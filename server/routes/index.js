@@ -11,9 +11,9 @@ router.get('/', (req, res) => {
   //res.send(req.query.name);
 
   //get query parameters
-  //res.send(req.query);
+  res.send(req.query);
 
-  res.render("hello");
+  //res.render("hello");
 });
 
 //putting colon behind will give you a variable on each of your requests
