@@ -20,7 +20,6 @@ fs.get_json(function (err,courses_info) {
     });
 })
 
-
 //putting colon behind will give you a variable on each of your requests
 //example localhost:7777/reverse/jeremy
 router.get('/reverse/:name', (req, res) => {
