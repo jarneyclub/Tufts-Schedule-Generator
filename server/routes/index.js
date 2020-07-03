@@ -2,13 +2,7 @@ const express = require('express');
 const router = express.Router();
 const fs = require('../fs/read_file.js');
 
-/*
-var json_object;
-fs.get_json(function (err,data){
-    json_object = data;
-})*/
-
-
+//example: http://localhost:7777/?course=COMP-0040
 fs.get_json(function (err,courses_info) {
     router.get('/', async (req, res) => {
         var course = req.query.course;
@@ -26,28 +20,6 @@ fs.get_json(function (err,courses_info) {
     });
 })
 
-
-
-/*
-// Do work here
-//example: localhost:7777/?name=jeremy&age=30&cool=false
-router.get('/', async (req, res) => {
-    var json_object;
-    fs.get_json(function (err,data){
-        //console.log(data);
-        json_object = data;
-    })
-
-    const jer = { name: "jeremy", age: 20, cool: true};
-    //res.send('Hey! It works!');
-    //res.json(jer)
-    //res.send(req.query.name);
-
-    //get query parameters
-    res.send(req.query);
-
-    //res.render("hello");
-});*/
 
 //putting colon behind will give you a variable on each of your requests
 //example localhost:7777/reverse/jeremy
