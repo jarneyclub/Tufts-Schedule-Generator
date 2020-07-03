@@ -1,7 +1,7 @@
 json_file = {
     course_id_names: ["VID-0004", "eng1", "eng2", "ang5", "etc"],
     courses_names: ["Video I", "english composition", "etc"],
-    courses: {
+    Courses: {
         //a single course dict (made with [])
         "VID-0004": {
             //a sectypes header
