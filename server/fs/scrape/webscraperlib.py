@@ -294,12 +294,12 @@ class webscraper():
         courses_amnt = len(master_list)
         courses_id_names = []
         courses_names = []
-        json_file = {}
+        dict_file = {}
         for x in range(0, courses_amnt):
             courses_id_names.append(str(master_list[x][1]))
             courses_names.append(str(master_list[x][0]))
-        json_file['courses_id_names'] = courses_id_names
-        json_file['courses_names'] = courses_names
+        dict_file['courses_id_names'] = courses_id_names
+        dict_file['courses_names'] = courses_names
         all_courses = []
         for course_num in range(0, courses_amnt):
             #list used to make a course dict
@@ -332,26 +332,32 @@ class webscraper():
                             #make settings list tuple
                             location = str(master_list[course_num][2][sec_type_num][sec_num][1][subsec_num][1])
                             city = str(master_list[course_num][2][sec_type_num][sec_num][1][subsec_num][2])
-                            times_value = ("Times", times_list)
-                            location_value = ("Location", location)
-                            city_value = ("City", city)
+                            times_value = ("times", times_list)
+                            location_value = ("location", location)
+                            city_value = ("city", city)
                             settings_dict = dict([times_value, location_value, city_value])
                             settings_list.append(settings_dict)
                         #make settings list tuple
-                        settings_tuple = ("Settings", settings_list)
+                        settings_tuple = ("settings", settings_list)
                         #make instructors list tuple
                         instructors_text = str(master_list[course_num][2][sec_type_num][sec_num][2])
                         instructors_list = instructors_text.split(", ")
-                        instructors_tuple = ("Instructors", instructors_list)
+                        instructors_tuple = ("instructors", instructors_list)
                         #make section name tuple
-                        sec_name_tuple = ("Section_name", section_name)
+                        sec_name_tuple = ("section_name", section_name)
                         #make section dictionary
                         sec_dict = dict([sec_name_tuple, settings_tuple, instructors_tuple])
                         sec_list.append(sec_dict)
                     sec_type_dict = (str(section_type), sec_list)
                     sec_type_list.append(sec_type_dict)
-            sec_type_header = ("Section_types", available_sec_types)
+            sec_type_header = ("section_types", available_sec_types)
             sec_type_list.append(sec_type_header)
             all_courses.append((courses_id_names[course_num], dict(sec_type_list)))
-        json_file['Courses'] = dict(all_courses)
-        return json_file
+        dict_file['courses'] = dict(all_courses)
+        json.dumps(dict_file, indent = 2)
+        self.write_file(dict_file)
+        return dict_file
+    #write the output file in json
+    def write_file(self, dict_file):
+        with open ('fs/data.txt', 'w') as outfile:
+            json.dump(dict_file, outfile)
