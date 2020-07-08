@@ -7,13 +7,29 @@ fs.get_json(function (err,courses_info) {
     router.get('/', async (req, res) => {
         var course = req.query.course;
         var id_names_list = courses_info.courses_id_names;
+        var course_found = false;
         for( var index in id_names_list) {
             if (id_names_list[index] == course) {
                 console.log(id_names_list[index]);
-                var information = courses_info.Courses[course]
-                console.log(information)
-                res.send(information);
+                var information = courses_info.Courses[course];
+                console.log(information);
+                var response = {
+                    "status": "200",
+                    "data": {
+                        "course": course,
+                        "info": information
+                    }
+                };
+                res.send(response);
+                course_found = true;
             }
+        }
+        if ( !course_found ) {
+            error_response = {
+                "status": "400",
+                "error": "Client Error: Course does not exist"
+            }
+            res.send(error_response)
         }
         //get query parameters
         //res.send(courses_info);
