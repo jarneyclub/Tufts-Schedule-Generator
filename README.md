@@ -5,7 +5,7 @@ React JS -
 Render automatic shuffling of courses in a week schedule
 
 Back end:
-Node JS
+a) Node JS
 - Express (API to get course info from database)
-Python
-- Get course catalog
+b) Python
+- Web scrape course catalog
