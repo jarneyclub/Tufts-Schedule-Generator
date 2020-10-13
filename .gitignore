@@ -1,3 +1,6 @@
 node_modules
 .DS_Store
 variables.env
+schedulemaker.code-workspace
+schedulemaker
+./server/variables.env
