@@ -3,4 +3,4 @@ node_modules
 variables.env
 schedulemaker.code-workspace
 schedulemaker
-./server/variables.env
+server/variables.env

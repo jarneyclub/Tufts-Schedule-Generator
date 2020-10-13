@@ -10,6 +10,7 @@ var course = {
     courseName: "courseName",
     information: ""
 }
+
 //Form to take user's course preferences
 class Form extends React.Component {
     constructor(props) {
