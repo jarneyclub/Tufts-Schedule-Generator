@@ -1,4 +1,5 @@
 # Automated Schedule Maker for Tufts University
+Disclaimer: Personal project. Not endorsed by or affiliated with Tufts University. 
 
 > Frontend:
 
