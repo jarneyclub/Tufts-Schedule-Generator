@@ -11,14 +11,17 @@ class webscraper():
 
     # initialize object
     def __init__(self, wait = 30):
+        # version number of webscraperlib (YYYYMM last modified)
+        self.version = "202010"
         # store all possible section types
         self.section_types_dict = { "Lecture" : 0, "Laboratory" : 1, "Recitation" : 2, "Recitation (Optional)" : 3, "Internship" : 4, "Seminar" : 5, 
         "Continuance" : 6, "Project" : 7, "Teaching Assistant" : 8, "Independent Study" : 9, "Thesis" : 10, "Research" : 11, "Laboratory (Optional)": 12, "Discussion" : 13, 
         "Thesis Research" : 14, "Exam": 15, "Clinical" : 16, "Rotation": 17, 
-        "Studio": 18, "Small Group": 19, "Evaluated Recitation": 20, "Workshop": 21, "Field Studies": 22, "Practicum": 23, "Once Per Week": 24 }
+        "Studio": 18, "Small Group": 19, "Evaluated Recitation": 20, "Workshop": 21, "Field Studies": 22, "Practicum": 23, "Once Per Week": 24, 
+        "Non-credit Online": 25, "Cross Registration": 26 }
         self.section_types_array = ["Lecture", "Laboratory", "Recitation", "Recitation (Optional)", "Internship", "Seminar", "Continuance", "Project", "Teaching Assistant", "Independent Study", "Thesis", "Research", "Laboratory (Optional)", "Discussion", "Thesis Research", "Exam", "Clinical", "Rotation", 
-        "Studio", "Small Group", "Evaluated Recitation", "Workshop", "Field Studies", "Practicum", "Once Per Week"]
-        self.total_section_types = 25
+        "Studio", "Small Group", "Evaluated Recitation", "Workshop", "Field Studies", "Practicum", "Once Per Week", "Non-credit Online", "Cross Registration"]
+        self.total_section_types = len(self.section_types_array)
 
         # how much to wait for course catalog to load
         self.waiting_time = wait
@@ -212,14 +215,16 @@ class webscraper():
             section_type_index = 0
             for tbody in course:
                 section_type = str(section_types[index_in_section_types][section_type_index])
-                index_to_use = self.section_types_dict[section_type]
                 #add the tr arrays to its section_type
                 try:
+                    index_to_use = self.section_types_dict[section_type]
                     course_trs[index_to_use] = tbody.find_all('tr', 'accorion-head')
                 except IndexError:
-                    print "list assignment index out of range because of this shit"
+                    print "IndexError: new section type in course catalog. Codebase need sync. New section_type: "
                     print section_type
-                    print "-----"
+                except KeyError:
+                    print "KeyError: New section type in course catalog. Codebase need sync. New section_type: "
+                    print section_type
                 section_type_index+=1
             index_in_section_types+=1
             #tr_list[0][0] is lectures [0][1] would be like labs
