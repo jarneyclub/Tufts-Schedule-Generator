@@ -10,7 +10,13 @@ json_file = {
             Studio: [ //a sec dict
                         {     Section_name: "01-STU", 
                             Settings: [ 
-                                { Times : ["We2:00PM - 4:30PM", "We9:30AM - 12:00PM"], Location: "230 Fenway: B115 (Video)", City: "Fenway" } 
+                                { 
+                                    Times : { 
+                                        0: [2 /* day of week*/], 
+                                        1: [540, 615] /* time of day in integer */
+                                },
+                                 Location: "230 Fenway: B115 (Video)",
+                                City: "Fenway" } 
                                     ], 
                             Instructor: ['Mary Ellen Strom'] },
                     {
