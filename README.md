@@ -1,12 +1,12 @@
 # Automated Schedule Maker for Tufts University
 Disclaimer: Personal project. Not endorsed by or affiliated with Tufts University. 
 
-> Frontend:
+> Frontend (./frontend):
 
 a) React JS
 - Render automatic shuffling of courses in a week schedule
 
-> Backend:
+> Backend (./server):
 
 a) Node JS
 - Express (API to get course info from database)
