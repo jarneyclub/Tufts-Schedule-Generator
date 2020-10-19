@@ -39,70 +39,70 @@ function Section ( courseID, sectionName, times, location, city, instructors, se
     /** Get duration of section
      * @returns {integer} 1 = a minute
      */
-    var getDuration = function() {
+    function getDuration() {
         return timeEnd- timeBegin;
     }
 
     /** Get start time of section
      * @returns {integer} [0 to 1440], 0 being 12AM, 1440 being 12AM 24 hrs later
      */
-    var getStartTime = function() {
+    function getStartTime() {
         return timeBegin;
     }
 
     /** Get end time of section
      * @returns {integer} [0 to 1440], 0 being 12AM, 1440 being 12AM 24 hrs later
      */
-    var getEndTime = function() {
+    function getEndTime() {
         return timeEnd;
     }
 
     /** Get days of the week the section is on
      * @returns {list} 1-indexed days of the week (e.g. monday = 1 )
      */
-    var getDays = function() {
+    function getDays() {
         return daysOfWeek;
     }
     
     /** Get instructors of the section
      * @returns {list} names of instructors
      */
-    var getInstructors = function() {
+    function getInstructors() {
         return instructors;
     }
 
     /** Get courseID of section
      * @returns {string} course ID (e.g. COMP-0015)
      */
-    var getCourseID = function() {
+    function getCourseID() {
         return courseID
     }
 
     /** Get name of section
      * @returns {string} section name (e.g. LEC-1)
      */
-    var getSectionName = function() {
+    function getSectionName() {
         return sectionName
     }
 
     /** Get type of section
      * @returns {string}
      */
-    var getSectionType = function() {
+    function getSectionType() {
         return sectionType;
     }
 
     /** Get location of section
      * @returns {string} 
      */
-    var getLocation = function() {
+    function getLocation() {
         return location;
     }
 
     /** Get city of section
      * @returns {string}
      */
-    var getCity = function() {
+    function getCity() {
         return city;
     }
 

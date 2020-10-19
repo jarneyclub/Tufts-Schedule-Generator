@@ -31,7 +31,7 @@ function Course (courseName, listSections, listSectionTypes) {
     /** Get Sections
      * @returns {object} sections
      */
-    var getSections = function() {
+    function getSections() {
         return sections;
     }
 
@@ -39,14 +39,14 @@ function Course (courseName, listSections, listSectionTypes) {
      * @param {any} type 
      * @returns {list} list of Section objects
      */
-    var getSectionsByType = function(type) {
+    function getSectionsByType(type) {
         return sections[type];
     }
 
     /** Get name of course
      * @returns {string} name of course
      */
-    var getCourseName = function() {
+    function getCourseName() {
         return courseName;
     }
 
@@ -56,7 +56,7 @@ function Course (courseName, listSections, listSectionTypes) {
     //                                      //
     //////////////////////////////////////////
     
-    var populateSections = function () {
+    function populateSections () {
 
         // initialize sections variable with section types
         for (var index in listSectionTypes) {
@@ -75,7 +75,8 @@ function Course (courseName, listSections, listSectionTypes) {
 
     return {
         getSections,
-        getSectionsByType
+        getSectionsByType,
+        getCourseName
     }
 }
 
