@@ -1,10 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('./fs/read_file.js');
-
+const Section = require('objects/Class.js');
+const Course = require('objects/Course.js')
 var testResponse = "ok";
 
 fs.get_json(function (err,courses_info) {
+
+    /* create data structures */
+
+    for ( var index in courses_info ) {
+        var courseID = courses_info[index];
+        
+    }
+
     /* 
     * Handle GET requests for information on a single course 
     * USAGE: http://localhost:7777/course/?course=COMP-0040 
