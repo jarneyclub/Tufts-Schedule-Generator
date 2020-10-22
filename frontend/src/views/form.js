@@ -55,7 +55,7 @@ class Form extends React.Component {
         //prevent default event handler
         event.preventDefault();
         //add the course query to the base URL
-        var API_URL = process.env.REACT_APP_API_URL + "/?course=" + this.state.course;
+        var API_URL = process.env.REACT_APP_API_URL + "/course/?course=" + this.state.course;
         //send API call to database, add course if it exists
         this.addCourse(API_URL, () => {
             console.log(this.state.coursesInfo);
