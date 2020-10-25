@@ -1,15 +1,16 @@
 
 /** Section class
  * 
- * @param {string} courseID 
- * @param {string} sectionName 
- * @param {list} times 
- * @param {string} location 
- * @param {string} city 
- * @param {list} instructors 
- * @returns {Section}
+ * @param {any} inputCourseID 
+ * @param {any} inputSectionName 
+ * @param {any} inputSectionType 
+ * @param {any} inputTimes {0: [days of week], 1: [begin, end]}
+ * @param {any} inputLocation 
+ * @param {any} inputCity 
+ * @param {any} inputInstructors 
+ * @returns 
  */
-function Section ( courseID, sectionName, times, location, city, instructors, sectionType ) {
+function Section ( inputCourseID, inputSectionName, inputSectionType, inputTimes, inputLocation, inputCity, inputInstructors) {
     
     //////////////////////////////////////////
     //                                      //
@@ -17,18 +18,31 @@ function Section ( courseID, sectionName, times, location, city, instructors, se
     //                                      //
     //////////////////////////////////////////
 
-    const courseID = courseID;
-    const sectionName = sectionName;
-    const sectionType = sectionType;
-
-    const daysOfWeek = times[0];
+    const courseID = inputCourseID;
+    const sectionName = inputSectionName;
+    const sectionType = inputSectionType;
+    
+    const daysOfWeek = inputTimes[0];
     // NOTE: time = 0 is 12AM
-    const timeBegin = times[1][0];
-    const timeEnd = times[1][0];
+    const timeBegin = inputTimes[1][0];
+    const timeEnd = inputTimes[1][0];
 
-    const location = location;
-    const city = city;
-    const instructors = instructors;
+    const location = inputLocation;
+    const city = inputCity;
+    const instructors = inputInstructors;
+
+    /* array of available times, array of [day, start, end] elements */
+    var timesArray = function () {
+        var result = [];
+        for ( var index in daysOfWeek ) {
+            var singleClass = [];
+            singleClass.push(daysOfWeek[index]); // append a day of week
+            singleClass.push(timeBegin);
+            singleClass.push(timeEnd);
+            result.push(singleClass);
+        }
+        return result;
+    }
 
     //////////////////////////////////////////
     //                                      //
@@ -41,6 +55,13 @@ function Section ( courseID, sectionName, times, location, city, instructors, se
      */
     function getDuration() {
         return timeEnd- timeBegin;
+    }
+
+    /** Get array of times
+     * @returns  array of available times, array of [day, start, end] elements
+     */
+    function getTimes() {
+        return timesArray;
     }
 
     /** Get start time of section
@@ -108,6 +129,7 @@ function Section ( courseID, sectionName, times, location, city, instructors, se
 
     return {
         getDuration,
+        getTimes,
         getStartTime,
         getEndTime,
         getDays,

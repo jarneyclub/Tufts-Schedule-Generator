@@ -1,10 +1,10 @@
 /** Course class definition
- * @param {string} courseName 
- * @param {list} listSections 
- * @param {list} listSectionTypes 
+ * @param {string} inputCourseName 
+ * @param {list} inputListSections 
+ * @param {list} inputListSectionTypes 
  * @returns 
  */
-function Course (courseName, listSections, listSectionTypes) {
+function Course (inputCourseName, inputListSections, inputListSectionTypes) {
     
     //////////////////////////////////////////
     //                                      //
@@ -19,7 +19,7 @@ function Course (courseName, listSections, listSectionTypes) {
         "Laboratory": [Section]
     }
     */
-    const courseName = courseName;
+    const courseName = inputCourseName;
     populateSections();
 
     //////////////////////////////////////////
@@ -59,14 +59,14 @@ function Course (courseName, listSections, listSectionTypes) {
     function populateSections () {
 
         // initialize sections variable with section types
-        for (var index in listSectionTypes) {
-            var sectionType = listSectionTypes[index];
+        for (var index in inputListSectionTypes) {
+            var sectionType = inputListSectionTypes[index];
             sections[sectionType] = [];
         }
 
         // assign an unsorted list of Sections by section type
-        for (var index in listSections) {
-            var section = listSections[index]; // a single Section object
+        for (var index in inputListSections) {
+            var section = inputListSections[index]; // a single Section object
             var sectionType = section.getSectionType();
 
             sections[sectionType].push(section);
