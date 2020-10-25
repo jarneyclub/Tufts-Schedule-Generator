@@ -26,7 +26,7 @@ fs.get_json(function (err,courses_info) {
     * NOTE: ONLY ACCEPTS COURSE ID 
     * */
     router.get('/course/', async (req, res) => {
-
+        console.log("in router.get/course/");
         var course = req.query.course; // name of course from request URL query
 
         var id_names_list = courses_info.courses_id_names; // list of existing course IDs
