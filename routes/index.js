@@ -16,7 +16,7 @@ fs.get_json(function (err,courses_info) {
         courseID : Course object
     }   
     */
-    var courseDictionary = objectUtils.initializeCourseDictionary(courses);
+    //var courseDictionary = objectUtils.initializeCourseDictionary(courses);
     router.get('/', async (req, res) => {
         res.send("Hello world!")
     })
