@@ -1,18 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('./fs/read_file.js');
-const Section = require('objects/Class.js');
-const Course = require('objects/Course.js')
+const Section = require('./utils/objects/Section.js');
+const Course = require('./utils/objects/Course.js');
+const objectUtils = require('./utils/objectUtils.js');
 var testResponse = "ok";
 
+/* courses_info is the JSON object with raw information on the course catalog */
 fs.get_json(function (err,courses_info) {
 
-    /* create data structures */
+    var courses = courses_info.courses; // get courses object from JSON
 
-    for ( var index in courses_info ) {
-        var courseID = courses_info[index];
-        
-    }
+    /* Initialize data structure */
+    /* courseDictionary = {
+        courseID : Course object
+    }   
+    */
+    var courseDictionary = objectUtils.initializeCourseDictionary(courses);
 
     /* 
     * Handle GET requests for information on a single course 
@@ -67,14 +71,15 @@ fs.get_json(function (err,courses_info) {
     */
     router.get('/courses/', async (req, res) => {
 
-        var courses = req.query.courses; // Requested courses list from URL query
+        var coursesRequested = req.query.courses; // Requested courses list from URL query
         var id_names_list = courses_info.courses_id_names; // List of existing course IDs
 
-        var promises = []; // promises of all course checks
-
+        /* Promises are used because it is required when there are various types of responses to the query*/
+        var promises = []; // promises of all course checks 
+    
         // check if each course exists in database
-        for ( var index in courses ) {
-            promises.push(checkCourseExistence(id_names_list, courses[index]));
+        for ( var index in coursesRequested ) {
+            promises.push(checkCourseExistenceFast(courseDictionary, coursesRequested[index]));
         }
 
         /* Check if all requested courses are valid
@@ -85,8 +90,8 @@ fs.get_json(function (err,courses_info) {
             function(result) {
                 var response = {};
                 // append all requested courses' information to response
-                for ( var index in courses ) {
-                    var courseID = courses[index];
+                for ( var index in coursesRequested ) {
+                    var courseID = coursesRequested[index];
 
                     var information = courses_info.courses[courseID]; // get course info
 
@@ -108,23 +113,17 @@ fs.get_json(function (err,courses_info) {
 
     /* Check if requested course exists in database
     * return resolve, reject Promise
+    TODO: replace promises with this function
+    * Time complexity: O(1)
     */
-    function checkCourseExistence( id_names_list, courseID) {
-        return new Promise(( resolve, reject ) => {
-            // Traverse course ID list
-            for (var index in id_names_list) {
-                // Matching course name found
-                if (id_names_list[index] == courseID) {
-                    // Success
-                    resolve(true)
-                }
-                else {
-                    // No match was found after complete list traversal
-                    if (index == id_names_list.length - 1) {
-                        // Failure
-                        reject(new Error("ClientError: A requested course does not exist in the Tufts course catalog"))
-                    }
-                }
+    function checkCourseExistenceFast( objectCourses, courseID ) {
+        return new Promise((resolve, reject) => {
+            if (objectCourses[courseID] !== undefined) {
+                resolve(true);
+            }
+            else {
+                console.log(courseID)
+                reject(new Error("ClientError: A requested course does not exist in the Tufts course catalog"));
             }
         })
     }
