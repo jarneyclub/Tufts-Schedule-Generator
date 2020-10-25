@@ -1,9 +1,10 @@
 const Section = require('./objects/Section.js');
 const Course = require('./objects/Course.js');
+
 /** Check if two time intervals overlap
- * 
  * @param {any} timeA [day of week, begin time, end time]
  * @param {any} timeB [day of week, begin time, end time]
+ * Time Complexity: O(1) => one OR comparison of two inputs
  */
 function doesNotOverlap(timeA, timeB) {
     var dayA = timeA[0];
@@ -29,6 +30,10 @@ function doesNotOverlap(timeA, timeB) {
     }
 }
 
+/** Finite map Course objects
+ * @param {object} courses
+ * @returns {object} finite map (key: courseID, value: Course object)
+ */
 function initializeCourseDictionary(courses) {
     var dictionaryCourses = {};
 
@@ -68,14 +73,16 @@ function initializeCourseDictionary(courses) {
 
                         /* sometimes the setting for the course can still be TBA, in that case, disregard section*/
                         if (sectionTime !== null) {
+                            // make new Section object based off of all info gathered
                             var newSection = new Section(courseID, sectionName, sectionType, sectionTime, sectionLocation, sectionCity, sectionInstructors);
+                            // add to the list of Sections
                             listSections.push(newSection);
                         }
                     }
                 }
             }
         }
-
+        // create new Course object with the list of Sections
         var newCourse = new Course(courseID, listSections, listSectionTypes);
         dictionaryCourses[courseID] = newCourse;
     }
