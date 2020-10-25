@@ -17,7 +17,9 @@ fs.get_json(function (err,courses_info) {
     }   
     */
     var courseDictionary = objectUtils.initializeCourseDictionary(courses);
-
+    router.get('/', async (req, res) => {
+        res.send("Hello world!")
+    })
     /* 
     * Handle GET requests for information on a single course 
     * USAGE: http://localhost:7777/course/?course=COMP-0040 
