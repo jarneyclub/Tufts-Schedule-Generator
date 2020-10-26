@@ -1,23 +1,15 @@
 # Automated Schedule Maker for Tufts University
 Disclaimer: Personal project. Not endorsed by or affiliated with Tufts University. 
 
-> Backend (./server):
+## JSONRPC based REST API that communicates course information and schedule recommendations
 
-a) Node JS
-- Express (API to get course info from database)
+Domain: https://tuftsschedulerapi.herokuapp.com/
 
-b) Python
-- Web scrape course catalog
-
-1) Go to ./server/routes/fs
-```Unix
-source scrape/bin/activate
-```
-2) Go to ./scrape
-3) python2.7
-```python
-import webscraperlib
-catalogscraper = webscraperlib.webscraper(wait = 40 ) # estimated time in seconds needed for DOM content to fully load
-master_list = catalogscraper.scrape_web()
-catalogscraper.write_json(master_list)
-```
+> Get a single course's information
+BASE: https://tuftsschedulerapi.herokuapp.com/course/
+QUERY: ?course=COURSEID
+e.g. https://tuftsschedulerapi.herokuapp.com/course/course=COMP-0011
+> Get multiple courses' information
+BASE: https://tuftsschedulerapi.herokuapp.com/courses/
+QUERY: ?courses=COURSEID&courses=COURSEID
+e.g. https://tuftsschedulerapi.herokuapp.com/courses/?courses=COMP-0015&courses=COMP-0011
