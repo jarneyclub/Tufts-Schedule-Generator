@@ -11,7 +11,7 @@ BASE: https://tuftsschedulerapi.herokuapp.com/course/
 
 QUERY: ?course=COURSEID
 
-e.g. https://tuftsschedulerapi.herokuapp.com/course/course=COMP-0011
+e.g. https://tuftsschedulerapi.herokuapp.com/course/?course=COMP-0011
 
 > Get multiple courses' information
 
