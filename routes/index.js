@@ -18,7 +18,7 @@ fs.get_json(function (err,courses_info) {
     */
     var courseDictionary = objectUtils.initializeCourseDictionary(courses);
     router.get('/', async (req, res) => {
-        res.send("Hello world!")
+        res.send("API that helps generate semester schedule based on user specifications")
     })
     /* 
     * Handle GET requests for information on a single course 
@@ -35,7 +35,7 @@ fs.get_json(function (err,courses_info) {
         * Success: send information of course
         * Fail: send 400 response
         */
-        checkCourseExistence(id_names_list, course).then(
+        checkCourseExistenceFast(courseDictionary, course).then(
             function(result) {
                 var courseID = courses[course];
                 var information = courses_info[courseID]; // get course info
