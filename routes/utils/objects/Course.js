@@ -20,6 +20,7 @@ function Course (inputCourseName, inputListSections, inputListSectionTypes) {
     }
     */
     const courseName = inputCourseName;
+    const sectionTypes = inputListSectionTypes;
     populateSections();
 
     //////////////////////////////////////////
@@ -50,6 +51,13 @@ function Course (inputCourseName, inputListSections, inputListSectionTypes) {
         return courseName;
     }
 
+    /** Get section types
+     * @returns {list} list of section types
+     */
+    function getSectionTypes() {
+        return sectionTypes;
+    }
+
     //////////////////////////////////////////
     //                                      //
     //          Private Functions           //
@@ -73,10 +81,12 @@ function Course (inputCourseName, inputListSections, inputListSectionTypes) {
         }
     }
 
+
     return {
         getSections,
         getSectionsByType,
-        getCourseName
+        getCourseName,
+        getSectionTypes
     }
 }
 
