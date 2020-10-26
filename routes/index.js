@@ -27,28 +27,22 @@ fs.get_json(function (err,courses_info) {
     * */
     router.get('/course/', async (req, res) => {
         console.log("in router.get/course/");
-        var course = req.query.course; // name of course from request URL query
-
-        var id_names_list = courses_info.courses_id_names; // list of existing course IDs
+        var courseID = req.query.course; // name of course from request URL query
 
         /*
         * Success: send information of course
         * Fail: send 400 response
         */
-        checkCourseExistenceFast(courseDictionary, course).then(
+        checkCourseExistenceFast(courseDictionary, courseID).then(
             function(result) {
-                var courseID = courses[course];
-                var information = courses_info[courseID]; // get course info
-
-                console.log(course);
-                console.log(information);
+                var information = courses_info.courses[courseID]; // get course info
 
                 res.status(200);
                 // formulate response body
                 var response = {
                     "status": "200",
                     "data": {
-                        "course": course,
+                        "course": courseID,
                         "info": information
                     }
                 };
@@ -74,7 +68,6 @@ fs.get_json(function (err,courses_info) {
     router.get('/courses/', async (req, res) => {
 
         var coursesRequested = req.query.courses; // Requested courses list from URL query
-        var id_names_list = courses_info.courses_id_names; // List of existing course IDs
 
         /* Promises are used because it is required when there are various types of responses to the query*/
         var promises = []; // promises of all course checks 
@@ -120,6 +113,7 @@ fs.get_json(function (err,courses_info) {
     */
     function checkCourseExistenceFast( objectCourses, courseID ) {
         return new Promise((resolve, reject) => {
+
             if (objectCourses[courseID] !== undefined) {
                 resolve(true);
             }
