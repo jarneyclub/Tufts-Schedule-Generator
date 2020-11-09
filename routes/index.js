@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('./fs/read_file.js');
-const Section = require('./utils/objects/Section.js');
-const Course = require('./utils/objects/Course.js');
-const objectUtils = require('./utils/objectUtils.js');
+const Section = require('./utils/objects/classes/Section.js');
+const Course = require('./utils/objects/classes/Course.js');
+const objectUtils = require('./utils/objects/classes/helpers.js');
 var testResponse = "ok";
 
 /* courses_info is the JSON object with raw information on the course catalog */
@@ -104,7 +104,74 @@ fs.get_json(function (err,courses_info) {
                 res.send(response)
             }
         )
+    });
+
+    /*
+    * Retrieve a schedule of a typical week of classes from chosen courses and times within given bounds
+    * USAGE: http://localhost:7777/findCoursesInRange/?start=100&end=400?courses=COMP-0015&courses=COMP-0011
+    * start and end are times in integer format
+    * NOTE: ONLY ACCEPTS COURSE ID
+    * TODO: NOT IMPLEMENTED
+    */
+    router.get('/coursesInRange/', async (req, res) => {
+        var coursesRequested = req.query.courses; // Requested courses list from URL query
+        var startTime = req.query.start;
+        var endTime = req.query.end;
+
+        /* Promises are used because it is required when there are various types of responses to the query*/
+        var promises = []; // promises of all course checks 
+
+        // check if each course exists in database
+        for (var index in coursesRequested) {
+            promises.push(checkCourseExistenceFast(courseDictionary, coursesRequested[index]));
+        }
+
+        /* Check if all requested courses are valid
+        * Success: send information of course
+        * Fail: send 400 response
+        */
+        Promise.all(promises).then(
+            function (result) {
+                var response = {};
+                // append all requested courses' information to response
+                for (var index in coursesRequested) {
+                    var courseID = coursesRequested[index];
+
+                    var information = courses_info.courses[courseID]; // get course info
+
+                    response[courseID] = information; // append to response
+                }
+
+                res.send(response);
+            },
+            function (error) {
+                res.status(400);
+                // formulate response body
+                var response = {
+                    Error: error.message
+                }
+                res.send(response);
+            }
+        )
     })
+
+    /*
+    * Test data structure and algorithms
+    * USAGE: http://localhost:7777/test
+    * start and end are times in integer format
+    * NOTE: ONLY ACCEPTS COURSE ID
+    * TODO: NOT IMPLEMENTED
+    */
+    router.get('/test', async (req, res) => {
+        console.log("-------beginning test------");
+        res.send("Test results:");
+
+        // get random courses
+
+        // get a schedule from these courses
+
+    })
+
 
     /* Check if requested course exists in database
     * return resolve, reject Promise
