@@ -1,21 +1,21 @@
-const Section = require('./objects/Section.js');
-const Course = require('./objects/Course.js');
+const Section = require('./Section.js');
+const Course = require('./Course.js');
 
 /** Check if two time intervals overlap
- * @param {any} timeA [day of week, begin time, end time]
- * @param {any} timeB [day of week, begin time, end time]
+ * @param {any} timeIntervalA [day of week, begin time, end time]
+ * @param {any} timeIntervalB [day of week, begin time, end time]
  * Time Complexity: O(1) => one OR comparison of two inputs
  */
-function doesNotOverlap(timeA, timeB) {
-    var dayA = timeA[0];
-    var dayB = timeB[0];
+function doesNotOverlap(timeIntervalA, timeIntervalB) {
+    var dayA = timeIntervalA[0];
+    var dayB = timeIntervalB[0];
 
     // the time intervals are on the same day of the week
     if ( dayA == dayB ) {
-        var beginA = timeA[1];
-        var beginB = timeB[1];
-        var endA = timeA[2];
-        var endB = timeB[2];
+        var beginA = timeIntervalA[1];
+        var beginB = timeIntervalB[1];
+        var endA = timeIntervalA[2];
+        var endB = timeIntervalB[2];
         // O(1) comparison
         if ( (beginA <= beginB && beginB <= endA) || (beginB <= beginA && beginA <= endB) ) {
             return false;
@@ -30,7 +30,24 @@ function doesNotOverlap(timeA, timeB) {
     }
 }
 
-/** Finite map Course objects
+/** Check if a section's time period is within a time interval
+ * @param {Section} section Section object to range check
+ * @param {[start, end]} timeInterval an array of integer of size 2
+ * @returns 
+ */
+function sectionWithinBounds(section, timeInterval) {
+    var begin = timeInterval[0];
+    var end = timeInterval[1];
+
+    if ( section.getStartTime() >= begin && section.getEndTime() <= end ) {
+        return true
+    }
+    else {
+        return false
+    }
+}
+
+/** Finite map Course objects for basic data structure
  * @param {object} courses
  * @returns {object} finite map (key: courseID, value: Course object)
  */
