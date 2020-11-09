@@ -1,4 +1,4 @@
-const Section = require('./Section.js');
+const Section = require('./classes/Section.js');
 
 /** Node for AVL tree of Sections
  * Key: Section
