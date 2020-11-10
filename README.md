@@ -3,20 +3,20 @@ Disclaimer: Personal project. Not endorsed by or affiliated with Tufts Universit
 
 ## JSONRPC based REST API that communicates course information and schedule recommendations
 
-Domain: https://tuftsschedulerapi.herokuapp.com/
+Base address: https://tuftsschedulerapi.herokuapp.com/
 
 > Get a single course's information
 
-BASE: https://tuftsschedulerapi.herokuapp.com/course/
+endpoint /course/
 
-QUERY: ?course=COURSEID
+query: ?course=COURSEID
 
 e.g. https://tuftsschedulerapi.herokuapp.com/course/?course=COMP-0011
 
 > Get multiple courses' information
 
-BASE: https://tuftsschedulerapi.herokuapp.com/courses/
+endpoint: /courses/
 
-QUERY: ?courses=COURSEID&courses=COURSEID
+query: ?courses=COURSEID&courses=COURSEID
 
 e.g. https://tuftsschedulerapi.herokuapp.com/courses/?courses=COMP-0015&courses=COMP-0011
