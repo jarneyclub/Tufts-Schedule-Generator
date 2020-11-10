@@ -7,7 +7,7 @@ Base address: https://tuftsschedulerapi.herokuapp.com/
 
 > Get a single course's information
 
-endpoint /course/
+endpoint: /course/
 
 query: ?course=COURSEID
 
