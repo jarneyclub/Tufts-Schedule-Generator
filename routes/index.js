@@ -18,13 +18,9 @@ fs.get_json(function (err,courses_info) {
     */
     var courseDictionary = objectUtils.initializeCourseDictionary(courses);
 
-
-    router.get('/', async (req, res) => {
-        res.send("API that helps generate semester schedule based on user specifications")
-    })
     /*
     * Handle GET requests for list of all courses
-    * USAGE: http://localhost:7777/courses/list
+    * USAGE: http://localhost:7777/api/courses/list
     * */
     router.get('/courses/list', async(req, res) => {
         console.log("in endpoint /courses/list");
@@ -46,7 +42,7 @@ fs.get_json(function (err,courses_info) {
 
     /* 
     * Handle GET requests for information on a single course 
-    * USAGE: http://localhost:7777/course/?course=COMP-0040 
+    * USAGE: http://localhost:7777/api/course/?course=COMP-0040 
     * NOTE: ONLY ACCEPTS COURSE ID 
     * */
     router.get('/course/', async (req, res) => {
@@ -86,7 +82,7 @@ fs.get_json(function (err,courses_info) {
 
     /*
     * Handle GET requests for information on a list of courses
-    * USAGE: http://localhost:7777/courses/?courses=COMP-0015&courses=COMP-0011
+    * USAGE: http://localhost:7777/api/courses/?courses=COMP-0015&courses=COMP-0011
     * NOTE: ONLY ACCEPTS COURSE ID
     */
     router.get('/courses/', async (req, res) => {
@@ -132,7 +128,7 @@ fs.get_json(function (err,courses_info) {
 
     /*
     * Retrieve a schedule of a typical week of classes from chosen courses and times within given bounds
-    * USAGE: http://localhost:7777/findCoursesInRange/?start=100&end=400?courses=COMP-0015&courses=COMP-0011
+    * USAGE: http://localhost:7777/api/findCoursesInRange/?start=100&end=400?courses=COMP-0015&courses=COMP-0011
     * start and end are times in integer format
     * NOTE: ONLY ACCEPTS COURSE ID
     * TODO: NOT IMPLEMENTED
@@ -181,7 +177,7 @@ fs.get_json(function (err,courses_info) {
 
     /*
     * Test data structure and algorithms
-    * USAGE: http://localhost:7777/test
+    * USAGE: http://localhost:7777/api/test
     * start and end are times in integer format
     * NOTE: ONLY ACCEPTS COURSE ID
     * TODO: NOT IMPLEMENTED
@@ -216,7 +212,7 @@ fs.get_json(function (err,courses_info) {
     }
 });
 //putting colon behind will give you a variable on each of your requests
-//example localhost:7777/reverse/jeremy
+//example localhost:7777/api/reverse/jeremy
 router.get('/reverse/:name', (req, res) => {
     const reverse = [...req.params.name].reverse().join()
     //req.params to access things in the URL
