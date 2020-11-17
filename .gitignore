@@ -4,4 +4,3 @@ variables.env
 schedulemaker.code-workspace
 schedulemaker
 server/variables.env
-frontend/
