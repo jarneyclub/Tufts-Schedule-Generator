@@ -1,0 +1,9 @@
+.button {
+    height: 50px;
+    width: 150px;
+    font-size: 20px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+/* need different styling for selected button*/
