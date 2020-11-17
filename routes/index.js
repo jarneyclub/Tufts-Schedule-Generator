@@ -17,9 +17,33 @@ fs.get_json(function (err,courses_info) {
     }   
     */
     var courseDictionary = objectUtils.initializeCourseDictionary(courses);
+
+
     router.get('/', async (req, res) => {
         res.send("API that helps generate semester schedule based on user specifications")
     })
+    /*
+    * Handle GET requests for list of all courses
+    * USAGE: http://localhost:7777/courses/list
+    * */
+    router.get('/courses/list', async(req, res) => {
+        console.log("in endpoint /courses/list");
+
+        // populate list of course IDs
+        var listCourses = [];
+        for (courseID in courseDictionary) {
+            listCourses.push(courseID);
+        }
+        res.status(200);
+        // formulate response body
+        var response = {
+            "status": "200",
+            "list_courseids": listCourses
+            }
+
+        res.send(response);
+    })
+
     /* 
     * Handle GET requests for information on a single course 
     * USAGE: http://localhost:7777/course/?course=COMP-0040 
