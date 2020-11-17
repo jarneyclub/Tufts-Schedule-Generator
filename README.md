@@ -1,7 +1,8 @@
-# Automated Schedule Maker for Tufts University
+# Semester Schedule Generator with Tufts University courses
 Disclaimer: Personal project. Not endorsed by or affiliated with Tufts University. 
 Work in progress
-## JSONRPC based REST API that communicates course information and schedule recommendations
+
+## JSONRPC based web API that communicates course information and schedule recommendations
 
 Base address: https://tufts-schedule.herokuapp.com/api
 
