@@ -1,17 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('./fs/read_file.js');
+
 const Section = require('./utils/objects/classes/Section.js');
 const Course = require('./utils/objects/classes/Course.js');
+const Tree1 = require('./utils/Tree1.js');
+
+const phase1 = require('./utils/phase1Utils.js');
 const objectUtils = require('./utils/apiUtils.js');
 const testUtils = require('./utils/testUtils.js');
 
-var testResponse = "ok";
-
 /* courses_info is the JSON object with raw information on the course catalog */
 fs.get_json(function (err,courses_info) {
-
-    var courses = courses_info.courses; // get courses object from JSON
 
     /* Initialize data structure */
     /* courseDictionary = {
@@ -186,15 +186,16 @@ fs.get_json(function (err,courses_info) {
     */
     router.get('/test', async (req, res) => {
         console.log("-------beginning test------");
-        res.send("Test results:");
+        var start = Date.now();
+        /* SELECT RANDOM COURSES AND SOME MANUALLY */
 
         // get 5 random courses
-        var selectedCourses = [];
+        let selectedCourses = []; // array of course IDS
         while (selectedCourses.length < 5) {
-            var randomCourseID = testUtils.getRandomCourse(courseDictionary).getCourseName();
+            let randomCourseID = testUtils.getRandomCourse(courseDictionary).getCourseName();
             // check if random course already exists in array
-            var doesntExist = true;
-            for (var i = 0; i < selectedCourses.length; i++ ) {
+            let doesntExist = true;
+            for (let i = 0; i < selectedCourses.length; i++ ) {
                 if (selectedCourses[i] == randomCourseID) {
                     doesntExist = false;
                 }
@@ -203,10 +204,46 @@ fs.get_json(function (err,courses_info) {
             if (doesntExist)
                 selectedCourses.push(randomCourseID);
         }
+        
+        // manual selection of course
+        selectedCourses.push("CHEM-0011");
 
         console.log("selected courses: ", selectedCourses);
+         /* e.g.
+            mapCourseToSectionType: {
+                'SPN-0032': { Lecture: [[Object]] },
+                'AMER-0186': { Lecture: [[Object], [Object]] },
+                'TPS-0161': { Lecture: [[Object]] },
+                'NUTR-0211': { Lecture: [] },
+                'PHY-0293': { Lecture: [[Object]] }
+            }
+        */
 
-        // get a schedule from these courses
+        let mapCourseToSectionType = phase1.mapCoursesToSectionTypes(courseDictionary, selectedCourses);
+        
+        /* let mapTree1Courses = {
+            COURSEID: {
+                "Lecture": Tree1()
+            },
+            COURSEID2: {
+                
+            },
+            etc.
+        } */
+        let mapTree1Courses = phase1.mapCoursesToTree1s(mapCourseToSectionType);
+
+        console.log("phase 1 tree mapping: ", mapTree1Courses);
+
+        for (let key in mapTree1Courses) {
+            for (let secType in mapTree1Courses[key]) {
+                mapTree1Courses[key][secType].print();
+            }
+        }
+        var end = Date.now();
+        var difference = end - start;
+        var executionTime = "executionTime: "  + difference + "ms";
+        res.send("Test results:" + executionTime);
+        console.log("---ending test-----", "\n");
     })
 
 

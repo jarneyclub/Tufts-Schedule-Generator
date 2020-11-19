@@ -12,6 +12,7 @@ Context:
 > Assumptions :
 > 1) All classes in a Section have identical start times and end times and differ only by day of week.
 > 2) All section types are required (need to enroll in one section of each Course's section type).
+> 3) In implementation: times that are TBA are put in Sunday/7 for day, 00:00/2400 for both start and end time.
 
 ## Algorithm
 

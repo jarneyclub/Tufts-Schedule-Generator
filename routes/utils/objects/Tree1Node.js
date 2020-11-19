@@ -32,6 +32,10 @@ function Tree1Node(sectionInput) {
     const getValue = () => {
         return value;
     }
+    
+    const getCourseID = () => {
+        return course;
+    }
 
     /** store any object in objects
      * @param {any} object 
@@ -65,6 +69,7 @@ function Tree1Node(sectionInput) {
         storeObject: storeObject,
         getObjects: getObjects,
         noDuplicates: noDuplicates,
+        getCourseID: getCourseID,
         value: value,
         objects: objects
     }

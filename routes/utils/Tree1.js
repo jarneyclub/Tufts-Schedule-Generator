@@ -33,6 +33,8 @@ function Tree1() {
     // 1-indexed
     var tree = [null];
     var treeSize = 0;
+    var courseID = "";
+    var sectionType = "";
 
     //////////////////////////////////////////
     //                                      //
@@ -51,12 +53,18 @@ function Tree1() {
     }
 
     const insert = (section) => {
+        courseID = section.getCourseID();
+        sectionType = section.getSectionType();
+
         var startTime = section.getStartTime();
         insertHelper(section, startTime, 1);
     }
 
-    const preOrderPrint = () => {
-        preOrderPrintHelper(1);
+    const print = () => {
+        var printArray = [];
+        preOrderPrintHelper(1, printArray);
+
+        console.log("Course: ", courseID, " secType: ", sectionType, " tree: ", printArray);
     }
 
 
@@ -79,6 +87,7 @@ function Tree1() {
             var node = new sectionsNode(section); // create sectionsNode
 
             tree[index] = node; // insert leaf
+            treeSize++; // increment treeSize
         }
         else {
             // recurse into left subtree
@@ -99,26 +108,35 @@ function Tree1() {
         }
     }
     
-    const preOrderPrintHelper = (index) => {
-        if ( indexInRange(index) == true ) {
+    const preOrderPrintHelper = (index, array) => {
+        if ( indexInRange(index) == true && tree[index] != undefined ) {
             // recurse left
             var leftIndex = leftChildIndex(index);
-            preOrderPrintHelper(leftIndex);
-            // print
-            console.log(tree[leftIndex].getValue(), ", ");
+            preOrderPrintHelper(leftIndex, array);
+
+            // handle duplicates
+            if (tree[index].noDuplicates() == true) {
+                array.push(tree[index].getValue());
+            }
+            else {
+                var duplicates = tree[index].getObjects();
+                for (let dupInd in duplicates) {
+                    array.push(tree[index].getValue());
+                }
+            }
+            
             // recurse right
             var rightIndex = rightChildIndex(index);
-            preOrderPrintHelper(rightIndex);
-            // print
-            console.log(tree[rightIndex].getValue(), ", ");
+            preOrderPrintHelper(rightIndex, array);
         }
     }
 
     const indexInRange = (index) => {
         if (index <= treeSize)
             return true;
-        else 
+        else {
             return false;
+        }
     }
 
     const leftChildIndex = (index) => {
@@ -133,7 +151,7 @@ function Tree1() {
         getRoot: getRoot,
         isEmpty: isEmpty,
         insert: insert,
-        preOrderPrint: preOrderPrint
+        print: print
     }
 }
 
