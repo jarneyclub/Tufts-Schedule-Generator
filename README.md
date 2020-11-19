@@ -1,6 +1,11 @@
 # Semester Schedule Generator with Tufts University courses
 Disclaimer: Personal project. Not endorsed by or affiliated with Tufts University. 
-Work in progress
+Work in progress!
+
+Features: 
+- A weekly schedule within a time interval given by user (WIP)
+- Link with an open source RateMyProfessor API (Future)
+
 
 ## Frontend (React JS)
 https://tufts-schedule.herokuapp.com
