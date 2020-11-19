@@ -13,3 +13,10 @@ catalogscraper = webscraperlib.webscraper(wait = 40 ) # estimated time in second
 master_list = catalogscraper.scrape_web()
 catalogscraper.write_json(master_list) # write data.txt with course catalog in JSON format
 ```
+
+# NOTES
+> Ignored edge cases
+1. Sometimes: there are multiple "courses" associated to a course ID.
+e.g. EN-0001 (has multiple "courses" but they are distinguished by section id)
+2. Sometimes: there are mutliple "settings" for a course
+e.g. same time but choices in which room to take it

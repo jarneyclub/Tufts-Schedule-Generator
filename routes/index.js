@@ -3,7 +3,9 @@ const router = express.Router();
 const fs = require('./fs/read_file.js');
 const Section = require('./utils/objects/classes/Section.js');
 const Course = require('./utils/objects/classes/Course.js');
-const objectUtils = require('./utils/objects/classes/helpers.js');
+const objectUtils = require('./utils/apiUtils.js');
+const testUtils = require('./utils/testUtils.js');
+
 var testResponse = "ok";
 
 /* courses_info is the JSON object with raw information on the course catalog */
@@ -16,7 +18,7 @@ fs.get_json(function (err,courses_info) {
         courseID : Course object
     }   
     */
-    var courseDictionary = objectUtils.initializeCourseDictionary(courses);
+    var courseDictionary = objectUtils.initializeCourseDictionary(courses_info);
 
     /*
     * Handle GET requests for list of all courses
@@ -186,10 +188,25 @@ fs.get_json(function (err,courses_info) {
         console.log("-------beginning test------");
         res.send("Test results:");
 
-        // get random courses
+        // get 5 random courses
+        var selectedCourses = [];
+        while (selectedCourses.length < 5) {
+            var randomCourseID = testUtils.getRandomCourse(courseDictionary).getCourseName();
+            // check if random course already exists in array
+            var doesntExist = true;
+            for (var i = 0; i < selectedCourses.length; i++ ) {
+                if (selectedCourses[i] == randomCourseID) {
+                    doesntExist = false;
+                }
+            }
+
+            if (doesntExist)
+                selectedCourses.push(randomCourseID);
+        }
+
+        console.log("selected courses: ", selectedCourses);
 
         // get a schedule from these courses
-
     })
 
 
