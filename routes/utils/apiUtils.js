@@ -48,6 +48,13 @@ function sectionWithinBounds(section, timeInterval) {
     }
 }
 
+function getNumberOfCourses(courses_info) {
+    var arrayCourseIDs = courses_info.courses_id_names;
+    coursesTotal = arrayCourseIDs.length;
+
+    return coursesTotal;
+}
+
 /** Finite map Course objects for basic data structure
  * @param {object} courses
  * @returns {object} finite map (key: courseID, value: Course object)
@@ -55,11 +62,6 @@ function sectionWithinBounds(section, timeInterval) {
 function initializeCourseDictionary(courses_info) {
     var dictionaryCourses = {}; // to return
     var courses = courses_info.courses;
-    
-    var arrayCourseIDs = courses_info.courses_id_names;
-    dictionaryCourses.courseIDs = arrayCourseIDs;
-    dictionaryCourses.courseNames = courses_info.courses_names;
-    dictionaryCourses.coursesTotal = arrayCourseIDs.length;
 
     // iterate over every course
     for (var courseID in courses) {
@@ -185,3 +187,4 @@ exports.doesNotOverlap = doesNotOverlap;
 exports.sectionWithinBounds = sectionWithinBounds;
 exports.initializeCourseDictionary = initializeCourseDictionary;
 exports.parseCourseInformation = parseCourseInformation;
+exports.getNumberOfCourses = getNumberOfCourses;

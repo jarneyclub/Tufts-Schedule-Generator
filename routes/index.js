@@ -19,7 +19,8 @@ fs.get_json(function (err,courses_info) {
     }   
     */
     var courseDictionary = objectUtils.initializeCourseDictionary(courses_info);
-
+    var __coursesTotal = objectUtils.getNumberOfCourses(courses_info);
+    var __courseIDs = courses_info.courses_id_names;
     /*
     * Handle GET requests for list of all courses
     * USAGE: http://localhost:7777/api/courses/list
@@ -32,6 +33,7 @@ fs.get_json(function (err,courses_info) {
         for (courseID in courseDictionary) {
             listCourses.push(courseID);
         }
+
         res.status(200);
         // formulate response body
         var response = {
@@ -192,7 +194,7 @@ fs.get_json(function (err,courses_info) {
         // get 5 random courses
         let selectedCourses = []; // array of course IDS
         while (selectedCourses.length < 5) {
-            let randomCourseID = testUtils.getRandomCourse(courseDictionary).getCourseName();
+            let randomCourseID = testUtils.getRandomCourse(courseDictionary, __courseIDs, __coursesTotal).getCourseName();
             // check if random course already exists in array
             let doesntExist = true;
             for (let i = 0; i < selectedCourses.length; i++ ) {

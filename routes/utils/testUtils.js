@@ -1,9 +1,10 @@
 // get random course
-const getRandomCourse = (courseDictionary) => {
-    var numberOfCourses = courseDictionary.coursesTotal;
+const getRandomCourse = (courseDictionary, courseIDs, coursesTotal) => {
+    var numberOfCourses = coursesTotal;
     var randomIndex = randomIntegerBetween(0, numberOfCourses-1);
     
-    var randomID = courseDictionary.courseIDs[randomIndex];
+    var randomID = courseIDs[randomIndex];
+    console.log(courseIDs)
     return courseDictionary[randomID];
 
 }
