@@ -2,7 +2,12 @@
 Disclaimer: Personal project. Not endorsed by or affiliated with Tufts University. 
 Work in progress
 
-## JSONRPC based web API that communicates course information and schedule recommendations
+## Frontend (React JS)
+https://tufts-schedule.herokuapp.com
+
+## Backend (node JS on Heroku)
+
+### JSONRPC based web API
 
 Base address: https://tufts-schedule.herokuapp.com/api
 
