@@ -1,14 +1,10 @@
+const Section = require('./classes/Section.js');
 /*
     Node definition for AVL tree
     !!!!
     To be used in tree that represents SECTIONS IN A SECTION TYPE
     - Not augmented
     !!!!
-
-    Augmentation:
-    1) list of duplicates
-    2) span of class period
-        span = max{ largest endTime , largest value in the subtree}
 
     Handling duplicates:
     - Section's with the same start times are appended in a list
@@ -24,21 +20,21 @@
 
 */
 
-function Node(sectionInput) {
+function Tree2Node(sectionInput) {
 
     var value = sectionInput.getStartTime();
     var span = sectionInput.getEndTime();
     /* array of duplicates that have the same value */
     var objects = [];
 
-    function getValue() {
+    const getValue = () => {
         return value;
     }
 
     /** store any object in objects
      * @param {any} object 
      */
-    function storeObject(object) {
+    const storeObject = (object) => {
         objects.push(object);
     }
 
@@ -46,14 +42,14 @@ function Node(sectionInput) {
      * O(1)
      * @returns {Array} array of objects
      */
-    function getObjects() {
+    const getObjects = (objects) => {
         return objects;
     }
 
     /**
      * @returns {Boolean} whether there are duplicates or not
      */
-    function noDuplicates() {
+    const noDuplicates = () => {
         if (objects.length == 1) {
             return true;
         }
@@ -62,7 +58,7 @@ function Node(sectionInput) {
         }
     }
 
-    function getSpan() {
+    const getSpan = () => {
         return span;
     }
 
@@ -76,3 +72,5 @@ function Node(sectionInput) {
         objects: objects
     }
 }
+
+module.exports = Tree2Node;

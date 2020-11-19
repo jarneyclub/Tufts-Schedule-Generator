@@ -6,34 +6,37 @@ const Section = require('./classes/Section.js');
     - Not augmented
     !!!!
 
-    Handling duplicates:
-    - Section's with the same start times are appended in a list
-
     USAGE:
-    Node Construction:
+    Node CONSTRUCTION:
         // assume sec is a Section object
         var newNode = new Node(sec);
-    Node comparison:
+    Node COMPARISON:
         if (node1.getValue() > node2.getValue())
-    Node duplicate section insertion
-        node.storeObject(sec)
-
+            ....
+    Node DUPLICATE HANDLING
+        let sec <- section to insert
+        if (sec.getStartTime() == existingNode.getValue()) {
+            existingNode.storeObject(sec);
+        }
 */
 
-function Node (sectionInput) {
+function Tree1Node(sectionInput) {
 
     var value = sectionInput.getStartTime();
+    var course = sectionInput.getCourseID();
+    
     /* array of duplicates that have the same value */
-    var objects = []; 
+    // elts are Section objects
+    var objects = [sectionInput];
 
-    function getValue() {
+    const getValue = () => {
         return value;
     }
 
     /** store any object in objects
      * @param {any} object 
      */
-    function storeObject(object) {
+    const storeObject = (object) => {
         objects.push(object);
     }
 
@@ -41,14 +44,14 @@ function Node (sectionInput) {
      * O(1)
      * @returns {Array} array of objects
      */
-    function getObjects() {
+    const getObjects = () => {
         return objects;
     }
 
     /**
      * @returns {Boolean} whether there are duplicates or not
      */
-    function noDuplicates() {
+    const noDuplicates = () => {
         if (objects.length == 1) {
             return true;
         }
@@ -66,3 +69,5 @@ function Node (sectionInput) {
         objects: objects
     }
 }
+
+module.exports = Tree1Node;

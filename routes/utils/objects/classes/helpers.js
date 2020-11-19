@@ -2,9 +2,9 @@ const Section = require('./Section.js');
 const Course = require('./Course.js');
 
 /** Check if two time intervals overlap
+ * Time Complexity: O(1) => one OR comparison of two inputs
  * @param {any} timeIntervalA [day of week, begin time, end time]
  * @param {any} timeIntervalB [day of week, begin time, end time]
- * Time Complexity: O(1) => one OR comparison of two inputs
  */
 function doesNotOverlap(timeIntervalA, timeIntervalB) {
     var dayA = timeIntervalA[0];
@@ -31,9 +31,10 @@ function doesNotOverlap(timeIntervalA, timeIntervalB) {
 }
 
 /** Check if a section's time period is within a time interval
+ * Time Complexity: O(1) => one OR comparison of two inputs
  * @param {Section} section Section object to range check
  * @param {[start, end]} timeInterval an array of integer of size 2
- * @returns 
+ * @returns {boolean} 
  */
 function sectionWithinBounds(section, timeInterval) {
     var begin = timeInterval[0];
@@ -108,4 +109,5 @@ function initializeCourseDictionary(courses) {
 }
 
 exports.doesNotOverlap = doesNotOverlap;
+exports.sectionWithinBounds = sectionWithinBounds;
 exports.initializeCourseDictionary = initializeCourseDictionary;
