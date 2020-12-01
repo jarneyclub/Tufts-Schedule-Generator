@@ -25,6 +25,10 @@ function Tree1Node(sectionInput) {
     var value = sectionInput.getStartTime();
     var course = sectionInput.getCourseID();
     
+    var left = null;
+    var right = null;
+    var height = 0;
+
     /* array of duplicates that have the same value */
     // elts are Section objects
     var objects = [sectionInput];
@@ -70,6 +74,9 @@ function Tree1Node(sectionInput) {
         getObjects: getObjects,
         noDuplicates: noDuplicates,
         getCourseID: getCourseID,
+        left: left,
+        right: right,
+        height: height,
         value: value,
         objects: objects
     }

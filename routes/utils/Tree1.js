@@ -1,4 +1,5 @@
 const sectionsNode = require('./objects/Tree1Node.js');
+const treeify = require('treeify');
 /*
     definition for Tree1
     Type: AVL Tree
@@ -7,6 +8,7 @@ const sectionsNode = require('./objects/Tree1Node.js');
     Note:
     - handles duplicates
     - takes sections as inputs ( converts to sectionsNode )
+    - implemented with "pointers"
 
     USAGE:
     
@@ -31,40 +33,57 @@ const sectionsNode = require('./objects/Tree1Node.js');
 function Tree1() {
 
     // 1-indexed
-    var tree = [null];
+    var root = null;
     var treeSize = 0;
     var courseID = "";
     var sectionType = "";
+
 
     //////////////////////////////////////////
     //                                      //
     //          Public Functions            //
     //                                      //
     //////////////////////////////////////////
+
     const getRoot = () => {
-        return tree[1];
+        return root;
     }
 
     const isEmpty = () => {
-        if (treeSize == 0 )
+        if (treeSize == 0)
             return true
-        else 
+        else
             return false
     }
 
     const insert = (section) => {
+        console.log("inserting node: ", section.getSectionName());
         courseID = section.getCourseID();
         sectionType = section.getSectionType();
 
         var startTime = section.getStartTime();
-        insertHelper(section, startTime, 1);
+        insertHelper(section, startTime, root, 0);
     }
 
-    const print = () => {
-        var printArray = [];
-        preOrderPrintHelper(1, printArray);
-
-        console.log("Course: ", courseID, " secType: ", sectionType, " tree: ", printArray);
+    const print = (option) => {
+        let sectionsArray = [];
+        if (option == "inorder") {
+            inOrderPrintHelper(root, sectionsArray);
+            let printArray = [];
+            for (let index in sectionsArray)
+                printArray.push(sectionsArray[index].getStartTime());
+            console.log("Course: ", courseID, " secType: ", sectionType, " tree: ", printArray);
+        }
+        else if (option == "inorderSecName") {
+            inOrderPrintHelper(root, sectionsArray);
+            let printArray = [];
+            for (let index in sectionsArray)
+                printArray.push(sectionsArray[index].getSectionName());
+            console.log("Course: ", courseID, " secType: ", sectionType, " tree: ", printArray);
+        }
+        else if (option == "tree") {
+            console.log(treeify.asTree({root}, true, true));
+        }
     }
 
 
@@ -80,77 +99,211 @@ function Tree1() {
      * @param {any} section
      * @param {any} index 
      */
-    const insertHelper = (section, startTime, index) => {
+    const insertHelper = (section, startTime, currNode, depth) => {
 
-        // insert a new Node as a leaf in tree
-        if (tree[index] == undefined) {
-            var node = new sectionsNode(section); // create sectionsNode
+        /* BST insertion start */
 
-            tree[index] = node; // insert leaf
-            treeSize++; // increment treeSize
+        // insert a new Node as a root
+        if (currNode == null) {
+            var newNode = new sectionsNode(section);
+            // inesrt root
+            if (root == null) {
+                root = newNode;
+            }
+            // check shape property and rotate as needed
+            treeSize++;
         }
         else {
-            // recurse into left subtree
-            if (tree[index].getValue() > startTime) {
-                var leftIndex = leftChildIndex(index); // get index of left child
-
-                insertHelper(section, startTime, leftIndex); // recurse
-            }
-            // recurse into right subtree
-            else if (tree[index].getValue() < startTime) {
-                var rightIndex = rightChildIndex(index); // get index of right child
-
-                insertHelper(section, startTime, rightIndex); // recurse
-            }
-            // value of current node is same as start time of section to insert
-            else
-                tree[index].storeObject(section); // handle duplicates
-        }
-    }
-    
-    const preOrderPrintHelper = (index, array) => {
-        if ( indexInRange(index) == true && tree[index] != undefined ) {
-            // recurse left
-            var leftIndex = leftChildIndex(index);
-            preOrderPrintHelper(leftIndex, array);
-
-            // handle duplicates
-            if (tree[index].noDuplicates() == true) {
-                array.push(tree[index].getValue());
-            }
-            else {
-                var duplicates = tree[index].getObjects();
-                for (let dupInd in duplicates) {
-                    array.push(tree[index].getValue());
+            // insert in left subtree
+            if (currNode.getValue() > startTime) {
+                if (currNode.left == null) {
+                    var newNode = new sectionsNode(section);
+                    currNode.left = newNode;
+                }
+                else {
+                    // recurse into left subtree
+                    insertHelper(section, startTime, currNode.left, depth + 1);
                 }
             }
+            // insert in right subtree
+            else if (currNode.getValue() < startTime) {
+                if (currNode.right == null) {
+                    var newNode = new sectionsNode(section);
+                    currNode.right = newNode;
+                }
+                else {
+                    // recurse into right subtree
+                    insertHelper(section, startTime, currNode.right, depth + 1);
+                }
+            }
+            // value of current node is same as start time of section to insert
+            else {
+                currNode.storeObject(section); // handle duplicates
+            }
+        }
+        /* BST insertion end */
+
+        /* AVL invariant maintenance start */
+        if (currNode != null) {
             
-            // recurse right
-            var rightIndex = rightChildIndex(index);
-            preOrderPrintHelper(rightIndex, array);
+            console.log("currNode: ", currNode.getObjects()[0].getSectionName());
+            
+            /* Balancing subtrees */
+            if (currNode.left != null)
+                console.log("balancing currNode.left: ", currNode.left.getObjects()[0].getSectionName());
+            currNode.left = balanceNode(currNode.left);
+            if (currNode.right != null)
+                console.log("balancing currNode.right: ", currNode.right.getObjects()[0].getSectionName());
+            currNode.right = balanceNode(currNode.right);
+
+            /* Updating Height */
+            currNode.height = max(getHeight(currNode.left), getHeight(currNode.right)) + 1;
         }
+        /* AVL invariant maintenance end */
     }
 
-    const indexInRange = (index) => {
-        if (index <= treeSize)
-            return true;
+    const balanceNode = (childNode) => {
+        let newNode = null;
+        
+        if (childNode != null) {
+
+            // childNode is left heavy
+            if (heightDiff(childNode) < -1) {
+                console.log("subtree is left heavy");
+                newNode = rightRotate(childNode);
+            }
+            // childNode is right heavy
+            else if (heightDiff(childNode) > 1) {
+                console.log("subtree is right heavy");
+                newNode = leftRotate(childNode);
+            }
+            // childNode is balanced
+            else {
+                newNode = childNode;
+            }
+
+            /* Updating Height */
+            newNode.height = max(getHeight(newNode.left), getHeight(newNode.right)) + 1;
+            
+            return newNode;
+        }
         else {
-            return false;
+            return newNode;
         }
     }
 
-    const leftChildIndex = (index) => {
-        return index * 2;
+
+    const leftRotate = (currNode) => {
+        try {
+            console.log("LEFT ROTATING node: ", currNode.getObjects()[0].getSectionName());
+            let rightLeftSubtree = currNode.right.left;
+            let rightSubtree = currNode.right;
+            let newNode = null;
+
+            currNode.right = rightLeftSubtree;
+            rightSubtree.left = currNode;
+            newNode = rightSubtree;
+
+            console.log("newNode: ", newNode.getObjects()[0].getSectionName());
+            if (newNode.left != null)
+                console.log("newNode.left: ", newNode.left.getObjects()[0].getSectionName());
+            if (newNode.right != null)
+                console.log("newNode.right: ", newNode.right.getObjects()[0].getSectionName());
+            
+            return newNode;
+
+        }
+        catch (e) {
+            console.log("Error in leftRotate. Details: ");
+            console.log(e);
+            console.log("currNode: ", currNode.getObjects()[0].getSectionName());
+            console.log("currNode.left: ", currNode.left.getObjects()[0].getSectionName());
+            console.log("currNode.right: ", currNode.right.getObjects()[0].getSectionName());
+        }
+
+    }
+    const rightRotate = (currNode) => {
+        try {
+            console.log("RIGHT ROTATING node: ", currNode.getObjects()[0].getSectionName());
+            let leftRightSubtree = currNode.left.right;
+            let leftSubtree = currNode.left;
+            let newNode = null;
+
+            currNode.left = leftRightSubtree
+            leftSubtree.right = currNode;
+            newNode = leftSubtree;
+
+            console.log("newNode: ", newNode.getObjects()[0].getSectionName());
+            if (newNode.left != null)
+                console.log("newNode.left: ", newNode.left.getObjects()[0].getSectionName());
+            if (newNode.right != null)
+                console.log("newNode.right: ", newNode.right.getObjects()[0].getSectionName());
+
+            return newNode;
+        }
+        catch(e) {
+            console.log("Error in rightRotate. Details: ");
+            console.log(e);
+            console.log("currNode: ", currNode.getObjects()[0].getSectionName());
+            console.log("currNode.left: ", currNode.left.getObjects()[0].getSectionName());
+            console.log("currNode.right: ", currNode.right.getObjects()[0].getSectionName());
+        }
     }
 
-    const rightChildIndex = (index) => {
-        return index * 2 + 1;
+    const max = (a,b) => {
+        if ( a <= b )
+            return b;
+        else 
+            return a;
+    }
+    
+    const getHeight = (node) => {
+        if (node != null)
+            return node.height;
+        else
+            return -1;
+    }
+
+    const heightDiff = (currNode) => {
+        var leftHeight = getHeight(currNode.left);
+        var rightHeight = getHeight(currNode.right);
+        return rightHeight - leftHeight;
+    }
+
+    const levelOrderPrintHelper = (currNode, array, level) => {
+        if (currNode == null) {
+            // push "null" to array at current level
+            array[level].push(null)
+        }
+        else if (currNode == undefined) {
+            return;
+        }
+        else {
+            array.push(currNode)
+        }
+    }
+
+    const inOrderPrintHelper = (currNode, array) => {
+        if (currNode != null) {
+
+            inOrderPrintHelper(currNode.left, array); // recurse to left subtree
+
+            let duplicates = currNode.getObjects();
+            for (let index in duplicates) {
+                array.push(duplicates[index]);
+            }
+
+            inOrderPrintHelper(currNode.right, array); // recurse to right subtree
+
+        }
     }
 
     return {
         getRoot: getRoot,
         isEmpty: isEmpty,
         insert: insert,
+        leftRotate: leftRotate,
+        rightRotate: rightRotate,
         print: print
     }
 }
