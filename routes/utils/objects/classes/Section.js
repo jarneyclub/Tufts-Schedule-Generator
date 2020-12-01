@@ -25,7 +25,7 @@ function Section ( inputCourseID, inputSectionName, inputSectionType, inputTimes
     const daysOfWeek = inputTimes[0];
     // NOTE: time = 0 is 12AM
     const timeBegin = inputTimes[1][0];
-    const timeEnd = inputTimes[1][0];
+    const timeEnd = inputTimes[1][1];
 
     const location = inputLocation;
     const city = inputCity;
