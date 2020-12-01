@@ -6,6 +6,7 @@ const Section = require('./utils/objects/classes/Section.js');
 const Course = require('./utils/objects/classes/Course.js');
 const Tree1 = require('./utils/Tree1.js');
 
+const phase0 = require('./utils/phase0Utils.js');
 const phase1 = require('./utils/phase1Utils.js');
 const objectUtils = require('./utils/apiUtils.js');
 const testUtils = require('./utils/testUtils.js');
@@ -190,61 +191,24 @@ fs.get_json(function (err,courses_info) {
         console.log("-------beginning test------");
         var start = Date.now();
         /* SELECT RANDOM COURSES AND SOME MANUALLY */
+        // testUtils.testPhase1(courseDictionary, __courseIDs, __coursesTotal);
 
-        // get 5 random courses
-        let selectedCourses = []; // array of course IDS
-        while (selectedCourses.length < 5) {
-            let randomCourseID = testUtils.getRandomCourse(courseDictionary, __courseIDs, __coursesTotal).getCourseName();
-            // check if random course already exists in array
-            let doesntExist = true;
-            for (let i = 0; i < selectedCourses.length; i++ ) {
-                if (selectedCourses[i] == randomCourseID) {
-                    doesntExist = false;
-                }
-            }
+        /* Test phase 0 with integers */
+        // phase0.phase0(mapCourseToSectionType, function() {
+            // console.log(combinationRecords);
+        // })
 
-            if (doesntExist)
-                selectedCourses.push(randomCourseID);
-        }
+        // phase0.testPhase0();
         
-        // manual selection of course
-        selectedCourses.push("CHEM-0011");
-
-        console.log("selected courses: ", selectedCourses);
-         /* e.g.
-            mapCourseToSectionType: {
-                'SPN-0032': { Lecture: [[Object]] },
-                'AMER-0186': { Lecture: [[Object], [Object]] },
-                'TPS-0161': { Lecture: [[Object]] },
-                'NUTR-0211': { Lecture: [] },
-                'PHY-0293': { Lecture: [[Object]] }
-            }
-        */
-
-        let mapCourseToSectionType = phase1.mapCoursesToSectionTypes(courseDictionary, selectedCourses);
+        testUtils.testTree1();
         
-        /* let mapTree1Courses = {
-            COURSEID: {
-                "Lecture": Tree1()
-            },
-            COURSEID2: {
-                
-            },
-            etc.
-        } */
-        let mapTree1Courses = phase1.mapCoursesToTree1s(mapCourseToSectionType);
-
-        console.log("phase 1 tree mapping: ", mapTree1Courses);
-
-        for (let key in mapTree1Courses) {
-            for (let secType in mapTree1Courses[key]) {
-                mapTree1Courses[key][secType].print();
-            }
-        }
         var end = Date.now();
         var difference = end - start;
         var executionTime = "executionTime: "  + difference + "ms";
+
+
         res.send("Test results:" + executionTime);
+        
         console.log("---ending test-----", "\n");
     })
 
