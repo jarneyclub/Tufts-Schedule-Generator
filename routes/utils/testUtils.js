@@ -81,62 +81,130 @@ exports.testPhase1 = (courseDictionary, __courseIDs, __coursesTotal) => {
 
 }
 
-const testTree1 = () => {
-    console.log("### Testing Tree1 ###");
-    /* BASIC BST INVARIANT TESTING */
+const arrayEquals = (a,b) => {
+    return Array.isArray(a) &&
+        Array.isArray(b) &&
+        a.length === b.length &&
+        a.every((val, index) => val === b[index]);
+}
+
+const testLeftInsertion = () => {
+    console.log("--- unit test: ( LEFT INSERTION ) ---")
+    /* INITIALIZE TREE */
+
     let tree = new Tree1();
     let testSections = [];
-
     testSections.push(new Section("Test", "A", "testSec", [[1, 3], [7, 15]], "test location", "test city", ["test instructor"]));
-    testSections.push(new Section("Test", "E", "testSec", [[1, 3], [6, 15]], "test location", "test city", ["test instructor"]))
-    testSections.push(new Section("Test", "D", "testSec", [[1, 3], [4, 15]], "test location", "test city", ["test instructor"]))
-    testSections.push(new Section("Test", "B", "testSec", [[1, 3], [5, 15]], "test location", "test city", ["test instructor"]));
-    testSections.push(new Section("Test", "C", "testSec", [[1, 3], [9, 15]], "test location", "test city", ["test instructor"]))
-    testSections.push(new Section("Test", "G", "testSec", [[1, 3], [10, 15]], "test location", "test city", ["test instructor"]))
-    testSections.push(new Section("Test", "F", "testSec", [[1, 3], [8, 15]], "test location", "test city", ["test instructor"]))
+    testSections.push(new Section("Test", "B", "testSec", [[1, 3], [6, 15]], "test location", "test city", ["test instructor"]));
+    // testSections.push(new Section("Test", "C", "testSec", [[1, 3], [5, 15]], "test location", "test city", ["test instructor"]));
+    // testSections.push(new Section("Test", "D", "testSec", [[1, 3], [4, 15]], "test location", "test city", ["test instructor"]));
 
     /* insert sections */
     for (let index in testSections)
         tree.insert(testSections[index]);
-    
-    console.log("Test BST Invariant: ");
-    tree.print("inorder");
-    /* END BASIC BST INVARIANT TESTING */
-    
-    /* TEST LEFT ROTATION */
-    console.log("Test AVL leftRotate: ");
 
-    testSections = [];
-    tree = new Tree1();
+    /* END init tree */
+
+    let output = tree.print("array");
+    let answer = [undefined, 'A', 'B', null, null, null]
+    if (arrayEquals(output, answer))
+        console.log("Success")
+    else {
+        console.log("Failure: ")
+        console.log("Expected print: ", answer);
+        console.log("Output: ", output);
+    }
+
+    console.log("--- end: ( LEFT INSERTION ) ---");
+}
+
+const testRightInsertion = () => {
+    console.log("--- unit test: ( RIGHT INSERTION ) ---")
+    /* INITIALIZE TREE */
+
+    let tree = new Tree1();
+    let testSections = [];
     testSections.push(new Section("Test", "A", "testSec", [[1, 3], [7, 15]], "test location", "test city", ["test instructor"]));
-    testSections.push(new Section("Test", "B", "testSec", [[1, 3], [5, 15]], "test location", "test city", ["test instructor"]));
-    testSections.push(new Section("Test", "C", "testSec", [[1, 3], [9, 15]], "test location", "test city", ["test instructor"]))
-    testSections.push(new Section("Test", "D", "testSec", [[1, 3], [10, 15]], "test location", "test city", ["test instructor"]))
-    testSections.push(new Section("Test", "E", "testSec", [[1, 3], [11, 15]], "test location", "test city", ["test instructor"]))
+    testSections.push(new Section("Test", "B", "testSec", [[1, 3], [8, 15]], "test location", "test city", ["test instructor"]));
+    // testSections.push(new Section("Test", "C", "testSec", [[1, 3], [5, 15]], "test location", "test city", ["test instructor"]));
+    // testSections.push(new Section("Test", "D", "testSec", [[1, 3], [4, 15]], "test location", "test city", ["test instructor"]));
+
     /* insert sections */
     for (let index in testSections)
         tree.insert(testSections[index]);
-    /*
-            A
-        B      C
-                   D
-                        E
-    */
+
+    /* END init tree */
+
+    let output = tree.print("array");
+    let answer = [undefined, 'A', null, 'B', null, null]
+    if (arrayEquals(output, answer))
+        console.log("Success");
+    else {
+        console.log("Failure: ")
+        console.log("Expected print: ", answer);
+        console.log("Output: ", output);
+        tree.print("tree");
+    }
+
+    console.log("--- end : ( RIGHT INSERTION ) ---")
+}
+
+const testBSTInvariant = () => {
+    console.log("--- unit test: ( BST INVARIANT ) ---")
+    /* INITIALIZE TREE */
+
+    let tree = new Tree1();
+    let testSections = [];
+    testSections.push(new Section("Test", "A", "testSec", [[1, 3], [7, 15]], "test location", "test city", ["test instructor"]));
+    testSections.push(new Section("Test", "B", "testSec", [[1, 3], [8, 15]], "test location", "test city", ["test instructor"]));
+    testSections.push(new Section("Test", "C", "testSec", [[1, 3], [6, 15]], "test location", "test city", ["test instructor"]));
+    // testSections.push(new Section("Test", "D", "testSec", [[1, 3], [4, 15]], "test location", "test city", ["test instructor"]));
+
+    /* insert sections */
+    for (let index in testSections)
+        tree.insert(testSections[index]);
+
+    /* END init tree */
+
+    let output = tree.print("array");
+    let answer = [undefined, 'A', 'C', 'B', null, null, null, null];
+    console.log(output);
+    if (arrayEquals(output, answer))
+        console.log("Success");
+    else {
+        console.log("Failure: ")
+        console.log("Expected print: ", answer);
+        console.log("Output: ", output);
+    }
+    console.log("--- end : ( BST INVARIANT ) ---")
+}
+
+const testLeftRotation = () => {
+    console.log("--- unit test: ( AVL Tree LEFT ROTATION ) ---")
+    console.log("--- end : ( AVL Tree LEFT ROTATION ) ---")
+}
+
+const testLeftRotationRoot = () => {
+    console.log("--- unit test: ( AVL Tree LEFT ROTATION on ROOT ) ---")
+    console.log("--- end : ( AVL Tree LEFT ROTATION on ROOT ) ---")
+}
+
+const testRightRotation = () => {
+    console.log("--- unit test: ( AVL Tree RIGHT ROTATION ) ---")
+    console.log("--- end : ( AVL Tree RIGHT ROTATION ) ---")
+}
+
+const testRightRotationRoot = () => {
+    console.log("--- unit test: ( AVL Tree RIGHT ROTATION on ROOT ) ---")
+    console.log("--- end : ( AVL Tree RIGHT ROTATION on ROOT ) ---")
+}
 
 
-    console.log("BST Invariant: ");
-    console.log("Expected inorder print: [B,A,C,D,E] ");
-    tree.print("inorderSecName");
-
-    console.log("Expected node: D");
-    let root = tree.getRoot();
-    console.log(root.right.getObjects()[0].getSectionName());
-    tree.print('tree');
-
-    /* test right rotation */
-    // tree.rightRotate(root.right);
-
-    tree.print("inorderSecName");
+const testTree1 = () => {
+    console.log("### Testing TREE 1 ###");
+    testLeftInsertion();
+    testRightInsertion();
+    testBSTInvariant();
     
 }
 exports.testTree1 = testTree1;

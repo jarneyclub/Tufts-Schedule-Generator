@@ -57,16 +57,16 @@ function Tree1() {
     }
 
     const insert = (section) => {
-        console.log("inserting node: ", section.getSectionName());
         courseID = section.getCourseID();
         sectionType = section.getSectionType();
 
-        var startTime = section.getStartTime();
-        insertHelper(section, startTime, root, 0);
+        let startTime = section.getStartTime();
+        root = insertHelper(section, startTime, root, 0);
     }
 
     const print = (option) => {
         let sectionsArray = [];
+
         if (option == "inorder") {
             inOrderPrintHelper(root, sectionsArray);
             let printArray = [];
@@ -83,6 +83,11 @@ function Tree1() {
         }
         else if (option == "tree") {
             console.log(treeify.asTree({root}, true, true));
+        }
+        else if (option == "array") {
+            let treeArray = [undefined];
+            treeArrayHelper(root, 1, treeArray);
+            return treeArray;
         }
     }
 
@@ -103,93 +108,67 @@ function Tree1() {
 
         /* BST insertion start */
 
-        // insert a new Node as a root
+        // BASE CASE: input node is null, start unraveling recursion
         if (currNode == null) {
             var newNode = new sectionsNode(section);
-            // inesrt root
-            if (root == null) {
-                root = newNode;
-            }
-            // check shape property and rotate as needed
-            treeSize++;
+
+            treeSize++; 
+            
+            return newNode;
         }
         else {
             // insert in left subtree
             if (currNode.getValue() > startTime) {
-                if (currNode.left == null) {
-                    var newNode = new sectionsNode(section);
-                    currNode.left = newNode;
-                }
-                else {
-                    // recurse into left subtree
-                    insertHelper(section, startTime, currNode.left, depth + 1);
-                }
+
+                currNode.left = insertHelper(section, startTime, currNode.left, depth + 1);
             }
             // insert in right subtree
             else if (currNode.getValue() < startTime) {
-                if (currNode.right == null) {
-                    var newNode = new sectionsNode(section);
-                    currNode.right = newNode;
-                }
-                else {
-                    // recurse into right subtree
-                    insertHelper(section, startTime, currNode.right, depth + 1);
-                }
+
+                currNode.right = insertHelper(section, startTime, currNode.right, depth + 1);            
             }
-            // value of current node is same as start time of section to insert
+            // currNode.getValue() == startTime
             else {
                 currNode.storeObject(section); // handle duplicates
             }
+
         }
         /* BST insertion end */
 
         /* AVL invariant maintenance start */
-        if (currNode != null) {
-            
-            console.log("currNode: ", currNode.getObjects()[0].getSectionName());
-            
-            /* Balancing subtrees */
-            if (currNode.left != null)
-                console.log("balancing currNode.left: ", currNode.left.getObjects()[0].getSectionName());
-            currNode.left = balanceNode(currNode.left);
-            if (currNode.right != null)
-                console.log("balancing currNode.right: ", currNode.right.getObjects()[0].getSectionName());
-            currNode.right = balanceNode(currNode.right);
 
-            /* Updating Height */
-            currNode.height = max(getHeight(currNode.left), getHeight(currNode.right)) + 1;
-        }
+        currNode.height = max(getHeight(currNode.left), getHeight(currNode.right)) + 1;        
+
+        currNode = balanceNode(currNode);
+
         /* AVL invariant maintenance end */
+
+        return currNode;
     }
 
-    const balanceNode = (childNode) => {
-        let newNode = null;
-        
-        if (childNode != null) {
+    /** Balance a given AVL Tree node
+     * Callers: insertHelper
+     * @param {any} currNode will always be != null 
+     * @returns 
+     */
+    const balanceNode = (currNode) => {
 
-            // childNode is left heavy
-            if (heightDiff(childNode) < -1) {
-                console.log("subtree is left heavy");
-                newNode = rightRotate(childNode);
-            }
-            // childNode is right heavy
-            else if (heightDiff(childNode) > 1) {
-                console.log("subtree is right heavy");
-                newNode = leftRotate(childNode);
-            }
-            // childNode is balanced
-            else {
-                newNode = childNode;
-            }
+        // currNode is left heavy
+        if (heightDiff(currNode) < -1) {
 
-            /* Updating Height */
-            newNode.height = max(getHeight(newNode.left), getHeight(newNode.right)) + 1;
-            
-            return newNode;
+            currNode = rightRotate(currNode);
         }
+        // currNode is right heavy
+        else if (heightDiff(currNode) > 1) {
+
+            currNode = leftRotate(currNode);
+        }
+        // currNode is balanced
         else {
-            return newNode;
+            return currNode;
         }
+
+        return currNode;
     }
 
 
@@ -203,13 +182,16 @@ function Tree1() {
             currNode.right = rightLeftSubtree;
             rightSubtree.left = currNode;
             newNode = rightSubtree;
+            
+            // Note: newNode.left is always != null because it switched with what is now newNode
+            newNode.left.height = max(getHeight(newNode.left.left), getHeight(newNode.left.right)) + 1;
 
             console.log("newNode: ", newNode.getObjects()[0].getSectionName());
             if (newNode.left != null)
                 console.log("newNode.left: ", newNode.left.getObjects()[0].getSectionName());
             if (newNode.right != null)
                 console.log("newNode.right: ", newNode.right.getObjects()[0].getSectionName());
-            
+
             return newNode;
 
         }
@@ -232,6 +214,9 @@ function Tree1() {
             currNode.left = leftRightSubtree
             leftSubtree.right = currNode;
             newNode = leftSubtree;
+            
+            // Note: newNode.right is always != null because it switched with what is now newNode
+            newNode.right.height = max(getHeight(newNode.right.left), getHeight(newNode.right.right)) + 1;
 
             console.log("newNode: ", newNode.getObjects()[0].getSectionName());
             if (newNode.left != null)
@@ -270,17 +255,18 @@ function Tree1() {
         return rightHeight - leftHeight;
     }
 
-    const levelOrderPrintHelper = (currNode, array, level) => {
+    const treeArrayHelper = (currNode, index, treeArray) => {
         if (currNode == null) {
-            // push "null" to array at current level
-            array[level].push(null)
-        }
-        else if (currNode == undefined) {
+            treeArray[index] = null;
+
             return;
         }
-        else {
-            array.push(currNode)
-        }
+
+        treeArray[index] = currNode.getObjects()[0].getSectionName();
+        // go to left subtree
+        treeArrayHelper(currNode.left, 2*index, treeArray);
+        // go to right subtree
+        treeArrayHelper(currNode.right, 2 * index + 1, treeArray);
     }
 
     const inOrderPrintHelper = (currNode, array) => {
@@ -302,8 +288,6 @@ function Tree1() {
         getRoot: getRoot,
         isEmpty: isEmpty,
         insert: insert,
-        leftRotate: leftRotate,
-        rightRotate: rightRotate,
         print: print
     }
 }
