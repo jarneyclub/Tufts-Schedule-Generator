@@ -29,10 +29,10 @@ app.use('/api', routes);
 
 // divert all other routing to react app
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname + '/../frontend/build/index.html'));
+  res.sendFile(path.join(__dirname + '/frontend/build/index.html'));
 });
-app.use('/static', express.static(path.join(__dirname, "/../frontend/build/static")));
-app.use('/manifest.json', express.static(path.join(__dirname, "/../frontend/build", "manifest.json")))
+app.use('/static', express.static(path.join(__dirname, "/frontend/build/static")));
+app.use('/manifest.json', express.static(path.join(__dirname, "/frontend/build", "manifest.json")))
 
 //export and start the site in start.js
 module.exports = app;
