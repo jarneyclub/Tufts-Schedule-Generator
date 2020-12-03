@@ -1,0 +1,24 @@
+#course_selection_prompt {
+    background-color: #EAE6E5;
+    height: 500px;
+    width: 500px;
+    border-radius: 10px;
+}
+
+#course_form {
+    position:relative;
+    top: 5px;
+    width: 150px;
+    height: 40px;
+    font-size:30px;
+    margin-left: 10px;
+}
+
+#form_submit {
+    width: 60px;
+    height: 40px;
+}
+
+#form_complete{
+    position: relative;
+}

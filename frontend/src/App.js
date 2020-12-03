@@ -1,12 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Form from "./components/views/form.js"
+import Homepage from "./components/Homepage.js";
 
-function App() {
-  return (
-    <div className="App">
-      Test
-    </div>
-  );
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+
+export default class App extends React.Component {
+
+    render() {
+        //return <Form/>;
+        return <Homepage/>;
+    }
 }
-
-export default App;
