@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Test Schedulemaker backend
+        </title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div id = "queryIndividualCourse">
+            <div>
+                Testing API query for single course:
+                <input class = "individual" id="courseName" type="text" placeholder="COMP-0015">
+                <button class = "individual" id="querySingle">GET</button>
+            </div>
+            <div id = "queryIndividualCourseResponse">
+                <div class = "individual" id = "courseName">
+
+                </div>
+                <div class = "individual" id = "courseSectionTypes">
+
+                </div>
+                <div class = "individual" id = "executionTime">
+
+                </div>
+            </div>
+        </div>
+        <div id = "courseForm">
+                Choose your courses for next semester
+                <input id = "courseName" type = "text" placeholder="COMP-0015">
+                <input type = "submit" onclick = "addCourse();">
+        </div>
+        <div class = "coursesChosen" id = "coursesChosen">
+            <input type="submit" onclick="getCoursesInfo();">
+        </div>
+        <div class = "coursesInfo">
+
+        </div>
+    </body>
+    <script>
+        var listCourses = [];
+        var REACT_APP_API_URL = "https://tuftsschedulerapi.herokuapp.com"
+        
+        function addCourse() {
+            // the element in which to append chosen courses
+            var coursesChosen = document.getElementsByClassName("coursesChosen");
+            // get the name of chosen courses
+            var courseNameInput = document.getElementById("courseName");
+            var courseName = courseNameInput.value;
+            
+            // create a new list element and append to coursesChosen
+            var courseNew = document.createElement("li");
+            courseNew.innerHTML = courseName;
+            coursesChosen[0].appendChild(courseNew);
+            // append courseName to listCourses global var
+            listCourses.push(courseName);
+
+            // refresh course name input
+            courseNameInput.value = "";
+        }
+
+        async function getCoursesInfo() {
+            for (var index in listCourses) {
+                var courseInfo = await getCourseInfo(listCourses[index]);
+                // the element in which to append info of chosen courses
+                var coursesInfo = document.getElementsByClassName("coursesInfo");
+                // create a new list element and append to coursesInfo
+                var courseNew = document.createElement("li");
+                courseNew.innerHTML = courseInfo;
+                
+                coursesInfo[0].appendChild(courseNew);
+            }
+        }
+
+        /* get course information from API */
+        /* expected JSON 
+            {
+                course: {course name},
+                info {
+                    Lecture: { list of lectures.. e.g.
+                        instructors: [list of instructors],
+                        section_name: "name of section",
+                        settings: {
+                            city: "city",
+                            "location": "specific building/room",
+                            "times": {
+                                0: [begin time in int, end time in int],
+                                ...
+                            }
+                        }
+                    },
+                    Laboratory: { list of labs },
+                    . . . dictionary all section types,
+                    section_types: [list of secion types to expect]
+                }
+            }
+        */
+        async function getCourseInfo(courseName) {
+            var response;
+            await $.ajax({
+                url : REACT_APP_API_URL + "/course" + "/?course=" + courseName,
+                "method": "GET"
+            }).done(function (data) {
+                console.log("received data: ", data);
+                response = data;
+            })
+
+            return response.info;
+        }
+
+        var getIndividualCourse = document.getElementById("querySingle");
+        getIndividualCourse.addEventListener("click", function() {
+            var courseName = $(".individual").find("#courseName").val();
+            console.log(courseName);
+        })
+
+    </script>
+</html>
