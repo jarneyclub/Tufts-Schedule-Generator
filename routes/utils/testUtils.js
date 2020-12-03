@@ -181,6 +181,7 @@ const testBSTInvariant = () => {
 
 const testLeftRotation = () => {
     console.log("--- unit test: ( AVL Tree LEFT ROTATION ) ---")
+    
     console.log("--- end : ( AVL Tree LEFT ROTATION ) ---")
 }
 
