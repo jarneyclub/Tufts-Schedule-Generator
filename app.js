@@ -28,11 +28,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api', routes);
 
 // divert all other routing to react app
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname + '/../frontend/build/index.html'));
+// app.get('/', (req, res) => {
+  // res.sendFile(path.join(__dirname + '/frontend/build/index.html'));
+// });
+// app.use('/', express.static(path.join(__dirname, "/frontend/build")))
+// app.use('/static', express.static(path.join(__dirname, "/frontend/build/static")));
+// app.use('/manifest.json', express.static(path.join(__dirname, "/frontend/build", "manifest.json")))
+
+app.use(express.static(__dirname + "/frontend/build")); //
+app.get("/", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "/frontend/build", index.html)); // <- try "index.html"
 });
-app.use('/static', express.static(path.join(__dirname, "/../frontend/build/static")));
-app.use('/manifest.json', express.static(path.join(__dirname, "/../frontend/build", "manifest.json")))
 
 //export and start the site in start.js
 module.exports = app;
