@@ -1,6 +1,6 @@
 import React from 'react';
-import Form from "./components/views/form.js"
 import Homepage from "./components/Homepage.js";
+import Schedule from "./components/Schedule.js";
 
 import {
     BrowserRouter as Router,
@@ -13,6 +13,19 @@ export default class App extends React.Component {
 
     render() {
         //return <Form/>;
-        return <Homepage/>;
+        return (
+            <div>
+                {/* A <Switch> looks through its children <Route>s and
+        renders the first one that matches the current URL. */}
+                <Switch>
+                    <Route path="/schedule">
+                        <Schedule />
+                    </Route>
+                    <Route path="/">
+                        <Homepage />
+                    </Route>
+                </Switch>
+            </div>
+        );
     }
 }

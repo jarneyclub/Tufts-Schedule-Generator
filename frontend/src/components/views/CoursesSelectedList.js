@@ -1,6 +1,9 @@
 import React from 'react';
 import style from './styles/CoursesSelectedList.module.css';
 import CourseSelected from './CourseSelected.js';
+import {
+    Link
+} from "react-router-dom";
 class CoursesSelectedList extends React.Component {
     constructor(props) {
         super(props);
@@ -15,7 +18,9 @@ class CoursesSelectedList extends React.Component {
                         return <CourseSelected courseID = {courseID}></CourseSelected>
                     })}
                 </div>
-                <button onClick = {this.props.handleGenerate} >Generate</button>
+                <Link className = {style.button} onClick = {this.props.handleGenerate} to = "/schedule">
+                    Schedule
+                </Link>
             </div>
         );
     }
