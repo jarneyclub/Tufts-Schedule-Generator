@@ -1,4 +1,6 @@
 # Backend Features Outline
+## Notes:
+Time is represented in integer
 
 ## Feature:  Generating a weekly schedule from chosen courses with possible user customization. 
 User customization:
@@ -42,7 +44,8 @@ Context:
 > 2. AVL: For a given node n, the heights of n's left and right subtrees does not differ by more than 1
 
 #### Tree_2 (Augmented AVL Tree)
-- Nodes have keys that are existing *starting times* of each section. 
+- Represent a week of Classes, each node represents a class
+- Nodes have keys that are existing *starting times* of each section mapped to a WEEK. 
 - Nodes are augmented with *spans*
 - Node n's *span* = max{n.endTime, latest endTime in right subtree}
 > Invariants

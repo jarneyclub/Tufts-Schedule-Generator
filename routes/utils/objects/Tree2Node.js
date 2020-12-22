@@ -1,13 +1,12 @@
-const Section = require('./classes/Section.js');
 /*
-    Node definition for AVL tree
+    Node definition for TREE2
     !!!!
-    To be used in tree that represents SECTIONS IN A SECTION TYPE
-    - Not augmented
+    To be used in AVL tree that represents a week of Classes, with each node representing a Class
+    - Augmented
     !!!!
 
     Handling duplicates:
-    - Section's with the same start times are appended in a list
+    - THIS DOES NOT HANDLE DUPLICATES AS TREE2'S INVARIANT IS NO OVERLAPS
 
     USAGE:
     Node Construction:
@@ -20,56 +19,57 @@ const Section = require('./classes/Section.js');
 
 */
 
-function Tree2Node(sectionInput) {
+/**
+ * 
+ * 
+ * @param {any} inputObject 
+ * @param {any} inputName 
+ * @param {any} inputValue 
+ * @param {any} inputAugmentation 
+ * @returns 
+ */
+function Tree2Node(inputObject, inputName, inputValue, inputAugmentation) {
 
-    var value = sectionInput.getStartTime();
-    var span = sectionInput.getEndTime();
-    /* array of duplicates that have the same value */
-    var objects = [];
+    var object = inputObject;
+    var value = inputValue;
+    var span = inputAugmentation;
+    var name = inputName;
+    var height = 0;
+    var left = null;
+    var right = null;
+
 
     const getValue = () => {
         return value;
     }
 
-    /** store any object in objects
-     * @param {any} object 
-     */
-    const storeObject = (object) => {
-        objects.push(object);
-    }
-
     /**
-     * O(1)
-     * @returns {Array} array of objects
+     * @returns {object} stored object
      */
-    const getObjects = (objects) => {
-        return objects;
-    }
-
-    /**
-     * @returns {Boolean} whether there are duplicates or not
-     */
-    const noDuplicates = () => {
-        if (objects.length == 1) {
-            return true;
-        }
-        else {
-            return false;
-        }
+    const getObject = () => {
+        return object;
     }
 
     const getSpan = () => {
         return span;
     }
 
+    const getName = () => {
+        return name;
+    }
+
+
     return {
         getValue: getValue,
-        storeObject: storeObject,
-        getObjects: getObjects,
+        getObject: getObject,
         getSpan: getSpan,
-        noDuplicates: noDuplicates,
+        getName: getName,
+        getValue: getValue,
+        left: left, 
+        right: right,
+        height: height,
         value: value,
-        objects: objects
+        name: name
     }
 }
 
