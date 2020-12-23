@@ -1,7 +1,7 @@
-const Tree1 = require('./Tree1.js');
-const Section = require('./objects/classes/Section.js');
-const phase0 = require('./phase0Utils.js');
-const phase1 = require('./phase1Utils.js');
+const Tree1 = require('../Tree1.js');
+const Section = require('../objects/classes/Section.js');
+const phase0 = require('../phase0Utils.js');
+const phase1 = require('../phase1Utils.js');
 
 // get random course
 const getRandomCourse = (courseDictionary, courseIDs, coursesTotal) => {

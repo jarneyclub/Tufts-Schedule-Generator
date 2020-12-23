@@ -1,6 +1,6 @@
-const Tree1 = require('./Tree1.js');
-const Section = require('./objects/classes/Section.js');
-const Class = require('./objects/classes/Class.js');
+const Tree1 = require('../Tree1.js');
+const Section = require('../objects/classes/Section.js');
+const Class = require('../objects/classes/Class.js');
 
 const arrayEquals = (a, b) => {
     return Array.isArray(a) &&
