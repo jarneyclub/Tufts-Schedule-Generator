@@ -2,7 +2,7 @@ const Section = require('./objects/classes/Section.js');
 const Course = require('./objects/classes/Course.js');
 const Tree1 = require('./Tree1.js');
 const Tree2 = require('./Tree2.js');
-
+const memwatch = require('@airbnb/node-memwatch');
 /**
  * @param {mapCoursesToSectionTypes} map 
  * @returns {object}
