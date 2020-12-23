@@ -9,7 +9,7 @@ const Tree1 = require('./utils/Tree1.js');
 const phase0 = require('./utils/phase0Utils.js');
 const phase1 = require('./utils/phase1Utils.js');
 const objectUtils = require('./utils/apiUtils.js');
-const testUtils = require('./utils/testUtils.js');
+const testUtils = require('./utils/tests/testUtils.js');
 
 /* courses_info is the JSON object with raw information on the course catalog */
 fs.get_json(function (err,courses_info) {
