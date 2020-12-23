@@ -27,7 +27,7 @@ Context:
 - SEC is inserted into Tree_2's that they belong in (given user preferences) -> Moving to phase 2 
 
 ### Phase 2 Generating weekly schedule
-- For each day of the week, represent classes on each day in an *augmented AVL tree*
+- Represent all classes in a week in an *augmented AVL tree* where keys (times) are mapped to a week
 - ( Implementation of class node -> ./objects/Tree2Node.js)
 - Let this tree be **Tree_2**.
 
