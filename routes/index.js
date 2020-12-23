@@ -22,6 +22,7 @@ fs.get_json(function (err,courses_info) {
     var courseDictionary = objectUtils.initializeCourseDictionary(courses_info);
     var __coursesTotal = objectUtils.getNumberOfCourses(courses_info);
     var __courseIDs = courses_info.courses_id_names;
+
     /*
     * Handle GET requests for list of all courses
     * USAGE: http://localhost:7777/api/courses/list
@@ -189,6 +190,11 @@ fs.get_json(function (err,courses_info) {
     */
     router.get('/test', async (req, res) => {
         console.log("-------beginning test------");
+        const used = process.memoryUsage();
+        for (let key in used) {
+            console.log(`${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`);
+        }
+
         var start = Date.now();
         /* SELECT RANDOM COURSES AND SOME MANUALLY */
         // testUtils.testPhase1(courseDictionary, __courseIDs, __coursesTotal);
@@ -198,9 +204,9 @@ fs.get_json(function (err,courses_info) {
             // console.log(combinationRecords);
         // })
 
-        // phase0.testPhase0();
+        phase0.testPhase0();
         
-        testUtils.testTree1();
+        // testUtils.testTree1();
         
         var end = Date.now();
         var difference = end - start;
