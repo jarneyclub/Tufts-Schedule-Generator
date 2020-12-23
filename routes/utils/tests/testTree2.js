@@ -1,5 +1,5 @@
-const Tree2 = require('./Tree2.js');
-const Class = require('./objects/classes/Class.js');
+const Tree2 = require('../Tree2.js');
+const Class = require('../objects/classes/Class.js');
 
 const arrayEquals = (a, b) => {
     return Array.isArray(a) &&
@@ -415,5 +415,5 @@ const testTree2 = () => {
 
 
 }
-testTree2();
+
 exports.testTree2 = testTree2;
