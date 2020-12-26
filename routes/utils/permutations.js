@@ -1,21 +1,25 @@
 /** Generates all possible permutations of a given array of digits
  * O(n*k^n) NOT TIGHT
- * @param {array} arrayDigits array of digits that is 1 to 9
+ * @param {array} arrayDigits array of digits that is 0 to 9
  * e.g. [3,1], expecting [[3,1], [2,1], [1,1]]
  * @returns 
  */
 const permutationsDP = (arrayDigits) => {
+    
     // identify base cases
     var memo = {};
-    memo["1"] = [[1]];
-    memo["2"] = [[2], [1]];
-    memo["3"] = [[3], [2], [1]];
-    memo["4"] = [[4], [3], [2], [1]];
-    memo["5"] = [[5], [4], [3], [2], [1]];
-    memo["6"] = [[6], [5], [4], [3], [2], [1]];
-    memo["7"] = [[7], [6], [5], [4], [3], [2], [1]];
-    memo["8"] = [[8], [7], [6], [5], [4], [3], [2], [1]];
-    memo["9"] = [[9], [8], [7], [6], [5], [4], [3], [2], [1]];
+
+    memo["0"] = [[0]]
+    memo["1"] = [[1], [0]];
+    memo["2"] = [[2], [1], [0]];
+    memo["3"] = [[3], [2], [1], [0]];
+    memo["4"] = [[4], [3], [2], [1], [0]];
+    memo["5"] = [[5], [4], [3], [2], [1], [0]];
+    memo["6"] = [[6], [5], [4], [3], [2], [1], [0]];
+    memo["7"] = [[7], [6], [5], [4], [3], [2], [1], [0]];
+    memo["8"] = [[8], [7], [6], [5], [4], [3], [2], [1], [0]];
+    memo["9"] = [[9], [8], [7], [6], [5], [4], [3], [2], [1], [0]];
+
     return permutationsDPHelper(arrayDigits, memo);
 }
 
@@ -101,7 +105,9 @@ const permutationsRecHelper = async (currIndex, recursedPermutation, arrayDigits
 
     // console.log(recursedPermutation, " : ", currIndex);
     if (currIndex < recursedPermutation.length) {
+
         let possibleDigitsForCurrIndex = [];
+        
         for (let i = 1; i <= arrayDigits[currIndex]; i++)
             possibleDigitsForCurrIndex.push(i);
 
