@@ -24,23 +24,34 @@
  * 
  * @param {any} inputObject 
  * @param {any} inputName 
- * @param {any} inputValue 
+ * @param {any} inputLeft 
+ * @param {any} inputRight 
  * @param {any} inputAugmentation 
  * @returns 
  */
-function Tree2Node(inputObject, inputName, inputValue, inputAugmentation) {
+function Tree2Node(inputObject, inputName, inputLeft, inputRight, inputAugmentation) {
 
     var object = inputObject;
-    var value = inputValue;
+    // var value = inputValue;
     var span = inputAugmentation;
     var name = inputName;
     var height = 0;
     var left = null;
     var right = null;
 
+    var leftEndpoint = inputLeft;
+    var rightEndpoint = inputRight;
 
-    const getValue = () => {
-        return value;
+    // const getValue = () => {
+    //     return value;
+    // }
+
+    const getLeftValue = () => {
+        return leftEndpoint;
+    }
+
+    const getRightValue = () => {
+        return rightEndpoint;
     }
 
     /**
@@ -58,17 +69,23 @@ function Tree2Node(inputObject, inputName, inputValue, inputAugmentation) {
         return name;
     }
 
+    const setSpan = (input) => {
+        span = input;
+    }
+
 
     return {
-        getValue: getValue,
         getObject: getObject,
         getSpan: getSpan,
         getName: getName,
-        getValue: getValue,
+        getLeftValue: getLeftValue,
+        getRightValue: getRightValue,
+        setSpan: setSpan,
+        leftEndpoint: leftEndpoint,
+        span: span,
         left: left, 
         right: right,
         height: height,
-        value: value,
         name: name
     }
 }

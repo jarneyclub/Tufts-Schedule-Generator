@@ -56,13 +56,21 @@ function Tree2() {
     const insert = (inputObject) => {
         
         // day * 2400 + time so that all classes in a week can be inserted into one AVL tree
-        let inputValue = inputObject.getDayOfWeek() * 2400 + inputObject.getStartTime();
-        let inputAugmentation = inputObject.getDayOfWeek() * 2400 + inputObject.getEndTime();
+        let inputLeftValue = inputObject.getDayOfWeek() * 2400 + inputObject.getStartTime();
+        let inputRightValue = inputObject.getDayOfWeek() * 2400 + inputObject.getEndTime();
         let inputName = inputObject.getSectionName();
+        // console.log("INSERTION NODE INFO: ");
+        // console.log("inserting ", inputName);
+        // console.log("inputLeftValue: ", inputLeftValue);
+        // console.log("inputRightValue: ", inputRightValue);
 
-        root = insertHelper(inputObject, inputName, inputValue, inputAugmentation, root, 0);
+        // console.log("QUERY INTERVAL CHECKING BEGIN: ");
+        if (queryIntervalHelper(inputLeftValue, inputRightValue, root) == false) {
+            // console.log("INSERTION BEGIN: ");
+            root = insertHelper(inputObject, inputName, inputLeftValue, inputRightValue, root, 0);
+        }
+
     }
-
 
     const print = (option) => {
         let nodesArray = [];
@@ -71,7 +79,7 @@ function Tree2() {
             inOrderPrintHelper(root, nodesArray);
             let printArray = [];
             for (let index in nodesArray)
-                printArray.push(nodesArray[index].getValue());
+                printArray.push(nodesArray[index].getLeftValue());
             console.log(" Tree2 (InOrder Print): ", printArray);
         }
         else if (option == "inorderName") {
@@ -91,7 +99,6 @@ function Tree2() {
         }
     }
 
-
     //////////////////////////////////////////
     //                                      //
     //          Private Functions           //
@@ -105,31 +112,39 @@ function Tree2() {
      * @param {any} index 
      */
     // section, startTime, currNode, depth
-    const insertHelper = (inputObject, inputName, inputValue, inputAugmentation, currNode, depth) => {
+    const insertHelper = (inputObject, inputName, inputLeftValue, inputRightValue, currNode, depth) => {
 
         /* BST insertion start */
 
         // BASE CASE: input node is null, start unraveling recursion
         if (currNode == null) {
-            // TODO: update augmentation
-            var newNode = new Node(inputObject, inputName, inputValue, inputAugmentation);
+
+            // augmentation of leaf is (leftValue, rightValue)
+            var newNode = new Node(inputObject, inputName, inputLeftValue, inputRightValue, inputRightValue);
 
             treeSize++;
 
             return newNode;
         }
         else {
+            
+            // update currNode augmentation 
+            if (currNode.getSpan() < inputRightValue) {
+                // console.log("augmenting ", currNode.getName(), " with ", inputRightValue);
+                currNode.setSpan(inputRightValue);
+            }
+            
             // insert in left subtree
-            if (currNode.getValue() > inputValue) {
+            if (currNode.getLeftValue() > inputLeftValue) {    
 
-                currNode.left = insertHelper(inputObject, inputName, inputValue, inputAugmentation, currNode.left, depth + 1);
+                currNode.left = insertHelper(inputObject, inputName, inputLeftValue, inputRightValue, currNode.left, depth + 1);
             }
             // insert in right subtree
-            else if (currNode.getValue() < inputValue) {
+            else if (currNode.getLeftValue() < inputLeftValue) {
 
-                currNode.right = insertHelper(inputObject, inputName, inputValue, inputAugmentation, currNode.right, depth + 1);
+                currNode.right = insertHelper(inputObject, inputName, inputLeftValue, inputRightValue, currNode.right, depth + 1);
             }
-            // currNode.getValue() == startTime
+            // currNode.getLeftValue() == startTime
             else {
                 throw new Error('Request object could not be inserted as a Node with an identical value already exists');
             }
@@ -146,6 +161,112 @@ function Tree2() {
         /* AVL invariant maintenance end */
 
         return currNode;
+    }
+
+    /** check if query interval intersects with any node in AVL Tree
+     * @param {any} inputLeftValue 
+     * @param {any} inputRightValue 
+     * @param {any} currNode 
+     * @returns {boolean} whether node intersects or not
+     */
+    const queryIntervalHelper = (inputLeftValue, inputRightValue, currNode) => {
+
+        if (currNode == null) {
+            // console.log("currNode is null")
+            /* currNode does not exist */
+            return false;
+        }
+        
+        let leftCurrNodeSpan = currNode.getLeftValue();
+        let rightCurrNodeSpan = currNode.getSpan();
+        let currNodeRightValue = currNode.getRightValue();
+        
+        /* check if node intersects with subtree root */
+
+        if (doesNotOverlap(inputLeftValue, inputRightValue, leftCurrNodeSpan, currNodeRightValue) == true) {
+            
+            // console.log("input does not overlap with currNode");
+
+            /* node to insert DOES NOT overlap with currNode */
+
+            // check if node intersects with subtree root's span
+            if (doesNotOverlap(inputLeftValue, inputRightValue, leftCurrNodeSpan, rightCurrNodeSpan) == true) {
+                /* node to insert DOES NOT overlap with currNode's span */
+                
+                // console.log("does not overlap with currNode's span");
+                
+                // query interval is to the right of span
+                if (rightCurrNodeSpan < inputLeftValue) {
+
+                    /* no possible intersection in subtree */
+
+                    // console.log("inputLeftValue: ", inputLeftValue);
+                    // console.log("inputRightValue: ", inputRightValue);
+                    // console.log("rightCurrNodeSpan: ", rightCurrNodeSpan);
+                    // console.log("CASE 1A: no possible intersection in subtree");
+                    
+                    return false;
+                }
+                // query interval is to the left of span
+                else if (inputLeftValue < leftCurrNodeSpan && inputRightValue < leftCurrNodeSpan) {
+
+                    // console.log("query interval is to the left of span");
+                    // console.log("CASE 1B: recurse to left subtree");
+                    return queryIntervalHelper(inputLeftValue, inputRightValue, currNode.left);
+                }
+            }
+            else {
+                /* node to insert DOES overlap with currNode's span */
+                // console.log("does overlap with currNode's span");
+
+                if (currNode.left == null) {
+                    return queryIntervalHelper(inputLeftValue, inputRightValue, currNode.right);
+                }
+                else {
+                    let leftSubtreeSpan = currNode.left.getSpan();
+                    let leftSubtreeValue = currNode.left.getLeftValue();
+                    // does not intersect with left subtree
+                    if (doesNotOverlap(leftSubtreeValue, leftSubtreeSpan, inputLeftValue, inputRightValue) == true) {
+                        // console.log("does not overlap with currNode.left's span");
+
+                        // console.log("CASE 2: recurse to right subtree");
+                        /* recurse to right subtree */
+                        return queryIntervalHelper(inputLeftValue, inputRightValue, currNode.right);
+                    }
+                    else {
+                        // console.log("does overlap with currNode.left's span");
+
+                        // console.log("CASE 2: recurse to left subtree");
+                        /* recurse to left subtree */
+                        return queryIntervalHelper(inputLeftValue, inputRightValue, currNode.left);
+                    }
+                }
+                
+            }
+
+        }
+        else {
+            /* node to insert DOES overlap with currNode */
+            // console.log("input does overlap with currNode");
+            return true;
+        }
+    }
+
+    /** O(1) comparison
+     * 
+     * @param {any} beginA 
+     * @param {any} endA 
+     * @param {any} beginB 
+     * @param {any} endB 
+     * @returns 
+     */
+    const doesNotOverlap = (beginA, endA, beginB, endB) => {
+        if ((beginA <= beginB && beginB <= endA) || (beginB <= beginA && beginA <= endB)) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
     /** Balance a given AVL Tree node
@@ -220,6 +341,7 @@ function Tree2() {
         }
 
     }
+
     const rightRotate = (currNode) => {
         try {
             console.log("RIGHT ROTATING node: ", currNode.getName());
