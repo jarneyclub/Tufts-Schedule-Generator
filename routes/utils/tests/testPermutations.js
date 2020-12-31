@@ -7,6 +7,32 @@ const arrayEquals = (a, b) => {
         a.every((val, index) => val === b[index]);
 }
 
+const testPermutationsDPSingle = () => {
+    console.log("--- unit test ( Dynamic Programming Permutations ( [0]) ) ---")
+    
+    let result = false;
+    let expectedSize = 1;
+
+    /* INITIALIZE INPUT */
+    let digitsArray = [0];
+    for (let index in digitsArray)
+        expectedSize *= (digitsArray[index]+1);
+
+    let output = Permutations.permutationsDP(digitsArray);
+    if (output.length == expectedSize)
+        result = true;
+    else {
+        result = false;
+        console.log("expected size: ", expectedSize);
+        console.log("output.length: ", output.length);
+        console.log("input: ", digitsArray);
+        console.log("output: ", output);
+        console.log("Error in testPermutationsDPSingle")
+    }
+
+    return result;
+}
+
 const testPermutationsDPSorted = () => {
     console.log("--- unit test ( Dynamic Programming Permutations ( INCREASING TO DECREASING SORTED ARRAY) ) ---")
 
@@ -14,15 +40,22 @@ const testPermutationsDPSorted = () => {
     let expectedSize = 1;
 
     /* INITIALIZE INPUT */
-    let digitsArray = [4,3,1];
+    let digitsArray = [4,3,0];
     for (let index in digitsArray)
-        expectedSize*=digitsArray[index];
+        expectedSize *= (digitsArray[index] + 1);
 
     let output = Permutations.permutationsDP(digitsArray);
     if (output.length == expectedSize)
         result = true;
-    else
+    else {
         result = false;
+        console.log("expected size: ", expectedSize);
+        console.log("output.length: ", output.length);
+        console.log("input: ", digitsArray);
+        console.log("output: ", output);
+        console.log("Error in testPermutationsDPSorted")
+    }
+    
 
     return result;
 }
@@ -36,13 +69,19 @@ const testPermutationsDPUnsortedOne = () => {
     /* INITIALIZE INPUT */
     let digitsArray = [1, 3, 4];
     for (let index in digitsArray)
-        expectedSize *= digitsArray[index];
+        expectedSize *= (digitsArray[index] + 1);
 
     let output = Permutations.permutationsDP(digitsArray);
     if (output.length == expectedSize)
         result = true;
-    else
+    else {
         result = false;
+        console.log("expected size: ", expectedSize);
+        console.log("output.length: ", output.length);
+        console.log("input: ", digitsArray);
+        console.log("output: ", output);
+        console.log("Error in testPermutationsDPUnsortedOne")
+    }
 
     return result;
 }
@@ -56,13 +95,19 @@ const testPermutationsDPUnsortedTwo = () => {
     /* INITIALIZE INPUT */
     let digitsArray = [4, 3, 4];
     for (let index in digitsArray)
-        expectedSize *= digitsArray[index];
+        expectedSize *= (digitsArray[index] + 1);
 
     let output = Permutations.permutationsDP(digitsArray);
     if (output.length == expectedSize)
         result = true;
-    else
+    else {
         result = false;
+        console.log("expected size: ", expectedSize);
+        console.log("output.length: ", output.length);
+        console.log("input: ", digitsArray);
+        console.log("output: ", output);
+        console.log("Error in testPermutationsDUnsortedTwo")
+    }
 
     return result;
 }
@@ -76,13 +121,19 @@ const testPermutationsDPUnsortedThree = () => {
     /* INITIALIZE INPUT */
     let digitsArray = [4, 9, 4, 5, 6];
     for (let index in digitsArray)
-        expectedSize *= digitsArray[index];
+        expectedSize *= (digitsArray[index] + 1);
 
     let output = Permutations.permutationsDP(digitsArray);
     if (output.length == expectedSize)
         result = true;
-    else
+    else {
         result = false;
+        console.log("expected size: ", expectedSize);
+        console.log("output.length: ", output.length);
+        console.log("input: ", digitsArray);
+        console.log("output: ", output);
+        console.log("Error in testPermutationsDPUnsortedThree")
+    }
 
     return result;
 }
@@ -90,6 +141,7 @@ const testPermutationsDPUnsortedThree = () => {
 const testPermutations = () => {
     console.log("### Testing Permutations ###");
     let testResults = [];
+    testResults.push(testPermutationsDPSingle());
     testResults.push(testPermutationsDPSorted());
     testResults.push(testPermutationsDPUnsortedOne());
     testResults.push(testPermutationsDPUnsortedTwo());

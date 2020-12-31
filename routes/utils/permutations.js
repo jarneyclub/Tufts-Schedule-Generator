@@ -1,4 +1,7 @@
+const LARGEST_POSSIBLE_DIGIT_DP = 15;
+
 /** Generates all possible permutations of a given array of digits
+ * IMPORTANT: ONLY SUPPORTS DIGITS [0-9]
  * O(n*k^n) NOT TIGHT
  * @param {array} arrayDigits array of digits that is 0 to 9
  * e.g. [3,1], expecting [[3,1], [2,1], [1,1]]
@@ -19,6 +22,14 @@ const permutationsDP = (arrayDigits) => {
     memo["7"] = [[7], [6], [5], [4], [3], [2], [1], [0]];
     memo["8"] = [[8], [7], [6], [5], [4], [3], [2], [1], [0]];
     memo["9"] = [[9], [8], [7], [6], [5], [4], [3], [2], [1], [0]];
+    // memo["10"] = [[10], [9], [8], [7], [6], [5], [4], [3], [2], [1], [0]];
+    // memo["11"] = [[11], [10], [9], [8], [7], [6], [5], [4], [3], [2], [1], [0]];
+    // memo["12"] = [[12], [11], [10], [9], [8], [7], [6], [5], [4], [3], [2], [1], [0]];
+    // memo["13"] = [[13], [12], [11], [10], [9], [8], [7], [6], [5], [4], [3], [2], [1], [0]];
+    // memo["14"] = [[14], [13], [12], [11], [10], [9], [8], [7], [6], [5], [4], [3], [2], [1], [0]];
+    // memo["15"] = [[15], [14], [13], [12], [11], [10], [9], [8], [7], [6], [5], [4], [3], [2], [1], [0]];
+
+
 
     return permutationsDPHelper(arrayDigits, memo);
 }
@@ -34,8 +45,8 @@ const permutationsDPHelper = (arrayDigits, memo) => {
     let key = "";
 
     // convert to key, typeof string (memo's keys are strings of digits)
-    for (digit in arrayDigits)
-        key += arrayDigits[digit].toString();
+    for (let digitIndex = 0; digitIndex < arrayDigits.length; digitIndex++)
+        key += arrayDigits[digitIndex].toString();
 
     // memoisation exists
     if (memo[key] != undefined) {
@@ -45,10 +56,10 @@ const permutationsDPHelper = (arrayDigits, memo) => {
     else {
         let lastIndex = arrayDigits.length - 1;
 
-        // get all integers from 1 to lastDigit 
+        // get all integers from 0 to lastDigit 
         let lastDigit = arrayDigits[lastIndex];
         let allDigitsToConcat = [];
-        for (let i = 1; i <= lastDigit; i++)
+        for (let i = 0; i <= lastDigit; i++)
             allDigitsToConcat.push(i)
 
         // get reduced array excluding last digit
@@ -107,7 +118,7 @@ const permutationsRecHelper = async (currIndex, recursedPermutation, arrayDigits
     if (currIndex < recursedPermutation.length) {
 
         let possibleDigitsForCurrIndex = [];
-        
+
         for (let i = 1; i <= arrayDigits[currIndex]; i++)
             possibleDigitsForCurrIndex.push(i);
 
@@ -145,7 +156,7 @@ const permutationsRecHelper = async (currIndex, recursedPermutation, arrayDigits
 const getRandomPermutation = (arrayDigits) => {
     let randomPermutation = [];
     for (let index in arrayDigits) {
-        let digit = Math.ceil(Math.random() * arrayDigits[index]);
+        let digit = Math.floor(Math.random() * (arrayDigits[index]+1));
         randomPermutation.push(digit);
         digit = null;
     }
@@ -182,6 +193,48 @@ const permutationsRandom = (arrayDigits, maxSize) => {
     return resultArray;
 }
 
+const getPermutations = (arrayDigits, callback) => {
+    
+    let chosenPermutations;  // to return
+    
+    /* check constraints */
+
+    // get largest digit
+    let largestDigit = 0;
+    let totalDigits = 0;
+    let lengthOfPermutation = arrayDigits.length;
+
+    for (let i in arrayDigits) {
+        let choices = arrayDigits[i];
+        
+        if (choices.length > largestDigit) 
+            largestDigit = choices.length;
+
+        for (let j in choices) {
+            totalDigits++;
+        }
+    }
+
+    if (largestDigit > LARGEST_POSSIBLE_DIGIT_DP + 1) {
+        if (totalDigits > 48) {
+            chosenPermutations = permutationsRandom(arrayDigits, 100);
+        }
+        else {
+            chosenPermutations = permutationsDP(arrayDigits);
+        }
+    }
+    else {
+        if (lengthOfPermutation > 15)
+            chosenPermutations = permutationsDP(arrayDigits);
+        else 
+            chosenPermutations = permutationsRandom(arrayDigits, 100);
+    }
+
+    return chosenPermutations;
+}
+
 exports.permutationsDP = permutationsDP;
 exports.permutationsRandom = permutationsRandom;
 exports.permutationsRec = permutationsRec;
+exports.getPermutations = getPermutations;
+exports.LARGEST_POSSIBLE_DIGIT_DP = LARGEST_POSSIBLE_DIGIT_DP;
