@@ -1,6 +1,39 @@
 const Tree2 = require('../Tree2.js');
 const Class = require('../objects/classes/Class.js');
 
+const defaultFilter = {
+    time: {
+        1: {
+            time_earliest: 0,
+            time_latest: 2400
+        },
+        2: {
+            time_earliest: 0,
+            time_latest: 2400
+        },
+        3: {
+            time_earliest: 0,
+            time_latest: 2400
+        },
+        4: {
+            time_earliest: 0,
+            time_latest: 2400
+        },
+        5: {
+            time_earliest: 0,
+            time_latest: 2400
+        },
+        6: {
+            time_earliest: 0,
+            time_latest: 2400
+        },
+        7: {
+            time_earliest: 0,
+            time_latest: 2400
+        }
+    }
+}
+
 const arrayEquals = (a, b) => {
     return Array.isArray(a) &&
         Array.isArray(b) &&
@@ -13,7 +46,7 @@ const testInsertion = () => {
 
     let result = false;
     /* INITIALIZE TREE */
-    let tree = new Tree2();
+    let tree = new Tree2(defaultFilter);
 
     /* INITIALIZE OBJECTS TO INSERT */
     let testObjects = [];
@@ -54,7 +87,7 @@ const testLeftInsertion = () => {
     console.log("--- unit test: ( AVL Tree LEFT INSERTION ) ---")
     let result = false;
     /* INITIALIZE TREE */
-    let tree = new Tree2();
+    let tree = new Tree2(defaultFilter);
 
     /* INITIALIZE OBJECTS TO INSERT */
     let testObjects = [];
@@ -92,7 +125,7 @@ const testRightInsertion = () => {
     console.log("--- unit test: ( AVL Tree RIGHT INSERTION ) ---")
     let result = false;
     /* INITIALIZE TREE */
-    let tree = new Tree2();
+    let tree = new Tree2(defaultFilter);
 
     /* INITIALIZE OBJECTS TO INSERT */
     let testObjects = [];
@@ -130,7 +163,7 @@ const testBSTInvariant = () => {
     console.log("--- unit test: ( AVL Tree BST Invariant ) ---")
     let result = false;
     /* INITIALIZE TREE */
-    let tree = new Tree2();
+    let tree = new Tree2(defaultFilter);
 
     /* INITIALIZE OBJECTS TO INSERT */
     let testObjects = [];
@@ -166,7 +199,7 @@ const testLeftRotation = () => {
     console.log("--- unit test: ( AVL Tree LEFT ROTATION ) ---")
     let result = false;
     /* INITIALIZE TREE */
-    let tree = new Tree2();
+    let tree = new Tree2(defaultFilter);
 
     /* INITIALIZE OBJECTS TO INSERT */
     let testObjects = [];
@@ -204,7 +237,7 @@ const testRightLeftRotation = () => {
     console.log("--- unit test: ( AVL Tree RIGHT,LEFT ROTATION ) ---")
     let result = false;
     /* INITIALIZE TREE */
-    let tree = new Tree2();
+    let tree = new Tree2(defaultFilter);
 
     /* INITIALIZE OBJECTS TO INSERT */
     let testObjects = [];
@@ -242,7 +275,7 @@ const testLeftRightRotation = () => {
     console.log("--- unit test: ( AVL Tree LEFT,RIGHT ROTATION ) ---")
     let result = false;
     /* INITIALIZE TREE */
-    let tree = new Tree2();
+    let tree = new Tree2(defaultFilter);
 
     /* INITIALIZE OBJECTS TO INSERT */
     let testObjects = [];
@@ -280,7 +313,7 @@ const testLeftRotationRoot = () => {
     console.log("--- unit test: ( AVL Tree LEFT ROTATION on ROOT ) ---")
     let result = false;
     /* INITIALIZE TREE */
-    let tree = new Tree2();
+    let tree = new Tree2(defaultFilter);
 
     /* INITIALIZE OBJECTS TO INSERT */
     let testObjects = [];
@@ -316,7 +349,7 @@ const testRightRotation = () => {
     console.log("--- unit test: ( AVL Tree RIGHT ROTATION ) ---")
     let result = false;
     /* INITIALIZE TREE */
-    let tree = new Tree2();
+    let tree = new Tree2(defaultFilter);
 
     /* INITIALIZE OBJECTS TO INSERT */
     let testObjects = [];
@@ -354,7 +387,7 @@ const testRightRotationRoot = () => {
     console.log("--- unit test: ( AVL Tree RIGHT ROTATION on ROOT ) ---")
     let result = false;
     /* INITIALIZE TREE */
-    let tree = new Tree2();
+    let tree = new Tree2(defaultFilter);
 
     /* INITIALIZE OBJECTS TO INSERT */
     let testObjects = [];
@@ -390,7 +423,7 @@ const testNoIntersectionQueryLeft = () => {
     console.log("--- unit test: ( AVL Tree No Intersection Query Left ) ---")
     let result = false;
     /* INITIALIZE TREE */
-    let tree = new Tree2();
+    let tree = new Tree2(defaultFilter);
 
     /* INITIALIZE OBJECTS TO INSERT */
     let testObjects = [];
@@ -429,7 +462,7 @@ const testNoIntersectionQueryRight = () => {
     console.log("--- unit test: ( AVL Tree No Intersection Query Right) ---")
     let result = false;
     /* INITIALIZE TREE */
-    let tree = new Tree2();
+    let tree = new Tree2(defaultFilter);
 
     /* INITIALIZE OBJECTS TO INSERT */
     let testObjects = [];
@@ -468,7 +501,7 @@ const testIntersectionQueryLeft = () => {
     console.log("--- unit test: ( AVL Tree Intersection Query Left) ---")
     let result = false;
     /* INITIALIZE TREE */
-    let tree = new Tree2();
+    let tree = new Tree2(defaultFilter);
 
     /* INITIALIZE OBJECTS TO INSERT */
     let testObjects = [];
@@ -507,7 +540,7 @@ const testIntersectionQueryRight = () => {
     console.log("--- unit test: ( AVL Tree Intersection Query Right) ---")
     let result = false;
     /* INITIALIZE TREE */
-    let tree = new Tree2();
+    let tree = new Tree2(defaultFilter);
 
     /* INITIALIZE OBJECTS TO INSERT */
     let testObjects = [];
@@ -546,7 +579,7 @@ const testIntersectionQueryExactSame = () => {
     console.log("--- unit test: ( AVL Tree Intersection Query Right) ---")
     let result = false;
     /* INITIALIZE TREE */
-    let tree = new Tree2();
+    let tree = new Tree2(defaultFilter);
 
     /* INITIALIZE OBJECTS TO INSERT */
     let testObjects = [];
@@ -585,7 +618,7 @@ const testIntersectionQueryExactSameLeft = () => {
     console.log("--- unit test: ( AVL Tree Intersection Query Right) ---")
     let result = false;
     /* INITIALIZE TREE */
-    let tree = new Tree2();
+    let tree = new Tree2(defaultFilter);
 
     /* INITIALIZE OBJECTS TO INSERT */
     let testObjects = [];
@@ -658,6 +691,6 @@ const testTree2 = () => {
 
 }
 
-testTree2();
+testTree2(defaultFilter);
 
 exports.testTree2 = testTree2;

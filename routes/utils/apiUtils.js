@@ -1,34 +1,119 @@
 const Section = require('./objects/classes/Section.js');
 const Course = require('./objects/classes/Course.js');
+const Class = require('./objects/classes/Class.js');
 
-/** Check if two time intervals overlap
- * Time Complexity: O(1) => one OR comparison of two inputs
- * @param {any} timeIntervalA [day of week, begin time, end time]
- * @param {any} timeIntervalB [day of week, begin time, end time]
- */
-function doesNotOverlap(timeIntervalA, timeIntervalB) {
-    var dayA = timeIntervalA[0];
-    var dayB = timeIntervalB[0];
+const integerToMilitaryTime = (input) => {
+    let intHour = Math.floor(input/60);
+    let intMinutes = input%60;
 
-    // the time intervals are on the same day of the week
-    if (dayA == dayB) {
-        var beginA = timeIntervalA[1];
-        var beginB = timeIntervalB[1];
-        var endA = timeIntervalA[2];
-        var endB = timeIntervalB[2];
-        // O(1) comparison
-        if ((beginA <= beginB && beginB <= endA) || (beginB <= beginA && beginA <= endB)) {
-            return false;
-        }
-        else {
-            return true;
-        }
+    let strHour;
+    let strMin;
+    if (intHour < 10)
+        strHour = "0" + intHour.toString();
+    else
+        strHour = intHour.toString();
 
-    }
-    else {
-        return true;
-    }
+    if (intMinutes < 10)
+        strMin = "0" + intMinutes.toString();
+    else
+        strMin = intMinutes.toString();
+    let result = strHour + ":" + strMin;
+
+    return result;
 }
+
+const militaryTimeToInteger = (input) => {
+    let splitTime = input.split(/[:]/g);
+
+    let intHour = parseInt(splitTime[0]);
+    let intMinutes = parseInt(splitTime[1]);
+
+    let result = intHour * 60 + intMinutes;
+    
+    return result;
+}
+
+////////////////////////////////////////
+//                                    //
+//         Database: Mongodb          //
+//                                    //
+////////////////////////////////////////
+
+const documentToCourse = (document) => {
+    let courseName = document.course_name;
+    let courseId = document.course_id;
+    let sections = document.sections;
+    let availableSectionTypes = document.available_section_types;
+    let objectSectionType = {};
+
+    // iterate through section types
+    for (let sectionType in sections) {
+
+        let arraySections = sections[sectionType];
+        
+        // init object to store
+        let objectSection = {};
+        let indexObjectSection = 0;
+
+        // iterate through sections
+        for (let indexSectionInfo in arraySections) {
+
+            let sectionInfo = arraySections[indexSectionInfo];
+            let sectionId = sectionInfo.section_id;
+            let arrayClasses = sectionInfo.classes;
+            
+            // init object to store
+            let objectClass = {};
+            let indexObjectClass = 0;
+
+            // iterate through classes
+            for (let indexClass in arrayClasses) {
+                
+                // parse document
+                let classInfo = arrayClasses[indexClass];
+                let timeStart = classInfo.time_start;
+                let timeEnd = classInfo.time_end;
+                let day = classInfo.days_of_week;
+                let faculties = classInfo.faculties;
+                let city = classInfo.city; 
+                let room = classInfo.room;
+
+                // appended into an object to be stored into Section
+                let newClass =
+                    new Class(courseId, courseName, sectionId, sectionType, day, timeStart, timeEnd, room, city, faculties);
+
+                // add Class object to objectClass
+                objectClass[indexObjectClass] = newClass;
+                indexObjectClass++;
+
+
+            }
+
+            // END of iteration through classes
+            let newSection = 
+                new Section(courseId, courseName, sectionId, sectionType, objectClass);
+            
+            // add Section object to objectSection
+            objectSection[indexObjectSection] = newSection;
+            indexObjectSection++;
+        }
+        // END of iteration through sections
+
+        // add objectSection to objectSectionType
+        objectSectionType[sectionType] = objectSection;
+    }
+    // END of iteration through section types
+
+    let newCourse = new Course(courseId, courseName, availableSectionTypes, objectSectionType);
+
+    return newCourse;
+}
+
+////////////////////////////////////////
+//                                    //
+//          Database: File            //
+//                                    //
+////////////////////////////////////////
 
 /** Check if a section's time period is within a time interval
  * Time Complexity: O(1) => one OR comparison of two inputs
@@ -183,8 +268,10 @@ function parseCourseInformation(courseID, information) {
 
 }
 
-exports.doesNotOverlap = doesNotOverlap;
 exports.sectionWithinBounds = sectionWithinBounds;
 exports.initializeCourseDictionary = initializeCourseDictionary;
 exports.parseCourseInformation = parseCourseInformation;
 exports.getNumberOfCourses = getNumberOfCourses;
+exports.documentToCourse = documentToCourse;
+exports.integerToMilitaryTime = integerToMilitaryTime;
+exports.militaryTimeToInteger = militaryTimeToInteger;

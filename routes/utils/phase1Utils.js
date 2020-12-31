@@ -3,151 +3,237 @@ const Course = require('./objects/classes/Course.js');
 const Tree1 = require('./Tree1.js');
 const Tree2 = require('./Tree2.js');
 const memwatch = require('@airbnb/node-memwatch');
-/**
- * @param {mapCoursesToSectionTypes} map 
- * @returns {object}
- * let mapTree1Courses = {
-        COURSEID: {
-            "Lecture": Tree1()
-        },
-        COURSEID2: {},
-        etc.
-    }
- */
-const mapCoursesToTree1s = (map) => {
-    let mapTree1Courses = {};
 
-    for (let key in map) {
-        let sectionTypes = map[key]; // objects of section types of ONE COURSE
-        mapTree1Courses[key] = {};
+const Permutations = require('./permutations.js');
 
-        for (let type in sectionTypes) {
+const mapSectionTypes = (arrayCourses) => {
+    let arraySections = [];
+    for (i in arrayCourses) {
+        let course = arrayCourses[i];
+        let sectionsInSecTypes = course.getSections();
 
-            var sectionTypeTree = new Tree1(); // init phase 1 tree
+        for (let j in sectionsInSecTypes) {
+            let sections = sectionsInSecTypes[j];
 
-            let sections = sectionTypes[type]; // array of Section objects
-            // populate phase 1 tree
-            for (let sectionIndex in sections) {
-                let section = sections[sectionIndex];
-                sectionTypeTree.insert(section);
-            }
-
-            mapTree1Courses[key][type] = sectionTypeTree; // assign phase 1 tree of this section type
+            arraySections.push(sections);
         }
     }
-
-    return mapTree1Courses;
+    return arraySections;
 }
 
-/** Helper function
+/**
+ * 1) Get permutations
+ * 2) Map permutations to mapping of sectiontypes and its sections
+ * 3) Use Tree2 to filter section permutations that have overlaps
+ * 4) Filter section permutations that don't include all courses
+ * 5) 
  * 
- * 
- * @param {any} courseID 
- * @param {any} sectionType 
- * @param {any} arraySections 
+ * @param {any} arrayCourses 
+ * @param {object} filter
+ * filter = {
+ *      time: {
+ *          1: { (1 for Monday)
+ *             time_earliest: 600,
+ *             time_latest: 1440
+ *          },
+ *          2: { (2 for Tuesday)
+ *              time_earliest: 0, (DEFAULT)
+ *              time_latest: 2400 (DEFAULT)
+ *          },
+ *          etc.
+ *      }
+ * }
  * @returns 
  */
-const initSectionTypeQueue = (courseID, sectionType, arraySections) => {    
-    let sectionTypeQueue = {};
-    // let sectionTypeQueue_IND = 0;
+const phase1 = (arrayCourses, filter) => {
+
+    console.log("done");
     
-    // Define courseID sectionType belongs to
-    sectionTypeQueue["courseID"] = courseID;
-    // Define sectionType
-    sectionTypeQueue["sectionType"] = sectionType;
-    // Define object listing all sections in sectionType
-    sectionTypeQueue["sections"] = arraySections
+    /* get possible digits for permutations */
 
-    return sectionTypeQueue;
-}
+    let possibleDigits = [];
 
-const initMasterStructure = (mapCoursesToSectionTypes, callback) => {
-    let masterStructure = {};
-    let masterStructureSize = 0;
+    // iterate through courses
+    for (let index in arrayCourses) {
+        let course = arrayCourses[index];
+        let sections = course.getSections();
 
-    // Traverse through each course
-    for (courseID in mapCoursesToSectionTypes) {
-        let objectSectionTypes = mapCoursesToSectionTypes[courseID];
+        // iterate through section types
+        for (let sectiontype in sections) {
+            let sectionsInSecType = sections[sectiontype];
 
-        // Traverse through each sectionType
-        for (sectionType in objectSectionTypes) {
-            let arraySections = objectSectionTypes[sectionType];
-
-            masterStructure[masterStructureSize] = 
-                initSectionTypeQueue(courseID, sectionType, arraySections);
-            masterStructureSize++;
+            // append maximum digits
+            possibleDigits.push(Object.keys(sectionsInSecType).length-1);
         }
+
     }
 
-    callback(masterStructure, masterStructureSize++);
-}
+    let chosenPermutations = Permutations.getPermutations(possibleDigits);
+    
+    let arraySectionTypes = mapSectionTypes(arrayCourses);
+    // console.log("arraySectionTypes: ", arraySectionTypes);
 
-const phase0 = (mapCoursesToSectionTypes, hd, callback) => {
-    initMasterStructure(mapCoursesToSectionTypes, function(masterStructure, masterStructureSize) {
-        var combinationRecords = [];
+    let resultClasses = {};
+    let resultClassesIndex = 0;
+    for (let i = 0; i < chosenPermutations.length; i++) {
+        let permutation = chosenPermutations[i];
 
-        console.log("masterStructure: ", masterStructure);
-        let sectionsCombinationNull = [];
+        let chosenSections = [];
+        /* 
+        chosenSections is an array of Sections that were selected by picking 
+        a Section out from arraySectionTypes with mapping from a permutation
+        */
 
-        // init a null, populated list of sectionsCombination
-        for (let i = 0; i < masterStructureSize; i++)
-            sectionsCombinationNull.push(null);
+        /* map digit permutations to a section for each section type */
+        for (let j in permutation) {
+            /* each iteration through an index in permutation 
+            is an interation over sectiontype, an index in arraySectionTypes
+            */
 
-        allCombinations(0, sectionsCombinationNull, masterStructure, combinationRecords);
-        console.log(hd);
+            let chosenSectionType = arraySectionTypes[j];
+            let digit = permutation[j];
+            let chosenSection = chosenSectionType[digit];
+            if (chosenSection == undefined) {
+                console.log("######################")
+                console.log("chosenSection: ", chosenSection);
+                console.log("digit: ", digit);
+                console.log("chosenSectionType: ", chosenSectionType);
+                console.log("chosenSectionType.length: ", chosenSectionType.length);
+                console.log("j: ", j);
+                console.log("permutation.length: ", permutation.length);
+                console.log("permutation: ", permutation);
+                console.log("######################")
+            }
+            chosenSections.push(chosenSection);
+        }
+
+        // console.log("chosenSections.length: ", chosenSections.length);
+
+        // console.log("chosenSections: ", chosenSections);
         
-        callback(combinationRecords, hd);
-    })
+        let nothingOverlaps = true;
 
-}
+        let ClassesTree = new Tree2(filter);
 
-const testPhase0 = () => {
-    testMapInteger = {
-        0: {
-            sections: [1,2,3,4,5, 6]
-        },
-        1: {
-            sections: [1, 2,3,4,5,6]
-        },
-        2: {
-            sections: [1, 2, 3, 4, 5, 6]
-        },
-        3: {
-            sections: [1, 2, 3, 4, 5, 6]
-        },
-        4: {
-            sections: [1, 2, 3, 4, 5, 6]
-        },
-        5: {
-            sections: [1, 2, 3, 4, 5, 6]
-        },
-        6: {
-            sections: [1, 2, 3, 4, 5, 6]
-        },
-        7: {
-            sections: [1, 2, 3, 4, 5, 6]
+        // iterate through sections mapped to permutation
+        for (let k = 0; k < chosenSections.length; k++) {
+            let section = chosenSections[k];
+
+            let classes = section.getClasses();
+
+            /* check if all classes of this section does not overlap with one another */
+
+            // itereate through classes
+            for (let p in classes) {
+                // insert into tree to check overlap
+                try {
+                    ClassesTree.insert(classes[p]);
+                }
+                catch (e) {
+                    console.log(e);
+                    nothingOverlaps = false;
+                }
+            }
         }
-    }
-    var hd = new memwatch.HeapDiff();
 
-    phase0(testMapInteger, hd, function (combinationRecords, hd) {
-        // console.log(combinationRecords);
-        console.log(combinationRecords.length);
-    });
+        /* if nothing overlaps, add to resultClasses */
+        if (nothingOverlaps) {
+            resultClasses[resultClassesIndex] = [];
+            for (let k = 0; k < chosenSections.length; k++) {
+                let section = chosenSections[k];
 
-    var diff = hd.end();
-    console.log("producing diff");
-    console.log("diff: ", diff);
-    const used = process.memoryUsage();
-    for (let key in used) {
-        console.log(`${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`);
+                let classes = section.getClasses();
+
+                console.log("classes: ", classes);
+                // itereate through classes
+                for (let p in classes) {
+                    // insert class
+                    resultClasses[resultClassesIndex].push(classes[p]);
+                }
+            }
+            resultClassesIndex++;
+        }
+
     }
+    // console.log("resultClasses: ", resultClasses);
+    console.log("done");
+    return resultClasses;
+}
+
+
+const chosenClassToApiDetails = (chosenClasses) => {
+    let size = Object.keys(chosenClasses).length;
+
+    let randomIndex = Math.ceil(Math.random() * (size - 1));
+
+    let classes = chosenClasses[randomIndex];
+
+    let result = {
+        "Monday": [],
+        "Tuesday": [],
+        "Wednesday": [],
+        "Thursday": [],
+        "Friday": [],
+        "Saturday": [],
+        "Sunday": []
+    }
+
+    for (let i in classes) {
+        let singleClass = classes[i];
+
+        let day = singleClass.getDayOfWeek();
+
+        /* parse class information */
+        let time_start = singleClass.getStartTime();
+        let time_end = singleClass.getEndTime();
+        let sectionName = singleClass.getSectionName();
+        let courseId = singleClass.getCourseID();
+        let courseName = singleClass.getCourseName();
+        let room = singleClass.getLocation();
+        let city = singleClass.getCity();
+
+        let location = room + "," + city;
+        let eventName = sectionName;
+        let eventDetails = courseName + ", " + courseId;
+
+        let eventObject = {
+            name: eventName,
+            details: eventDetails,
+            location: location,
+            time_start: time_start,
+            time_end: time_end
+        }
+
+        switch (day) {
+            case 1:
+                result["Monday"].push(eventObject);
+                break;
+            case 2:
+                result["Tuesday"].push(eventObject);
+                break;
+            case 3:
+                result["Wednesday"].push(eventObject);
+                break;
+            case 4:
+                result["Thursday"].push(eventObject);
+                break;
+            case 5:
+                result["Friday"].push(eventObject);
+                break;
+            case 6:
+                result["Saturday"].push(eventObject);
+                break;
+            case 7:
+                result["Sunday"].push(eventObject);
+                break;
+        }
+
+
+    }
+
+    return result;
 
 }
 
-memwatch.on('stats', function (stats) {
-    console.log(stats);
-})
-
-
-exports.mapCoursesToTree1s = mapCoursesToTree1s;
+exports.phase1 = phase1;
+exports.chosenClassToApiDetails = chosenClassToApiDetails;

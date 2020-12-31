@@ -4,6 +4,7 @@
  * - a Class is a single weekly class period of a Section 
  *   that occurs on the same day, same time, every week.
 * @param {any} inputCourseID
+* @param {any} inputCourseName
  * @param {any} inputSectionName
  * @param {any} inputSectionType
  * @param {integer} inputDay e.g. Monday = 1
@@ -15,7 +16,7 @@
  * @param {any} inputInstructors
  * @returns 
  */
-function Class(inputCourseID, inputSectionName, inputSectionType, inputDay, inputStartTime, inputEndTime, inputLocation, inputCity, inputInstructors) {
+function Class(inputCourseID, inputCourseName, inputSectionName, inputSectionType, inputDay, inputStartTime, inputEndTime, inputLocation, inputCity, inputInstructors) {
 
     //////////////////////////////////////////
     //                                      //
@@ -24,6 +25,7 @@ function Class(inputCourseID, inputSectionName, inputSectionType, inputDay, inpu
     //////////////////////////////////////////
 
     const courseID = inputCourseID;
+    const courseName = inputCourseName;
     const sectionName = inputSectionName;
     const sectionType = inputSectionType;
 
@@ -85,6 +87,13 @@ function Class(inputCourseID, inputSectionName, inputSectionType, inputDay, inpu
         return courseID
     }
 
+    /** Get courseName of section
+    * @returns {string} course name
+    */
+    function getCourseName() {
+        return courseName
+    }
+
     /** Get name of section
      * @returns {string} section name (e.g. LEC-1)
      */
@@ -120,6 +129,7 @@ function Class(inputCourseID, inputSectionName, inputSectionType, inputDay, inpu
         getEndTime,
         getInstructors,
         getCourseID,
+        getCourseName,
         getSectionName,
         getLocation,
         getCity,

@@ -21,15 +21,28 @@ const treeify = require('treeify');
 */
 
 /**
- * 
- * 
+ * @param {object} inputFilter
+ * filter = {
+ *      time: {
+ *          1: { (1 for Monday)
+ *             time_earliest: 600,
+ *             time_latest: 1440
+ *          },
+ *          2: { (2 for Tuesday)
+ *              time_earliest: 0, (DEFAULT)
+ *              time_latest: 2400 (DEFAULT)
+ *          },
+ *          etc.
+ *      }
+ * }
  * @returns 
  */
-function Tree2() {
+function Tree2(inputFilter) {
 
     // 1-indexed
     var root = null;
     var treeSize = 0;
+    var filter = inputFilter;
 
 
     //////////////////////////////////////////
@@ -56,18 +69,32 @@ function Tree2() {
     const insert = (inputObject) => {
         
         // day * 2400 + time so that all classes in a week can be inserted into one AVL tree
-        let inputLeftValue = inputObject.getDayOfWeek() * 2400 + inputObject.getStartTime();
-        let inputRightValue = inputObject.getDayOfWeek() * 2400 + inputObject.getEndTime();
-        let inputName = inputObject.getSectionName();
-        // console.log("INSERTION NODE INFO: ");
-        // console.log("inserting ", inputName);
-        // console.log("inputLeftValue: ", inputLeftValue);
-        // console.log("inputRightValue: ", inputRightValue);
+        let dayOfWeek = inputObject.getDayOfWeek();
+        let inputLeftValue = dayOfWeek * 2400 + inputObject.getStartTime();
+        let inputRightValue = dayOfWeek * 2400 + inputObject.getEndTime();
 
-        // console.log("QUERY INTERVAL CHECKING BEGIN: ");
-        if (queryIntervalHelper(inputLeftValue, inputRightValue, root) == false) {
-            // console.log("INSERTION BEGIN: ");
-            root = insertHelper(inputObject, inputName, inputLeftValue, inputRightValue, root, 0);
+        let inputName = inputObject.getSectionName();
+
+        /* apply filter on times */
+        let timeStartFilter;
+        let timeEndFilter;
+        if (filter.time[dayOfWeek] != undefined) {
+            timeStartFilter = filter.time[dayOfWeek].time_earliest;
+            timeEndFilter = filter.time[dayOfWeek].time_latest;
+            if (withinBounds(timeStartFilter, timeEndFilter, inputObject.getStartTime(), inputObject.getEndTime()) == false)
+                throw Error("Requested object did not pass filter: Time");
+            else {
+                // console.log("INSERTION NODE INFO: ");
+                // console.log("inserting ", inputName);
+                // console.log("inputLeftValue: ", inputLeftValue);
+                // console.log("inputRightValue: ", inputRightValue);
+
+                // console.log("QUERY INTERVAL CHECKING BEGIN: ");
+                if (queryIntervalHelper(inputLeftValue, inputRightValue, root) == false) {
+                    // console.log("INSERTION BEGIN: ");
+                    root = insertHelper(inputObject, inputName, inputLeftValue, inputRightValue, root, 0);
+                }
+            }
         }
 
     }
@@ -253,7 +280,7 @@ function Tree2() {
     }
 
     /** O(1) comparison
-     * 
+     * Assumption: begin < end
      * @param {any} beginA 
      * @param {any} endA 
      * @param {any} beginB 
@@ -267,6 +294,20 @@ function Tree2() {
         else {
             return true;
         }
+    }
+
+    /**
+     * Assumption: begin < end
+     * @param {any} beginOutside 
+     * @param {any} endOutside 
+     * @param {any} beginInside 
+     * @param {any} endInside 
+     */
+    const withinBounds = (beginOutside, endOutside, beginInside, endInside) => {
+        if (beginOutside < beginInside && endInside < endOutside )
+            return true;
+        else
+            return false;
     }
 
     /** Balance a given AVL Tree node
@@ -307,7 +348,7 @@ function Tree2() {
 
     const leftRotate = (currNode) => {
         try {
-            console.log("LEFT ROTATING node: ", currNode.getName());
+            // console.log("LEFT ROTATING node: ", currNode.getName());
             let rightLeftSubtree = currNode.right.left;
             let rightSubtree = currNode.right;
             let newNode = null;
@@ -321,11 +362,11 @@ function Tree2() {
 
             newNode.height = max(getHeight(newNode.left), getHeight(newNode.right)) + 1;
 
-            console.log("newNode: ", newNode.getName());
-            if (newNode.left != null)
-                console.log("newNode.left: ", newNode.left.getName());
-            if (newNode.right != null)
-                console.log("newNode.right: ", newNode.right.getName());
+            // console.log("newNode: ", newNode.getName());
+            // if (newNode.left != null)
+                // console.log("newNode.left: ", newNode.left.getName());
+            // if (newNode.right != null)
+                // console.log("newNode.right: ", newNode.right.getName());
 
             return newNode;
 
@@ -344,7 +385,7 @@ function Tree2() {
 
     const rightRotate = (currNode) => {
         try {
-            console.log("RIGHT ROTATING node: ", currNode.getName());
+            // console.log("RIGHT ROTATING node: ", currNode.getName());
             let leftRightSubtree = currNode.left.right;
             let leftSubtree = currNode.left;
             let newNode = null;
@@ -358,11 +399,11 @@ function Tree2() {
 
             newNode.height = max(getHeight(newNode.left), getHeight(newNode.right)) + 1;
 
-            console.log("newNode: ", newNode.getName());
-            if (newNode.left != null)
-                console.log("newNode.left: ", newNode.left.getName());
-            if (newNode.right != null)
-                console.log("newNode.right: ", newNode.right.getName());
+            // console.log("newNode: ", newNode.getName());
+            // if (newNode.left != null)
+                // console.log("newNode.left: ", newNode.left.getName());
+            // if (newNode.right != null)
+                // console.log("newNode.right: ", newNode.right.getName());
 
             return newNode;
         }

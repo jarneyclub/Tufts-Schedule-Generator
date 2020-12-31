@@ -1,10 +1,11 @@
 /** Course class definition
+ * @param {string} inputCourseId
  * @param {string} inputCourseName 
- * @param {list} inputListSections 
  * @param {list} inputListSectionTypes 
+ * @param {list} inputListSections 
  * @returns 
  */
-function Course (inputCourseName, inputListSections, inputListSectionTypes) {
+function Course (inputCourseId, inputCourseName, inputListSectionTypes, inputSections) {
     
     //////////////////////////////////////////
     //                                      //
@@ -12,7 +13,7 @@ function Course (inputCourseName, inputListSections, inputListSectionTypes) {
     //                                      //
     //////////////////////////////////////////
     
-    var sections = {};
+    var sections = inputSections;
     /* e.g.
     {
         "Lecture": [Section, Section],
@@ -20,8 +21,10 @@ function Course (inputCourseName, inputListSections, inputListSectionTypes) {
     }
     */
     const courseName = inputCourseName;
+    const courseID = inputCourseId;
     const sectionTypes = inputListSectionTypes;
-    populateSections();
+
+    // populateSections();
 
     //////////////////////////////////////////
     //                                      //
@@ -42,6 +45,13 @@ function Course (inputCourseName, inputListSections, inputListSectionTypes) {
      */
     function getSectionsByType(type) {
         return sections[type];
+    }
+
+    /** Get id of course
+    * @returns {string} id of course
+    */
+    function getCourseID() {
+        return courseID;
     }
 
     /** Get name of course
@@ -86,6 +96,7 @@ function Course (inputCourseName, inputListSections, inputListSectionTypes) {
         getSections,
         getSectionsByType,
         getCourseName,
+        getCourseID,
         getSectionTypes
     }
 }

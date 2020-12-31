@@ -6,23 +6,25 @@ const path = require('path');
 const app = express();
 
 // use static build pages
-app.use(express.static(path.join(__dirname, 'build')));
+// app.use(express.static(path.join(__dirname, 'build')));
 
 //Enable CORS
 app.use("*",function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Credentials', 'true');
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-    res.header(
-      'Access-Control-Allow-Headers',
-      'access-control-request-headers'
-    );
+    res.header('Access-Control-Allow-Headers', "Content-Type");
+    // res.header(
+      // 'Access-Control-Allow-Headers',
+      // 'access-control-request-headers'
+    // );
     next();
 });
 
+app.use(express.json());
 // turn raw requests into usable properties on req.body
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
 
 // handle api routes
 app.use('/api', routes);
@@ -35,9 +37,14 @@ app.use('/api', routes);
 // app.use('/static', express.static(path.join(__dirname, "/frontend/build/static")));
 // app.use('/manifest.json', express.static(path.join(__dirname, "/frontend/build", "manifest.json")))
 
-app.use(express.static(__dirname + "/frontend/build")); //
+app.use(express.static(__dirname + "/frontend/build"));
+
+app.get("/prototype", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "frontend/prototype/v2", "index.html"));
+});
+
 app.get("/", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "/frontend/build", index.html)); // <- try "index.html"
+  res.sendFile(path.resolve(__dirname, "/frontend/build", "index.html")); 
 });
 
 //export and start the site in start.js
