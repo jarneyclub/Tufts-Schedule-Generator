@@ -8,18 +8,15 @@ const Section = require('./utils/objects/classes/Section.js');
 const Course = require('./utils/objects/classes/Course.js');
 const Tree1 = require('./utils/Tree1.js');
 
+/* algorithms */
 const phase0 = require('./utils/phase0Utils.js');
 const phase1 = require('./utils/phase1Utils.js');
 const objectUtils = require('./utils/apiUtils.js');
 const testUtils = require('./utils/tests/testUtils.js');
+const searchIndex = require('./database/searchIndex.js');
 
-db.run( (collection) => {
-    
-    let cursor = collection.find({'course_id': 'ACL-0007'});
-    
-    cursor.forEach((doc) => {
-        console.log(doc)
-    });
+db.run( (database) => {
+    let collectionCourses = database.collection('courses');
 
     /*
     * Handle GET requests by MONGODB object id
@@ -29,7 +26,7 @@ db.run( (collection) => {
         let objectId = req.query.id;
 
         let oid = new db.ObjectID(objectId);
-        let document = await collection.findOne({'_id': oid});
+        let document = await collectionCourses.findOne({'_id': oid});
         let course = objectUtils.documentToCourse(document);
         let name = course.getCourseName();
         console.log(course);
@@ -52,7 +49,7 @@ db.run( (collection) => {
         for (let index in objectIds) {
             let objectId = objectIds[index];
             let oid = new db.ObjectID(objectId);
-            let document = await collection.findOne({ '_id': oid });
+            let document = await collectionCourses.findOne({ '_id': oid });
             let course = objectUtils.documentToCourse(document);
 
             courses.push(course);
@@ -83,7 +80,7 @@ db.run( (collection) => {
             let objectId = objectIds[index];
 
             let oid = new db.ObjectID(objectId);
-            let document = await collection.findOne({ '_id': oid });
+            let document = await collectionCourses.findOne({ '_id': oid });
             console.log(document);
             let course = objectUtils.documentToCourse(document);
 
@@ -110,7 +107,7 @@ db.run( (collection) => {
         for (let index in courseIds) {
             let courseId = courseIds[index];
             // let oid = new db.ObjectID(objectId);
-            let document = await collection.findOne({ 'course_id': courseId });
+            let document = await collectionCourses.findOne({ 'course_id': courseId });
             let oid = document._id.toString();
             let course = objectUtils.documentToCourse(document);
 
@@ -132,6 +129,203 @@ db.run( (collection) => {
 
         res.send(url);
     })
+
+    router.get('/courses/docs/course-id', async (req, res) => {
+        let courseId = req.query.id;
+        let documents = [];
+        let cursor = await collectionCourses.find({ 'course_id': courseId });
+        
+        /* go through each document and append to documents */
+        await cursor.forEach((doc) => {
+            documents.push(doc);
+        });
+
+        console.log("documents: ", documents);
+        
+        /* stringify ObjectIds in each document */
+        
+        res.json(documents);
+    });
+
+    router.get('/courses/docs/course-name', async (req, res) => {
+        let query = req.query.name;
+        let documents = [];
+        let cursor = await collectionCourses.find({ 'course_name': query });
+
+        /* go through each document and append to documents */
+        await cursor.forEach((doc) => {
+            documents.push(doc);
+        });
+
+        console.log("documents: ", documents);
+
+        /* stringify ObjectIds in each document */
+
+        res.json(documents);
+    });
+
+    router.get('/courses/list/course-name', async (req, res) => {
+        let response = [];
+        let cursor = await collectionCourses.find({});
+
+        /* go through each document and append to response */
+        await cursor.forEach((doc) => {
+            let course_name = doc.course_name;
+            response.push(course_name);
+        });
+
+        /* stringify ObjectIds in each document */
+
+        res.json(response);
+    });
+
+    router.get('/courses/list/course-id', async (req, res) => {
+        let response = [];
+        let cursor = await collectionCourses.find();
+
+        /* go through each document and append to response */
+        await cursor.forEach((doc) => {
+            let course_id = doc.course_id;
+            response.push(course_id);
+        });
+
+        /* stringify ObjectIds in each document */
+
+        res.json(response);
+    });
+
+    router.get('/courses/alg/search-table', async (req, res) => {
+        let collectionSearchIndex = database.collection('search-index');
+        let response = {};
+        let cursor = await collectionSearchIndex.find();
+
+        /* go through each document and append to response */
+        await cursor.forEach((doc) => {
+            let key = doc.query;
+            let value = doc.key;
+
+            response[key] = value;
+
+        });
+
+        res.json(response);
+    })
+
+    router.get('/courses/db/search-table', async (req, res) => {
+        let courseIds = [];
+        let courseNames = [];
+        let cursor = await collectionCourses.find();
+
+        /* go through each document and append to response */
+        await cursor.forEach((doc) => {
+            let course_id = doc.course_id;
+            let course_name = doc.course_name;
+
+            courseIds.push(course_id);
+            courseNames.push(course_name);
+        });
+        
+        let collectionSearchIndex = database.collection('search-index');
+
+        await collectionSearchIndex.drop(async (err, resolve) => {
+            if (err) {
+                /* collection does not exist */
+
+                // create collection
+                database.createCollection("search-index", async (err, sol) => {
+                    collectionSearchIndex = database.collection('search-index');
+
+                    let response = await searchIndex.generateSearchIndex(courseIds, courseNames, collectionCourses);
+                    console.log("finished writing index");
+
+
+                    for (let key in response) {
+                        let newDoc = {
+                            query: key,
+                            key: response[key]
+                        }
+
+                        collectionSearchIndex.insertOne(newDoc);
+                    }
+
+                    console.log("done");
+
+                })
+
+            }
+            if (resolve) {
+                /* collection was deleted */
+
+                // create collection
+                database.createCollection("search-index", async (err, sol) => {
+                    collectionSearchIndex = database.collection('search-index');
+
+                    let response = await searchIndex.generateSearchIndex(courseIds, courseNames, collectionCourses);
+                    console.log("finished writing index");
+
+                    for (let key in response) {
+                        let newDoc = {
+                            query: key,
+                            key: response[key]
+                        }
+
+                        collectionSearchIndex.insertOne(newDoc);
+                    }
+
+                    console.log("done");
+                    
+                })
+
+            }
+        });
+
+        res.send("done");
+    });
+
+    router.get('/courses/alg/search-table/test', async (req, res) => {
+        let collectionSearchIndex = database.collection('search-index');
+
+        await collectionSearchIndex.drop(async (err, resolve) => {
+            if (err) {
+                /* collection does not exist */
+
+                // create collection
+                database.createCollection("search-index", async (err, sol) => {
+                    collectionSearchIndex = database.collection('search-index');
+
+                    let response = {
+                        a: ["a"],
+                        b: ["b"]
+                    }
+
+                    collectionSearchIndex.insert(response);
+
+                    res.send("done");
+                })
+            }
+            if (resolve) {
+                /* collection was deleted */
+
+                // create collection
+                database.createCollection("search-index", async (err, sol) => {
+                    collectionSearchIndex = database.collection('search-index');
+
+                    let response = {
+                        a: ["a"],
+                        b: ["b"]
+                    }
+
+                    collectionSearchIndex.insert(response);
+
+                    res.send("done");
+                })
+
+            }
+        });
+    });
+
+
+
     /*
     * Handle POST request: generate a weekly schedule 
     * given MongoDB ObjectId stringified of courses and a filter
@@ -139,11 +333,11 @@ db.run( (collection) => {
     *   objectIds: [xxxxxx,xxxxx,xxxxxx,xxxxxx,xxxxx],
     *   filter: {
     *       time: {
-    *               0: {
+    *               Monday: {
     *                   time_earliest:
     *                   time_latest:     
     *               },
-    *               1: {
+    *               Tuesday: {
     *                  
     *               }
     *           }
@@ -192,7 +386,7 @@ db.run( (collection) => {
             let objectId = objectIds[index];
 
             let oid = new db.ObjectID(objectId);
-            let document = await collection.findOne({ '_id': oid });
+            let document = await collectionCourses.findOne({ '_id': oid });
             console.log(document);
             let course = objectUtils.documentToCourse(document);
 
