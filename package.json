@@ -23,6 +23,8 @@
     "fs": "0.0.1-security",
     "mongodb": "^3.6.3",
     "path": "^0.12.7",
+    "swagger-jsdoc": "5.0.1",
+    "swagger-ui-express": "^4.1.6",
     "treeify": "^1.1.0"
   },
   "devDependencies": {

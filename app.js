@@ -2,11 +2,32 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const routes = require('./routes/index');
 const promisify = require('es6-promisify');
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 const path = require('path');
 const app = express();
 
-// use static build pages
-// app.use(express.static(path.join(__dirname, 'build')));
+const swaggerDefinition = {
+  openapi: '3.0.0',
+  info: {
+    title: 'Express API for JSONPlaceholder',
+    version: '1.0.0',
+  },
+  servers: [
+    {
+      url: 'https://tufts-schedule-api.herokuapp.com/api',
+      description: 'Production server'
+    }
+  ]
+};
+
+const options = {
+  swaggerDefinition,
+  // Paths to files containing OpenAPI definitions
+  apis: ['./routes/index.js'],
+};
+
+const swaggerSpec = swaggerJSDoc(options);
 
 //Enable CORS
 app.use("*",function (req, res, next) {
@@ -22,20 +43,12 @@ app.use("*",function (req, res, next) {
 });
 
 app.use(express.json());
-// turn raw requests into usable properties on req.body
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
 
 // handle api routes
 app.use('/api', routes);
 
-// divert all other routing to react app
-// app.get('/', (req, res) => {
-  // res.sendFile(path.join(__dirname + '/frontend/build/index.html'));
-// });
-// app.use('/', express.static(path.join(__dirname, "/frontend/build")))
-// app.use('/static', express.static(path.join(__dirname, "/frontend/build/static")));
-// app.use('/manifest.json', express.static(path.join(__dirname, "/frontend/build", "manifest.json")))
+// handle api docs
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(express.static(__dirname + "/frontend/build"));
 
