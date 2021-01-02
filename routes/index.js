@@ -22,6 +22,36 @@ db.run( (database) => {
     * Handle GET requests by MONGODB object id
     * USAGE: BASEURL/api/courses/db-id/?id={MONGODB_ID}
     * */
+
+    /**
+    * @swagger
+    * /courses/db-id/:id:
+    *   get:
+    *     summary: Retrieve a single MongoDB document with given ObjectId
+    *     responses:
+    *       200:
+    *         description: A single document.
+    *         content:
+    *           application/json:
+    *             schema:
+    *               type: object
+    *               properties:
+    *                 data:
+    *                   type: object
+    *                   properties:
+    *                     _id:
+    *                       type: object
+    *                       description: The MongoDB Object ID.
+    *                       example: ObjectId('fe8fe71fbae1fdb75772bbe')
+    *                     course_name:
+    *                       type: string
+    *                       description: The course's name.
+    *                       example: Data Structures
+    *                     course_id:
+    *                       type: string
+    *                       description: The course's id.
+    *                       example: COMP-0015
+    */
     router.get('/courses/db-id', async (req, res) => {
         let objectId = req.query.id;
 
@@ -34,7 +64,7 @@ db.run( (database) => {
             name: name
         };
 
-        res.json(response);
+        res.json({data: response});
     })
 
     /*
@@ -144,7 +174,7 @@ db.run( (database) => {
         
         /* stringify ObjectIds in each document */
         
-        res.json({ documents: documents });
+        res.json({ data: documents });
     });
 
     router.get('/courses/docs/course-name', async (req, res) => {
@@ -161,7 +191,7 @@ db.run( (database) => {
 
         /* stringify ObjectIds in each document */
 
-        res.json({ documents: documents });
+        res.json({ data: documents });
     });
 
     router.get('/courses/list/course-name', async (req, res) => {
@@ -176,7 +206,7 @@ db.run( (database) => {
 
         /* stringify ObjectIds in each document */
 
-        res.json(response);
+        res.json({data: response});
     });
 
     router.get('/courses/list/course-id', async (req, res) => {
@@ -191,7 +221,7 @@ db.run( (database) => {
 
         /* stringify ObjectIds in each document */
 
-        res.json(response);
+        res.json({data: response});
     });
 
     router.get('/courses/alg/search-table', async (req, res) => {
@@ -208,7 +238,7 @@ db.run( (database) => {
 
         });
 
-        res.json(response);
+        res.json({data: response});
     })
 
     router.get('/courses/db/search-table', async (req, res) => {
