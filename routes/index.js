@@ -144,7 +144,7 @@ db.run( (database) => {
         
         /* stringify ObjectIds in each document */
         
-        res.json(documents);
+        res.json({ documents: documents });
     });
 
     router.get('/courses/docs/course-name', async (req, res) => {
@@ -161,7 +161,7 @@ db.run( (database) => {
 
         /* stringify ObjectIds in each document */
 
-        res.json(documents);
+        res.json({ documents: documents });
     });
 
     router.get('/courses/list/course-name', async (req, res) => {
