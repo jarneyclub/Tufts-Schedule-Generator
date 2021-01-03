@@ -22,76 +22,45 @@ db.run( (database) => {
     * Handle GET requests by MONGODB object id
     * USAGE: BASEURL/api/courses/db-id/?id={MONGODB_ID}
     * */
-
-    /**
-    * @swagger
-    * /courses/db-id/:id:
-    *   get:
-    *     summary: Retrieve a single MongoDB document with given ObjectId
-    *     responses:
-    *       200:
-    *         description: A single document.
-    *         content:
-    *           application/json:
-    *             schema:
-    *               type: object
-    *               properties:
-    *                 data:
-    *                   type: object
-    *                   properties:
-    *                     _id:
-    *                       type: object
-    *                       description: The MongoDB Object ID.
-    *                       example: ObjectId('fe8fe71fbae1fdb75772bbe')
-    *                     course_name:
-    *                       type: string
-    *                       description: The course's name.
-    *                       example: Data Structures
-    *                     course_id:
-    *                       type: string
-    *                       description: The course's id.
-    *                       example: COMP-0015
-    */
-    router.get('/courses/db-id', async (req, res) => {
-        let objectId = req.query.id;
+    router.get('/courses/docs/db-id/:id', async (req, res) => {
+        let objectId = req.params.id;
 
         let oid = new db.ObjectID(objectId);
         let document = await collectionCourses.findOne({'_id': oid});
-        let course = objectUtils.documentToCourse(document);
-        let name = course.getCourseName();
-        console.log(course);
+        // let course = objectUtils.documentToCourse(document);
+        // let name = course.getCourseName();
+        // console.log(course);
+        
         let response = {
-            name: name
+            data: document
         };
 
-        res.json({data: response});
+        res.json(response);
     })
 
     /*
     * Handle GET requests by MONGODB object id
     * USAGE: BASEURL/api/courses/db-ids/?id={MONGODB_ID}?id={MONGODB_ID}
     * */
-    router.get('/courses/db-ids', async (req, res) => {
+    router.get('/courses/docs/db-ids', async (req, res) => {
         
         let objectIds = req.query.id;
+
+        let documents = []
 
         let courses = [];
         for (let index in objectIds) {
             let objectId = objectIds[index];
             let oid = new db.ObjectID(objectId);
             let document = await collectionCourses.findOne({ '_id': oid });
-            let course = objectUtils.documentToCourse(document);
-
-            courses.push(course);
+            
+            documents.push(document);
         }
-
-        let names = [];
-        for (let index in courses) {
-            names.push(courses[index].getCourseName());
-        }
-
+        
         let response = {
-            names: names
+            data: {
+                documents: documents
+            }
         };
 
         res.json(response);
@@ -120,7 +89,11 @@ db.run( (database) => {
         
         let chosenClasses = phase1.phase1(courses);
 
-        let response = phase1.chosenClassToApiDetails(chosenClasses);
+        let scheduleWeek = phase1.chosenClassToApiDetails(chosenClasses);
+
+        let response = {
+            data: scheduleWeek   
+        }
 
         res.json(response);
     })
@@ -160,10 +133,10 @@ db.run( (database) => {
         res.send(url);
     })
 
-    router.get('/courses/docs/course-id', async (req, res) => {
-        let courseId = req.query.id;
+    router.get('/courses/docs/course-id/:id', async (req, res) => {
+        let query = req.params.id;
         let documents = [];
-        let cursor = await collectionCourses.find({ 'course_id': courseId });
+        let cursor = await collectionCourses.find({ 'course_id': query });
         
         /* go through each document and append to documents */
         await cursor.forEach((doc) => {
@@ -171,14 +144,18 @@ db.run( (database) => {
         });
 
         console.log("documents: ", documents);
+
+        let response = {
+            data: {
+                documents: documents
+            }
+        }
         
-        /* stringify ObjectIds in each document */
-        
-        res.json({ data: documents });
+        res.json(response)
     });
 
-    router.get('/courses/docs/course-name', async (req, res) => {
-        let query = req.query.name;
+    router.get('/courses/docs/course-name/:name', async (req, res) => {
+        let query = req.params.name;
         let documents = [];
         let cursor = await collectionCourses.find({ 'course_name': query });
 
@@ -425,7 +402,11 @@ db.run( (database) => {
 
         let chosenClasses = phase1.phase1(courses, newFilter);
 
-        let response = phase1.chosenClassToApiDetails(chosenClasses);
+        let weeklySchedule = phase1.chosenClassToApiDetails(chosenClasses);
+
+        let response = {
+            data: weeklySchedule
+        }
 
         console.log("response: ", response);
 
