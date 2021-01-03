@@ -1,4 +1,4 @@
-exports.generateSearchIndex = async (courseIds, courseNames, collection) => {
+exports.generateSearchIndex = async (courseIds, courseNames, collection) => { 
     try {
 
         let index = {};
@@ -25,7 +25,7 @@ exports.generateSearchIndex = async (courseIds, courseNames, collection) => {
                 index[courseIdLowerCase].push(parsedDocument);
 
                 /* map course id substrings */
-                for (let j = 1; j <= courseIdLowerCase.length; j++) {
+                for (let j = 1; j < courseIdLowerCase.length; j++) {
                     let substr = courseIdLowerCase.substring(0, j);
 
                     if (index[substr] == undefined) {
@@ -40,47 +40,55 @@ exports.generateSearchIndex = async (courseIds, courseNames, collection) => {
         }
 
         /* Map complete course names to course documents */
-        for (let i = 0; i < courseNames.length; i++) {
-            let courseName = courseNames[i];
-            let courseNameLowerCase = courseName.toLowerCase();
+        // for (let i = 0; i < courseNames.length; i++) {
+        //     let courseName = courseNames[i];
+        //     let courseNameLowerCase = courseName.toLowerCase();
 
-            if (index[courseNameLowerCase] == undefined)
-                index[courseNameLowerCase] = [];
+        //     let cursor = await collection.find({ course_name: courseName });
 
-            let cursor = await collection.find({ course_name: courseName });
+        //     /* go through each document and append to response */
+        //     await cursor.forEach((doc) => {
+        //         // remove some fields from original document to decrease document size
+        //         let parsedDocument = {
+        //             _id: doc._id.toString(),
+        //             course_name: doc.course_name,
+        //             course_id: doc.course_id
 
-            /* go through each document and append to response */
-            await cursor.forEach((doc) => {
-                // remove some fields from original document to decrease document size
-                let parsedDocument = {
-                    _id: doc._id.toString(),
-                    course_name: doc.course_name,
-                    course_id: doc.course_id
+        //         }
+        //         if (index[courseNameLowerCase] == undefined)
+        //             index[courseNameLowerCase] = [];
+        //         else {
 
-                }
+        //         }
+        //         index[courseNameLowerCase].push(parsedDocument);
 
-                index[courseNameLowerCase].push(parsedDocument);
+        //         /* split courseNames by spaces and map all substrings to documents*/
+        //         let splitCourseName = courseNameLowerCase.split(/[ ]/);
+        //         for (let j = 0; j < splitCourseName.length; j++) {
+        //             let word = splitCourseName[j];
 
-                /* split courseNames by spaces and map all substrings to documents*/
-                let splitCourseName = courseNameLowerCase.split(/[ ]/);
-                for (let j = 0; j < splitCourseName.length; j++) {
-                    let word = splitCourseName[j];
+        //             /* iterate through substrings from index 0*/
+        //             for (let k = 1; k <= word.length; k++) {
+        //                 let substr = word.substring(0, k);
 
-                    /* iterate through substrings from index 0*/
-                    for (let k = 1; k <= word.length; k++) {
-                        let substr = word.substring(0, k);
+        //                 if (index[substr] == undefined) {
+        //                     index[substr] = [];
+        //                 }
+        //                 else {
+        //                     /* check if this document is already in the index */
+        //                     for (let t = 0; t < index[substr].length; t++) {
+        //                         let singleDoc = index[substr][t];
+        //                         singleDoc
+        //                     }
+        //                 }
 
-                        if (index[substr] == undefined) {
-                            index[substr] = [];
-                        }
+        //                 index[substr].push(parsedDocument);
 
-                        index[substr].push(parsedDocument);
+        //             }
+        //         }
+        //     });
 
-                    }
-                }
-            });
-
-        }
+        // }
         // console.log(index);
         return index;
     }
