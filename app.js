@@ -10,7 +10,7 @@ const app = express();
 const swaggerDefinition = {
   openapi: '3.0.0',
   info: {
-    title: 'Express API for JSONPlaceholder',
+    title: 'API for Tufts Schedule Generator',
     version: '1.0.0',
   },
   servers: [
@@ -24,7 +24,7 @@ const swaggerDefinition = {
 const options = {
   swaggerDefinition,
   // Paths to files containing OpenAPI definitions
-  apis: ['./routes/index.js'],
+  apis: ['./routes/docsAPi.yaml'],
 };
 
 const swaggerSpec = swaggerJSDoc(options);

@@ -1,0 +1,374 @@
+paths:
+  /courses/docs/db-id/:id:
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            minimum: 1
+            maximum: 1
+          description: The MongoDB object ID to query
+          example: "fe8fe71fbae1fdb75772bbe"
+      summary: a single course document matched with given ObjectId
+      responses:
+        200:
+          description: A single document.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/CourseDocument"
+  /courses/docs/db-ids:
+    get:
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+            minimum: 1
+            maximum: 7
+          description: The MongoDB object IDs to query
+      summary: a single course document matched with given ObjectId
+      responses:
+        200:
+          description: A single document.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      documents:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/CourseDocument"
+  /courses/docs/course-id/:id:
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            minimum: 1
+            maximum: 1
+          description: The course id to query
+          example: "COMP-0015"
+      summary: all course documents matched with given course id
+      responses:
+        200:
+          description: An array of course documents
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      documents:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/CourseDocument"
+  /courses/docs/course-name/:name:
+    get:
+      parameters:
+        - in: path
+          name: name
+          required: true
+          schema:
+            type: string
+            minimum: 1
+            maximum: 1
+          description: The course name to query
+          example: "Data Structures"
+      summary: all course documents matched with given course name
+      responses:
+        200:
+          description: An array of course documents
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      documents:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/CourseDocument"
+
+  /courses/alg/search-table:
+    get:
+      summary: all course documents with minimum details of which substring of its course id was matched with the key
+      responses:
+        200:
+          description: An array of course documents
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      key:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/CourseInfoMinimum"
+  /courses/schedule:
+    post:
+      summary: an automatically generated weekly schedule
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/requestBodySchedule"
+
+      responses:
+        200:
+          description: An array of course documents
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      key:
+                        type: array
+                        description: a key is a beginning substring of a potential course id
+                        items:
+                          $ref: "#/components/schemas/CourseInfoMinimum"
+
+components:
+  schemas:
+    CourseInfoMinimum: # Minimum details of a course (for search-table)
+      type: object
+      properties:
+        _id:
+          type: object
+          description: The MongoDB Object ID.
+          example: ObjectId('fe8fe71fbae1fdb75772bbe')
+        course_name:
+          type: string
+          description: The course's name.
+          example: Data Structures
+        course_id:
+          type: string
+          description: The course's id.
+          example: COMP-0015
+    CourseDocument: # Generic MongoDB course document
+      type: object
+      properties:
+        _id:
+          type: object
+          description: The MongoDB Object ID.
+          example: ObjectId('fe8fe71fbae1fdb75772bbe')
+        course_name:
+          type: string
+          description: The course's name.
+          example: Data Structures
+        course_id:
+          type: string
+          description: The course's id.
+          example: COMP-0015
+        available_section_types:
+          type: array
+          description: Array of all section types, "componenets", in the course.
+          example: ["Lecture", "Laboratory"]
+        sections:
+          type: object
+          description: Details of all sections in this course.
+          example: {
+              "Lecture": [
+                  {
+                      "section_id": "01-LEC",
+                      "classes": [
+                          {
+                              "time_start": 900,
+                              "time_end": 975,
+                              "days_of_week": 1,
+                              "faculties": [
+                                  "Mark A Sheldon"
+                              ],
+                              "room": "Virtual",
+                              "city": ""
+                          },
+                          {
+                              "time_start": 900,
+                              "time_end": 975,
+                              "days_of_week": 3,
+                              "faculties": [
+                                  "Mark A Sheldon"
+                              ],
+                              "room": "Virtual",
+                              "city": ""
+                          }
+                      ]
+                  }
+              ],
+              "Laboratory": [
+                {
+                    "section_id": "LA-LAB",
+                    "classes": [
+                        {
+                            "time_start": 540,
+                            "time_end": 615,
+                            "days_of_week": 2,
+                            "faculties": [
+                                "Mark A Sheldon"
+                            ],
+                            "room": "Virtual",
+                            "city": ""
+                        }
+                    ]
+                },
+                {
+                    "section_id": "LB-LAB",
+                    "classes": [
+                        {
+                            "time_start": 540,
+                            "time_end": 615,
+                            "days_of_ week": 2,
+                            "faculties": [
+                                "Mark A Sheldon"
+                            ],
+                            "room": "Virtual",
+                            "city": ""
+                        }
+                    ]
+                }
+
+              ]
+
+          }
+    classes:
+      type: array
+      items: 
+        $ref: "#/components/schemas/Class"
+      Section:
+        type: object
+        properties:
+          section_id:
+            type: string
+            example:
+              "01-LEC"
+          classes:
+            type: array
+            items: 
+              $ref: "#/components/schemas/Class"
+    Class:
+      type: object
+      properties:
+        time_start:
+          type: integer
+          example: 900
+        time_end:
+          type: integer
+          example: 975
+        days_of_week:
+          type: integer
+          example: 1
+        faculties:
+          type: array
+          description: array of the full names of instructors teaching this class
+          example:
+            ["Mark A Sheldon"]
+        room:
+          type: string
+          example: "Barnum Hall E204"
+        city:
+          type: string
+          example: "Medford"
+    requestBodySchedule:
+      type: object
+      properties:
+        objectIds:
+          type: array
+          description: array of Object Ids of chosen courses
+          example:
+            ["1111", "222222"]
+              
+        filter:
+          type: object
+          properties:
+            time:
+              type: object
+              properties:
+                Monday:
+                  type: object
+                  properties:
+                    time_earliest:
+                      type: string
+                      example: "00:00"
+                    time_latest:
+                      type: string
+                      example: "23:59"
+                Tuesday:
+                  type: object
+                  properties:
+                    time_earliest:
+                      type: string
+                      example: "00:00"
+                    time_latest:
+                      type: string
+                      example: "23:59"
+                Wednesday:
+                  type: object
+                  properties:
+                    time_earliest:
+                      type: string
+                      example: "00:00"
+                    time_latest:
+                      type: string
+                      example: "23:59"
+                Thursday:
+                  type: object
+                  properties:
+                    time_earliest:
+                      type: string
+                      example: "00:00"
+                    time_latest:
+                      type: string
+                      example: "23:59"
+                Friday:
+                  type: object
+                  properties:
+                    time_earliest:
+                      type: string
+                      example: "00:00"
+                    time_latest:
+                      type: string
+                      example: "23:59"
+                Saturday:
+                  type: object
+                  properties:
+                    time_earliest:
+                      type: string
+                      example: "00:00"
+                    time_latest:
+                      type: string
+                      example: "23:59"
+                Sunday:
+                  type: object
+                  properties:
+                    time_earliest:
+                      type: string
+                      example: "00:00"
+                    time_latest:
+                      type: string
+                      example: "23:59"
+      
+            
+      
