@@ -1,6 +1,4 @@
-const Section = require('./objects/classes/Section.js');
-const Course = require('./objects/classes/Course.js');
-const Tree1 = require('./Tree1.js');
+const apiUtils = require("./apiUtils.js");
 const Tree2 = require('./Tree2.js');
 const memwatch = require('@airbnb/node-memwatch');
 
@@ -139,21 +137,11 @@ const phase1 = (arrayCourses, filter) => {
         /* if nothing overlaps, add to resultClasses */
         if (nothingOverlaps) {
             resultClasses[resultClassesIndex] = [];
-            for (let k = 0; k < chosenSections.length; k++) {
-                let section = chosenSections[k];
 
-                let classes = section.getClasses();
+            resultClasses[resultClassesIndex] = ClassesTree.getObjects();
 
-                console.log("classes: ", classes);
-                // itereate through classes
-                for (let p in classes) {
-                    // insert class
-                    resultClasses[resultClassesIndex].push(classes[p]);
-                }
-            }
             resultClassesIndex++;
         }
-
     }
     // console.log("resultClasses: ", resultClasses);
     console.log("done");
@@ -186,6 +174,11 @@ const chosenClassToApiDetails = (chosenClasses) => {
         /* parse class information */
         let time_start = singleClass.getStartTime();
         let time_end = singleClass.getEndTime();
+
+        // Convert integer times to military time
+        let time_start_military = apiUtils.integerToMilitaryTime(time_start);
+        let time_end_military = apiUtils.integerToMilitaryTime(time_end);
+
         let sectionName = singleClass.getSectionName();
         let courseId = singleClass.getCourseID();
         let courseName = singleClass.getCourseName();
@@ -200,8 +193,8 @@ const chosenClassToApiDetails = (chosenClasses) => {
             name: eventName,
             details: eventDetails,
             location: location,
-            time_start: time_start,
-            time_end: time_end
+            time_start: time_start_military,
+            time_end: time_end_military
         }
 
         switch (day) {
