@@ -653,8 +653,48 @@ const testIntersectionQueryExactSameLeft = () => {
     return result;
 }
 
+const testTreeGetObjects = () => {
+    console.log("--- unit test: ( Tree2 getObjects() ) ---")
+    let result = false;
+    /* INITIALIZE TREE */
+    let tree = new Tree2(defaultFilter);
 
+    /* INITIALIZE OBJECTS TO INSERT */
+    let testObjects = [];
+    testObjects.push(new Class("Test", "test", "A", "testSec", 1, 100, 150, "test location", "test city", ["test instructor"]));
+    testObjects.push(new Class("Test", "test", "B", "testSec", 1, 70, 80, "test location", "test city", ["test instructor"]));
+    testObjects.push(new Class("Test", "test", "C", "testSec", 1, 170, 190, "test location", "test city", ["test instructor"]));
+    // query interval
+    testObjects.push(new Class("Test", "test", "D", "testSec", 1, 70, 80, "test location", "test city", ["test instructor"]));
 
+    /* insert sections */
+    for (let index in testObjects) {
+        let object = testObjects[index];
+
+        tree.insert(object);
+    }
+
+    /* END init tree */
+    let objectsReceived = tree.getObjects();
+    let output = [];
+    for (let i = 0; i < objectsReceived.length; i++ )
+        output.push(objectsReceived[i].getSectionName());
+    
+    let answer = ['B', 'A', 'C'];
+
+    if (arrayEquals(output, answer))
+        result = true;
+    else {
+        tree.print("tree");
+        console.log("Failure: ")
+        console.log("Expected print: ", answer);
+        console.log("Output: ", output);
+        console.log("inorder output");
+        tree.print("inorder");
+        console.log("--- end : ( Tree2 getObjects ) ---")
+    }
+    return result;
+}
 
 const testTree2 = () => {
     console.log("### Testing TREE 2 ###");
@@ -675,6 +715,7 @@ const testTree2 = () => {
     testResults.push(testIntersectionQueryRight());
     testResults.push(testIntersectionQueryExactSame());
     testResults.push(testIntersectionQueryExactSameLeft());
+    testResults.push(testTreeGetObjects());
 
     let testsPass = true;
     for (let index in testResults) {

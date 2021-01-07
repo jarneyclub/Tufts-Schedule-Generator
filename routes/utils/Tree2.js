@@ -75,6 +75,10 @@ function Tree2(inputFilter) {
 
         let inputName = inputObject.getSectionName();
 
+        /* if either endTime of startTime is -1, do not insert and throw error */
+        if (inputObject.getStartTime() == -1 || inputObject.getEndTime() == -1)
+            throw Error("Requested object does not have a defined time");
+
         /* apply filter on times */
         let timeStartFilter;
         let timeEndFilter;
@@ -126,12 +130,33 @@ function Tree2(inputFilter) {
         }
     }
 
+    const getObjects = () => {
+        arrayClasses = []
+        getObjectsPreOrder(root, arrayClasses);
+
+        return arrayClasses;
+    }
+
     //////////////////////////////////////////
     //                                      //
     //          Private Functions           //
     //                                      //
     //////////////////////////////////////////
 
+    const getObjectsPreOrder = (currNode, arrayClasses) => {
+
+        if (currNode != null) {
+
+            getObjectsPreOrder(currNode.left, arrayClasses);
+
+            arrayClasses.push(currNode.getObject());
+
+            getObjectsPreOrder(currNode.right, arrayClasses);
+
+            return arrayClasses
+        }
+
+    }
     /** AVL Insert
      *  Base case: the position at index is undefined, insert node
      *  Compare node values and insert node in tree as leaf
@@ -488,7 +513,8 @@ function Tree2(inputFilter) {
         getRoot: getRoot,
         isEmpty: isEmpty,
         insert: insert,
-        print: print
+        print: print,
+        getObjects: getObjects
     }
 }
 
