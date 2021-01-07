@@ -8,34 +8,36 @@ exports.generateSearchIndex = async (courseIds, courseNames, collection) => {
             let courseId = courseIds[i];
             let courseIdLowerCase = courseId.toLowerCase(); // all keys must be lowercase
 
-            if (index[courseIdLowerCase] == undefined)
+            if (index[courseIdLowerCase] == undefined) {
+                
                 index[courseIdLowerCase] = [];
 
-            let cursor = await collection.find({ course_id: courseId });
+                let cursor = await collection.find({ course_id: courseId });
 
-            // go through each document and append
-            await cursor.forEach((doc) => {
-                // remove some fields from original document to decrease document size
-                let parsedDocument = {
-                    _id: doc._id.toString(),
-                    course_name: doc.course_name,
-                    course_id: doc.course_id
+                // go through each document and append
+                await cursor.forEach((doc) => {
+                    // remove some fields from original document to decrease document size
+                    let parsedDocument = {
+                        _id: doc._id.toString(),
+                        course_name: doc.course_name,
+                        course_id: doc.course_id
 
-                }
-                index[courseIdLowerCase].push(parsedDocument);
-
-                /* map course id substrings */
-                for (let j = 1; j < courseIdLowerCase.length; j++) {
-                    let substr = courseIdLowerCase.substring(0, j);
-
-                    if (index[substr] == undefined) {
-                        index[substr] = [];
                     }
+                    index[courseIdLowerCase].push(parsedDocument);
 
-                    index[substr].push(parsedDocument);
+                    /* map course id substrings */
+                    for (let j = 1; j < courseIdLowerCase.length; j++) {
+                        let substr = courseIdLowerCase.substring(0, j);
 
-                }
-            });
+                        if (index[substr] == undefined) {
+                            index[substr] = [];
+                        }
+
+                        index[substr].push(parsedDocument);
+
+                    }
+                });
+            }
 
         }
 
