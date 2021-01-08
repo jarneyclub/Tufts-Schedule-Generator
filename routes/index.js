@@ -345,12 +345,12 @@ db.run( (database) => {
     */
     router.post('/courses/schedule', async (req, res) => {
         let requestBody = req.body;
-        console.log("requestBody: ", requestBody);
+        // console.log("requestBody: ", requestBody);
 
         let objectIds = requestBody.objectIds;
         let filter = requestBody.filter;
-        console.log("objectIds: ", objectIds);
-        console.log("filter: ", filter);
+        // console.log("objectIds: ", objectIds);
+        // console.log("filter: ", filter);
 
         var start = Date.now(); // begin timing API endpoint
 
@@ -384,7 +384,7 @@ db.run( (database) => {
             }
         }
 
-        console.log("object: ", newFilter.time);
+        // console.log("object: ", newFilter.time);
         
         let courses = [];
         for (let index in objectIds) {

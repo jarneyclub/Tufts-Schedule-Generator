@@ -79,7 +79,7 @@ function Tree2(inputFilter) {
         if (inputObject.getStartTime() == -1 || inputObject.getEndTime() == -1) {
             // console.log("inputObject.getStartTime(): ", inputObject.getStartTime());
             // console.log("inputObject.getEndTime(): ", inputObject.getEndTime());
-            console.log("courseID: ", inputObject.getCourseID());
+            // console.log("courseID: ", inputObject.getCourseID());
 
             throw Error("Requested object does not have a defined time");
         }
@@ -121,7 +121,7 @@ function Tree2(inputFilter) {
 
                 // console.log("QUERY INTERVAL CHECKING BEGIN: ");
                 if (queryIntervalHelper(inputLeftValue, inputRightValue, root) == false) {
-                    console.log("INSERTION BEGIN: ");
+                    // console.log("INSERTION BEGIN: ");
                     root = insertHelper(inputObject, inputName, inputLeftValue, inputRightValue, root, 0);
                 }
             }
@@ -169,20 +169,6 @@ function Tree2(inputFilter) {
     //                                      //
     //////////////////////////////////////////
 
-    const getObjectsPreOrder = (currNode, arrayClasses) => {
-
-        if (currNode != null) {
-
-            getObjectsPreOrder(currNode.left, arrayClasses);
-
-            arrayClasses.push(currNode.getObject());
-
-            getObjectsPreOrder(currNode.right, arrayClasses);
-
-            return arrayClasses
-        }
-
-    }
     /** AVL Insert
      *  Base case: the position at index is undefined, insert node
      *  Compare node values and insert node in tree as leaf
@@ -533,6 +519,21 @@ function Tree2(inputFilter) {
             inOrderPrintHelper(currNode.right, array); // recurse to right subtree
 
         }
+    }
+
+    const getObjectsPreOrder = (currNode, arrayClasses) => {
+
+        if (currNode != null) {
+
+            getObjectsPreOrder(currNode.left, arrayClasses);
+
+            arrayClasses.push(currNode.getObject());
+
+            getObjectsPreOrder(currNode.right, arrayClasses);
+
+            return arrayClasses
+        }
+
     }
 
     return {
