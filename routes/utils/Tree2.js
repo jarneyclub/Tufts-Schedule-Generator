@@ -76,16 +76,42 @@ function Tree2(inputFilter) {
         let inputName = inputObject.getSectionName();
 
         /* if either endTime of startTime is -1, do not insert and throw error */
-        if (inputObject.getStartTime() == -1 || inputObject.getEndTime() == -1)
+        if (inputObject.getStartTime() == -1 || inputObject.getEndTime() == -1) {
+            // console.log("inputObject.getStartTime(): ", inputObject.getStartTime());
+            // console.log("inputObject.getEndTime(): ", inputObject.getEndTime());
+            console.log("courseID: ", inputObject.getCourseID());
+
             throw Error("Requested object does not have a defined time");
+        }
 
         /* apply filter on times */
-        let timeStartFilter;
-        let timeEndFilter;
+
         if (filter.time[dayOfWeek] != undefined) {
-            timeStartFilter = filter.time[dayOfWeek].time_earliest;
-            timeEndFilter = filter.time[dayOfWeek].time_latest;
-            if (withinBounds(timeStartFilter, timeEndFilter, inputObject.getStartTime(), inputObject.getEndTime()) == false)
+
+            /* check if request object is within a user preference */
+
+            // iterate through time preferences
+            let timePreferencesOnDay = filter.time[dayOfWeek];
+            let withinUserPreference = false; // flag for user time preference
+            
+            for ( let i = 0; i < timePreferencesOnDay.length; i++ ) {
+
+                let timeStartFilter = timePreferencesOnDay[i].time_earliest;
+                let timeEndFilter = timePreferencesOnDay[i].time_latest;
+
+                // console.log("timeStartFilter: ", timeStartFilter);
+                // console.log("timeEndFilter: ", timeEndFilter);
+                // console.log("inputObject.getStartTime(): ", inputObject.getStartTime());
+                // console.log("inputObject.getEndTime(): ", inputObject.getEndTime());
+
+                if (withinBounds(timeStartFilter, timeEndFilter, inputObject.getStartTime(), inputObject.getEndTime()) == true) {
+                    withinUserPreference = true;
+                    break;
+                }
+            }
+
+            /* begin insertion process if user preference fulfilled */
+            if (withinUserPreference == false) 
                 throw Error("Requested object did not pass filter: Time");
             else {
                 // console.log("INSERTION NODE INFO: ");
@@ -95,7 +121,7 @@ function Tree2(inputFilter) {
 
                 // console.log("QUERY INTERVAL CHECKING BEGIN: ");
                 if (queryIntervalHelper(inputLeftValue, inputRightValue, root) == false) {
-                    // console.log("INSERTION BEGIN: ");
+                    console.log("INSERTION BEGIN: ");
                     root = insertHelper(inputObject, inputName, inputLeftValue, inputRightValue, root, 0);
                 }
             }
@@ -321,7 +347,7 @@ function Tree2(inputFilter) {
         }
     }
 
-    /**
+    /** INCLUSIVELY checks if [beginInside, endInside] is within [beginOutside, endOutside];
      * Assumption: begin < end
      * @param {any} beginOutside 
      * @param {any} endOutside 
@@ -329,7 +355,7 @@ function Tree2(inputFilter) {
      * @param {any} endInside 
      */
     const withinBounds = (beginOutside, endOutside, beginInside, endInside) => {
-        if (beginOutside < beginInside && endInside < endOutside )
+        if (beginOutside <= beginInside && endInside <= endOutside )
             return true;
         else
             return false;

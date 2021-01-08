@@ -3,23 +3,29 @@ const Course = require('./objects/classes/Course.js');
 const Class = require('./objects/classes/Class.js');
 
 const integerToMilitaryTime = (input) => {
-    let intHour = Math.floor(input/60);
-    let intMinutes = input%60;
 
-    let strHour;
-    let strMin;
-    if (intHour < 10)
-        strHour = "0" + intHour.toString();
-    else
-        strHour = intHour.toString();
+    if (input == -1) {
+        let result = "Time not specified";
+        return result;
+    }
+    else {
+        let intHour = Math.floor(input / 60);
+        let intMinutes = input % 60;
 
-    if (intMinutes < 10)
-        strMin = "0" + intMinutes.toString();
-    else
-        strMin = intMinutes.toString();
-    let result = strHour + ":" + strMin;
+        let strHour;
+        let strMin;
+        if (intHour < 10)
+            strHour = "0" + intHour.toString();
+        else
+            strHour = intHour.toString();
 
-    return result;
+        if (intMinutes < 10)
+            strMin = "0" + intMinutes.toString();
+        else
+            strMin = intMinutes.toString();
+        let result = strHour + ":" + strMin;
+        return result;
+    }
 }
 
 const militaryTimeToInteger = (input) => {
@@ -73,7 +79,7 @@ const documentToCourse = (document) => {
                 let classInfo = arrayClasses[indexClass];
                 let timeStart = classInfo.time_start;
                 let timeEnd = classInfo.time_end;
-                let day = classInfo.days_of_week;
+                let day = classInfo.day_of_week;
                 let faculties = classInfo.faculties;
                 let city = classInfo.city; 
                 let room = classInfo.room;

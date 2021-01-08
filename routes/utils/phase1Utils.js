@@ -67,7 +67,7 @@ const phase1 = (arrayCourses, filter) => {
     }
 
     let chosenPermutations = Permutations.getPermutations(possibleDigits);
-    
+    console.log("possibleDigits: ", possibleDigits);
     let arraySectionTypes = mapSectionTypes(arrayCourses);
     // console.log("arraySectionTypes: ", arraySectionTypes);
 
@@ -109,8 +109,8 @@ const phase1 = (arrayCourses, filter) => {
 
         // console.log("chosenSections: ", chosenSections);
         
-        let nothingOverlaps = true;
-
+        let allClassesInserted = true;
+        let classesTimeNotSpecified = []; // array that holds classes of which time wasn't specified
         let ClassesTree = new Tree2(filter);
 
         // iterate through sections mapped to permutation
@@ -121,30 +121,49 @@ const phase1 = (arrayCourses, filter) => {
 
             /* check if all classes of this section does not overlap with one another */
 
-            // itereate through classes
+            // iterate through classes
             for (let p in classes) {
                 // insert into tree to check overlap
                 try {
-                    ClassesTree.insert(classes[p]);
+                    let classToInsert = classes[p];
+
+                    if (classToInsert.getStartTime() == -1 && classToInsert.getEndTime() == -1) {
+                        /* Class period's time is not specified, so just add to an array for later appending and don't process in Tree2 */
+                        classesTimeNotSpecified.push(classToInsert);
+                    }
+                    else {
+                        /* Class period time is specified. Use Tree2 to check for overlaps */
+                        ClassesTree.insert(classToInsert);
+                    }
+
                 }
                 catch (e) {
-                    console.log(e);
-                    nothingOverlaps = false;
+                    // console.log(e);
+                    allClassesInserted = false;
+                    // console.log("---------END (allClasses NOT inserted)---------");
+                    // console.log(e);
+                    break;
                 }
             }
+
+            if (allClassesInserted == false)
+                break;
         }
 
         /* if nothing overlaps, add to resultClasses */
-        if (nothingOverlaps) {
+        if (allClassesInserted == true) {
             resultClasses[resultClassesIndex] = [];
 
             resultClasses[resultClassesIndex] = ClassesTree.getObjects();
 
+            for (let j = 0; j < classesTimeNotSpecified.length; j++) {
+                resultClasses[resultClassesIndex].push(classesTimeNotSpecified[j]);
+            }
+
             resultClassesIndex++;
         }
     }
-    // console.log("resultClasses: ", resultClasses);
-    console.log("done");
+    console.log("phase 1 has finished");
     return resultClasses;
 }
 
@@ -163,7 +182,8 @@ const chosenClassToApiDetails = (chosenClasses) => {
         "Thursday": [],
         "Friday": [],
         "Saturday": [],
-        "Sunday": []
+        "Sunday": [],
+        "Unscheduled":[]
     }
 
     for (let i in classes) {
@@ -198,6 +218,9 @@ const chosenClassToApiDetails = (chosenClasses) => {
         }
 
         switch (day) {
+            case -1:
+                result["Unscheduled"].push(eventObject);
+                break;
             case 1:
                 result["Monday"].push(eventObject);
                 break;
