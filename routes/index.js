@@ -117,20 +117,10 @@ db.run( (database) => {
             courses.push(course);
             oids.push(oid)
         }
-        
-        // generate endpoint url
-        let url = "http://localhost:7777/api/courses/schedule/db-ids/?ids=";
-
-        for (let index in oids) {
-            if (index == 0)
-                url = url + oids[index];
-            else
-                url = url + "&ids=" + oids[index];
-        }
 
         // phase1.phase1(courses);
 
-        res.send(url);
+        res.send(oids);
     })
 
     router.get('/courses/docs/course-id/:id', async (req, res) => {
@@ -340,13 +330,13 @@ db.run( (database) => {
     *   objectIds: [xxxxxx,xxxxx,xxxxxx,xxxxxx,xxxxx],
     *   filter: {
     *       time: {
-    *               Monday: {
+    *               Monday: [{
     *                   time_earliest:
     *                   time_latest:     
-    *               },
-    *               Tuesday: {
+    *               }],
+    *               Tuesday: [{
     *                  
-    *               }
+    *               }]
     *           }
     *   }
     * 
@@ -361,7 +351,9 @@ db.run( (database) => {
         let filter = requestBody.filter;
         console.log("objectIds: ", objectIds);
         console.log("filter: ", filter);
-        
+
+        var start = Date.now(); // begin timing API endpoint
+
         let dayToInteger = {
             Monday: 1,
             Tuesday: 2,
@@ -379,14 +371,20 @@ db.run( (database) => {
         for (let key in filter.time) {
             let integer = dayToInteger[key];
             newFilter.time[integer] = filter.time[key];
-            let strTimeEarliest = filter.time[key].time_earliest;
-            let strTimeLatest = filter.time[key].time_latest;
-            
-            let intTimeForEarliest = objectUtils.militaryTimeToInteger(strTimeEarliest);
-            let intTimeForLatest = objectUtils.militaryTimeToInteger(strTimeLatest);
-            newFilter.time[integer].time_earliest = intTimeForEarliest;
-            newFilter.time[integer].time_latest = intTimeForLatest;
+
+            let arrayTimes = newFilter.time[integer];
+            for (let i = 0; i < arrayTimes.length; i++ ) {
+                let strTimeEarliest = filter.time[key][i].time_earliest;
+                let strTimeLatest = filter.time[key][i].time_latest;
+
+                let intTimeForEarliest = objectUtils.militaryTimeToInteger(strTimeEarliest);
+                let intTimeForLatest = objectUtils.militaryTimeToInteger(strTimeLatest);
+                newFilter.time[integer][i].time_earliest = intTimeForEarliest;
+                newFilter.time[integer][i].time_latest = intTimeForLatest;
+            }
         }
+
+        console.log("object: ", newFilter.time);
         
         let courses = [];
         for (let index in objectIds) {
@@ -404,11 +402,16 @@ db.run( (database) => {
 
         let weeklySchedule = phase1.chosenClassToApiDetails(chosenClasses);
 
+        var end = Date.now(); // End timing API endpoint
+        var difference = end - start;
+        let timeTakenString = difference.toString() + "ms";
+
         let response = {
-            data: weeklySchedule
+            data: weeklySchedule,
+            time_taken: timeTakenString
         }
 
-        console.log("response: ", response);
+        // console.log("response: ", response);
 
         res.json(response);
     })
