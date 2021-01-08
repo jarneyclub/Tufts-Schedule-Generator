@@ -145,14 +145,87 @@ paths:
                   data:
                     type: object
                     properties:
-                      key:
+                      Monday:
                         type: array
-                        description: a key is a beginning substring of a potential course id
+                        description: all classes happening on this day
                         items:
-                          $ref: "#/components/schemas/CourseInfoMinimum"
-
+                          $ref: "#/components/schemas/ClassInfoInSchedule"
+                      Tuesday:
+                        type: array
+                        description: all classes happening on this day
+                        items:
+                          $ref: "#/components/schemas/ClassInfoInSchedule"
+                      Wednesday:
+                        type: array
+                        description: all classes happening on this day
+                        items:
+                          $ref: "#/components/schemas/ClassInfoInSchedule"
+                      Friday:
+                        type: array
+                        description: all classes happening on this day
+                        items:
+                          $ref: "#/components/schemas/ClassInfoInSchedule"
+                      Saturday:
+                        type: array
+                        description: all classes happening on this day
+                        items:
+                          $ref: "#/components/schemas/ClassInfoInSchedule"
+                      Sunday:
+                        type: array
+                        description: all classes happening on this day
+                        items:
+                          $ref: "#/components/schemas/ClassInfoInSchedule"
+                      Unscheduled:
+                        type: array
+                        description: all classes of which time was unspecified
+                        items:
+                          type: object
+                          properties:
+                            details:
+                              type: string
+                              description: 
+                              example: Calculus III, MATH-0042
+                            location:
+                              type: string
+                              description: 
+                              example: Virtual
+                            name:
+                              type: string
+                              description: 
+                              example: R02-RCT
+                            time_start:
+                              type: string
+                              description: 
+                              example: ""
+                            time_end:
+                              type: string
+                              description: 
+                              example: ""
 components:
   schemas:
+    ClassInfoInSchedule:
+      type: object
+      properties:
+        details:
+          type: string
+          description: 
+          example: Calculus III, MATH-0042
+        location:
+          type: string
+          description: 
+          example: Virtual
+        name:
+          type: string
+          description: 
+          example: R02-RCT
+        time_start:
+          type: string
+          description: 
+          example: "10:30"
+        time_end:
+          type: string
+          description: 
+          example: "11:20"
     CourseInfoMinimum: # Minimum details of a course (for search-table)
       type: object
       properties:
@@ -198,7 +271,7 @@ components:
                           {
                               "time_start": 900,
                               "time_end": 975,
-                              "days_of_week": 1,
+                              "day_of_week": 1,
                               "faculties": [
                                   "Mark A Sheldon"
                               ],
@@ -208,7 +281,7 @@ components:
                           {
                               "time_start": 900,
                               "time_end": 975,
-                              "days_of_week": 3,
+                              "day_of_week": 3,
                               "faculties": [
                                   "Mark A Sheldon"
                               ],
@@ -225,7 +298,7 @@ components:
                         {
                             "time_start": 540,
                             "time_end": 615,
-                            "days_of_week": 2,
+                            "day_of_week": 2,
                             "faculties": [
                                 "Mark A Sheldon"
                             ],
@@ -277,7 +350,7 @@ components:
         time_end:
           type: integer
           example: 975
-        days_of_week:
+        day_of_week:
           type: integer
           example: 1
         faculties:
@@ -298,8 +371,7 @@ components:
           type: array
           description: array of Object Ids of chosen courses
           example:
-            ["1111", "222222"]
-              
+            ["5ff7cb917050e1e1f4a1495a", "5ff7cb917050e1e1f4a148e5", "5ff7cb917050e1e1f4a1481a", "5ff7cb917050e1e1f4a14891", "5ff7cb917050e1e1f4a14e37"]
         filter:
           type: object
           properties:
@@ -307,68 +379,82 @@ components:
               type: object
               properties:
                 Monday:
-                  type: object
-                  properties:
-                    time_earliest:
-                      type: string
-                      example: "00:00"
-                    time_latest:
-                      type: string
-                      example: "23:59"
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      time_earliest:
+                        type: string
+                        example: "00:00"
+                      time_latest:
+                        type: string
+                        example: "23:59"
                 Tuesday:
-                  type: object
-                  properties:
-                    time_earliest:
-                      type: string
-                      example: "00:00"
-                    time_latest:
-                      type: string
-                      example: "23:59"
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      time_earliest:
+                        type: string
+                        example: "00:00"
+                      time_latest:
+                        type: string
+                        example: "23:59"
                 Wednesday:
-                  type: object
-                  properties:
-                    time_earliest:
-                      type: string
-                      example: "00:00"
-                    time_latest:
-                      type: string
-                      example: "23:59"
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      time_earliest:
+                        type: string
+                        example: "00:00"
+                      time_latest:
+                        type: string
+                        example: "23:59"
                 Thursday:
-                  type: object
-                  properties:
-                    time_earliest:
-                      type: string
-                      example: "00:00"
-                    time_latest:
-                      type: string
-                      example: "23:59"
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      time_earliest:
+                        type: string
+                        example: "00:00"
+                      time_latest:
+                        type: string
+                        example: "23:59"
                 Friday:
-                  type: object
-                  properties:
-                    time_earliest:
-                      type: string
-                      example: "00:00"
-                    time_latest:
-                      type: string
-                      example: "23:59"
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      time_earliest:
+                        type: string
+                        example: "00:00"
+                      time_latest:
+                        type: string
+                        example: "23:59"
                 Saturday:
-                  type: object
-                  properties:
-                    time_earliest:
-                      type: string
-                      example: "00:00"
-                    time_latest:
-                      type: string
-                      example: "23:59"
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      time_earliest:
+                        type: string
+                        example: "00:00"
+                      time_latest:
+                        type: string
+                        example: "23:59"
                 Sunday:
-                  type: object
-                  properties:
-                    time_earliest:
-                      type: string
-                      example: "00:00"
-                    time_latest:
-                      type: string
-                      example: "23:59"
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      time_earliest:
+                        type: string
+                        example: "00:00"
+                      time_latest:
+                        type: string
+                        example: "23:59"
       
             
       
