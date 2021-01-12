@@ -116,6 +116,8 @@ const phase1 = (arrayCourses, filter) => {
     //         Get Possible Digits        //
     //                                    //
     ////////////////////////////////////////
+    
+    let start = Date.now();
 
     let possibleDigits = [];
     // iterate through courses
@@ -133,21 +135,40 @@ const phase1 = (arrayCourses, filter) => {
 
     }
 
+    let end = Date.now();
+    let difference = end - start;
+    let timeTakenString = difference.toString() + "ms";
+    console.log("Get Possible Digits took: ", timeTakenString);
+
     ////////////////////////////////////////
     //                                    //
     //        Generate Permutations       //
     //                                    //
     ////////////////////////////////////////
+    
+    start = Date.now();
 
     /* (only when using dynamic programming) perform counting sort on possibleDigits for more consistent memoisation */
     let sortedObject = countingSort(possibleDigits, 31);
     let sortedDigits = sortedObject.sorted; // permutations will run on this array of integers
     let references = sortedObject.references; // a map of indices in which entry in index e is the index in chosenSectionType (list of sections)
 
-    /* get permutations */
-    let chosenPermutations = Permutations.getPermutations(sortedDigits);
-    console.log("possibleDigits: ", possibleDigits);
+    end = Date.now();
+    difference = end - start;
+    timeTakenString = difference.toString() + "ms";
+    console.log("CountingSort took: ", timeTakenString);
 
+    /* get permutations */
+    start = Date.now();
+
+    let chosenPermutations = Permutations.getPermutations(sortedDigits);
+    console.log("chosenPermutations.length: ", chosenPermutations.length);
+    end = Date.now();
+    difference = end - start;
+    timeTakenString = difference.toString() + "ms";
+    console.log("getPermutations() took: ", timeTakenString);
+
+    start = Date.now();
     let arraySectionTypes = mapSectionTypes(arrayCourses);
     // console.log("arraySectionTypes: ", arraySectionTypes);
 
@@ -179,7 +200,6 @@ const phase1 = (arrayCourses, filter) => {
             let chosenSectionType = arraySectionTypes[j];
             
             let realReference = references[j];
-            console.log("realReference: ", realReference);
 
             let digit = permutation[realReference];
 
@@ -202,6 +222,12 @@ const phase1 = (arrayCourses, filter) => {
 
         // console.log("chosenSections: ", chosenSections);
         
+        ////////////////////////////////////////
+        //                                    //
+        //        Filter ideal schedules      //
+        //                                    //
+        ////////////////////////////////////////
+
         let allClassesInserted = true;
         let classesTimeNotSpecified = []; // array that holds classes of which time wasn't specified
         let ClassesTree = new Tree2(filter);
@@ -258,7 +284,12 @@ const phase1 = (arrayCourses, filter) => {
             resultClassesIndex++;
         }
     }
+
     console.log("phase 1 has finished");
+    end = Date.now();
+    difference = end - start;
+    timeTakenString = difference.toString() + "ms";
+    console.log("Use permutations and Filter ideal scchedule took: ", timeTakenString);
     return resultClasses;
 }
 
