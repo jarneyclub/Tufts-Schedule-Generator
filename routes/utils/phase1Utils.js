@@ -4,6 +4,81 @@ const memwatch = require('@airbnb/node-memwatch');
 
 const Permutations = require('./permutations.js');
 
+/** sort arrayDigits
+ * 
+ * @param {array} arrayDigits 
+ * @param {integer} maxEntryExcluding 
+ * @returns an object with an array of references and sorted array
+ */
+const countingSort = (arrayDigits, maxEntryExcluding) => {
+    var arrayCounting = [];
+
+    // initialize counting array for counting sort
+    for (let i = 0; i < maxEntryExcluding; i++) {
+        arrayCounting.push([]);
+    }
+
+    var arrayObjects = [];
+    // iterate through indices in arrayDigits
+    for (let i = 0; i < arrayDigits.length; i++) {
+        let object = {
+            "realIndex": undefined,
+            "value": undefined
+        };
+
+        object.realIndex = i;
+        object.value = arrayDigits[i];
+
+        arrayObjects.push(object);
+    }
+
+    // recursively sort arrayObjects
+    countingSortHelper(arrayObjects, arrayCounting);
+
+    // iterate through the sorted objects
+    let arraySorted = [];
+    let mapReferences = {};
+
+    let indexReference = 0;
+    for (let i = 0; i < arrayCounting.length; i++) {
+        let index = arrayCounting[i];
+
+        for (let j = 0; j < index.length; j++) {
+            let object = index[j];
+
+            arraySorted.push(object.value);
+
+            mapReferences[object.realIndex] = indexReference;
+            indexReference++;
+        }
+    }
+
+    let toReturn = {
+        "references": mapReferences,
+        "sorted": arraySorted
+    }
+
+    return toReturn;
+}
+
+/** Helper function for counting sort
+ * 
+ * @param {array} arrayObjects 
+ * @param {array} arrayCounting 
+ */
+const countingSortHelper = (arrayObjects, arrayCounting) => {
+    if (arrayObjects.length < 1)
+        return
+
+    let firstEntry = arrayObjects[0];
+    let value = firstEntry.value;
+    arrayCounting[value].push(firstEntry);
+
+    arrayObjects.shift();
+
+    countingSortHelper(arrayObjects, arrayCounting);
+}
+
 const mapSectionTypes = (arrayCourses) => {
     let arraySections = [];
     for (i in arrayCourses) {
@@ -28,19 +103,6 @@ const mapSectionTypes = (arrayCourses) => {
  * 
  * @param {any} arrayCourses 
  * @param {object} filter
- * filter = {
- *      time: {
- *          1: { (1 for Monday)
- *             time_earliest: 600,
- *             time_latest: 1440
- *          },
- *          2: { (2 for Tuesday)
- *              time_earliest: 0, (DEFAULT)
- *              time_latest: 2400 (DEFAULT)
- *          },
- *          etc.
- *      }
- * }
  * @returns 
  */
 const phase1 = (arrayCourses, filter) => {
@@ -49,8 +111,13 @@ const phase1 = (arrayCourses, filter) => {
     
     /* get possible digits for permutations */
 
-    let possibleDigits = [];
+    ////////////////////////////////////////
+    //                                    //
+    //         Get Possible Digits        //
+    //                                    //
+    ////////////////////////////////////////
 
+    let possibleDigits = [];
     // iterate through courses
     for (let index in arrayCourses) {
         let course = arrayCourses[index];
@@ -66,13 +133,27 @@ const phase1 = (arrayCourses, filter) => {
 
     }
 
-    let chosenPermutations = Permutations.getPermutations(possibleDigits);
+    ////////////////////////////////////////
+    //                                    //
+    //        Generate Permutations       //
+    //                                    //
+    ////////////////////////////////////////
+
+    /* (only when using dynamic programming) perform counting sort on possibleDigits for more consistent memoisation */
+    let sortedObject = countingSort(possibleDigits, 31);
+    let sortedDigits = sortedObject.sorted; // permutations will run on this array of integers
+    let references = sortedObject.references; // a map of indices in which entry in index e is the index in chosenSectionType (list of sections)
+
+    /* get permutations */
+    let chosenPermutations = Permutations.getPermutations(sortedDigits);
     console.log("possibleDigits: ", possibleDigits);
+
     let arraySectionTypes = mapSectionTypes(arrayCourses);
     // console.log("arraySectionTypes: ", arraySectionTypes);
 
     let resultClasses = {};
     let resultClassesIndex = 0;
+
     for (let i = 0; i < chosenPermutations.length; i++) {
         let permutation = chosenPermutations[i];
 
@@ -81,15 +162,27 @@ const phase1 = (arrayCourses, filter) => {
         chosenSections is an array of Sections that were selected by picking 
         a Section out from arraySectionTypes with mapping from a permutation
         */
+        
+        ////////////////////////////////////////
+        //                                    //
+        //           Use Permutations         //
+        //                                    //
+        ////////////////////////////////////////
 
         /* map digit permutations to a section for each section type */
         for (let j in permutation) {
+
             /* each iteration through an index in permutation 
             is an interation over sectiontype, an index in arraySectionTypes
             */
 
             let chosenSectionType = arraySectionTypes[j];
-            let digit = permutation[j];
+            
+            let realReference = references[j];
+            console.log("realReference: ", realReference);
+
+            let digit = permutation[realReference];
+
             let chosenSection = chosenSectionType[digit];
             if (chosenSection == undefined) {
                 console.log("######################")
@@ -112,6 +205,8 @@ const phase1 = (arrayCourses, filter) => {
         let allClassesInserted = true;
         let classesTimeNotSpecified = []; // array that holds classes of which time wasn't specified
         let ClassesTree = new Tree2(filter);
+        
+        /* Go through each permutation and assign classes by each index's digit */
 
         // iterate through sections mapped to permutation
         for (let k = 0; k < chosenSections.length; k++) {
