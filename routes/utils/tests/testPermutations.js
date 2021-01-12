@@ -138,6 +138,32 @@ const testPermutationsDPUnsortedThree = () => {
     return result;
 }
 
+const testPermutationsDPThirtyTwo = () => {
+    console.log("--- unit test ( Dynamic Programming Permutations ( 32 possible digit index exists) ) ---")
+
+    let result = false;
+    let expectedSize = 1;
+
+    /* INITIALIZE INPUT */
+    let digitsArray = [6, 4, 10, 32, 5, 10, 0, 4];
+    for (let index in digitsArray)
+        expectedSize *= (digitsArray[index] + 1);
+
+    let output = Permutations.permutationsDP(digitsArray);
+    if (output.length == expectedSize)
+        result = true;
+    else {
+        result = false;
+        console.log("expected size: ", expectedSize);
+        console.log("output.length: ", output.length);
+        console.log("input: ", digitsArray);
+        console.log("output: ", output);
+        console.log("Error in testPermutationsDPUnsortedThree")
+    }
+
+    return result;
+}
+
 const testPermutations = () => {
     console.log("### Testing Permutations ###");
     let testResults = [];
@@ -146,7 +172,8 @@ const testPermutations = () => {
     testResults.push(testPermutationsDPUnsortedOne());
     testResults.push(testPermutationsDPUnsortedTwo());
     testResults.push(testPermutationsDPUnsortedThree());
-    
+    testResults.push(testPermutationsDPThirtyTwo());
+
     let testsPass = true;
     for (let index in testResults) {
         if (testResults[index] == false) {
