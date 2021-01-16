@@ -1,10 +1,16 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 mongoose.Promise = global.Promise;
+const validator = require('validator');
+const mongodbErrorHandler = require('mongoose-mongodb-errors');
+const passportLocalMongoose = require('password-local-mongoose');
 
 
-const userSchema = new mongoose.Schema({
-    username: {
+const userSchema = new Schema({
+    email: {
         type: String,
+        unique: true,
+        lowercase: true,
         trim: true,
         required: 'Please enter your username!'
     },
