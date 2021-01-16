@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 const routes = require('./routes/index');
 const promisify = require('es6-promisify');

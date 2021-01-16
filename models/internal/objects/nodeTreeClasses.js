@@ -29,7 +29,7 @@
  * @param {any} inputAugmentation 
  * @returns 
  */
-function Tree2Node(inputObject, inputName, inputLeft, inputRight, inputAugmentation) {
+function nodeTreeClasses(inputObject, inputName, inputLeft, inputRight, inputAugmentation) {
 
     var object = inputObject;
     // var value = inputValue;
@@ -90,4 +90,4 @@ function Tree2Node(inputObject, inputName, inputLeft, inputRight, inputAugmentat
     }
 }
 
-module.exports = Tree2Node;
+module.exports = nodeTreeClasses;

@@ -12,7 +12,7 @@ module.exports.get_json = function get_json(callback) {
         console.log("running get_json");
 
         // parse course catalog into JSON object
-        var courses_json;
+        let courses_json;
         courses_json = JSON.parse(data);
 
         callback(null, courses_json);

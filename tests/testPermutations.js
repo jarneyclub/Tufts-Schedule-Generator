@@ -1,4 +1,4 @@
-const Permutations = require('../permutations.js');
+const Permutations = require('../services/utils/permutationsUtils.js');
 
 const arrayEquals = (a, b) => {
     return Array.isArray(a) &&
