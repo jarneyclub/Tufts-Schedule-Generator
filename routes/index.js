@@ -33,10 +33,6 @@ router.get('/courses/db/search-table', searchIndexController.postSearchIndexToDB
 
 router.post('/courses/schedule', courseScheduleController.generateCourseSchedule);
 
-/*
-* Handle GET requests by MONGODB object id
-* USAGE: BASEURL/api/courses/schedule/db-ids/test
-* */
 router.get('/courses/schedule/db-ids/test', courseScheduleController.sendTestOIDs);
 
 module.exports = router;
