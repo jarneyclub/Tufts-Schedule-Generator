@@ -25,6 +25,13 @@ exports.validateRegister = (req, res, next) => {
     // req.checkBody('password-confirm', 'Oops! Your passwords do not match').equals(req.body.password);
 
     const errors = validationResult(req);
+    let emailsMatch = (req.body.email == req.body.email_confirmation);
+    if (!emailsMatch) {
+
+        console.log("Errors detected");
+
+        return res.status(400).json({ error: "Email did not match with confirmation" });
+    }
 
     if (!errors.isEmpty()) {
 
@@ -32,7 +39,7 @@ exports.validateRegister = (req, res, next) => {
 
         console.log("Errors detected");
 
-        return res.status(400).json({  errors: errors.array() });
+        return res.status(400).json({ errors: errors.array() });
     }
 
     next(); // pass to registration into DB

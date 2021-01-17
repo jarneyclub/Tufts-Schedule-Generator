@@ -58,4 +58,6 @@ router.post('/auth/register',
     userController.register,
     authController.login);
 
+router.post('/auth/login', authController.login);
+
 module.exports = router;
