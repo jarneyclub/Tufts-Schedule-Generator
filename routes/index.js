@@ -1,11 +1,21 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
+const { body, validationResult } = require('express-validator');
 
 /* Controllers */
 const courseScheduleController = require('../controllers/courses/courseScheduleController.js');
 const searchIndexController = require('../controllers/courses/searchIndexController.js');
 const docsController = require('../controllers/courses/docsController.js');
 const listController = require('../controllers/courses/listController.js');
+const userController = require('../controllers/auth/userController.js');
+const authController = require('../controllers/auth/authController.js');
+
+////////////////////////////////////////
+//                                    //
+//              Courses               //
+//                                    //
+////////////////////////////////////////
 
 /*
 * Handle GET requests by MONGODB object id
@@ -34,5 +44,18 @@ router.get('/courses/db/search-table', searchIndexController.postSearchIndexToDB
 router.post('/courses/schedule', courseScheduleController.generateCourseSchedule);
 
 router.get('/courses/schedule/db-ids/test', courseScheduleController.sendTestOIDs);
+
+////////////////////////////////////////
+//                                    //
+//              Auth                  //
+//                                    //
+////////////////////////////////////////
+
+router.post('/auth/register', 
+    body('email').isEmail().normalizeEmail(), 
+    body('password').not().isEmpty(),
+    userController.validateRegister,
+    userController.register,
+    authController.login);
 
 module.exports = router;

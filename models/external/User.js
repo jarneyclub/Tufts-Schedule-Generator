@@ -3,8 +3,7 @@ const Schema = mongoose.Schema;
 mongoose.Promise = global.Promise;
 const validator = require('validator');
 const mongodbErrorHandler = require('mongoose-mongodb-errors');
-const passportLocalMongoose = require('password-local-mongoose');
-
+const passportLocalMongoose = require('passport-local-mongoose');
 
 const userSchema = new Schema({
     email: {
@@ -12,14 +11,17 @@ const userSchema = new Schema({
         unique: true,
         lowercase: true,
         trim: true,
-        required: 'Please enter your username!'
+        validate: [validator.isEmail, 'Invalid Email Address'],
+        required: 'Please enter an email address!'
     },
-    password: {
+    name: {
         type: String,
-        trim: true,
-        required: 'Please enter your password!'
+        required: 'Please enter a name!',
+        trim: true
     }
 });
 
+userSchema.plugin(passportLocalMongoose, { usernameField: 'email'});
+userSchema.plugin(mongodbErrorHandler);
 
 module.exports = mongoose.model('User', userSchema);

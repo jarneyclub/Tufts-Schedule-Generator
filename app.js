@@ -1,12 +1,12 @@
 const express = require('express');
 const mongoose = require("mongoose");
-const bodyParser = require('body-parser');
 const routes = require('./routes/index');
-const promisify = require('es6-promisify');
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const path = require('path');
 const app = express();
+
+require('./services/handlers/passport.js');
 
 const swaggerDefinition = {
   openapi: '3.0.0',
