@@ -1,4 +1,4 @@
-const ApiUtils = require('../apiUtils.js');
+const ApiUtils = require('../services/apiUtils.js');
 const testDocument = require('./testDocument.js');
 
 const testDocumentToCourse = () => {

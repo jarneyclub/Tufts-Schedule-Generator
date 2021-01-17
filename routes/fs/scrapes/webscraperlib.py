@@ -1,30 +1,74 @@
 #from urllib import FancyURLopener
 #from urllib2 import urlopen
 from bs4 import BeautifulSoup
+from pymongo import MongoClient
 from selenium import webdriver
 import time
 import os
 import re
 import json
 
+'''
+master_list = [
+    ['COURSE-NAME', 'COURSE-ID', [SECTIONS] ]
+]
+master_list[COURSEINDEX]
+[SECTIONS] = [ LECTURE_SECTIONS, LABORATORY_SECTIONS, etc.] (master_list[courseIndex][2])
+
+e.g. LECTURE_SECTIONS = [SECTION, SECTION, etc.] (master_list[courseIndex][2][secTypeIndex])
+
+SECTION = ['SECTION ID e.g. 01-IND', [SETTINGS],[FACULTIES]] (master_list[courseIndex][2][secTypeIndex][sectionIndex])
+WHOA WHOA WHOA! FACULTIES IN MASTER_LIST IS NOT PARSED! E.G. "teachername, teachername2". DO IT
+[SETTINGS] =  [SETTING, SETTING, etc.] (master_list[courseIndex][2][secTypeIndex][sectionIndex][1])
+
+SETTING = [[TIMES], 'ROOM INFO', 'CITY' ] (master_list[courseIndex][2][secTypeIndex][sectionIndex][1][settingIndex])
+
+[TIMES] = [TIME, TIME] (master_list[courseIndex][2][secTypeIndex][sectionIndex][1][settingIndex][0])
+OR
+[TIMES] = [None] if no time exists 
+
+TIME = [[DAYS OF WEEK], [START TIME, END TIME]] (master_list[courseIndex][2][secTypeIndex][sectionIndex][1][settingIndex][0][timeIndex])
+'''
 class webscraper():
 
     # initialize object
     def __init__(self, wait = 30):
-        # version number of webscraperlib (YYYYMM last modified)
-        self.version = "202010"
+        # version number of webscraperlib (YYMMDD last modified)
+        self.version = "201225"
         # store all possible section types
         self.section_types_dict = { "Lecture" : 0, "Laboratory" : 1, "Recitation" : 2, "Recitation (Optional)" : 3, "Internship" : 4, "Seminar" : 5, 
         "Continuance" : 6, "Project" : 7, "Teaching Assistant" : 8, "Independent Study" : 9, "Thesis" : 10, "Research" : 11, "Laboratory (Optional)": 12, "Discussion" : 13, 
         "Thesis Research" : 14, "Exam": 15, "Clinical" : 16, "Rotation": 17, 
         "Studio": 18, "Small Group": 19, "Evaluated Recitation": 20, "Workshop": 21, "Field Studies": 22, "Practicum": 23, "Once Per Week": 24, 
-        "Non-credit Online": 25, "Cross Registration": 26 }
+        "Non-credit Online": 25, "Cross Registration": 26, "Study Abroad": 27 }
         self.section_types_array = ["Lecture", "Laboratory", "Recitation", "Recitation (Optional)", "Internship", "Seminar", "Continuance", "Project", "Teaching Assistant", "Independent Study", "Thesis", "Research", "Laboratory (Optional)", "Discussion", "Thesis Research", "Exam", "Clinical", "Rotation", 
-        "Studio", "Small Group", "Evaluated Recitation", "Workshop", "Field Studies", "Practicum", "Once Per Week", "Non-credit Online", "Cross Registration"]
+        "Studio", "Small Group", "Evaluated Recitation", "Workshop", "Field Studies", "Practicum", "Once Per Week", "Non-credit Online", "Cross Registration", "Study Abroad"]
         self.total_section_types = len(self.section_types_array)
+
+        # initialize mongodb
+        self.db = self.init_db()
 
         # how much to wait for course catalog to load
         self.waiting_time = wait
+
+        # global indices for master_list
+        self.COURSENAME_INDEX = 0
+        self.COURSEID_INDEX = 1
+        self.SECTIONS_INDEX = 2
+    
+    # init_db() - initialize 
+    #
+    # Parameters:
+    #
+    # Returns: A Beautiful Soup object of the HTML for later parsing
+    # Note: Blocks the entire workflow waiting for page to load
+    def init_db(self):
+        dburl = "mongodb+srv://jeremy:fdqTM7kYkotbeMDT@cluster0.2mmvf.mongodb.net/courses?retryWrites=true&w=majority"
+        client = MongoClient(dburl)
+        db = client.courses
+        collection = db.courses
+        collection.drop() # remove all documents from collection
+        return db['courses']
     
     # retrieve_html() - Get the entire course catalog page in HTML
     #
@@ -114,7 +158,12 @@ class webscraper():
                         
                         # get the time period of the section in integer format
                         times = self.input_time(div_time_loc)
-                        
+                        try:
+                            if len(times) > 0:
+                                if times[0] == None or times[0] == [None]:
+                                    times = []
+                        except IndexError as e:
+                            print(e)
                         single_option.append(times)
                         
                         # get the location of the section
@@ -130,15 +179,15 @@ class webscraper():
                     single_section.append(options)
 
                     ########## append section instructor ##########
-                    teacher_name = self.input_teacher(tr)
-                    
-                    single_section.append(teacher_name)
+                    instructors_text = self.input_teacher(tr)
+                    instructors_list = instructors_text.split(", ")
+                    single_section.append(instructors_list)
                     
                     ########## append a section ###########
                     sections.append(single_section)
 
                 ########## append all sections of a section type ##########
-                master_list[x][2].append(sections)
+                master_list[x][self.SECTIONS_INDEX].append(sections)
                 
                 ########## append course name and course ID ##########
                 self.input_course_name_ID_master(master_list, course_list, x)
@@ -322,12 +371,12 @@ class webscraper():
                 string_size = len(str(c))
                 #content is course ID
                 if name_found == False:
-                    master_list[curr_index][1] = str(c)[1:string_size-1]
+                    master_list[curr_index][self.COURSEID_INDEX] = str(c)[1:string_size-1]
                     name_found = True
                 #content is course name
                 else:
                     raw_string = str(c)[7:string_size-8]
-                    master_list[curr_index][0] = raw_string.replace("&amp;", "&")
+                    master_list[curr_index][self.COURSENAME_INDEX] = raw_string.replace("&amp;", "&")
 
     # input_section_name() - get section name (ex. LEC-01)
     #
@@ -420,11 +469,122 @@ class webscraper():
         return teacher_name
 
     
-    ####################################
-    #                                  #
-    #        JSONIFY FUNCTIONS         #
-    #                                  #
-    ####################################
+    ###################################################
+    #                                                 #
+    #        master_list PROCESSING FUNCTIONS         #
+    #                                                 #
+    ###################################################
+    def generate_documents(self, master_list):
+        all_documents = []
+        courses_amnt = len(master_list)
+        # iterate through courses
+        for course_index in range(0,courses_amnt):
+
+            print("Course index: " + str(course_index))
+
+            course_name = master_list[course_index][self.COURSENAME_INDEX] # to insert
+            print("Course name: " + course_name)
+            course_id = master_list[course_index][self.COURSEID_INDEX] # to insert
+            available_section_types = [] # to insert
+            dict_course = {
+                "course_name": course_name,
+                "course_id": course_id,
+                "available_section_types": [],
+                "sections": {}
+            }
+
+            sections_by_sectiontypes = master_list[course_index][self.SECTIONS_INDEX]
+            # iterate through section types
+            for sectype_index in range(0,self.total_section_types):
+                array_sections = sections_by_sectiontypes[sectype_index]
+                # check if there are sections for this section type
+                if len(array_sections) > 0:
+                    section_type = self.section_types_array[sectype_index] # to insert
+                    dict_course['sections'][section_type] = []
+                    sections = [] # to insert
+                    available_section_types.append(section_type) # to insert
+
+                    # iterate through sections
+                    for section in array_sections:
+                        section_id = section[0] # to insert
+                        faculties = section[2] # to insert
+                        classes = [] # initialize classes array for each section
+                        array_settings = section[1]
+
+                        # iterate through settings (appending to classes)
+                        for setting in array_settings:
+                            #print(setting)
+                            try:
+                                room_info = setting[1] # to insert
+                                city_info = setting[2] # to insert
+                                array_times = setting[0]
+                                # check if a time slot is defined
+                                if len(array_times) > 0:
+                                    # iterate through times
+                                    for time in array_times:
+
+                                        days_of_week = time[0] # to insert
+                                        #print(days_of_week)
+                                        time_start = time[1][0] # to insert 
+                                        time_end = time[1][1] # to insert
+                                        # iterate through days of week
+                                        for day in days_of_week:
+                                            a_class = {} # initialize a single class
+                                            a_class["time_start"] = time_start
+                                            a_class["time_end"] = time_end
+                                            a_class["day_of_week"] = day
+                                            a_class["faculties"] = faculties
+                                            a_class["room"] = room_info
+                                            a_class["city"] = city_info
+
+                                            classes.append(a_class)
+                                        # END OF (iteration through days of week)
+                                else:
+                                    a_class = {} # initialize a single class
+                                    a_class["time_start"] = -1
+                                    a_class["time_end"] = -1
+                                    a_class["day_of_week"] = -1
+                                    a_class["faculties"] = faculties
+                                    a_class["room"] = room_info
+                                    a_class["city"] = city_info
+
+                                    classes.append(a_class)
+                            except IndexError as e:
+                                print(e)
+                                print("course index: " + str(course_index))
+                                print("sectype index: " + str(sectype_index))
+                                print("section id: " + section_id)
+                        # END OF (ITERATION THROUGH SETTINGS)
+
+                        dict_section = {
+                            "section_id": section_id,
+                            "classes": classes
+                        }
+
+                        dict_course['sections'][section_type].append(dict_section)
+                        # test sections
+                        if course_id == 'COMP-0015':
+                            print('COMPPP')
+                            print(dict_course['sections'][section_type])
+                        
+                        if len(array_settings) > 1:
+                            print("Settings more than 1")
+                    # END OF (ITERATION THROUGH SECTIONS)                    
+                    
+                    if len(array_sections) > 1:
+                        print("Sections more than 1")
+
+            # END OF (ITERATION THROUGH SECTION TYPES)
+            dict_course['available_section_types'] = available_section_types
+
+            all_documents.append(dict_course)
+        # END OF (ITERATION THROUGH COURSES)
+        
+        # add all documents to database
+        self.db.insert_many(all_documents)
+        return all_documents
+
+
 
     # write_json() - parse master_list into readable dictionary and write the JSON into data.txt in current directory
     #

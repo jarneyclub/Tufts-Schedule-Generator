@@ -1,11 +1,11 @@
-const Node = require('./objects/Tree2Node.js');
+const Node = require('./objects/nodeTreeClasses.js');
 const treeify = require('treeify');
 /*
-    Definition for Tree2
+    Definition for treeClasses
     Type: AVL Tree
     Usage: Checking if a week of Classes has any overlapping time periods
     Key: start time of a Class
-    Node: * Node * from Tree2Node.js 
+    Node: * Node * from treeClassesNode.js 
     Note:
     - implemented with "pointers"
 
@@ -37,7 +37,7 @@ const treeify = require('treeify');
  * }
  * @returns 
  */
-function Tree2(inputFilter) {
+function treeClasses(inputFilter) {
 
     // 1-indexed
     var root = null;
@@ -137,14 +137,14 @@ function Tree2(inputFilter) {
             let printArray = [];
             for (let index in nodesArray)
                 printArray.push(nodesArray[index].getLeftValue());
-            console.log(" Tree2 (InOrder Print): ", printArray);
+            console.log(" treeClasses (InOrder Print): ", printArray);
         }
         else if (option == "inorderName") {
             inOrderPrintHelper(root, nodesArray);
             let printArray = [];
             for (let index in nodesArray)
                 printArray.push(nodesArray[index].getName());
-            console.log(" Tree2 (InOrder Name Print): ", printArray);
+            console.log(" treeClasses (InOrder Name Print): ", printArray);
         }
         else if (option == "tree") {
             console.log(treeify.asTree({ root }, true, true));
@@ -545,4 +545,4 @@ function Tree2(inputFilter) {
     }
 }
 
-module.exports = Tree2;
+module.exports = treeClasses;

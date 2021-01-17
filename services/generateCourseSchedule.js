@@ -1,83 +1,9 @@
-const apiUtils = require("./apiUtils.js");
-const Tree2 = require('./Tree2.js');
+const timeUtils = require("./utils/timeUtils.js");
+const treeClasses = require('../models/internal/treeClasses.js');
 const memwatch = require('@airbnb/node-memwatch');
 
-const Permutations = require('./permutations.js');
-
-/** sort arrayDigits
- * 
- * @param {array} arrayDigits 
- * @param {integer} maxEntryExcluding 
- * @returns an object with an array of references and sorted array
- */
-const countingSort = (arrayDigits, maxEntryExcluding) => {
-    var arrayCounting = [];
-
-    // initialize counting array for counting sort
-    for (let i = 0; i < maxEntryExcluding; i++) {
-        arrayCounting.push([]);
-    }
-
-    var arrayObjects = [];
-    // iterate through indices in arrayDigits
-    for (let i = 0; i < arrayDigits.length; i++) {
-        let object = {
-            "realIndex": undefined,
-            "value": undefined
-        };
-
-        object.realIndex = i;
-        object.value = arrayDigits[i];
-
-        arrayObjects.push(object);
-    }
-
-    // recursively sort arrayObjects
-    countingSortHelper(arrayObjects, arrayCounting);
-
-    // iterate through the sorted objects
-    let arraySorted = [];
-    let mapReferences = {};
-
-    let indexReference = 0;
-    for (let i = 0; i < arrayCounting.length; i++) {
-        let index = arrayCounting[i];
-
-        for (let j = 0; j < index.length; j++) {
-            let object = index[j];
-
-            arraySorted.push(object.value);
-
-            mapReferences[object.realIndex] = indexReference;
-            indexReference++;
-        }
-    }
-
-    let toReturn = {
-        "references": mapReferences,
-        "sorted": arraySorted
-    }
-
-    return toReturn;
-}
-
-/** Helper function for counting sort
- * 
- * @param {array} arrayObjects 
- * @param {array} arrayCounting 
- */
-const countingSortHelper = (arrayObjects, arrayCounting) => {
-    if (arrayObjects.length < 1)
-        return
-
-    let firstEntry = arrayObjects[0];
-    let value = firstEntry.value;
-    arrayCounting[value].push(firstEntry);
-
-    arrayObjects.shift();
-
-    countingSortHelper(arrayObjects, arrayCounting);
-}
+const Permutations = require('./utils/permutationsUtils.js');
+const CountingSort = require('./utils/countingsortUtils.js');
 
 const mapSectionTypes = (arrayCourses) => {
     let arraySections = [];
@@ -97,7 +23,7 @@ const mapSectionTypes = (arrayCourses) => {
 /**
  * 1) Get permutations
  * 2) Map permutations to mapping of sectiontypes and its sections
- * 3) Use Tree2 to filter section permutations that have overlaps
+ * 3) Use treeClasses to filter section permutations that have overlaps
  * 4) Filter section permutations that don't include all courses
  * 5) 
  * 
@@ -105,7 +31,7 @@ const mapSectionTypes = (arrayCourses) => {
  * @param {object} filter
  * @returns 
  */
-const phase1 = (arrayCourses, filter) => {
+const generateCourseSchedule = (arrayCourses, filter) => {
 
     console.log("done");
     
@@ -149,7 +75,7 @@ const phase1 = (arrayCourses, filter) => {
     start = Date.now();
 
     /* (only when using dynamic programming) perform counting sort on possibleDigits for more consistent memoisation */
-    let sortedObject = countingSort(possibleDigits, 31);
+    let sortedObject = CountingSort.countingSort(possibleDigits, 31);
     let sortedDigits = sortedObject.sorted; // permutations will run on this array of integers
     let references = sortedObject.references; // a map of indices in which entry in index e is the index in chosenSectionType (list of sections)
 
@@ -230,7 +156,7 @@ const phase1 = (arrayCourses, filter) => {
 
         let allClassesInserted = true;
         let classesTimeNotSpecified = []; // array that holds classes of which time wasn't specified
-        let ClassesTree = new Tree2(filter);
+        let ClassesTree = new treeClasses(filter);
         
         /* Go through each permutation and assign classes by each index's digit */
 
@@ -249,11 +175,11 @@ const phase1 = (arrayCourses, filter) => {
                     let classToInsert = classes[p];
 
                     if (classToInsert.getStartTime() == -1 && classToInsert.getEndTime() == -1) {
-                        /* Class period's time is not specified, so just add to an array for later appending and don't process in Tree2 */
+                        /* Class period's time is not specified, so just add to an array for later appending and don't process in treeClasses */
                         classesTimeNotSpecified.push(classToInsert);
                     }
                     else {
-                        /* Class period time is specified. Use Tree2 to check for overlaps */
+                        /* Class period time is specified. Use treeClasses to check for overlaps */
                         ClassesTree.insert(classToInsert);
                     }
 
@@ -294,7 +220,7 @@ const phase1 = (arrayCourses, filter) => {
 }
 
 
-const chosenClassToApiDetails = (chosenClasses) => {
+const chosenClassesToApiDetails = (chosenClasses) => {
     let size = Object.keys(chosenClasses).length;
 
     let randomIndex = Math.ceil(Math.random() * (size - 1));
@@ -322,8 +248,8 @@ const chosenClassToApiDetails = (chosenClasses) => {
         let time_end = singleClass.getEndTime();
 
         // Convert integer times to military time
-        let time_start_military = apiUtils.integerToMilitaryTime(time_start);
-        let time_end_military = apiUtils.integerToMilitaryTime(time_end);
+        let time_start_military = timeUtils.integerToMilitaryTime(time_start);
+        let time_end_military = timeUtils.integerToMilitaryTime(time_end);
 
         let sectionName = singleClass.getSectionName();
         let courseId = singleClass.getCourseID();
@@ -377,5 +303,5 @@ const chosenClassToApiDetails = (chosenClasses) => {
 
 }
 
-exports.phase1 = phase1;
-exports.chosenClassToApiDetails = chosenClassToApiDetails;
+exports.generateCourseSchedule = generateCourseSchedule;
+exports.chosenClassesToApiDetails = chosenClassesToApiDetails;
