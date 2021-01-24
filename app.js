@@ -31,7 +31,7 @@ const options = {
 const swaggerSpec = swaggerJSDoc(options);
 
 //Enable CORS
-app.use(function (req, res, next) {
+app.use('*', function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Credentials', 'true');
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
@@ -51,15 +51,15 @@ app.use('/api', routes);
 // handle api docs
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use(express.static(__dirname + "/frontend/build"));
+// app.use(express.static(__dirname + "/frontend/build"));
 
-app.get("/prototype", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "frontend/prototype/v2", "index.html"));
-});
+// app.get("/prototype", (req, res) => {
+//   res.sendFile(path.resolve(__dirname, "frontend/prototype/v2", "index.html"));
+// });
 
-app.get("/", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "/frontend/build", "index.html")); 
-});
+// app.get("/", (req, res) => {
+//   res.sendFile(path.resolve(__dirname, "/frontend/build", "index.html")); 
+// });
 
 //export and start the site in start.js
 module.exports = app;
