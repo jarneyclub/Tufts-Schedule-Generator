@@ -309,7 +309,7 @@ const getPermutations = (arrayDigits, callback) => {
         else {
             // console.log("Using recursive algorithm here");
             // chosenPermutations = permutationsRec(arrayDigits);
-            console.log("Using randomized algorithm there");
+            console.log("(api/courses/schedule):", "Using randomized algorithm there");
             chosenPermutations = permutationsRandom(arrayDigits, 100);
         }
     }
@@ -317,11 +317,11 @@ const getPermutations = (arrayDigits, callback) => {
         if (lengthOfPermutation > 15) {
             // console.log("Using DP algorithm there");
             // chosenPermutations = permutationsDP(arrayDigits);
-            console.log("Using randomized algorithm there");
+            console.log("(api/courses/schedule):", "Using randomized algorithm there");
             chosenPermutations = permutationsRandom(arrayDigits, 100);
         }
         else  {
-            console.log("Using randomized algorithm there");
+            console.log("(api/courses/schedule):", "Using randomized algorithm there");
             chosenPermutations = permutationsRandom(arrayDigits, 100);
             // console.log("Using DP algorithm there");
             // chosenPermutations = permutationsDP(arrayDigits);

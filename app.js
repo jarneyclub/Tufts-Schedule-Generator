@@ -31,7 +31,7 @@ const options = {
 const swaggerSpec = swaggerJSDoc(options);
 
 //Enable CORS
-app.use('*', function (req, res, next) {
+app.use(function (req, res, next) {
     console.log("Applying CORS headers to response");
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Credentials', 'true');
@@ -41,7 +41,7 @@ app.use('*', function (req, res, next) {
       // 'Access-Control-Allow-Headers',
       // 'access-control-request-headers'
     // );
-    console.log("Response thus far: ", res);
+    // console.log("Response thus far: ", res);
     next();
 });
 
