@@ -32,10 +32,11 @@ const swaggerSpec = swaggerJSDoc(options);
 
 //Enable CORS
 app.use('*', function (req, res, next) {
+    console.log("Applying CORS headers to response");
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Credentials', 'true');
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', "Content-Type");
+    res.header('Access-Control-Allow-Headers', "Content-Type, Origin, Accept");
     // res.header(
       // 'Access-Control-Allow-Headers',
       // 'access-control-request-headers'
@@ -50,16 +51,6 @@ app.use('/api', routes);
 
 // handle api docs
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-// app.use(express.static(__dirname + "/frontend/build"));
-
-// app.get("/prototype", (req, res) => {
-//   res.sendFile(path.resolve(__dirname, "frontend/prototype/v2", "index.html"));
-// });
-
-// app.get("/", (req, res) => {
-//   res.sendFile(path.resolve(__dirname, "/frontend/build", "index.html")); 
-// });
 
 //export and start the site in start.js
 module.exports = app;
