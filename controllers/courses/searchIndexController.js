@@ -4,7 +4,8 @@ const searchIndex = require('../../services/searchIndex.js');
 exports.sendSearchIndex = async (req, res) => {
 
     var start = Date.now(); // begin timing API endpoint
-
+    
+    console.log("(api/courses/alg/serach-table):", "Getting search-table from MongoDB");
     let collectionSearchIndex = mongoose.connection.collection("search-index"); // get MongoDB collection
 
     let cursor = await collectionSearchIndex.find();
@@ -26,7 +27,7 @@ exports.sendSearchIndex = async (req, res) => {
         data: responseDatabase,
         time_taken: timeTakenString
     };
-
+    console.log("(api/courses/alg/serach-table):", "search-table successfully retrieved. Sending index...");
     res.json(responseApi);
 
 }
@@ -70,7 +71,7 @@ exports.postSearchIndexToDB = async (req, res) => {
                     collectionSearchIndex.insertOne(newDoc);
                 }
 
-                console.log("done");
+                console.log("Search-Table population complete");
 
             })
 
@@ -95,7 +96,7 @@ exports.postSearchIndexToDB = async (req, res) => {
                     collectionSearchIndex.insertOne(newDoc);
                 }
 
-                console.log("done");
+                console.log("Search-Table population complete");
 
             })
 

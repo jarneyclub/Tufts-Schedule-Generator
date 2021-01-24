@@ -33,7 +33,7 @@ const mapSectionTypes = (arrayCourses) => {
  */
 const generateCourseSchedule = (arrayCourses, filter) => {
 
-    console.log("done");
+    console.log("(api/courses/schedule):", "Now generating course schedule...");
     
     /* get possible digits for permutations */
 
@@ -64,7 +64,7 @@ const generateCourseSchedule = (arrayCourses, filter) => {
     let end = Date.now();
     let difference = end - start;
     let timeTakenString = difference.toString() + "ms";
-    console.log("Get Possible Digits took: ", timeTakenString);
+    console.log("(api/courses/schedule):", "Get Possible Digits took: ", timeTakenString);
 
     ////////////////////////////////////////
     //                                    //
@@ -82,17 +82,17 @@ const generateCourseSchedule = (arrayCourses, filter) => {
     end = Date.now();
     difference = end - start;
     timeTakenString = difference.toString() + "ms";
-    console.log("CountingSort took: ", timeTakenString);
+    console.log("(api/courses/schedule):", "CountingSort took: ", timeTakenString);
 
     /* get permutations */
     start = Date.now();
 
     let chosenPermutations = Permutations.getPermutations(sortedDigits);
-    console.log("chosenPermutations.length: ", chosenPermutations.length);
+    console.log("(api/courses/schedule):", "chosenPermutations.length: ", chosenPermutations.length);
     end = Date.now();
     difference = end - start;
     timeTakenString = difference.toString() + "ms";
-    console.log("getPermutations() took: ", timeTakenString);
+    console.log("(api/courses/schedule):", "getPermutations() took: ", timeTakenString);
 
     start = Date.now();
     let arraySectionTypes = mapSectionTypes(arrayCourses);
@@ -211,11 +211,11 @@ const generateCourseSchedule = (arrayCourses, filter) => {
         }
     }
 
-    console.log("phase 1 has finished");
+    console.log("(api/courses/schedule):", "Course schedule generation is complete");
     end = Date.now();
     difference = end - start;
     timeTakenString = difference.toString() + "ms";
-    console.log("Use permutations and Filter ideal scchedule took: ", timeTakenString);
+    console.log("(api/courses/schedule):", "Use permutations and Filter ideal scchedule took: ", timeTakenString);
     return resultClasses;
 }
 

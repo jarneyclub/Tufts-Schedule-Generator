@@ -41,6 +41,7 @@ app.use('*', function (req, res, next) {
       // 'Access-Control-Allow-Headers',
       // 'access-control-request-headers'
     // );
+    console.log("Response thus far: ", res);
     next();
 });
 
