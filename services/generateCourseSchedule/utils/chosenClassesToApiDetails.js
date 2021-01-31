@@ -3,7 +3,7 @@ const timeUtils = require("./timeUtils.js");
 const chosenClassesToApiDetails = (global) => {
     let chosenClasses = global.resultClasses;
 
-    console.log("chosenClasses: ", chosenClasses);
+    // console.log("chosenClasses: ", chosenClasses);
 
     let size = Object.keys(chosenClasses).length;
 
