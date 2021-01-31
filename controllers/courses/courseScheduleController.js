@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const CourseSchedule = require('../../services/generateCourseSchedule.js');
+const CourseSchedule = require('../../services/generateCourseSchedule/generateCourseSchedule.js');
 const objectUtils = require('../../services/apiUtils.js');
 const timeUtils = require('../../services/utils/timeUtils.js');
 
@@ -82,22 +82,35 @@ exports.generateCourseSchedule = async (req, res) => {
 
 
 
-    let chosenClasses = CourseSchedule.generateCourseSchedule(courses, newFilter);
+    CourseSchedule.generateCourseSchedule(courses, newFilter)
+    .then(
+        (weeklySchedule) => {
+            var end = Date.now(); // End timing API endpoint
+            var difference = end - start;
+            let timeTakenString = difference.toString() + "ms";
 
-    let weeklySchedule = CourseSchedule.chosenClassesToApiDetails(chosenClasses);
+            let response = {
+                data: weeklySchedule,
+                time_taken: timeTakenString
+            }
 
-    var end = Date.now(); // End timing API endpoint
-    var difference = end - start;
-    let timeTakenString = difference.toString() + "ms";
+            res.json(response);
+        },
+        (error) => {
+            var end = Date.now(); // End timing API endpoint
+            var difference = end - start;
+            let timeTakenString = difference.toString() + "ms";
 
-    let response = {
-        data: weeklySchedule,
-        time_taken: timeTakenString
-    }
+            let response = {
+                error: error,
+                time_taken: timeTakenString
+            };
 
-    // console.log("response: ", response);
+            res.status(400);
 
-    res.json(response);
+            res.json(response)
+        }
+    )
 }
 
 exports.sendTestOIDs = async (req, res) => {

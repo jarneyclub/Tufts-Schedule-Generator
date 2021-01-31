@@ -653,6 +653,45 @@ const testIntersectionQueryExactSameLeft = () => {
     return result;
 }
 
+const testIntersectionQueryOverlapInside = () => {
+    console.log("--- unit test: ( AVL Tree interval A INSIDE interval B ) ---")
+    let result = false;
+    /* INITIALIZE TREE */
+    let tree = new treeClasses(defaultFilter);
+
+    /* INITIALIZE OBJECTS TO INSERT */
+    let testObjects = [];
+    testObjects.push(new Class("Test", "test", "A", "testSec", 1, 100, 150, "test location", "test city", ["test instructor"]));
+    testObjects.push(new Class("Test", "test", "B", "testSec", 1, 70, 80, "test location", "test city", ["test instructor"])); /* interval B */
+    testObjects.push(new Class("Test", "test", "C", "testSec", 1, 170, 190, "test location", "test city", ["test instructor"]));
+    // query interval
+    testObjects.push(new Class("Test", "test", "D", "testSec", 1, 75, 76, "test location", "test city", ["test instructor"])); /* interval A */
+
+    /* insert sections */
+    for (let index in testObjects) {
+        let object = testObjects[index];
+
+        tree.insert(object);
+    }
+
+    /* END init tree */
+    let output = tree.print("array");
+    let answer = [undefined, 'A', 'B', 'C'];
+
+    if (arrayEquals(output, answer))
+        result = true;
+    else {
+        tree.print("tree");
+        console.log("Failure: ")
+        console.log("Expected print: ", answer);
+        console.log("Output: ", output);
+        console.log("inorder output");
+        tree.print("inorder");
+        console.log("--- end : (AVL Tree interval A INSIDE interval B)) ---")
+    }
+    return result;
+}
+
 const testTreeGetObjects = () => {
     console.log("--- unit test: ( treeClasses getObjects() ) ---")
     let result = false;
@@ -715,6 +754,7 @@ const testTree = () => {
     testResults.push(testIntersectionQueryRight());
     testResults.push(testIntersectionQueryExactSame());
     testResults.push(testIntersectionQueryExactSameLeft());
+    testResults.push(testIntersectionQueryOverlapInside());
     testResults.push(testTreeGetObjects());
 
     let testsPass = true;
