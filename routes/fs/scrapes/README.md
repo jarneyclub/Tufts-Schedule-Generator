@@ -6,11 +6,12 @@ Python2.7
 source scrape/bin/activate
 ```
 2) Go to ./scrape
-3) python2.7
+3) python
 ```python
 import webscraperlib
 catalogscraper = webscraperlib.webscraper(wait = 40 ) # estimated time in seconds needed for DOM content to fully load
 master_list = catalogscraper.scrape_web()
+catalogscraper.generate_documents(master_list) # upload to database 
 catalogscraper.write_json(master_list) # write data.txt with course catalog in JSON format
 ```
 

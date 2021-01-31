@@ -331,18 +331,37 @@ class webscraper():
                 hours = int(float(start_hours))
                 minutes = int(float(start_minutes))
                 time_1 = hours * 60 + minutes
+                # start from 0 if the hour is 12AM.
+                if hours == 12:
+                    time_1 = minutes
+                else:
+                    time_1 = hours * 60 + minutes
             else:
                 hours = int(float(start_hours))
                 minutes = int(float(start_minutes))
                 time_1 = hours * 60 + minutes + 720
+                # start from 720 if the hour is 12PM.
+                if hours == 12:
+                    time_1 = hours * 60 + minutes
+                else:
+                    time_1 = hours * 60 + minutes + 720
             if time_2_meridiem == "AM":
                 hours = int(float(end_hours))
                 minutes = int(float(end_minutes))
                 time_2 = hours * 60 + minutes
+                # start from 0 if the hour is 12AM.
+                if hours == 12:
+                    time_2 = minutes
+                else:
+                    time_2 = hours * 60 + minutes
             else:
                 hours = int(float(end_hours))
                 minutes = int(float(end_minutes))
-                time_2 = hours * 60 + minutes + 720
+                # start from 720 if the hour is 12PM.
+                if hours == 12:
+                    time_2 = hours * 60 + minutes
+                else:
+                    time_2 = hours * 60 + minutes + 720
             times = []
             times.append(time_1)
             times.append(time_2)
