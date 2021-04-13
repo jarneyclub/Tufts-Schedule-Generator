@@ -61,5 +61,5 @@ const generateCourseSchedule = (arrayCourses, filter) => {
                 }
             )
     });
-
+}
 exports.generateCourseSchedule = generateCourseSchedule;
