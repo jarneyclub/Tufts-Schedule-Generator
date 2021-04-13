@@ -79,7 +79,7 @@ class webscraper():
     def retrieve_html(self):
         driver = webdriver.Chrome(executable_path= os.path.abspath('')+'/chromedriver')
         #all courses
-        URL = 'https://sis.uit.tufts.edu/psp/paprd/EMPLOYEE/EMPL/h/?tab=TFP_CLASS_SEARCH#search_results/term/2212/career/ALL/subject/course/attr/keyword/instructor'
+        URL = 'https://sis.uit.tufts.edu/psp/paprd/EMPLOYEE/EMPL/h/?tab=TFP_CLASS_SEARCH#search_results/term/2218/career/ALL/subject/course/attr/keyword/instructor'
         driver.get(URL)
         for x in range(0,self.waiting_time):
             time.sleep(1)

@@ -67,7 +67,8 @@ exports.generateCourseSchedule = async (req, res) => {
     }
 
     // console.log("object: ", newFilter.time);
-
+    
+    /* List of Course objects */
     let courses = [];
     for (let index in objectIds) {
         let objectId = objectIds[index];
@@ -76,7 +77,6 @@ exports.generateCourseSchedule = async (req, res) => {
         let document = await collectionCourses.findOne({ '_id': oid });
         console.log("(api/courses/schedule):", "Received course to consider: ", document);
         let course = objectUtils.documentToCourse(document);
-
         courses.push(course);
     }
 

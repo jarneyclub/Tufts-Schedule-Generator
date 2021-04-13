@@ -13,6 +13,7 @@ catalogscraper = webscraperlib.webscraper(wait = 40 ) # estimated time in second
 master_list = catalogscraper.scrape_web()
 catalogscraper.generate_documents(master_list) # upload to database 
 catalogscraper.write_json(master_list) # write data.txt with course catalog in JSON format
+# and then go to https://tufts-schedule-api.herokuapp.com/api/courses/db/search-table to update search index
 ```
 
 # NOTES
