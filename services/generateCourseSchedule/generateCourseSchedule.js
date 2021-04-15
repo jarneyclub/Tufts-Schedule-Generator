@@ -1,12 +1,11 @@
 /* utils */
 const getPossibleDigits = require('./utils/getPossibleDigits.js');
 const generatePermutations = require('./utils/generatePermutations.js');
+const preprocessFilter = require('./utils/preprocessFilter.js');
 const getIdealSchedules = require('./utils/getIdealSchedules.js');
 const chosenClassesToApiDetails = require('./utils/chosenClassesToApiDetails.js');
 
-
 const timeUtils = require("../utils/timeUtils.js");
-const treeClasses = require('../../models/internal/treeClasses.js');
 const memwatch = require('@airbnb/node-memwatch');
 
 const Permutations = require('../utils/permutationsUtils.js');
@@ -42,17 +41,21 @@ const generateCourseSchedule = (arrayCourses, filter) => {
                 (global) => generatePermutations(global)
             )
             .then(
+                (global) => preprocessFilter.joinAdjacentTimesInFilter(global)
+            )
+            .then(
                 (global) => getIdealSchedules(global)
             )
             .then(
                 (global) => {
                     
                     let resultClassesIndex = global.resultClassesIndex;
-                    console.log("resultClassesINdex: ", resultClassesIndex);
+                    console.log("(api/courses/schedule):", "resultClassesINdex: ", resultClassesIndex);
                     if (resultClassesIndex !== 0) {
 
+                        console.log("(api/courses/schedule):", "Picking random course schedule..");
+
                         let result = chosenClassesToApiDetails(global);
-                        console.log("AAAA");
                         resolve(result);
                     }
                     else {
