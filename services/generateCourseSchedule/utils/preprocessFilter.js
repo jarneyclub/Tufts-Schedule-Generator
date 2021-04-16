@@ -8,6 +8,8 @@ const joinAdjacentTimesInFilter = (global) => {
         let filter = global.filter;
         let preferencesTime = filter.time;
 
+        console.log("(preprocessFilter) timePref before: ", preferencesTime);
+
         for (let day in preferencesTime) {
 
             /* iterate through the days of the week in time preferences */
@@ -43,7 +45,7 @@ const joinAdjacentTimesInFilter = (global) => {
             }
 
         }
-        console.log("(preprocessFilter) timePref: ", preferencesTime);
+        console.log("(preprocessFilter) timePref after: ", preferencesTime);
 
         resolve(global);
     });
