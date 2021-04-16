@@ -665,7 +665,7 @@ const testIntersectionQueryOverlapInside = () => {
     testObjects.push(new Class("Test", "test", "B", "testSec", 1, 70, 80, "test location", "test city", ["test instructor"])); /* interval B */
     testObjects.push(new Class("Test", "test", "C", "testSec", 1, 170, 190, "test location", "test city", ["test instructor"]));
     // query interval
-    testObjects.push(new Class("Test", "test", "D", "testSec", 1, 75, 76, "test location", "test city", ["test instructor"])); /* interval A */
+    let queryObject = new Class("Test", "test", "D", "testSec", 1, 75, 76, "test location", "test city", ["test instructor"]) /* interval A */
 
     /* insert sections */
     for (let index in testObjects) {
@@ -674,6 +674,22 @@ const testIntersectionQueryOverlapInside = () => {
         tree.insert(object);
     }
 
+    try {
+        tree.insert(queryObject);
+        tree.print("tree");
+        console.log("Failure: ")
+        console.log("Expected Error", );
+        console.log("Output: ", output);
+        console.log("inorder output");
+        tree.print("inorder");
+        console.log("--- end : (AVL Tree interval A INSIDE interval B)) ---")
+        result = false;
+    }
+    catch (e) {
+        result = true;
+    }
+    
+    return result;
     /* END init tree */
     let output = tree.print("array");
     let answer = [undefined, 'A', 'B', 'C'];
@@ -716,7 +732,7 @@ const testIntersectionAnomalyOne = () => {
 
     testObjects.push(new Class("CS-0170", "test", "K", "01-LEC", 1, 540, 615, "test location", "test city", ["test instructor"]));
     testObjects.push(new Class("CS-0170", "test", "L", "01-LEC", 3, 540, 615, "test location", "test city", ["test instructor"]));
-    testObjects.push(new Class("CS-0170", "test", "M", "RE-RCT", 3, 900, 975, "test location", "test city", ["test instructor"]));
+    testObjects.push(new Class("CS-0170", "test", "M", "RD-RCT", 3, 900, 975, "test location", "test city", ["test instructor"]));
 
     /* insert sections */
     for (let index in testObjects) {
@@ -739,6 +755,50 @@ const testIntersectionAnomalyOne = () => {
         console.log("inorder output");
         tree.print("inorder");
         console.log("--- end : (AVL Tree Intersection Anomaly 1)) ---")
+    }
+    return result;
+}
+
+const testIntersectionAnomalyTwo = () => {
+    console.log("--- unit test: ( AVL Tree Intersection Anomaly 2 ) ---")
+    let result = false;
+    /* INITIALIZE TREE */
+    let tree = new treeClasses(defaultFilter);
+
+    /* INITIALIZE OBJECTS TO INSERT */
+    let testObjects = [];
+    // testObjects.push(new Class("CS-0040", "test", "A", "01-LEC", 2, 810, 885, "test location", "test city", ["test instructor"]));
+    // testObjects.push(new Class("CS-0040", "test", "B", "01-LEC", 4, 810, 885, "test location", "test city", ["test instructor"]));
+    // testObjects.push(new Class("CS-0040", "test", "C", "LAB-LA", 5, 630, 705, "test location", "test city", ["test instructor"]));
+
+    // testObjects.push(new Class("CS-0137", "test", "D", "01-LEC", 1, 630, 705, "test location", "test city", ["test instructor"]));
+    // testObjects.push(new Class("CS-0137", "test", "E", "01-LEC", 3, 630, 705, "test location", "test city", ["test instructor"]));
+
+    // testObjects.push(new Class("CS-0116", "test", "F", "01-LEC", 2, 990, 1065, "test location", "test city", ["test instructor"]));
+    // testObjects.push(new Class("CS-0116", "test", "G", "01-LEC", 4, 990, 1065, "test location", "test city", ["test instructor"]));
+
+    testObjects.push(new Class("CS-0170", "test", "K", "01-LEC", 1, 540, 615, "test location", "test city", ["test instructor"]));
+    testObjects.push(new Class("CS-0170", "test", "L", "01-LEC", 3, 540, 615, "test location", "test city", ["test instructor"]));
+    testObjects.push(new Class("CS-0170", "test", "M", "RD-RCT", 3, 900, 975, "test location", "test city", ["test instructor"]));
+
+    testObjects.push(new Class("MATH-0050", "test", "H", "01-LEC", 3, 870, 990, "test location", "test city", ["test instructor"]));
+    try {
+        /* insert sections */
+        for (let index in testObjects) {
+            let object = testObjects[index];
+
+            tree.insert(object);
+        }
+
+        tree.print("tree");
+        console.log("Failure: ")
+        console.log("inorder output");
+        tree.print("inorder");
+        console.log("--- end : (AVL Tree Intersection Anomaly 2)) ---")
+    }
+    catch (e) {
+        console.log(e)
+        result = true;
     }
     return result;
 }
@@ -789,25 +849,26 @@ const testTreeGetObjects = () => {
 const testTree = () => {
     console.log("### Testing TREE 2 ###");
     let testResults = [];
-    testResults.push(testInsertion());
-    testResults.push(testLeftInsertion());
-    testResults.push(testRightInsertion());
-    testResults.push(testBSTInvariant());
-    testResults.push(testLeftRotation());
-    testResults.push(testRightLeftRotation());
-    testResults.push(testLeftRightRotation());
-    testResults.push(testLeftRotationRoot());
-    testResults.push(testRightRotation());
-    testResults.push(testRightRotationRoot());
-    testResults.push(testNoIntersectionQueryLeft());
-    testResults.push(testNoIntersectionQueryRight());
-    testResults.push(testIntersectionQueryLeft());
-    testResults.push(testIntersectionQueryRight());
-    testResults.push(testIntersectionQueryExactSame());
-    testResults.push(testIntersectionQueryExactSameLeft());
-    testResults.push(testIntersectionQueryOverlapInside());
-    testResults.push(testIntersectionAnomalyOne());
-    testResults.push(testTreeGetObjects());
+    // testResults.push(testInsertion());
+    // testResults.push(testLeftInsertion());
+    // testResults.push(testRightInsertion());
+    // testResults.push(testBSTInvariant());
+    // testResults.push(testLeftRotation());
+    // testResults.push(testRightLeftRotation());
+    // testResults.push(testLeftRightRotation());
+    // testResults.push(testLeftRotationRoot());
+    // testResults.push(testRightRotation());
+    // testResults.push(testRightRotationRoot());
+    // testResults.push(testNoIntersectionQueryLeft());
+    // testResults.push(testNoIntersectionQueryRight());
+    // testResults.push(testIntersectionQueryLeft());
+    // testResults.push(testIntersectionQueryRight());
+    // testResults.push(testIntersectionQueryExactSame());
+    // testResults.push(testIntersectionQueryExactSameLeft());
+    // testResults.push(testIntersectionQueryOverlapInside());
+    // testResults.push(testIntersectionAnomalyOne());
+    testResults.push(testIntersectionAnomalyTwo());
+    // testResults.push(testTreeGetObjects());
 
     let testsPass = true;
     for (let index in testResults) {

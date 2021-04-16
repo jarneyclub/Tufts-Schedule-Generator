@@ -114,10 +114,10 @@ function treeClasses(inputFilter) {
             if (withinUserPreference == false) 
                 throw Error("Requested object did not pass filter: Time");
             else {
-                // console.log("INSERTION NODE INFO: ");
-                // console.log("inserting ", inputName);
-                // console.log("inputLeftValue: ", inputLeftValue);
-                // console.log("inputRightValue: ", inputRightValue);
+                console.log("INSERTION NODE INFO: ");
+                console.log("inserting ", inputName);
+                console.log("inputLeftValue: ", inputLeftValue);
+                console.log("inputRightValue: ", inputRightValue);
 
                 // console.log("QUERY INTERVAL CHECKING BEGIN: ");
                 if (queryIntervalHelper(inputLeftValue, inputRightValue, root) == false) {
@@ -237,73 +237,73 @@ function treeClasses(inputFilter) {
      * @returns {boolean} whether node intersects or not
      */
     const queryIntervalHelper = (inputLeftValue, inputRightValue, currNode) => {
-
         if (currNode == null) {
             // console.log("currNode is null")
             /* currNode does not exist */
             return false;
         }
+        console.log("currNode in queryIntervalHelper: ", currNode.getName());
         
-        let leftCurrNodeSpan = currNode.getLeftValue();
+        let currNodeLeftValue = currNode.getLeftValue();
         let rightCurrNodeSpan = currNode.getSpan();
         let currNodeRightValue = currNode.getRightValue();
         
         /* check if node intersects with subtree root */
 
-        if (doesNotOverlap(inputLeftValue, inputRightValue, leftCurrNodeSpan, currNodeRightValue) == true) {
-            
-            // console.log("input does not overlap with currNode");
+        if (doesNotOverlap(inputLeftValue, inputRightValue, currNodeLeftValue, currNodeRightValue) == true) {
+            console.log("input does not overlap with currNode");
 
             /* node to insert DOES NOT overlap with currNode */
 
             // check if node intersects with subtree root's span
-            if (doesNotOverlap(inputLeftValue, inputRightValue, leftCurrNodeSpan, rightCurrNodeSpan) == true) {
+            if (doesNotOverlap(inputLeftValue, inputRightValue, currNodeLeftValue, rightCurrNodeSpan) == true) {
                 /* node to insert DOES NOT overlap with currNode's span */
                 
-                // console.log("does not overlap with currNode's span");
+                console.log("does not overlap with currNode's span");
                 
                 // query interval is to the right of span
                 if (rightCurrNodeSpan < inputLeftValue) {
 
                     /* no possible intersection in subtree */
 
-                    // console.log("inputLeftValue: ", inputLeftValue);
-                    // console.log("inputRightValue: ", inputRightValue);
-                    // console.log("rightCurrNodeSpan: ", rightCurrNodeSpan);
-                    // console.log("CASE 1A: no possible intersection in subtree");
+                    console.log("inputLeftValue: ", inputLeftValue);
+                    console.log("inputRightValue: ", inputRightValue);
+                    console.log("rightCurrNodeSpan: ", rightCurrNodeSpan);
+                    console.log("CASE 1A: no possible intersection in subtree");
                     
                     return false;
                 }
                 // query interval is to the left of span
-                else if (inputLeftValue < leftCurrNodeSpan && inputRightValue < leftCurrNodeSpan) {
+                else if (inputLeftValue < currNodeLeftValue && inputRightValue < currNodeLeftValue) {
 
-                    // console.log("query interval is to the left of span");
-                    // console.log("CASE 1B: recurse to left subtree");
+                    console.log("query interval is to the left of span");
+                    console.log("CASE 1B: recurse to left subtree");
                     return queryIntervalHelper(inputLeftValue, inputRightValue, currNode.left);
                 }
             }
             else {
                 /* node to insert DOES overlap with currNode's span */
-                // console.log("does overlap with currNode's span");
+                console.log("does overlap with currNode's span");
 
                 if (currNode.left == null) {
                     return queryIntervalHelper(inputLeftValue, inputRightValue, currNode.right);
                 }
                 else {
                     let leftSubtreeSpan = currNode.left.getSpan();
-                    let leftSubtreeValue = currNode.left.getLeftValue();
-                    // does not intersect with left subtree
-                    if (doesNotOverlap(leftSubtreeValue, leftSubtreeSpan, inputLeftValue, inputRightValue) == true) {
-                        // console.log("does not overlap with currNode.left's span");
 
-                        // console.log("CASE 2: recurse to right subtree");
+                    let leftSubstreeLeftValue = currNode.left.getLeftValue();
+                    // does not intersect with left subtree
+                    if (doesNotOverlap(leftSubstreeLeftValue, leftSubtreeSpan, inputLeftValue, inputRightValue) == true) {
+                        console.log("does not overlap with currNode.left's span");
+
+                        console.log("CASE 2: recurse to right subtree");
                         /* recurse to right subtree */
                         return queryIntervalHelper(inputLeftValue, inputRightValue, currNode.right);
                     }
                     else {
-                        // console.log("does overlap with currNode.left's span");
+                        console.log("does overlap with currNode.left's span");
 
-                        // console.log("CASE 2: recurse to left subtree");
+                        console.log("CASE 2: recurse to left subtree");
                         /* recurse to left subtree */
                         return queryIntervalHelper(inputLeftValue, inputRightValue, currNode.left);
                     }
@@ -386,6 +386,11 @@ function treeClasses(inputFilter) {
     }
 
 
+    /** Get the root of the subtree to left rotate. Return 
+     * the new root of the rotated subtree. 
+     * @param {Node} currNode 
+     * @returns {Node} 
+     */
     const leftRotate = (currNode) => {
         try {
             // console.log("LEFT ROTATING node: ", currNode.getName());
@@ -394,12 +399,31 @@ function treeClasses(inputFilter) {
             let newNode = null;
 
             currNode.right = rightLeftSubtree;
+            
             rightSubtree.left = currNode;
             newNode = rightSubtree;
+
+            // Update span of (newNode)
+            newNode.setSpan(currNode.getSpan());
             
+            // get information needed to calculate new span of newNode.left
+            let newNodeLeftLeftSubtreeSpan = -1;
+            if (newNode.left.left !== null)
+                newNodeLeftLeftSubtreeSpan = newNode.left.left.getSpan();
+            let newNodeLeftRightSubtreeSpan = -1;
+            if (newNode.left.right !== null)
+                newNodeLeftRightSubtreeSpan = newNode.left.right.getSpan();
+            
+            // Update span of (newNode.left)
+            newNode.left.setSpan(Math.max(newNode.left.getRightValue(), 
+                                          newNodeLeftLeftSubtreeSpan,
+                                          newNodeLeftRightSubtreeSpan));
+
+            // Update height of (newNode.left)
             // Note: newNode.left is always != null because it switched with what is now newNode
             newNode.left.height = max(getHeight(newNode.left.left), getHeight(newNode.left.right)) + 1;
-
+            
+            // Update height of (newNode)
             newNode.height = max(getHeight(newNode.left), getHeight(newNode.right)) + 1;
 
             // console.log("newNode: ", newNode.getName());
@@ -423,6 +447,11 @@ function treeClasses(inputFilter) {
 
     }
 
+    /** Get the root of the subtree to right rotate. Return
+     * the new root of the rotated subtree.
+     * @param {Node} currNode
+     * @returns {Node}
+     */
     const rightRotate = (currNode) => {
         try {
             // console.log("RIGHT ROTATING node: ", currNode.getName());
@@ -434,9 +463,27 @@ function treeClasses(inputFilter) {
             leftSubtree.right = currNode;
             newNode = leftSubtree;
 
+            // Update span of (newNode)
+            newNode.setSpan(currNode.getSpan());
+
+            // get information needed to calculate new span of newNode.right
+            let newNodeRightLeftSubtreeSpan = -1;
+            if (newNode.right.left !== null)
+                newNodeRightLeftSubtreeSpan = newNode.right.left.getSpan();
+            let newNodeRightRightSubtreeSpan = -1;
+            if (newNode.right.right !== null)
+                newNodeRightRightSubtreeSpan = newNode.right.right.getSpan();
+
+            // Update span of (newNode.right)
+            newNode.right.setSpan(Math.max(newNode.right.getRightValue(),
+                newNodeRightLeftSubtreeSpan,
+                newNodeRightRightSubtreeSpan));
+            
+            // Update height of (newNode.right)
             // Note: newNode.right is always != null because it switched with what is now newNode
             newNode.right.height = max(getHeight(newNode.right.left), getHeight(newNode.right.right)) + 1;
-
+            
+            // Update height of (newNode)
             newNode.height = max(getHeight(newNode.left), getHeight(newNode.right)) + 1;
 
             // console.log("newNode: ", newNode.getName());
