@@ -1,3 +1,5 @@
+const { Heap } = require('heap-js');
+
 /** Combine adjacent time intervals in the time preferences section
  * of filter. e.g. 10:00-11:00, 11:00-12:00 should be 10:00-12:00
  * 
@@ -14,7 +16,15 @@ const joinAdjacentTimesInFilter = (global) => {
 
             /* iterate through the days of the week in time preferences */
             let dayPreferences = preferencesTime[day];
+            
             let numIntervals = dayPreferences.length;
+            
+            // Sort time intervals in dayPreferences by earliest_time
+            const customPriorityComparator = (a, b) => a.time_earliest - b.time_earliest;
+            const priorityQueue = new Heap(customPriorityComparator);
+            priorityQueue.init(dayPreferences);
+            dayPreferences = Heap.nsmallest(numIntervals, priorityQueue)
+
             let index = 0;
             let previousTimeLatest = undefined;
 

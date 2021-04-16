@@ -22,6 +22,7 @@
     "express-session": "^1.17.1",
     "express-validator": "^6.9.2",
     "fs": "0.0.1-security",
+    "heap-js": "^2.1.5",
     "mongodb": "^3.6.3",
     "mongoose": "^5.11.12",
     "mongoose-mongodb-errors": "0.0.2",
