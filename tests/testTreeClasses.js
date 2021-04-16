@@ -692,6 +692,57 @@ const testIntersectionQueryOverlapInside = () => {
     return result;
 }
 
+const testIntersectionAnomalyOne = () => {
+    console.log("--- unit test: ( AVL Tree Intersection Anomaly 1 ) ---")
+    let result = false;
+    /* INITIALIZE TREE */
+    let tree = new treeClasses(defaultFilter);
+
+    /* INITIALIZE OBJECTS TO INSERT */
+    let testObjects = [];
+    testObjects.push(new Class("CS-0040", "test", "A", "01-LEC", 2, 810, 885, "test location", "test city", ["test instructor"]));
+    testObjects.push(new Class("CS-0040", "test", "B", "01-LEC", 4, 810, 885, "test location", "test city", ["test instructor"]));
+    testObjects.push(new Class("CS-0040", "test", "C", "LAB-LA", 5, 630, 705, "test location", "test city", ["test instructor"]));
+
+    testObjects.push(new Class("CS-0137", "test", "D", "01-LEC", 1, 630, 705, "test location", "test city", ["test instructor"]));
+    testObjects.push(new Class("CS-0137", "test", "E", "01-LEC", 3, 630, 705, "test location", "test city", ["test instructor"]));
+
+    testObjects.push(new Class("CS-0116", "test", "F", "01-LEC", 2, 990, 1065, "test location", "test city", ["test instructor"]));
+    testObjects.push(new Class("CS-0116", "test", "G", "01-LEC", 4, 990, 1065, "test location", "test city", ["test instructor"]));
+
+    testObjects.push(new Class("MATH-0051", "test", "H", "01-LEC", 1, 540, 615, "test location", "test city", ["test instructor"]));
+    testObjects.push(new Class("MATH-0051", "test", "I", "01-LEC", 5, 540, 615, "test location", "test city", ["test instructor"]));
+    testObjects.push(new Class("MATH-0051", "test", "J", "06R-RCT", 2, 1170, 1220, "test location", "test city", ["test instructor"]));
+
+    testObjects.push(new Class("CS-0170", "test", "K", "01-LEC", 1, 540, 615, "test location", "test city", ["test instructor"]));
+    testObjects.push(new Class("CS-0170", "test", "L", "01-LEC", 3, 540, 615, "test location", "test city", ["test instructor"]));
+    testObjects.push(new Class("CS-0170", "test", "M", "RE-RCT", 3, 900, 975, "test location", "test city", ["test instructor"]));
+
+    /* insert sections */
+    for (let index in testObjects) {
+        let object = testObjects[index];
+
+        tree.insert(object);
+    }
+
+    /* END init tree */
+    let output = tree.print("array");
+    let answer = [undefined, 'A', 'B', 'C'];
+
+    if (arrayEquals(output, answer))
+        result = true;
+    else {
+        tree.print("tree");
+        console.log("Failure: ")
+        console.log("Expected print: ", answer);
+        console.log("Output: ", output);
+        console.log("inorder output");
+        tree.print("inorder");
+        console.log("--- end : (AVL Tree Intersection Anomaly 1)) ---")
+    }
+    return result;
+}
+
 const testTreeGetObjects = () => {
     console.log("--- unit test: ( treeClasses getObjects() ) ---")
     let result = false;
@@ -755,6 +806,7 @@ const testTree = () => {
     testResults.push(testIntersectionQueryExactSame());
     testResults.push(testIntersectionQueryExactSameLeft());
     testResults.push(testIntersectionQueryOverlapInside());
+    testResults.push(testIntersectionAnomalyOne());
     testResults.push(testTreeGetObjects());
 
     let testsPass = true;

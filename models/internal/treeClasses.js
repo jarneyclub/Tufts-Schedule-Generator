@@ -124,6 +124,9 @@ function treeClasses(inputFilter) {
                     // console.log("INSERTION BEGIN: ");
                     root = insertHelper(inputObject, inputName, inputLeftValue, inputRightValue, root, 0);
                 }
+                else {
+                    throw new Error('Request object could not be inserted as it violates AVL tree invariant');
+                }
             }
         }
 
@@ -208,7 +211,7 @@ function treeClasses(inputFilter) {
 
                 currNode.right = insertHelper(inputObject, inputName, inputLeftValue, inputRightValue, currNode.right, depth + 1);
             }
-            // currNode.getLeftValue() == startTime
+            // currNode.getLeftValue() == inputLeftValue (startTime)
             else {
                 throw new Error('Request object could not be inserted as a Node with an identical value already exists');
             }
