@@ -145,7 +145,7 @@ const testPermutationsDPThirtyTwo = () => {
     let expectedSize = 1;
 
     /* INITIALIZE INPUT */
-    let digitsArray = [6, 4, 10, 32, 5, 10, 0, 4];
+    let digitsArray = [6, 4, 10, 32, 32, 10, 0, 4];
     for (let index in digitsArray)
         expectedSize *= (digitsArray[index] + 1);
 

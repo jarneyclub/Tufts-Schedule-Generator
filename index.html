@@ -72,6 +72,56 @@
             }
         }
 
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "https://tufts-schedule-api.herokuapp.com/api/courses/schedule", true);
+        var bodyRaw = {
+            objectIds: ["5fe8fe71fbae1fdb75772bbe", "5fe8fe71fbae1fdb75772b4c", "5fe8fe71fbae1fdb75772a81", "5fe8fe71fbae1fdb75772af8", "5fe8fe71fbae1fdb7577305f"],
+            filter: {
+                time: {
+                    Monday: {
+                        time_earliest:"00:00",
+                        time_latest: "23:59"
+                    },
+                    Tuesday: {
+                        time_earliest:"00:00",
+                        time_latest: "23:59"
+                    },
+                    Wednesday: {
+                        time_earliest:"00:00",
+                        time_latest: "23:59"
+                    },
+                    Thursday: {
+                        time_earliest:"00:00",
+                        time_latest: "23:59"
+                    },
+                    Friday: {
+                        time_earliest:"00:00",
+                        time_latest: "23:59"
+                    },
+                    Saturday: {
+                        time_earliest:"00:00",
+                        time_latest: "23:59"
+                    },
+                    Sunday: {
+                        time_earliest:"00:00",
+                        time_latest: "23:59"
+                    }
+                }
+            }
+        }
+        xhr.setRequestHeader("Content-type", "application/json");
+        var bodyStringified = JSON.stringify(bodyRaw);
+        xhr.send(bodyStringified);
+
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+            }
+            else if (this.status == 400) {
+                console.log(this.responseText);
+            }
+        };
+
         /* get course information from API */
         /* expected JSON 
             {

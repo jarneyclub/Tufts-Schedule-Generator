@@ -226,24 +226,11 @@ const runTests = async (option) => {
     
     let arrayDocs = [];
     /* Overlappign courses combo */
-    // arrayDocs.push(await testGetOidOfCourseId(option, "JPN-0022"));
-    // arrayDocs.push(await testGetOidOfCourseId(option, "WGSS-0072"));
-    // arrayDocs.push(await testGetOidOfCourseId(option, "GBA-B236"));
-    // arrayDocs.push(await testGetOidOfCourseId(option, "SCP-0146"));
+    arrayDocs.push(await testGetOidOfCourseId(option, "CS-0040"));
+    arrayDocs.push(await testGetOidOfCourseId(option, "CS-0116"));
+    arrayDocs.push(await testGetOidOfCourseId(option, "CS-0137"));
+    // arrayDocs.push(await testGetOidOfCourseId(option, "CS-0170"));
     // arrayDocs.push(await testGetOidOfCourseId(option, "EC-0005"));
-
-    /* overlapping courses combo */
-    arrayDocs.push(await testGetOidOfCourseId(option, "FAH-0003"));
-    arrayDocs.push(await testGetOidOfCourseId(option, "WGSS-0040"));
-    arrayDocs.push(await testGetOidOfCourseId(option, "GBA-B250"));
-    arrayDocs.push(await testGetOidOfCourseId(option, "HEB-0093"));
-    arrayDocs.push(await testGetOidOfCourseId(option, "EC-0006"));
-    
-    /* No schedule combo */
-    // arrayDocs.push(await testGetOidOfCourseId(option, "CEE-0012"));
-    // arrayDocs.push(await testGetOidOfCourseId(option, "EC-0005"));
-    // arrayDocs.push(await testGetOidOfCourseId(option, "FAH-0004"));
-    // arrayDocs.push(await testGetOidOfCourseId(option, "GBA-B281"));
 
     let arrayOids = [];
     for (let i in arrayDocs) {
@@ -262,7 +249,8 @@ const runTests = async (option) => {
             console.log("documents.length: ", documents.length);
         }
     }
-
+    arrayOids.push("6075d5ee2b1565a73d7519f9")
+    console.log(arrayOids)
     testSchedule(option, arrayOids, function (result) {
         if (result.TEST_PASSED)
             console.log("test schedule with overlapping case? PASSED in", result.RESPONSE_TIME);

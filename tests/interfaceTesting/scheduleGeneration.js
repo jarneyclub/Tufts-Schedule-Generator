@@ -17,26 +17,30 @@ const testSchedule = (option, objectIds, callback) => {
         filter: {
             "time": {
                 "Monday": [
-                    { "time_earliest": "12:00", "time_latest": "23:59" }
+                    { "time_earliest": "08:00", "time_latest": "23:59" }
                 ],
                 "Tuesday": [
-                    { "time_earliest": "12:00", "time_latest": "23:59" }
+                    { "time_earliest": "08:00", "time_latest": "23:59" }
                 ],
                 "Wednesday": [
-                    { "time_earliest": "12:00", "time_latest": "23:59" }
+                    { "time_earliest": "08:00", "time_latest": "23:59" }
                 ],
                 "Thursday": [
-                    { "time_earliest": "12:00", "time_latest": "23:59" }
+                    { "time_earliest": "08:00", "time_latest": "23:59" }
                 ],
                 "Friday": [
-                    { "time_earliest": "12:00", "time_latest": "23:59" }
+                    { "time_earliest": "08:00", "time_latest": "23:59" }
                 ],
                 "Saturday": [
-                    { "time_earliest": "12:00", "time_latest": "23:59" }
+                    { "time_earliest": "08:00", "time_latest": "23:59" }
                 ],
                 "Sunday": [
-                    { "time_earliest": "12:00", "time_latest": "23:59" }
+                    { "time_earliest": "08:00", "time_latest": "23:59" }
                 ]
+            },
+            "misc" : {
+                "ignoreTU": false,
+                "ignoreM": true
             }
         }
     };
@@ -128,6 +132,7 @@ const testScheduleBasic = (option, callback) => {
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
+
     var body = {
         objectIds: [
             "5ff7cb917050e1e1f4a1495a", "5ff7cb917050e1e1f4a148e5", "5ff7cb917050e1e1f4a1481a", "5ff7cb917050e1e1f4a14891", "5ff7cb917050e1e1f4a14e37"
@@ -155,6 +160,10 @@ const testScheduleBasic = (option, callback) => {
                 "Sunday": [
                     { "time_earliest": "08:00", "time_latest": "23:59" }
                 ]
+            },
+            "misc": {
+                "ignoreTU": false,
+                "ignoreM": false
             }
         }
     };
