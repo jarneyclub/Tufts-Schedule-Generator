@@ -114,10 +114,10 @@ function treeClasses(inputFilter) {
             if (withinUserPreference == false) 
                 throw Error("Requested object did not pass filter: Time");
             else {
-                console.log("INSERTION NODE INFO: ");
-                console.log("inserting ", inputName);
-                console.log("inputLeftValue: ", inputLeftValue);
-                console.log("inputRightValue: ", inputRightValue);
+                // console.log("INSERTION NODE INFO: ");
+                // console.log("inserting ", inputName);
+                // console.log("inputLeftValue: ", inputLeftValue);
+                // console.log("inputRightValue: ", inputRightValue);
 
                 // console.log("QUERY INTERVAL CHECKING BEGIN: ");
                 if (queryIntervalHelper(inputLeftValue, inputRightValue, root) == false) {
@@ -242,7 +242,7 @@ function treeClasses(inputFilter) {
             /* currNode does not exist */
             return false;
         }
-        console.log("currNode in queryIntervalHelper: ", currNode.getName());
+        // console.log("currNode in queryIntervalHelper: ", currNode.getName());
         
         let currNodeLeftValue = currNode.getLeftValue();
         let rightCurrNodeSpan = currNode.getSpan();
@@ -251,7 +251,7 @@ function treeClasses(inputFilter) {
         /* check if node intersects with subtree root */
 
         if (doesNotOverlap(inputLeftValue, inputRightValue, currNodeLeftValue, currNodeRightValue) == true) {
-            console.log("input does not overlap with currNode");
+            // console.log("input does not overlap with currNode");
 
             /* node to insert DOES NOT overlap with currNode */
 
@@ -259,31 +259,31 @@ function treeClasses(inputFilter) {
             if (doesNotOverlap(inputLeftValue, inputRightValue, currNodeLeftValue, rightCurrNodeSpan) == true) {
                 /* node to insert DOES NOT overlap with currNode's span */
                 
-                console.log("does not overlap with currNode's span");
+                // console.log("does not overlap with currNode's span");
                 
                 // query interval is to the right of span
                 if (rightCurrNodeSpan < inputLeftValue) {
 
                     /* no possible intersection in subtree */
 
-                    console.log("inputLeftValue: ", inputLeftValue);
-                    console.log("inputRightValue: ", inputRightValue);
-                    console.log("rightCurrNodeSpan: ", rightCurrNodeSpan);
-                    console.log("CASE 1A: no possible intersection in subtree");
+                    // console.log("inputLeftValue: ", inputLeftValue);
+                    // console.log("inputRightValue: ", inputRightValue);
+                    // console.log("rightCurrNodeSpan: ", rightCurrNodeSpan);
+                    // console.log("CASE 1A: no possible intersection in subtree");
                     
                     return false;
                 }
                 // query interval is to the left of span
                 else if (inputLeftValue < currNodeLeftValue && inputRightValue < currNodeLeftValue) {
 
-                    console.log("query interval is to the left of span");
-                    console.log("CASE 1B: recurse to left subtree");
+                    // console.log("query interval is to the left of span");
+                    // console.log("CASE 1B: recurse to left subtree");
                     return queryIntervalHelper(inputLeftValue, inputRightValue, currNode.left);
                 }
             }
             else {
                 /* node to insert DOES overlap with currNode's span */
-                console.log("does overlap with currNode's span");
+                // console.log("does overlap with currNode's span");
 
                 if (currNode.left == null) {
                     return queryIntervalHelper(inputLeftValue, inputRightValue, currNode.right);
@@ -294,16 +294,16 @@ function treeClasses(inputFilter) {
                     let leftSubstreeLeftValue = currNode.left.getLeftValue();
                     // does not intersect with left subtree
                     if (doesNotOverlap(leftSubstreeLeftValue, leftSubtreeSpan, inputLeftValue, inputRightValue) == true) {
-                        console.log("does not overlap with currNode.left's span");
+                        // console.log("does not overlap with currNode.left's span");
 
-                        console.log("CASE 2: recurse to right subtree");
+                        // console.log("CASE 2: recurse to right subtree");
                         /* recurse to right subtree */
                         return queryIntervalHelper(inputLeftValue, inputRightValue, currNode.right);
                     }
                     else {
-                        console.log("does overlap with currNode.left's span");
+                        // console.log("does overlap with currNode.left's span");
 
-                        console.log("CASE 2: recurse to left subtree");
+                        // console.log("CASE 2: recurse to left subtree");
                         /* recurse to left subtree */
                         return queryIntervalHelper(inputLeftValue, inputRightValue, currNode.left);
                     }
