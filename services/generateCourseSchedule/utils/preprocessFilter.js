@@ -10,7 +10,7 @@ const joinAdjacentTimesInFilter = (global) => {
         let filter = global.filter;
         let preferencesTime = filter.time;
 
-        console.log("(preprocessFilter) timePref before: ", preferencesTime);
+        // console.log("(preprocessFilter) timePref before: ", preferencesTime);
 
         for (let day in preferencesTime) {
 
@@ -18,7 +18,7 @@ const joinAdjacentTimesInFilter = (global) => {
             let dayPreferences = preferencesTime[day];
             
             let numIntervals = dayPreferences.length;
-            
+
             // Sort time intervals in dayPreferences by earliest_time
             const customPriorityComparator = (a, b) => a.time_earliest - b.time_earliest;
             const priorityQueue = new Heap(customPriorityComparator);
@@ -55,7 +55,7 @@ const joinAdjacentTimesInFilter = (global) => {
             }
 
         }
-        console.log("(preprocessFilter) timePref after: ", preferencesTime);
+        // console.log("(preprocessFilter) timePref after: ", preferencesTime);
 
         resolve(global);
     });
