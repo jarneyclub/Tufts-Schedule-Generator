@@ -5,3 +5,4 @@ schedulemaker.code-workspace
 schedulemaker
 server/variables.env
 frontend/.eslintcache
+.env
