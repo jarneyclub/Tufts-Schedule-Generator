@@ -10,7 +10,7 @@ const joinAdjacentTimesInFilter = (global) => {
         let filter = global.filter;
         let preferencesTime = filter.time;
 
-        // console.log("(preprocessFilter) timePref before: ", preferencesTime);
+        console.log("(preprocessFilter) timePref before: ", preferencesTime);
 
         for (let day in preferencesTime) {
 
@@ -28,25 +28,30 @@ const joinAdjacentTimesInFilter = (global) => {
             let index = 0;
             let previousTimeLatest = undefined;
 
+            // iterate through the specified time intervals in the day
             while (index < numIntervals) {
-                /* iterate through the specified time intervals in the day */
                 let interval = dayPreferences[index];
                 let timeEarliest = interval.time_earliest;
                 let timeLatest = interval.time_latest;
 
                 if (timeEarliest === previousTimeLatest) {
+                    
+                    /* join current and previous intervals */
+
                     // combine current interval into the previous interval
                     let previousInterval = dayPreferences[index - 1];
                     previousInterval.time_latest = timeLatest;
 
                     // remove current interval from array
+                    console.log("dayPreferences before splice: ", dayPreferences)
                     dayPreferences.splice(index, 1);
+                    console.log("dayPreferences after splice: ", dayPreferences)
 
                     previousTimeLatest = timeLatest; // update join condition
                     numIntervals--;
                 }
                 else {
-                    // keep current and previous intervals seperate
+                    /* keep current and previous intervals seperate */
 
                     previousTimeLatest = timeLatest; // update join condition
 
@@ -54,8 +59,11 @@ const joinAdjacentTimesInFilter = (global) => {
                 }
             }
 
+            // update the time filter's day of preferences
+            preferencesTime[day] = dayPreferences;
+
         }
-        // console.log("(preprocessFilter) timePref after: ", preferencesTime);
+        console.log("(preprocessFilter) timePref after: ", preferencesTime);
 
         resolve(global);
     });

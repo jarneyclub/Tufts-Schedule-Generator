@@ -79,6 +79,7 @@ exports.generateCourseSchedule = async (req, res) => {
         let objectId = objectIds[index];
 
         let oid = mongoose.Types.ObjectId(objectId);
+        console.log("(api/courses/schedule): objectID: ", objectId)
         let document = await collectionCourses.findOne({ '_id': oid });
         console.log("(api/courses/schedule):", "Received course to consider: ", document);
         let course = objectUtils.documentToCourse(document);

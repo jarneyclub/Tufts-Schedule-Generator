@@ -35,6 +35,5 @@ const militaryTimeToInteger = (input) => {
     return result;
 }
 
-
 exports.integerToMilitaryTime = integerToMilitaryTime;
 exports.militaryTimeToInteger = militaryTimeToInteger;

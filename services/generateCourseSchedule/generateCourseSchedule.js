@@ -5,12 +5,7 @@ const preprocessFilter = require('./utils/preprocessFilter.js');
 const applyFilter = require('./utils/applyFilter.js');
 const getIdealSchedules = require('./utils/getIdealSchedules.js');
 const chosenClassesToApiDetails = require('./utils/chosenClassesToApiDetails.js');
-
-const timeUtils = require("./utils/timeUtils.js");
 const memwatch = require('@airbnb/node-memwatch');
-
-const Permutations = require('./utils/permutationsUtils.js');
-const CountingSort = require('./utils/countingsortUtils.js');
 
 /**
  * 1) Get permutations
@@ -26,7 +21,7 @@ const CountingSort = require('./utils/countingsortUtils.js');
 const generateCourseSchedule = (arrayCourses, filter) => {
     return new Promise ((resolve, reject) => {
         
-        console.log("(api/courses/schedule):", "Now generating course schedule...");
+        console.log("(generateCourseSchedule):", "Now generating course schedule...");
 
         /* Error catching */
         if (arrayCourses.length == 0)
@@ -51,7 +46,11 @@ const generateCourseSchedule = (arrayCourses, filter) => {
         )
         .then(
             // Uses arrayCourses
-            (global) => getPossibleDigits(global)
+            (global) => getPossibleDigits(global),
+            (err) => {
+                console.log("(generateCourseSchedule) error detected: ", err);
+                reject(err);
+            }
         )
         .then(
             // Uses arrayCourses, possibleDigits
@@ -64,10 +63,9 @@ const generateCourseSchedule = (arrayCourses, filter) => {
             (global) => {
                 
                 let resultClassesIndex = global.resultClassesIndex;
-                console.log("(api/courses/schedule):", "resultClassesINdex: ", resultClassesIndex);
                 if (resultClassesIndex !== 0) {
 
-                    console.log("(api/courses/schedule):", "Picking random course schedule..");
+                    console.log("(generateCourseSchedule):", "Picking random course schedule..");
 
                     let result = chosenClassesToApiDetails(global);
                     resolve(result);

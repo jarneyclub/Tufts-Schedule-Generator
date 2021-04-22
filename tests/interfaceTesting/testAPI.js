@@ -228,6 +228,8 @@ const runTests = async (option) => {
     /* Overlappign courses combo */
     arrayDocs.push(await testGetOidOfCourseId(option, "CS-0015"));
     arrayDocs.push(await testGetOidOfCourseId(option, "CS-0040"));
+    arrayDocs.push(await testGetOidOfCourseId(option, "BIO-0013"));
+    arrayDocs.push(await testGetOidOfCourseId(option, "CHEM-0001"));
 
     let arrayOids = [];
     for (let i in arrayDocs) {
@@ -246,7 +248,6 @@ const runTests = async (option) => {
             console.log("documents.length: ", documents.length);
         }
     }
-    arrayOids.push("6075d5ee2b1565a73d7519f9")
     console.log(arrayOids)
     testSchedule(option, arrayOids, function (result) {
         if (result.TEST_PASSED)

@@ -6,8 +6,9 @@ const chosenClassesToApiDetails = (global) => {
     // console.log("chosenClasses: ", chosenClasses);
 
     let size = Object.keys(chosenClasses).length;
-
+    console.log("(chosenClassesToApiDet):", "number of schedules: ", size);
     let randomIndex = Math.ceil(Math.random() * (size - 1));
+    console.log("(chosenClassesToApiDet):", "chosenIndex: ", randomIndex);
 
     let classes = chosenClasses[randomIndex];
 

@@ -54,11 +54,9 @@ const documentToCourse = (document) => {
                 // add Class object to objectClass
                 objectClass[indexObjectClass] = newClass;
                 indexObjectClass++;
-
-
             }
 
-            // END of iteration through classes
+            /* (End of) iteration through classes */
             let newSection = 
                 new Section(courseId, courseName, sectionId, sectionType, objectClass);
             
@@ -66,12 +64,12 @@ const documentToCourse = (document) => {
             objectSection[indexObjectSection] = newSection;
             indexObjectSection++;
         }
-        // END of iteration through sections
+        /* (End of) iteration through sections */
 
         // add objectSection to objectSectionType
         objectSectionType[sectionType] = objectSection;
     }
-    // END of iteration through section types
+    /* (End of) iteration through section types */
 
     let newCourse = new Course(courseId, courseName, availableSectionTypes, objectSectionType);
 

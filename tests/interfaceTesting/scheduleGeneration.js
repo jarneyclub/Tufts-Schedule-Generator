@@ -40,7 +40,9 @@ const testSchedule = (option, objectIds, callback) => {
             },
             "misc" : {
                 "ignoreTU": false,
-                "ignoreM": true
+                "ignoreM": false,
+                "ignoreClosed": true,
+                "ignoreWL": true
             }
         }
     };
