@@ -40,6 +40,17 @@ const createArrSectionTypes = (global) => {
         }
         let timePref = filter.time;
 
+        // record of filtered section information (for verbose error messages)
+        let filtrationRecord = {
+            numOfSecsInSecType: undefined,
+            numOfSecsIgnored: undefined,
+            numOfSecsIgnoredByignoreTU: undefined,
+            numOfSecsIgnoredByignoreM: undefined,
+            numOfSecsIgnoredByignoreClosed: undefined,
+            numOfSecsIgnoredByignoreWL: undefined,
+            numOfSecsIgnoredByTime: undefined,
+        }
+
         let mapSectionTypes = [];
         for (i in arrayCourses) {
             let course = arrayCourses[i];
@@ -52,7 +63,13 @@ const createArrSectionTypes = (global) => {
                 let sections = sectionsInSecTypes[j];
 
                 let secsToInsert = [];
-                let secsInCourse = Object.keys(sections).length; // use later to notify users when a course with a single section had its section ignored
+                filtrationRecord.numOfSecsInSecType = Object.keys(sections).length;
+                filtrationRecord.numOfSecsIgnored = 0;
+                filtrationRecord.numOfSecsIgnoredByignoreTU = 0;
+                filtrationRecord.numOfSecsIgnoredByignoreM = 0;
+                filtrationRecord.numOfSecsIgnoredByignoreClosed = 0;
+                filtrationRecord.numOfSecsIgnoredByignoreWL = 0;
+                filtrationRecord.numOfSecsIgnoredByTime = 0;
 
                 // iterate through Sections
                 for (let k in sections) {
@@ -94,24 +111,9 @@ const createArrSectionTypes = (global) => {
                                 let timeStartFilter = timePreferencesOnDay[i].time_earliest;
                                 let timeEndFilter = timePreferencesOnDay[i].time_latest;
 
-                                if (sec.getCourseID() === "CHEM-0001")
-                                    if (sec.getSectionName() === "01-LEC") {
-                                        console.log("CHEM1 LEC1 CHECKING")
-                                        console.log("withinUserPref: ", withinUserPreference)
-                                        console.log("timeStartFilter: ", timeStartFilter);
-                                        console.log("timeEndFilter: ", timeEndFilter);
-                                        console.log("classStartTime: ", classStartTime);
-                                        console.log("classEndTime: ", classEndTime);
-                                        console.log("aClass.dayOfWeek: ", dayOfWeek)
-                                    }
-
                                 if (withinBounds(timeStartFilter, timeEndFilter, classStartTime, classEndTime) == true) {
                                     /* Class is within user time preference */
                                     withinUserPreference = true;
-                                    if (sec.getCourseID() === "CHEM-0001")
-                                        if (sec.getSectionName() === "01-LEC") {
-                                            console.log("chem1 lec1 just passed")
-                                        }
                                     break;
                                 }
                             } /* (End of) loop over a single day's time preferences */
@@ -124,6 +126,10 @@ const createArrSectionTypes = (global) => {
 
                                 console.log("(applyFilter) Time was not specified. Ignoring...");
                                 withinUserPreference = false;
+                                
+                                // update records
+                                filtrationRecord.numOfSecsIgnored++; 
+                                filtrationRecord.numOfSecsIgnoredByignoreTU++;
                                 break;
                             }
                             else {
@@ -133,14 +139,14 @@ const createArrSectionTypes = (global) => {
 
                         if (withinUserPreference === false) {
                             /* Time was specified, but current Class did not match user time preferences */
-                            console.log("(applyFilter) Time is not within bounds. ")
+                            // console.log("(applyFilter) Time is not within bounds. ")
+                            // update records
+                            filtrationRecord.numOfSecsIgnored++;
+                            filtrationRecord.numOfSecsIgnoredByTime++;
                             break;
                         }
                         else  {
-                            console.log("(applyFilter) Time IS within bounds. ")
-                            if (sec.getCourseID() === "CHEM-0001")
-                                if (sec.getSectionName() === "01-LEC")
-                                    console.log("and that was chem1 lec1")
+                            // console.log("(applyFilter) Time IS within bounds. ")
                         }
 
                         // apply ignore MSection filter
@@ -156,16 +162,43 @@ const createArrSectionTypes = (global) => {
                                 /* Cannot insert this Section (Msection filter) */
 
                                 console.log("(applyFilter) M section. Ignoring...")
+
+                                // update records
+                                filtrationRecord.numOfSecsIgnored++;
+                                filtrationRecord.numOfSecsIgnoredByignoreM++;
+
                                 withinUserPreference = false;
                                 break;
                             }
                         }
 
                         if (!withinUserPreference)
-                            console.log("(applyFilter) USER PREFERENCE WAS NOT SATISFIED")
+                            console.log("(applyFilter) impossible withinUserPreference === false")
 
                     } /* (End of) loop over Classes */
 
+                    // apply ignoreClosed and ignoreWL filters
+                    let secStatus = sec.getSectionStatus();
+                    
+                    if (ignoreClosed === true)
+                        if (secStatus === "closed") {
+                            withinUserPreference = false;
+
+                            // update records
+                            filtrationRecord.numOfSecsIgnored++;
+                            filtrationRecord.numOfSecsIgnoredByignoreClosed++;
+                        }
+                    
+                    if (ignoreWL === true)
+                        if (secStatus === "waitlist") {
+                            withinUserPreference = false;
+
+                            // update records
+                            filtrationRecord.numOfSecsIgnored++;
+                            filtrationRecord.numOfSecsIgnoredByignoreWL++;
+                        }
+                    
+                    // insert if all filters applied without issue
                     if ( withinUserPreference === true ) {
                         secsToInsert.push(sec);
                     }
@@ -183,10 +216,10 @@ const createArrSectionTypes = (global) => {
                 }
                 
                 if (sectionTypeObj["0"] === undefined) 
-                    reject("No schedule could be matched with the given courses and user preferences")
+                    reject("No schedule matches your courses and user preferences. Please reselect your preferences.")
                 mapSectionTypes.push(sectionTypeObj);
 
-            }
+            } /* (End of) loop over section types */
         }
 
         /*

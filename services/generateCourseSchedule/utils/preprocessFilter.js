@@ -10,7 +10,7 @@ const joinAdjacentTimesInFilter = (global) => {
         let filter = global.filter;
         let preferencesTime = filter.time;
 
-        console.log("(preprocessFilter) timePref before: ", preferencesTime);
+        // console.log("(preprocessFilter) timePref before: ", preferencesTime);
 
         for (let day in preferencesTime) {
 
@@ -43,9 +43,9 @@ const joinAdjacentTimesInFilter = (global) => {
                     previousInterval.time_latest = timeLatest;
 
                     // remove current interval from array
-                    console.log("dayPreferences before splice: ", dayPreferences)
+                    // console.log("dayPreferences before splice: ", dayPreferences)
                     dayPreferences.splice(index, 1);
-                    console.log("dayPreferences after splice: ", dayPreferences)
+                    // console.log("dayPreferences after splice: ", dayPreferences)
 
                     previousTimeLatest = timeLatest; // update join condition
                     numIntervals--;
@@ -63,7 +63,7 @@ const joinAdjacentTimesInFilter = (global) => {
             preferencesTime[day] = dayPreferences;
 
         }
-        console.log("(preprocessFilter) timePref after: ", preferencesTime);
+        // console.log("(preprocessFilter) timePref after: ", preferencesTime);
 
         resolve(global);
     });
