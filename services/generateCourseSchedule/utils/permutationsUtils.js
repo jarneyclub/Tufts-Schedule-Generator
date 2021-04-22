@@ -139,25 +139,23 @@ const permutationsDPHelper = (arrayDigits, memo) => {
     }
     // memo doesn't exist, recurse
     else {
-        let lastIndex = arrayDigits.length - 1;
+        // get reduced array excluding last digit
+        let reducedArray = [];
+        for (let i = 0; i < arrayDigits.length - 1; i++)
+            reducedArray.push(arrayDigits[i])
+        
+        // get memoisation on reducedArray
+        let memoisedArray = permutationsDPHelper(reducedArray, memo);
+        // console.log("memoised array: ", memoisedArray);
 
+        let lastIndex = arrayDigits.length - 1;
         // get all integers that are [0, lastDigit] 
         let lastDigit = arrayDigits[lastIndex];
         let allDigitsToConcat = [];
         for (let i = 0; i <= lastDigit; i++)
             allDigitsToConcat.push(i)
 
-        // get reduced array excluding last digit
-        let reducedArray = [];
-        for (let i = 0; i < arrayDigits.length - 1; i++)
-            reducedArray.push(arrayDigits[i])
-
-        // get memoisation on reducedArray
-        let memoisedArray = permutationsDPHelper(reducedArray, memo);
-        // console.log("memoised array: ", memoisedArray);
-
         let resultArray = [];
-
         // iterate through permutations
         for (let permInd in memoisedArray) { // O(k^(n-1))
             let aPermutation = memoisedArray[permInd];
@@ -179,7 +177,7 @@ const permutationsDPHelper = (arrayDigits, memo) => {
             // console.log("concatPermutation end: ", concatPermutation);
         }
 
-        memo[key] = resultArray; // memoise
+        memo[key] = resultArray; // memoise O(k^n), where n is input length
         return resultArray;
     }
 
