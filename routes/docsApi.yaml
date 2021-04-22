@@ -447,6 +447,21 @@ components:
         filter:
           type: object
           properties:
+            misc:
+              type: object
+              properties:
+               ignoreTU:
+                type: boolean
+                example: false
+               ignoreM:
+                type: boolean
+                example: false
+               ignoreClosed:
+                type: boolean
+                example: true
+               ignoreWL:
+                type: boolean
+                example: true
             time:
               type: object
               properties:
