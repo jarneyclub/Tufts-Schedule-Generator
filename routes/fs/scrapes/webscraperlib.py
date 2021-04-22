@@ -17,7 +17,7 @@ master_list[COURSEINDEX]
 
 e.g. LECTURE_SECTIONS = [SECTION, SECTION, etc.] (master_list[courseIndex][2][secTypeIndex])
 
-SECTION = ['SECTION ID e.g. 01-IND', [SETTINGS],[FACULTIES]] (master_list[courseIndex][2][secTypeIndex][sectionIndex])
+SECTION = ['SECTION ID e.g. 01-IND', [SETTINGS],[FACULTIES], 'STATUS e.g. closed/open/waitlist'] (master_list[courseIndex][2][secTypeIndex][sectionIndex])
 WHOA WHOA WHOA! FACULTIES IN MASTER_LIST IS NOT PARSED! E.G. "teachername, teachername2". DO IT
 [SETTINGS] =  [SETTING, SETTING, etc.] (master_list[courseIndex][2][secTypeIndex][sectionIndex][1])
 
@@ -63,7 +63,7 @@ class webscraper():
     # Returns: A Beautiful Soup object of the HTML for later parsing
     # Note: Blocks the entire workflow waiting for page to load
     def init_db(self):
-        dburl = "mongodb+srv://jeremy:fdqTM7kYkotbeMDT@cluster0.2mmvf.mongodb.net/courses?retryWrites=true&w=majority"
+        dburl = ""
         client = MongoClient(dburl)
         db = client.courses
         collection = db.courses
@@ -182,6 +182,13 @@ class webscraper():
                     instructors_text = self.input_teacher(tr)
                     instructors_list = instructors_text.split(", ")
                     single_section.append(instructors_list)
+                    
+                    # {img} - icon for every section that indicates whether the section is 
+                    # open or closed, by (alt = "open status image") or (title = "open")
+                    img = tr.find('img')
+                    alts = img.get('alt')
+                    alt_list = alts.split(" ")
+                    single_section.append(alt_list[0])
                     
                     ########## append a section ###########
                     sections.append(single_section)
@@ -526,6 +533,7 @@ class webscraper():
                     # iterate through sections
                     for section in array_sections:
                         section_id = section[0] # to insert
+                        section_status = section[3] # to insert
                         faculties = section[2] # to insert
                         classes = [] # initialize classes array for each section
                         array_settings = section[1]
@@ -577,13 +585,14 @@ class webscraper():
 
                         dict_section = {
                             "section_id": section_id,
-                            "classes": classes
+                            "classes": classes,
+                            "status": section_status
                         }
 
                         dict_course['sections'][section_type].append(dict_section)
                         # test sections
-                        if course_id == 'COMP-0015':
-                            print('COMPPP')
+                        if course_id == 'CS-0015':
+                            print('Test preview for arbitrary course CS-0015')
                             print(dict_course['sections'][section_type])
                         
                         if len(array_settings) > 1:
