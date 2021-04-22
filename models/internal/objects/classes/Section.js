@@ -6,9 +6,10 @@
  * @param {any} inputSectionName 
  * @param {any} inputSectionType 
  * @param {any} inputClasses
+ * @param {string} inputSectionStatus 'closed', 'waitlist', 'open'
  * @returns 
  */
-function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectionType, inputClasses) {
+function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectionType, inputClasses, inputSectionStatus) {
     
     //////////////////////////////////////////
     //                                      //
@@ -20,6 +21,7 @@ function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectio
     const courseName = inputCourseName;
     const sectionName = inputSectionName;
     const sectionType = inputSectionType;
+    const sectionStatus = inputSectionStatus;
 
     const classes = inputClasses;
 
@@ -57,8 +59,16 @@ function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectio
         return sectionType;
     }
 
+    /** Get classes of this section
+     * 
+     * @returns {object} {'1': Class, '2': Class}
+     */
     function getClasses () {
         return classes;
+    }
+
+    function getSectionStatus() {
+        return sectionStatus;
     }
 
     return {
@@ -66,7 +76,8 @@ function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectio
         getSectionName,
         getSectionType,
         getCourseName,
-        getClasses
+        getClasses,
+        getSectionStatus
     }
 }
 

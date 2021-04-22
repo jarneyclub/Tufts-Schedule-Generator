@@ -30,6 +30,7 @@ const documentToCourse = (document) => {
             let sectionInfo = arraySections[indexSectionInfo];
             let sectionId = sectionInfo.section_id;
             let arrayClasses = sectionInfo.classes;
+            let sectionStatus = sectionInfo.status;
             
             // init object to store
             let objectClass = {};
@@ -58,7 +59,7 @@ const documentToCourse = (document) => {
 
             /* (End of) iteration through classes */
             let newSection = 
-                new Section(courseId, courseName, sectionId, sectionType, objectClass);
+                new Section(courseId, courseName, sectionId, sectionType, objectClass, sectionStatus);
             
             // add Section object to objectSection
             objectSection[indexObjectSection] = newSection;
