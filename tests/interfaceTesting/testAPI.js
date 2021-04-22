@@ -226,11 +226,8 @@ const runTests = async (option) => {
     
     let arrayDocs = [];
     /* Overlappign courses combo */
+    arrayDocs.push(await testGetOidOfCourseId(option, "CS-0015"));
     arrayDocs.push(await testGetOidOfCourseId(option, "CS-0040"));
-    arrayDocs.push(await testGetOidOfCourseId(option, "CS-0116"));
-    arrayDocs.push(await testGetOidOfCourseId(option, "CS-0137"));
-    // arrayDocs.push(await testGetOidOfCourseId(option, "CS-0170"));
-    // arrayDocs.push(await testGetOidOfCourseId(option, "EC-0005"));
 
     let arrayOids = [];
     for (let i in arrayDocs) {

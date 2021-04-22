@@ -1,30 +1,20 @@
 const getPossibleDigits = (global) => {
     return new Promise ((resolve, reject)=>  {
 
-        let arrayCourses = global.arrayCourses;
-
-        /* Error catching */
-        if (arrayCourses.length == 0)
-            reject(new Error("getPossibleDigits: length of arrayCourses is 0"));
-        else if (arrayCourses === undefined)
-            reject(new Error("getPossibleDigits: arrayCourses is undefined"));
+        let arrSectionTypes = global.arrSecTypes;
 
         let start = Date.now();
 
         let possibleDigits = [];
+
         // iterate through courses
-        for (let index in arrayCourses) {
-            let course = arrayCourses[index];
-            let sections = course.getSections();
+        for (let index in arrSectionTypes) {
 
-            // iterate through section types
-            for (let sectiontype in sections) {
-                let sectionsInSecType = sections[sectiontype];
+            /* { '0': Section,
+                    '1': Section }  */
+            let sectionsObj = arrSectionTypes[index];
 
-                // append maximum digits
-                possibleDigits.push(Object.keys(sectionsInSecType).length - 1);
-            }
-
+            possibleDigits.push(Object.keys(sectionsObj).length - 1);
         }
 
         let end = Date.now();
@@ -34,7 +24,7 @@ const getPossibleDigits = (global) => {
         
         /* add variables to global */
         global.possibleDigits = possibleDigits;
-    
+        console.log("possibleDigits: ", possibleDigits);
         resolve(global);
     });
     

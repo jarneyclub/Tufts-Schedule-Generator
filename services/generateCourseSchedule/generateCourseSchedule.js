@@ -2,14 +2,15 @@
 const getPossibleDigits = require('./utils/getPossibleDigits.js');
 const generatePermutations = require('./utils/generatePermutations.js');
 const preprocessFilter = require('./utils/preprocessFilter.js');
+const applyFilter = require('./utils/applyFilter.js');
 const getIdealSchedules = require('./utils/getIdealSchedules.js');
 const chosenClassesToApiDetails = require('./utils/chosenClassesToApiDetails.js');
 
-const timeUtils = require("../utils/timeUtils.js");
+const timeUtils = require("./utils/timeUtils.js");
 const memwatch = require('@airbnb/node-memwatch');
 
-const Permutations = require('../utils/permutationsUtils.js');
-const CountingSort = require('../utils/countingsortUtils.js');
+const Permutations = require('./utils/permutationsUtils.js');
+const CountingSort = require('./utils/countingsortUtils.js');
 
 /**
  * 1) Get permutations
@@ -27,42 +28,55 @@ const generateCourseSchedule = (arrayCourses, filter) => {
         
         console.log("(api/courses/schedule):", "Now generating course schedule...");
 
+        /* Error catching */
+        if (arrayCourses.length == 0)
+            reject(new Error("Length of arrayCourses is 0"));
+        else if (arrayCourses === undefined)
+            reject(new Error("arrayCourses is undefined"));
+
         let global = {
             "arrayCourses": arrayCourses,
             "filter": filter,
+            "arrSecTypes": undefined,
+            "possibleDigits": undefined,
             "references": undefined,
             "chosenPermutations": undefined,
             "resultClasses": undefined,
             "resultClassesIndex": undefined
         };
+        // Uses filter
+        preprocessFilter.joinAdjacentTimesInFilter(global)
+        .then(
+            (global) => applyFilter.createArrSectionTypes(global)
+        )
+        .then(
+            // Uses arrayCourses
+            (global) => getPossibleDigits(global)
+        )
+        .then(
+            // Uses arrayCourses, possibleDigits
+            (global) => generatePermutations(global)
+        )
+        .then(
+            (global) => getIdealSchedules(global)
+        )
+        .then(
+            (global) => {
+                
+                let resultClassesIndex = global.resultClassesIndex;
+                console.log("(api/courses/schedule):", "resultClassesINdex: ", resultClassesIndex);
+                if (resultClassesIndex !== 0) {
 
-        getPossibleDigits(global)
-            .then(
-                (global) => generatePermutations(global)
-            )
-            .then(
-                (global) => preprocessFilter.joinAdjacentTimesInFilter(global)
-            )
-            .then(
-                (global) => getIdealSchedules(global)
-            )
-            .then(
-                (global) => {
-                    
-                    let resultClassesIndex = global.resultClassesIndex;
-                    console.log("(api/courses/schedule):", "resultClassesINdex: ", resultClassesIndex);
-                    if (resultClassesIndex !== 0) {
+                    console.log("(api/courses/schedule):", "Picking random course schedule..");
 
-                        console.log("(api/courses/schedule):", "Picking random course schedule..");
-
-                        let result = chosenClassesToApiDetails(global);
-                        resolve(result);
-                    }
-                    else {
-                        reject("No schedule could be matched with the given courses and user preferences");
-                    }
+                    let result = chosenClassesToApiDetails(global);
+                    resolve(result);
                 }
-            )
+                else {
+                    reject("No schedule could be matched with the given courses and user preferences");
+                }
+            }
+        )
     });
 }
 exports.generateCourseSchedule = generateCourseSchedule;

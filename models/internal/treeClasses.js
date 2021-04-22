@@ -75,59 +75,15 @@ function treeClasses(inputFilter) {
 
         let inputName = inputObject.getSectionName();
 
-        /* if either endTime of startTime is -1, do not insert and throw error */
-        if (inputObject.getStartTime() == -1 || inputObject.getEndTime() == -1) {
-            // console.log("inputObject.getStartTime(): ", inputObject.getStartTime());
-            // console.log("inputObject.getEndTime(): ", inputObject.getEndTime());
-            // console.log("courseID: ", inputObject.getCourseID());
+        // console.log("INSERTION NODE INFO: ");
+        // console.log("inserting ", inputName);
+        // console.log("inputLeftValue: ", inputLeftValue);
+        // console.log("inputRightValue: ", inputRightValue);
 
-            throw Error("Requested object does not have a defined time");
-        }
-
-        /* apply filter on times */
-
-        if (filter.time[dayOfWeek] != undefined) {
-
-            /* check if request object is within a user preference */
-
-            // iterate through time preferences
-            let timePreferencesOnDay = filter.time[dayOfWeek];
-            let withinUserPreference = false; // flag for user time preference
-            
-            for ( let i = 0; i < timePreferencesOnDay.length; i++ ) {
-
-                let timeStartFilter = timePreferencesOnDay[i].time_earliest;
-                let timeEndFilter = timePreferencesOnDay[i].time_latest;
-
-                // console.log("timeStartFilter: ", timeStartFilter);
-                // console.log("timeEndFilter: ", timeEndFilter);
-                // console.log("inputObject.getStartTime(): ", inputObject.getStartTime());
-                // console.log("inputObject.getEndTime(): ", inputObject.getEndTime());
-
-                if (withinBounds(timeStartFilter, timeEndFilter, inputObject.getStartTime(), inputObject.getEndTime()) == true) {
-                    withinUserPreference = true;
-                    break;
-                }
-            }
-
-            /* begin insertion process if user preference fulfilled */
-            if (withinUserPreference == false) 
-                throw Error("Requested object did not pass filter: Time");
-            else {
-                // console.log("INSERTION NODE INFO: ");
-                // console.log("inserting ", inputName);
-                // console.log("inputLeftValue: ", inputLeftValue);
-                // console.log("inputRightValue: ", inputRightValue);
-
-                // console.log("QUERY INTERVAL CHECKING BEGIN: ");
-                if (queryIntervalHelper(inputLeftValue, inputRightValue, root) == false) {
-                    // console.log("INSERTION BEGIN: ");
-                    root = insertHelper(inputObject, inputName, inputLeftValue, inputRightValue, root, 0);
-                }
-                else {
-                    throw new Error('Request object could not be inserted as it violates AVL tree invariant');
-                }
-            }
+        // console.log("QUERY INTERVAL CHECKING BEGIN: ");
+        if (queryIntervalHelper(inputLeftValue, inputRightValue, root) == false) {
+            // console.log("INSERTION BEGIN: ");
+            root = insertHelper(inputObject, inputName, inputLeftValue, inputRightValue, root, 0);
         }
 
     }

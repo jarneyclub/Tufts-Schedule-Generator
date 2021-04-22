@@ -6,11 +6,9 @@ const generatePermutations = (global) => {
         
         let possibleDigits = global.possibleDigits;
         let arrayCourses = global.arrayCourses;
-        let filter = global.filter;
 
         console.log("possibleDigits: ", possibleDigits)
         console.log("arrayCourses: ", arrayCourses)
-        console.log("filter: ", filter);
         
         let start = Date.now();
 

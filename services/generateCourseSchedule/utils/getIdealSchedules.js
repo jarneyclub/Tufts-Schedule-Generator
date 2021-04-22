@@ -1,7 +1,7 @@
 const treeClasses = require('../../../models/internal/treeClasses.js');
 
 const mapSectionTypes = (arrayCourses) => {
-    let arraySections = [];
+    let arraySectionTypes = [];
     for (i in arrayCourses) {
         let course = arrayCourses[i];
         let sectionsInSecTypes = course.getSections();
@@ -9,10 +9,17 @@ const mapSectionTypes = (arrayCourses) => {
         for (let j in sectionsInSecTypes) {
             let sections = sectionsInSecTypes[j];
 
-            arraySections.push(sections);
+            arraySectionTypes.push(sections);
         }
     }
-    return arraySections;
+    /*
+    [
+     { '0': Section }, // one section type
+     { '0': Section, 
+      '1': Section } // second section type
+    ]
+    */
+    return arraySectionTypes;
 }
 
 const getIdealSchedules = (global) => {
@@ -21,12 +28,10 @@ const getIdealSchedules = (global) => {
 
         let references = global.references;
         let chosenPermutations = global.chosenPermutations;
-        let arrayCourses = global.arrayCourses;
         let filter = global.filter;
 
         let start = Date.now();
-        let arraySectionTypes = mapSectionTypes(arrayCourses); //used 
-        // console.log("arraySectionTypes: ", arraySectionTypes);
+        let arraySectionTypes = global.arrSecTypes; //used 
 
         let resultClasses = {};
         let resultClassesIndex = 0;

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const CourseSchedule = require('../../services/generateCourseSchedule/generateCourseSchedule.js');
 const objectUtils = require('../../services/apiUtils.js');
-const timeUtils = require('../../services/utils/timeUtils.js');
+const timeUtils = require('../../services/generateCourseSchedule/utils/timeUtils.js');
 
 /*
 * Handle POST request: generate a weekly schedule
@@ -17,7 +17,11 @@ const timeUtils = require('../../services/utils/timeUtils.js');
 *               Tuesday: [{
 *
 *               }]
-*           }
+*           },
+*       "misc" : {
+*           "ignoreTU": bool,
+*           "ignoreM": bool
+*       }
 *   }
 *
 * }
@@ -48,7 +52,8 @@ exports.generateCourseSchedule = async (req, res) => {
 
     /* translate strings in to integers for API */
     let newFilter = {
-        time: {}
+        time: {},
+        misc: filter.misc
     }
     for (let key in filter.time) {
         let integer = dayToInteger[key];
