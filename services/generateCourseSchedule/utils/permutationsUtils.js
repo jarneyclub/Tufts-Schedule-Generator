@@ -290,8 +290,7 @@ const getPermutations = (arrayDigits, callback) => {
     let numberOfPossiblePermutations = 1;
     for (let i in arrayDigits) {
         let choices = arrayDigits[i];
-        
-        numberOfPossiblePermutations = numberOfPossiblePermutations * choices.length;
+        numberOfPossiblePermutations = numberOfPossiblePermutations * choices + 1;
 
         if (choices.length > largestDigit) 
             largestDigit = choices.length;
@@ -305,13 +304,13 @@ const getPermutations = (arrayDigits, callback) => {
         console.log("(api/courses/schedule):", "largestDigit > LARGEST_POSSIBLE_DIGIT_DP + 1");
         if (totalDigits > 48) {
             console.log("(api/courses/schedule):", "totalDigits > 48 ... using randomized algorithm");
-            chosenPermutations = permutationsRandom(arrayDigits, 100);
+            chosenPermutations = permutationsRandom(arrayDigits, numberOfPossiblePermutations*0.3);
         }
         else {
             // console.log("Using recursive algorithm here");
             // chosenPermutations = permutationsRec(arrayDigits);
             console.log("(api/courses/schedule):", "totalDigits <= 48 ... using randomized algorithm");
-            chosenPermutations = permutationsRandom(arrayDigits, 100);
+            chosenPermutations = permutationsRandom(arrayDigits, numberOfPossiblePermutations*0.3);
         }
     }
     else {
@@ -320,15 +319,16 @@ const getPermutations = (arrayDigits, callback) => {
             // console.log("Using DP algorithm there");
             // chosenPermutations = permutationsDP(arrayDigits);
             console.log("(api/courses/schedule):", "length of permutation > 15 ... using randomized algorithm");
-            chosenPermutations = permutationsRandom(arrayDigits, 100);
+            chosenPermutations = permutationsRandom(arrayDigits, numberOfPossiblePermutations*0.3);
         }
         else  {
-            if (numberOfPossiblePermutations > 100) {
-                console.log("(api/courses/schedule):", "number of total permutations > 100 ... using randomized algorithm");
-                chosenPermutations = permutationsRandom(arrayDigits, 100);
+            if (numberOfPossiblePermutations > 35000) {
+                console.log("(api/courses/schedule):", "number of total permutations = ", numberOfPossiblePermutations," > 35000 ... using randomized algorithm");
+                chosenPermutations = permutationsRandom(arrayDigits, numberOfPossiblePermutations*0.3);
             }
             else {
-                console.log("(api/courses/schedule):", "number of total permutations <= 100 ... using dynamic programming");
+                console.log("(api/courses/schedule):", "number of total permutations = ", numberOfPossiblePermutations,
+                                " <= 35000 ... using dynamic programming");
                 chosenPermutations = permutationsDP(arrayDigits);   
             }
         }
