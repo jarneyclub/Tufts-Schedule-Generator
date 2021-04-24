@@ -325,7 +325,7 @@ const getPermutations = (arrayDigits, callback) => {
             if (numberOfPossiblePermutations > 35000) {
                 console.log("(api/courses/schedule):", "number of total permutations = ", numberOfPossiblePermutations," > 35000 ... using randomized algorithm");
                 if (numberOfPossiblePermutations > 1000000) {
-                    chosenPermutations = permutationsRandom(arrayDigits, 50000);
+                    chosenPermutations = permutationsRandom(arrayDigits, numberOfPossiblePermutations*0.1);
                 }
                 else {
                     chosenPermutations = permutationsRandom(arrayDigits, numberOfPossiblePermutations*0.3);
