@@ -302,14 +302,10 @@ const getPermutations = (arrayDigits, callback) => {
 
     if (largestDigit > LARGEST_POSSIBLE_DIGIT_DP + 1) {
         console.log("(api/courses/schedule):", "largestDigit > LARGEST_POSSIBLE_DIGIT_DP + 1");
-        if (totalDigits > 48) {
-            console.log("(api/courses/schedule):", "totalDigits > 48 ... using randomized algorithm");
-            chosenPermutations = permutationsRandom(arrayDigits, numberOfPossiblePermutations*0.3);
+        if (numberOfPossiblePermutations > 1000000) {
+            chosenPermutations = permutationsRandom(arrayDigits, numberOfPossiblePermutations * 0.05);
         }
         else {
-            // console.log("Using recursive algorithm here");
-            // chosenPermutations = permutationsRec(arrayDigits);
-            console.log("(api/courses/schedule):", "totalDigits <= 48 ... using randomized algorithm");
             chosenPermutations = permutationsRandom(arrayDigits, numberOfPossiblePermutations*0.3);
         }
     }
