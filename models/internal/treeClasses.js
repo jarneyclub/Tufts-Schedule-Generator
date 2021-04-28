@@ -76,7 +76,8 @@ function treeClasses(inputFilter) {
         let inputName = inputObject.getSectionName();
 
         // console.log("INSERTION NODE INFO: ");
-        // console.log("inserting ", inputName);
+        // console.log("inserting section id", inputName);
+        // console.log("inserting course id", inputObject.getCourseID());
         // console.log("inputLeftValue: ", inputLeftValue);
         // console.log("inputRightValue: ", inputRightValue);
 
@@ -84,6 +85,9 @@ function treeClasses(inputFilter) {
         if (queryIntervalHelper(inputLeftValue, inputRightValue, root) == false) {
             // console.log("INSERTION BEGIN: ");
             root = insertHelper(inputObject, inputName, inputLeftValue, inputRightValue, root, 0);
+        }
+        else {
+            throw new Error ("Requested object could not be inserted because it violated the no overlap invariant")
         }
 
     }
@@ -534,7 +538,6 @@ function treeClasses(inputFilter) {
             getObjectsPreOrder(currNode.left, arrayClasses);
 
             arrayClasses.push(currNode.getObject());
-
             getObjectsPreOrder(currNode.right, arrayClasses);
 
             return arrayClasses
