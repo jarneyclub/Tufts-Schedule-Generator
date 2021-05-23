@@ -42,7 +42,11 @@ const generateCourseSchedule = (arrayCourses, filter) => {
         // Uses filter
         preprocessFilter.joinAdjacentTimesInFilter(global)
         .then(
-            (global) => applyFilter.createArrSectionTypes(global)
+            (global) => applyFilter.createArrSectionTypes(global), 
+            (err) => {
+                console.log("(generateCourseSchedule) error detected: ", err);
+                reject(err);
+            }
         )
         .then(
             // Uses arrayCourses

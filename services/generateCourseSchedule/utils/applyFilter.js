@@ -210,13 +210,14 @@ const createArrSectionTypes = (global) => {
                 for ( let i in secsToInsert ) {
                     
                     let sec = secsToInsert[i]; // Section object
-
                     sectionTypeObj[indexSection.toString()] = sec;
                     indexSection++;
                 }
                 
-                if (sectionTypeObj["0"] === undefined) 
+                if (sectionTypeObj["0"] === undefined) {
+                    console.log("(applyFilter) sectionTypeObj: ", sectionTypeObj)
                     reject("No schedule matches your courses and user preferences. Please reselect your preferences.")
+                }
                 mapSectionTypes.push(sectionTypeObj);
 
             } /* (End of) loop over section types */
