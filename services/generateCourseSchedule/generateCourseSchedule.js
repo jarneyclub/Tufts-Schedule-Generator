@@ -40,7 +40,7 @@ const generateCourseSchedule = (arrayCourses, filter) => {
             "resultClassesIndex": undefined
         };
         // Uses filter
-        preprocessFilter.joinAdjacentTimesInFilter(global)
+        preprocessFilter(global)
         .then(
             (global) => applyFilter.createArrSectionTypes(global), 
             (err) => {

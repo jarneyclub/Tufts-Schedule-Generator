@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const CourseSchedule = require('../../services/generateCourseSchedule/generateCourseSchedule.js');
 const objectUtils = require('../../services/apiUtils.js');
-const timeUtils = require('../../services/generateCourseSchedule/utils/timeUtils.js');
 
 /*
 * Handle POST request: generate a weekly schedule
@@ -39,39 +38,7 @@ exports.generateCourseSchedule = async (req, res) => {
     // console.log("filter: ", filter);
 
     var start = Date.now(); // begin timing API endpoint
-
-    let dayToInteger = {
-        Monday: 1,
-        Tuesday: 2,
-        Wednesday: 3,
-        Thursday: 4,
-        Friday: 5,
-        Saturday: 6,
-        Sunday: 7
-    }
-
-    /* translate strings in to integers for API */
-    let newFilter = {
-        time: {},
-        misc: filter.misc
-    }
-    for (let key in filter.time) {
-        let integer = dayToInteger[key];
-        newFilter.time[integer] = filter.time[key];
-
-        let arrayTimes = newFilter.time[integer];
-        for (let i = 0; i < arrayTimes.length; i++) {
-            let strTimeEarliest = filter.time[key][i].time_earliest;
-            let strTimeLatest = filter.time[key][i].time_latest;
-
-            let intTimeForEarliest = timeUtils.militaryTimeToInteger(strTimeEarliest);
-            let intTimeForLatest = timeUtils.militaryTimeToInteger(strTimeLatest);
-            newFilter.time[integer][i].time_earliest = intTimeForEarliest;
-            newFilter.time[integer][i].time_latest = intTimeForLatest;
-        }
-    }
-
-    // console.log("object: ", newFilter.time);
+    let startDB = Date.now(); // start timer
     
     /* List of Course objects */
     let courses = [];
@@ -86,9 +53,12 @@ exports.generateCourseSchedule = async (req, res) => {
         courses.push(course);
     }
 
+    let endDB = Date.now(); // end timer
+    let diff = endDB - startDB;
+    let tstring = diff.toString() + "ms";
+    console.log("(api/courses/schedule): ", "Getting courses from the database took ", tstring)
 
-
-    CourseSchedule.generateCourseSchedule(courses, newFilter)
+    CourseSchedule.generateCourseSchedule(courses, filter)
     .then(
         (weeklySchedule) => {
             var end = Date.now(); // End timing API endpoint

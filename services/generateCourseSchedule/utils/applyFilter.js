@@ -26,10 +26,12 @@ const createArrSectionTypes = (global) => {
 
         let arrayCourses = global.arrayCourses;
         let filter = global.filter;
+        let timePref = filter.time;
+
         // default miscellaneous filters
         let ignoreTU = false;
         let ignoreM = false;
-        let ignoreClosed = true;
+        let ignoreClosed = false;
         let ignoreWL = true;
         // apply user filters if provided
         if (filter.misc !== undefined) {
@@ -38,7 +40,6 @@ const createArrSectionTypes = (global) => {
             ignoreClosed = filter.misc.ignoreClosed;
             ignoreWL = filter.misc.ignoreWL;
         }
-        let timePref = filter.time;
 
         // record of filtered section information (for verbose error messages)
         let filtrationRecord = {
@@ -106,7 +107,6 @@ const createArrSectionTypes = (global) => {
                             let dayOfWeek = aClass.getDayOfWeek();
 
                             let timePreferencesOnDay = timePref[dayOfWeek];
-                            
                             for (let i = 0; i < timePreferencesOnDay.length; i++) {
                                 let timeStartFilter = timePreferencesOnDay[i].time_earliest;
                                 let timeEndFilter = timePreferencesOnDay[i].time_latest;
@@ -182,8 +182,9 @@ const createArrSectionTypes = (global) => {
                     
                     if (ignoreClosed === true)
                         if (secStatus === "closed") {
+                            
                             withinUserPreference = false;
-
+                            console.log("(applyFilter) closed section...ignoring")
                             // update records
                             filtrationRecord.numOfSecsIgnored++;
                             filtrationRecord.numOfSecsIgnoredByignoreClosed++;
@@ -192,7 +193,7 @@ const createArrSectionTypes = (global) => {
                     if (ignoreWL === true)
                         if (secStatus === "waitlist") {
                             withinUserPreference = false;
-
+                            console.log("(applyFilter) waitlist section...ignoring..")
                             // update records
                             filtrationRecord.numOfSecsIgnored++;
                             filtrationRecord.numOfSecsIgnoredByignoreWL++;

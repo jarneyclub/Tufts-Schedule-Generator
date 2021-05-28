@@ -98,7 +98,6 @@ const getIdealSchedules = (global) => {
             // iterate through sections mapped to permutation
             for (let k = 0; k < chosenSections.length; k++) {
                 let section = chosenSections[k];
-
                 let classes = section.getClasses();
 
                 /* check if all classes of this section does not overlap with one another */
@@ -108,7 +107,7 @@ const getIdealSchedules = (global) => {
                     // insert into tree to check overlap
                     try {
                         let classToInsert = classes[p];
-
+                        // console.log("classToInsert Course: ", classToInsert.getCourseID());
                         if (classToInsert.getStartTime() === -1 && classToInsert.getEndTime() === -1) {
                             /* Class period's time is not specified, so just add to an array for later appending and don't process in treeClasses */
                             classesTimeNotSpecified.push(classToInsert);
@@ -137,7 +136,6 @@ const getIdealSchedules = (global) => {
                 resultClasses[resultClassesIndex] = [];
 
                 resultClasses[resultClassesIndex] = ClassesTree.getObjects();
-
                 for (let j = 0; j < classesTimeNotSpecified.length; j++) {
                     resultClasses[resultClassesIndex].push(classesTimeNotSpecified[j]);
                 }
