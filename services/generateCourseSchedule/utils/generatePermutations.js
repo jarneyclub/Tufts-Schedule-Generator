@@ -7,8 +7,8 @@ const generatePermutations = (global) => {
         let possibleDigits = global.possibleDigits;
         let arrayCourses = global.arrayCourses;
 
-        console.log("possibleDigits: ", possibleDigits)
-        console.log("arrayCourses: ", arrayCourses)
+        // console.log("possibleDigits: ", possibleDigits) //!!!!!
+        // console.log("arrayCourses: ", arrayCourses) //!!!!!
         
         let start = Date.now();
 
@@ -23,7 +23,7 @@ const generatePermutations = (global) => {
         let end = Date.now();
         let difference = end - start;
         let timeTakenString = difference.toString() + "ms";
-        console.log("(api/courses/schedule):", "generatePermutations() took: ", timeTakenString);
+        // console.log("(api/courses/schedule):", "generatePermutations() took: ", timeTakenString); //!!!!!
         
         /* add global variables */
         global.references = references;

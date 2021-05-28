@@ -4,7 +4,7 @@ const timeUtils = require('./timeUtils.js');
 
 const preprocessFilter = (global) => {
     return new Promise((resolve, reject) => {
-        console.log("(preprocessFilter) preprocessing filter now ");
+        // console.log("(preprocessFilter) preprocessing filter now "); //!!!!!
         let filter = global.filter;
 
         let dayToInteger = {
@@ -96,7 +96,7 @@ const preprocessFilter = (global) => {
             preferencesTime[day] = dayPreferences;
 
         }
-        console.log("(preprocessFilter) timePref after: ", preferencesTime);
+        // console.log("(preprocessFilter) timePref after: ", preferencesTime); //!!!!!
 
         resolve(global);
     });

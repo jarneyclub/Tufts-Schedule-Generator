@@ -21,7 +21,7 @@ const memwatch = require('@airbnb/node-memwatch');
 const generateCourseSchedule = (arrayCourses, filter) => {
     return new Promise ((resolve, reject) => {
         
-        console.log("(generateCourseSchedule):", "Now generating course schedule...");
+        // console.log("(generateCourseSchedule):", "Now generating course schedule..."); //!!!!!
 
         /* Error catching */
         if (arrayCourses.length == 0)
@@ -44,7 +44,7 @@ const generateCourseSchedule = (arrayCourses, filter) => {
         .then(
             (global) => applyFilter.createArrSectionTypes(global), 
             (err) => {
-                console.log("(generateCourseSchedule) error detected: ", err);
+                // console.log("(generateCourseSchedule) error detected: ", err); //!!!!!
                 reject(err);
             }
         )
@@ -52,7 +52,7 @@ const generateCourseSchedule = (arrayCourses, filter) => {
             // Uses arrayCourses
             (global) => getPossibleDigits(global),
             (err) => {
-                console.log("(generateCourseSchedule) error detected: ", err);
+                // console.log("(generateCourseSchedule) error detected: ", err); //!!!!!
                 reject(err);
             }
         )
@@ -69,7 +69,7 @@ const generateCourseSchedule = (arrayCourses, filter) => {
                 let resultClassesIndex = global.resultClassesIndex;
                 if (resultClassesIndex !== 0) {
 
-                    console.log("(generateCourseSchedule):", "Picking random course schedule..");
+                    // console.log("(generateCourseSchedule):", "Picking random course schedule.."); //!!!!!
 
                     let result = chosenClassesToApiDetails(global);
                     resolve(result);
