@@ -44,7 +44,7 @@ const preprocessFilter = (global) => {
         */
         let preferencesTime = filter.time;
         // console.log("(preprocessFilter) filter after: ", filter);
-        // console.log("(preprocessFilter) timePref before: ", preferencesTime);
+        console.log("(preprocessFilter) timePref before: ", preferencesTime);
         for (let day in preferencesTime) {
 
             /* iterate through the days of the week in time preferences */
