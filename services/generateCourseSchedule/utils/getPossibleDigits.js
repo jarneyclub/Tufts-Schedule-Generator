@@ -20,11 +20,11 @@ const getPossibleDigits = (global) => {
         let end = Date.now();
         let difference = end - start;
         let timeTakenString = difference.toString() + "ms";
-        // console.log("(api/courses/schedule):", "Get Possible Digits took: ", timeTakenString); //!!!!!
+        console.log("(api/courses/schedule):", "Get Possible Digits took: ", timeTakenString);
         
         /* add variables to global */
         global.possibleDigits = possibleDigits;
-        // console.log("possibleDigits: ", possibleDigits); //!!!!!
+        console.log("possibleDigits: ", possibleDigits);
         resolve(global);
     });
     

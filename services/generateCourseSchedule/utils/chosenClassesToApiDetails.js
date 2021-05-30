@@ -6,9 +6,9 @@ const chosenClassesToApiDetails = (global) => {
     // console.log("chosenClasses: ", chosenClasses);
 
     let size = Object.keys(chosenClasses).length;
-    // console.log("(chosenClassesToApiDet):", "number of schedules: ", size); //!!!!!
+    console.log("(chosenClassesToApiDet):", "number of schedules: ", size);
     let randomIndex = Math.ceil(Math.random() * (size - 1));
-    // console.log("(chosenClassesToApiDet):", "chosenIndex: ", randomIndex); //!!!!!
+    console.log("(chosenClassesToApiDet):", "chosenIndex: ", randomIndex);
 
     let classes = chosenClasses[randomIndex];
 
@@ -55,8 +55,8 @@ const chosenClassesToApiDetails = (global) => {
             time_end: time_end_military
         }
 
-        // console.log("courseName: ", courseName); //!!!!!
-        // console.log("day: ", day); //!!!!!
+        console.log("courseName: ", courseName);
+        console.log("day: ", day);
 
         switch (day) {
             case -1:

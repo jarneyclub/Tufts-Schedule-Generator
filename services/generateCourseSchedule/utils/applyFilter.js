@@ -124,7 +124,7 @@ const createArrSectionTypes = (global) => {
                             if (ignoreTU !== undefined && ignoreTU === true) {  
                                 /* Cannot insert this Section (TU filter) */
 
-                                // console.log("(applyFilter) Time was not specified. Ignoring..."); //!!!!!
+                                console.log("(applyFilter) Time was not specified. Ignoring...");
                                 withinUserPreference = false;
                                 
                                 // update records
@@ -152,7 +152,7 @@ const createArrSectionTypes = (global) => {
                         // apply ignore MSection filter
                         if (secName.indexOf("M") == 0) {
                             /* Section of this Class is an "M" section*/
-                            // console.log("(applyFilter) M secName: ", secName); //!!!!!
+                            console.log("(applyFilter) M secName: ", secName);
                             isMSection = true;
                         }
                         
@@ -161,7 +161,7 @@ const createArrSectionTypes = (global) => {
                             if (isMSection === true) {
                                 /* Cannot insert this Section (Msection filter) */
 
-                                // console.log("(applyFilter) M section. Ignoring...") //!!!!!
+                                console.log("(applyFilter) M section. Ignoring...")
 
                                 // update records
                                 filtrationRecord.numOfSecsIgnored++;
@@ -172,9 +172,8 @@ const createArrSectionTypes = (global) => {
                             }
                         }
 
-                        if (!withinUserPreference) {
-                            // console.log("(applyFilter) impossible withinUserPreference === false") //!!!!!
-                        }
+                        if (!withinUserPreference)
+                            console.log("(applyFilter) impossible withinUserPreference === false")
 
                     } /* (End of) loop over Classes */
 
@@ -185,7 +184,7 @@ const createArrSectionTypes = (global) => {
                         if (secStatus === "closed") {
                             
                             withinUserPreference = false;
-                            // console.log("(applyFilter) closed section...ignoring") //!!!!!
+                            console.log("(applyFilter) closed section...ignoring")
                             // update records
                             filtrationRecord.numOfSecsIgnored++;
                             filtrationRecord.numOfSecsIgnoredByignoreClosed++;
@@ -194,7 +193,7 @@ const createArrSectionTypes = (global) => {
                     if (ignoreWL === true)
                         if (secStatus === "waitlist") {
                             withinUserPreference = false;
-                            // console.log("(applyFilter) waitlist section...ignoring..") //!!!!!
+                            console.log("(applyFilter) waitlist section...ignoring..")
                             // update records
                             filtrationRecord.numOfSecsIgnored++;
                             filtrationRecord.numOfSecsIgnoredByignoreWL++;
@@ -217,7 +216,7 @@ const createArrSectionTypes = (global) => {
                 }
                 
                 if (sectionTypeObj["0"] === undefined) {
-                    // console.log("(applyFilter) sectionTypeObj: ", sectionTypeObj) //!!!!!
+                    console.log("(applyFilter) sectionTypeObj: ", sectionTypeObj)
                     reject("No schedule matches your courses and user preferences. Please reselect your preferences.")
                 }
                 mapSectionTypes.push(sectionTypeObj);
@@ -238,7 +237,7 @@ const createArrSectionTypes = (global) => {
         let end = Date.now();
         let difference = end - start;
         let timeTakenString = difference.toString() + "ms";
-        // console.log("(api/courses/schedule):", "applyFilter.js/createrArrSectionType() took: ", timeTakenString); //!!!!!
+        console.log("(api/courses/schedule):", "applyFilter.js/createrArrSectionType() took: ", timeTakenString);
 
         resolve(global);
     });

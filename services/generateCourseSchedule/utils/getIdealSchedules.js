@@ -148,13 +148,13 @@ const getIdealSchedules = (global) => {
         global.resultClasses = resultClasses;
         global.resultClassesIndex = resultClassesIndex;
 
-        // console.log("(api/courses/schedule):", "Course schedule generation is complete"); //!!!!!
+        console.log("(api/courses/schedule):", "Course schedule generation is complete");
 
         let end = Date.now();
         let difference = end - start;
         let timeTakenString = difference.toString() + "ms";
 
-        // console.log("(api/courses/schedule):", "Use permutations and Filter ideal scchedule took: ", timeTakenString); //!!!!!
+        console.log("(api/courses/schedule):", "Use permutations and Filter ideal scchedule took: ", timeTakenString);
 
         resolve(global);
     })
