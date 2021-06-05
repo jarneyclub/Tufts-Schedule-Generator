@@ -1,9 +1,8 @@
 const express = require('express');
-const mongoose = require("mongoose");
+const passport = require('passport');
 const routes = require('./routes/index');
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
-const path = require('path');
 const app = express();
 
 require('./services/handlers/passport.js');
@@ -12,12 +11,16 @@ const swaggerDefinition = {
   openapi: '3.0.0',
   info: {
     title: 'API for Tufts Schedule Generator',
-    version: '1.0.0',
+    version: '0.1.1',
   },
   servers: [
     {
       url: 'https://tufts-schedule-api.herokuapp.com/api',
-      description: 'Production server'
+      description: 'Development server'
+    },
+    {
+      url: "ec2-18-219-235-185.us-east-2.compute.amazonaws.com/api",
+      description: "Production server"
     }
   ]
 };
@@ -32,11 +35,10 @@ const swaggerSpec = swaggerJSDoc(options);
 
 //Enable CORS
 app.use(function (req, res, next) {
-    console.log("Applying CORS headers to response");
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Credentials', 'true');
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', "Content-Type, Origin, Accept");
+    res.header('Access-Control-Allow-Headers', "Content-Type, Origin, Accept, Authorization");
     // res.header(
       // 'Access-Control-Allow-Headers',
       // 'access-control-request-headers'
@@ -46,7 +48,7 @@ app.use(function (req, res, next) {
 });
 
 app.use(express.json());
-
+app.use(passport.initialize());
 // handle api routes
 app.use('/api', routes);
 

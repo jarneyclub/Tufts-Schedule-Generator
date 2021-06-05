@@ -1,6 +1,13 @@
 paths:
+  ####################
+  #                  #
+  #     ACCOUNT      #
+  #                  #
+  ####################
   /auth/register:
     post:
+      tags: 
+        - Account
       summary: register an account into tufts scheduler
       requestBody:
         required: true
@@ -29,17 +36,13 @@ paths:
               schema:
                 type: object
                 properties:
-                  data:
-                    type: object
-                    properties:
-                      result:
-                        type: boolean
-                        description: registration result (true or false)
-                      message:
-                        type: string
-                        description: registration result message
+                  token:
+                    type: string
+                    description: token to be used in subsequent Authorization headers
   /auth/login:
     post:
+      tags:
+        - Account
       summary: register an account into tufts scheduler
       requestBody:
         required: true
@@ -71,6 +74,510 @@ paths:
                       message:
                         type: string
                         description: login result message
+  ####################
+  #                  #
+  #     COURSES      #
+  #                  #
+  ####################
+  /courses/general?cnum={e1}:
+    get:
+      tags:
+        - Courses
+      summary: Get a list of courses from the past seven years of which course number matches query e.g. CS-0011 matching with CS
+      parameters:
+        - in: query
+          name: cnum
+          schema:
+            type: string
+          description: Portion of the course number to filter with
+      responses:
+        200:
+          description: An array of General Course information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  courses:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/CourseGeneral"
+  /courses/term?cnum={e1}&attr={e2}:
+    get:
+      tags:
+        - Courses
+      summary: Get a list of courses offered in this term of which course number matches given course-num and attribute
+      description: example. _BASE_URL/courses/term/query/?cnum=CS-0011&attr=SoE-Mathematics
+      parameters:
+        - in: query
+          name: cnum
+          schema:
+            type: string
+        - in: query
+          name: attr
+          schema:
+            type: string
+      responses:
+        200:
+          description: An array of Term Course information
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CourseTerm"
+  ####################
+  #                  #
+  #    DEGREE PLAN   #
+  #                  #
+  ####################
+  /degreeplan:
+    post:
+      tags:
+        - Degree Plan
+      summary: Create a new degree plan
+      parameters:
+        - in: header
+          name: Authorization
+          schema: 
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RBSaveDegreePlan"
+      responses:
+        200:
+          description: A single degree plan
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  plan_id: 
+                    type: string
+                  plan_name:
+                    type: string
+                  terms:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/DegreePlanTerm"
+  /degreeplan/{planid}:
+    get:
+      tags:
+        - Degree Plan
+      summary: Load a degree plan
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+        - in: path
+          name: planid
+          schema:
+            type: string
+      responses:
+        200:
+          description: A single degree plan
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  plan_id:
+                    type: string
+                  plan_name:
+                    type: string
+                  courses:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/DegreePlanTerm"
+  /degreeplan/{plan_id}:
+    delete:
+      tags:
+        - Degree Plan
+      summary: Delete a degree plan
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+        - in: path
+          name: plan_id
+          schema:
+            type: string
+      responses:
+        200:
+          description: delete successful
+  /degreeplans:
+    get:
+      tags:
+        - Degree Plan
+      summary: Get list of degree plans associated with user.
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+      responses:
+        200:
+          description: List of degree plans
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  plans:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        plan_id:
+                          type: string
+                        plan_name:
+                          type: string
+                        terms:
+                          type: array
+                          items:
+                            $ref: "#/components/schemas/DegreePlanTerm"
+  /degreeplan/term/create:
+    post:
+      tags:
+        - Degree Plan
+      summary: Create an empty term for a degree plan and get its plan_term_id
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                plan_id:
+                  type: string
+                term:
+                  type: integer
+      responses:
+        200:
+          description: plan_term_id of new term
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  plan_term_id:
+                    type: string
+                    example: "142391huafaowe12312"
+  /degreeplan/term/save:
+    post:
+      tags:
+        - Degree Plan
+      summary: Save a term in a degree plan
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                plan_term_id:
+                  type: string
+                courses:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      course_num: 
+                        type: string
+                      course_title:
+                        type: string
+                      units_esti:
+                        type: string
+                      gen_course_id:
+                        type: string
+      responses:
+        200:
+          description: Update successful
+  /degreeplan/term/{plan_term_id}:
+    delete:
+      tags:
+        - Degree Plan
+      summary: Delete a term from a degree plan
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+        - in: path
+          name: plan_term_id
+          schema:
+            type: string
+      responses:
+        200:
+          description: Update successful
+  ####################
+  #                  #
+  #    DEGREE REQ    #
+  #                  #
+  ####################
+  /degreereq/public:
+    post:
+      tags:
+        - Degree Requirements
+      summary: Create a new public degree requirement (Only for developers)
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RBDegreeReqPublic"
+      responses:
+        200:
+          description: Update successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  priv_dr_id: string
+  /degreereqs/public:
+    get:
+      tags:
+        - Degree Requirements
+      summary: Get a list of public degree requirements
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+      responses:
+        200:
+          description: Degree requirements
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reqs:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/DegreeReqPublic"
+  /degreereq/public/copy/{pub_dr_id}:
+    post:
+      tags:
+        - Degree Requirements
+      summary: Copy a public degree requirement into private list
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+        - in: path
+          name: pub_dr_id
+          schema:
+            type: string
+      responses:
+        200:
+          description: Degree requirement
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  req:
+                    $ref: "#/components/schemas/DegreeReqPrivate"
+  /degreereqs/private:
+    get:
+      tags:
+        - Degree Requirements
+      summary: Get a list of private degree requirements
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+      responses:
+        200:
+          description: List of private degree requirements
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reqs:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/DegreeReqPrivate"
+  /degreereq/private/{priv_dr_id}:
+    get: 
+      tags:
+        - Degree Requirements
+      summary: Get a private degree requirement
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+        - in: path
+          name: priv_dr_id
+          schema:
+            type: string
+      responses:
+        200:
+          description: Private degree requirement
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  req:
+                    $ref: "#/components/schemas/DegreeReqPrivate"
+    delete:
+      tags:
+        - Degree Requirements
+      summary: Delete a private degree requirement
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+      responses:
+        200:
+          description: Update successful
+  /degreereq/private:
+    post:
+      tags:
+        - Degree Requirements
+      summary: Save a degree requirement
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                req:
+                  $ref: "#/components/schemas/DegreeReqPrivate"
+      responses:
+        200:
+          description: Update successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  priv_dr_id: string
+  ####################
+  #                  #
+  #     SCHEDULE     #
+  #                  #
+  ####################
+  /schedule/generate:
+    post:
+      tags:
+        - Schedule
+      summary: Generate semester schedule based on user preferences and save to database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                term_course_ids:
+                  type: array
+                  description: array of Object Ids of chosen courses
+                  example:
+                    ["5ff7cb917050e1e1f4a1495a", "5ff7cb917050e1e1f4a148e5", "5ff7cb917050e1e1f4a1481a", "5ff7cb917050e1e1f4a14891", "5ff7cb917050e1e1f4a14e37"]
+                filter:
+                  $ref: "#/components/schemas/ScheduleFilter"
+      responses:
+        200:
+          description: An array of classes
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Schedule"
+  /schedules:
+    get:
+      tags:
+        - Schedule
+      summary: Get saved schedules
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+      responses:
+        200:
+          description: An array of arrays of classes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  schedules:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Schedule"
+  /schedule:
+    delete:
+      tags:
+        - Schedule
+      summary: Delete saved schedule
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+  ####################
+  #                  #
+  #       MISC       #
+  #                  #
+  ####################
+  /attributes:
+    get:
+      tags:
+        - Misc
+      summary: Get list of current term's offered attributes
+      responses:
+        200:
+          description: List of attributes offered this term
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  attributes:
+                    type: array
+                    items:
+                      type: string
+                      example: "SoE-Engineering"
+  ####################
+  #                  #
+  #       OLD        #
+  #                  #
+  ####################
   /courses/docs/db-id/:id:
     get:
       parameters:
@@ -177,7 +684,6 @@ paths:
                         type: array
                         items:
                           $ref: "#/components/schemas/CourseDocument"
-
   /courses/alg/search-table:
     get:
       summary: all course documents with minimum details of which substring of its course id was matched with the key
@@ -196,108 +702,376 @@ paths:
                         type: array
                         items:
                           $ref: "#/components/schemas/CourseInfoMinimum"
-  /courses/schedule:
-    post:
-      summary: an automatically generated weekly schedule
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/requestBodySchedule"
-
-      responses:
-        200:
-          description: An array of course documents
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      Monday:
-                        type: array
-                        description: all classes happening on this day
-                        items:
-                          $ref: "#/components/schemas/ClassInfoInSchedule"
-                      Tuesday:
-                        type: array
-                        description: all classes happening on this day
-                        items:
-                          $ref: "#/components/schemas/ClassInfoInSchedule"
-                      Wednesday:
-                        type: array
-                        description: all classes happening on this day
-                        items:
-                          $ref: "#/components/schemas/ClassInfoInSchedule"
-                      Friday:
-                        type: array
-                        description: all classes happening on this day
-                        items:
-                          $ref: "#/components/schemas/ClassInfoInSchedule"
-                      Saturday:
-                        type: array
-                        description: all classes happening on this day
-                        items:
-                          $ref: "#/components/schemas/ClassInfoInSchedule"
-                      Sunday:
-                        type: array
-                        description: all classes happening on this day
-                        items:
-                          $ref: "#/components/schemas/ClassInfoInSchedule"
-                      Unscheduled:
-                        type: array
-                        description: all classes of which time was unspecified
-                        items:
-                          type: object
-                          properties:
-                            details:
-                              type: string
-                              description: 
-                              example: Calculus III, MATH-0042
-                            location:
-                              type: string
-                              description: 
-                              example: Virtual
-                            name:
-                              type: string
-                              description: 
-                              example: R02-RCT
-                            time_start:
-                              type: string
-                              description: 
-                              example: ""
-                            time_end:
-                              type: string
-                              description: 
-                              example: ""
 components:
   schemas:
+####################
+#                  #
+#     COURSES      #
+#                  #
+####################
+    CourseGeneral:
+      type: object
+      properties:
+        course_num:
+          type: string
+          description: course number
+          example: CS-0011
+        course_title:
+          type: string
+          description: course title
+          example: Intro to Computer Science
+        units_esti:
+          type: number
+          description: maximum amount of SHU's possible
+          example: 1.5
+    CourseTerm:
+      type: object
+      properties:
+        term_course_id:
+          type: string
+          description: unique Term Course identifier
+          example: "1947261349112412"
+        course_num:
+          type: string
+          description: course number
+          example: CS-0011
+        course_title:
+          type: string
+          description: course title
+          example: Intro to Computer Science
+        units_esti:
+          type: number
+          description: maximum amount of SHU's possible
+          example: 1.5
+        attributes:
+          type: array
+          description: maximum amount of SHU's possible
+          items:
+            type: string
+            example: "SOE-Computing"
+          example: ["SOE-Computing", "SoE-Engineering"]
+        closed:
+          type: boolean
+          description: whether all sections of this course are closed
+        last_term:
+          type: integer
+          description: current term identifier
+          example: 2215
+####################
+#                  #
+#   DEGREE PLAN    #
+#                  #
+####################
+    RBSaveDegreePlan:
+      type: object
+      properties:
+        plan_name: 
+          type: string
+    RBSaveDegreePlanTerm:
+      type: object
+      properties:
+        plan_term_id:
+          type: string
+        term:
+          type: integer
+        courses:
+          type: array
+          items:
+            type: object
+            properties:
+              course_num:
+                type: string
+              course_title:
+                type: string
+              units_esti:
+                type: number
+              gen_course_id:
+                type: string
+        plan_id:
+          type: string
+    DegreePlanTerm:
+      type: object
+      properties:
+        plan_term_id:
+          type: string
+        term:
+          type: integer
+          example: 2215
+        courses:
+          type: array
+          items:
+            type: object
+            properties:
+              course_num: 
+                type: string
+              course_title:
+                type: string
+              units_esti:
+                type: string
+              gen_course_id:
+                type: string
+    DegreePlan:
+      type: object
+      properties:
+        plan_id:
+          type: string
+        plan_name:
+          type: string
+####################
+#                  #
+#    DEGREE REQ    #
+#                  #
+####################
+    DegreeReqPrivate:
+      type: object
+      properties:
+        priv_dr_id:
+          type: string
+        program_name:
+          type: string
+        school:
+          type: string
+        degree:
+          type: string
+        parts:
+          type: array
+          items:
+            type: object
+            properties:
+              part_name:
+                type: string
+              part_desc:
+                type: string
+              part_reqs:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    course_num: 
+                      type: string
+                    course_title:
+                      type: string
+    DegreeReqPublic:
+      type: object
+      properties:
+        pub_dr_id:
+          type: string
+        program_name:
+          type: string
+        school:
+          type: string
+        degree:
+          type: string
+        date_created:
+          type: string
+        parts:
+          type: array
+          items:
+            type: object
+            properties:
+              part_name:
+                type: string
+              part_desc:
+                type: string
+              part_reqs:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    course_num: 
+                      type: string
+                    course_title:
+                      type: string
+    RBDegreeReqPublic:
+      type: object
+      properties:
+        program_name:
+          type: string
+        school:
+          type: string
+        degree:
+          type: string
+        parts:
+          type: array
+          items:
+            type: object
+            properties:
+              part_name:
+                type: string
+              part_desc:
+                type: string
+              part_reqs:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    course_num: 
+                      type: string
+                    course_title:
+                      type: string
+####################
+#                  #
+#     SCHEDULE     #
+#                  #
+####################
     ClassInfoInSchedule:
       type: object
       properties:
         details:
-          type: string
-          description: 
+          type: string 
           example: Calculus III, MATH-0042
         location:
           type: string
-          description: 
           example: Virtual
         name:
-          type: string
-          description: 
+          type: string 
           example: R02-RCT
         time_start:
           type: string
-          description: 
           example: "10:30"
         time_end:
           type: string
-          description: 
           example: "11:20"
+        term_section_id:
+          type: string
+        instructor:
+          type: string
+    Schedule:
+      type: object
+      properties:
+        sched_id:
+          type: string
+          example: 1251iaawfuw11721
+        sched_name:
+          type: string
+          example: My Schedule
+        filter:
+          $ref: "#/components/schemas/ScheduleFilter"
+        term:
+          type: integer
+          example: 2215
+        courses:
+          type: array
+          items:
+            type: object
+            properties:
+              term_course_id: 
+                type: string
+              course_num:
+                type: string
+              course_title:
+                type: string
+              units_esti:
+                type: number
+        classes:
+          type: object
+          properties:
+            Monday:
+              type: array
+              description: all classes happening on this day
+              items:
+                $ref: "#/components/schemas/ClassInfoInSchedule"
+            Tuesday:
+              type: array
+              description: all classes happening on this day
+              items:
+                $ref: "#/components/schemas/ClassInfoInSchedule"
+            Wednesday:
+              type: array
+              description: all classes happening on this day
+              items:
+                $ref: "#/components/schemas/ClassInfoInSchedule"
+            Friday:
+              type: array
+              description: all classes happening on this day
+              items:
+                $ref: "#/components/schemas/ClassInfoInSchedule"
+            Unscheduled:
+              type: array
+              description: all classes of which time was unspecified
+              items:
+                $ref: "#/components/schemas/ClassInfoInSchedule"
+    ScheduleFilter:
+      type: object
+      properties:
+        misc:
+          type: object
+          properties:
+            ignoreTU:
+              type: boolean
+              example: false
+            ignoreM:
+              type: boolean
+              example: false
+            ignoreClosed:
+              type: boolean
+              example: true
+            ignoreWL:
+              type: boolean
+              example: true
+        time:
+          type: object
+          properties:
+            Monday:
+              type: array
+              items:
+                type: object
+                properties:
+                  time_earliest:
+                    type: string
+                    example: "00:00"
+                  time_latest:
+                    type: string
+                    example: "23:59"
+            Tuesday:
+              type: array
+              items:
+                type: object
+                properties:
+                  time_earliest:
+                    type: string
+                    example: "00:00"
+                  time_latest:
+                    type: string
+                    example: "23:59"
+            Wednesday:
+              type: array
+              items:
+                type: object
+                properties:
+                  time_earliest:
+                    type: string
+                    example: "00:00"
+                  time_latest:
+                    type: string
+                    example: "23:59"
+            Thursday:
+              type: array
+              items:
+                type: object
+                properties:
+                  time_earliest:
+                    type: string
+                    example: "00:00"
+                  time_latest:
+                    type: string
+                    example: "23:59"
+            Friday:
+              type: array
+              items:
+                type: object
+                properties:
+                  time_earliest:
+                    type: string
+                    example: "00:00"
+                  time_latest:
+                    type: string
+                    example: "23:59"
+####################
+#                  #
+#      OLD         #
+#                  #
+####################
     CourseInfoMinimum: # Minimum details of a course (for search-table)
       type: object
       properties:
@@ -436,112 +1210,3 @@ components:
         city:
           type: string
           example: "Medford"
-    requestBodySchedule:
-      type: object
-      properties:
-        objectIds:
-          type: array
-          description: array of Object Ids of chosen courses
-          example:
-            ["5ff7cb917050e1e1f4a1495a", "5ff7cb917050e1e1f4a148e5", "5ff7cb917050e1e1f4a1481a", "5ff7cb917050e1e1f4a14891", "5ff7cb917050e1e1f4a14e37"]
-        filter:
-          type: object
-          properties:
-            misc:
-              type: object
-              properties:
-               ignoreTU:
-                type: boolean
-                example: false
-               ignoreM:
-                type: boolean
-                example: false
-               ignoreClosed:
-                type: boolean
-                example: true
-               ignoreWL:
-                type: boolean
-                example: true
-            time:
-              type: object
-              properties:
-                Monday:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      time_earliest:
-                        type: string
-                        example: "00:00"
-                      time_latest:
-                        type: string
-                        example: "23:59"
-                Tuesday:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      time_earliest:
-                        type: string
-                        example: "00:00"
-                      time_latest:
-                        type: string
-                        example: "23:59"
-                Wednesday:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      time_earliest:
-                        type: string
-                        example: "00:00"
-                      time_latest:
-                        type: string
-                        example: "23:59"
-                Thursday:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      time_earliest:
-                        type: string
-                        example: "00:00"
-                      time_latest:
-                        type: string
-                        example: "23:59"
-                Friday:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      time_earliest:
-                        type: string
-                        example: "00:00"
-                      time_latest:
-                        type: string
-                        example: "23:59"
-                Saturday:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      time_earliest:
-                        type: string
-                        example: "00:00"
-                      time_latest:
-                        type: string
-                        example: "23:59"
-                Sunday:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      time_earliest:
-                        type: string
-                        example: "00:00"
-                      time_latest:
-                        type: string
-                        example: "23:59"
-      
-            
-      
