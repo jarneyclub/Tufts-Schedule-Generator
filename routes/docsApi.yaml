@@ -347,13 +347,31 @@ paths:
               $ref: "#/components/schemas/RBDegreeReqPublic"
       responses:
         200:
-          description: Update successful
+          description: Update was successful
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  priv_dr_id: string
+                  pub_dr_id:
+                    type: string
+  /degree/req/public/{pub_dr_id}:
+    delete:
+      tags:
+        - Degree Requirements
+      summary: Delete a public degree requirement (Only for developers)
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+        - in: path
+          name: pub_dr_id
+          schema:
+            type: string
+      responses:
+        200:
+          description: Update successful
   /degreereqs/public:
     get:
       tags:
@@ -401,6 +419,31 @@ paths:
                   req:
                     $ref: "#/components/schemas/DegreeReqPrivate"
   /degreereqs/private:
+    post:
+      tags:
+        - Degree Requirements
+      summary: Create a private degree requirement
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RBDegreeReqPublic"
+      responses:
+        200:
+          description: Private degree requirement
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  req:
+                    $ref: "#/components/schemas/DegreeReqPrivate"
     get:
       tags:
         - Degree Requirements
@@ -458,7 +501,7 @@ paths:
       responses:
         200:
           description: Update successful
-  /degreereq/private:
+  /degreereq/private/save:
     post:
       tags:
         - Degree Requirements
@@ -485,7 +528,8 @@ paths:
               schema:
                 type: object
                 properties:
-                  priv_dr_id: string
+                  priv_dr_id: 
+                    type: string
   ####################
   #                  #
   #     SCHEDULE     #
@@ -850,6 +894,8 @@ components:
                       type: string
                     course_title:
                       type: string
+                    completed:
+                      type: boolean
     DegreeReqPublic:
       type: object
       properties:
