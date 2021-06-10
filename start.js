@@ -12,7 +12,11 @@ mongoose.connection.on('error', (err) => {
 
 // import all models
 require('./models/external/User');
-
+require('./models/external/Plan');
+require('./models/external/PlanTerm');
+require('./models/external/DegreeReqPrivate');
+require('./models/external/DegreeReqPublic');
+require('./models/external/Schedule');
 // start app
 const app = require('./app');
 app.set('port', process.env.PORT || 7777);

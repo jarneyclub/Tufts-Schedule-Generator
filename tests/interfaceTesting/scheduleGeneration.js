@@ -9,6 +9,9 @@ const testSchedule = (option, objectIds, callback) => {
     else if (option == "PROD") {
         url = BASEURL_PRODUCTION + endpoint;
     }
+    else if (option == "AWS") {
+        url = BASEURL_AWS + endpoint;
+    }
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
@@ -93,9 +96,9 @@ const testSchedule = (option, objectIds, callback) => {
 
                                 if (!(intStartTime >= 540 && intEndTime <= 1439)) {
                                     result.TEST_PASSED = false;
-                                    console.log("ERROR! class name:", aClass.name);
-                                    console.log("day in: ", key);
-                                    console.log("intStartTime: ", intStartTime);
+                                    // console.log("ERROR! class name:", aClass.name);
+                                    // console.log("day in: ", key);
+                                    // console.log("intStartTime: ", intStartTime);
                                 }
                             }
                             catch (e) {

@@ -27,19 +27,16 @@ const objectUtils = require('../../services/apiUtils.js');
 *
 */
 exports.generateCourseSchedule = async (req, res) => {
-
+    // get request information
     let requestBody = req.body;
-
-    collectionCourses = mongoose.connection.collection("courses"); // get MongoDB collection
-
     let objectIds = requestBody.objectIds;
     let filter = requestBody.filter;
+    
+    collectionCourses = mongoose.connection.collection("courses"); // get MongoDB collection
     // console.log("objectIds: ", objectIds);
     // console.log("filter: ", filter);
-
     var start = Date.now(); // begin timing API endpoint
     let startDB = Date.now(); // start timer
-    
     /* List of Course objects */
     let courses = [];
     for (let index in objectIds) {
@@ -52,12 +49,10 @@ exports.generateCourseSchedule = async (req, res) => {
         let course = objectUtils.documentToCourse(document);
         courses.push(course);
     }
-
     let endDB = Date.now(); // end timer
     let diff = endDB - startDB;
     let tstring = diff.toString() + "ms";
     console.log("(api/courses/schedule): ", "Getting courses from the database took ", tstring)
-
     CourseSchedule.generateCourseSchedule(courses, filter)
     .then(
         (weeklySchedule) => {
@@ -87,26 +82,4 @@ exports.generateCourseSchedule = async (req, res) => {
             res.json(response)
         }
     )
-}
-
-exports.sendTestOIDs = async (req, res) => {
-
-    let courses = [];
-
-    let collectionCourses = mongoose.connection.collection("courses"); // get MongoDB collection
-
-    let courseIds = ['COMP-0015', 'CHEM-0001', 'BIO-0044', 'CEE-0136', 'MATH-0042'];
-    let oids = [];
-    for (let index in courseIds) {
-        let courseId = courseIds[index];
-
-        let document = await collectionCourses.findOne({ 'course_id': courseId });
-        let oid = document._id.toString();
-        let course = objectUtils.documentToCourse(document);
-
-        courses.push(course);
-        oids.push(oid)
-    }
-
-    res.send(oids);
 }

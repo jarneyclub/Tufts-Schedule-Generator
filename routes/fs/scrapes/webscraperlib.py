@@ -63,7 +63,7 @@ class webscraper():
     # Returns: A Beautiful Soup object of the HTML for later parsing
     # Note: Blocks the entire workflow waiting for page to load
     def init_db(self):
-        dburl = ""
+        dburl = "mongodb+srv://backend:WBxtm0WV0lnUJIxA@cluster0.2mmvf.mongodb.net/courses?retryWrites=true&w=majority"
         client = MongoClient(dburl)
         db = client.courses
         collection = db.courses
@@ -106,7 +106,7 @@ class webscraper():
         # {course_list} - list of courses names
         # {tr_list} - list of <tr> objects for serious parsing
         course_list, tr_list = self.init_lists(bsoup)
-        
+        print("number of courses: " + str(len(course_list)))
         # {master_list} - list to which all important course information will be appended
         master_list = []
         

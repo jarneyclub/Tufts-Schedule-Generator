@@ -8,14 +8,26 @@ exports.generateSearchIndex = async (courseIds, courseNames, collection) => {
             let courseId = courseIds[i];
             let courseIdLowerCase = courseId.toLowerCase(); // all keys must be lowercase
 
+            let splitCourseIdArr = courseIdLowerCase.split('-'); // split at dash
+            let idLetters = splitCourseIdArr[0]; // get only the letters of course id
+            let idNumber = splitCourseIdArr[1]; // get only the number of course id            
+            // remove leading zeroes after dash in courseId
+            while (idNumber[0] === '0') {
+                idNumber = idNumber.substring(1, idNumber.length);
+            }
+            let courseIdLowerCaseWoLeadingZeroes = splitCourseIdArr[0] + '-' + idNumber;
+            let courseIdLowerCaseWoLzeroesAndDash = splitCourseIdArr[0] + idNumber;
+
             if (index[courseIdLowerCase] == undefined) {
-                
-                index[courseIdLowerCase] = [];
+                /* there is yet not a key in the index that matches the exact course id */
+
+                index[courseIdLowerCase] = []; // initialize key and values
 
                 let cursor = await collection.find({ course_id: courseId });
 
                 // go through each document and append
                 await cursor.forEach((doc) => {
+
                     // remove some fields from original document to decrease document size
                     let parsedDocument = {
                         _id: doc._id.toString(),
@@ -25,7 +37,7 @@ exports.generateSearchIndex = async (courseIds, courseNames, collection) => {
                     }
                     index[courseIdLowerCase].push(parsedDocument);
 
-                    /* map course id substrings */
+                    // map exact course id substrings
                     for (let j = 1; j < courseIdLowerCase.length; j++) {
                         let substr = courseIdLowerCase.substring(0, j);
 
@@ -34,8 +46,33 @@ exports.generateSearchIndex = async (courseIds, courseNames, collection) => {
                         }
 
                         index[substr].push(parsedDocument);
-
                     }
+                    
+                    let lengthCourseIdLetters = idLetters.length
+                    let lengthCourseIdNumberWoLzeroes = idNumber.length;
+                    // console.log("idLetters: ", idLetters)
+                    // console.log("idNumber: ", idNumber)
+                    // console.log("lengthCourseIdLetters: ", lengthCourseIdLetters)
+                    // console.log("lengthcIdwithoutleading: ", lengthCourseIdNumberWoLzeroes)
+                    // length of already existing key with letters + dash
+                    let lengthExistingKey = lengthCourseIdLetters + 1
+                    // console.log("lengthExistingKey: ", lengthExistingKey)
+                    // map course id without leading zeroes substrings
+                    for (let j = 0; j < idNumber.length; j++) {
+                        let firstInd = lengthExistingKey;
+                        let lastInd = lengthExistingKey + j;
+                        let toAppend = courseIdLowerCaseWoLeadingZeroes.substring(firstInd, lastInd);
+                        // console.log("toappend: ", toAppend)
+                        let substr = idLetters + "-" + toAppend;
+                        // console.log("substr: ", substr)
+                        if (index[substr] == undefined) {
+                            index[substr] = [];
+                        }
+
+                        index[substr].push(parsedDocument);
+                    }
+
+
                 });
             }
 

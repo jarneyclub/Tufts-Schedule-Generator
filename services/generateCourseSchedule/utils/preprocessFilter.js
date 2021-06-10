@@ -56,7 +56,7 @@ const preprocessFilter = (global) => {
             const customPriorityComparator = (a, b) => a.time_earliest - b.time_earliest;
             const priorityQueue = new Heap(customPriorityComparator);
             priorityQueue.init(dayPreferences);
-            dayPreferences = Heap.nsmallest(numIntervals, priorityQueue)
+            dayPreferences = Heap.nsmallest(numIntervals, priorityQueue);
 
             let index = 0;
             let previousTimeLatest = undefined;
