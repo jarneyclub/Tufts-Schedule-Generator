@@ -5,7 +5,6 @@ const preprocessFilter = require('./utils/preprocessFilter.js');
 const applyFilter = require('./utils/applyFilter.js');
 const getIdealSchedules = require('./utils/getIdealSchedules.js');
 const chosenClassesToApiDetails = require('./utils/chosenClassesToApiDetails.js');
-const memwatch = require('@airbnb/node-memwatch');
 
 /**
  * 1) Get permutations
