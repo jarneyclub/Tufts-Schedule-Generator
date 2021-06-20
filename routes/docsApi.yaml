@@ -76,6 +76,42 @@ paths:
                       message:
                         type: string
                         description: login result message
+                      token: 
+                        type: string
+                        description: token (Authorization)
+  /auth/userinfo:
+    post:
+      tags:
+        - Account
+      summary: Get user information
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      firstname:
+                        type: string
+                      lastname:
+                        type: string
   ####################
   #                  #
   #     COURSES      #
