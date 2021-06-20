@@ -1,6 +1,6 @@
 // load database api
-const degreeReqAPI = require('../../services/handlers/database/degreeReq.js');
-const errorHandler = require('../../services/handlers/errorHandler');
+const degreeReqAPI = require('../services/handlers/database/degreeReq.js');
+const errorHandler = require('../services/handlers/errorHandler');
 
 /**
  * Create a public degree requirement

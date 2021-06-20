@@ -1,6 +1,6 @@
 // load database api
-const degreePlanAPI = require('../../services/handlers/database/degreePlan.js');
-const errorHandler = require('../../services/handlers/errorHandler');
+const degreePlanAPI = require('../services/handlers/database/degreePlan.js');
+const errorHandler = require('../services/handlers/errorHandler');
 /**
  * Create a new degree plan
  * @param {any} req 
