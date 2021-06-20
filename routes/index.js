@@ -6,9 +6,10 @@ const passport = require('passport');
 const courseScheduleController = require('../controllers/courses/courseScheduleController.js');
 // const searchIndexController = require('../controllers/courses/searchIndexController.js');
 // const docsController = require('../controllers/courses/docsController.js');
-const courseController = require('../controllers/courses/courseController.js');
-const degreePlanController = require('../controllers/courses/degreePlanController.js');
-const degreeReqController = require('../controllers/courses/degreeReqController.js');
+const courseController = require('../controllers/courseController.js');
+const degreePlanController = require('../controllers/degreePlanController.js');
+const degreeReqController = require('../controllers/degreeReqController.js');
+const scheduleController = require('../controllers/scheduleController.js')
 // const listController = require('../controllers/courses/listController.js');
 const userController = require('../controllers/auth/userController.js');
 const authController = require('../controllers/auth/authController.js');
@@ -85,13 +86,25 @@ router.post('/degreereq/private/save', authController.authenticateToken, degreeR
 //                                    //
 ////////////////////////////////////////
 
-router.post('/auth/register', 
-    body('email').isEmail().normalizeEmail(), 
+router.post('/auth/register',
+    body('userid').isEmail().normalizeEmail(),
     body('password').not().isEmpty(),
-    userController.validateRegister,
-    userController.register,
+    body('password_confirmation').not().isEmpty(),
+    userController.validateRegisterLocal,
+    userController.registerLocal,
     authController.login);
 
+// router.post('/auth/register/guest', authController.checkGuestToken, userController.registerGuest, authController.loginGuest);
+
 router.post('/auth/login', passport.authenticate('local'), authController.login);
+
+
+////////////////////////////////////////
+//                                    //
+//             Schedule               //
+//                                    //
+////////////////////////////////////////
+
+router.post('/schedule/generate', scheduleController.generateSchedule);
 
 module.exports = router;
