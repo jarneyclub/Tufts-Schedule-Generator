@@ -1,5 +1,5 @@
 // load database api
-const degreeReqAPI = require('../services/handlers/database/degreeReq.js');
+const degreeReqAPI = require('../services/handlers/degreeReq.js');
 const errorHandler = require('../services/handlers/errorHandler');
 
 /**

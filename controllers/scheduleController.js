@@ -1,0 +1,3 @@
+exports.generateSchedule = (req, res) => {
+    
+}
