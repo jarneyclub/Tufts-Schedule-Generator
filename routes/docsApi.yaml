@@ -105,13 +105,11 @@ paths:
               schema:
                 type: object
                 properties:
-                  data:
-                    type: object
-                    properties:
-                      firstname:
-                        type: string
-                      lastname:
-                        type: string
+                  properties:
+                    firstname:
+                      type: string
+                    lastname:
+                      type: string
   ####################
   #                  #
   #     COURSES      #
