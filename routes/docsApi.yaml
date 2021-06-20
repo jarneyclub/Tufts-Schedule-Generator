@@ -16,18 +16,21 @@ paths:
             schema:
               type: object
               properties:
-                name:
+                firstname:
                   type: string
-                  description: user's name
-                email:
+                  description: user's firstname
+                lastname:
+                  type: string
+                  description: user's lastname
+                userid:
                   type: string
                   description: user's email
-                email_confirmation:
-                  type: string
-                  description: user's email again (for confirmation)
                 password:
                   type: string
                   description: user's password
+                password_confirmation:
+                  type: string
+                  description: user's password again (for confirmation)
       responses:
         200:
           description: token to be used in subsequent Authorization headers
@@ -51,7 +54,7 @@ paths:
             schema:
               type: object
               properties:
-                email:
+                userid:
                   type: string
                   description: user's email
                 password:
