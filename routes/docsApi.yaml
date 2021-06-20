@@ -586,6 +586,8 @@ paths:
             schema:
               type: object
               properties:
+                sched_name:
+                  type: string
                 term_course_ids:
                   type: array
                   description: array of Object Ids of chosen courses
