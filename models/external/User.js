@@ -9,6 +9,7 @@ const user_Schema = new Schema({
     userid: {
         type: String,
         unique: true,
+        sparse: true,
         lowercase: true,
         trim: true,
         validate: [validator.isEmail, 'Invalid Email Address'],
