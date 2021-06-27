@@ -1,6 +1,7 @@
 // load database api
 const degreePlanAPI = require('../services/handlers/degreePlan.js');
-const errorHandler = require('../services/handlers/errorHandler');
+const resHandler = require("./utils/resHandler.js");
+// const errorHandler = require('../services/handlers/errorHandler');
 /**
  * Create a new degree plan
  * @param {any} req 
@@ -24,9 +25,8 @@ exports.createDegreePlan = async (req, res) => {
         });
     })
     .catch(err => {
-            errorHandler(res, err, start);
-        }
-    );
+        errorHandler(err, "createDegreePlan", res);
+    });
 }
 
 /**
@@ -53,7 +53,7 @@ exports.getDegreePlan = async (req, res) => {
             });
     })
     .catch(err => {
-        errorHandler(res, err, start);
+        errorHandler(err, "getDegreePlan", res);
     })
 }
 
@@ -74,7 +74,7 @@ exports.deleteDegreePlan = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(res, err, start);
+        errorHandler(err, "deleteDegreePlan", res);
     })    
 }
 
@@ -85,20 +85,20 @@ exports.deleteDegreePlan = async (req, res) => {
  */
 exports.getDegreePlans = async (req, res) => {
     var start = Date.now(); // begin timing API endpoint
-    
+    console.log("(dPController/getDP) here");
     let query = {
         user_id: req.user_id
     }
-    degreePlanAPI.getDegreePlans(query)
+    let result = await degreePlanAPI.getDegreePlans(query)
     .then(result => {
         res.status(200);
         res.json({
-            plans     : result,
+            plans: result,
             time_taken: ((Date.now() - start).toString() + "ms")
         });
     })
     .catch(err => {
-        errorHandler(res, err, start);
+        errorHandler(err, "getDegreePlans", res);
     })
 }
 
@@ -125,7 +125,7 @@ exports.createTerm = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(res, err, start);
+        errorHandler(err, "createTerm", res);
     })
 }
 
@@ -149,7 +149,7 @@ exports.saveTerm = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(res, err, start);
+        errorHandler(err, "saveTerm", res);
     })
 }
 
@@ -174,6 +174,19 @@ exports.deleteTerm = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(res, err, start);
+        errorHandler(err, "deleteTerm", res);
     })
+}
+
+
+const errorHandler = (err, endpoint, res) => {
+    console.error("(dPController/errorhandler) err: ", err);
+    if (err.detail !== undefined && err.title != undefined) {
+        /* this is internally formatted error */
+        resHandler.respondWithCustomError(err.id, err.status, err.title, err.detail, res);
+    }
+    else {
+        console.error("(degreePlanController/" + endpoint, err);
+        resHandler.respondWithCustomError("000", "500", "Internal Server Error", err, res);
+    }
 }

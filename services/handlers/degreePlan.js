@@ -48,15 +48,7 @@ exports.createNewDegreePlan = async (schema) => {
 
     }
     catch (e) {
-        if (e.message.indexOf("validation failed") > -1) {
-            // console.log(e.errors['plan_name']);
-            /* error is mongoose validation error */
-            throw {code: 1, message: e.message};
-        }
-        else {
-            console.error(e);
-            throw { code: 4, message: e };
-        }
+        errorHandler(e);
     }
 }
 
@@ -110,24 +102,13 @@ exports.getDegreePlan = async (query) => {
             }
             documents.push(docToInsert);
         });
-        if (documents.length === 0)
-            throw "No degree plan could be found with given query.";
+        // if (documents.length === 0)
+            // throw { id: "202", status: "404", title: "Degree Plan Error", detail: "No degree plan could be found with given query." };
         // only get one degree plan (only one should exist anyways)
         return documents[0];
     }
     catch (e) {
-        if (e.message.indexOf("validation failed") > -1) {
-            /* error is mongoose validation error */
-            throw { code: 1, message: e.message };
-        }
-        else if (e.message.indexOf("No degree plan") > -1) {
-            /* error is mongoose validation error */
-            throw { code: 2, message: e.message };
-        }
-        else {
-            console.error(e);
-            throw { code: 4, message: e };
-        }
+        errorHandler(e);
     }
 }
 
@@ -158,8 +139,7 @@ exports.deleteDegreePlan = async (query) => {
 
     }
     catch (e) {
-        console.error(e);
-        throw { code: 4, message: e };
+        errorHandler(e);
     }
 }
 
@@ -208,20 +188,11 @@ exports.getDegreePlans = async (query) => {
             }
             documents.push(docToInsert);
         });
-        if (documents.length === 0)
-            throw "No degree plan could be found with given query."
 
         return documents;
     }
     catch (e) {
-        if (e.message.indexOf("No degree plan") > -1) {
-            /* error is mongoose validation error */
-            throw { code: 2, message: e.message };
-        }
-        else {
-            console.error(e);
-            throw { code: 4, message: e };
-        }
+        errorHandler(e);
     }
 }
 
@@ -237,14 +208,7 @@ exports.createTerm = async (schema) => {
         return planTerm._id.valueOf();
     }
     catch (e) {
-        if (e.message.indexOf("validation failed") > -1) {
-            /* error is mongoose validation error */
-            throw { code: 1, message: e.message };
-        }
-        else {
-            console.error(e);
-            throw { code: 4, message: e };
-        }
+        errorHandler(e);
     }
 }
 
@@ -276,18 +240,11 @@ exports.saveTerm = async (plan_term_id, setParams) => {
         });
         // confirm update
         if (planTerm === null)
-            throw "Plan term with given identifier was not found"
+            throw { id: "202", status: "404", title: "Degree Plan Error", detail: "Plan term with given identifiers were not found" };
         return planTerm._id.valueOf();
     }
     catch (e) {
-        if (e.message.indexOf("Plan term") > -1) {
-            /* error is mongoose validation error */
-            throw { code: 2, message: e.message };
-        }
-        else {
-            console.error(e);
-            throw { code: 4, message: e };
-        }
+        errorHandler(e);
     }
 }
 
@@ -303,18 +260,11 @@ exports.deleteTerm = async (query) => {
         let dbPlanTerms = mongoose.connection.collection("plan_terms"); // get MongoDB collection
         let deleteResult = await dbPlanTerms.deleteOne({ user_id: query.userId, _id: mongoose.Types.ObjectId(query.planId) });
         if (deleteResult.n === 0)
-            throw "Plan term with given identifiers were not found"
+            throw { id: "202", status: "404", title: "Degree Plan Error", detail: "Plan term with given identifiers were not found" };
         return true
     }
     catch (e) {
-        if (e.message.indexOf("Plan term") > -1) {
-            /* error is mongoose validation error */
-            throw { code: 2, message: e.message };
-        }
-        else {
-            console.error(e);
-            throw { code: 4, message: e };
-        }
+        errorHandler(e);
     }
 }
 
@@ -339,4 +289,32 @@ const getNextTerm = async (currTerm) => {
     // put together updated values
     currTerm = 10 * currYear + currSeas;
     return currTerm
+}
+
+const errorHandler = (e) => {
+    console.log("(degreePlan errorHandler)");
+    if (e.message !== undefined) {
+        if (e.message.indexOf("validation failed") > -1) {
+            // console.log(e.errors['plan_name']);
+            /* error is mongoose validation error */
+            throw { id: "201", status: "400", title: "Degree Plan Error", detail: e.message };
+        }
+        else if (e.message.indexOf("No degree plan") > -1) {
+            /* error is mongoose validation error */
+            throw { id: "202", status: "404", title: "Degree Plan Error", detail: e.message };
+        }
+        else {
+            console.error(e.message);
+            throw { id: "000", status: "500", title: "Degree Plan Error", detail: e.message };
+        }
+    }
+    else {
+        if (e.detail !== undefined && e.title !== undefined) {
+            /* this is internally formatted error */
+            throw { id: e.id, status: e.status, title: e.title, detail: e.detail };
+        }
+        else {
+            throw { id: "000", status: "500", title: "Degree Plan Error", detail: e.message };
+        }
+    }
 }
