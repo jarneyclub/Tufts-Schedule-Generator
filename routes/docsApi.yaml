@@ -16,10 +16,10 @@ paths:
             schema:
               type: object
               properties:
-                firstname:
+                first_name:
                   type: string
                   description: user's firstname
-                lastname:
+                last_name:
                   type: string
                   description: user's lastname
                 userid:
@@ -42,6 +42,27 @@ paths:
                   token:
                     type: string
                     description: token (Authorization)
+        400:
+          description: Bad Request (password did not match)
+        409:
+          description: Conflict (e.g. Email already in use)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id: string
+                      status: string
+                      title: string
+                      detail: string
+        403:
+          description: Forbidden
+        
   /auth/login:
     post:
       tags:
