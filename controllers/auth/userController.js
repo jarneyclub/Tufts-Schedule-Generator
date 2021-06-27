@@ -3,26 +3,16 @@ const User = mongoose.model('User');
 // const Guest = mongoose.model('Guest');
 const passport = require('passport');
 const { body, validationResult } = require('express-validator');
+const resHandler = require("../utils/resHandler.js");
 
 exports.validateRegisterLocal = async (req, res, next) => {
 
     const {first_name, last_name, userid, password, password_confirmation} = req.body;
-    
-    // req.sanitizeBody('name');
-    // req.checkBody('name', 'You must enter a name!').notEmpty();
-    // req.checkBody('email', 'That Email is not valid!').isEmail();
-
-    // // normalizes different email addresses gmail.com, googlemail.com, etc.
-    // req.sanitizeBody('email').normalizeEmail({
-    //     remove_dots: false,
-    //     remove_extension: false,
-    //     gmail_remove_subaddress: false
-    // });
 
     // check if email addresses match
     let pwsMatch = (password === password_confirmation);
     if (!pwsMatch)
-        return res.status(400).json({ error: "Password did not match with confirmation" });
+        resHandler.respondWithCustomError("101", "400", "Registration Error", "Password did not match with confirmation", res);
     // validate result
     const errors = validationResult(req);
     if (!errors.isEmpty())
@@ -34,7 +24,6 @@ exports.validateRegisterLocal = async (req, res, next) => {
 
 exports.registerLocal = async (req, res, next) => {
 
-    
     const user = new User ({ userid: req.body.userid, first_name: req.body.first_name, last_name: req.body.last_name, guest: false });
     console.log("(userController/registerLocal) userid: ", req.body.userid)
     console.log("(userController/registerLocal) password: ", req.body.password)
@@ -42,21 +31,8 @@ exports.registerLocal = async (req, res, next) => {
     // register user with encrypted password
     User.register(user, req.body.password, (err, user) => {
         if (err) {
-            console.error("err: ", err);
-            console.error("err.message: ", err.message);
-            if (err.indexOf("already registered") > -1) {
-                res.status(409);
-                res.json ({
-                    errors: [
-                        {
-                            id: "102",
-                            status: "409",
-                            title: "Registration Error",
-                            detail: "The email is already used"
-                        }
-                    ]
-                });
-            }
+            if (err.message.indexOf("already registered") > -1)
+                resHandler.respondWithCustomError("102", "409", "Registration Error", "The email is already in use", res);
         }
         console.log("(userController/registerLocal) registered user into database");
         console.log("(userController/registerLocal) user: ", user);

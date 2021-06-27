@@ -1,5 +1,18 @@
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
+const resHandler = require("../utils/resHandler.js");
+const passport = require('passport');
+
+exports.authenticateLocal = async (req, res, next) => {
+    passport.authenticate('local', function (err, user, info) {
+        if (err)
+            return resHandler.respondWithCustomError("101", "400", "Login Error", err.message, res);
+        if (!user) 
+            return resHandler.respondWithCustomError("101", "400", "Login Error", "Authentication failed", res);
+        else 
+            next();
+    })(req, res, next);
+}
 
 exports.login = async (req, res) => {
     const { userid, password } = req.body;
@@ -9,7 +22,7 @@ exports.login = async (req, res) => {
     });
     console.log("(authController/login) dbUsers.fineOne(..): ", result);
     if (result === null)
-        return res.sendStatus(403);
+        resHandler.respondWithCustomError("104", "403", "Registration Error", "Email is not registered. Please register first.", res);
     
     let token = jwt.sign({ userid: userid, password: password}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
     res.json({ token });
@@ -18,25 +31,31 @@ exports.login = async (req, res) => {
 /* Janith Kasun */
 exports.authenticateToken = async (req, res, next) => {
     const token = req.headers.authorization;
+    
+    if (token == null)
+        resHandler.respondWithCustomError("306", "401",
+            "Authentication Error", "Token was not provided", res);
+
     if (token) {
         jwt.verify(token, process.env.TOKEN_SECRET, async (err, userdata) => {
             console.log("(authenticateToken) userdata: ", userdata);
-            if (err) {
-                return res.sendStatus(403);
-            }
+            if (err)
+                resHandler.respondWithCustomError("305", "401", "Authentication Error", "Token is invalid", res);
             let dbUsers = mongoose.connection.collection("users"); // get MongoDB collection
             let result = await dbUsers.findOne({
                 userid: userdata.userid
             });
             
             if (result === null)
-                return res.sendStatus(403);
+                resHandler.respondWithCustomError("307", "401",
+                        "Authentication Error", "Token is invalid. Wrong user.", res);
             
             req.user_id = userdata.userid;
             next();
         });
     } else {
-        res.sendStatus(401);
+        resHandler.respondWithCustomError("306", "401",
+            "Authentication Error", "Token was not provided", res);
     }
 }
 
