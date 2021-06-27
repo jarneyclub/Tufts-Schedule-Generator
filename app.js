@@ -15,12 +15,8 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: 'https://tufts-schedule-api.herokuapp.com/api',
-      description: 'Development server'
-    },
-    {
-      url: "ec2-18-219-235-185.us-east-2.compute.amazonaws.com/api",
-      description: "Production server"
+        url: "http://ec2-3-87-205-234.compute-1.amazonaws.com:3000/api",
+        description: "Production server"
     }
   ]
 };
