@@ -7,7 +7,7 @@ const { body, validationResult } = require('express-validator');
 exports.validateRegisterLocal = async (req, res, next) => {
 
     const {firstname, lastname, userid, password, password_confirmation} = req.body;
-
+    
     // req.sanitizeBody('name');
     // req.checkBody('name', 'You must enter a name!').notEmpty();
     // req.checkBody('email', 'That Email is not valid!').isEmail();
@@ -27,20 +27,24 @@ exports.validateRegisterLocal = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())
         return res.status(400).json({ errors: errors.array() });
-
+    console.log("(userController/validateRegisterLocal) field validation passed");
     next(); // pass to registration into DB
 
 }
 
 exports.registerLocal = async (req, res, next) => {
 
-    console.log("in here");
     
-    const user = new User({ userid: req.body.userid, first_name: req.body.firstname, last_name: req.body.lastname });
-    
+    const user = new User({ userid: req.body.userid, first_name: req.body.firstname, last_name: req.body.lastname, guest: false});
+    console.log("(userController/registerLocal) userid: ", req.body.userid)
+    console.log("(userController/registerLocal) password: ", req.body.password)
+    console.log("(userController/registerLocal) user: ", user)
     // register user with encrypted password
     User.register(user, req.body.password, (err, user) => {
-
+        if (err)
+            throw err;
+        console.log("(userController/registerLocal) registered user into database");
+        console.log("(userController/registerLocal) user: ", user);
         next(); // pass to authController.login()
     });
 }

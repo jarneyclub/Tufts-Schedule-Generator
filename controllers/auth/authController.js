@@ -4,10 +4,10 @@ const mongoose = require('mongoose');
 exports.login = async (req, res) => {
     const { userid, password } = req.body;
     let dbUsers = mongoose.connection.collection("users"); // get MongoDB collection
-    console.log("in here")
     let result = await dbUsers.findOne({
         userid: userid
     });
+    console.log("(authController/login) dbUsers.fineOne(..): ", result);
     if (result === null)
         return res.sendStatus(403);
     
