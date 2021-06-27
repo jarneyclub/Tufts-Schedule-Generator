@@ -6,7 +6,7 @@ const { body, validationResult } = require('express-validator');
 
 exports.validateRegisterLocal = async (req, res, next) => {
 
-    const {firstname, lastname, userid, password, password_confirmation} = req.body;
+    const {first_name, last_name, userid, password, password_confirmation} = req.body;
     
     // req.sanitizeBody('name');
     // req.checkBody('name', 'You must enter a name!').notEmpty();
@@ -35,14 +35,29 @@ exports.validateRegisterLocal = async (req, res, next) => {
 exports.registerLocal = async (req, res, next) => {
 
     
-    const user = new User({ userid: req.body.userid, first_name: req.body.firstname, last_name: req.body.lastname, guest: false});
+    const user = new User ({ userid: req.body.userid, first_name: req.body.first_name, last_name: req.body.last_name, guest: false });
     console.log("(userController/registerLocal) userid: ", req.body.userid)
     console.log("(userController/registerLocal) password: ", req.body.password)
     console.log("(userController/registerLocal) user: ", user)
     // register user with encrypted password
     User.register(user, req.body.password, (err, user) => {
-        if (err)
-            throw err;
+        if (err) {
+            console.error("err: ", err);
+            console.error("err.message: ", err.message);
+            if (err.indexOf("already registered") > -1) {
+                res.status(409);
+                res.json ({
+                    errors: [
+                        {
+                            id: "102",
+                            status: "409",
+                            title: "Registration Error",
+                            detail: "The email is already used"
+                        }
+                    ]
+                });
+            }
+        }
         console.log("(userController/registerLocal) registered user into database");
         console.log("(userController/registerLocal) user: ", user);
         next(); // pass to authController.login()
