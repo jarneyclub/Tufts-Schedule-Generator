@@ -1,4 +1,5 @@
 const errorHandler = (res, err, start) => {
+    console.error("(errorHandler): ", err);
     switch (err.code) {
         // 1, when a query/schema is incorrect
         // 2, when a document was not found in the database
