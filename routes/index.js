@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
-const passport = require('passport');
 /* Controllers */
 const courseScheduleController = require('../controllers/courses/courseScheduleController.js');
 // const searchIndexController = require('../controllers/courses/searchIndexController.js');
@@ -96,7 +95,7 @@ router.post('/auth/register',
 
 // router.post('/auth/register/guest', authController.checkGuestToken, userController.registerGuest, authController.loginGuest);
 
-router.post('/auth/login', passport.authenticate('local'), authController.login);
+router.post('/auth/login', authController.authenticateLocal, authController.login);
 
 
 ////////////////////////////////////////
