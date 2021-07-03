@@ -5,7 +5,7 @@ exports.getGeneralCourses = async (req, res) => {
     let reqCourseNum = req.query.cnum; // get query string
     let dbCoursesGeneral = mongoose.connection.collection("courses_general"); // get MongoDB collection
     // get cursor of courses from database with queried course number
-    let cursor = dbCoursesGeneral.find({"course_num": reqCourseNum});
+    let cursor = dbCoursesGeneral.find({"course_num": {"$regex": '^' + reqCourseNum}});
     // convert cursor to list
     let documents = [];
     await cursor.forEach((doc) => {
@@ -41,21 +41,21 @@ exports.getTermCourses = async (req, res) => {
         cursor = dbCourses.find();
     }
     else {
-        let re = new RegExp(reqCourseNum, "g");
+        // let re = new RegExp(reqCourseNum, "g");
         if ( reqCourseNum === "" ) {
             /* only attribute is provided */
             cursor = dbCourses.find({"attributes": {"$all": [reqAttr]}});
         }
         else if ( reqAttr === "" ) {
             /* only course_num is provided */
-            cursor = dbCourses.find({
-                "course_num": re
-            })
+            cursor = dbCourses.find({ "course_num": { "$regex": '^' + reqCourseNum } });
         }
         else {
             /* all parameters are provided */
             cursor = dbCourses.find({
-                "course_num": re,
+                "course_num": {
+                    "$regex": '^' + reqCourseNum
+                },
                 "attributes": {
                     "$all": [reqAttr]
                 }
