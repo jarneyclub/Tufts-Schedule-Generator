@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 exports.getGeneralCourses = async (req, res) => {
     var start = Date.now(); // begin timing API endpoint
-    let reqCourseNum = req.query.cnum; // get query string
+    let reqCourseNum = req.query.cnum.toUpperCase(); // get query string
     let dbCoursesGeneral = mongoose.connection.collection("courses_general"); // get MongoDB collection
     // get cursor of courses from database with queried course number
     let cursor = dbCoursesGeneral.find({"course_num": {"$regex": '^' + reqCourseNum}});
@@ -31,7 +31,7 @@ exports.getGeneralCourses = async (req, res) => {
 exports.getTermCourses = async (req, res) => {
     var start = Date.now(); // begin timing API endpoint
     // get query strings
-    let reqCourseNum = req.query.cnum;
+    let reqCourseNum = req.query.cnum.toUpperCase();
     let reqAttr      = req.query.attr;
     let dbCourses = mongoose.connection.collection("courses"); // get MongoDB collection
     // get cursor of courses from database with query parameters
