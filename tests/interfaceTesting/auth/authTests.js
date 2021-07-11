@@ -16,9 +16,10 @@ const testRegister = (option, callback) => {
     xhr.open("POST", url, true);
 
     var body = {
-        name: "jeremy",
-        email: "aaa@gmail.com",
-        email_confirmation: "aaa@gmail.com",
+        first_name: "bing",
+        last_name: "bong",
+        userid: "jangho@gmail.com",
+        password_confirmation: "12345",
         password: "12345"
     };
 
@@ -53,7 +54,7 @@ const testLogin = (option, callback) => {
     xhr.open("POST", url, true);
 
     var body = {
-        email: "aaa@gmail.com",
+        userid: "jangho@gmail.com",
         password: "12345"
     };
 

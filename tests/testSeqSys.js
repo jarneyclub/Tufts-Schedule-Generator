@@ -34,23 +34,24 @@ const testPermutationsDPThirtyTwo = () => {
     return result;
 }
 
-const testSeqSys = () => {
-    console.log("--- unit test ( Sequence System ( 32 possible digit index exists) ) ---")
+const testSeqSysSmall = () => {
+    console.log("--- unit test ( Sequence System ( not too big ) ) ---")
 
     let result = false;
     let expectedSize = 1;
 
     /* INITIALIZE INPUT */
-    let digitsArray = [6, 4, 10, 32, 32, 10, 0, 4];
+    let digitsArray = [6, 4, 10, 10, 0, 4];
     for (let index in digitsArray)
         expectedSize *= (digitsArray[index] + 1);
 
     let sys = sequences.sequenceSys();
     sys.init(digitsArray);
     let output = [];
-    for (let i = 0 ; i < expectedSize; i++) {
+    for (let i = 0; i < expectedSize; i++) {
         try {
             output.push(sys.getCurr());
+            console.log(sys.getCurr());
             sys.increment();
         }
         catch (e) {
@@ -69,7 +70,45 @@ const testSeqSys = () => {
         // console.log("output: ", output);
         console.log("Error in testSeqSys")
     }
+    return result;
+}
 
+const testSeqSys = () => {
+    console.log("--- unit test ( Sequence System ( 32 possible digit index exists) ) ---")
+
+    let result = false;
+    let expectedSize = 1;
+
+    /* INITIALIZE INPUT */
+    let digitsArray = [6, 4, 10, 32, 32, 10, 0, 4];
+    for (let index in digitsArray)
+        expectedSize *= (digitsArray[index] + 1);
+
+    let sys = sequences.sequenceSys();
+    sys.init(digitsArray);
+    let output = [];
+    for (let i = 0 ; i < expectedSize; i++) {
+        try {
+            output.push(sys.getCurr());
+            console.log(sys.getCurr());
+            sys.increment();
+        }
+        catch (e) {
+            console.error("ahhhhh")
+            break;
+        }
+    }
+
+    if (output.length == expectedSize)
+        result = true;
+    else {
+        result = false;
+        console.log("expected size: ", expectedSize);
+        console.log("output.length: ", output.length);
+        // console.log("input: ", digitsArray);
+        // console.log("output: ", output);
+        console.log("Error in testSeqSys")
+    }
     return result;
 }
 
@@ -77,7 +116,8 @@ const test = () => {
     var start = Date.now(); // begin timing 
 
     // testPermutationsDPThirtyTwo();
-    testSeqSys();
+    // testSeqSys();
+    testSeqSysSmall();
     
     var end = Date.now(); // End timing
     var difference = end - start;

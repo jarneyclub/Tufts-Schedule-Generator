@@ -221,14 +221,18 @@ const drAppLogicTest = async (option, token) => {
         "program_name": "test program",
         "school": "school of bussin",
         "degree": "can i get a hoya",
+        "part_id_tracker": 1,
         "parts": [
             {
+                "part_id": 0,
                 "part_name": "important part",
                 "part_desc": "you need to do this",
+                "part_req_id_tracker": 1,
                 "part_reqs": [
                     {
+                        "part_req_id": 0,
                         "course_num": "CS-0011",
-                        "course_title": "Intro to Comp Sci"
+                        "course_note": "Intro to Comp Sci"
                     }
                 ]
             }
@@ -302,17 +306,19 @@ const drAppLogicTest = async (option, token) => {
                         res5.req.parts.push({
                             part_name: "ooga ooga",
                             part_desc: "hoya",
+                            part_id: 0,
                             part_reqs: [
                                 {course_num  :  "BB-0001",
                                 course_title : "hey" }
                             ] 
                         })
                         let saveBody = {
-                            priv_dr_id   : res5.req.priv_dr_id,
-                            program_name : res5.req.program_name,
-                            school       : res5.req.school,
-                            degree       : res5.req.degree,
-                            parts        : res5.req.parts
+                            priv_dr_id      : res5.req.priv_dr_id,
+                            program_name    : res5.req.program_name,
+                            school          : res5.req.school,
+                            degree          : res5.req.degree,
+                            parts           : res5.req.parts,
+                            part_id_tracker : res5.req.part_id_tracker
                         }
                         let res6 = await saveDRPrivate (option, token, saveBody);
                         if (res6.err !== undefined) {
@@ -353,19 +359,22 @@ const drAppLogicTest = async (option, token) => {
 }
 
 const drCreatePrivateTest = async (option, token) => {
-    let testPassing = true;
     let DRPrivateBody = {
         "program_name": "test private program",
         "school": "school of bussin",
         "degree": "can i get a hoya",
+        "part_id_tracker": 1,
         "parts": [
             {
+                "part_id": 0,
                 "part_name": "important part",
                 "part_desc": "you need to do this",
+                "part_req_id_tracker": 1,
                 "part_reqs": [
                     {
+                        "part_req_id": 0,
                         "course_num": "CS-0011",
-                        "course_title": "Intro to Comp Sci"
+                        "course_note": "Intro to Comp Sci"
                     }
                 ]
             }
