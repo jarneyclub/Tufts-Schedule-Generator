@@ -19,7 +19,7 @@ const swaggerDefinition = {
         description: "Production server"
     }
   ]
-};
+};  
 
 const options = {
   swaggerDefinition,
