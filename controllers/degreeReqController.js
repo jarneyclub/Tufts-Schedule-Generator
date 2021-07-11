@@ -12,10 +12,11 @@ exports.createDegreeReqPublic = async (req, res) => {
 
     // get user request information
     let schema = {
-        programName : req.body.program_name,
-        school      : req.body.school,
-        degree      : req.body.degree,
-        parts       : req.body.parts
+        programName     : req.body.program_name,
+        school          : req.body.school,
+        degree          : req.body.degree,
+        parts           : req.body.parts,
+        partIdTracker : req.body.part_id_tracker
     };
     // insert to database
     degreeReqAPI.createDegreeReqPublic(schema)
@@ -30,7 +31,6 @@ exports.createDegreeReqPublic = async (req, res) => {
         errorHandler(res, err, start);
     });
 }
-
 
 /**
  * Get all public degree requirements
@@ -101,21 +101,23 @@ exports.copyDegreeReqPublicToPrivate = async (req, res) => {
 }
 
 exports.createDegreeReqPrivate = async (req, res) => {
+    // TODO: if from admin account, create a public degree requirement
     let start = Date.now(); // begin timing API endpoint
     
     // get user request information
     let schema = {
-        programName  : req.body.program_name,
-        school       : req.body.school,
-        degree       : req.body.degree,
-        parts        : req.body.parts
+        programName   : req.body.program_name,
+        school        : req.body.school,
+        degree        : req.body.degree,
+        parts         : req.body.parts,
+        partIdTracker : req.body.part_id_tracker
     };
     // get from database
     degreeReqAPI.createDegreeReqPrivate(req.user_id, schema)
     .then(result => {
         res.status(200);
         res.json({
-            reqs: result,
+            req: result,
             time_taken: ((Date.now() - start).toString() + "ms")
         });
     })
@@ -183,14 +185,16 @@ exports.getDegreeReqPrivate = async (req, res) => {
  * @param {any} res 
  */
 exports.saveDegreeReqPrivate = async (req, res) => {
+    // TODO: if from admin account, save the public degree requirement
     let start = Date.now(); // begin timing API endpoint
 
     // get user request information
     let query = {
-        programName : req.body.program_name ,
-        school      : req.body.school,
-        degree      : req.body.degree,
-        parts        : req.body.parts
+        programName     : req.body.program_name ,
+        school          : req.body.school,
+        degree          : req.body.degree,
+        parts           : req.body.parts,
+        partIdTracker : req.body.part_id_tracker
     };
     // update in database
     degreeReqAPI.saveDegreeReqPrivate(req.body.priv_dr_id, query)

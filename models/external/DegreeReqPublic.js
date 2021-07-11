@@ -23,24 +23,41 @@ const degreeReqPublic_Schema = new Schema({
         trim: true,
         required: 'Please enter the degree type!'
     },
+    part_id_tracker: {
+        type: Number,
+        required: 'FATAL ERROR: part_id_tracker is undefined'
+    },
     parts: [{
         _id: false,
+        part_id: {
+            type: Number,
+            required: 'FATAL ERROR: part_id is undefined'
+        },
         part_name: {
             type: String,
             trim: true,
             required: 'Please enter the names of all parts of program requirement',
         },
         part_desc: String,
+        part_req_id_tracker: {
+            type: Number,
+            required: 'FATAL ERROR: part_req_id_tracker is undefined'
+        },
         part_reqs: [{
             _id: false,
+            part_req_id: {
+                type: Number,
+                required: 'FATAL ERROR: part_req_id is undefined'
+            },
             course_num: {
                 type: String,
                 trim: true
             },
-            course_title: {
+            course_note: {
                 type: String,
                 trim: true
-            }}]
+            }
+        }]
     }],
     date_created: {
         type: Date,

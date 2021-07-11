@@ -936,11 +936,15 @@ components:
           type: string
         degree:
           type: string
+        part_id_tracker:
+          type: number
         parts:
           type: array
           items:
             type: object
             properties:
+              part_id:
+                type: number
               part_name:
                 type: string
               part_desc:
@@ -950,9 +954,11 @@ components:
                 items:
                   type: object
                   properties:
+                    part_req_id: 
+                      type: number
                     course_num: 
                       type: string
-                    course_title:
+                    course_note:
                       type: string
                     completed:
                       type: boolean
@@ -967,13 +973,15 @@ components:
           type: string
         degree:
           type: string
-        date_created:
-          type: string
+        part_id_tracker:
+          type: number
         parts:
           type: array
           items:
             type: object
             properties:
+              part_id:
+                type: number
               part_name:
                 type: string
               part_desc:
@@ -983,9 +991,11 @@ components:
                 items:
                   type: object
                   properties:
+                    part_req_id: 
+                      type: number
                     course_num: 
                       type: string
-                    course_title:
+                    course_note:
                       type: string
     RBDegreeReqPublic:
       type: object
@@ -996,11 +1006,15 @@ components:
           type: string
         degree:
           type: string
+        part_id_tracker:
+          type: number
         parts:
           type: array
           items:
             type: object
             properties:
+              part_id:
+                type: number
               part_name:
                 type: string
               part_desc:
@@ -1010,9 +1024,11 @@ components:
                 items:
                   type: object
                   properties:
+                    part_req_id: 
+                      type: number
                     course_num: 
                       type: string
-                    course_title:
+                    course_note:
                       type: string
 ####################
 #                  #

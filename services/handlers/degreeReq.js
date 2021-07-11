@@ -14,7 +14,8 @@ exports.createDegreeReqPublic = async (schema) => {
             program_name: schema.programName,
             school: schema.school,
             degree: schema.degree,
-            parts: schema.parts
+            parts: schema.parts,
+            part_id_tracker: schema.partIdTracker
         });
 
         let insertedDR = await dr.save();
@@ -32,6 +33,7 @@ exports.createDegreeReqPublic = async (schema) => {
         }
     }
 }
+
 /**
  * Get all public degree requirements
  * @returns 
@@ -50,7 +52,8 @@ exports.getDegreeReqsPublic = async () => {
                 "school": doc.school,
                 "degree": doc.degree,
                 "parts": doc.parts,
-                "date_created": doc.date_created
+                "date_created": doc.date_created,
+                "part_id_tracker": doc.part_id_tracker
             };
             documents.push(docParsed);
         });
@@ -106,16 +109,18 @@ exports.copyDegreeReqPublicToPrivate = async (pub_dr_id, userId) => {
             school: drPub.school,
             degree: drPub.degree,
             parts: drPub.parts,
-            user_id: userId
+            user_id: userId,
+            part_id_tracker: drPub.part_id_tracker
         })
         let insertedDr = await drPriv.save();
         // parse inserted private degree requirement for api response
         let insertedDrParsed = {
-            priv_dr_id   : insertedDr._id.valueOf(),
-            program_name : insertedDr.program_name, 
-            school       : insertedDr.school,
-            degree       : insertedDr.degree,
-            parts        : insertedDr.parts
+            priv_dr_id      : insertedDr._id.valueOf(),
+            program_name    : insertedDr.program_name, 
+            school          : insertedDr.school,
+            degree          : insertedDr.degree,
+            parts           : insertedDr.parts,
+            part_id_tracker : insertedDr.part_id_tracker
         };
         return insertedDrParsed;
     }
@@ -151,11 +156,12 @@ exports.getDegreeReqsPrivate = async (query) => {
         await cursor.forEach((doc) => {
             // parse degree requirement
             let docParsed = {
-                priv_dr_id   : doc._id.valueOf(),
-                program_name : doc.program_name,
-                school       : doc.school,
-                degree       : doc.degree,
-                parts        : doc.parts 
+                priv_dr_id      : doc._id.valueOf(),
+                program_name    : doc.program_name,
+                school          : doc.school,
+                degree          : doc.degree,
+                parts           : doc.parts,
+                part_id_tracker : doc.part_id_tracker
             };
             documents.push(docParsed);
         });
@@ -187,16 +193,24 @@ exports.getDegreeReqsPrivate = async (query) => {
 exports.createDegreeReqPrivate = async (userId, schema) => {
     try {
         let dr = new DegreeReqPrivate({
-            program_name : schema.programName,
-            school       : schema.school,
-            degree       : schema.degree,
-            parts        : schema.parts,
-            user_id      : userId
+            program_name    : schema.programName,
+            school          : schema.school,
+            degree          : schema.degree,
+            parts           : schema.parts,
+            user_id         : userId,
+            part_id_tracker : schema.partIdTracker
         });
 
         let insertedDR = await dr.save();
 
-        return insertedDR._id.valueOf();
+        return {
+            priv_dr_id: insertedDR._id.valueOf(),
+            program_name: schema.programName,
+            school: schema.school,
+            degree: schema.degree,
+            parts: schema.parts,
+            part_id_tracker: schema.partIdTracker
+        }
     }
     catch (e) {
         if (e.message.indexOf("validation failed") > -1) {
@@ -227,11 +241,12 @@ exports.getDegreeReqPrivate = async (query) => {
             throw "No private degree requirement with given fields was found."
         // parse document for api response
         let docParsed = {
-            priv_dr_id   : doc._id.valueOf(),
-            program_name : doc.program_name,
-            school       : doc.school,
-            degree       : doc.degree,
-            parts        : doc.parts
+            priv_dr_id      : doc._id.valueOf(),
+            program_name    : doc.program_name,
+            school          : doc.school,
+            degree          : doc.degree,
+            parts           : doc.parts,
+            part_id_tracker : doc.part_id_tracker
         };
         return docParsed;
     }
@@ -259,10 +274,11 @@ exports.saveDegreeReqPrivate = async (priv_dr_id, schema) => {
         let dr = await DegreeReqPrivate.findOneAndUpdate({
             _id: mongoose.Types.ObjectId(priv_dr_id)
         }, {
-            program_name : schema.programName,
-            school       : schema.school,
-            degree       : schema.degree,
-            parts        : schema.parts
+            program_name    : schema.programName,
+            school          : schema.school,
+            degree          : schema.degree,
+            parts           : schema.parts,
+            part_id_tracker : schema.partIdTracker
         }, {
             new: true,
             upsert: false
