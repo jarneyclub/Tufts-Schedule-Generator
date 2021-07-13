@@ -27,14 +27,14 @@ const app = require('./app');
 // const server = app.listen(app.get('port'), () => {
 //     console.log(`Express running → PORT ${server.address().port}`);
 // });
-console.log(process.env.SSL_PKEY.replace(/\\n/gm, '\n'))
-console.log(process.env.CSR.replace(/\\n/gm, '\n'))
+// console.log(process.env.SSL_PKEY.replace(/\\n/gm, '\n'))
+// console.log(process.env.CSR.replace(/\\n/gm, '\n'))
 const httpServer = http.createServer(app);
 const httpsServer = https.createServer({
-    key : fs.readFileSync(path.resolve(__dirname, 'routes/generated-private-key.txt')),
-    cert: fs.readFileSync(path.resolve(__dirname, 'routes/generated-csr.txt'))
-    // key: process.env.SSL_PKEY.replace(/\\n/gm, '\n'),
-    // cert: process.env.CSR.replace(/\\n/gm, '\n'),
+    // key : fs.readFileSync(path.resolve(__dirname, 'routes/generated-private-key.txt')),
+    // cert: fs.readFileSync(path.resolve(__dirname, 'routes/generated-csr.txt'))
+    key: process.env.SSL_PKEY.replace(/\\n/gm, '\n'),
+    cert: process.env.CERT.replace(/\\n/gm, '\n'),
 }, app);
 
 httpServer.listen(80, () => {
