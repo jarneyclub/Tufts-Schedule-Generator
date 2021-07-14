@@ -1,0 +1,24 @@
+.dayContainer {
+  flex-grow: 10;
+}
+
+.timeSlotTitle {
+  height: 40px;
+  min-width: 80px;
+  text-align: center;
+  /* position: fixed; */
+}
+
+.timeContainer {
+}
+
+.timeSlot {
+  height: 80px;
+  border: 1px solid #c4c4c4;
+}
+.timeSlotOverlay {
+  height: 40px;
+  border: 1px solid #c4c4c4;
+
+  /* background-color: aqua; */
+}

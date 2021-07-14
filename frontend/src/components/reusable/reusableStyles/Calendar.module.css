@@ -1,0 +1,23 @@
+.calendarContainer {
+  display: flex;
+  flex-direction: row;
+
+  width: 100%;
+  height: 100%;
+  /* overflow: scroll; */
+}
+
+.timeSlotContainer {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.timeSlotTitle {
+  height: 40px;
+  /* position: fixed; */
+}
+
+.timeSlot {
+  height: 80px;
+  text-align: right;
+}

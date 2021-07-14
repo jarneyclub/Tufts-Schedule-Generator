@@ -1,0 +1,129 @@
+.homeContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background: linear-gradient(-45deg, #ccbeee, #d9cef2, #fed7d7, #fec2c2);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+.horizontalContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: flex-start;
+  flex-wrap: wrap;
+
+  height: 100vh;
+  width: 100%;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  padding-top: 20vh;
+  /* 
+  background-image: url("../res/pexels-moose-photos-1037995.jpg");
+  background-size: cover; */
+  /* background-repeat: no-repeat; */
+}
+
+.loginImage {
+  /* width: 30vw; */
+  height: 50vh;
+  /* float: right; */
+}
+
+.schedulerImage {
+  height: 50vh;
+  float: left;
+}
+
+.loginGraphicContainer {
+  flex-grow: 1;
+  /* padding-right: 2vw; */
+}
+
+.verticalContainer {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  /* max-width: 54vw; */
+  border: none;
+  border-radius: 12px;
+  padding: 15px 2vw;
+  background-color: #ffffff;
+}
+
+.bodyContainer {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+h1 {
+  color: #5a32bf;
+  font-size: 70px;
+}
+h2 {
+  color: #5a32bf;
+  font-size: 50px;
+}
+
+.content {
+  color: #000000;
+  font-size: 18px;
+  max-width: 50ch;
+  /* text-align: center; */
+}
+
+.button {
+  background-color: #5a32bf;
+  color: #ffffff;
+
+  border-radius: 12px;
+
+  min-height: 50px;
+
+  text-align: center;
+  font-size: 20px;
+  line-height: 22px;
+
+  margin-top: 10px;
+}
+
+.button:hover {
+  background-color: #fc4e4e;
+  border: #fc4e4e solid 1px;
+}
+
+/* body {
+  background: linear-gradient(-45deg, #ccbeee, #d9cef2, #fed7d7, #fec2c2);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+} */
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@media only screen and (max-width: 813px) {
+  .horizontalContainer {
+    flex-direction: column-reverse;
+    flex-wrap: nowrap;
+  }
+}

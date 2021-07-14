@@ -1,0 +1,265 @@
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+
+  padding-top: 2vh;
+}
+
+/* * * * * * * * * * * PROGRESS BAR * * * * * * * * * * */
+
+.progressBarContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 10px;
+  margin-bottom: 20px;
+
+  padding: 1vh;
+}
+
+.progressBarTitle {
+  white-space: nowrap;
+
+  color: #5a32bf;
+  font-weight: bold;
+  font-size: 25px;
+}
+.progressBar {
+  border: #5a32bf 1px solid;
+  border-radius: 15px;
+  width: 75%;
+  height: 30px;
+
+  margin-left: 1vw;
+  margin-right: 1vw;
+}
+
+/* * * * * * * * * * * HORIZONTAL WRAPPER * * * * * * * * * * */
+.horizontalWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  padding-left: 2vw;
+  padding-right: 2vw;
+}
+
+/* * * * * * * * * * * leftContainer * * * * * * * * * * */
+.leftContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 25%;
+  align-items: center;
+
+  padding-right: 1vw;
+
+  margin-bottom: 20px;
+}
+
+.planSelectorContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px #5a32bf solid;
+
+  width: 100%;
+  padding: 5px 1vw;
+
+  white-space: nowrap;
+}
+
+/* SEARCH CONTAINER for Courses */
+.existListWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border: 1px solid #5a32bf;
+
+  width: 100%;
+  margin-top: 10px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+input {
+  border-radius: 5px;
+  border: #5a32bf solid 1px;
+  min-width: 80%;
+
+  font-size: 15px;
+  padding-left: 5px;
+}
+
+.inputSearch {
+  width: 90%;
+}
+
+.searchButton {
+  border-radius: 17px;
+  border: #5a32bf solid 1px;
+  margin-top: 10px;
+  box-sizing: border-box;
+
+  height: 35px;
+
+  padding-left: 2vw;
+  padding-right: 2vw;
+
+  text-align: center;
+  font-size: 13px;
+  color: #ffffff;
+
+  background-color: #5a32bf;
+}
+
+.searchButton:hover {
+  background-color: #fc4e4e;
+  border: #fc4e4e solid 1px;
+}
+
+.searchListContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  box-sizing: content-box;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  border-top: 1px solid #5a32bf;
+  width: 100%;
+  height: 200px;
+
+  overflow-y: scroll;
+}
+
+/* Degree Requirement Container  */
+
+.degreeReqContainer {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  margin-top: 10px;
+
+  border: 1px #5a32bf solid;
+}
+
+.degreeReqTitleContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  padding-left: 1vw;
+  padding-right: 1vw;
+
+  background-color: #5a32bf;
+  color: #ffffff;
+
+  height: 25px;
+}
+
+.degreeReqNextButton {
+  cursor: pointer;
+}
+
+.degreeReqDetailContainer {
+  height: 300px;
+}
+
+/* * * * * * * * * * * rightContainer * * * * * * * * * * */
+
+.rightContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 3 0 75%;
+
+  border: #5a32bf solid 1px;
+  background-color: #5a32bf;
+  margin-bottom: 20px;
+}
+
+.semesterPlanTitleContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  padding-left: 2vw;
+  padding-right: 2vw;
+
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.semesterPlanTitle {
+  font-size: 20px;
+  font-weight: bold;
+
+  color: #ffffff;
+}
+
+.editSemesterButtonContainer {
+  display: flex;
+  flex-direction: row;
+  /* align-items: center;
+    align-content: stretch; */
+  /* justify-content: flex-end; */
+}
+
+.editSemesterButton {
+  height: 25px;
+  width: 25px;
+
+  top: 0;
+  bottom: 0;
+
+  color: #ffffff;
+}
+
+.planCardsContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  background-color: #5a32bf;
+  height: 600px;
+
+  overflow: scroll;
+  padding: 0 1vw;
+  margin: 0;
+}
+
+/* ------------------ AddSemester Functional Comoponent ------------- */
+
+.addSemesterContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #ffffff;
+  width: 40%;
+
+  border: #ffffff 1px solid;
+  border-radius: 12px;
+
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+.submitButton {
+  width: 100%;
+  background-color: #fc4e4e;
+  color: #ffffff;
+  height: 50px;
+  border: none;
+}

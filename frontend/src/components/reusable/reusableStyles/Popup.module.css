@@ -1,0 +1,152 @@
+/*  =============== Overlay CSS =============== */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(112, 72, 213, 0.5);
+  z-index: 100;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/*  =============== Popup Body CSS =============== */
+.loginContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #ffffff;
+  width: 40%;
+
+  border: #ffffff 1px solid;
+  border-radius: 12px;
+
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+.headerContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  width: 100%;
+  height: 50px;
+  padding: 10px 1vw;
+  margin-bottom: 20px;
+  border-bottom: #7048d5 1px solid;
+}
+
+.closeButton {
+  cursor: pointer;
+}
+
+.headerBody {
+  font-weight: bold;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+}
+
+.inputContainer {
+  /* border: #7048d5 1px solid;
+  border-radius: 5px; */
+  margin-bottom: 20px;
+  width: 90%;
+  /* margin-botopttom: 20px; */
+}
+
+.dropdownContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-bottom: 20px;
+  width: 80%;
+}
+
+.inputBarContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-bottom: 20px;
+  width: 80%;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.inputAreaName {
+  width: 100%;
+  border: none !important;
+  /* height: 50px; */
+}
+
+.inputAreaNoBorder {
+  border: none;
+}
+
+.inputAreaPd {
+  width: 100%;
+  border: none;
+  height: 50px;
+  border-top: #7048d5 1px solid;
+}
+
+.inputBar {
+  border: #7048d5 1px solid;
+  background-color: #ffffff;
+  color: #5a32bf;
+  font-weight: bold;
+  margin-bottom: 10px;
+  /* width: 80%; */
+  height: 50px;
+}
+.inputBar:hover {
+  background-color: #7048d5;
+  color: #ffffff;
+  margin-bottom: 10px;
+  height: 50px;
+}
+
+.submitButton {
+  width: 80%;
+  background-color: #fc4e4e;
+  color: #ffffff;
+  height: 40px;
+  border: #fc4e4e 1px solid;
+
+  border-radius: 12px;
+}
+.submitButton:hover {
+  background-color: #fc6d6d;
+}
+@media only screen and (max-width: 744px) {
+  .formContainer {
+    /* width: 80%; */
+  }
+}
+
+@media only screen and (max-width: 1050px) {
+  .loginContainer {
+    width: 60%;
+  }
+}
+@media only screen and (max-width: 744px) {
+  .loginContainer {
+    width: 100%;
+  }
+}

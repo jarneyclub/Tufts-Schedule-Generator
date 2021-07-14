@@ -1,0 +1,42 @@
+h2 {
+  color: #5a32bf;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 20vh;
+  align-items: center;
+}
+
+.horizontalWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: center;
+}
+
+.navButton {
+  padding: 10px;
+  margin: 10px;
+
+  color: #5a32bf;
+  border: 2px solid #5a32bf;
+  background-color: #ffffff;
+
+  width: 200px;
+  height: 200px;
+}
+
+.overlay {
+  position: fixed;
+  display: none;
+  background-color: #5a32bf;
+}
+
+.navButton:hover .overlay {
+  display: block;
+}

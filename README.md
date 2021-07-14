@@ -1,11 +1,13 @@
 # Semester Schedule Generator with Tufts University Courses
 ![Demonstration](./img/demo.gif)
+Scheduling Page Prototype Design by Duncan Chang
 
 # Overview
-API that generates personalized semester schedules given a list of courses and user preferences with heuristic algorithms. 
+...
 
-Developed with Node JS, MongoDB, and Python. 
+Developed with Google Cloud, Node JS, MongoDB, and Python. 
 
-## Documentation
-http://tufts-schedule-api.herokuapp.com/docs
-
+# Team
+### Backend (Jeremy Jung)
+### Frontend (Duncan Chang, Carys Kong)
+### UI/UX (Duncan Chang, Carys Kong)

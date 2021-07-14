@@ -1,0 +1,127 @@
+.horizontalContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: flex-start;
+  flex-wrap: wrap;
+
+  height: 100vh;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  padding-top: 20vh;
+
+  background-image: url("../res/pexels-moose-photos-1037995.jpg");
+  background-size: cover;
+  /* background-repeat: no-repeat; */
+}
+
+@font-face {
+  font-family: "Eina03";
+  src: local("Eina03-SemiBold"),
+    url("../../fonts/Eina03-SemiBold.ttf") format("truetype");
+}
+
+.loginImage {
+  /* width: 30vw; */
+  height: 50vh;
+  float: right;
+}
+
+.loginGraphicContainer {
+  flex-grow: 1;
+  padding-right: 2vw;
+}
+
+.verticalContainer {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  max-width: 55vw;
+  border: #fc4e4e 5px double;
+  border-radius: 12px;
+  padding: 10px 2vw;
+  background-color: #ffffff;
+}
+
+img {
+  float: left;
+}
+
+.titleContainer {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.bodyContainer {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+h1 {
+  color: #5a32bf;
+  font-size: 100px;
+  font-family: "Eina03";
+}
+
+h2 {
+  font-family: "Eina03";
+}
+h2 {
+  color: #5a32bf;
+  font-size: 20px;
+  font-family: "Eina03";
+}
+
+/* div button {
+    font-family: 'Eina03';
+    color: #ffffff;
+
+    background-color: #5a32bf;
+    border: 2px solid #5a32bf;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 10px;
+
+    max-height: 50px;
+    display: inline-block;
+    font-size: 50px;
+} */
+
+.content {
+  color: #000000;
+  font-size: 20px;
+  /* text-align: center; */
+}
+
+.loginButton {
+  background-color: #5a32bf;
+  color: #ffffff;
+
+  border-radius: 12px;
+  border: #000000 solid 1px;
+
+  box-sizing: border-box;
+
+  height: 35px;
+  width: 20vw;
+  padding-left: 1vw;
+  padding-right: 1vw;
+
+  text-align: center;
+  font-size: 20px;
+
+  margin-top: 10px;
+}
+
+.loginButton:hover {
+  background-color: #fc4e4e;
+  border: #fc4e4e solid 1px;
+}

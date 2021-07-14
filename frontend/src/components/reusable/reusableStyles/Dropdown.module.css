@@ -1,0 +1,11 @@
+.DropdownContainer {
+  width: 90%;
+  display: flex;
+
+  flex-direction: column;
+  /* padding: 10px; */
+}
+
+select {
+  height: 30px;
+}

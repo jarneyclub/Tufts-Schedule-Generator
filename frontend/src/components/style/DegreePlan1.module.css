@@ -1,0 +1,202 @@
+/* * * * Note * * * * 
+    that the h3 and h5 size affects the width of left and right col */
+h3 {
+  color: #000000;
+  padding-left: 5vw;
+  padding-right: 5vw;
+  text-align: center;
+}
+
+h5 {
+  color: #000000;
+  padding-left: 3vw;
+  padding-right: 3vw;
+  text-align: center;
+}
+
+input {
+  border-radius: 5px;
+  border: #000000 solid 1px;
+  min-width: 80%;
+
+  font-size: 15px;
+  padding-left: 5px;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* * * * encaps both DEGREE SEARCH Wrapper & DEGREE REQ Wrapper * * * */
+.horizontalWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 5vh;
+
+  align-content: center;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* Includes the Searching for existing degree plan */
+.DegreeSearchWrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  padding-left: 5vw;
+  padding-right: 5vw;
+}
+
+/* Includes the currently saved degree req drop down */
+.existListWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border: 1px solid #5a32bf;
+  box-sizing: border-box;
+  margin-top: 10px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+.inputSearch {
+  width: 90%;
+}
+.searchButton {
+  border-radius: 17px;
+  border: #5a32bf solid 1px;
+  box-sizing: border-box;
+
+  margin-top: 15px;
+  height: 35px;
+
+  padding-left: 2vw;
+  padding-right: 2vw;
+  text-align: center;
+  font-size: 13px;
+  color: #ffffff;
+
+  background-color: #5a32bf;
+}
+
+.searchButton:hover {
+  border: #fc4e4e solid 1px;
+  background-color: #fc4e4e;
+}
+
+.searchListContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  box-sizing: content-box;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  border-top: 1px solid #5a32bf;
+  width: 100%;
+  height: 200px;
+
+  overflow-y: scroll;
+}
+
+.myListWrapper {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #5a32bf;
+  box-sizing: border-box;
+  margin-top: 10px;
+  align-items: center;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.newMajorMinorButton {
+  font-size: 10px;
+  color: #000000;
+  cursor: pointer;
+  border-bottom: #5a32bf solid 1px;
+  border-radius: none;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* * * * * The RIGHT COL, Includes the info of Selected Degree Req * * * * */
+.DegreeReqWrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-left: 5vw;
+  padding-right: 5vw;
+
+  margin-top: 20px;
+
+  border-left: #5a32bf 1px solid;
+}
+
+/* Within the DegreeReqWrapper, includes the list */
+.DegreeReqListWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border: 1px solid #5a32bf;
+  box-sizing: border-box;
+  margin-top: 1vh;
+
+  padding-bottom: 10px;
+}
+
+.DegreeReqListTitle {
+  text-align: center;
+  color: #ffffff;
+  background-color: #7048d5;
+  font-size: 25px;
+
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+
+  height: 50px;
+  width: 100%;
+}
+
+.degreeReqListExpandable {
+  height: 350px;
+  width: 100%;
+}
+
+.editButton {
+  border-radius: 12px;
+  border: #000000 solid 1px;
+  box-sizing: border-box;
+
+  margin-top: 15px;
+  height: 35px;
+
+  padding-left: 1vw;
+  padding-right: 1vw;
+  text-align: center;
+  font-size: 13px;
+  color: #000000;
+
+  background-color: #ffffff;
+}
+.editButton:hover {
+  background-color: #fc4e4e;
+  border: #fc4e4e solid 1px;
+  color: #ffffff;
+}
+.nextPageButton {
+  text-align: right;
+  font-size: 40px;
+  color: #000000;
+  text-decoration: none;
+}
+
+.nextPageButton:hover {
+  text-decoration: none;
+  color: #fc4e4e;
+}
+
+body {
+  background-color: white;
+}

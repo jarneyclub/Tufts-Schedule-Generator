@@ -3,6 +3,7 @@ const passport = require('passport');
 const routes = require('./routes/index');
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const path = require('path');
 const app = express();
 
 require('./services/handlers/passport.js');
@@ -45,13 +46,17 @@ app.use(function (req, res, next) {
 
 app.use(express.json());
 app.use(passport.initialize());
+
 // handle api routes
 app.use('/api', routes);
 
 // handle api docs
-app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/docs/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use(express.static(path.join(__dirname, "/frontend/build")));
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/frontend/build', 'index.html'));
+});
 
 //export and start the site in start.js
 module.exports = app;

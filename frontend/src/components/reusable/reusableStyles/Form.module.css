@@ -1,0 +1,10 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  color: #5a32bf;
+  border: 1px solid #5a32bf;
+  margin-top: 10px;
+}

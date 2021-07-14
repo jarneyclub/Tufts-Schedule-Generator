@@ -1,0 +1,80 @@
+/*  DegreeReqEdit.js   */
+.drContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #ffffff;
+  width: 40%;
+
+  border: #ffffff 1px solid;
+  border-radius: 12px;
+
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+.headerContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  width: 100%;
+  height: 50px;
+  padding: 10px 1vw;
+  margin-bottom: 20px;
+  border-bottom: #7048d5 1px solid;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+}
+
+.inputContainer {
+  width: 90%;
+}
+
+.partsContainer {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  /* border: #000000 1px solid; */
+  max-height: 300px;
+  margin: 10px 0;
+}
+
+/*  DegreeReqPart.js   */
+.partContainer {
+  margin-bottom: 10px;
+}
+.partNameContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.tabbedContainer {
+  margin-left: 2vw;
+}
+
+/*  DegreeReqCourse.js  */
+.courseContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+@media only screen and (max-width: 1050px) {
+  .drContainer {
+    width: 60%;
+  }
+}
+@media only screen and (max-width: 744px) {
+  .drContainer {
+    width: 100%;
+  }
+}

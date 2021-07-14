@@ -1,0 +1,25 @@
+/* font */
+* {
+  font-family: Eina03-SemiBold;
+}
+
+body {
+  margin: 0;
+  font-family: "Eina03";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+* {
+  -ms-overflow-style: none;
+  scrollbar-color: transparent transparent;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
