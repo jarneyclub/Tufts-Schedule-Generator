@@ -49,7 +49,9 @@ app.use(passport.initialize());
 app.use('/api', routes);
 
 // handle api docs
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/docs/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 //export and start the site in start.js
 module.exports = app;
