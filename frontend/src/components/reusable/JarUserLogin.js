@@ -36,10 +36,7 @@ function JarUserLogin(props) {
     console.log("handleSubmit clicked ", values);
     setLoadMessage(true);
     if (loginState) {
-      await fetch(
-        "http://ec2-3-87-205-234.compute-1.amazonaws.com:3000/api/auth/login",
-        values
-      )
+      await fetch("https://jarney.club/api/auth/login", values)
         .then((response) => response.json())
         .then(
           (result) => {
@@ -57,10 +54,7 @@ function JarUserLogin(props) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       };
-      await fetch(
-        "http://ec2-3-87-205-234.compute-1.amazonaws.com:3000/api/auth/register",
-        requestOption
-      )
+      await fetch("https://jarney.club/api/auth/register", requestOption)
         .then((response) => response.json())
         .then(
           (result) => {
