@@ -222,24 +222,28 @@ function DegreePlan2(props) {
     setCourseSearchValue(e.target.value);
   };
 
-  useEffect(async () => {
-    let unmounted = false;
-    await fetch(
-      "http://ec2-3-87-205-234.compute-1.amazonaws.com:3000/api/courses/general?cnum=".concat(
-        courseSearchValue
+  useEffect(() => {
+    async function fetchData() {
+      await fetch(
+        "https://jarney.club/api/courses/general?cnum=".concat(
+          courseSearchValue
+        )
       )
-    )
-      .then((response) => response.json())
-      .then(
-        (result) => {
-          setSearchCourseResult(result.courses);
-          setLoadMessage(false);
-        },
-        (error) => {
-          setSearchCourseResult([]);
-          console.log("error from DegreePlan2 course search", error);
-        }
-      );
+        .then((response) => response.json())
+        .then(
+          (result) => {
+            setSearchCourseResult(result.courses);
+            setLoadMessage(false);
+          },
+          (error) => {
+            setSearchCourseResult([]);
+            console.log("error from DegreePlan2 course search", error);
+          }
+        );
+    }
+    fetchData();
+
+    let unmounted = false;
 
     return () => {
       unmounted = true;

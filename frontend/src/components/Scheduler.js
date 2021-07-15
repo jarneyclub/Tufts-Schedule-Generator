@@ -121,22 +121,25 @@ function Scheduler(props) {
   // })
   // const classes = useStyles();
 
-  useEffect(async () => {
-    await fetch(
-      "http://ec2-3-87-205-234.compute-1.amazonaws.com:3000/api/courses/general?cnum=".concat(
-        courseSearchValue
+  useEffect(() => {
+    async function fetchData() {
+      await fetch(
+        "https://jarney.club/api/courses/general?cnum=".concat(
+          courseSearchValue
+        )
       )
-    )
-      .then((response) => response.json())
-      .then(
-        (result) => {
-          setSearchCourseResult(result.courses);
-        },
-        (error) => {
-          setSearchCourseResult([]);
-          console.log("error from Scheduler course search", error);
-        }
-      );
+        .then((response) => response.json())
+        .then(
+          (result) => {
+            setSearchCourseResult(result.courses);
+          },
+          (error) => {
+            setSearchCourseResult([]);
+            console.log("error from Scheduler course search", error);
+          }
+        );
+    }
+    fetchData();
   }, [courseSearchValue, selectedFilter]);
 
   return (
