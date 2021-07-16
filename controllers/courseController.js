@@ -4,6 +4,12 @@ const mongoose = require('mongoose');
 exports.getGeneralCourses = async (req, res) => {
     var start = Date.now(); // begin timing API endpoint
     let reqCourseNum = req.query.cnum.toUpperCase(); // get query string
+    let firstDigit = reqCourseNum.match(/\d/); // will give you the first digit in the string
+    let indexFirstDigit = reqCourseNum.indexOf(firstDigit);
+    // let numberOfChrsAfterIncludingFirstDig = reqCourseNum.length - indexFirstDigit;
+    // if (reqCourseNum[indexFirstDigit - 1] !== "-")
+        // reqCourseNum = reqCourseNum.substring(0, indexFirstDigit) + "-" + reqCourseNum.substring(indexFirstDigit, reqCourseNum.length);
+    // console.log("(getGeneralCourses) reqCourseNum: ", reqCourseNum)
     let dbCoursesGeneral = mongoose.connection.collection("courses_general"); // get MongoDB collection
     // get cursor of courses from database with queried course number
     let cursor = dbCoursesGeneral.find({"course_num": {"$regex": '^' + reqCourseNum}});
@@ -12,9 +18,10 @@ exports.getGeneralCourses = async (req, res) => {
     await cursor.forEach((doc) => {
         // parse database document
         let docToInsert = {
-            "course_num"   : doc["course_num"],
-            "course_title" : doc["course_title"],
-            "units_esti"   : doc["units_esti"]
+            "gen_course_id" : doc["_id"].valueOf(),
+            "course_num"    : doc["course_num"],
+            "course_title"  : doc["course_title"],
+            "units_esti"    : doc["units_esti"]
         };
         documents.push(docToInsert);
     });

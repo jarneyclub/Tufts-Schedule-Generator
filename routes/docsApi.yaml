@@ -815,6 +815,9 @@ components:
     CourseGeneral:
       type: object
       properties:
+        gen_course_id:
+          type: string
+          description: course number
         course_num:
           type: string
           description: course number
