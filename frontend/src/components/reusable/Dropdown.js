@@ -27,8 +27,11 @@ function Dropdown(props) {
     labelName,
     labelId,
     customStyle,
+    fullWidth,
   } = props;
-
+  let width = fullWidth;
+  if (fullWidth) {
+  }
   useEffect(() => {
     console.log("Dropdown.js useEffect called");
     console.log("options, selectedOption: ", options, " ", selectedOption);
