@@ -91,15 +91,15 @@ paths:
                   data:
                     type: object
                     properties:
-                      result:
-                        type: boolean
-                        description: login result (true or false)
-                      message:
+                      first_name:
                         type: string
-                        description: login result message
-                      token: 
+                        description: user first name
+                      last_name:
                         type: string
-                        description: token (Authorization)
+                        description: user last name
+                      userid:
+                        type: string
+                        description: user email
   /auth/userinfo:
     post:
       tags:

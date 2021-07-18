@@ -27,7 +27,7 @@ exports.login = async (req, res) => {
     let token = jwt.sign({ userid: userid, password: password}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
     res.cookie("access_token", token, {
         // httpOnly: true
-    }).status(200).json({"data": {"message": "Login successful!"}});
+    }).status(200).json({"data": {"first_name": result.first_name, "last_name": result.last_name, "userid": result.userid}});
 };
 
 /**
