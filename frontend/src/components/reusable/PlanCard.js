@@ -4,32 +4,37 @@
  *
  */
 
+import CourseSearchBar from "./CourseSearchBar";
 import pStyle from "./reusableStyles/PlanCard.module.css";
 
 function PlanCard(props) {
-  const { cardName, onDragOver, onDrop } = props;
-  // const handleDragOver = (e) => {
-  //   console.log("hey", e);
-  //   e.preventDefault();
-  //   console.log("ondragover: ", e)
+  const { cardDetail, dropItem } = props;
+  const dragOver = (e) => {
+    e.preventDefault();
 
-  // }
+    console.log("hey", e);
+    console.log("ondragover: ", e);
+  };
 
-  // const handleDrop = (e) => {
-  //   e.preventDefault();
-  //   const data = e.dataTransfer.getData("id");
-  //   console.log("drop: " , data);
-  // }
+  const drop = (e) => {
+    const data = e.dataTransfer.getData("id");
+    console.log("drop: ", data, e);
+    dropItem();
+  };
 
   return (
-    <div className={pStyle.cardContainer}>
-      <div className={pStyle.cardTitle}>{cardName}</div>
-      <div
-        className={pStyle.courseContainer}
-        id={cardName}
-        onDragOver={onDragOver}
-        onDrop={onDrop}
-      />
+    <div
+      className={pStyle.cardContainer}
+      onDragOver={dragOver}
+      onDrop={drop}
+      id={cardDetail.plan_term_id}
+    >
+      <div className={pStyle.cardTitle}>{cardDetail.plan_term_id}</div>
+      <div className={pStyle.courseContainer}>
+        {cardDetail.courses?.map((course) => (
+          <CourseSearchBar courseDetail={course} />
+        ))}
+      </div>
     </div>
   );
 }

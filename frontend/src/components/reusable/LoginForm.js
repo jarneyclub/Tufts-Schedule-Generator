@@ -24,7 +24,7 @@ const validationSchema = Yup.object({
 });
 
 function LoginForm(props) {
-  const { handleSubmit, testVal } = props;
+  const { onSubmit } = props;
 
   return (
     <Formik
@@ -34,20 +34,40 @@ function LoginForm(props) {
       }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        // setTimeout(() => {
-        //   alert(JSON.stringify(values, null, 2));
-        //   setSubmitting(false);
-        // }, 400);
+        console.log("hey this clicked");
         console.log("values: ", values);
-        handleSubmit(values);
+        onSubmit(values);
       }}
     >
-      <Form className={fStyle.formContainer}>
-        <MyInputField placeholder="Email Address" name="userid" type="email" />
-        <MyInputField placeholder="Password" name="password" type="password" />
+      {(props) => {
+        const {
+          values: { email, password },
+          errors,
+          touched,
+          handleSubmit,
+          handleChange,
+          isValid,
+          setFieldTouched,
+        } = props;
+        return (
+          <Form className={fStyle.formContainer} onSubmit={handleSubmit}>
+            <MyInputField
+              placeholder="Email Address"
+              name="userid"
+              type="email"
+              value={email}
+            />
+            <MyInputField
+              placeholder="Password"
+              name="password"
+              type="password"
+              value={password}
+            />
 
-        <Button className={fStyle.button}>login</Button>
-      </Form>
+            <Button className={fStyle.button}>login</Button>
+          </Form>
+        );
+      }}
     </Formik>
   );
 }

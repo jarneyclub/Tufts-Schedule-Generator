@@ -1,9 +1,12 @@
-.DropdownContainer {
+.formContainer {
+  justify-content: center;
   width: 90%;
+}
+
+.DropdownContainer {
   display: flex;
 
   flex-direction: column;
-  /* padding: 10px; */
 }
 
 select {

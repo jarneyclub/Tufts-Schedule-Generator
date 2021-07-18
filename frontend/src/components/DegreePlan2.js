@@ -181,7 +181,12 @@ const courses = [
 function DegreePlan2(props) {
   const { shrink } = props;
   const [degreeReqTitle, setDegreeReqTitle] = useState("PLACEHOLDER"); // sets the title of degree requirement
-  const [semesterPlanOptions, setSemesterPlanOptions] = useState([1, 2, 3, 4]); // sets the array of options for semester plans
+  const [semesterPlanOptions, setSemesterPlanOptions] = useState([
+    "Plan #1",
+    2,
+    3,
+    4,
+  ]); // sets the array of options for semester plans
   const [semesterPlanTitle, setSemesterPlanTitle] = useState(
     "4 Year Plan Placeholder"
   ); // sets the title of the degree plan
@@ -189,15 +194,48 @@ function DegreePlan2(props) {
 
   /*  Stores the card options. Should be updated by API in UseEffect  */
   const [cardOptions, setCardOptions] = useState([
-    "FALL 2021",
-    "SPRING 2022",
-    "FALL 2022",
-    "SPRING 2023",
-    "FALL 2023",
-    "SPRING 2024",
-    "FALL 2024",
-    "SPRING 2025",
+    {
+      plan_term_id: "FALL 2021",
+      term: 2215,
+      courses: [],
+    },
+    {
+      plan_term_id: "SPRING 2022",
+      term: 2215,
+      courses: [],
+    },
+    {
+      plan_term_id: "FALL 2022",
+      term: 2215,
+      courses: [],
+    },
+    {
+      plan_term_id: "SPRING 2023",
+      term: 2215,
+      courses: [],
+    },
+    {
+      plan_term_id: "FALL 2023",
+      term: 2215,
+      courses: [],
+    },
+    {
+      plan_term_id: "SPRING 2024",
+      term: 2215,
+      courses: [],
+    },
+    {
+      plan_term_id: "FALL 2024",
+      term: 2215,
+      courses: [],
+    },
+    {
+      plan_term_id: "SPRING 2025",
+      term: 2215,
+      courses: [],
+    },
   ]);
+
   /* Popups */
   const [addSemesterPopup, setAddSemesterPopup] = useState(false);
   const [removeSemesterPopup, setRemoveSemesterPopup] = useState(false);
@@ -243,27 +281,20 @@ function DegreePlan2(props) {
     }
     fetchData();
 
-    let unmounted = false;
+    // let unmounted = false;
 
-    return () => {
-      unmounted = true;
-    };
+    // return () => {
+    //   unmounted = true;
+    // };
   }, [courseSearchValue]);
 
   const handleDragStart = (e) => {
     e.dataTransfer.setData("id", e.target.id);
     console.log(e);
   };
-  const handleDragOver = (e) => {
-    console.log("hey", e);
-    e.preventDefault();
-    console.log("ondragover: ", e);
-  };
 
-  const handleDrop = (e) => {
-    e.preventDefault();
-    const data = e.dataTransfer.getData("id");
-    console.log("drop: ", data);
+  const dropItem = (courseDetail) => {
+    console.log("dropItem ", courseDetail);
   };
 
   return (
@@ -290,17 +321,6 @@ function DegreePlan2(props) {
                         3. Degree Req Container 
                     */}
           <div className={dp2Style.leftContainer}>
-            {/* Semester Plan Selector */}
-            <div className={dp2Style.planSelectorContainer}>
-              <Dropdown
-                options={semesterPlanOptions}
-                selectedOption={selectedSemester}
-                onOptionChange={handleSemesterChange}
-                labelId="semester_plan"
-                labelName="Semester Plan"
-              />
-            </div>
-
             {/* SEARCH CONTAINER for Courses */}
             <div className={dp2Style.existListWrapper}>
               <TextField
@@ -354,19 +374,24 @@ function DegreePlan2(props) {
             <div className={dp2Style.semesterPlanTitleContainer}>
               <div />
               <div className={dp2Style.semesterPlanTitle}>
-                {semesterPlanTitle}
+                <Dropdown
+                  options={semesterPlanOptions}
+                  selectedOption={selectedSemester}
+                  onOptionChange={handleSemesterChange}
+                  customStyle={{ fontSize: "20px", color: "#ffffff" }}
+                />
               </div>
               <div className={dp2Style.editSemesterButtonContainer}>
                 <IconButton
                   className={dp2Style.editSemesterButton}
-                  onClick={() => setAddSemesterPopup((prev) => true)}
+                  onClick={() => setAddSemesterPopup(true)}
                 >
                   <AddBoxIcon fontSize="medium" />
                 </IconButton>
                 &nbsp;
                 <IconButton
                   className={dp2Style.editSemesterButton}
-                  onClick={() => setRemoveSemesterPopup((prev) => true)}
+                  onClick={() => setRemoveSemesterPopup(true)}
                 >
                   <IndeterminateCheckBoxIcon fontSize="medium" />
                 </IconButton>
@@ -376,12 +401,7 @@ function DegreePlan2(props) {
             {/* PlanCards Container */}
             <div className={dp2Style.planCardsContainer}>
               {cardOptions.map((card) => (
-                <PlanCard
-                  cardName={card}
-                  key={card}
-                  onDragOver={handleDragOver}
-                  onDrop={handleDrop}
-                />
+                <PlanCard cardDetail={card} key={card} dropItem={dropItem} />
               ))}
             </div>
           </div>
