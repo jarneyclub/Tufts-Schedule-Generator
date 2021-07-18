@@ -8,7 +8,7 @@
  *
  */
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import CancelIcon from "@material-ui/icons/Cancel";
 import { IconButton, Button, CircularProgress } from "@material-ui/core";
 import LoginForm from "./LoginForm";
@@ -18,7 +18,8 @@ import jStyle from "./reusableStyles/JarUserLogin.module.css";
 
 /* scripts */
 
-function JarUserLogin(props) {
+// function JarUserLogin(props) {
+const JarUserLogin = React.forwardRef((props, ref) => {
   const { onClose, onSwitch, loginState, signupState } = props;
   const [loginValues, setLoginValues] = useState({});
   const [loadMessage, setLoadMessage] = useState(false);
@@ -35,6 +36,7 @@ function JarUserLogin(props) {
   const handleSubmit = async (values) => {
     console.log("handleSubmit clicked ", values);
     setLoadMessage(true);
+    console.log("hey this is called");
     if (loginState) {
       await fetch("https://jarney.club/api/auth/login", values)
         .then((response) => response.json())
@@ -85,11 +87,11 @@ function JarUserLogin(props) {
         <div className={jStyle.formContainer}>
           {loginState ? (
             <div>
-              <LoginForm handleSubmit={handleSubmit} />
+              <LoginForm onSubmit={handleSubmit} />
             </div>
           ) : (
             <div>
-              <SignupForm handleSubmit={handleSubmit} />
+              <SignupForm onSubmit={handleSubmit} />
             </div>
           )}
         </div>
@@ -102,6 +104,6 @@ function JarUserLogin(props) {
       </Button>
     </div>
   );
-}
+});
 
 export default JarUserLogin;

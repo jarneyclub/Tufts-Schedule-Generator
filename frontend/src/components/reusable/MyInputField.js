@@ -16,12 +16,14 @@ const styles = {
   helperText: "#5a32bf",
 };
 
-const MyInputField = ({ placeholder, type, ...props }) => {
+const MyInputField = ({ value, handleChange, placeholder, type, ...props }) => {
   const [field, meta] = useField(props);
   const errorText = meta.touched && meta.error ? meta.error : "";
 
   return (
     <TextField
+      value={value}
+      onChange={handleChange}
       label={placeholder}
       placeholder={placeholder}
       type={type}

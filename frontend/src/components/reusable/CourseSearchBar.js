@@ -7,6 +7,14 @@
  *    - part name
  *    - part Description (note)
  *    - courses (DegreeReqCourse component)
+ * 
+ *  course object includes : 
+ *    {
+          "course_num": "string",
+          "course_title": "string",
+          "units_esti": "string",
+          "gen_course_id": "string"
+        }
  *
  */
 import { useState } from "react";
@@ -21,19 +29,19 @@ import {
 import cStyle from "./reusableStyles/CourseSearchBar.module.css";
 
 function CourseSearchBar(props) {
-  const { courseDetail, onDragStart } = props;
+  const { courseDetail } = props;
   const { course_num, course_title, units_esti } = courseDetail;
 
-  // const handleDragStart = (e) => {
-  //   e.dataTransfer.setData("id", e.target.id)
-  //   console.log(e);
-  // }
+  const handleDragStart = (e) => {
+    e.dataTransfer.setData("id", e.target.id);
+    console.log(e);
+  };
 
   return (
     <div
       className={cStyle.barContainer}
       draggable
-      onDragStart={onDragStart}
+      onDragStart={handleDragStart}
       id={course_num.concat(course_title)}
     >
       【{course_num}】<br />

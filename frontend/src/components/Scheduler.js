@@ -27,7 +27,7 @@ import sStyle from "./style/Scheduler.module.css";
 import Dropdown from "./reusable/Dropdown";
 import dStyle from "./reusable/reusableStyles/Dropdown.module.css";
 import Calendar from "./reusable/Calendar";
-
+import CourseSearchBar from "./reusable/CourseSearchBar";
 const timePrefDefault = {
   Monday: [],
   Tuesday: [],
@@ -44,7 +44,7 @@ function Scheduler(props) {
 
   /* filter Dropdown */
   const [filterOptions, setFilterOption] = useState([
-    "Selected",
+    "",
     "SOE Computing",
     "SOE Engineering",
     "SOE HASS",
@@ -58,9 +58,9 @@ function Scheduler(props) {
 
   const [scheduleTitle, setScheduleTitle] = useState("Schedule#1  Placeholder");
   const [degreeReqTab, setDegreeReqTab] = useState(1);
-  const [searchCourseResult, setSearchCourseResult] = useState([]);
-  const [courseSearchValue, setCourseSearchValue] = useState("");
-
+  const [searchCourseResult, setSearchCourseResult] = useState([]); // the list of courses returned by GET request
+  const [courseSearchValue, setCourseSearchValue] = useState(""); // the course search value that will be given to GET request ^^
+  const [loadMessage, setLoadMessage] = useState(true);
   const [timePrefState, setTimePrefState] = useState(false); // state of time pref overlay
   const [timePref, setTimePref] = useState(timePrefDefault); // time pref json that will be passed into post req
 
@@ -123,14 +123,17 @@ function Scheduler(props) {
 
   useEffect(() => {
     async function fetchData() {
+      setLoadMessage(true);
       await fetch(
-        "https://jarney.club/api/courses/general?cnum=".concat(
-          courseSearchValue
-        )
+        "https://jarney.club/api/courses/general?cnum="
+          .concat(courseSearchValue)
+          .concat("&attr=")
+          .concat(selectedFilter)
       )
         .then((response) => response.json())
         .then(
           (result) => {
+            setLoadMessage(false);
             setSearchCourseResult(result.courses);
           },
           (error) => {
@@ -147,7 +150,7 @@ function Scheduler(props) {
       <div className={sStyle.horizontalWrapper}>
         <div className={sStyle.leftColumnWrapper}>
           {/* Semester Plan Selector */}
-          <div className={sStyle.scheduleSelectorContainer}>
+          {/* <div className={sStyle.scheduleSelectorContainer}>
             <Dropdown
               options={scheduleOptions}
               selectedOption={selectedSchedule}
@@ -155,7 +158,7 @@ function Scheduler(props) {
               labelId="schedule_plan"
               labelName="Schedule Plan"
             />
-          </div>
+          </div> */}
 
           {/* CourseContainer 
                         Contains: 
@@ -193,10 +196,17 @@ function Scheduler(props) {
                   labelName="Filter"
                 />
               </div>
-              {/* <Button className={sStyle.searchButton}>search</Button> */}
             </div>
 
-            <div className={sStyle.courseListContainer}>Placeholder</div>
+            <div className={sStyle.courseListContainer}>
+              {loadMessage && <div>Loading...</div>}
+              {searchCourseResult?.map((course) => (
+                <CourseSearchBar
+                  courseDetail={course}
+                  key={course.course_num.concat(course.course_title)}
+                />
+              ))}
+            </div>
 
             <div className={sStyle.preferenceContainer}>
               <FormControl className={sStyle.leftCheckboxContainer}>
@@ -289,7 +299,13 @@ function Scheduler(props) {
 
         <div className={sStyle.rightColumnWrapper}>
           <div className={sStyle.scheduleTitleContainer}>
-            {scheduleTitle}
+            <Dropdown
+              options={scheduleOptions}
+              selectedOption={selectedSchedule}
+              onOptionChange={handleScheduleChange}
+              customStyle={{}}
+            />
+
             <br />
           </div>
 
