@@ -16,7 +16,7 @@ const swaggerDefinition = {
   },
   servers: [
     {
-        url: "http://ec2-3-87-205-234.compute-1.amazonaws.com:3000/api",
+        url: "https://jarney.club/api",
         description: "Production server"
     }
   ]
