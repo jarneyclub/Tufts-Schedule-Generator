@@ -1,4 +1,5 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const routes = require('./routes/index');
 const swaggerJSDoc = require('swagger-jsdoc');
@@ -46,7 +47,7 @@ app.use(function (req, res, next) {
 
 app.use(express.json());
 app.use(passport.initialize());
-
+app.use(cookieParser());
 // handle api routes
 app.use('/api', routes);
 

@@ -25,8 +25,24 @@ exports.login = async (req, res) => {
         resHandler.respondWithCustomError("104", "403", "Registration Error", "Email is not registered. Please register first.", res);
     
     let token = jwt.sign({ userid: userid, password: password}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
-    res.json({ token });
+    res.cookie("access_token", token, {
+        // httpOnly: true
+    }).status(200).json({"data": {"message": "Login successful!"}});
 };
+
+/**
+ *
+ * 
+ * @param {*} req
+ * @param {*} res
+ */
+exports.SignTokenAndAddToCookie = async (req, res, next) => {
+    let token = jwt.sign({ userid: req.userid, password: req.password}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
+    res.cookie("access_token", token, {
+        // httpOnly: true
+    });
+    next();
+}
 
 /* Janith Kasun */
 exports.authenticateToken = async (req, res, next) => {
