@@ -34,7 +34,7 @@ const validationSchema = Yup.object({
 });
 
 function SignupForm(props) {
-  const { handleSubmit } = props;
+  const { onSubmit } = props;
   return (
     <Formik
       initialValues={{
@@ -51,7 +51,7 @@ function SignupForm(props) {
         //   setSubmitting(false);
         // }, 400);
         console.log("values: ", values);
-        handleSubmit(values);
+        onSubmit(values);
       }}
     >
       <Form className={fStyle.formContainer}>

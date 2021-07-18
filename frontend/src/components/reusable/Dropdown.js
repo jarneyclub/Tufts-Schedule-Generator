@@ -19,8 +19,15 @@ import dStyle from "./reusableStyles/Dropdown.module.css";
 /* scripts */
 
 function Dropdown(props) {
-  const { options, selectedOption, onOptionChange, name, labelName, labelId } =
-    props;
+  const {
+    options,
+    selectedOption,
+    onOptionChange,
+    name,
+    labelName,
+    labelId,
+    customStyle,
+  } = props;
 
   useEffect(() => {
     console.log("Dropdown.js useEffect called");
@@ -33,7 +40,7 @@ function Dropdown(props) {
 
   return (
     // checks if mouse clicked outside of frame
-    <FormControl fullWidth>
+    <FormControl fullWidth className={dStyle.formContainer}>
       <InputLabel htmlFor={labelId}>{labelName}</InputLabel>
       <Select
         value={selectedOption}
@@ -43,7 +50,7 @@ function Dropdown(props) {
         className={dStyle.DropdownContainer}
         labelId={labelId}
         variant="standard"
-        style={{ padding: "0 0" }}
+        style={customStyle}
       >
         {options.map((opt) => (
           <option value={opt} key={opt}>

@@ -65,7 +65,7 @@
   align-items: center;
   justify-content: center;
 
-  border: 1px #5a32bf solid;
+  /* border: 1px #5a32bf solid; */
 
   width: 100%;
   padding: 5px 1vw;
@@ -79,7 +79,7 @@
   flex-direction: column;
   align-items: center;
 
-  border: 1px solid #5a32bf;
+  /* border: 1px solid #5a32bf; */
 
   width: 100%;
   margin-top: 10px;
@@ -132,7 +132,7 @@ input {
   margin-top: 10px;
   margin-bottom: 10px;
 
-  border-top: 1px solid #5a32bf;
+  /* border-top: 1px solid #5a32bf; */
   width: 100%;
   height: 200px;
 
@@ -182,7 +182,7 @@ input {
   flex: 3 0 75%;
 
   border: #5a32bf solid 1px;
-  background-color: #5a32bf;
+  border-radius: 5px;
   margin-bottom: 20px;
 }
 
@@ -191,18 +191,15 @@ input {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  background-color: #5a32bf;
 
-  padding-left: 2vw;
-  padding-right: 2vw;
-
-  margin-top: 10px;
-  margin-bottom: 10px;
+  padding: 10px 2vw;
 }
 
 .semesterPlanTitle {
   font-size: 20px;
   font-weight: bold;
-
+  padding-left: 24px;
   color: #ffffff;
 }
 
@@ -230,7 +227,7 @@ input {
   flex-wrap: wrap;
   justify-content: space-around;
 
-  background-color: #5a32bf;
+  /* background-color: #5a32bf; */
   height: 600px;
 
   overflow: scroll;
