@@ -15,8 +15,7 @@ import {
   FormControlLabel,
   Switch,
   FormControl,
-  InputLabel,
-  FormLabel,
+  CircularProgress,
   FormGroup,
   makeStyles,
 } from "@material-ui/core";
@@ -149,17 +148,6 @@ function Scheduler(props) {
     <div>
       <div className={sStyle.horizontalWrapper}>
         <div className={sStyle.leftColumnWrapper}>
-          {/* Semester Plan Selector */}
-          {/* <div className={sStyle.scheduleSelectorContainer}>
-            <Dropdown
-              options={scheduleOptions}
-              selectedOption={selectedSchedule}
-              onOptionChange={handleScheduleChange}
-              labelId="schedule_plan"
-              labelName="Schedule Plan"
-            />
-          </div> */}
-
           {/* CourseContainer 
                         Contains: 
                         1. searhCourse
@@ -199,13 +187,16 @@ function Scheduler(props) {
             </div>
 
             <div className={sStyle.courseListContainer}>
-              {loadMessage && <div>Loading...</div>}
-              {searchCourseResult?.map((course) => (
-                <CourseSearchBar
-                  courseDetail={course}
-                  key={course.course_num.concat(course.course_title)}
-                />
-              ))}
+              {loadMessage && <CircularProgress />}
+              {!loadMessage &&
+                searchCourseResult?.map((course) => (
+                  <CourseSearchBar
+                    courseDetail={course}
+                    key={course.course_num.concat(course.course_title)}
+                    draggable={false}
+                    origin={"courseList"}
+                  />
+                ))}
             </div>
 
             <div className={sStyle.preferenceContainer}>
@@ -299,14 +290,14 @@ function Scheduler(props) {
 
         <div className={sStyle.rightColumnWrapper}>
           <div className={sStyle.scheduleTitleContainer}>
+            <div />
             <Dropdown
               options={scheduleOptions}
               selectedOption={selectedSchedule}
               onOptionChange={handleScheduleChange}
-              customStyle={{}}
+              customStyle={{ fontSize: "20px" }}
             />
-
-            <br />
+            <div />
           </div>
 
           <div className={sStyle.calendarContainer}>

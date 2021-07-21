@@ -11,19 +11,21 @@ import {
   InputAdornment,
   TextField,
   IconButton,
-  FormControl,
-  InputLabel,
+  CircularProgress,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
 import CancelIcon from "@material-ui/icons/Cancel";
+import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
+import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import dp2Style from "./style/DegreePlan2.module.css";
 import pStyle from "./reusable/reusableStyles/Popup.module.css";
 import Popup from "./reusable/Popup";
 import PlanCard from "./reusable/PlanCard";
 import Dropdown from "./reusable/Dropdown";
 import CourseSearchBar from "./reusable/CourseSearchBar";
+import SnackBarAlert from "./reusable/SnackBarAlert";
 
 /*  ==================== Add PlanCard Popup ==================== */
 function AddSemester(props) {
@@ -235,7 +237,8 @@ function DegreePlan2(props) {
       courses: [],
     },
   ]);
-
+  const [transferCourseDetail, setTransferCourseDetail] = useState({});
+  const [cardOrigin, setCardOrigin] = useState("");
   /* Popups */
   const [addSemesterPopup, setAddSemesterPopup] = useState(false);
   const [removeSemesterPopup, setRemoveSemesterPopup] = useState(false);
@@ -245,6 +248,9 @@ function DegreePlan2(props) {
   );
 
   const [loadMessage, setLoadMessage] = useState(true);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState();
+  const [alertSeverity, setAlertSeverity] = useState();
 
   const handleSemesterChange = (e) => {
     setSelectedSemester(e.target.value);
@@ -258,6 +264,13 @@ function DegreePlan2(props) {
 
   const handleSearchChange = (e) => {
     setCourseSearchValue(e.target.value);
+  };
+  const handleCloseAlert = () => {
+    setShowAlert(false);
+  };
+  const handleTransferCourseDetail = (detail) => {
+    setTransferCourseDetail(detail);
+    console.log("transferCourseDetail: ", transferCourseDetail);
   };
 
   useEffect(() => {
@@ -288,13 +301,71 @@ function DegreePlan2(props) {
     // };
   }, [courseSearchValue]);
 
-  const handleDragStart = (e) => {
-    e.dataTransfer.setData("id", e.target.id);
-    console.log(e);
+  /*
+   *  checkCourseExist()
+   *  purpose: checks if the course is in given courseList
+   *  paramenters: courseList, course
+   */
+  const checkCourseExist = (courseList, course) => {
+    for (let c of courseList) {
+      if (c.gen_course_id === course.gen_course_id) {
+        setAlertMessage("Course has already been Added");
+        setAlertSeverity("error");
+        setShowAlert(true);
+        return false;
+      }
+    }
+
+    return true;
   };
 
-  const dropItem = (courseDetail) => {
-    console.log("dropItem ", courseDetail);
+  /*
+   * dropItem()
+   * purpose: adds course to planCard when course is dropped
+   *
+   */
+  const dropItem = (planTerm, courseDetail) => {
+    /*  Adds course to Card  */
+    setCardOptions((prev) =>
+      prev?.map((card) =>
+        card.plan_term_id === planTerm
+          ? {
+              ...card,
+              courses: checkCourseExist(card.courses, courseDetail)
+                ? [...card.courses, courseDetail]
+                : card.courses,
+            }
+          : card
+      )
+    );
+  };
+
+  /*
+   * handleCardOrigin()
+   * purpose: sets the origin of the courseSearchBar (from which planCard)
+   */
+  const handleCardOrigin = (origin) => {
+    setCardOrigin(origin);
+  };
+
+  /*
+   *  handleRemoveCourse()
+   *  purpose: removes course from planCard
+   *
+   */
+  const handleRemoveCourse = (planTerm, courseDetail) => {
+    setCardOptions((prev) =>
+      prev?.map((card) =>
+        card.plan_term_id === planTerm
+          ? {
+              ...card,
+              courses: card.courses.filter(
+                (course) => course.gen_course_id !== courseDetail.gen_course_id
+              ),
+            }
+          : card
+      )
+    );
   };
 
   return (
@@ -341,15 +412,16 @@ function DegreePlan2(props) {
                 }}
                 className={dp2Style.inputSearch}
               />
-              {/* <Button className={dp2Style.searchButton}>search</Button> */}
 
               <div className={dp2Style.searchListContainer}>
-                {loadMessage && <div>Loading...</div>}
+                {loadMessage && <CircularProgress />}
                 {searchCourseResult?.map((course) => (
                   <CourseSearchBar
                     courseDetail={course}
-                    key={course.course_num.concat(course.course_title)}
-                    onDragStart={handleDragStart}
+                    key={course.gen_course_id}
+                    onTransferCourse={handleTransferCourseDetail}
+                    origin={"courseList"}
+                    draggable={true}
                   />
                 ))}
               </div>
@@ -358,9 +430,13 @@ function DegreePlan2(props) {
             {/* Degree Requirment Container */}
             <div className={dp2Style.degreeReqContainer}>
               <div className={dp2Style.degreeReqTitleContainer}>
-                <div className={dp2Style.degreeReqNextButton}>◄</div>
+                <IconButton>
+                  <ArrowLeftIcon fontSize="large" />
+                </IconButton>
                 <div>{degreeReqTitle}</div>
-                <div className={dp2Style.degreeReqNextButton}>►</div>
+                <IconButton color="action">
+                  <ArrowRightIcon fontSize="large" />
+                </IconButton>
               </div>
               <div className={dp2Style.degreeReqDetailContainer} />
             </div>
@@ -401,7 +477,16 @@ function DegreePlan2(props) {
             {/* PlanCards Container */}
             <div className={dp2Style.planCardsContainer}>
               {cardOptions.map((card) => (
-                <PlanCard cardDetail={card} key={card} dropItem={dropItem} />
+                <PlanCard
+                  cardDetail={card}
+                  key={card.plan_term_id}
+                  dropItem={dropItem}
+                  transferCourseDetail={transferCourseDetail}
+                  onTransferCourse={handleTransferCourseDetail}
+                  onRemoveCourse={handleRemoveCourse}
+                  handleCardOrigin={handleCardOrigin}
+                  cardOrigin={cardOrigin}
+                />
               ))}
             </div>
           </div>
@@ -422,6 +507,14 @@ function DegreePlan2(props) {
             handleRemoveCards={handleRemoveCards}
           />
         </Popup>
+      )}
+      {showAlert && (
+        <SnackBarAlert
+          severity={alertSeverity}
+          onCloseAlert={handleCloseAlert}
+          showAlert={showAlert}
+          message={alertMessage}
+        />
       )}
     </div>
   );

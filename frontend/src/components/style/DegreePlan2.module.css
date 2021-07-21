@@ -147,8 +147,12 @@ input {
 
   width: 100%;
   margin-top: 10px;
-
-  border: 1px #5a32bf solid;
+  box-shadow: 0 4px 8px 0 rgba(90, 50, 191, 0.2),
+    0 6px 20px 0 rgba(90, 50, 191, 0.19);
+  /* background-color: #efebf9; */
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  /* border: 1px #efebf9 solid; */
 }
 
 .degreeReqTitleContainer {
@@ -160,7 +164,10 @@ input {
   padding-left: 1vw;
   padding-right: 1vw;
 
-  background-color: #5a32bf;
+  background-color: #7048d5;
+
+  border-top-left-radius: 11px;
+  border-top-right-radius: 11px;
   color: #ffffff;
 
   height: 25px;
@@ -181,8 +188,10 @@ input {
   flex-direction: column;
   flex: 3 0 75%;
 
-  border: #5a32bf solid 1px;
-  border-radius: 5px;
+  /* border: #5a32bf solid 1px; */
+
+  border-radius: 12px;
+  background-color: #efebf9;
   margin-bottom: 20px;
 }
 
@@ -191,8 +200,9 @@ input {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: #5a32bf;
-
+  background-color: #7048d5;
+  border-top-left-radius: 11px;
+  border-top-right-radius: 11px;
   padding: 10px 2vw;
 }
 
