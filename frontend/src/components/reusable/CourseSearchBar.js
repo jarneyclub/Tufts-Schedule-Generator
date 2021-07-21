@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
 /* * * *  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * DegreeReqPart.js
+ * CourseSearchBar.js
  *  This component is part of the DegreeReqEdit Component
  *  A part includes:
  *    - part name
@@ -29,20 +29,36 @@ import {
 import cStyle from "./reusableStyles/CourseSearchBar.module.css";
 
 function CourseSearchBar(props) {
-  const { courseDetail } = props;
+  const {
+    courseDetail,
+    onTransferCourse,
+    origin,
+    handleCardOrigin,
+    draggable,
+    onDoubleClick,
+  } = props;
   const { course_num, course_title, units_esti } = courseDetail;
 
   const handleDragStart = (e) => {
-    e.dataTransfer.setData("id", e.target.id);
-    console.log(e);
+    onTransferCourse(courseDetail);
+    if (origin !== "courseList") {
+      handleCardOrigin(origin);
+    }
+  };
+
+  const handleDoubleClick = () => {
+    if (origin !== "courseList") {
+      onDoubleClick();
+    }
   };
 
   return (
     <div
       className={cStyle.barContainer}
-      draggable
+      draggable={draggable}
       onDragStart={handleDragStart}
       id={course_num.concat(course_title)}
+      onDoubleClick={handleDoubleClick}
     >
       【{course_num}】<br />
       {course_title}

@@ -32,10 +32,10 @@ function Dropdown(props) {
   let width = fullWidth;
   if (fullWidth) {
   }
-  useEffect(() => {
-    console.log("Dropdown.js useEffect called");
-    console.log("options, selectedOption: ", options, " ", selectedOption);
-  }, []);
+  // useEffect(() => {
+  //   console.log("Dropdown.js useEffect called");
+  //   console.log("options, selectedOption: ", options, " ", selectedOption);
+  // }, []);
 
   const handleChange = (e) => {
     onOptionChange(e);
@@ -43,7 +43,7 @@ function Dropdown(props) {
 
   return (
     // checks if mouse clicked outside of frame
-    <FormControl fullWidth className={dStyle.formContainer}>
+    <FormControl className={dStyle.formContainer}>
       <InputLabel htmlFor={labelId}>{labelName}</InputLabel>
       <Select
         value={selectedOption}

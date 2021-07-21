@@ -28,18 +28,6 @@
 }
 
 /* * 1st * */
-.scheduleSelectorContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  border: 1px #000000 solid;
-
-  width: 100%;
-  padding: 5px 1vw;
-
-  white-space: nowrap;
-  align-items: center;
-}
 
 /* * 2nd * */
 .courseContainer {
@@ -48,7 +36,7 @@
   justify-content: center;
   align-items: center;
 
-  border: #000000 1px solid;
+  /* border: #000000 1px solid; */
   margin-top: 10px;
   width: 100%;
 }
@@ -59,16 +47,11 @@
   flex-direction: column;
   align-items: center;
   width: 80%;
-
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
 .inputSearch {
-  /* border-radius: 5px;
-  border: #000000 solid 1px; */
-  /* min-width: 80%; */
-  /* height: 30px; */
   font-size: 15px;
   padding-right: 0px;
 }
@@ -114,9 +97,11 @@
   flex-direction: column;
   align-items: center;
   height: 150px;
-  border-top: #000000 1px solid;
+  /* border-top: #000000 1px solid; */
   width: 100%;
-
+  /* background-color: #efebf9; */
+  border-bottom-left-radius: 11px;
+  border-bottom-right-radius: 11px;
   overflow-y: scroll;
 }
 
@@ -126,12 +111,17 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: 150px;
-  border-top: #000000 1px solid;
+  height: 170px;
+  border: #5a32bf 1px solid;
+  /* box-shadow: 0 4px 8px 0 rgba(90,50,191, 0.2), 0 6px 20px 0 rgba(90,50,191, 0.19); */
+  /* background-color: #efebf9; */
+
+  border-radius: 12px;
   width: 100%;
 
   padding-left: 1vw;
   padding-right: 1vw;
+  margin: 10px 0;
 }
 
 .leftCheckboxContainer {
@@ -142,16 +132,6 @@
 
   padding-left: 1vw;
   padding-right: 1vw;
-}
-
-.checkboxContainer {
-  display: flex;
-  flex-direction: row;
-  /* justify-content: center; */
-  align-items: center;
-  white-space: nowrap;
-
-  color: #000000;
 }
 
 .rightButtonContainer {
@@ -166,7 +146,7 @@
 
 .timePrefButton {
   border-radius: 12px;
-  border: #000000 solid 1px;
+  border: #5a32bf solid 1px;
 
   box-sizing: border-box;
 
@@ -177,10 +157,10 @@
 
   text-align: center;
   font-size: 13px;
-  color: #000000;
+  color: #5a32bf;
   line-height: 14px;
 
-  background-color: #ffffff;
+  background-color: #efebf9;
 }
 
 .timePrefButton:hover {
@@ -283,7 +263,11 @@
 
 .tabDetailContainer {
   height: 250px;
-  border: #000000 solid 1px;
+  /* border: #000000 solid 1px; */
+  border-bottom-left-radius: 11px;
+  border-bottom-right-radius: 11px;
+  background-color: #efebf9;
+  /* box-shadow: 0 4px 8px 0 rgba(90,50,191, 0.2), 0 6px 20px 0 rgba(90,50,191, 0.19); */
   border-top: none;
   box-sizing: content-box;
 }
@@ -303,6 +287,10 @@
 }
 
 .scheduleTitleContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
   width: 100%;
   text-align: center;
   font-size: 25px;
