@@ -26,6 +26,8 @@ import {
   FormControl,
   InputLabel,
 } from "@material-ui/core";
+import RemoveIcon from "@material-ui/icons/Remove";
+import AddIcon from "@material-ui/icons/Add";
 import cStyle from "./reusableStyles/CourseSearchBar.module.css";
 
 function CourseSearchBar(props) {
@@ -36,6 +38,7 @@ function CourseSearchBar(props) {
     handleCardOrigin,
     draggable,
     onDoubleClick,
+    customStyle,
   } = props;
   const { course_num, course_title, units_esti } = courseDetail;
 
@@ -47,7 +50,9 @@ function CourseSearchBar(props) {
   };
 
   const handleDoubleClick = () => {
-    if (origin !== "courseList") {
+    if (origin === "schedulerCourseList" || origin === "schedulerTab") {
+      onDoubleClick(courseDetail);
+    } else if (origin !== "coursList") {
       onDoubleClick();
     }
   };
@@ -59,9 +64,29 @@ function CourseSearchBar(props) {
       onDragStart={handleDragStart}
       id={course_num.concat(course_title)}
       onDoubleClick={handleDoubleClick}
+      style={customStyle}
     >
-      【{course_num}】<br />
-      {course_title}
+      {(origin === "schedulerCourseList" || origin === "schedulerTab") && (
+        <div>&nbsp;</div>
+      )}
+      <div>
+        【{course_num}】<br />
+        {course_title}
+      </div>
+      {origin === "schedulerCourseList" && (
+        <div className={cStyle.actionButton}>
+          <IconButton onClick={handleDoubleClick}>
+            <AddIcon style={{ fill: "#ffffff" }} />
+          </IconButton>
+        </div>
+      )}
+      {origin === "schedulerTab" && (
+        <div className={cStyle.actionButton}>
+          <IconButton onClick={handleDoubleClick}>
+            <RemoveIcon style={{ fill: "#ffffff" }} />
+          </IconButton>
+        </div>
+      )}
     </div>
   );
 }
