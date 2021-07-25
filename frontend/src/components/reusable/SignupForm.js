@@ -51,7 +51,7 @@ function SignupForm(props) {
         onSubmit(values);
       }}
     >
-      <Form className={fStyle.formContainer} onSubmit={Formik.handleSubmit}>
+      <Form className={fStyle.formContainer}>
         <MyInputField placeholder="First name" name="first_name" />
         <MyInputField placeholder="Last Name" name="last_name" />
 
