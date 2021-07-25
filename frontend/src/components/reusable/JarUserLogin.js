@@ -34,11 +34,17 @@ const JarUserLogin = React.forwardRef((props, ref) => {
   };
 
   const handleSubmit = async (values) => {
-    console.log("handleSubmit clicked ", values);
     setLoadMessage(true);
-    console.log("hey this is called");
+
+    const requestOption = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    };
+    console.log("requestOption clicked ", requestOption);
+
     if (loginState) {
-      await fetch("https://jarney.club/api/auth/login", values)
+      await fetch("https://jarney.club/api/auth/login", requestOption)
         .then((response) => response.json())
         .then(
           (result) => {
@@ -55,11 +61,6 @@ const JarUserLogin = React.forwardRef((props, ref) => {
           }
         );
     } else {
-      const requestOption = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      };
       await fetch("https://jarney.club/api/auth/register", requestOption)
         .then((response) => response.json())
         .then(

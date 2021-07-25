@@ -131,8 +131,8 @@ function Scheduler(props) {
   const handleCloseAlert = () => {
     setShowAlert(false);
   };
-  /* 
-   *  checkCourseAdded() 
+  /*
+   *  checkCourseAdded()
    *  purpose: checks if a course is already in the selected course list
    */
   const checkCourseAdded = (courseID) => {
@@ -144,8 +144,8 @@ function Scheduler(props) {
     return true;
   };
 
-  /* 
-   *  handleDoubleClickCourseList() 
+  /*
+   *  handleDoubleClickCourseList()
    *  purpose: for courseSearchBar, adds course to selectedCourseList
    */
   const handleDoubleClickCourseList = (courseDetail) => {
@@ -157,8 +157,8 @@ function Scheduler(props) {
       setShowAlert(true);
     }
   };
-  /* 
-   *  handleDoubleClickSelected() 
+  /*
+   *  handleDoubleClickSelected()
    *  purpose: for courseSearchBar, removes course from selectedCourseList
    */
   const handleDoubleClickSelected = (courseDetail) => {
