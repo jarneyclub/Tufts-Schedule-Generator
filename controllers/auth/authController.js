@@ -7,8 +7,11 @@ exports.authenticateLocal = async (req, res, next) => {
     passport.authenticate('local', function (err, user, info) {
         if (err)
             return resHandler.respondWithCustomError("101", "400", "Login Error", err.message, res);
-        if (!user) 
+        if (!user) {
+            console.error("(authenticateLocal) user: ", user);
+            console.error("(authenticateLocal) info: ", info);
             return resHandler.respondWithCustomError("101", "400", "Login Error", "Authentication failed", res);
+        }
         else 
             next();
     })(req, res, next);
@@ -25,8 +28,24 @@ exports.login = async (req, res) => {
         resHandler.respondWithCustomError("104", "403", "Registration Error", "Email is not registered. Please register first.", res);
     
     let token = jwt.sign({ userid: userid, password: password}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
-    res.json({ token });
+    // res.json({"token": token});
+    res.cookie("access_token", token, {
+    }).status(200).json({"data": {"first_name": result.first_name, "last_name": result.last_name, "userid": result.userid}});
 };
+
+/**
+ *
+ * 
+ * @param {*} req
+ * @param {*} res
+ */
+exports.SignTokenAndAddToCookie = async (req, res, next) => {
+    let token = jwt.sign({ userid: req.userid, password: req.password}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
+    res.cookie("access_token", token, {
+        // httpOnly: true
+    });
+    next();
+}
 
 /* Janith Kasun */
 exports.authenticateToken = async (req, res, next) => {

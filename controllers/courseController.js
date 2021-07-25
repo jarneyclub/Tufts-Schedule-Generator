@@ -4,6 +4,12 @@ const mongoose = require('mongoose');
 exports.getGeneralCourses = async (req, res) => {
     var start = Date.now(); // begin timing API endpoint
     let reqCourseNum = req.query.cnum.toUpperCase(); // get query string
+    let firstDigit = reqCourseNum.match(/\d/); // will give you the first digit in the string
+    let indexFirstDigit = reqCourseNum.indexOf(firstDigit);
+    // let numberOfChrsAfterIncludingFirstDig = reqCourseNum.length - indexFirstDigit;
+    // if (reqCourseNum[indexFirstDigit - 1] !== "-")
+        // reqCourseNum = reqCourseNum.substring(0, indexFirstDigit) + "-" + reqCourseNum.substring(indexFirstDigit, reqCourseNum.length);
+    // console.log("(getGeneralCourses) reqCourseNum: ", reqCourseNum)
     let dbCoursesGeneral = mongoose.connection.collection("courses_general"); // get MongoDB collection
     // get cursor of courses from database with queried course number
     let cursor = dbCoursesGeneral.find({"course_num": {"$regex": '^' + reqCourseNum}});
@@ -12,9 +18,10 @@ exports.getGeneralCourses = async (req, res) => {
     await cursor.forEach((doc) => {
         // parse database document
         let docToInsert = {
-            "course_num"   : doc["course_num"],
-            "course_title" : doc["course_title"],
-            "units_esti"   : doc["units_esti"]
+            "gen_course_id" : doc["_id"].valueOf(),
+            "course_num"    : doc["course_num"],
+            "course_title"  : doc["course_title"],
+            "units_esti"    : doc["units_esti"]
         };
         documents.push(docToInsert);
     });
@@ -84,6 +91,34 @@ exports.getTermCourses = async (req, res) => {
     // send response
     let response = {
         courses: documents,
+        time_taken: timeTakenString
+    };
+    res.json(response);
+}
+
+exports.getAttributes = async (req, res) => {
+    var start = Date.now(); // begin timing API endpoint
+    let attributesCol = mongoose.connection.collection("attributes"); // get MongoDB collection
+    // get cursor of courses from database with queried course number
+    let cursor = attributesCol.find();
+    // convert cursor to list
+    let documents = [];
+    documents.push({
+        name: ""
+    });
+    await cursor.forEach((doc) => {
+        // parse database document
+        let docToInsert = {
+            "name" : doc["text"]
+        };
+        documents.push(docToInsert);
+    });
+    var end = Date.now(); // End timing API endpoint
+    var difference = end - start;
+    let timeTakenString = difference.toString() + "ms";
+    // send response
+    let response = {
+        attributes: documents,
         time_taken: timeTakenString
     };
     res.json(response);
