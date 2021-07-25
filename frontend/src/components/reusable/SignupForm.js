@@ -10,7 +10,7 @@
  */
 
 import { useState, useEffect } from "react";
-import { useField, Formik, Form } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { TextField, Button } from "@material-ui/core";
 import MyInputField from "./MyInputField";
@@ -45,16 +45,13 @@ function SignupForm(props) {
         password_confirmation: "",
       }}
       validationSchema={validationSchema}
-      onSubmit={(values, { setSubmitting }) => {
-        // setTimeout(() => {
-        //   alert(JSON.stringify(values, null, 2));
-        //   setSubmitting(false);
-        // }, 400);
+      onSubmit={(values) => {
+        console.log("hey submitted");
         console.log("values: ", values);
         onSubmit(values);
       }}
     >
-      <Form className={fStyle.formContainer}>
+      <Form className={fStyle.formContainer} onSubmit={Formik.handleSubmit}>
         <MyInputField placeholder="First name" name="first_name" />
         <MyInputField placeholder="Last Name" name="last_name" />
 
@@ -66,7 +63,9 @@ function SignupForm(props) {
           type="password"
         />
 
-        <Button className={fStyle.button}>register</Button>
+        <Button type="submit" className={fStyle.button}>
+          register
+        </Button>
       </Form>
     </Formik>
   );

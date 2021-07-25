@@ -53,7 +53,10 @@ input {
   flex-direction: column;
   align-items: center;
 
-  border: 1px solid #5a32bf;
+  /* border: 1px solid #5a32bf; */
+  border-radius: 12px;
+  box-shadow: 0 6px 20px 0 rgba(90, 50, 191, 0.19);
+
   box-sizing: border-box;
   margin-top: 10px;
   padding-bottom: 10px;
@@ -74,13 +77,16 @@ input {
   padding-right: 2vw;
   text-align: center;
   font-size: 13px;
-  color: #ffffff;
+  color: #5a32bf;
+  font-weight: 900;
 
-  background-color: #5a32bf;
+  background-color: #efebf9;
 }
 
 .searchButton:hover {
   border: #fc4e4e solid 1px;
+  color: #ffffff;
+
   background-color: #fc4e4e;
 }
 
@@ -103,7 +109,11 @@ input {
 .myListWrapper {
   display: flex;
   flex-direction: column;
-  border: 1px solid #5a32bf;
+  /* border: 1px solid #5a32bf; */
+  box-shadow: 0 4px 8px 0 rgba(90, 50, 191, 0.2),
+    0 6px 20px 0 rgba(90, 50, 191, 0.19);
+  border-radius: 12px;
+
   box-sizing: border-box;
   margin-top: 10px;
   align-items: center;
@@ -138,9 +148,12 @@ input {
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-shadow: 0 4px 8px 0 rgba(90, 50, 191, 0.2),
+    0 6px 20px 0 rgba(90, 50, 191, 0.19);
+  /* border: 1px solid #5a32bf; */
+  border-radius: 12px;
 
-  border: 1px solid #5a32bf;
-  box-sizing: border-box;
+  box-sizing: content-box;
   margin-top: 1vh;
 
   padding-bottom: 10px;
@@ -150,6 +163,11 @@ input {
   text-align: center;
   color: #ffffff;
   background-color: #7048d5;
+  /* border: 1px solid #5a32bf; */
+
+  border-top-left-radius: 11px;
+  border-top-right-radius: 11px;
+
   font-size: 25px;
 
   padding-top: 1vh;

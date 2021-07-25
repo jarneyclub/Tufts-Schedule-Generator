@@ -15,8 +15,7 @@ import {
   FormControlLabel,
   Switch,
   FormControl,
-  InputLabel,
-  FormLabel,
+  CircularProgress,
   FormGroup,
   makeStyles,
 } from "@material-ui/core";
@@ -28,6 +27,8 @@ import Dropdown from "./reusable/Dropdown";
 import dStyle from "./reusable/reusableStyles/Dropdown.module.css";
 import Calendar from "./reusable/Calendar";
 import CourseSearchBar from "./reusable/CourseSearchBar";
+import SnackBarAlert from "./reusable/SnackBarAlert";
+
 const timePrefDefault = {
   Monday: [],
   Tuesday: [],
@@ -55,14 +56,20 @@ function Scheduler(props) {
 
   const [waitlist, setWaitlist] = useState(true);
   const [closed, setClosed] = useState(true);
+  const [selectedCourses, setSelectedCourses] = useState(
+    []
+  ); /*  The courses selected to generate schedule  */
 
-  const [scheduleTitle, setScheduleTitle] = useState("Schedule#1  Placeholder");
   const [degreeReqTab, setDegreeReqTab] = useState(1);
   const [searchCourseResult, setSearchCourseResult] = useState([]); // the list of courses returned by GET request
   const [courseSearchValue, setCourseSearchValue] = useState(""); // the course search value that will be given to GET request ^^
   const [loadMessage, setLoadMessage] = useState(true);
   const [timePrefState, setTimePrefState] = useState(false); // state of time pref overlay
   const [timePref, setTimePref] = useState(timePrefDefault); // time pref json that will be passed into post req
+
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState();
+  const [alertSeverity, setAlertSeverity] = useState();
 
   /*  Control for schedule plan dropdown change  */
   const handleScheduleChange = (e) => {
@@ -121,6 +128,47 @@ function Scheduler(props) {
   // })
   // const classes = useStyles();
 
+  const handleCloseAlert = () => {
+    setShowAlert(false);
+  };
+  /* 
+   *  checkCourseAdded() 
+   *  purpose: checks if a course is already in the selected course list
+   */
+  const checkCourseAdded = (courseID) => {
+    for (let course of selectedCourses) {
+      if (course.gen_course_id === courseID) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  /* 
+   *  handleDoubleClickCourseList() 
+   *  purpose: for courseSearchBar, adds course to selectedCourseList
+   */
+  const handleDoubleClickCourseList = (courseDetail) => {
+    if (checkCourseAdded(courseDetail.gen_course_id)) {
+      setSelectedCourses((prev) => [...prev, courseDetail]);
+    } else {
+      setAlertMessage("Course was already added!");
+      setAlertSeverity("error");
+      setShowAlert(true);
+    }
+  };
+  /* 
+   *  handleDoubleClickSelected() 
+   *  purpose: for courseSearchBar, removes course from selectedCourseList
+   */
+  const handleDoubleClickSelected = (courseDetail) => {
+    setSelectedCourses((prev) =>
+      prev.filter(
+        (course) => course.gen_course_id !== courseDetail.gen_course_id
+      )
+    );
+  };
+
   useEffect(() => {
     async function fetchData() {
       setLoadMessage(true);
@@ -149,17 +197,6 @@ function Scheduler(props) {
     <div>
       <div className={sStyle.horizontalWrapper}>
         <div className={sStyle.leftColumnWrapper}>
-          {/* Semester Plan Selector */}
-          {/* <div className={sStyle.scheduleSelectorContainer}>
-            <Dropdown
-              options={scheduleOptions}
-              selectedOption={selectedSchedule}
-              onOptionChange={handleScheduleChange}
-              labelId="schedule_plan"
-              labelName="Schedule Plan"
-            />
-          </div> */}
-
           {/* CourseContainer 
                         Contains: 
                         1. searhCourse
@@ -199,13 +236,21 @@ function Scheduler(props) {
             </div>
 
             <div className={sStyle.courseListContainer}>
-              {loadMessage && <div>Loading...</div>}
-              {searchCourseResult?.map((course) => (
-                <CourseSearchBar
-                  courseDetail={course}
-                  key={course.course_num.concat(course.course_title)}
-                />
-              ))}
+              {loadMessage && <CircularProgress />}
+              {!loadMessage &&
+                searchCourseResult?.map((course) => (
+                  <CourseSearchBar
+                    courseDetail={course}
+                    key={course.course_num.concat(course.course_title)}
+                    draggable={false}
+                    onDoubleClick={handleDoubleClickCourseList}
+                    origin={"schedulerCourseList"}
+                    customStyle={{
+                      border: "none",
+                      justifyContent: "space-between",
+                    }}
+                  />
+                ))}
             </div>
 
             <div className={sStyle.preferenceContainer}>
@@ -293,20 +338,35 @@ function Scheduler(props) {
               </div>
             </div>
 
-            <div className={sStyle.tabDetailContainer} />
+            <div className={sStyle.tabDetailContainer}>
+              {degreeReqTab === 1 &&
+                selectedCourses?.map((course) => (
+                  <CourseSearchBar
+                    courseDetail={course}
+                    key={course.course_num.concat(course.course_title)}
+                    draggable={false}
+                    onDoubleClick={handleDoubleClickSelected}
+                    origin={"schedulerTab"}
+                    customStyle={{
+                      border: "none",
+                      justifyContent: "space-between",
+                    }}
+                  />
+                ))}
+            </div>
           </div>
         </div>
 
         <div className={sStyle.rightColumnWrapper}>
           <div className={sStyle.scheduleTitleContainer}>
+            <div />
             <Dropdown
               options={scheduleOptions}
               selectedOption={selectedSchedule}
               onOptionChange={handleScheduleChange}
-              customStyle={{}}
+              customStyle={{ fontSize: "20px" }}
             />
-
-            <br />
+            <div />
           </div>
 
           <div className={sStyle.calendarContainer}>
@@ -344,6 +404,14 @@ function Scheduler(props) {
             />
           </div>
         </div>
+      )}
+      {showAlert && (
+        <SnackBarAlert
+          severity={alertSeverity}
+          onCloseAlert={handleCloseAlert}
+          showAlert={showAlert}
+          message={alertMessage}
+        />
       )}
     </div>
   );

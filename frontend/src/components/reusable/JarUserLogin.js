@@ -47,6 +47,10 @@ const JarUserLogin = React.forwardRef((props, ref) => {
             onClose();
           },
           (error) => {
+            setLoadMessage(false);
+            onClose();
+
+            // add an error message popup of some sort
             console.log("error: ", error);
           }
         );
@@ -66,6 +70,10 @@ const JarUserLogin = React.forwardRef((props, ref) => {
           },
           (error) => {
             console.log("error: ", error);
+            setLoadMessage(false);
+            onClose();
+
+            // add an error message popup of some sort
           }
         );
     }
@@ -96,12 +104,13 @@ const JarUserLogin = React.forwardRef((props, ref) => {
           )}
         </div>
       )}
-
-      <Button onClick={handleSwitch} className={jStyle.linkButton}>
-        {loginState
-          ? "--- Create my JAR Account ---"
-          : "--- Log in to my JAR Account---"}
-      </Button>
+      {!loadMessage && (
+        <Button onClick={handleSwitch} className={jStyle.linkButton}>
+          {loginState
+            ? "--- Create my JAR Account ---"
+            : "--- Log in to my JAR Account---"}
+        </Button>
+      )}
     </div>
   );
 });
