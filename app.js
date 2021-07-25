@@ -47,7 +47,7 @@ app.use(function (req, res, next) {
 
 app.use(express.json());
 app.use(passport.initialize());
-app.use(cookieParser());
+// app.use(cookieParser());
 // handle api routes
 app.use('/api', routes);
 
