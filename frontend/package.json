@@ -1,7 +1,7 @@
 {
   "name": "frontend",
   "version": "0.1.0",
-  "homepage": "https://jarney.club",
+  "homepage": ".",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.4",
