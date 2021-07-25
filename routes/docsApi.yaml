@@ -91,15 +91,15 @@ paths:
                   data:
                     type: object
                     properties:
-                      result:
-                        type: boolean
-                        description: login result (true or false)
-                      message:
+                      first_name:
                         type: string
-                        description: login result message
-                      token: 
+                        description: user first name
+                      last_name:
                         type: string
-                        description: token (Authorization)
+                        description: user last name
+                      userid:
+                        type: string
+                        description: user email
   /auth/userinfo:
     post:
       tags:
@@ -183,6 +183,27 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/CourseTerm"
+  /courses/attributes:
+    get:
+      tags:
+        - Courses
+      summary: Get list of current term's course attributes. The first attribute in the list is an empty string.
+      responses:
+        200:
+          description: List of attributes offered this term
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  attributes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: Graduate Teaching Assistantship
   ####################
   #                  #
   #    DEGREE PLAN   #
@@ -655,29 +676,6 @@ paths:
             type: string
   ####################
   #                  #
-  #       MISC       #
-  #                  #
-  ####################
-  /attributes:
-    get:
-      tags:
-        - Misc
-      summary: Get list of current term's offered attributes
-      responses:
-        200:
-          description: List of attributes offered this term
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  attributes:
-                    type: array
-                    items:
-                      type: string
-                      example: "SoE-Engineering"
-  ####################
-  #                  #
   #       OLD        #
   #                  #
   ####################
@@ -815,6 +813,9 @@ components:
     CourseGeneral:
       type: object
       properties:
+        gen_course_id:
+          type: string
+          description: course number
         course_num:
           type: string
           description: course number

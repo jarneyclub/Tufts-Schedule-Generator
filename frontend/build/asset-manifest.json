@@ -17,12 +17,14 @@
     "static/media/Icon_Scheduler.81286442.png": "/static/media/Icon_Scheduler.81286442.png",
     "static/media/JARney.ea751889.png": "/static/media/JARney.ea751889.png",
     "static/media/JARney_Img.de7350f0.png": "/static/media/JARney_Img.de7350f0.png"
+
   },
   "entrypoints": [
-    "static/js/runtime-main.8233b8b5.js",
+    "static/js/runtime-main.3b001913.js",
     "static/css/2.081f420c.chunk.css",
     "static/js/2.d3e94de9.chunk.js",
     "static/css/main.9527f030.chunk.css",
     "static/js/main.084c2f6c.chunk.js"
+
   ]
 }

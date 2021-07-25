@@ -1,4 +1,5 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const routes = require('./routes/index');
 const swaggerJSDoc = require('swagger-jsdoc');
@@ -16,7 +17,7 @@ const swaggerDefinition = {
   },
   servers: [
     {
-        url: "http://ec2-3-87-205-234.compute-1.amazonaws.com:3000/api",
+        url: "https://jarney.club/api",
         description: "Production server"
     }
   ]
@@ -46,7 +47,7 @@ app.use(function (req, res, next) {
 
 app.use(express.json());
 app.use(passport.initialize());
-
+app.use(cookieParser());
 // handle api routes
 app.use('/api', routes);
 
