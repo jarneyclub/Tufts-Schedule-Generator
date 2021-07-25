@@ -7,8 +7,11 @@ exports.authenticateLocal = async (req, res, next) => {
     passport.authenticate('local', function (err, user, info) {
         if (err)
             return resHandler.respondWithCustomError("101", "400", "Login Error", err.message, res);
-        if (!user) 
+        if (!user) {
+            console.error("(authenticateLocal) user: ", user);
+            console.error("(authenticateLocal) info: ", info);
             return resHandler.respondWithCustomError("101", "400", "Login Error", "Authentication failed", res);
+        }
         else 
             next();
     })(req, res, next);
