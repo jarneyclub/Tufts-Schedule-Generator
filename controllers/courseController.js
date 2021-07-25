@@ -95,3 +95,31 @@ exports.getTermCourses = async (req, res) => {
     };
     res.json(response);
 }
+
+exports.getAttributes = async (req, res) => {
+    var start = Date.now(); // begin timing API endpoint
+    let attributesCol = mongoose.connection.collection("attributes"); // get MongoDB collection
+    // get cursor of courses from database with queried course number
+    let cursor = attributesCol.find();
+    // convert cursor to list
+    let documents = [];
+    documents.push({
+        name: ""
+    });
+    await cursor.forEach((doc) => {
+        // parse database document
+        let docToInsert = {
+            "name" : doc["text"]
+        };
+        documents.push(docToInsert);
+    });
+    var end = Date.now(); // End timing API endpoint
+    var difference = end - start;
+    let timeTakenString = difference.toString() + "ms";
+    // send response
+    let response = {
+        attributes: documents,
+        time_taken: timeTakenString
+    };
+    res.json(response);
+}
