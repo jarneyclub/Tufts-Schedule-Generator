@@ -24,12 +24,12 @@ const validationSchema = Yup.object({
 });
 
 function LoginForm(props) {
-  const { onSubmit, testVal } = props;
+  const { onSubmit } = props;
 
   return (
     <Formik
       initialValues={{
-        email: "",
+        userid: "",
         password: "",
       }}
       validationSchema={validationSchema}
