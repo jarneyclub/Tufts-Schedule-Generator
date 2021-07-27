@@ -113,15 +113,10 @@ exports.getAttributes = async (req, res) => {
     let cursor = attributesCol.find();
     // convert cursor to list
     let documents = [];
-    documents.push({
-        name: ""
-    });
+    documents.push("");
     await cursor.forEach((doc) => {
         // parse database document
-        let docToInsert = {
-            "name" : doc["text"]
-        };
-        documents.push(docToInsert);
+        documents.push(doc["text"]);
     });
     var end = Date.now(); // End timing API endpoint
     var difference = end - start;
