@@ -199,11 +199,8 @@ paths:
                   attributes:
                     type: array
                     items:
-                      type: object
-                      properties:
-                        name:
-                          type: string
-                          example: Graduate Teaching Assistantship
+                      type: string
+                        example: Graduate Teaching Assistantship
   ####################
   #                  #
   #    DEGREE PLAN   #
