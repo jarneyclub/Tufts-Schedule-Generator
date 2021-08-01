@@ -55,7 +55,7 @@ function Dropdown(props) {
         variant="standard"
         style={customStyle}
       >
-        {options.map((opt) => (
+        {options?.map((opt) => (
           <option value={opt} key={opt}>
             {opt}
           </option>
