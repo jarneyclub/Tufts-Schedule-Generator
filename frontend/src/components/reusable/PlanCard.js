@@ -58,6 +58,10 @@ function PlanCard(props) {
             origin={cardDetail.plan_term_id}
             handleCardOrigin={handleCardOrigin}
             onDoubleClick={handleDoubleClick}
+            customStyle={{
+              border: "none",
+              justifyContent: "space-between",
+            }}
           />
         ))}
       </div>

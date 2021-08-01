@@ -294,11 +294,7 @@ function DegreePlan2(props) {
     }
     fetchData();
 
-    // let unmounted = false;
-
-    // return () => {
-    //   unmounted = true;
-    // };
+ 
   }, [courseSearchValue]);
 
   /*
@@ -368,6 +364,30 @@ function DegreePlan2(props) {
     );
   };
 
+  const fetchPlans = async () => {
+    await fetch(
+      "https://jarney.club/api/degreeplans")
+      .then((response) => response.json())
+      .then(
+        (result) => {
+          setSemesterPlanOptions(result.attributes);
+          console.log("result of semester plan", result)
+        },
+        (error) => {
+          
+          console.log("error from Degreeplan semesterPlanOptions ", error);
+        }
+      );
+  }
+
+  useEffect(() => {
+    fetchPlans();
+  })
+  
+  useEffect(() => {
+    console.log("cardOptions: " , cardOptions)
+  }, [cardOptions])
+
   return (
     <div>
       <div className={dp2Style.contentContainer}>
@@ -414,7 +434,7 @@ function DegreePlan2(props) {
               />
 
               <div className={dp2Style.searchListContainer}>
-                {loadMessage && <CircularProgress />}
+                {(loadMessage && courseSearchValue !== "") && <CircularProgress />}
                 {searchCourseResult?.map((course) => (
                   <CourseSearchBar
                     courseDetail={course}
@@ -422,6 +442,7 @@ function DegreePlan2(props) {
                     onTransferCourse={handleTransferCourseDetail}
                     origin={"courseList"}
                     draggable={true}
+                    
                   />
                 ))}
               </div>
