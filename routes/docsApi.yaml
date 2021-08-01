@@ -200,7 +200,7 @@ paths:
                     type: array
                     items:
                       type: string
-                        example: Graduate Teaching Assistantship
+                      example: Graduate Teaching Assistantship
   ####################
   #                  #
   #    DEGREE PLAN   #
