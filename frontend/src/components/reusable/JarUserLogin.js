@@ -43,12 +43,11 @@ const JarUserLogin = React.forwardRef((props, ref) => {
     onSwitch();
   };
 
-
   const handleAlert = (severity: Boolean, message: String) => {
     setAlertMessage(message);
     setAlertSeverity(severity);
     setShowAlert(true);
-  }
+  };
 
   const handleSubmit = async (values) => {
     setLoadMessage(true);
@@ -62,56 +61,48 @@ const JarUserLogin = React.forwardRef((props, ref) => {
 
     if (loginState) {
       await fetch("https://jarney.club/api/auth/login", requestOption)
-        .then((response) => 
-        {
+        .then((response) => {
           if (response.ok) {
             return response.json();
-
           }
           throw new Error("Failed to login.");
-
         })
         .then((result) => {
-            console.log("data: ", result.data);
-            setLoadMessage(false);
-            onClose();
-          })
-        .catch((error) => {
-            setLoadMessage(false);
-            // console.log(error.data);
-            handleAlert("error", "Error: Failed to Login");
-          // console.log("error login")
-
-            // add an error message popup of some sort
-            console.log("error from login: ", error);
-          }
-        );
-    } else {
-      await fetch("https://jarney.club/api/auth/register", requestOption)
-      .then((response) => 
-      {
-        if (response.ok) {
-          return response.json();
-
-        }
-        throw new Error("Failed to Signup.");
-
-      })
-      .then((result) => {
           console.log("data: ", result.data);
           setLoadMessage(false);
           onClose();
         })
-      .catch((error) => {
+        .catch((error) => {
           setLoadMessage(false);
           // console.log(error.data);
-          handleAlert("error", "Error: Failed to Signup");
-        // console.log("error login")
+          handleAlert("error", "Error: Failed to Login");
+          // console.log("error login")
 
           // add an error message popup of some sort
           console.log("error from login: ", error);
-        }
-      );
+        });
+    } else {
+      await fetch("https://jarney.club/api/auth/register", requestOption)
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error("Failed to Signup.");
+        })
+        .then((result) => {
+          console.log("data: ", result.data);
+          setLoadMessage(false);
+          onClose();
+        })
+        .catch((error) => {
+          setLoadMessage(false);
+          // console.log(error.data);
+          handleAlert("error", "Error: Failed to Signup");
+          // console.log("error login")
+
+          // add an error message popup of some sort
+          console.log("error from login: ", error);
+        });
     }
   };
 
@@ -147,7 +138,12 @@ const JarUserLogin = React.forwardRef((props, ref) => {
             : "--- Log in to my JAR Account---"}
         </Button>
       )}
-      <SnackBarAlert showAlert={showAlert} onCloseAlert={handleCloseAlert} severity={alertSeverity} message={alertMessage}/>
+      <SnackBarAlert
+        showAlert={showAlert}
+        onCloseAlert={handleCloseAlert}
+        severity={alertSeverity}
+        message={alertMessage}
+      />
     </div>
   );
 });

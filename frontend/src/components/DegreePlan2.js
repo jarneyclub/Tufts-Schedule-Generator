@@ -244,7 +244,8 @@ function DegreePlan2(props) {
   const [removeSemesterPopup, setRemoveSemesterPopup] = useState(false);
   const [searchCourseResult, setSearchCourseResult] = useState([]);
   const [selectedSemester, setSelectedSemester] = useState(
-    semesterPlanOptions[0]);
+    semesterPlanOptions[0]
+  );
 
   const [loadMessage, setLoadMessage] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
@@ -268,7 +269,7 @@ function DegreePlan2(props) {
     setShowAlert(false);
   };
   const handleTransferCourseDetail = (detail) => {
-    console.log("drag start course: ", detail)
+    console.log("drag start course: ", detail);
     setTransferCourseDetail(detail);
     console.log("transferCourseDetail: ", transferCourseDetail);
   };
@@ -293,8 +294,6 @@ function DegreePlan2(props) {
         );
     }
     fetchData();
-
- 
   }, [courseSearchValue]);
 
   /*
@@ -315,7 +314,6 @@ function DegreePlan2(props) {
     return false;
   };
 
-  
   /*
    * dropItem()
    * purpose: adds course to planCard when course is dropped
@@ -325,7 +323,10 @@ function DegreePlan2(props) {
     console.log("drop course: ", courseDetail, " to: ", planTerm);
     /*  Check if course has been added  */
     for (let card of cardOptions) {
-      if (card.plan_term_id === planTerm && checkCourseExist(card.courses, courseDetail)) {
+      if (
+        card.plan_term_id === planTerm &&
+        checkCourseExist(card.courses, courseDetail)
+      ) {
         console.log("False");
         return false;
       }
@@ -333,15 +334,15 @@ function DegreePlan2(props) {
 
     /*  Adds course to Card  */
     setCardOptions((prev) =>
-    prev?.map((card) =>
-      card.plan_term_id === planTerm
-        ? {
-            ...card,
-            courses: [...card.courses, courseDetail]
-          }
-        : card
-    )
-  );
+      prev?.map((card) =>
+        card.plan_term_id === planTerm
+          ? {
+              ...card,
+              courses: [...card.courses, courseDetail],
+            }
+          : card
+      )
+    );
     return true;
   };
 
@@ -377,63 +378,54 @@ function DegreePlan2(props) {
     const requestOption = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({plan_name: planName}),
+      body: JSON.stringify({ plan_name: planName }),
     };
     await fetch("https://jarney.club/api/degreeplan", requestOption)
-        .then((response) => 
-        {
-          if (response.ok) {
-            return response.json();
-          }
-          throw new Error("Failed to create Plan.");
-        })
-        .then((result) => {
-            console.log("data: ", result);
-            fetchPlans();
-            setLoadMessage(false);
-          })
-        .catch((error) => {
-            setLoadMessage(false);
-            // console.log(error.data);
-            // handleAlert("error", "Error: Failed to Login");
-
-            // add an error message popup of some sort
-            console.log("error from login: ", error);
-          }
-        );
-  }
-
-
-  const fetchPlans = async () => {
-    await fetch(
-      "https://jarney.club/api/degreeplans")
       .then((response) => {
         if (response.ok) {
           return response.json();
         }
-        throw new Error("Failed to fetch Plans")
+        throw new Error("Failed to create Plan.");
       })
-      .then(
-        (result) => {
-          if (result.plans.length === 0) {
-            createNewPlan("Plan #1");
-          }
-          else {
-            setSemesterPlanOptions(result.plans);
-          }
-          console.log("result of semester plan", result)
-        })
-      .catch(
-        (error) => {
-          
-          console.log("error from Degreeplan semesterPlanOptions ", error);
+      .then((result) => {
+        console.log("data: ", result);
+        fetchPlans();
+        setLoadMessage(false);
+      })
+      .catch((error) => {
+        setLoadMessage(false);
+        // console.log(error.data);
+        // handleAlert("error", "Error: Failed to Login");
+
+        // add an error message popup of some sort
+        console.log("error from login: ", error);
+      });
+  };
+
+  const fetchPlans = async () => {
+    await fetch("https://jarney.club/api/degreeplans")
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
         }
-      );
-  }
+        throw new Error("Failed to fetch Plans");
+      })
+      .then((result) => {
+        if (result.plans.length === 0) {
+          createNewPlan("Plan #1");
+        } else {
+          setSemesterPlanOptions(result.plans);
+        }
+        console.log("result of semester plan", result);
+      })
+      .catch((error) => {
+        console.log("error from Degreeplan semesterPlanOptions ", error);
+      });
+  };
 
   useEffect(() => {
     fetchPlans();
-  }, [])
+  }, []);
 
   // useEffect(() => {
   //   if (semesterPlanOptions.length === 0) {
@@ -442,8 +434,8 @@ function DegreePlan2(props) {
   // }, [semesterPlanOptions])
 
   useEffect(() => {
-    console.log("cardOptions: " , cardOptions)
-  }, [cardOptions])
+    console.log("cardOptions: ", cardOptions);
+  }, [cardOptions]);
 
   return (
     <div>
@@ -491,7 +483,9 @@ function DegreePlan2(props) {
               />
 
               <div className={dp2Style.searchListContainer}>
-                {(loadMessage && courseSearchValue !== "") && <CircularProgress />}
+                {loadMessage && courseSearchValue !== "" && (
+                  <CircularProgress />
+                )}
                 {searchCourseResult?.map((course) => (
                   <CourseSearchBar
                     courseDetail={course}
@@ -499,7 +493,6 @@ function DegreePlan2(props) {
                     onTransferCourse={handleTransferCourseDetail}
                     origin={"courseList"}
                     draggable={true}
-                    
                   />
                 ))}
               </div>
