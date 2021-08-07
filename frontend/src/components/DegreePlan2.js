@@ -244,8 +244,7 @@ function DegreePlan2(props) {
   const [removeSemesterPopup, setRemoveSemesterPopup] = useState(false);
   const [searchCourseResult, setSearchCourseResult] = useState([]);
   const [selectedSemester, setSelectedSemester] = useState(
-    semesterPlanOptions[0].plan_name
-  );
+    semesterPlanOptions[0]);
 
   const [loadMessage, setLoadMessage] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
@@ -390,6 +389,7 @@ function DegreePlan2(props) {
         })
         .then((result) => {
             console.log("data: ", result);
+            fetchPlans();
             setLoadMessage(false);
           })
         .catch((error) => {
@@ -415,7 +415,12 @@ function DegreePlan2(props) {
       })
       .then(
         (result) => {
-          setSemesterPlanOptions(result.plans);
+          if (result.plans.length === 0) {
+            createNewPlan("Plan #1");
+          }
+          else {
+            setSemesterPlanOptions(result.plans);
+          }
           console.log("result of semester plan", result)
         })
       .catch(
@@ -430,11 +435,11 @@ function DegreePlan2(props) {
     fetchPlans();
   }, [])
 
-  useEffect(() => {
-    if (semesterPlanOptions.length === 0) {
-      createNewPlan("New Plan");
-    }
-  }, [semesterPlanOptions])
+  // useEffect(() => {
+  //   if (semesterPlanOptions.length === 0) {
+  //     createNewPlan("New Plan");
+  //   }
+  // }, [semesterPlanOptions])
 
   useEffect(() => {
     console.log("cardOptions: " , cardOptions)
