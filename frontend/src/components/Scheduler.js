@@ -13,13 +13,13 @@ import {
   TextField,
   Button,
   FormControlLabel,
- FormControl,
+  FormControl,
   CircularProgress,
   FormGroup,
 } from "@material-ui/core";
 import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import SearchIcon from "@material-ui/icons/Search";
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from "@material-ui/core/styles";
 import PurpleSwitch from "./reusable/PurpleSwitch";
 import { useLovelySwitchStyles } from "@mui-treasury/styles/switch/lovely";
 import sStyle from "./style/Scheduler.module.css";
@@ -44,8 +44,7 @@ const boolStateDefault = {
   online: true,
   time_unspecified: true,
   timePrefState: false,
-  
-}
+};
 
 function Scheduler(props) {
   const { shrink } = props;
@@ -109,18 +108,13 @@ function Scheduler(props) {
     console.log(timePref, dayName);
   };
 
-
   const handleCoursePrefChange = (field) => {
-    console.log("coursePref waitlist", coursePreference[field]); 
-    setCoursePreference((prev) => (
-      {
-        ...prev,
-        [field]: !prev[field]
-      }
-    ))
-
+    console.log("coursePref waitlist", coursePreference[field]);
+    setCoursePreference((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
   };
-
 
   const handleRemoveTimePref = (dayName, timeValue) => {
     setTimePref((prev) => ({
@@ -143,8 +137,6 @@ function Scheduler(props) {
   //     },
   // })
   // const classes = useStyles();
-
-  
 
   const handleCloseAlert = () => {
     setShowAlert(false);
@@ -188,26 +180,22 @@ function Scheduler(props) {
     );
   };
 
-  useEffect(() => { 
+  useEffect(() => {
     async function fetchAttributes() {
-   
-      await fetch(
-        "https://jarney.club/api/courses/attributes")
+      await fetch("https://jarney.club/api/courses/attributes")
         .then((response) => response.json())
         .then(
           (result) => {
             setAttributes(result.attributes);
           },
           (error) => {
-            
             console.log("error from Scheduler attribute ", error);
           }
         );
     }
 
     fetchAttributes();
-
-  },[])
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -276,7 +264,7 @@ function Scheduler(props) {
             </div>
 
             <div className={sStyle.courseListContainer}>
-              {(loadMessage && courseSearchValue !== "")  && <CircularProgress />}
+              {loadMessage && courseSearchValue !== "" && <CircularProgress />}
               {!loadMessage &&
                 searchCourseResult?.map((course) => (
                   <CourseSearchBar
@@ -414,7 +402,13 @@ function Scheduler(props) {
       </div>
 
       {timePrefState && (
-        <TimePrefSelector onAddTimePref={handleAddTimePref} onRemoveTimePref={handleRemoveTimePref} timePrefState={timePrefState} timePref={timePref} onTimePrefStateChange={setTimePrefState}/>
+        <TimePrefSelector
+          onAddTimePref={handleAddTimePref}
+          onRemoveTimePref={handleRemoveTimePref}
+          timePrefState={timePrefState}
+          timePref={timePref}
+          onTimePrefStateChange={setTimePrefState}
+        />
       )}
       {showAlert && (
         <SnackBarAlert

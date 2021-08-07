@@ -28,8 +28,7 @@ function PlanCard(props) {
    */
   const drop = (e) => {
     if (dropItem(cardDetail.plan_term_id, transferCourseDetail)) {
-          onRemoveCourse(cardOrigin, transferCourseDetail);
-
+      onRemoveCourse(cardOrigin, transferCourseDetail);
     }
   };
 
