@@ -408,6 +408,7 @@ function DegreePlan2(props) {
         if (response.ok) {
           return response.json();
         }
+        console.log("failed to fetch Plans")
         throw new Error("Failed to fetch Plans");
       })
       .then((result) => {
