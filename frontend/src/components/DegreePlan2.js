@@ -244,7 +244,7 @@ function DegreePlan2(props) {
   const [removeSemesterPopup, setRemoveSemesterPopup] = useState(false);
   const [searchCourseResult, setSearchCourseResult] = useState([]);
   const [selectedSemester, setSelectedSemester] = useState(
-    semesterPlanOptions[0]
+    semesterPlanOptions[0].plan_name
   );
 
   const [loadMessage, setLoadMessage] = useState(true);
@@ -269,6 +269,7 @@ function DegreePlan2(props) {
     setShowAlert(false);
   };
   const handleTransferCourseDetail = (detail) => {
+    console.log("drag start course: ", detail)
     setTransferCourseDetail(detail);
     console.log("transferCourseDetail: ", transferCourseDetail);
   };
@@ -308,32 +309,41 @@ function DegreePlan2(props) {
         setAlertMessage("Course has already been Added");
         setAlertSeverity("error");
         setShowAlert(true);
-        return false;
+        return true;
       }
     }
 
-    return true;
+    return false;
   };
 
+  
   /*
    * dropItem()
    * purpose: adds course to planCard when course is dropped
    *
    */
   const dropItem = (planTerm, courseDetail) => {
+    console.log("drop course: ", courseDetail, " to: ", planTerm);
+    /*  Check if course has been added  */
+    for (let card of cardOptions) {
+      if (card.plan_term_id === planTerm && checkCourseExist(card.courses, courseDetail)) {
+        console.log("False");
+        return false;
+      }
+    }
+
     /*  Adds course to Card  */
     setCardOptions((prev) =>
-      prev?.map((card) =>
-        card.plan_term_id === planTerm
-          ? {
-              ...card,
-              courses: checkCourseExist(card.courses, courseDetail)
-                ? [...card.courses, courseDetail]
-                : card.courses,
-            }
-          : card
-      )
-    );
+    prev?.map((card) =>
+      card.plan_term_id === planTerm
+        ? {
+            ...card,
+            courses: [...card.courses, courseDetail]
+          }
+        : card
+    )
+  );
+    return true;
   };
 
   /*
@@ -350,6 +360,7 @@ function DegreePlan2(props) {
    *
    */
   const handleRemoveCourse = (planTerm, courseDetail) => {
+    console.log("Remove course: ", courseDetail, " from: ", planTerm);
     setCardOptions((prev) =>
       prev?.map((card) =>
         card.plan_term_id === planTerm
@@ -363,16 +374,51 @@ function DegreePlan2(props) {
       )
     );
   };
+  const createNewPlan = async (planName) => {
+    const requestOption = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({plan_name: planName}),
+    };
+    await fetch("https://jarney.club/api/degreeplan", requestOption)
+        .then((response) => 
+        {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error("Failed to create Plan.");
+        })
+        .then((result) => {
+            console.log("data: ", result);
+            setLoadMessage(false);
+          })
+        .catch((error) => {
+            setLoadMessage(false);
+            // console.log(error.data);
+            // handleAlert("error", "Error: Failed to Login");
+
+            // add an error message popup of some sort
+            console.log("error from login: ", error);
+          }
+        );
+  }
+
 
   const fetchPlans = async () => {
     await fetch(
       "https://jarney.club/api/degreeplans")
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Failed to fetch Plans")
+      })
       .then(
         (result) => {
-          setSemesterPlanOptions(result.attributes);
+          setSemesterPlanOptions(result.plans);
           console.log("result of semester plan", result)
-        },
+        })
+      .catch(
         (error) => {
           
           console.log("error from Degreeplan semesterPlanOptions ", error);
@@ -382,8 +428,14 @@ function DegreePlan2(props) {
 
   useEffect(() => {
     fetchPlans();
-  })
-  
+  }, [])
+
+  useEffect(() => {
+    if (semesterPlanOptions.length === 0) {
+      createNewPlan("New Plan");
+    }
+  }, [semesterPlanOptions])
+
   useEffect(() => {
     console.log("cardOptions: " , cardOptions)
   }, [cardOptions])
