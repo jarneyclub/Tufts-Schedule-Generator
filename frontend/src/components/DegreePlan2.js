@@ -411,8 +411,8 @@ function DegreePlan2(props) {
         if (result.plans.length === 0) {
           createNewPlan("Plan #1");
         } else {
-          console.log("semesterPlanOptions b4: ", semesterPlanOptions);
-          // setSemesterPlanOptions(result.plans);
+          console.log("prev semesterPlanOptions: ", semesterPlanOptions);
+          setSemesterPlanOptions(result.plans);
         }
       })
       .catch((error) => {
@@ -424,11 +424,7 @@ function DegreePlan2(props) {
     fetchPlans();
   }, []);
 
-  // useEffect(() => {
-  //   if (semesterPlanOptions.length === 0) {
-  //     createNewPlan("New Plan");
-  //   }
-  // }, [semesterPlanOptions])
+ 
 
   useEffect(() => {
     console.log("cardOptions: ", cardOptions);
