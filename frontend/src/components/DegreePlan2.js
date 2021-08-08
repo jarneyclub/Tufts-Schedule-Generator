@@ -420,7 +420,7 @@ function DegreePlan2(props) {
         console.log("result of semester plan", result);
       })
       .catch((error) => {
-        console.log("error from Degreeplan semesterPlanOptions ", error);
+        console.log("error from Degreeplan semesterPlanOptions ");
       });
   };
 
