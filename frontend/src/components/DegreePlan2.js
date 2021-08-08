@@ -183,12 +183,7 @@ const courses = [
 function DegreePlan2(props) {
   const { shrink } = props;
   const [degreeReqTitle, setDegreeReqTitle] = useState("PLACEHOLDER"); // sets the title of degree requirement
-  const [semesterPlanOptions, setSemesterPlanOptions] = useState([
-    "Plan #1",
-    2,
-    3,
-    4,
-  ]); // sets the array of options for semester plans
+  const [semesterPlanOptions, setSemesterPlanOptions] = useState([]); // sets the array of options for semester plans
   const [semesterPlanTitle, setSemesterPlanTitle] = useState(
     "4 Year Plan Placeholder"
   ); // sets the title of the degree plan
@@ -243,9 +238,7 @@ function DegreePlan2(props) {
   const [addSemesterPopup, setAddSemesterPopup] = useState(false);
   const [removeSemesterPopup, setRemoveSemesterPopup] = useState(false);
   const [searchCourseResult, setSearchCourseResult] = useState([]);
-  const [selectedSemester, setSelectedSemester] = useState(
-    semesterPlanOptions[0]
-  );
+  const [selectedSemester, setSelectedSemester] = useState();
 
   const [loadMessage, setLoadMessage] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
@@ -383,7 +376,7 @@ function DegreePlan2(props) {
     await fetch("https://jarney.club/api/degreeplan", requestOption)
       .then((response) => {
         if (response.ok) {
-          response.json();
+          return response.json();
         }
         else {
           throw new Error("Failed to create Plan.");
@@ -415,11 +408,11 @@ function DegreePlan2(props) {
         console.log("result of semester plan: ", result);
         console.log("plans: ", result.plans);
 
-        // if (result.plans.length === 0) {
-        //   createNewPlan("Plan #1");
-        // } else {
-        //   setSemesterPlanOptions(result.plans);
-        // }
+        if (result.plans.length === 0) {
+          createNewPlan("Plan #1");
+        } else {
+          setSemesterPlanOptions(result.plans);
+        }
       })
       .catch((error) => {
         console.log("error from Degreeplan semesterPlanOptions ", error);
@@ -526,6 +519,8 @@ function DegreePlan2(props) {
               <div className={dp2Style.semesterPlanTitle}>
                 <Dropdown
                   options={semesterPlanOptions}
+                  isObject={true}
+                  objectField={"plan_name"}
                   selectedOption={selectedSemester}
                   onOptionChange={handleSemesterChange}
                   customStyle={{ fontSize: "20px", color: "#ffffff" }}

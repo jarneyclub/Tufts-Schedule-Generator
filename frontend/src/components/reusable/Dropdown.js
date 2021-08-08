@@ -28,10 +28,10 @@ function Dropdown(props) {
     labelId,
     customStyle,
     fullWidth,
+    isObject,
+    objectField
   } = props;
-  let width = fullWidth;
-  if (fullWidth) {
-  }
+ 
   // useEffect(() => {
   //   console.log("Dropdown.js useEffect called");
   //   console.log("options, selectedOption: ", options, " ", selectedOption);
@@ -55,11 +55,21 @@ function Dropdown(props) {
         variant="standard"
         style={customStyle}
       >
-        {options?.map((opt) => (
+        {
+        isObject ? 
+        options?.map((opt) => (
           <option value={opt} key={opt}>
             {opt}
           </option>
-        ))}
+        ))
+        :
+        options?.map((opt) => (
+          <option value={opt.objectField} key={opt.objectField}>
+            {opt.objectField}
+          </option>
+        ))
+      }
+        
       </Select>
     </FormControl>
   );
