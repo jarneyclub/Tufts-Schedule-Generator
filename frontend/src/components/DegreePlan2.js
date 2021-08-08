@@ -411,7 +411,8 @@ function DegreePlan2(props) {
         if (result.plans.length === 0) {
           createNewPlan("Plan #1");
         } else {
-          setSemesterPlanOptions(result.plans);
+          console.log("semesterPlanOptions b4: ", semesterPlanOptions);
+          // setSemesterPlanOptions(result.plans);
         }
       })
       .catch((error) => {
