@@ -41,6 +41,8 @@ function Dropdown(props) {
     onOptionChange(e);
   };
 
+  console.log("check from dropdown: ", options[0].objectField)
+
   return (
     // checks if mouse clicked outside of frame
     <FormControl className={dStyle.formContainer}>
@@ -64,8 +66,8 @@ function Dropdown(props) {
         ))
         :
         options?.map((opt) => (
-          <option value={opt.objectField} key={opt.objectField}>
-            {opt.objectField}
+          <option value={opt.objectField} key={opt[objectField]}>
+            {opt[objectField]}
           </option>
         ))
       }
