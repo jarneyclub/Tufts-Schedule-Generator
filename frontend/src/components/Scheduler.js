@@ -13,20 +13,21 @@ import {
   TextField,
   Button,
   FormControlLabel,
-  Switch,
   FormControl,
   CircularProgress,
   FormGroup,
-  makeStyles,
 } from "@material-ui/core";
 import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import SearchIcon from "@material-ui/icons/Search";
+import { withStyles } from "@material-ui/core/styles";
+import PurpleSwitch from "./reusable/PurpleSwitch";
 import { useLovelySwitchStyles } from "@mui-treasury/styles/switch/lovely";
 import sStyle from "./style/Scheduler.module.css";
 import Dropdown from "./reusable/Dropdown";
-import dStyle from "./reusable/reusableStyles/Dropdown.module.css";
+
 import Calendar from "./reusable/Calendar";
 import CourseSearchBar from "./reusable/CourseSearchBar";
+import TimePrefSelector from "./reusable/TimePrefSelector";
 import SnackBarAlert from "./reusable/SnackBarAlert";
 
 const timePrefDefault = {
@@ -37,6 +38,14 @@ const timePrefDefault = {
   Friday: [],
 };
 
+const boolStateDefault = {
+  waitlist: true,
+  closed: true,
+  online: true,
+  time_unspecified: true,
+  timePrefState: false,
+};
+
 function Scheduler(props) {
   const { shrink } = props;
   /* schedule Dropdown */
@@ -44,18 +53,11 @@ function Scheduler(props) {
   const [selectedSchedule, setSelectedSchedule] = useState(scheduleOptions[0]);
 
   /* filter Dropdown */
-  const [filterOptions, setFilterOption] = useState([
-    "",
-    "SOE Computing",
-    "SOE Engineering",
-    "SOE HASS",
-    "SOE HASS-Arts",
-    "SOE HASS-Humanities",
-  ]);
-  const [selectedFilter, setSelectedFilter] = useState(filterOptions[0]);
+  const [attributes, setAttributes] = useState([]);
+  const [selectedAttribute, setSelectedAttribute] = useState("attributes[0]");
 
-  const [waitlist, setWaitlist] = useState(true);
-  const [closed, setClosed] = useState(true);
+  const [coursePreference, setCoursePreference] = useState(boolStateDefault);
+
   const [selectedCourses, setSelectedCourses] = useState(
     []
   ); /*  The courses selected to generate schedule  */
@@ -78,7 +80,7 @@ function Scheduler(props) {
 
   /*  Control for search filter dropdown change  */
   const handleFilterChange = (e) => {
-    setSelectedFilter(e.target.value);
+    setSelectedAttribute(e.target.value);
   };
 
   const handleAddTimePref = (dayName, timeValue) => {
@@ -106,6 +108,14 @@ function Scheduler(props) {
     console.log(timePref, dayName);
   };
 
+  const handleCoursePrefChange = (field) => {
+    console.log("coursePref waitlist", coursePreference[field]);
+    setCoursePreference((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
+  };
+
   const handleRemoveTimePref = (dayName, timeValue) => {
     setTimePref((prev) => ({
       ...prev,
@@ -118,7 +128,7 @@ function Scheduler(props) {
   };
 
   /* toggle switch style */
-  const switchStyle = useLovelySwitchStyles();
+  // const switchStyle = useLovelySwitchStyles();
   // const useStyles = makeStyles({
   //     select: {
   //       "&&": {
@@ -131,6 +141,7 @@ function Scheduler(props) {
   const handleCloseAlert = () => {
     setShowAlert(false);
   };
+
   /*
    *  checkCourseAdded()
    *  purpose: checks if a course is already in the selected course list
@@ -170,13 +181,30 @@ function Scheduler(props) {
   };
 
   useEffect(() => {
+    async function fetchAttributes() {
+      await fetch("https://jarney.club/api/courses/attributes")
+        .then((response) => response.json())
+        .then(
+          (result) => {
+            setAttributes(result.attributes);
+          },
+          (error) => {
+            console.log("error from Scheduler attribute ", error);
+          }
+        );
+    }
+
+    fetchAttributes();
+  }, []);
+
+  useEffect(() => {
     async function fetchData() {
       setLoadMessage(true);
       await fetch(
         "https://jarney.club/api/courses/general?cnum="
           .concat(courseSearchValue)
           .concat("&attr=")
-          .concat(selectedFilter)
+          .concat(selectedAttribute)
       )
         .then((response) => response.json())
         .then(
@@ -191,7 +219,7 @@ function Scheduler(props) {
         );
     }
     fetchData();
-  }, [courseSearchValue, selectedFilter]);
+  }, [courseSearchValue, selectedAttribute]);
 
   return (
     <div>
@@ -226,8 +254,8 @@ function Scheduler(props) {
               <div className={sStyle.filterContainer}>
                 <Dropdown
                   classes={sStyle.dropdown}
-                  options={filterOptions}
-                  selectedOption={selectedFilter}
+                  options={attributes}
+                  selectedOption={selectedAttribute}
                   onOptionChange={handleFilterChange}
                   labelId="filter"
                   labelName="Filter"
@@ -236,7 +264,7 @@ function Scheduler(props) {
             </div>
 
             <div className={sStyle.courseListContainer}>
-              {loadMessage && <CircularProgress />}
+              {loadMessage && courseSearchValue !== "" && <CircularProgress />}
               {!loadMessage &&
                 searchCourseResult?.map((course) => (
                   <CourseSearchBar
@@ -258,22 +286,20 @@ function Scheduler(props) {
                 <FormGroup>
                   <FormControlLabel
                     control={
-                      <Switch
-                        classes={switchStyle}
-                        checked={waitlist}
+                      <PurpleSwitch
+                        checked={coursePreference.waitlist}
                         name="waitlist"
-                        onChange={() => setWaitlist((prev) => !prev)}
+                        onChange={() => handleCoursePrefChange("waitlist")}
                       />
                     }
                     label="Include Waitlist"
                   />
                   <FormControlLabel
                     control={
-                      <Switch
-                        classes={switchStyle}
-                        checked={closed}
+                      <PurpleSwitch
+                        checked={coursePreference.closed}
                         name="closed"
-                        onChange={() => setClosed((prev) => !prev)}
+                        onChange={() => handleCoursePrefChange("closed")}
                       />
                     }
                     label="Include Closed"
@@ -307,7 +333,7 @@ function Scheduler(props) {
                 }}
               >
                 <div>
-                  SELECTED <br /> COURSES
+                  Selected <br /> Courses
                 </div>
               </div>
               <div
@@ -321,7 +347,7 @@ function Scheduler(props) {
                 }}
               >
                 <div>
-                  DEGREE <br /> REQUIREMENTS
+                  Degree <br /> Requirements
                 </div>
               </div>
               <div
@@ -334,7 +360,7 @@ function Scheduler(props) {
                   setDegreeReqTab(3);
                 }}
               >
-                <div>DEGREE PLAN</div>
+                <div>Degree Plan</div>
               </div>
             </div>
 
@@ -376,34 +402,13 @@ function Scheduler(props) {
       </div>
 
       {timePrefState && (
-        <div className={sStyle.timePrefOverlay}>
-          <div className={sStyle.overlayTitleContainer}>
-            <div className={sStyle.overlayTitle}>
-              Drag or Click to Select Your Preferred Time Frame
-            </div>
-            <div>
-              **Time Frame Set for the Entire Day if No Selection Made For the
-              Day**
-            </div>
-          </div>
-          <br />
-          <Button
-            className={sStyle.timePrefButton}
-            onClick={() => setTimePrefState((prev) => !prev)}
-          >
-            Save Time Preference
-          </Button>
-          <br />
-          {/* This is the OVERLAY CALENDAR */}
-          <div className={sStyle.overlayCalendarContainer}>
-            <Calendar
-              timePrefState={timePrefState}
-              timePref={timePref}
-              handleAddTimePref={handleAddTimePref}
-              handleRemoveTimePref={handleRemoveTimePref}
-            />
-          </div>
-        </div>
+        <TimePrefSelector
+          onAddTimePref={handleAddTimePref}
+          onRemoveTimePref={handleRemoveTimePref}
+          timePrefState={timePrefState}
+          timePref={timePref}
+          onTimePrefStateChange={setTimePrefState}
+        />
       )}
       {showAlert && (
         <SnackBarAlert

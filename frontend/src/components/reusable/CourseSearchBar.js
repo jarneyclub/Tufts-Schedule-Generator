@@ -66,9 +66,9 @@ function CourseSearchBar(props) {
       onDoubleClick={handleDoubleClick}
       style={customStyle}
     >
-      {(origin === "schedulerCourseList" || origin === "schedulerTab") && (
-        <div>&nbsp;</div>
-      )}
+      {(origin === "schedulerCourseList" ||
+        origin === "schedulerTab" ||
+        origin !== "courseList") && <div>&nbsp;</div>}
       <div>
         【{course_num}】<br />
         {course_title}
@@ -80,7 +80,8 @@ function CourseSearchBar(props) {
           </IconButton>
         </div>
       )}
-      {origin === "schedulerTab" && (
+      {(origin === "schedulerTab" ||
+        !(origin === "courseList" || origin === "schedulerCourseList")) && (
         <div className={cStyle.actionButton}>
           <IconButton onClick={handleDoubleClick}>
             <RemoveIcon style={{ fill: "#ffffff" }} />

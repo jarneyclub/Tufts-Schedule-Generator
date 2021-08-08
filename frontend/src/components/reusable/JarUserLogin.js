@@ -13,8 +13,10 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import { IconButton, Button, CircularProgress } from "@material-ui/core";
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
+import SnackBarAlert from "./SnackBarAlert";
 import "./reusableStyles/LoginForm.module.css";
 import jStyle from "./reusableStyles/JarUserLogin.module.css";
+import { string } from "prop-types";
 
 /* scripts */
 
@@ -24,6 +26,14 @@ const JarUserLogin = React.forwardRef((props, ref) => {
   const [loginValues, setLoginValues] = useState({});
   const [loadMessage, setLoadMessage] = useState(false);
 
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState();
+  const [alertSeverity, setAlertSeverity] = useState();
+
+  const handleCloseAlert = () => {
+    setShowAlert(false);
+  };
+
   const handleClose = () => {
     onClose();
   };
@@ -31,6 +41,12 @@ const JarUserLogin = React.forwardRef((props, ref) => {
   /*  switches from login to signup, vice versa  */
   const handleSwitch = () => {
     onSwitch();
+  };
+
+  const handleAlert = (severity: Boolean, message: String) => {
+    setAlertMessage(message);
+    setAlertSeverity(severity);
+    setShowAlert(true);
   };
 
   const handleSubmit = async (values) => {
@@ -45,38 +61,48 @@ const JarUserLogin = React.forwardRef((props, ref) => {
 
     if (loginState) {
       await fetch("https://jarney.club/api/auth/login", requestOption)
-        .then((response) => response.json())
-        .then(
-          (result) => {
-            console.log("data: ", result.data);
-            setLoadMessage(false);
-            onClose();
-          },
-          (error) => {
-            setLoadMessage(false);
-            onClose();
-
-            // add an error message popup of some sort
-            console.log("error: ", error);
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
           }
-        );
+          throw new Error("Failed to login.");
+        })
+        .then((result) => {
+          console.log("data: ", result.data);
+          setLoadMessage(false);
+          onClose();
+        })
+        .catch((error) => {
+          setLoadMessage(false);
+          // console.log(error.data);
+          handleAlert("error", "Error: Failed to Login");
+          // console.log("error login")
+
+          // add an error message popup of some sort
+          console.log("error from login: ", error);
+        });
     } else {
       await fetch("https://jarney.club/api/auth/register", requestOption)
-        .then((response) => response.json())
-        .then(
-          (result) => {
-            console.log("data: ", result);
-            setLoadMessage(false);
-            onClose();
-          },
-          (error) => {
-            console.log("error: ", error);
-            setLoadMessage(false);
-            onClose();
-
-            // add an error message popup of some sort
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
           }
-        );
+          throw new Error("Failed to Signup.");
+        })
+        .then((result) => {
+          console.log("data: ", result.data);
+          setLoadMessage(false);
+          onClose();
+        })
+        .catch((error) => {
+          setLoadMessage(false);
+          // console.log(error.data);
+          handleAlert("error", "Error: Failed to Signup");
+          // console.log("error login")
+
+          // add an error message popup of some sort
+          console.log("error from login: ", error);
+        });
     }
   };
 
@@ -112,6 +138,12 @@ const JarUserLogin = React.forwardRef((props, ref) => {
             : "--- Log in to my JAR Account---"}
         </Button>
       )}
+      <SnackBarAlert
+        showAlert={showAlert}
+        onCloseAlert={handleCloseAlert}
+        severity={alertSeverity}
+        message={alertMessage}
+      />
     </div>
   );
 });

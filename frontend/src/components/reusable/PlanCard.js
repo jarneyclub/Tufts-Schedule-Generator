@@ -27,8 +27,9 @@ function PlanCard(props) {
    *  purpose: when course is dropped onto a planCard
    */
   const drop = (e) => {
-    dropItem(cardDetail.plan_term_id, transferCourseDetail);
-    onRemoveCourse(cardOrigin, transferCourseDetail);
+    if (dropItem(cardDetail.plan_term_id, transferCourseDetail)) {
+      onRemoveCourse(cardOrigin, transferCourseDetail);
+    }
   };
 
   /*
@@ -58,6 +59,10 @@ function PlanCard(props) {
             origin={cardDetail.plan_term_id}
             handleCardOrigin={handleCardOrigin}
             onDoubleClick={handleDoubleClick}
+            customStyle={{
+              border: "none",
+              justifyContent: "space-between",
+            }}
           />
         ))}
       </div>
