@@ -411,10 +411,10 @@ function DegreePlan2(props) {
         if (response.ok) {
           response.json();
         }
-        else {
-          console.log("failed to fetch Plans")
-          throw new Error("Failed to fetch Plans");
-        }
+        // else {
+        //   console.log("failed to fetch Plans")
+        //   throw new Error("Failed to fetch Plans");
+        // }
         
       })
       .then((result) => {
