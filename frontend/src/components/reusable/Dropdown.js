@@ -41,7 +41,7 @@ function Dropdown(props) {
     onOptionChange(e);
   };
 
-  console.log("check from dropdown: ", options[0].objectField)
+  console.log("check from dropdown: ", options)
 
   return (
     // checks if mouse clicked outside of frame
