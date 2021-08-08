@@ -417,13 +417,14 @@ function DegreePlan2(props) {
         // }
         
       })
-      .then((result) => {
+      .then((result) => {        
+        console.log("result of semester plan", result);
+
         if (result.plans.length === 0) {
           createNewPlan("Plan #1");
         } else {
           setSemesterPlanOptions(result.plans);
         }
-        console.log("result of semester plan", result);
       })
       .catch((error) => {
         console.log("error from Degreeplan semesterPlanOptions ", error);
