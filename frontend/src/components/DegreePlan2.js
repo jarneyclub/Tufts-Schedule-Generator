@@ -383,9 +383,11 @@ function DegreePlan2(props) {
     await fetch("https://jarney.club/api/degreeplan", requestOption)
       .then((response) => {
         if (response.ok) {
-          return response.json();
+          response.json();
         }
-        throw new Error("Failed to create Plan.");
+        else {
+          throw new Error("Failed to create Plan.");
+        }
       })
       .then((result) => {
         console.log("data: ", result);
@@ -406,10 +408,13 @@ function DegreePlan2(props) {
     await fetch("https://jarney.club/api/degreeplans")
       .then((response) => {
         if (response.ok) {
-          return response.json();
+          response.json();
         }
-        console.log("failed to fetch Plans")
-        throw new Error("Failed to fetch Plans");
+        else {
+          console.log("failed to fetch Plans")
+          throw new Error("Failed to fetch Plans");
+        }
+        
       })
       .then((result) => {
         if (result.plans.length === 0) {
@@ -420,7 +425,7 @@ function DegreePlan2(props) {
         console.log("result of semester plan", result);
       })
       .catch((error) => {
-        console.log("error from Degreeplan semesterPlanOptions ");
+        console.log("error from Degreeplan semesterPlanOptions ", error);
       });
   };
 
