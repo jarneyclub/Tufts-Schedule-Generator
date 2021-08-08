@@ -407,6 +407,7 @@ function DegreePlan2(props) {
   const fetchPlans = async () => {
     await fetch("https://jarney.club/api/degreeplans")
       .then((response) => {
+        console.log("response:", response)
         if (response.ok) {
           response.json();
         }
