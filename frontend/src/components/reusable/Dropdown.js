@@ -56,7 +56,7 @@ function Dropdown(props) {
         style={customStyle}
       >
         {
-        isObject ? 
+        !isObject ? 
         options?.map((opt) => (
           <option value={opt} key={opt}>
             {opt}
