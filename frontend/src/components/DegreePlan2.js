@@ -408,9 +408,7 @@ function DegreePlan2(props) {
     await fetch("https://jarney.club/api/degreeplans")
       .then((response) => {
         console.log("response:", response)
-        if (response.ok) {
-          response.json();
-        }
+        response.json();
         // else {
         //   console.log("failed to fetch Plans")
         //   throw new Error("Failed to fetch Plans");
