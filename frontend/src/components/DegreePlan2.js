@@ -183,12 +183,7 @@ const courses = [
 function DegreePlan2(props) {
   const { shrink } = props;
   const [degreeReqTitle, setDegreeReqTitle] = useState("PLACEHOLDER"); // sets the title of degree requirement
-  const [semesterPlanOptions, setSemesterPlanOptions] = useState([
-    "Plan #1",
-    2,
-    3,
-    4,
-  ]); // sets the array of options for semester plans
+  const [semesterPlanOptions, setSemesterPlanOptions] = useState([]); // sets the array of options for semester plans
   const [semesterPlanTitle, setSemesterPlanTitle] = useState(
     "4 Year Plan Placeholder"
   ); // sets the title of the degree plan
@@ -243,9 +238,7 @@ function DegreePlan2(props) {
   const [addSemesterPopup, setAddSemesterPopup] = useState(false);
   const [removeSemesterPopup, setRemoveSemesterPopup] = useState(false);
   const [searchCourseResult, setSearchCourseResult] = useState([]);
-  const [selectedSemester, setSelectedSemester] = useState(
-    semesterPlanOptions[0]
-  );
+  const [selectedSemester, setSelectedSemester] = useState();
 
   const [loadMessage, setLoadMessage] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
@@ -269,6 +262,7 @@ function DegreePlan2(props) {
     setShowAlert(false);
   };
   const handleTransferCourseDetail = (detail) => {
+    console.log("drag start course: ", detail);
     setTransferCourseDetail(detail);
     console.log("transferCourseDetail: ", transferCourseDetail);
   };
@@ -293,8 +287,6 @@ function DegreePlan2(props) {
         );
     }
     fetchData();
-
- 
   }, [courseSearchValue]);
 
   /*
@@ -308,11 +300,11 @@ function DegreePlan2(props) {
         setAlertMessage("Course has already been Added");
         setAlertSeverity("error");
         setShowAlert(true);
-        return false;
+        return true;
       }
     }
 
-    return true;
+    return false;
   };
 
   /*
@@ -321,19 +313,30 @@ function DegreePlan2(props) {
    *
    */
   const dropItem = (planTerm, courseDetail) => {
+    console.log("drop course: ", courseDetail, " to: ", planTerm);
+    /*  Check if course has been added  */
+    for (let card of cardOptions) {
+      if (
+        card.plan_term_id === planTerm &&
+        checkCourseExist(card.courses, courseDetail)
+      ) {
+        console.log("False");
+        return false;
+      }
+    }
+
     /*  Adds course to Card  */
     setCardOptions((prev) =>
       prev?.map((card) =>
         card.plan_term_id === planTerm
           ? {
               ...card,
-              courses: checkCourseExist(card.courses, courseDetail)
-                ? [...card.courses, courseDetail]
-                : card.courses,
+              courses: [...card.courses, courseDetail],
             }
           : card
       )
     );
+    return true;
   };
 
   /*
@@ -350,6 +353,7 @@ function DegreePlan2(props) {
    *
    */
   const handleRemoveCourse = (planTerm, courseDetail) => {
+    console.log("Remove course: ", courseDetail, " from: ", planTerm);
     setCardOptions((prev) =>
       prev?.map((card) =>
         card.plan_term_id === planTerm
@@ -363,30 +367,68 @@ function DegreePlan2(props) {
       )
     );
   };
+  const createNewPlan = async (planName) => {
+    const requestOption = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ plan_name: planName }),
+    };
+    await fetch("https://jarney.club/api/degreeplan", requestOption)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        else {
+          throw new Error("Failed to create Plan.");
+        }
+      })
+      .then((result) => {
+        console.log("data: ", result);
+        fetchPlans();
+        setLoadMessage(false);
+      })
+      .catch((error) => {
+        setLoadMessage(false);
+        // console.log(error.data);
+        // handleAlert("error", "Error: Failed to Login");
+
+        // add an error message popup of some sort
+        console.log("error from login: ", error);
+      });
+  };
 
   const fetchPlans = async () => {
-    await fetch(
-      "https://jarney.club/api/degreeplans")
-      .then((response) => response.json())
-      .then(
-        (result) => {
-          setSemesterPlanOptions(result.attributes);
-          console.log("result of semester plan", result)
-        },
-        (error) => {
-          
-          console.log("error from Degreeplan semesterPlanOptions ", error);
+    await fetch("https://jarney.club/api/degreeplans")
+      .then((response) => {
+        console.log("response:", response)
+        return response.json();
+        
+      })
+      .then((result) => {        
+        console.log("result of semester plan: ", result);
+        console.log("plans: ", result.plans);
+
+        if (result.plans.length === 0) {
+          createNewPlan("Plan #1");
+        } else {
+          console.log("prev semesterPlanOptions: ", semesterPlanOptions);
+          setSemesterPlanOptions(result.plans);
         }
-      );
-  }
+      })
+      .catch((error) => {
+        console.log("error from Degreeplan semesterPlanOptions ", error);
+      });
+  };
 
   useEffect(() => {
     fetchPlans();
-  })
-  
+  }, []);
+
+ 
+
   useEffect(() => {
-    console.log("cardOptions: " , cardOptions)
-  }, [cardOptions])
+    console.log("cardOptions: ", cardOptions);
+  }, [cardOptions]);
 
   return (
     <div>
@@ -434,7 +476,9 @@ function DegreePlan2(props) {
               />
 
               <div className={dp2Style.searchListContainer}>
-                {(loadMessage && courseSearchValue !== "") && <CircularProgress />}
+                {loadMessage && courseSearchValue !== "" && (
+                  <CircularProgress />
+                )}
                 {searchCourseResult?.map((course) => (
                   <CourseSearchBar
                     courseDetail={course}
@@ -442,7 +486,6 @@ function DegreePlan2(props) {
                     onTransferCourse={handleTransferCourseDetail}
                     origin={"courseList"}
                     draggable={true}
-                    
                   />
                 ))}
               </div>
@@ -473,6 +516,8 @@ function DegreePlan2(props) {
               <div className={dp2Style.semesterPlanTitle}>
                 <Dropdown
                   options={semesterPlanOptions}
+                  isObject={true}
+                  objectField={"plan_name"}
                   selectedOption={selectedSemester}
                   onOptionChange={handleSemesterChange}
                   customStyle={{ fontSize: "20px", color: "#ffffff" }}

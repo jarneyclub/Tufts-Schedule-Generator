@@ -6,7 +6,7 @@
  *
  */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DateRangeIcon from "@material-ui/icons/DateRange";
 import {
@@ -83,13 +83,14 @@ function AddMajorMinor(props) {
     </div>
   );
 }
+
+
+
 /*  ============================================================= */
-/*  =============== EXPORTED FUNCTIONAL COMPONENT =============== */
+/*  =============== EXPORTED MAIN FUNCTIONAL COMPONENT =============== */
 function DegreePlan1(props) {
   const { shrink } = props;
-  const [degreeReqOptions, setDegreeReqOptions] = useState([
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 11, 12, 13,
-  ]);
+  const [degreeReqOptions, setDegreeReqOptions] = useState([]);
 
   const [selectedDegreeReq, setDegreeReq] =
     useState(
@@ -101,6 +102,9 @@ function DegreePlan1(props) {
   const [listSearchValue, setListSearchValue] = useState("");
   const [newMMPopup, setNewMMPopup] =
     useState(false); /* Add new Major / Minor Popup */
+
+
+
   const handleDegreeReqChange = (e) => {
     setDegreeReq(e.target.value);
   };
@@ -108,6 +112,36 @@ function DegreePlan1(props) {
   const handleSearchChange = (e) => {
     setListSearchValue(e.target.value);
   };
+
+
+
+
+  const fetchPrivateReqs = async () => {
+    await fetch("https://jarney.club/api/degreereqs/private")
+      .then((response) => {
+        console.log("response:", response)
+        return response.json();
+        
+      })
+      .then((result) => {        
+        console.log("result of semester plan: ", result);
+        console.log("plans: ", result.plans);
+
+        if (result.reqs.length === 0) {
+          console.log("no private reqs")
+        } else {
+
+          setDegreeReqOptions(result.reqs);
+        }
+      })
+      .catch((error) => {
+        console.log("error from Degreeplan fetchPrivateReqs ", error);
+      });
+  };
+
+  useEffect(() => {
+    fetchPrivateReqs();
+  },[])
 
   return (
     <div>
@@ -159,6 +193,8 @@ function DegreePlan1(props) {
                             options - degree req of current user */}
             <Dropdown
               options={degreeReqOptions}
+              isObject={true}
+              objectField={"program_name"}
               selectedOption={selectedDegreeReq}
               onOptionChange={handleDegreeReqChange}
             />
