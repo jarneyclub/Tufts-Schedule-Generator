@@ -111,12 +111,7 @@ exports.createTerm = async (req, res) => {
     var start = Date.now(); // begin timing API endpoint
     
     const {plan_id, term} = req.body;
-    let schema = {
-        plan_id: plan_id,
-        term: term,
-        courses: []
-    }
-    degreePlanAPI.createTerm(schema)
+    degreePlanAPI.createTerm(plan_id, term, [])
     .then(result => {
         res.status(200);
         res.json({

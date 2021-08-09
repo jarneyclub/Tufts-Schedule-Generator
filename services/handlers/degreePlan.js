@@ -1,21 +1,28 @@
 const mongoose = require('mongoose');
+require('../../models/external/Plan.js');
+require('../../models/external/PlanTerm.js');
 const Plan = mongoose.model('Plan');
 const PlanTerm = mongoose.model('PlanTerm');
 const { Heap } = require('heap-js');
+
+// "FALL": "8",
+// "SPRING": "2",
+// "SUMMER": "5",
+// "annual": "4"
 
 /** Insert a degree plan in the database, that is 
  * one degree plan with 8 empty terms
  * @param {object} schema 
  * @returns {Promise} document or error
  */
-exports.createNewDegreePlan = async (schema) => {
+const createNewDegreePlan = async (schema) => {
     try {
         // validate schema and create document
         let newPlan = new Plan(schema);
         await newPlan.save(); // insert
         // insert numNewTerms amount of new terms into this plan
         let numNewTerms = 8
-        let insertedPlanTerms = [];
+        let insertedPlanTerms = []; // append inserted PlanTerm's to this array
         let currTerm = 2218; 
         for (let i = 0; i < numNewTerms; i++) {
             let newPlanTerm = new PlanTerm({
@@ -38,6 +45,11 @@ exports.createNewDegreePlan = async (schema) => {
         const priorityQueue = new Heap(customPriorityComparator);
         priorityQueue.init(insertedPlanTerms);
         insertedPlanTerms = Heap.nsmallest(numNewTerms, priorityQueue);
+        // convert term int ids to term descriptions (e.g. 2218 -> "Fall 2018")
+        for (let i = 0; i < insertedPlanTerms.length; i++) {
+            insertedPlanTerms[i].term = termIntegerToDesc(insertedPlanTerms[i].term);
+            console.log("(degreePlan) termDesc: ", termDesc);
+        }
         // formulate and send response
         let result = {
             plan_id: newPlan._id.valueOf(),
@@ -45,7 +57,6 @@ exports.createNewDegreePlan = async (schema) => {
             terms: insertedPlanTerms
         };
         return result;
-
     }
     catch (e) {
         errorHandler(e);
@@ -58,7 +69,7 @@ exports.createNewDegreePlan = async (schema) => {
  * EC ; 
  * - terms is not sorted (not handled)
  */
-exports.getDegreePlan = async (query) => {
+const getDegreePlan = async (query) => {
     try {
         let dbPlans = mongoose.connection.collection("plans"); // get MongoDB collection
         console.log("(database) getDegreePlan", "query: ", query);
@@ -100,7 +111,15 @@ exports.getDegreePlan = async (query) => {
                 plan_id: doc["_id"].valueOf(),
                 terms: doc["terms"]
             }
-            documents.push(docToInsert);
+            // convert term integer ids to desc e.g. 2218 -> "Fall 2018"
+            newTerms = [];
+            for (let i = 0; i < docToInsert.terms.length; i++) {
+                let currTerm = docToInsert.terms[i];
+                currTerm.term = termIntegerToDesc(currTerm.term);
+                newTerms.push(currTerm);
+            }
+            docToInsert.terms = newTerms; // update terms
+            documents.push(docToInsert); // append to documents
         });
         // if (documents.length === 0)
             // throw { id: "202", status: "404", title: "Degree Plan Error", detail: "No degree plan could be found with given query." };
@@ -120,7 +139,7 @@ exports.getDegreePlan = async (query) => {
  * - plan does not exist but all plan terms exist (Not handled)
  * - neither the plan nor some plan terms exist (Not handled)
  */
-exports.deleteDegreePlan = async (query) => {
+const deleteDegreePlan = async (query) => {
     try {
         // get degree plan from database
         const { plan_name, plan_id, terms } = await this.getDegreePlan(query);
@@ -149,7 +168,7 @@ exports.deleteDegreePlan = async (query) => {
  * EC;
  * - terms is not sorted (not handled)
  */
-exports.getDegreePlans = async (query) => {
+const getDegreePlans = async (query) => {
     try {
         let dbPlans = mongoose.connection.collection("plans"); // get MongoDB collection
         let matchStage = { $match: { user_id: query.user_id }};
@@ -186,6 +205,14 @@ exports.getDegreePlans = async (query) => {
                 plan_id: doc["_id"].valueOf(),
                 terms: doc["terms"]
             }
+            // convert term integer ids to desc e.g. 2218 -> "Fall 2018"
+            newTerms = [];
+            for (let i = 0; i < docToInsert.terms.length; i++) {
+                let currTerm = docToInsert.terms[i];
+                currTerm.term = termIntegerToDesc(currTerm.term);
+                newTerms.push(currTerm);
+            }
+            docToInsert.terms = newTerms; // update terms
             documents.push(docToInsert);
         });
 
@@ -196,13 +223,18 @@ exports.getDegreePlans = async (query) => {
     }
 }
 
-/** Create a term associted with a plan with
- *  empty courses
- * @param {object} schema 
- * @returns {Promise} string or error
+/**
+ * Create a term associted with a plan with
+ * empty courses
+ * @param {*} planId
+ * @param {*} planTermDesc
+ * @param {*} arrCourses
+ * @return {Promise} string or error
  */
-exports.createTerm = async (schema) => {
+const createTerm = async (planId, planTermDesc, arrCourses) => {
     try {
+        let planTermInt = descToTermInteger(planTermDesc);
+        let schema = {plan_id: planId, term: planTermInt, courses: arrCourses};
         let planTerm = new PlanTerm(schema);
         await planTerm.save();
         return planTerm._id.valueOf();
@@ -219,7 +251,7 @@ exports.createTerm = async (schema) => {
  * TODO:
  * - EC ; no term exists with plan_term_id (not handled)
  */
-exports.saveTerm = async (plan_term_id, setParams) => {
+const saveTerm = async (plan_term_id, setParams) => {
     try {
         // let dbPlanTerms = mongoose.connection.collection("plan_terms"); // get MongoDB collection
         let courses = setParams.courses;
@@ -234,7 +266,7 @@ exports.saveTerm = async (plan_term_id, setParams) => {
             _id: mongoose.Types.ObjectId(plan_term_id)
         }, {
             courses: courses
-        }, { 
+        }, {
             new: true,
             upsert: false
         });
@@ -254,7 +286,7 @@ exports.saveTerm = async (plan_term_id, setParams) => {
  * EC ;
  * - no term with given fields were found (not handled)
  */
-exports.deleteTerm = async (query) => {
+const deleteTerm = async (query) => {
     try {
         
         let dbPlanTerms = mongoose.connection.collection("plan_terms"); // get MongoDB collection
@@ -267,6 +299,12 @@ exports.deleteTerm = async (query) => {
         errorHandler(e);
     }
 }
+
+////////////////////////////////////////
+//                                    //
+//              Helpers               //
+//                                    //
+////////////////////////////////////////
 
 /** Helper function for finding next term
  * @param {integer} currTerm 
@@ -288,7 +326,46 @@ const getNextTerm = async (currTerm) => {
     let currSeas = termCycle[currIndTermCyc];
     // put together updated values
     currTerm = 10 * currYear + currSeas;
-    return currTerm
+    return currTerm;
+}
+
+const termIntegerToDesc = (termInt) => {
+    let mapIntToSeason = {
+        "2": "Spring",
+        "4": "Annual",
+        "5": "Summer",
+        "8": "Fall"
+    }
+
+    let termString = termInt.toString();
+    let year = termString[0] + 0 + termString[1] + termString[2];
+    let season = mapIntToSeason[termString[3]];
+    if (season === "Annual") {
+        year = year + "-" + (parseInt(year)+1).toString()
+        return year + " " + season;
+    }
+    else {
+        return year + " " + season;
+    }
+}
+
+const descToTermInteger = (termDesc) => {
+    let mapSeasonToInt = {
+        "Spring" : "2",
+        "Annual" : "4",
+        "Summer" : "5",
+        "Fall"   : "8"
+    }
+
+    if (termDesc.indexOf("Annual") > -1) {
+        let year = termDesc.substring(0, 4);
+        return parseInt(year[0] + year[2] + year[3] + mapSeasonToInt["Annual"]);
+    }
+    else {
+        let year = termDesc.substring(0, 4);
+        let season = termDesc.substring(5, termDesc.length);
+        return parseInt(year[0] + year[2] + year[3] + mapSeasonToInt[season]);
+    }
 }
 
 const errorHandler = (e) => {
@@ -318,3 +395,14 @@ const errorHandler = (e) => {
         }
     }
 }
+
+module.exports.createNewDegreePlan = createNewDegreePlan;
+module.exports.getDegreePlan = getDegreePlan;
+module.exports.deleteDegreePlan = deleteDegreePlan;
+module.exports.getDegreePlans = getDegreePlans;
+module.exports.createTerm = createTerm;
+module.exports.saveTerm = saveTerm;
+module.exports.deleteTerm = deleteTerm;
+module.exports.getNextTerm = getNextTerm;
+module.exports.termIntegerToDesc = termIntegerToDesc;
+module.exports.descToTermInteger = descToTermInteger;
