@@ -166,6 +166,7 @@ function DegreeReqEdit(props) {
   };
 
   const fetchCreate = async () => {
+
     const requestOption = {
       method: "POST",
       headers: { "Content-Type": "application/json",
@@ -176,6 +177,7 @@ function DegreeReqEdit(props) {
 
     await fetch("https://jarney.club/api/degreereqs/private", requestOption)
       .then((response) => {
+        console.log("response from fetchCreate: ", response);
         return response.json();
       })
       .then((result) => {
