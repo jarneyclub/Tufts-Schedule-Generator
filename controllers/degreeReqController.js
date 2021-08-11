@@ -102,6 +102,7 @@ exports.copyDegreeReqPublicToPrivate = async (req, res) => {
 
 exports.createDegreeReqPrivate = async (req, res) => {
     // TODO: if from admin account, create a public degree requirement
+    console.log("(degreeReqController/createDegreeReqPrivate) here");
     let start = Date.now(); // begin timing API endpoint
     
     // get user request information
