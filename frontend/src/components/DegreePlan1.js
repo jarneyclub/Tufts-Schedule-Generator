@@ -192,7 +192,10 @@ function DegreePlan1(props) {
 
             <Button
               className={dp1Style.newMajorMinorButton}
-              onClick={() => {setNewMMPopup(true); setEditDRPopup(true);}}
+              onClick={() => {
+                setNewMMPopup(true);
+                setEditDRPopup(true);
+              }}
             >
               --- create a new major/ minor ---
             </Button>
@@ -224,7 +227,10 @@ function DegreePlan1(props) {
             </Button>
             {editDRPopup && (
               <Popup onClose={() => setEditDRPopup(false)}>
-                <DegreeReqEdit onClose={() => setEditDRPopup(false)} isCreateMM={newMMPopup}/>
+                <DegreeReqEdit
+                  onClose={() => setEditDRPopup(false)}
+                  isCreateMM={newMMPopup}
+                />
               </Popup>
             )}
           </div>
