@@ -169,7 +169,7 @@ function DegreeReqEdit(props) {
 
     const requestOption = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "accept": "application/json" },
       body: JSON.stringify(detail),
     };
   
