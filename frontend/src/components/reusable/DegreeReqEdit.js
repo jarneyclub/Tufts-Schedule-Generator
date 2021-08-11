@@ -166,13 +166,14 @@ function DegreeReqEdit(props) {
   };
 
   const fetchCreate = async () => {
-    const requestBody = {
+    const requestOption = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(detail),
     };
+    console.log("request option: ", requestOption)
 
-    await fetch("https://jarney.club/api/degreereqs/private", requestBody)
+    await fetch("https://jarney.club/api/degreereqs/private", requestOption)
       .then((response) => {
         return response.json();
       })
@@ -197,7 +198,7 @@ function DegreeReqEdit(props) {
         >
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>=== {detail.program_name} ===</div>
+        <div className={pStyle.headerBody}>=== {detail.program_name} ===&nbsp;&nbsp;</div>
         <span />
       </div>
       {/*   ================== Body ================== */}
@@ -225,7 +226,7 @@ function DegreeReqEdit(props) {
             onChange={handleGeneralChange}
             className={pStyle.inputAreaName}
             label="Degree"
-            name="degree_dropdown"
+            name="degree"
           />
 
           {/* ------------ Parts ------------ */}
