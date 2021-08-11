@@ -377,8 +377,7 @@ function DegreePlan2(props) {
       .then((response) => {
         if (response.ok) {
           return response.json();
-        }
-        else {
+        } else {
           throw new Error("Failed to create Plan.");
         }
       })
@@ -400,11 +399,10 @@ function DegreePlan2(props) {
   const fetchPlans = async () => {
     await fetch("https://jarney.club/api/degreeplans")
       .then((response) => {
-        console.log("response:", response)
+        console.log("response:", response);
         return response.json();
-        
       })
-      .then((result) => {        
+      .then((result) => {
         console.log("result of semester plan: ", result);
         console.log("plans: ", result.plans);
 
@@ -423,8 +421,6 @@ function DegreePlan2(props) {
   useEffect(() => {
     fetchPlans();
   }, []);
-
- 
 
   useEffect(() => {
     console.log("cardOptions: ", cardOptions);

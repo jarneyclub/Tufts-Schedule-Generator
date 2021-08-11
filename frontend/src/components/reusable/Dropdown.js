@@ -29,9 +29,9 @@ function Dropdown(props) {
     customStyle,
     fullWidth,
     isObject,
-    objectField
+    objectField,
   } = props;
- 
+
   // useEffect(() => {
   //   console.log("Dropdown.js useEffect called");
   //   console.log("options, selectedOption: ", options, " ", selectedOption);
@@ -41,7 +41,7 @@ function Dropdown(props) {
     onOptionChange(e);
   };
 
-  console.log("check from dropdown: ", options)
+  console.log("check from dropdown: ", options);
 
   return (
     // checks if mouse clicked outside of frame
@@ -57,21 +57,17 @@ function Dropdown(props) {
         variant="standard"
         style={customStyle}
       >
-        {
-        !isObject ? 
-        options?.map((opt) => (
-          <option value={opt} key={opt}>
-            {opt}
-          </option>
-        ))
-        :
-        options?.map((opt) => (
-          <option value={opt.objectField} key={opt[objectField]}>
-            {opt[objectField]}
-          </option>
-        ))
-      }
-        
+        {!isObject
+          ? options?.map((opt) => (
+              <option value={opt} key={opt}>
+                &nbsp;&nbsp;&nbsp;{opt}
+              </option>
+            ))
+          : options?.map((opt) => (
+              <option value={opt.objectField} key={opt[objectField]}>
+                &nbsp;&nbsp;&nbsp;{opt[objectField]}
+              </option>
+            ))}
       </Select>
     </FormControl>
   );
