@@ -119,11 +119,11 @@ function DegreePlan1(props) {
         console.log("get request result of semester plan: ", result);
         console.log("plans: ", result.plans);
 
-        // if (result.reqs.length === 0) {
-        //   console.log("no private reqs");
-        // } else {
-        //   setDegreeReqOptions(result.reqs);
-        // }
+        if (result.reqs.length === 0) {
+          console.log("no private reqs");
+        } else {
+          setDegreeReqOptions(result.reqs);
+        }
       })
       .catch((error) => {
         console.log("error from Degreeplan fetchPrivateReqs ", error);
