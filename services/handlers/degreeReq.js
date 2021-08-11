@@ -23,9 +23,15 @@ exports.createDegreeReqPublic = async (schema) => {
         return insertedDR._id.valueOf();
     }
     catch (e) {
-        if (e.message.indexOf("validation failed") > -1) {
-            /* error is mongoose validation error */
-            throw { code: 1, message: e.message };
+        if (e.message !== undefined) {
+            if (e.message.indexOf("validation failed") > -1) {
+                /* error is mongoose validation error */
+                throw { code: 1, message: e.message };
+            }
+            else {
+                console.error(e);
+                throw { code: 4, message: e };
+            }
         }
         else {
             console.error(e);
@@ -125,13 +131,19 @@ exports.copyDegreeReqPublicToPrivate = async (pub_dr_id, userId) => {
         return insertedDrParsed;
     }
     catch (e) {
-        if (e.message.indexOf("validation failed") > -1) {
-            /* error is mongoose validation error */
-            throw { code: 1, message: e.message };
-        }
-        else if (e.message.indexOf("No public") > -1) {
-            /* error is mongoose validation error */
-            throw { code: 2, message: e.message };
+        if (e.message !== undefined) {
+            if (e.message.indexOf("validation failed") > -1) {
+                /* error is mongoose validation error */
+                throw { code: 1, message: e.message };
+            }
+            else if (e.message.indexOf("No public") > -1) {
+                /* error is mongoose validation error */
+                throw { code: 2, message: e.message };
+            }
+            else {
+                console.error(e);
+                throw { code: 4, message: e };
+            }
         }
         else {
             console.error(e);
@@ -213,9 +225,15 @@ exports.createDegreeReqPrivate = async (userId, schema) => {
         }
     }
     catch (e) {
-        if (e.message.indexOf("validation failed") > -1) {
-            /* error is mongoose validation error */
-            throw { code: 1, message: e.message };
+        if (e.message !== undefined) {
+            if (e.message.indexOf("validation failed") > -1) {
+                /* error is mongoose validation error */
+                throw { code: 1, message: e.message };
+            }
+            else {
+                console.error(e);
+                throw { code: 4, message: e };
+            }
         }
         else {
             console.error(e);
@@ -251,9 +269,15 @@ exports.getDegreeReqPrivate = async (query) => {
         return docParsed;
     }
     catch (e) {
-        if (e.message.indexOf("No private") > -1) {
-            /* error is mongoose validation error */
-            throw { code: 2, message: e.message };
+        if (e.message !== undefined) {
+            if (e.message.indexOf("No private") > -1) {
+                /* error is mongoose validation error */
+                throw { code: 2, message: e.message };
+            }
+            else {
+                console.error(e);
+                throw { code: 4, message: e };
+            }
         }
         else {
             console.error(e);
@@ -288,9 +312,15 @@ exports.saveDegreeReqPrivate = async (priv_dr_id, schema) => {
         return dr._id.valueOf();
     }
     catch (e) {
-        if (e.message.indexOf("was not found") > -1) {
-            /* error is mongoose validation error */
-            throw { code: 2, message: e.message };
+        if (e.message !== undefined) {
+            if (e.message.indexOf("was not found") > -1) {
+                /* error is mongoose validation error */
+                throw { code: 2, message: e.message };
+            }
+            else {
+                console.error(e);
+                throw { code: 4, message: e };
+            }
         }
         else {
             console.error(e);
