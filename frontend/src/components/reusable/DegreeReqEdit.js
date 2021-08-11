@@ -176,7 +176,10 @@ function DegreeReqEdit(props) {
     console.log("request option: ", requestOption)
 
     await fetch("https://jarney.club/api/degreereqs/private", requestOption)
-      .then((response) => console.log("response: ", response))
+      .then((response) => {
+        console.log("response: ", response);
+        return response.json();
+      })
       .then((result) => 
         console.log("result from fetchCreate: ", result))
       .catch((error) => {
