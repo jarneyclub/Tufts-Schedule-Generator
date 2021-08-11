@@ -117,7 +117,7 @@ function DegreePlan1(props) {
       })
       .then((result) => {
         console.log("get request result of semester plan: ", result);
-        console.log("plans: ", result.plans);
+        // console.log("plans: ", result.plans);
 
         if (result.reqs.length === 0) {
           console.log("no private reqs");
