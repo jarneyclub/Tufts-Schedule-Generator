@@ -228,18 +228,17 @@ exports.createDegreeReqPrivate = async (userId, schema) => {
         }
     }
     catch (e) {
+        console.error("(degreeReq/createDegreeReqPrivate) e: ", e);
         if (e.message !== undefined) {
             if (e.message.indexOf("validation failed") > -1) {
                 /* error is mongoose validation error */
                 throw { code: 1, message: e.message };
             }
             else {
-                console.error(e);
                 throw { code: 4, message: e };
             }
         }
         else {
-            console.error(e);
             throw { code: 4, message: e };
         }
     }
