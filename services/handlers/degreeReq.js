@@ -207,6 +207,7 @@ exports.getDegreeReqsPrivate = async (query) => {
  */
 exports.createDegreeReqPrivate = async (userId, schema) => {
     try {
+        console.log("(degreeReq/createDegreeReqPrivate) here");
         let dr = new DegreeReqPrivate({
             program_name    : schema.programName,
             school          : schema.school,
