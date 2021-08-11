@@ -59,9 +59,7 @@ function DegreeReqEdit(props) {
 
   const handleAdd = () => {
     /* do something API??  */
-
-    /* Then Close */
-    onClose();
+    fetchCreate();
   };
 
   const handleGeneralChange = (e) => {
@@ -167,6 +165,28 @@ function DegreeReqEdit(props) {
     }));
   };
 
+  const fetchCreate = async () => {
+    const requestBody = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(detail),
+    };
+
+    await fetch("https://jarney.club/api/degreereqs/private", requestBody)
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        console.log("result from fetchCreate: ", result);
+
+        /*  Closes the popup  */
+        onClose();
+      })
+      .catch((error) => {
+        console.log("fetchCreate error: ", error);
+      });
+  };
+
   return (
     <div className={dStyle.drContainer}>
       <div className={dStyle.headerContainer}>
@@ -199,14 +219,7 @@ function DegreeReqEdit(props) {
             labelId="school_dropdown"
             labelName="School"
           />
-          {/* <Dropdown
-            options={degreeOptions}
-            selectedOption={detail.degree}
-            onOptionChange={handleGeneralChange}
-            name="degree"
-            labelId="degree_dropdown"
-            labelName="Degree"
-          /> */}
+
           <TextField
             size="medium"
             onChange={handleGeneralChange}
