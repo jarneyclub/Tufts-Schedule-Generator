@@ -99,7 +99,6 @@ exports.deleteDegreeReqPublic = async (pubDrId) => {
  */
 exports.copyDegreeReqPublicToPrivate = async (pub_dr_id, userId) => {
     try {
-        console.log("heeeere");
         let dbDRPub = mongoose.connection.collection("degree_reqs_public"); // get MongoDB collection
         // let dbDRPriv = mongoose.connection.collection("degree_reqs_private"); // get MongoDB collection
         let drPub = await dbDRPub.findOne({
@@ -185,9 +184,15 @@ exports.getDegreeReqsPrivate = async (query) => {
 
     }
     catch (e) {
-        if (e.message.indexOf("No private") > -1) {
-            /* error is mongoose validation error */
-            throw { code: 2, message: e.message };
+        if (e.message !== undefined) {
+            if (e.message.indexOf("No private") > -1) {
+                /* error is mongoose validation error */
+                throw { code: 2, message: e.message };
+            }
+            else {
+                console.error(e);
+                throw { code: 4, message: e };
+            }
         }
         else {
             console.error(e);
