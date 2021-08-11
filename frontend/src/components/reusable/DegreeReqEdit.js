@@ -47,7 +47,7 @@ const drDefault = {
   part_id_tracker: 1,
 };
 
-const schoolOptions = ["A&S", "ENG"];
+const schoolOptions = [" A&S", " ENG"];
 const degreeOptions = ["B.S.", "B.A."];
 function DegreeReqEdit(props) {
   const { onClose } = props;
@@ -184,7 +184,7 @@ function DegreeReqEdit(props) {
       <div className={dStyle.formContainer}>
         <div className={dStyle.inputContainer}>
           <TextField
-            size="large"
+            size="medium"
             onChange={handleGeneralChange}
             className={pStyle.inputAreaName}
             label="Name"
@@ -199,13 +199,20 @@ function DegreeReqEdit(props) {
             labelId="school_dropdown"
             labelName="School"
           />
-          <Dropdown
+          {/* <Dropdown
             options={degreeOptions}
             selectedOption={detail.degree}
             onOptionChange={handleGeneralChange}
             name="degree"
             labelId="degree_dropdown"
             labelName="Degree"
+          /> */}
+          <TextField
+            size="medium"
+            onChange={handleGeneralChange}
+            className={pStyle.inputAreaName}
+            label="Degree"
+            name="degree_dropdown"
           />
 
           {/* ------------ Parts ------------ */}
