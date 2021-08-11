@@ -169,10 +169,10 @@ function DegreeReqEdit(props) {
 
     const requestOption = {
       method: "POST",
-      headers: { "Content-Type": "application/json",
-      "Accept": "application/json" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(detail),
     };
+  
     console.log("request option: ", requestOption)
 
     await fetch("https://jarney.club/api/degreereqs/private", requestOption)
