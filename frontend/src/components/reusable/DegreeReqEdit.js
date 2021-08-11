@@ -168,7 +168,8 @@ function DegreeReqEdit(props) {
   const fetchCreate = async () => {
     const requestOption = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json",
+      "Accept": "application/json" },
       body: JSON.stringify(detail),
     };
     console.log("request option: ", requestOption)
