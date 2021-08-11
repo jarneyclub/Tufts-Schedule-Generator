@@ -84,8 +84,6 @@ function AddMajorMinor(props) {
   );
 }
 
-
-
 /*  ============================================================= */
 /*  =============== EXPORTED MAIN FUNCTIONAL COMPONENT =============== */
 function DegreePlan1(props) {
@@ -103,8 +101,6 @@ function DegreePlan1(props) {
   const [newMMPopup, setNewMMPopup] =
     useState(false); /* Add new Major / Minor Popup */
 
-
-
   const handleDegreeReqChange = (e) => {
     setDegreeReq(e.target.value);
   };
@@ -113,24 +109,19 @@ function DegreePlan1(props) {
     setListSearchValue(e.target.value);
   };
 
-
-
-
   const fetchPrivateReqs = async () => {
     await fetch("https://jarney.club/api/degreereqs/private")
       .then((response) => {
-        console.log("response:", response)
+        console.log("response:", response);
         return response.json();
-        
       })
-      .then((result) => {        
+      .then((result) => {
         console.log("result of semester plan: ", result);
         console.log("plans: ", result.plans);
 
         if (result.reqs.length === 0) {
-          console.log("no private reqs")
+          console.log("no private reqs");
         } else {
-
           setDegreeReqOptions(result.reqs);
         }
       })
@@ -141,7 +132,7 @@ function DegreePlan1(props) {
 
   useEffect(() => {
     fetchPrivateReqs();
-  },[])
+  }, []);
 
   return (
     <div>
@@ -201,7 +192,10 @@ function DegreePlan1(props) {
 
             <Button
               className={dp1Style.newMajorMinorButton}
-              onClick={() => setNewMMPopup(true)}
+              onClick={() => {
+                setNewMMPopup(true);
+                setEditDRPopup(true);
+              }}
             >
               --- create a new major/ minor ---
             </Button>
@@ -233,7 +227,10 @@ function DegreePlan1(props) {
             </Button>
             {editDRPopup && (
               <Popup onClose={() => setEditDRPopup(false)}>
-                <DegreeReqEdit onClose={() => setEditDRPopup(false)} />
+                <DegreeReqEdit
+                  onClose={() => setEditDRPopup(false)}
+                  isCreateMM={newMMPopup}
+                />
               </Popup>
             )}
           </div>
@@ -247,11 +244,11 @@ function DegreePlan1(props) {
           </div>
         </div>
       </div>
-      {newMMPopup && (
+      {/* {newMMPopup && (
         <Popup onClose={() => setNewMMPopup(false)}>
           <AddMajorMinor onClose={() => setNewMMPopup(false)} />
         </Popup>
-      )}
+      )} */}
     </div>
   );
 }

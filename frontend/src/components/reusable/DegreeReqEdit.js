@@ -47,7 +47,7 @@ const drDefault = {
   part_id_tracker: 1,
 };
 
-const schoolOptions = ["A&S", "ENG"];
+const schoolOptions = [" A&S", " ENG"];
 const degreeOptions = ["B.S.", "B.A."];
 function DegreeReqEdit(props) {
   const { onClose } = props;
@@ -59,9 +59,7 @@ function DegreeReqEdit(props) {
 
   const handleAdd = () => {
     /* do something API??  */
-
-    /* Then Close */
-    onClose();
+    fetchCreate();
   };
 
   const handleGeneralChange = (e) => {
@@ -167,6 +165,32 @@ function DegreeReqEdit(props) {
     }));
   };
 
+  const fetchCreate = async () => {
+
+    const requestOption = {
+      method: "POST",
+      headers: { "Content-Type": "application/json",
+      "Accept": "application/json" },
+      body: JSON.stringify(detail),
+    };
+    console.log("request option: ", requestOption)
+
+    await fetch("https://jarney.club/api/degreereqs/private", requestOption)
+      .then((response) => {
+        console.log("response from fetchCreate: ", response);
+        return response.json();
+      })
+      .then((result) => {
+        console.log("result from fetchCreate: ", result);
+
+        /*  Closes the popup  */
+        onClose();
+      })
+      .catch((error) => {
+        console.log("fetchCreate error: ", error);
+      });
+  };
+
   return (
     <div className={dStyle.drContainer}>
       <div className={dStyle.headerContainer}>
@@ -177,14 +201,14 @@ function DegreeReqEdit(props) {
         >
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>=== {detail.program_name} ===</div>
+        <div className={pStyle.headerBody}>=== {detail.program_name} ===&nbsp;&nbsp;</div>
         <span />
       </div>
       {/*   ================== Body ================== */}
       <div className={dStyle.formContainer}>
         <div className={dStyle.inputContainer}>
           <TextField
-            size="large"
+            size="medium"
             onChange={handleGeneralChange}
             className={pStyle.inputAreaName}
             label="Name"
@@ -199,13 +223,13 @@ function DegreeReqEdit(props) {
             labelId="school_dropdown"
             labelName="School"
           />
-          <Dropdown
-            options={degreeOptions}
-            selectedOption={detail.degree}
-            onOptionChange={handleGeneralChange}
+
+          <TextField
+            size="medium"
+            onChange={handleGeneralChange}
+            className={pStyle.inputAreaName}
+            label="Degree"
             name="degree"
-            labelId="degree_dropdown"
-            labelName="Degree"
           />
 
           {/* ------------ Parts ------------ */}
