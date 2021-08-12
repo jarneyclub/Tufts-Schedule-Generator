@@ -167,20 +167,30 @@ function DegreePlan1(props) {
     const requestOption = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
+      body: JSON.stringify({
+        "program_name": "string",
+        "school": "string",
+        "degree": "string",
+        "part_id_tracker": 0,
+        "parts": [
+          {
+            "part_id": 0,
+            "part_name": "string",
+            "part_desc": "string",
+            "part_reqs": [
+              {
+                "part_req_id": 0,
+                "course_num": "string",
+                "course_note": "string"
+              }
+            ]
+          }
+        ]
+      }),
     };
     console.log("requestOption for fetchCreatePrivateReqs", requestOption);
     await fetch("https://jarney.club/api/degreereqs/private", requestOption)
-      .then(async(response) => {
-        try {
-          const data = await response.json()
-          console.log('response data?', data)
-        } catch(error) {
-          console.log('Error happened here!')
-          console.error(error)
-        }
-     }
-      )
+      .then((response) => response.json())
       .then((result) =>
         console.log("result from fetchCreatePrivateReqs", result)
       )
