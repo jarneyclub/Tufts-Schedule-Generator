@@ -90,21 +90,21 @@ function AddMajorMinor(props) {
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 const degreeReqDefault = {
-  program_name: "Requirement #1",
-  school: "",
-  degree: "",
-  part_id_tracker: 1,
-  parts: [
+  "program_name": "Requirement #1",
+  "school": "",
+  "degree": "",
+  "part_id_tracker": 1,
+  "parts": [
     {
-      part_id: 0,
-      part_name: "",
-      part_desc: "",
-      // part_req_id_tracker: 1,
-      part_reqs: [
+      "part_id": 0,
+      "part_name": "",
+      "part_desc": "",
+      "part_req_id_tracker": 1,
+      "part_reqs": [
         {
-          part_req_id: 0,
-          course_num: "",
-          course_note: "",
+          "part_req_id": 0,
+          "course_num": "",
+          "course_note": "",
         },
       ],
     },
