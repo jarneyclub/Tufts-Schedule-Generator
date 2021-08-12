@@ -171,7 +171,16 @@ function DegreePlan1(props) {
     };
     console.log("requestOption for fetchCreatePrivateReqs", requestOption);
     await fetch("https://jarney.club/api/degreereqs/private", requestOption)
-      .then((response) => response.json())
+      .then(async(response) => {
+        try {
+          const data = await response.json()
+          console.log('response data?', data)
+        } catch(error) {
+          console.log('Error happened here!')
+          console.error(error)
+        }
+     }
+      )
       .then((result) =>
         console.log("result from fetchCreatePrivateReqs", result)
       )
