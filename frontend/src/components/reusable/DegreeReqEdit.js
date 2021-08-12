@@ -25,15 +25,24 @@ import Dropdown from "./Dropdown";
 import DegreeReqPart from "./DegreeReqPart";
 import dStyle from "./reusableStyles/DegreeReq.module.css";
 
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+ *                                                                           *
+ *                                 CONSTANTS                                 *
+ *                                                                           * 
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 const drDefault = {
   program_name: "",
   school: "",
   degree: "",
+  part_id_tracker: 1,
   parts: [
     {
       part_id: 0,
       part_name: "",
       part_desc: "",
+      part_req_id_tracker: 1,
       part_reqs: [
         {
           part_req_id: 0,
@@ -41,14 +50,20 @@ const drDefault = {
           course_note: "",
         },
       ],
-      part_req_id_tracker: 1,
     },
   ],
-  part_id_tracker: 1,
 };
 
 const schoolOptions = [" A&S", " ENG"];
 const degreeOptions = ["B.S.", "B.A."];
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+ *                                                                           *
+ *                     EXPORTED MAIN FUNCTIONAL COMPONENT                    *
+ *                                                                           * 
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 function DegreeReqEdit(props) {
   const { onClose } = props;
   const [detail, setDetail] = useState(drDefault);
