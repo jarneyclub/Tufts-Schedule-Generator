@@ -23,7 +23,6 @@ import Popup from "./reusable/Popup";
 import Dropdown from "./reusable/Dropdown";
 import DegreeReqEdit from "./reusable/DegreeReqEdit";
 import dStyle from "./reusable/reusableStyles/Dropdown.module.css";
-import { response } from "express";
 
 /* scripts */
 
@@ -84,57 +83,55 @@ function AddMajorMinor(props) {
     </div>
   );
 }
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
  *                                 CONSTANTS                                 *
- *                                                                           * 
+ *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 const degreeReqDefault = {
-  "program_name": "Requirement #1",
-  "school": "",
-  "degree": "",
-  "part_id_tracker": 1,
-  "parts": [
+  program_name: "Requirement #1",
+  school: "",
+  degree: "",
+  part_id_tracker: 1,
+  parts: [
     {
-      "part_id": 0,
-      "part_name": "",
-      "part_desc": "",
-      "part_req_id_tracker": 1,
-      "part_reqs": [
+      part_id: 0,
+      part_name: "",
+      part_desc: "",
+      part_req_id_tracker: 1,
+      part_reqs: [
         {
-          "part_req_id": 0,
-          "course_num": "",
-          "course_note": ""
-        }
-      ]
-    }
-  ]
+          part_req_id: 0,
+          course_num: "",
+          course_note: "",
+        },
+      ],
+    },
+  ],
 };
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
  *                  EXPORTED MAIN FUNCTIONAL COMPONENT                       *
- *                                                                           * 
+ *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function DegreePlan1(props) {
   const { shrink } = props;
-  const [degreeReqOptions, setDegreeReqOptions] = useState([]); /*  ALL the private degree reqs to current user  */
+  const [degreeReqOptions, setDegreeReqOptions] = useState(
+    []
+  ); /*  ALL the private degree reqs to current user  */
   const [selectedDegreeReq, setDegreeReq] =
     useState(
       "PLACEHOLDER"
     ); /*  Holds the current private Degree Requirement Displayed */
 
-  
   const [editDRPopup, setEditDRPopup] =
     useState(false); /*  Degree Requirement Edit Popup */
 
   const [listSearchValue, setListSearchValue] = useState("");
   const [newMMPopup, setNewMMPopup] =
     useState(false); /* Add new Major / Minor Popup */
-
-
-
 
   const handleDegreeReqChange = (e) => {
     setDegreeReq(e.target.value);
@@ -174,12 +171,14 @@ function DegreePlan1(props) {
     };
     console.log("requestOption for fetchCreatePrivateReqs", requestOption);
     await fetch("https://jarney.club/api/degreereqs/private", requestOption)
-      .then(response => response.json())
-      .then(result => console.log("result from fetchCreatePrivateReqs", result))
-      .catch(error => console.log("error from fetchCreatePrivateReqs", error))
-  }
-
-
+      .then((response) => response.json())
+      .then((result) =>
+        console.log("result from fetchCreatePrivateReqs", result)
+      )
+      .catch((error) =>
+        console.log("error from fetchCreatePrivateReqs", error)
+      );
+  };
 
   useEffect(() => {
     fetchPrivateReqs();
