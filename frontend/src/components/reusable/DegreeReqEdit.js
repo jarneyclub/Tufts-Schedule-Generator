@@ -25,11 +25,10 @@ import Dropdown from "./Dropdown";
 import DegreeReqPart from "./DegreeReqPart";
 import dStyle from "./reusableStyles/DegreeReq.module.css";
 
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
  *                                 CONSTANTS                                 *
- *                                                                           * 
+ *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 const drDefault = {
@@ -57,11 +56,10 @@ const drDefault = {
 const schoolOptions = [" A&S", " ENG"];
 const degreeOptions = ["B.S.", "B.A."];
 
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
  *                     EXPORTED MAIN FUNCTIONAL COMPONENT                    *
- *                                                                           * 
+ *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 function DegreeReqEdit(props) {
@@ -187,7 +185,7 @@ function DegreeReqEdit(props) {
   //     headers: { "Content-Type": "application/json", "accept": "application/json" },
   //     body: JSON.stringify(detail),
   //   };
-  
+
   //   console.log("request option: ", requestOption)
 
   //   await fetch("https://jarney.club/api/degreereqs/private", requestOption)
@@ -195,13 +193,12 @@ function DegreeReqEdit(props) {
   //       console.log("response: ", response);
   //       return response.json();
   //     })
-  //     .then((result) => 
+  //     .then((result) =>
   //       console.log("result from fetchCreate: ", result))
   //     .catch((error) => {
   //       console.log("fetchCreate error: ", error);
   //     });
   // };
-
 
   const fetchCreate = async (values) => {
     // setLoadMessage(true);
@@ -213,29 +210,27 @@ function DegreeReqEdit(props) {
     };
     console.log("requestOption clicked ", requestOption);
 
-   await fetch("https://jarney.club/api/degreereqs/private", requestOption)
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-          throw new Error("Failed to fetch.");
-        })
-        .then((result) => {
-          console.log("result from post: ", result);
-          // setLoadMessage(false);
-          onClose();
-        })
-        .catch((error) => {
-          // setLoadMessage(false);
-          // console.log(error.data);
-          // handleAlert("error", "Error: Failed to Login");
-          // console.log("error login")
+    await fetch("https://jarney.club/api/degreereqs/private", requestOption)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Failed to fetch.");
+      })
+      .then((result) => {
+        console.log("result from post: ", result);
+        // setLoadMessage(false);
+        onClose();
+      })
+      .catch((error) => {
+        // setLoadMessage(false);
+        // console.log(error.data);
+        // handleAlert("error", "Error: Failed to Login");
+        // console.log("error login")
 
-          // add an error message popup of some sort
-          console.log("error from post degreereq: ", error);
-        });
-   
-    
+        // add an error message popup of some sort
+        console.log("error from post degreereq: ", error);
+      });
   };
 
   return (
@@ -248,7 +243,9 @@ function DegreeReqEdit(props) {
         >
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>=== {detail.program_name} ===&nbsp;&nbsp;</div>
+        <div className={pStyle.headerBody}>
+          === {detail.program_name} ===&nbsp;&nbsp;
+        </div>
         <span />
       </div>
       {/*   ================== Body ================== */}

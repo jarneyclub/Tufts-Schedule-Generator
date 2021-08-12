@@ -406,11 +406,11 @@ function DegreePlan2(props) {
   /*
    *  fetchPlans()
    *  purpose: fetch for existing degree plans
-   *  effect:  makes a GET request. sets the state for semesterPlans if plans 
-   *           are returned. If an empty array returned, then calls 
-   *           createNewPlan to create a new default plan for new users. 
+   *  effect:  makes a GET request. sets the state for semesterPlans if plans
+   *           are returned. If an empty array returned, then calls
+   *           createNewPlan to create a new default plan for new users.
    *
-   */ 
+   */
   const fetchPlans = async () => {
     await fetch("https://jarney.club/api/degreeplans")
       .then((response) => {
