@@ -99,7 +99,7 @@ const degreeReqDefault = {
       part_id: 0,
       part_name: "",
       part_desc: "",
-      part_req_id_tracker: 1,
+      // part_req_id_tracker: 1,
       part_reqs: [
         {
           part_req_id: 0,
