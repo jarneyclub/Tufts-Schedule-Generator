@@ -162,7 +162,7 @@
   align-items: center;
   justify-content: center;
   width: 100vw;
-  background-color: #5a32bf;
+  background-color: #efebf9;
   border-bottom: 5px solid #fc4e4e;
   border-bottom-left-radius: 10px;
   /* box-sizing: content-box; */
@@ -172,7 +172,7 @@
 }
 
 .shrinkNavOption {
-  color: #ffffff;
+  color: #7048d5;
   font-size: 25px;
   font-weight: lighter;
   /* width: 100%; */
@@ -186,7 +186,7 @@
 
 .shrinkNavOption:hover {
   color: #ffffff;
-  background-color: #7048d5;
+  background-color: #fc4e4e;
 }
 
 .activeShrinkNavOption {
@@ -197,7 +197,7 @@
     margin-bottom: 5px; */
   padding-top: 1%;
   padding-bottom: 1%;
-  background-color: #fc6d6d;
+  background-color: #7048d5;
   /* border-left: 10px #fc4e4e solid;
   border-right: 10px #fc4e4e solid; */
 
@@ -209,5 +209,5 @@
   /* width: 100%; */
   color: #ffffff;
   font-weight: normal;
-  background-color: #fc6d6d;
+  background-color: #7048d5;
 }

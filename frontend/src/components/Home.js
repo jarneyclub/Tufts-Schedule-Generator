@@ -10,7 +10,7 @@
 import { useState } from "react";
 import { Button } from "@material-ui/core";
 import hStyle from "./style/Home.module.css";
-import LoginGraphic from "./res/JARney_Img.png";
+import LoginGraphic from "./res/homepage__.gif";
 import DegreeGraphic from "./res/Icon_DegreePlanner.png";
 import SchedulerGraphic from "./res/Icon_Scheduler.png";
 import Popup from "./reusable/Popup";
@@ -31,24 +31,17 @@ function Home() {
   return (
     <div className={hStyle.homeContainer}>
       <div className={hStyle.horizontalContainer}>
-        <div className={hStyle.loginGraphicContainer}>
-          <img
-            src={LoginGraphic}
-            alt="LoginGraphic"
-            className={hStyle.loginImage}
-          />
-        </div>
-        <div className={hStyle.verticalContainer}>
-          <div className={hStyle.bodyContainer}>
-            <h1 style={{ fontSize: "70px" }}>JARney.</h1>
-            <div className={hStyle.content}>
-              Plan out your Tufts experience, from four-year (or five-year!)
-              plans to semesterly schedules.
-              <br />
-              Created by Tufts students, for Tufts students.
-            </div>
-          </div>
-
+        <img
+          src={LoginGraphic}
+          alt="LoginGraphic"
+          className={hStyle.loginImage}
+        />
+        <div className={hStyle.content}>
+          <h1 style={{ fontSize: "70px" }}>JARney.</h1>
+          Plan out your Tufts experience, from four-year (or five-year!) plans
+          to semesterly schedules.
+          <br />
+          Created by Tufts students, for Tufts students.
           <div className={hStyle.buttonContainer}>
             <Button
               type="submit"
@@ -61,6 +54,7 @@ function Home() {
           </div>
         </div>
       </div>
+
       <div className={hStyle.horizontalContainer}>
         <img
           src={DegreeGraphic}
@@ -72,6 +66,7 @@ function Home() {
           Plan ahead for your college journey using our degree planner!
         </div>
       </div>
+
       <div className={hStyle.horizontalContainer}>
         <div className={hStyle.content}>
           <h2>Semesterly Scheduling</h2>

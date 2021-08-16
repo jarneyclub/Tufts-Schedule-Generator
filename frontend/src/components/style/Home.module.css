@@ -54,7 +54,7 @@
   /* max-width: 54vw; */
   border: none;
   border-radius: 12px;
-  padding: 15px 2vw;
+  padding: 15px 1vw;
   background-color: #ffffff;
 }
 
@@ -123,7 +123,8 @@ h2 {
 
 @media only screen and (max-width: 813px) {
   .horizontalContainer {
-    flex-direction: column-reverse;
-    flex-wrap: nowrap;
+    /* flex-direction: column-reverse; */
+    /* flex-wrap: nowrap; */
+    padding-top: 10vh;
   }
 }
