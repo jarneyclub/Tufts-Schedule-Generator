@@ -10,7 +10,7 @@
 import { useState } from "react";
 import { Button } from "@material-ui/core";
 import hStyle from "./style/Home.module.css";
-import LoginGraphic from "./res/JARney_Img.png";
+import LoginGraphic from "./res/homepage__.gif";
 import DegreeGraphic from "./res/Icon_DegreePlanner.png";
 import SchedulerGraphic from "./res/Icon_Scheduler.png";
 import Popup from "./reusable/Popup";
