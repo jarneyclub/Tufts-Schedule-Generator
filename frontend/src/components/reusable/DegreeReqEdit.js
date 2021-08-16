@@ -25,15 +25,23 @@ import Dropdown from "./Dropdown";
 import DegreeReqPart from "./DegreeReqPart";
 import dStyle from "./reusableStyles/DegreeReq.module.css";
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *                                                                           *
+ *                                 CONSTANTS                                 *
+ *                                                                           *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 const drDefault = {
   program_name: "",
   school: "",
   degree: "",
+  part_id_tracker: 1,
   parts: [
     {
       part_id: 0,
       part_name: "",
       part_desc: "",
+      part_req_id_tracker: 1,
       part_reqs: [
         {
           part_req_id: 0,
@@ -41,14 +49,19 @@ const drDefault = {
           course_note: "",
         },
       ],
-      part_req_id_tracker: 1,
     },
   ],
-  part_id_tracker: 1,
 };
 
-const schoolOptions = ["A&S", "ENG"];
+const schoolOptions = [" A&S", " ENG"];
 const degreeOptions = ["B.S.", "B.A."];
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *                                                                           *
+ *                     EXPORTED MAIN FUNCTIONAL COMPONENT                    *
+ *                                                                           *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 function DegreeReqEdit(props) {
   const { onClose } = props;
   const [detail, setDetail] = useState(drDefault);
@@ -59,9 +72,7 @@ function DegreeReqEdit(props) {
 
   const handleAdd = () => {
     /* do something API??  */
-
-    /* Then Close */
-    onClose();
+    fetchCreate();
   };
 
   const handleGeneralChange = (e) => {
@@ -167,6 +178,61 @@ function DegreeReqEdit(props) {
     }));
   };
 
+  // const fetchCreate = async () => {
+
+  //   const requestOption = {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json", "accept": "application/json" },
+  //     body: JSON.stringify(detail),
+  //   };
+
+  //   console.log("request option: ", requestOption)
+
+  //   await fetch("https://jarney.club/api/degreereqs/private", requestOption)
+  //     .then((response) => {
+  //       console.log("response: ", response);
+  //       return response.json();
+  //     })
+  //     .then((result) =>
+  //       console.log("result from fetchCreate: ", result))
+  //     .catch((error) => {
+  //       console.log("fetchCreate error: ", error);
+  //     });
+  // };
+
+  const fetchCreate = async (values) => {
+    // setLoadMessage(true);
+
+    const requestOption = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(detail),
+    };
+    console.log("requestOption clicked ", requestOption);
+
+    await fetch("https://jarney.club/api/degreereqs/private", requestOption)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Failed to fetch.");
+      })
+      .then((result) => {
+        console.log("result from post: ", result);
+        // setLoadMessage(false);
+        onClose();
+      })
+      .catch((error) => {
+        // setLoadMessage(false);
+        // console.log(error.data);
+        // handleAlert("error", "Error: Failed to Login");
+        // console.log("error login")
+
+        // add an error message popup of some sort
+        console.log("error from post degreereq: ", error);
+      });
+  };
+
   return (
     <div className={dStyle.drContainer}>
       <div className={dStyle.headerContainer}>
@@ -177,14 +243,16 @@ function DegreeReqEdit(props) {
         >
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>=== {detail.program_name} ===</div>
+        <div className={pStyle.headerBody}>
+          === {detail.program_name} ===&nbsp;&nbsp;
+        </div>
         <span />
       </div>
       {/*   ================== Body ================== */}
       <div className={dStyle.formContainer}>
         <div className={dStyle.inputContainer}>
           <TextField
-            size="large"
+            size="medium"
             onChange={handleGeneralChange}
             className={pStyle.inputAreaName}
             label="Name"
@@ -199,13 +267,13 @@ function DegreeReqEdit(props) {
             labelId="school_dropdown"
             labelName="School"
           />
-          <Dropdown
-            options={degreeOptions}
-            selectedOption={detail.degree}
-            onOptionChange={handleGeneralChange}
+
+          <TextField
+            size="medium"
+            onChange={handleGeneralChange}
+            className={pStyle.inputAreaName}
+            label="Degree"
             name="degree"
-            labelId="degree_dropdown"
-            labelName="Degree"
           />
 
           {/* ------------ Parts ------------ */}

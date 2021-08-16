@@ -367,6 +367,13 @@ function DegreePlan2(props) {
       )
     );
   };
+
+  /*
+   *  createnNewPlan()
+   *  purpose: creates a new plan option with given name
+   *  effect:  makes a POST request
+   *
+   */
   const createNewPlan = async (planName) => {
     const requestOption = {
       method: "POST",
@@ -377,8 +384,7 @@ function DegreePlan2(props) {
       .then((response) => {
         if (response.ok) {
           return response.json();
-        }
-        else {
+        } else {
           throw new Error("Failed to create Plan.");
         }
       })
@@ -397,17 +403,24 @@ function DegreePlan2(props) {
       });
   };
 
+  /*
+   *  fetchPlans()
+   *  purpose: fetch for existing degree plans
+   *  effect:  makes a GET request. sets the state for semesterPlans if plans
+   *           are returned. If an empty array returned, then calls
+   *           createNewPlan to create a new default plan for new users.
+   *
+   */
   const fetchPlans = async () => {
     await fetch("https://jarney.club/api/degreeplans")
       .then((response) => {
-        console.log("response:", response)
+        console.log("response:", response);
         return response.json();
-        
       })
-      .then((result) => {        
+      .then((result) => {
         console.log("result of semester plan: ", result);
         console.log("plans: ", result.plans);
-
+        /*  Creates a new plan for new users */
         if (result.plans.length === 0) {
           createNewPlan("Plan #1");
         } else {
@@ -420,11 +433,10 @@ function DegreePlan2(props) {
       });
   };
 
+  /*  Initial fetching for plans when page first loads */
   useEffect(() => {
     fetchPlans();
   }, []);
-
- 
 
   useEffect(() => {
     console.log("cardOptions: ", cardOptions);

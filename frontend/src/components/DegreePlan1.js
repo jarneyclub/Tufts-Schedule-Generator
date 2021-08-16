@@ -83,27 +83,55 @@ function AddMajorMinor(props) {
     </div>
   );
 }
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *                                                                           *
+ *                                 CONSTANTS                                 *
+ *                                                                           *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+const degreeReqDefault = {
+  program_name: "Requirement #1",
+  school: "",
+  degree: "",
+  part_id_tracker: 1,
+  parts: [
+    {
+      part_id: 0,
+      part_name: "",
+      part_desc: "",
+      part_req_id_tracker: 1,
+      part_reqs: [
+        {
+          part_req_id: 0,
+          course_num: "",
+          course_note: "",
+        },
+      ],
+    },
+  ],
+};
 
-
-/*  ============================================================= */
-/*  =============== EXPORTED MAIN FUNCTIONAL COMPONENT =============== */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *                                                                           *
+ *                  EXPORTED MAIN FUNCTIONAL COMPONENT                       *
+ *                                                                           *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function DegreePlan1(props) {
   const { shrink } = props;
-  const [degreeReqOptions, setDegreeReqOptions] = useState([]);
-
+  const [degreeReqOptions, setDegreeReqOptions] = useState(
+    []
+  ); /*  ALL the private degree reqs to current user  */
   const [selectedDegreeReq, setDegreeReq] =
     useState(
       "PLACEHOLDER"
-    ); /*  Holds the current Degree Requirement Displayed */
+    ); /*  Holds the current private Degree Requirement Displayed */
+
   const [editDRPopup, setEditDRPopup] =
     useState(false); /*  Degree Requirement Edit Popup */
 
   const [listSearchValue, setListSearchValue] = useState("");
   const [newMMPopup, setNewMMPopup] =
     useState(false); /* Add new Major / Minor Popup */
-
-
 
   const handleDegreeReqChange = (e) => {
     setDegreeReq(e.target.value);
@@ -113,24 +141,20 @@ function DegreePlan1(props) {
     setListSearchValue(e.target.value);
   };
 
-
-
-
   const fetchPrivateReqs = async () => {
     await fetch("https://jarney.club/api/degreereqs/private")
       .then((response) => {
-        console.log("response:", response)
+        console.log("get request response:", response);
         return response.json();
-        
       })
-      .then((result) => {        
-        console.log("result of semester plan: ", result);
-        console.log("plans: ", result.plans);
+      .then((result) => {
+        console.log("get request result of semester plan: ", result);
+        // console.log("plans: ", result.plans);
 
         if (result.reqs.length === 0) {
-          console.log("no private reqs")
+          console.log("no private reqs");
+          fetchCreatePrivateReqs(degreeReqDefault);
         } else {
-
           setDegreeReqOptions(result.reqs);
         }
       })
@@ -139,12 +163,29 @@ function DegreePlan1(props) {
       });
   };
 
+  const fetchCreatePrivateReqs = async (values) => {
+    const requestOption = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    };
+    console.log("requestOption for fetchCreatePrivateReqs", requestOption);
+    await fetch("https://jarney.club/api/degreereq/private", requestOption)
+      .then((response) => response.json())
+      .then((result) =>
+        console.log("result from fetchCreatePrivateReqs", result)
+      )
+      .catch((error) =>
+        console.log("error from fetchCreatePrivateReqs", error)
+      );
+  };
+
   useEffect(() => {
     fetchPrivateReqs();
-  },[])
+  }, []);
 
   return (
-    <div>
+    <div className={dp1Style.dp1Container}>
       {/* * * * * * * The Big Ass Horizontal Display * * * * * * * */}
       {/* Encapsulates both 1) the search side, and 2) the degree req 
                 side. 
@@ -201,7 +242,10 @@ function DegreePlan1(props) {
 
             <Button
               className={dp1Style.newMajorMinorButton}
-              onClick={() => setNewMMPopup(true)}
+              onClick={() => {
+                setNewMMPopup(true);
+                setEditDRPopup(true);
+              }}
             >
               --- create a new major/ minor ---
             </Button>
@@ -233,7 +277,10 @@ function DegreePlan1(props) {
             </Button>
             {editDRPopup && (
               <Popup onClose={() => setEditDRPopup(false)}>
-                <DegreeReqEdit onClose={() => setEditDRPopup(false)} />
+                <DegreeReqEdit
+                  onClose={() => setEditDRPopup(false)}
+                  isCreateMM={newMMPopup}
+                />
               </Popup>
             )}
           </div>
@@ -247,11 +294,11 @@ function DegreePlan1(props) {
           </div>
         </div>
       </div>
-      {newMMPopup && (
+      {/* {newMMPopup && (
         <Popup onClose={() => setNewMMPopup(false)}>
           <AddMajorMinor onClose={() => setNewMMPopup(false)} />
         </Popup>
-      )}
+      )} */}
     </div>
   );
 }

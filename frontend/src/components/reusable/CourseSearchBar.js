@@ -50,10 +50,11 @@ function CourseSearchBar(props) {
   };
 
   const handleDoubleClick = () => {
+    console.log("origin of remove:", origin, courseDetail);
     if (origin === "schedulerCourseList" || origin === "schedulerTab") {
       onDoubleClick(courseDetail);
     } else if (origin !== "coursList") {
-      onDoubleClick();
+      onDoubleClick(courseDetail);
     }
   };
 

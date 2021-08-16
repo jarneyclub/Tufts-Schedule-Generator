@@ -1,7 +1,6 @@
 // load database api
 const degreeReqAPI = require('../services/handlers/degreeReq.js');
-const errorHandler = require('../services/handlers/errorHandler');
-
+const resHandler = require("./utils/resHandler.js");
 /**
  * Create a public degree requirement
  * @param {any} req 
@@ -28,7 +27,7 @@ exports.createDegreeReqPublic = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(res, err, start);
+        errorHandler(err, "createDegreeReqPublic", res);
     });
 }
 
@@ -50,7 +49,7 @@ exports.getDegreeReqsPublic = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(res, err, start);
+        errorHandler(err, "getDegreeReqsPublic", res);
     });
 }
 
@@ -64,15 +63,16 @@ exports.deleteDegreeReqPublic = async (req, res) => {
 
     // get from database
     degreeReqAPI.deleteDegreeReqPublic(req.params.pub_dr_id)
-        .then(result => {
-            res.status(200);
-            res.json({
-                time_taken: ((Date.now() - start).toString() + "ms")
-            });
-        })
-        .catch(err => {
-            errorHandler(res, err, start);
+    .then(result => {
+        res.status(200);
+        res.json({
+            time_taken: ((Date.now() - start).toString() + "ms")
         });
+    })
+    .catch(err => {
+        errorHandler(err, "deleteDegreeReqPublic", res);
+        // errorHandler(res, err, start);
+    });
 }
 
 /** 
@@ -96,12 +96,13 @@ exports.copyDegreeReqPublicToPrivate = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(res, err, start);
+        errorHandler(err, "copyDegreeReqPublicToPrivate", res);
     });
 }
 
 exports.createDegreeReqPrivate = async (req, res) => {
     // TODO: if from admin account, create a public degree requirement
+    console.log("(degreeReqController/createDegreeReqPrivate) here");
     let start = Date.now(); // begin timing API endpoint
     
     // get user request information
@@ -122,7 +123,7 @@ exports.createDegreeReqPrivate = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(res, err, start);
+        errorHandler(err, "createDegreeReqPrivate", res);
     });
 }
 
@@ -148,7 +149,7 @@ exports.getDegreeReqsPrivate = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(res, err, start);
+        errorHandler(err, "getDegreeReqsPrivate", res);
     });
 }
 
@@ -175,7 +176,7 @@ exports.getDegreeReqPrivate = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(res, err, start);
+        errorHandler(err, "getDegreeReqPrivate", res);
     });
 }
 
@@ -206,7 +207,7 @@ exports.saveDegreeReqPrivate = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(res, err, start);
+        errorHandler(err, "saveDegreeReqPrivate", res);
     });
 }
 
@@ -232,7 +233,7 @@ exports.deleteDegreeReqPrivate = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(res, err, start);
+        errorHandler(err, "deleteDegreeReqPrivate", res);
     });
 }
 
