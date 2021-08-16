@@ -185,7 +185,7 @@ function DegreePlan1(props) {
   }, []);
 
   return (
-    <div>
+    <div className={dp1Style.dp1Container}>
       {/* * * * * * * The Big Ass Horizontal Display * * * * * * * */}
       {/* Encapsulates both 1) the search side, and 2) the degree req 
                 side. 

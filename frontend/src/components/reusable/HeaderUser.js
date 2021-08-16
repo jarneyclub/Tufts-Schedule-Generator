@@ -52,32 +52,6 @@ function HeaderUser(props) {
     }
   };
 
-  // useEffect(() => {
-  //   // setPathName(window.location.pathname);
-  //   console.log("HeaderUser.js Scroll width", pathName);
-  //   // const navGroup = document.getElementById("navGroup");
-
-  //   const checkResize = () => {
-  //     if (window.innerWidth < 670) {
-  //       console.log("HeaderUser width smaller: ", window.innerWidth);
-
-  //       setShrink(true);
-  //     } else {
-  //       console.log("HeaderUser width larger: ", window.innerWidth);
-
-  //       setShrink(false);
-  //     }
-  //   };
-
-  //   window.addEventListener("resize", checkResize);
-
-  //   console.log("Link: ", Link);
-
-  //   return () => {
-  //     window.removeEventListener("resize", checkResize);
-  //   };
-  // }, []);
-
   return (
     <div className={hStyle.headerContainer} id="headerContainer">
       {/* Logo */}
@@ -185,22 +159,13 @@ function HeaderUser(props) {
             {shrinkExpandable && (
               <div className={hStyle.expandableContainer}>
                 <NavLink
-                  to="/Dashboard"
-                  activeClassName={hStyle.activeShrinkNavOption}
-                  className={hStyle.shrinkNavOption}
-                  onClick={() => setShrinkExpandable((prev) => !prev)}
-                  style={{ textDecoration: "none" }}
-                >
-                  🍯 Dashboard 🍯
-                </NavLink>
-                <NavLink
                   to="/DegreePlan1"
                   activeClassName={hStyle.activeShrinkNavOption}
                   className={hStyle.shrinkNavOption}
                   onClick={() => setShrinkExpandable((prev) => !prev)}
                   style={{ textDecoration: "none" }}
                 >
-                  🍯 Degree Plan Editor 🍯
+                  Degree Plan Editor
                 </NavLink>
                 <NavLink
                   to="/DegreePlan2"
@@ -209,7 +174,7 @@ function HeaderUser(props) {
                   onClick={() => setShrinkExpandable((prev) => !prev)}
                   style={{ textDecoration: "none" }}
                 >
-                  🍯 Degree Plan 🍯
+                  Degree Plan
                 </NavLink>
 
                 <NavLink
@@ -219,7 +184,7 @@ function HeaderUser(props) {
                   onClick={() => setShrinkExpandable((prev) => !prev)}
                   style={{ textDecoration: "none" }}
                 >
-                  🍯 Scheduler 🍯
+                  Scheduler
                 </NavLink>
               </div>
             )}

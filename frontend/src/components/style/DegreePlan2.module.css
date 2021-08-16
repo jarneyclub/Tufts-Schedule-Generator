@@ -1,7 +1,7 @@
 .contentContainer {
   display: flex;
   flex-direction: column;
-
+  /* background: linear-gradient(-90deg, #ccbeee, #d9cef2, #fed7d7, #fec2c2); */
   padding-top: 2vh;
 }
 
