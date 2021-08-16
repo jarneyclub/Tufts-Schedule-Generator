@@ -27,18 +27,22 @@ function PlanCard(props) {
    *  purpose: when course is dropped onto a planCard
    */
   const drop = (e) => {
-    if (dropItem(cardDetail.plan_term_id, transferCourseDetail)) {
+    if (
+      dropItem(cardDetail.plan_term_id, transferCourseDetail) &&
+      cardOrigin !== cardDetail.plan_term_id
+    ) {
       onRemoveCourse(cardOrigin, transferCourseDetail);
     }
   };
 
   /*
    *  handleDoubleClick()
-   *  purpose: removes course from plancard when doubleClicked
+   *  purpose: removes course from plancard when clicked
    *
    */
-  const handleDoubleClick = () => {
-    onRemoveCourse(cardDetail.plan_term_id, transferCourseDetail);
+  const handleDoubleClick = (courseDetail) => {
+    console.log("transferCourseDetail: ", transferCourseDetail);
+    onRemoveCourse(cardDetail.plan_term_id, courseDetail);
   };
 
   return (
