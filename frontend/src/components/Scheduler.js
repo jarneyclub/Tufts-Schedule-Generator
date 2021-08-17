@@ -180,21 +180,29 @@ function Scheduler(props) {
     );
   };
 
-  useEffect(() => {
-    async function fetchAttributes() {
-      await fetch("https://jarney.club/api/courses/attributes")
-        .then((response) => response.json())
-        .then(
-          (result) => {
-            setAttributes(result.attributes);
-          },
-          (error) => {
-            console.log("error from Scheduler attribute ", error);
-          }
-        );
-    }
+  const fetchSavedSchedules = async () => {
+    await fetch("https://jarney.club/api/schedules")
+      .then((response) => response.json())
+      .then((result) => console.log("result from fetchSavedSchedule", result))
+      .catch((error) => console.log("error from fetchSavedSchedules", error));
+  };
 
+  const fetchAttributes = async () => {
+    await fetch("https://jarney.club/api/courses/attributes")
+      .then((response) => response.json())
+      .then(
+        (result) => {
+          setAttributes(result.attributes);
+        },
+        (error) => {
+          console.log("error from Scheduler attribute ", error);
+        }
+      );
+  };
+
+  useEffect(() => {
     fetchAttributes();
+    fetchSavedSchedules();
   }, []);
 
   useEffect(() => {
