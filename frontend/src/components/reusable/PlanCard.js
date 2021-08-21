@@ -50,7 +50,7 @@ function PlanCard(props) {
       className={pStyle.cardContainer}
       onDragOver={dragOver}
       onDrop={drop}
-      id={cardDetail.plan_term_id}
+      id={cardDetail.term}
     >
       <div className={pStyle.cardTitle}>{cardDetail.plan_term_id}</div>
       <div className={pStyle.courseContainer}>
