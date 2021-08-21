@@ -52,7 +52,7 @@ function PlanCard(props) {
       onDrop={drop}
       id={cardDetail.plan_term_id}
     >
-      <div className={pStyle.cardTitle}>{cardDetail.plan_term_id}</div>
+      <div className={pStyle.cardTitle}>{cardDetail.term}</div>
       <div className={pStyle.courseContainer}>
         {cardDetail.courses?.map((course) => (
           <CourseSearchBar

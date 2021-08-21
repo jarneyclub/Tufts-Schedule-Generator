@@ -103,7 +103,7 @@ function AddSemester(props) {
 /*  ==================== Remove PlanCard Popup ==================== */
 function RemoveSemester(props) {
   const { onClose, cardOptions, handleRemoveCards } = props;
-
+  console.log("cardoptions from removeSemester: " , cardOptions);
   /*  Stores the cards to be deleted  */
   const [selectedCards, setSelectedCards] = useState([]);
 
@@ -148,7 +148,7 @@ function RemoveSemester(props) {
           {cardOptions.map((card) => (
             <input
               type="button"
-              value={card}
+              value={card.term}
               key={card}
               className={pStyle.inputBar}
               onClick={(e) => handleCardChange(e)}
@@ -245,8 +245,9 @@ function DegreePlan2(props) {
   const [alertMessage, setAlertMessage] = useState();
   const [alertSeverity, setAlertSeverity] = useState();
 
-  const handleSemesterChange = (e) => {
+  const handleSemesterPlanChange = (e) => {
     setSelectedSemester(e.target.value);
+    console.log("semesterPlanChange e:", e);
   };
 
   const handleRemoveCards = (cardsToRemove) => {
@@ -426,6 +427,7 @@ function DegreePlan2(props) {
         } else {
           console.log("prev semesterPlanOptions: ", semesterPlanOptions);
           setSemesterPlanOptions(result.plans);
+          setCardOptions(result.plans[0].terms);
         }
       })
       .catch((error) => {
@@ -531,7 +533,7 @@ function DegreePlan2(props) {
                   isObject={true}
                   objectField={"plan_name"}
                   selectedOption={selectedSemester}
-                  onOptionChange={handleSemesterChange}
+                  onOptionChange={handleSemesterPlanChange}
                   customStyle={{ fontSize: "20px", color: "#ffffff" }}
                 />
               </div>

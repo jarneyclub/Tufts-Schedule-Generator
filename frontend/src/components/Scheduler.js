@@ -127,17 +127,6 @@ function Scheduler(props) {
     setCourseSearchValue(e.target.value);
   };
 
-  /* toggle switch style */
-  // const switchStyle = useLovelySwitchStyles();
-  // const useStyles = makeStyles({
-  //     select: {
-  //       "&&": {
-  //         paddingRight: 0,
-  //       },
-  //     },
-  // })
-  // const classes = useStyles();
-
   const handleCloseAlert = () => {
     setShowAlert(false);
   };
@@ -168,6 +157,7 @@ function Scheduler(props) {
       setShowAlert(true);
     }
   };
+
   /*
    *  handleDoubleClickSelected()
    *  purpose: for courseSearchBar, removes course from selectedCourseList
@@ -198,6 +188,15 @@ function Scheduler(props) {
           console.log("error from Scheduler attribute ", error);
         }
       );
+  };
+
+  const fetchGenerateSchedule = async () => {
+    const requestOption = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(),
+    };
+    await fetch("", requestOption);
   };
 
   useEffect(() => {
