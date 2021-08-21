@@ -103,7 +103,7 @@ function AddSemester(props) {
 /*  ==================== Remove PlanCard Popup ==================== */
 function RemoveSemester(props) {
   const { onClose, cardOptions, handleRemoveCards } = props;
-
+  console.log("cardoptions from removeSemester: " , cardOptions);
   /*  Stores the cards to be deleted  */
   const [selectedCards, setSelectedCards] = useState([]);
 
@@ -148,7 +148,7 @@ function RemoveSemester(props) {
           {cardOptions.map((card) => (
             <input
               type="button"
-              value={card}
+              value={card.term}
               key={card}
               className={pStyle.inputBar}
               onClick={(e) => handleCardChange(e)}
