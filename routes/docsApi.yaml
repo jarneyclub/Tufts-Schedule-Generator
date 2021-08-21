@@ -947,6 +947,8 @@ components:
                 type: string
               part_desc:
                 type: string
+              part_req_id_tracker:
+                type: string
               part_reqs:
                 type: array
                 items:
