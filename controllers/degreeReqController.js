@@ -237,3 +237,14 @@ exports.deleteDegreeReqPrivate = async (req, res) => {
     });
 }
 
+const errorHandler = (err, endpoint, res) => {
+    console.error("(degreeReqController/errorhandler) err: ", err);
+    if (err.detail !== undefined && err.title != undefined) {
+        /* this is internally formatted error */
+        resHandler.respondWithCustomError(err.id, err.status, err.title, err.detail, res);
+    }
+    else {
+        console.error("(degreeReqController/" + endpoint, err);
+        resHandler.respondWithCustomError("000", "500", "Internal Server Error", err, res);
+    }
+}
