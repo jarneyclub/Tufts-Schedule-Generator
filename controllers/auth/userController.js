@@ -4,7 +4,30 @@ const User = mongoose.model('User');
 const passport = require('passport');
 const { body, validationResult } = require('express-validator');
 const resHandler = require("../utils/resHandler.js");
+const authController = require("./authController.js");
 
+
+/**
+ * POST api/auth/login
+ * Log the user in with given email and password
+ * @param {*} req
+ * @param {*} res
+ */
+exports.login = async (req, res) => {
+    const { userid, password } = req.body;
+    // check user credentials and respond
+    await authController.loginLocal(res, userid, password);
+};
+
+/**
+ * Validate user input before registering user
+ * Preconditions:
+ * - Password fields are not empty
+ * - userid (email) is a normalized email address
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 exports.validateRegisterLocal = async (req, res, next) => {
 
     const {first_name, last_name, userid, password, password_confirmation} = req.body;
@@ -40,33 +63,3 @@ exports.registerLocal = async (req, res, next) => {
     });
 }
 
-// DRopped feature
-exports.registerGuest = async (req, res, next) => {
-
-    // generate random 5 digit integer string
-    let randomId = (Math.randomId() * 1000).toString();
-    console.log("random guest id: ", randomId);
-    // check if this random id already is used
-    let dbUsers = mongoose.connection.collection("users"); // get MongoDB collection
-    let result = await dbUsers.findOne({
-        userid: randomId
-    });
-    
-    // generate random id until an unused one is found
-    while (result !== null) {
-        randomId = (Math.randomId() * 1000).toString();
-        console.log("random guest id: ", randomId);
-        // check if this random id already is used
-        result = await dbUsers.findOne({
-            userid: randomId
-        });
-    }
-    
-    // save guest account to database
-    const guest = new Guest({ userid: randomId, name: req.body.name });
-    await guest.save();
-
-    req.guestUserId = randomId; // set guest's random id in req for next middleware
-
-    next(); // pass to authController.login()
-}

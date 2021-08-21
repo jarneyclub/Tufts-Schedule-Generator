@@ -17,8 +17,13 @@ exports.authenticateLocal = async (req, res, next) => {
     })(req, res, next);
 }
 
-exports.login = async (req, res) => {
-    const { userid, password } = req.body;
+/**
+ * Sign and set JWT to cookie and respond to request with basic user data
+ * @param {*} res
+ * @param {*} userid
+ * @param {*} password
+ */
+exports.loginLocal = async (res, userid, password) => {
     let dbUsers = mongoose.connection.collection("users"); // get MongoDB collection
     let result = await dbUsers.findOne({
         userid: userid
@@ -26,12 +31,12 @@ exports.login = async (req, res) => {
     console.log("(authController/login) dbUsers.fineOne(..): ", result);
     if (result === null)
         resHandler.respondWithCustomError("104", "403", "Registration Error", "Email is not registered. Please register first.", res);
-    
+        
     let token = jwt.sign({ userid: userid, password: password}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
     // res.json({"token": token});
     res.cookie("access_token", token, {
     }).status(200).json({"data": {"first_name": result.first_name, "last_name": result.last_name, "userid": result.userid}});
-};
+}
 
 /**
  *
@@ -77,51 +82,4 @@ exports.authenticateToken = async (req, res, next) => {
         resHandler.respondWithCustomError("306", "401",
             "Authentication Error", "Token was not provided", res);
     }
-}
-
-// DRopped feature
-// before "registering" a guest, check if guest is already "registered"
-exports.checkGuestToken = async (req, res ,next) => {
-    const token = req.headers.authorization;
-    if (token) {
-        jwt.verify(token, process.env.TOKEN_SECRET, async (err, user) => {
-            if (err) {
-                return res.sendStatus(403);
-            }
-            let dbUsers = mongoose.connection.collection("users"); // get MongoDB collection
-            let result = await dbUsers.findOne({
-                userid: user
-            });
-
-            if (result === null) {
-                /* guest's authroization header is incorrect */
-                return res.sendStatus(403);
-            }
-            if (result.guest === false) {
-                /* guest's authorization is for a registered user */
-            }
-            
-            /* a valid guest token was already provided */
-            res.json({ token }); // send token back for future use
-        });
-    } else {
-        next();
-    }
-}
-
-// Dropped feature
-exports.loginGuest = async (req, res) => {
-    let userid = req.guestUserId;
-
-    let dbUsers = mongoose.connection.collection("users"); // get MongoDB collection
-    let result = await dbUsers.findOne({
-        userid: userid
-    });
-
-    if (result === null)
-        return res.sendStatus(403);
-
-    let token = jwt.sign(userid, process.env.TOKEN_SECRET);
-
-    res.json({ token });
 }
