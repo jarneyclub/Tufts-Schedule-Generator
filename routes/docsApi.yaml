@@ -336,7 +336,8 @@ paths:
                 plan_id:
                   type: string
                 term:
-                  type: integer
+                  type: string
+                  example: 2021-2022 Annual
       responses:
         200:
           description: plan_term_id of new term
@@ -509,7 +510,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/RBDegreeReqPublic"
+              $ref: "#/components/schemas/RBDegreeReqPrivate"
       responses:
         200:
           description: Private degree requirement
@@ -874,7 +875,8 @@ components:
         plan_term_id:
           type: string
         term:
-          type: integer
+          type: string
+          example: 2021-2022 Annual
         courses:
           type: array
           items:
@@ -896,8 +898,8 @@ components:
         plan_term_id:
           type: string
         term:
-          type: integer
-          example: 2215
+          type: string
+          example: 2021-2022 Annual
         courses:
           type: array
           items:
@@ -948,7 +950,7 @@ components:
               part_desc:
                 type: string
               part_req_id_tracker:
-                type: string
+                type: number
               part_reqs:
                 type: array
                 items:
@@ -1030,6 +1032,43 @@ components:
                       type: string
                     course_note:
                       type: string
+    RBDegreeReqPrivate:
+      type: object
+      properties:
+        program_name:
+          type: string
+        school:
+          type: string
+        degree:
+          type: string
+        part_id_tracker:
+          type: number
+        parts:
+          type: array
+          items:
+            type: object
+            properties:
+              part_id:
+                type: number
+              part_name:
+                type: string
+              part_desc:
+                type: string
+              part_req_id_tracker:
+                type: number
+              part_reqs:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    part_req_id: 
+                      type: number
+                    course_num: 
+                      type: string
+                    course_note:
+                      type: string
+                    completed:
+                      type: boolean
 ####################
 #                  #
 #     SCHEDULE     #
@@ -1069,8 +1108,8 @@ components:
         filter:
           $ref: "#/components/schemas/ScheduleFilter"
         term:
-          type: integer
-          example: 2215
+          type: string
+          example: 2021-2022 Annual
         courses:
           type: array
           items:
