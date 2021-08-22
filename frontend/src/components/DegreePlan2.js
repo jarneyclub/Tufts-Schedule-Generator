@@ -103,7 +103,7 @@ function AddSemester(props) {
 /*  ==================== Remove PlanCard Popup ==================== */
 function RemoveSemester(props) {
   const { onClose, cardOptions, handleRemoveCards } = props;
-  console.log("cardoptions from removeSemester: " , cardOptions);
+  console.log("cardoptions from removeSemester: ", cardOptions);
   /*  Stores the cards to be deleted  */
   const [selectedCards, setSelectedCards] = useState([]);
 

@@ -16,6 +16,7 @@ import {
   FormControl,
   CircularProgress,
   FormGroup,
+  FormLabel,
 } from "@material-ui/core";
 import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import SearchIcon from "@material-ui/icons/Search";
@@ -290,7 +291,8 @@ function Scheduler(props) {
 
             <div className={sStyle.preferenceContainer}>
               <FormControl className={sStyle.leftCheckboxContainer}>
-                <FormGroup>
+                <FormLabel>Generate Schedule With:</FormLabel>
+                <FormGroup row={true}>
                   <FormControlLabel
                     control={
                       <PurpleSwitch
@@ -299,7 +301,7 @@ function Scheduler(props) {
                         onChange={() => handleCoursePrefChange("waitlist")}
                       />
                     }
-                    label="Include Waitlist"
+                    label="Waitlist"
                   />
                   <FormControlLabel
                     control={
@@ -309,7 +311,29 @@ function Scheduler(props) {
                         onChange={() => handleCoursePrefChange("closed")}
                       />
                     }
-                    label="Include Closed"
+                    label="Closed"
+                  />
+                  <FormControlLabel
+                    control={
+                      <PurpleSwitch
+                        checked={coursePreference.online}
+                        name="online"
+                        onChange={() => handleCoursePrefChange("online")}
+                      />
+                    }
+                    label="Online"
+                  />
+                  <FormControlLabel
+                    control={
+                      <PurpleSwitch
+                        checked={coursePreference.time_unspecified}
+                        name="time_unspecified"
+                        onChange={() =>
+                          handleCoursePrefChange("time_unspecified")
+                        }
+                      />
+                    }
+                    label="Time Unspecified"
                   />
                 </FormGroup>
                 <Button
@@ -317,16 +341,14 @@ function Scheduler(props) {
                   onClick={() => setTimePrefState((prev) => !prev)}
                   startIcon={<QueryBuilderIcon />}
                 >
-                  Time Preference
+                  Edit Time Preference
                 </Button>
               </FormControl>
-
-              <div className={sStyle.rightButtonContainer}>
-                <Button className={sStyle.renderButton}>Render Schedule</Button>
-              </div>
             </div>
           </div>
-
+          <div className={sStyle.rightButtonContainer}>
+            <Button className={sStyle.renderButton}>Render Schedule</Button>
+          </div>
           <div className={sStyle.tabsContainer}>
             <div className={sStyle.tabBarsContainer}>
               <div
