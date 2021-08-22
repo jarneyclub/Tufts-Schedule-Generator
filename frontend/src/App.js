@@ -28,29 +28,8 @@ const THEME = createMuiTheme({
 });
 
 export default function App() {
-  // const [scrollHorizontal, setScrollHorizontal] = useState(0);
   const [shrink, setShrink] = useState(window.innerWidth < 630);
-  // setScrollHorizontal(elem.scrollLeft);
 
-  // useEffect(() => {
-  //   const elem = document.getElementById("headerContainer");
-  //   function updateScroll() {
-  //     console.log("App.js scrollLeft: ", elem.scrollLeft);
-  //     setScrollHorizontal(elem.scrollLeft);
-  //   }
-  //   function scrollUpdate() {
-  //     elem.scrollTo(scrollHorizontal, 0);
-  //     // console.log("App.js scrollUpdate Called");
-  //   }
-
-  //   elem.addEventListener("scroll", updateScroll);
-  //   elem.addEventListener("click", scrollUpdate);
-
-  //   return () => {
-  //     elem.removeEventListener("scroll", updateScroll);
-  //     elem.removeEventListener("click", scrollUpdate);
-  //   };
-  // }, []);
   useEffect(() => {
     const checkResize = () => {
       if (window.innerWidth < 670) {
@@ -73,7 +52,13 @@ export default function App() {
 
   return (
     <MuiThemeProvider theme={THEME}>
-      <div>
+      <div
+        style={{
+          background:
+            "linear-gradient(-45deg, #ccbeee, #d9cef2, #fed7d7, #fec2c2)",
+          minHeight: "100vh",
+        }}
+      >
         {/* A <Switch> looks through its children <Route>s and
                     renders the first on that matches the current URL
                 */}
