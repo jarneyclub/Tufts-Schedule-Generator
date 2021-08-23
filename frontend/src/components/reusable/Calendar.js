@@ -7,7 +7,10 @@
 import cStyle from "./reusableStyles/Calendar.module.css";
 
 import CalendarDay from "./CalendarDay";
-
+import { useState } from "react";
+import { IconButton } from "@material-ui/core";
+import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
+import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 /* scripts */
 const time = [
   "8AM",
@@ -28,31 +31,87 @@ const time = [
 const weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
 function Calendar(props) {
-  const { timePrefState, timePref, handleAddTimePref, handleRemoveTimePref } =
-    props;
+  const {
+    timePrefState,
+    timePref,
+    handleAddTimePref,
+    handleRemoveTimePref,
+    shrink,
+  } = props;
+  const [daySelection, setDaySelection] = useState(0);
+
+  /*
+   *  onDayChange()
+   *  purpose: controls the display of day schedule on single day view
+   */
+  const onDayChange = (direction) => {
+    if (daySelection === 4 && direction === 1) {
+      setDaySelection(0);
+    } else if (daySelection === 0 && direction === -1) {
+      setDaySelection(4);
+    } else {
+      setDaySelection((prev) => prev + direction);
+    }
+  };
 
   return (
-    <div className={cStyle.calendarContainer}>
-      {/* Time indicator */}
-      <div className={cStyle.timeSlotContainer}>
-        <div className={cStyle.timeSlotTitle} />
-        {time.map((timeSlot) => (
-          <div className={cStyle.timeSlot} key={timeSlot}>
-            {timeSlot}
-          </div>
-        ))}
-      </div>
+    <div className={cStyle.container}>
+      {/*   This is the control of days for Single Day View  */}
+      {shrink && (
+        <div className={cStyle.dayControlContainer}>
+          <IconButton
+            onClick={() => {
+              onDayChange(-1);
+            }}
+          >
+            <ArrowLeftIcon fontSize="large" />
+          </IconButton>
+          <div>{weekdays[daySelection]}</div>
+          <IconButton
+            onClick={() => {
+              onDayChange(1);
+            }}
+          >
+            <ArrowRightIcon fontSize="large" />
+          </IconButton>
+        </div>
+      )}
 
-      {weekdays.map((dayName) => (
-        <CalendarDay
-          dayName={dayName}
-          key={dayName}
-          timePrefState={timePrefState}
-          timePrefDay={timePref && timePref[dayName]}
-          addTimePref={handleAddTimePref}
-          removeTimePref={handleRemoveTimePref}
-        />
-      ))}
+      <div className={cStyle.calendarContainer}>
+        {/* Time indicator */}
+        <div className={cStyle.timeSlotContainer}>
+          <div className={cStyle.timeSlotTitle} />
+          {time.map((timeSlot) => (
+            <div className={cStyle.timeSlot} key={timeSlot}>
+              {timeSlot}
+            </div>
+          ))}
+        </div>
+
+        {!shrink ? (
+          weekdays.map((dayName) => (
+            <CalendarDay
+              dayName={dayName}
+              key={dayName}
+              timePrefState={timePrefState}
+              timePrefDay={timePref && timePref[dayName]}
+              addTimePref={handleAddTimePref}
+              removeTimePref={handleRemoveTimePref}
+              singleDay={false}
+            />
+          ))
+        ) : (
+          <CalendarDay
+            dayName={weekdays[daySelection]}
+            key={weekdays[daySelection]}
+            timePrefState={timePrefState}
+            timePrefDay={timePref && timePref[weekdays[daySelection]]}
+            addTimePref={handleAddTimePref}
+            removeTimePref={handleRemoveTimePref}
+            singleDay={true}
+          />
+        )}
+      </div>
     </div>
   );
 }

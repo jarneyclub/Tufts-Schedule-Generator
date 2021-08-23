@@ -49,6 +49,7 @@ const boolStateDefault = {
 
 function Scheduler(props) {
   const { shrink } = props;
+
   /* schedule Dropdown */
   const [scheduleOptions, setScheduleOptions] = useState([1, 2, 3, 4, 5]);
   const [selectedSchedule, setSelectedSchedule] = useState(scheduleOptions[0]);
@@ -425,7 +426,7 @@ function Scheduler(props) {
           </div>
 
           <div className={sStyle.calendarContainer}>
-            <Calendar timePrefState={timePrefState} />
+            <Calendar timePrefState={timePrefState} shrink={shrink} />
           </div>
         </div>
       </div>
@@ -437,6 +438,7 @@ function Scheduler(props) {
           timePrefState={timePrefState}
           timePref={timePref}
           onTimePrefStateChange={setTimePrefState}
+          shrink={shrink}
         />
       )}
       {showAlert && (
