@@ -26,8 +26,13 @@ import PlanCard from "./reusable/PlanCard";
 import Dropdown from "./reusable/Dropdown";
 import CourseSearchBar from "./reusable/CourseSearchBar";
 import SnackBarAlert from "./reusable/SnackBarAlert";
+import DegreeReqDisplay from "./reusable/DegreeReqDisplay";
 
-/*  ==================== Add PlanCard Popup ==================== */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *                                                                           *
+ *                          Add PlanCard Popup                               *
+ *                                                                           *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function AddSemester(props) {
   const { onClose } = props;
 
@@ -100,7 +105,11 @@ function AddSemester(props) {
   );
 }
 
-/*  ==================== Remove PlanCard Popup ==================== */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *                                                                           *
+ *                            Remove PlanCard Popup                          *
+ *                                                                           *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function RemoveSemester(props) {
   const { onClose, cardOptions, handleRemoveCards } = props;
   console.log("cardoptions from removeSemester: ", cardOptions);
@@ -164,6 +173,34 @@ function RemoveSemester(props) {
   );
 }
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *                                                                           *
+ *                                 CONSTANTS                                 *
+ *                                                                           *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+const degreeReqDefault = {
+  program_name: "Requirement #1",
+  school: " ",
+  degree: " ",
+  part_id_tracker: 1,
+  parts: [
+    {
+      part_id: 0,
+      part_name: " ",
+      part_desc: " ",
+      part_req_id_tracker: 1,
+      part_reqs: [
+        {
+          part_req_id: 0,
+          course_num: " ",
+          course_note: " ",
+          completed: false,
+        },
+      ],
+    },
+  ],
+};
+
 const courses = [
   {
     plan_term_id: "string",
@@ -178,8 +215,55 @@ const courses = [
     ],
   },
 ];
-/*  ========================================================================  */
-/*  ==================== DegreePlan2 Page Main Function ====================  */
+
+const planCardsPlaceholder = [
+  {
+    plan_term_id: "FALL 2021",
+    term: 2215,
+    courses: [],
+  },
+  {
+    plan_term_id: "SPRING 2022",
+    term: 2215,
+    courses: [],
+  },
+  {
+    plan_term_id: "FALL 2022",
+    term: 2215,
+    courses: [],
+  },
+  {
+    plan_term_id: "SPRING 2023",
+    term: 2215,
+    courses: [],
+  },
+  {
+    plan_term_id: "FALL 2023",
+    term: 2215,
+    courses: [],
+  },
+  {
+    plan_term_id: "SPRING 2024",
+    term: 2215,
+    courses: [],
+  },
+  {
+    plan_term_id: "FALL 2024",
+    term: 2215,
+    courses: [],
+  },
+  {
+    plan_term_id: "SPRING 2025",
+    term: 2215,
+    courses: [],
+  },
+];
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *                                                                           *
+ *                        DegreePlan2 Page Main Function                     *
+ *                                                                           *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function DegreePlan2(props) {
   const { shrink } = props;
   const [degreeReqTitle, setDegreeReqTitle] = useState("PLACEHOLDER"); // sets the title of degree requirement
@@ -190,48 +274,7 @@ function DegreePlan2(props) {
   const [courseSearchValue, setCourseSearchValue] = useState("");
 
   /*  Stores the card options. Should be updated by API in UseEffect  */
-  const [cardOptions, setCardOptions] = useState([
-    {
-      plan_term_id: "FALL 2021",
-      term: 2215,
-      courses: [],
-    },
-    {
-      plan_term_id: "SPRING 2022",
-      term: 2215,
-      courses: [],
-    },
-    {
-      plan_term_id: "FALL 2022",
-      term: 2215,
-      courses: [],
-    },
-    {
-      plan_term_id: "SPRING 2023",
-      term: 2215,
-      courses: [],
-    },
-    {
-      plan_term_id: "FALL 2023",
-      term: 2215,
-      courses: [],
-    },
-    {
-      plan_term_id: "SPRING 2024",
-      term: 2215,
-      courses: [],
-    },
-    {
-      plan_term_id: "FALL 2024",
-      term: 2215,
-      courses: [],
-    },
-    {
-      plan_term_id: "SPRING 2025",
-      term: 2215,
-      courses: [],
-    },
-  ]);
+  const [cardOptions, setCardOptions] = useState(planCardsPlaceholder);
   const [transferCourseDetail, setTransferCourseDetail] = useState({});
   const [cardOrigin, setCardOrigin] = useState("");
   /* Popups */
@@ -445,7 +488,7 @@ function DegreePlan2(props) {
   }, [cardOptions]);
 
   return (
-    <div>
+    <div style={{ marginTop: "80px" }}>
       <div className={dp2Style.contentContainer}>
         {/* * * * * Contains * * * * * 
                     Progress Bar
@@ -516,7 +559,9 @@ function DegreePlan2(props) {
                   <ArrowRightIcon fontSize="large" />
                 </IconButton>
               </div>
-              <div className={dp2Style.degreeReqDetailContainer} />
+              <div className={dp2Style.degreeReqDetailContainer}>
+                <DegreeReqDisplay reqDetail={degreeReqDefault} />
+              </div>
             </div>
           </div>
 

@@ -14,6 +14,8 @@ import {
   TextField,
   InputAdornment,
   FormControl,
+  FormControlLabel,
+  Checkbox,
   InputLabel,
 } from "@material-ui/core";
 import RemoveIcon from "@material-ui/icons/Remove";
@@ -21,6 +23,10 @@ import dStyle from "./reusableStyles/DegreeReq.module.css";
 
 function DegreeReqCourse(props) {
   const { onCourseChange, courseDetail, onRemoveCourse } = props;
+
+  const handleCompleteChange = (e) => {
+    onCourseChange(!e.target.checked, e.target.name, courseDetail.part_req_id);
+  };
 
   const handleCourseChange = (e) => {
     onCourseChange(e.target.value, e.target.name, courseDetail.part_req_id);
@@ -32,6 +38,13 @@ function DegreeReqCourse(props) {
 
   return (
     <div className={dStyle.courseContainer}>
+      <Checkbox
+        checked={courseDetail.complete}
+        onChange={handleCompleteChange}
+        name="completed"
+        color="primary"
+      />
+
       <TextField
         placeholder="Course ID"
         fullWidth
