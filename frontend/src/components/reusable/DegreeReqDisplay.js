@@ -49,11 +49,13 @@ import dStyle from "./reusableStyles/DegreeReqDisplay.module.css";
 
 function DegreeReqDisplay(props) {
   const { reqDetail } = props;
+  console.log("reqDetail from DegreeReqDisplay: ", reqDetail);
 
   return (
     <div className={dStyle.displayContainer}>
-      <div>{reqDetail.school}</div>
-      <div>{reqDetail.degree}</div>
+      <div>School:&nbsp;{reqDetail.school}</div>
+      <div>Degree:&nbsp;{reqDetail.degree}</div>
+      <br />
       {reqDetail.parts?.map((req) => (
         <div>
           <div>{req.part_name}</div>

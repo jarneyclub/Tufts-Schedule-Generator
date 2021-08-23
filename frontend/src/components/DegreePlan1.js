@@ -23,6 +23,7 @@ import Popup from "./reusable/Popup";
 import Dropdown from "./reusable/Dropdown";
 import DegreeReqEdit from "./reusable/DegreeReqEdit";
 import dStyle from "./reusable/reusableStyles/Dropdown.module.css";
+import DegreeReqDisplay from "./reusable/DegreeReqDisplay";
 
 /* scripts */
 
@@ -105,6 +106,7 @@ const degreeReqDefault = {
           part_req_id: 0,
           course_num: " ",
           course_note: " ",
+          completed: false,
         },
       ],
     },
@@ -230,13 +232,15 @@ function DegreePlan1(props) {
 
           {/* options will be an array returned by API
                             options - degree req of current user */}
-          <Dropdown
-            options={degreeReqOptions}
-            isObject={true}
-            objectField={"program_name"}
-            selectedOption={selectedDegreeReq}
-            onOptionChange={handleDegreeReqChange}
-          />
+          <div style={{ width: "90%" }}>
+            <Dropdown
+              options={degreeReqOptions}
+              isObject={true}
+              objectField={"program_name"}
+              selectedOption={selectedDegreeReq}
+              onOptionChange={handleDegreeReqChange}
+            />
+          </div>
 
           <Button
             className={dp1Style.newMajorMinorButton}
@@ -259,7 +263,9 @@ function DegreePlan1(props) {
 
           {/* info returned from API call
                             display the info of the selected degree plan */}
-          <div className={dp1Style.degreeReqListExpandable} />
+          <div className={dp1Style.degreeReqListExpandable}>
+            <DegreeReqDisplay reqDetail={degreeReqDefault} />
+          </div>
 
           {/* button that displays an overlay to edit current
                             displayed degree requirement */}
