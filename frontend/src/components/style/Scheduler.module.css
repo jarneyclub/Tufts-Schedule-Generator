@@ -163,8 +163,6 @@
 
   height: 35px;
   padding: 0 1vw;
-  /* padding-left: 1vw;
-  padding-right: 1vw; */
 
   text-align: center;
   font-size: 13px;
@@ -178,6 +176,28 @@
   color: #ffffff;
   background-color: #7048d5;
   border: #7048d5 solid 1px;
+}
+.saveTimePrefButton {
+  border-radius: 12px;
+  border: #ffffff solid 1px;
+
+  box-sizing: border-box;
+
+  height: 35px;
+  padding: 0 1vw;
+
+  text-align: center;
+  font-size: 13px;
+  color: #ffffff;
+  line-height: 14px;
+
+  /* background-color: #efebf9; */
+}
+
+.saveTimePrefButton:hover {
+  color: #7048d5;
+  background-color: #ffffff;
+  border: #ffffff solid 1px;
 }
 
 .renderButton {

@@ -78,7 +78,7 @@ export default function App() {
             </Route>
 
             <Route path="/Scheduler">
-              <Scheduler />
+              <Scheduler shrink={shrink} />
             </Route>
 
             <Route path="/">
