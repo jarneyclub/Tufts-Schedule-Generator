@@ -15,6 +15,7 @@ function TimePrefSelector(props) {
     onRemoveTimePref,
     timePrefState,
     onTimePrefStateChange,
+    shrink,
   } = props;
 
   return (
@@ -29,7 +30,7 @@ function TimePrefSelector(props) {
       </div>
       <br />
       <Button
-        className={sStyle.timePrefButton}
+        className={sStyle.saveTimePrefButton}
         onClick={() => onTimePrefStateChange((prev) => !prev)}
       >
         Save Time Preference
@@ -42,6 +43,7 @@ function TimePrefSelector(props) {
           timePref={timePref}
           handleAddTimePref={onAddTimePref}
           handleRemoveTimePref={onRemoveTimePref}
+          shrink={shrink}
         />
       </div>
     </div>

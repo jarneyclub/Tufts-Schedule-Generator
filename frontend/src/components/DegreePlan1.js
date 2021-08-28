@@ -23,6 +23,7 @@ import Popup from "./reusable/Popup";
 import Dropdown from "./reusable/Dropdown";
 import DegreeReqEdit from "./reusable/DegreeReqEdit";
 import dStyle from "./reusable/reusableStyles/Dropdown.module.css";
+import DegreeReqDisplay from "./reusable/DegreeReqDisplay";
 
 /* scripts */
 
@@ -105,6 +106,7 @@ const degreeReqDefault = {
           part_req_id: 0,
           course_num: " ",
           course_note: " ",
+          completed: false,
         },
       ],
     },
@@ -118,6 +120,7 @@ const degreeReqDefault = {
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function DegreePlan1(props) {
   const { shrink } = props;
+
   const [degreeReqOptions, setDegreeReqOptions] = useState(
     []
   ); /*  ALL the private degree reqs to current user  */
@@ -185,53 +188,51 @@ function DegreePlan1(props) {
   }, []);
 
   return (
-    <div className={dp1Style.dp1Container}>
-      {/* * * * * * * The Big Ass Horizontal Display * * * * * * * */}
-      {/* Encapsulates both 1) the search side, and 2) the degree req 
-                side. 
-                This flexbox has flex-direction: row */}
-      <div className={dp1Style.horizontalWrapper}>
-        {/* * * * * * * Includes Degree Req Selector * * * * * * */}
-        {/* Includes 1) Existing degree req search list, 2) My List.
+    // {/* * * * * * * The Big Ass Horizontal Display * * * * * * * */}
+    // {/* Encapsulates both 1) the search side, and 2) the degree req
+    //           side.
+    //           This flexbox has flex-direction: row */}
+    <div className={dp1Style.horizontalWrapper}>
+      {/* * * * * * * Includes Degree Req Selector * * * * * * */}
+      {/* Includes 1) Existing degree req search list, 2) My List.
                     This flexbox has flex-direction: column */}
-        <div className={dp1Style.DegreeSearchWrapper}>
-          <h3>DEGREE PLANS</h3>
+      <div className={dp1Style.DegreeSearchWrapper}>
+        {/* SEARCH CONTAINER for an Existing Degree Requirement */}
+        <div className={dp1Style.existListWrapper}>
+          <h5>Public Degree Requirements</h5>
+          <TextField
+            // label="Search Course"
+            placeholder="Search Degree"
+            onChange={handleSearchChange}
+            value={listSearchValue}
+            type="text"
+            variant="outlined"
+            size="small"
+            fullWidth
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+            className={dp1Style.inputSearch}
+          />
+          <Button type="submit" className={dp1Style.searchButton}>
+            search
+          </Button>
 
-          {/* SEARCH CONTAINER for an Existing Degree Requirement */}
-          <div className={dp1Style.existListWrapper}>
-            <h5>Search for an existing degree plan</h5>
-            <TextField
-              // label="Search Course"
-              placeholder="Search Degree"
-              onChange={handleSearchChange}
-              value={listSearchValue}
-              type="text"
-              variant="outlined"
-              size="small"
-              fullWidth
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-              }}
-              className={dp1Style.inputSearch}
-            />
-            <Button type="submit" className={dp1Style.searchButton}>
-              search
-            </Button>
-
-            <div className={dp1Style.searchListContainer}>
-              Course List placeholder1
-            </div>
+          <div className={dp1Style.searchListContainer}>
+            Course List placeholder1
           </div>
+        </div>
 
-          <div className={dp1Style.myListWrapper}>
-            <h5>My List</h5>
+        <div className={dp1Style.myListWrapper}>
+          <h5>My Degree Requirements</h5>
 
-            {/* options will be an array returned by API
+          {/* options will be an array returned by API
                             options - degree req of current user */}
+          <div style={{ width: "90%" }}>
             <Dropdown
               options={degreeReqOptions}
               isObject={true}
@@ -239,66 +240,59 @@ function DegreePlan1(props) {
               selectedOption={selectedDegreeReq}
               onOptionChange={handleDegreeReqChange}
             />
-
-            <Button
-              className={dp1Style.newMajorMinorButton}
-              onClick={() => {
-                setNewMMPopup(true);
-                setEditDRPopup(true);
-              }}
-            >
-              --- create a new major/ minor ---
-            </Button>
-          </div>
-        </div>
-
-        {/* * * * * * Includes the Degree Requirement Table * * * * * */}
-        <div className={dp1Style.DegreeReqWrapper}>
-          <h3>DEGREE REQUIREMENTS</h3>
-
-          <div className={dp1Style.DegreeReqListWrapper}>
-            {/* displays the name of the current selected degree
-                            requirement */}
-            <div className={dp1Style.DegreeReqListTitle}>
-              {selectedDegreeReq}
-            </div>
-
-            {/* info returned from API call
-                            display the info of the selected degree plan */}
-            <div className={dp1Style.degreeReqListExpandable} />
-
-            {/* button that displays an overlay to edit current
-                            displayed degree requirement */}
-            <Button
-              className={dp1Style.editButton}
-              onClick={() => setEditDRPopup(true)}
-            >
-              edit
-            </Button>
-            {editDRPopup && (
-              <Popup onClose={() => setEditDRPopup(false)}>
-                <DegreeReqEdit
-                  onClose={() => setEditDRPopup(false)}
-                  isCreateMM={newMMPopup}
-                />
-              </Popup>
-            )}
           </div>
 
-          <div className={dp1Style.nextPageButton}>
-            <Link to="/DegreePlan2">
-              <IconButton className={dp1Style.nextPageButton}>
-                <DateRangeIcon fontSize="medium" aria-label="Next Page" />
-              </IconButton>
-            </Link>
-          </div>
+          <Button
+            className={dp1Style.newMajorMinorButton}
+            onClick={() => {
+              setNewMMPopup(true);
+              setEditDRPopup(true);
+            }}
+          >
+            --- create a new major/ minor ---
+          </Button>
         </div>
       </div>
-      {/* {newMMPopup && (
-        <Popup onClose={() => setNewMMPopup(false)}>
-          <AddMajorMinor onClose={() => setNewMMPopup(false)} />
-        </Popup>
-      )} */}
+
+      {/* * * * * * Includes the Degree Requirement Table * * * * * */}
+      <div className={dp1Style.DegreeReqWrapper}>
+        <div className={dp1Style.DegreeReqListWrapper}>
+          {/* displays the name of the current selected degree
+                            requirement */}
+          <div className={dp1Style.DegreeReqListTitle}>{selectedDegreeReq}</div>
+
+          {/* info returned from API call
+                            display the info of the selected degree plan */}
+          <div className={dp1Style.degreeReqListExpandable}>
+            <DegreeReqDisplay reqDetail={degreeReqDefault} />
+          </div>
+
+          {/* button that displays an overlay to edit current
+                            displayed degree requirement */}
+          <Button
+            className={dp1Style.editButton}
+            onClick={() => setEditDRPopup(true)}
+          >
+            edit
+          </Button>
+          {editDRPopup && (
+            <Popup onClose={() => setEditDRPopup(false)}>
+              <DegreeReqEdit
+                onClose={() => setEditDRPopup(false)}
+                isCreateMM={newMMPopup}
+              />
+            </Popup>
+          )}
+        </div>
+
+        <div className={dp1Style.nextPageButton}>
+          <Link to="/DegreePlan2">
+            <IconButton className={dp1Style.nextPageButton}>
+              <DateRangeIcon fontSize="medium" aria-label="Next Page" />
+            </IconButton>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }

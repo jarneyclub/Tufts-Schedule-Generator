@@ -16,6 +16,7 @@ import {
   FormControl,
   CircularProgress,
   FormGroup,
+  FormLabel,
 } from "@material-ui/core";
 import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import SearchIcon from "@material-ui/icons/Search";
@@ -48,6 +49,7 @@ const boolStateDefault = {
 
 function Scheduler(props) {
   const { shrink } = props;
+
   /* schedule Dropdown */
   const [scheduleOptions, setScheduleOptions] = useState([1, 2, 3, 4, 5]);
   const [selectedSchedule, setSelectedSchedule] = useState(scheduleOptions[0]);
@@ -290,7 +292,8 @@ function Scheduler(props) {
 
             <div className={sStyle.preferenceContainer}>
               <FormControl className={sStyle.leftCheckboxContainer}>
-                <FormGroup>
+                <FormLabel>Generate Schedule With:</FormLabel>
+                <FormGroup row={true}>
                   <FormControlLabel
                     control={
                       <PurpleSwitch
@@ -299,7 +302,7 @@ function Scheduler(props) {
                         onChange={() => handleCoursePrefChange("waitlist")}
                       />
                     }
-                    label="Include Waitlist"
+                    label="Waitlist"
                   />
                   <FormControlLabel
                     control={
@@ -309,7 +312,29 @@ function Scheduler(props) {
                         onChange={() => handleCoursePrefChange("closed")}
                       />
                     }
-                    label="Include Closed"
+                    label="Closed"
+                  />
+                  <FormControlLabel
+                    control={
+                      <PurpleSwitch
+                        checked={coursePreference.online}
+                        name="online"
+                        onChange={() => handleCoursePrefChange("online")}
+                      />
+                    }
+                    label="Online"
+                  />
+                  <FormControlLabel
+                    control={
+                      <PurpleSwitch
+                        checked={coursePreference.time_unspecified}
+                        name="time_unspecified"
+                        onChange={() =>
+                          handleCoursePrefChange("time_unspecified")
+                        }
+                      />
+                    }
+                    label="Time Unspecified"
                   />
                 </FormGroup>
                 <Button
@@ -317,16 +342,14 @@ function Scheduler(props) {
                   onClick={() => setTimePrefState((prev) => !prev)}
                   startIcon={<QueryBuilderIcon />}
                 >
-                  Time Preference
+                  Edit Time Preference
                 </Button>
               </FormControl>
-
-              <div className={sStyle.rightButtonContainer}>
-                <Button className={sStyle.renderButton}>Render Schedule</Button>
-              </div>
             </div>
           </div>
-
+          <div className={sStyle.rightButtonContainer}>
+            <Button className={sStyle.renderButton}>Render Schedule</Button>
+          </div>
           <div className={sStyle.tabsContainer}>
             <div className={sStyle.tabBarsContainer}>
               <div
@@ -403,7 +426,7 @@ function Scheduler(props) {
           </div>
 
           <div className={sStyle.calendarContainer}>
-            <Calendar timePrefState={timePrefState} />
+            <Calendar timePrefState={timePrefState} shrink={shrink} />
           </div>
         </div>
       </div>
@@ -415,6 +438,7 @@ function Scheduler(props) {
           timePrefState={timePrefState}
           timePref={timePref}
           onTimePrefStateChange={setTimePrefState}
+          shrink={shrink}
         />
       )}
       {showAlert && (

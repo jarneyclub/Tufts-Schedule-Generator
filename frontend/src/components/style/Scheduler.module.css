@@ -11,7 +11,7 @@
   padding-left: 2vw;
   padding-right: 2vw;
 
-  margin-top: 20px;
+  margin-top: 80px;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -46,9 +46,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 80%;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  /* background-color: rgba(239, 235, 249, 0.9); */
+  border-radius: 12px;
+  width: 100%;
+  padding: 10px 1vw;
+  /* padding-top: 10px;
+  padding-bottom: 10px; */
 }
 
 .inputSearch {
@@ -99,6 +102,7 @@
   max-height: 150px;
   /* min-height: 50px; */
   /* border-top: #000000 1px solid; */
+  /* background-color: rgba(239, 235, 249, 0.9); */
   width: 100%;
   /* background-color: #efebf9; */
   border-bottom-left-radius: 11px;
@@ -113,32 +117,38 @@
   justify-content: space-between;
   align-items: center;
   min-height: 170px;
-  border: #5a32bf 1px solid;
+  /* border: #5a32bf 1px solid; */
+  background-color: rgba(239, 235, 249, 0.9);
+  /* 
+  box-shadow: 0 4px 8px 0 rgba(90, 50, 191, 0.2),
+    0 6px 20px 0 rgba(90, 50, 191, 0.19); */
   /* box-shadow: 0 4px 8px 0 rgba(90,50,191, 0.2), 0 6px 20px 0 rgba(90,50,191, 0.19); */
   /* background-color: #efebf9; */
 
   border-radius: 12px;
   width: 100%;
-
-  padding-left: 1vw;
-  padding-right: 1vw;
+  padding: 10px 1vw;
+  /* padding-left: 1vw;
+  padding-right: 1vw; */
   margin: 10px 0;
 }
 
 .leftCheckboxContainer {
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
   justify-content: flex-start;
-  align-items: center;
+  align-items: center; */
 
-  padding-left: 1vw;
-  padding-right: 1vw;
+  /* padding-left: 1vw;
+  padding-right: 1vw; */
 }
 
 .rightButtonContainer {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  width: 100%;
 }
 
 .toggleSwitch {
@@ -147,32 +157,52 @@
 
 .timePrefButton {
   border-radius: 12px;
-  border: #5a32bf solid 1px;
+  border: #7048d5 solid 1px;
 
   box-sizing: border-box;
 
   height: 35px;
-
-  padding-left: 1vw;
-  padding-right: 1vw;
+  padding: 0 1vw;
 
   text-align: center;
   font-size: 13px;
-  color: #5a32bf;
+  color: #7048d5;
   line-height: 14px;
 
-  background-color: #efebf9;
+  /* background-color: #efebf9; */
 }
 
 .timePrefButton:hover {
   color: #ffffff;
-  background-color: #fc4e4e;
-  border: #fc4e4e solid 1px;
+  background-color: #7048d5;
+  border: #7048d5 solid 1px;
+}
+.saveTimePrefButton {
+  border-radius: 12px;
+  border: #ffffff solid 1px;
+
+  box-sizing: border-box;
+
+  height: 35px;
+  padding: 0 1vw;
+
+  text-align: center;
+  font-size: 13px;
+  color: #ffffff;
+  line-height: 14px;
+
+  /* background-color: #efebf9; */
+}
+
+.saveTimePrefButton:hover {
+  color: #7048d5;
+  background-color: #ffffff;
+  border: #ffffff solid 1px;
 }
 
 .renderButton {
   border-radius: 12px;
-  border: #000000 solid 1px;
+  border: #fc6d6d solid 1px;
 
   box-sizing: border-box;
 
@@ -186,9 +216,9 @@
   color: #ffffff;
   line-height: 14px;
 
-  background-color: #000000;
+  background-color: #fc6d6d;
 
-  margin-top: 10px;
+  /* margin-top: 10px; */
 }
 
 .renderButton:hover {

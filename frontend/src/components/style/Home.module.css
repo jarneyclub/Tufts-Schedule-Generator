@@ -4,8 +4,8 @@
   justify-content: center;
   align-items: center;
 
-  background: linear-gradient(-45deg, #ccbeee, #d9cef2, #fed7d7, #fec2c2);
-  background-size: 400% 400%;
+  /* background: linear-gradient(-45deg, #ccbeee, #d9cef2, #fed7d7, #fec2c2); */
+  /* background-size: 400% 400%; */
   animation: gradient 15s ease infinite;
 }
 

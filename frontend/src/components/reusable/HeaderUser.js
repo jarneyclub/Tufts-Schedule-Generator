@@ -71,7 +71,7 @@ function HeaderUser(props) {
                   className={hStyle.navOption}
                   style={{ textDecoration: "none" }}
                 >
-                  DEGREE PLAN EDITOR
+                  Degree Requirement
                 </NavLink>
 
                 <NavLink
@@ -80,7 +80,7 @@ function HeaderUser(props) {
                   className={hStyle.navOption}
                   style={{ textDecoration: "none" }}
                 >
-                  DEGREE PLAN
+                  Degree Plan
                 </NavLink>
 
                 <NavLink
@@ -89,7 +89,7 @@ function HeaderUser(props) {
                   className={hStyle.navOption}
                   style={{ textDecoration: "none" }}
                 >
-                  SCHEDULER
+                  Scheduler
                 </NavLink>
               </div>
             )

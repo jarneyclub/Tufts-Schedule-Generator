@@ -53,11 +53,18 @@ const overlayTime = [
   "20:00",
   "20:30",
 ];
+
 function CalendarDay(props) {
   const [dragState, setDragState] = useState(false);
   // eslint-disable-next-line no-unused-vars
-  const { dayName, timePrefState, timePrefDay, addTimePref, removeTimePref } =
-    props;
+  const {
+    dayName,
+    timePrefState,
+    timePrefDay,
+    addTimePref,
+    removeTimePref,
+    singleDay,
+  } = props;
 
   console.log("TimePrefDay ", timePrefDay, " ", timePrefState);
   /*  To check if a time slot is highlighted during time pref selection  */
@@ -93,7 +100,10 @@ function CalendarDay(props) {
 
   return (
     <div className={cStyle.dayContainer}>
-      <div className={cStyle.timeSlotTitle}>{dayName}</div>
+      {/* {
+        !singleDay ? <div className={cStyle.timeSlotTitle}>{dayName}</div> : <div>&nbsp;</div>
+      } */}
+      <div className={cStyle.timeSlotTitle}>{!singleDay ? dayName : " "}</div>
       <div className={cStyle.timeContainer}>
         {timePrefState
           ? /* Time Pref Selection View */

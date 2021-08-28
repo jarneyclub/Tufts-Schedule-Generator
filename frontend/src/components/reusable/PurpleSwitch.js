@@ -8,7 +8,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 const PurpleSwitch = withStyles({
   switchBase: {
-    color: "#5a32bf",
+    color: "#7048d5",
     "&$checked": {
       color: "#7048d5",
     },
