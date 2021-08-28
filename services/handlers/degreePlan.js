@@ -342,7 +342,7 @@ const termIntegerToDesc = (termInt) => {
     let season = mapIntToSeason[termString[3]];
     if (season === "Annual") {
         year = year + "-" + (parseInt(year)+1).toString()
-        return year + " " + season;
+        return year + " " + "Annual";
     }
     else {
         return year + " " + season;
