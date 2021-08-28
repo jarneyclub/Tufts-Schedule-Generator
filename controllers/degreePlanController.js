@@ -13,7 +13,7 @@ exports.createDegreePlan = async (req, res) => {
     // get user request information
     let query = {
         plan_name: req.body.plan_name,
-        user_id: req.user_id
+        user_id: req.userid
     }
     // insert to database
     degreePlanAPI.createNewDegreePlan(query)
@@ -39,7 +39,7 @@ exports.getDegreePlan = async (req, res) => {
     console.log("(controllers/getDegreePlan) ", "req.params: ", req.params);
     // get user request information
     let query = {
-        user_id: req.user_id,
+        user_id: req.userid,
         plan_id: req.params.plan_id
     }
     
@@ -62,7 +62,7 @@ exports.deleteDegreePlan = async (req, res) => {
     var start = Date.now(); // begin timing API endpoint
     // get user request information
     let query = {
-        user_id: req.user_id,
+        user_id: req.userid,
         plan_id: req.params.plan_id
     }
     // delete degree plan and referenced plan terms
@@ -87,7 +87,7 @@ exports.getDegreePlans = async (req, res) => {
     var start = Date.now(); // begin timing API endpoint
     console.log("(dPController/getDP) here");
     let query = {
-        user_id: req.user_id
+        user_id: req.userid
     }
     let result = await degreePlanAPI.getDegreePlans(query)
     .then(result => {
@@ -157,7 +157,7 @@ exports.deleteTerm = async (req, res) => {
     var start = Date.now(); // begin timing API endpoint
 
     let query = {
-        userId : req.user_id,
+        userId : req.userid,
         planId : req.params.plan_term_id
     }
     degreePlanAPI.deleteTerm(query)

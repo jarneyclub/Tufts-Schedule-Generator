@@ -3,18 +3,33 @@ const mongoose = require('mongoose');
 const resHandler = require("../utils/resHandler.js");
 const passport = require('passport');
 
-exports.authenticateLocal = async (req, res, next) => {
+/**
+ * Authenticate user credentials, set req.userid and req.password, and 
+ * then go to next middleware
+ * Preconditions:
+ * - req.body.userid is set
+ * - req.body.password is set
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+exports.authenticateCredentialsWithPassport = async (req, res, next) => {
     passport.authenticate('local', function (err, user, info) {
         if (err)
             return resHandler.respondWithCustomError("101", "400", "Login Error", err.message, res);
         if (!user) {
-            console.error("(authenticateLocal) user: ", user);
-            console.error("(authenticateLocal) info: ", info);
+            console.error("(authenticateCredentialsWithPassport) user: ", user);
+            console.error("(authenticateCredentialsWithPassport) info: ", info);
             return resHandler.respondWithCustomError("101", "400", "Login Error", "Authentication failed", res);
         }
-        else 
+        else {
+            // set credentials in request
+            req.userid = req.body.userid;
+            req.password = req.body.password;
             next();
+        }
     })(req, res, next);
+    // TODO test if just an object with userid and password can be passed to passport.authenticate
 }
 
 /**
@@ -23,7 +38,7 @@ exports.authenticateLocal = async (req, res, next) => {
  * @param {*} userid
  * @param {*} password
  */
-exports.loginLocal = async (res, userid, password) => {
+exports.signAccessTokenAndSendAsCookie = async (res, userid, password) => {
     let dbUsers = mongoose.connection.collection("users"); // get MongoDB collection
     let result = await dbUsers.findOne({
         userid: userid
@@ -39,12 +54,14 @@ exports.loginLocal = async (res, userid, password) => {
 }
 
 /**
- *
+ * Attaches access token in the cookie of the response
  * 
+ * Preconditions:
+ * - req.userid and req.password is set in previous middleware
  * @param {*} req
  * @param {*} res
  */
-exports.SignTokenAndAddToCookie = async (req, res, next) => {
+exports.signAccessTokenAndAttachCookie = async (req, res, next) => {
     let token = jwt.sign({ userid: req.userid, password: req.password}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
     res.cookie("access_token", token, {
         // httpOnly: true
@@ -75,7 +92,8 @@ exports.authenticateToken = async (req, res, next) => {
                 resHandler.respondWithCustomError("307", "401",
                         "Authentication Error", "Token is invalid. Wrong user.", res);
             
-            req.user_id = userdata.userid;
+            req.userid = userdata.userid;
+            req.password = userdata.password;
             next();
         });
     } else {

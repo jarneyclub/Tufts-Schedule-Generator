@@ -94,13 +94,17 @@ router.post('/auth/register',
     body('password_confirmation').not().isEmpty(),
     userController.validateRegisterLocal,
     userController.registerLocal,
-    authController.login);
+    userController.login);
 
-// router.post('/auth/register/guest', authController.checkGuestToken, userController.registerGuest, authController.loginGuest);
-
-router.post('/auth/login', authController.authenticateLocal, authController.login);
-
-
+// authenticate credentials with mongoose, sign access token, and send response with cookie
+// router.post('/auth/login', authController.authenticateCredentialsWithPassport, userController.login);
+router.post('/auth/login', 
+            authController.authenticateCredentialsWithPassport, 
+            authController.signAccessTokenAndAttachCookie, 
+            userController.sendLoginResponse);
+// TODO debug
+// authenticate token and extract credentials, sign access token, and send response with cookie
+router.post('/auth/cookie_login', authController.authenticateToken, userController.sendLoginResponse);
 ////////////////////////////////////////
 //                                    //
 //             Schedule               //

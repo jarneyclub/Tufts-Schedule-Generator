@@ -16,8 +16,42 @@ const authController = require("./authController.js");
 exports.login = async (req, res) => {
     const { userid, password } = req.body;
     // check user credentials and respond
-    await authController.loginLocal(res, userid, password);
+    await authController.signAccessTokenAndSendAsCookie(res, userid, password);
 };
+
+/**
+ * POST api/auth/login
+ * Send the response to the login endpoint
+ * Preconditions:
+ * - req.userid is set in previous middleware
+ * - req.userid (email) exists in database
+ * @param {*} req
+ * @param {*} res
+ */
+exports.sendLoginResponse = async (req, res) => {
+    let dbUsers = mongoose.connection.collection("users"); // get MongoDB collection
+    console.log("(usrCntrl/sendLoginResponse) req.userid: ", req.userid);
+    let result = await dbUsers.findOne({
+        userid: req.userid
+    });
+    console.log("(authController/sendLoginResponse) dbUsers.fineOne(..): ", result);
+    if (result === null)
+        resHandler.respondWithCustomError("104", "500", "Registration Error", "Email is not registered. This shouldn't happen.", res);
+
+    res.status(200).json({"data": {"first_name": result.first_name, "last_name": result.last_name, "userid": result.userid}});
+};
+
+/**
+ * POST api/auth/cookie_login
+ * Log the user in with credentials from 'req' object
+ * Preconditions:
+ * - Cookie has been decrypted and verified with its claims defined in 'req'
+ * @param {*} req
+ * @param {*} res
+ */
+exports.loginWithCookie = async (req, res) => {
+    await authController.signAccessTokenAndSendAsCookie(res, req.userid, req.password);
+}
 
 /**
  * Validate user input before registering user

@@ -85,7 +85,7 @@ exports.copyDegreeReqPublicToPrivate = async (req, res) => {
 
     // get user request information
     let pubDrId = req.params.pub_dr_id;
-    let userId  = req.user_id;
+    let userId  = req.userid;
     // insert to database
     degreeReqAPI.copyDegreeReqPublicToPrivate(pubDrId, userId)
     .then(result => {
@@ -114,7 +114,7 @@ exports.createDegreeReqPrivate = async (req, res) => {
         partIdTracker : req.body.part_id_tracker
     };
     // get from database
-    degreeReqAPI.createDegreeReqPrivate(req.user_id, schema)
+    degreeReqAPI.createDegreeReqPrivate(req.userid, schema)
     .then(result => {
         res.status(200);
         res.json({
@@ -137,7 +137,7 @@ exports.getDegreeReqsPrivate = async (req, res) => {
 
     // get user request information
     let query = {
-        userId: req.user_id
+        userId: req.userid
     }
     // get from database
     degreeReqAPI.getDegreeReqsPrivate(query)
@@ -163,7 +163,7 @@ exports.getDegreeReqPrivate = async (req, res) => {
 
     // get user request information
     let query = {
-        userId  : req.user_id,
+        userId  : req.userid,
         privDrId: req.params.priv_dr_id
     };
     // get from database
@@ -222,7 +222,7 @@ exports.deleteDegreeReqPrivate = async (req, res) => {
     // get user request information
     let query = {
         privDrId : req.params.priv_dr_id,
-        userId   : req.user_id
+        userId   : req.userid
     };
     // delete from database
     degreeReqAPI.deleteDegreeReqPrivate(query)
