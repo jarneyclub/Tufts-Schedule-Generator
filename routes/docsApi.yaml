@@ -105,6 +105,12 @@ paths:
       tags:
         - Account
       summary: Login with only an access token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         200:
           content:
