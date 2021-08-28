@@ -346,6 +346,24 @@ paths:
                           type: array
                           items:
                             $ref: "#/components/schemas/DegreePlanTerm"
+    delete:
+      tags:
+        - Degree Plan
+      summary: Delete multiple degree plans. Access token must be provided in the cookie
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                plan_ids:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        200:
+          description: delete successful
   /degreeplan/term/create:
     post:
       tags:
@@ -525,7 +543,7 @@ paths:
                 properties:
                   req:
                     $ref: "#/components/schemas/DegreeReqPrivate"
-  /degreereqs/private:
+  /degreereq/private:
     post:
       tags:
         - Degree Requirements

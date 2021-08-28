@@ -162,6 +162,45 @@ const deleteDegreePlan = async (query) => {
     }
 }
 
+/** Delete degree plans from the database
+ * @param {any} query 
+ * @returns {Promise} true or error
+ */
+const deleteDegreePlanMultiple = async (query) => {
+    try {
+        let user_id = query.user_id;
+        let plan_ids = query.plan_ids;
+
+        // get mongodb collections
+        let dbPlans = mongoose.connection.collection("plans"); // get MongoDB collection
+        let dbPlanTerms = mongoose.connection.collection("plan_terms"); // get MongoDB collection
+
+        // delete degree plans
+        for (let j = 0; j < plan_ids.length; j++) {
+            // get degree plan from database
+            const { plan_name, plan_id, terms } = await this.getDegreePlan({
+                user_id: user_id,
+                plan_id: plan_ids[j]
+            });
+            console.log("(degreePlan/degreeDegreePlanMultiple) plan_id: ", plan_id );
+
+            // delete all referenced plan terms
+            for (let i = 0; i < terms.length; i++) {
+                const {courses, plan_term_id, term} = terms[i];
+                await dbPlanTerms.deleteOne({_id: mongoose.Types.ObjectId(plan_term_id)});
+            }
+
+            // delete degree plan
+            await dbPlans.deleteOne({_id: mongoose.Types.ObjectId(plan_id)});
+        }
+
+        return true;
+    }
+    catch (e) {
+        errorHandler(e);
+    }
+}
+
 /** Get all degree plans of a user
  * @param {object} query 
  * @returns {Promise} array or error
@@ -399,6 +438,7 @@ const errorHandler = (e) => {
 module.exports.createNewDegreePlan = createNewDegreePlan;
 module.exports.getDegreePlan = getDegreePlan;
 module.exports.deleteDegreePlan = deleteDegreePlan;
+module.exports.deleteDegreePlanMultiple = deleteDegreePlanMultiple;
 module.exports.getDegreePlans = getDegreePlans;
 module.exports.createTerm = createTerm;
 module.exports.saveTerm = saveTerm;

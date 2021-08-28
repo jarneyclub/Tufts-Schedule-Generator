@@ -79,6 +79,31 @@ exports.deleteDegreePlan = async (req, res) => {
 }
 
 /**
+ * DELETE api/degreeplans
+ * Delete multiple degree plans
+ * @param {any} req 
+ * @param {any} res 
+ */
+exports.deleteDegreePlanMultiple = async (req, res) => {
+    var start = Date.now(); // begin timing API endpoint
+    // delete multiple degree plans with userid and an array of plan ids
+    let query = {
+        user_id: req.userid,
+        plan_ids: req.body.plan_ids
+    }
+    degreePlanAPI.deleteDegreePlanMultiple(query)
+    .then(result => {
+        res.status(200);
+        res.json({
+            time_taken: ((Date.now() - start).toString() + "ms")
+        });
+    })
+    .catch(err => {
+        errorHandler(err, "deleteDegreePlan", res);
+    })
+}
+
+/**
  * Get degree plans
  * @param {any} req 
  * @param {any} res 

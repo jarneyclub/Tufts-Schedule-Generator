@@ -35,6 +35,7 @@ router.get('/courses/attributes', courseController.getAttributes);
 router.post('/degreeplan', authController.authenticateToken, degreePlanController.createDegreePlan);
 router.get('/degreeplan/:plan_id', authController.authenticateToken, degreePlanController.getDegreePlan);
 router.delete('/degreeplan/:plan_id', authController.authenticateToken, degreePlanController.deleteDegreePlan);
+router.delete('/degreeplans', authController.authenticateToken, degreePlanController.deleteDegreePlanMultiple);
 router.get('/degreeplans', authController.authenticateToken, degreePlanController.getDegreePlans);
 router.post('/degreeplan/term/create', authController.authenticateToken, degreePlanController.createTerm);
 router.post('/degreeplan/term/save', authController.authenticateToken, degreePlanController.saveTerm);
