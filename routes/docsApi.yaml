@@ -100,6 +100,30 @@ paths:
                       userid:
                         type: string
                         description: user email
+  /auth/login_cookie:
+    post:
+      tags:
+        - Account
+      summary: Login with only an access token
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      first_name:
+                        type: string
+                        description: user first name
+                      last_name:
+                        type: string
+                        description: user last name
+                      userid:
+                        type: string
+                        description: user email
   /auth/userinfo:
     post:
       tags:
