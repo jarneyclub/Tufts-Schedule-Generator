@@ -38,7 +38,7 @@ export default function App() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({}),
     };
-    await fetch("https://jarney.club/api/auth/login_cookie")
+    await fetch("https://jarney.club/api/auth/login_cookie", requestOption)
       .then((response) => {
         if (response.ok){
           setLogged(true);
