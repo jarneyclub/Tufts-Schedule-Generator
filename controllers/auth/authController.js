@@ -71,8 +71,8 @@ exports.signAccessTokenAndAttachCookie = async (req, res, next) => {
 
 /* Janith Kasun */
 exports.authenticateToken = async (req, res, next) => {
-    const token = req.cookies.access_token;
     console.log("req.cookies", req.cookies);
+    const token = req.cookies.access_token;
     
     if (token == null)
         resHandler.respondWithCustomError("306", "401",

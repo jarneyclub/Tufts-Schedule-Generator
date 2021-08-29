@@ -38,7 +38,8 @@ exports.sendLoginResponse = async (req, res) => {
     if (result === null)
         resHandler.respondWithCustomError("104", "500", "Registration Error", "Email is not registered. This shouldn't happen.", res);
 
-    res.status(200).json({"data": {"first_name": result.first_name, "last_name": result.last_name, "userid": result.userid}});
+    // res.json({"data": {"first_name": result.first_name, "last_name": result.last_name, "userid": result.userid}});
+    res.json({"data": true});
 };
 
 /**
