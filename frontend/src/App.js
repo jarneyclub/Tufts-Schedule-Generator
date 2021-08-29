@@ -29,8 +29,37 @@ const THEME = createMuiTheme({
 
 export default function App() {
   const [shrink, setShrink] = useState(window.innerWidth < 630);
+  const [logged, setLogged] = useState(false);
+  const [userData, setUserData] = useState({});
+
+  const fetchQuickLogin = async() => {
+    const requestOption = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: {},
+    };
+    await fetch("https://jarney.club/api/auth/login_cookie", requestOption)
+      .then((response) => {
+        if (response.ok){
+          setLogged(true);
+          return response.json();
+        }
+        setLogged(false);
+        console.log(response);
+        throw new Error("Quick Login Failed. User needs to Login");
+
+      })
+      .then((result) => console.log("result from quick login:", result))
+      .catch((error) => console.log("error from quick login: ", error ))
+
+
+
+  }
 
   useEffect(() => {
+    console.log("before fetchQuickLogin");
+    fetchQuickLogin();
+
     const checkResize = () => {
       if (window.innerWidth < 670) {
         console.log("HeaderUser width smaller: ", window.innerWidth);
@@ -42,6 +71,7 @@ export default function App() {
         setShrink(false);
       }
     };
+
 
     window.addEventListener("resize", checkResize);
 
