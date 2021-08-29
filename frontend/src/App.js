@@ -32,7 +32,7 @@ export default function App() {
   const [logged, setLogged] = useState(false);
   const [userData, setUserData] = useState({});
 
-  const fetchQuickLogin = async() => {
+  const fetchQuickLogin = async () => {
     const requestOption = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -40,21 +40,14 @@ export default function App() {
     };
     await fetch("https://jarney.club/api/auth/login_cookie", requestOption)
       .then((response) => {
-        if (response.ok){
-          setLogged(true);
+        if (response.ok) {
           return response.json();
         }
-        setLogged(false);
-        console.log(response);
         throw new Error("Quick Login Failed. User needs to Login");
-
       })
-      .then((result) => console.log("result from quick login:", result))
-      .catch((error) => console.log("error from quick login: ", error ))
-
-
-
-  }
+      .then((result) => setLogged(result.data))
+      .catch((error) => console.log("error from quick login: ", error));
+  };
 
   useEffect(() => {
     console.log("before fetchQuickLogin");
@@ -71,7 +64,6 @@ export default function App() {
         setShrink(false);
       }
     };
-
 
     window.addEventListener("resize", checkResize);
 
