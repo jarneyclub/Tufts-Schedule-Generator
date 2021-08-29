@@ -105,7 +105,7 @@ router.post('/auth/login',
             userController.sendLoginResponse);
 // TODO debug
 // authenticate token and extract credentials, sign access token, and send response with cookie
-router.post('/auth/cookie_login', authController.authenticateToken, userController.sendLoginResponse);
+router.post('/auth/login_cookie', authController.authenticateToken, userController.sendLoginResponse);
 ////////////////////////////////////////
 //                                    //
 //             Schedule               //
