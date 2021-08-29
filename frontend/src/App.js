@@ -36,9 +36,9 @@ export default function App() {
     const requestOption = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: {},
+      body: JSON.stringify({}),
     };
-    await fetch("https://jarney.club/api/auth/login_cookie", requestOption)
+    await fetch("https://jarney.club/api/auth/login_cookie")
       .then((response) => {
         if (response.ok){
           setLogged(true);
