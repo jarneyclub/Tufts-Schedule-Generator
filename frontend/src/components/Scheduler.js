@@ -51,6 +51,7 @@ function Scheduler(props) {
   const {
     shrink,
     logged,
+    switchLogged,
     loginPopup,
     signupPopup,
     handleLoginPopup,
@@ -460,6 +461,7 @@ function Scheduler(props) {
         <Popup onClose={handleLoginPopup}>
           <JarUserLogin
             forcedPopup={true}
+            switchLogged={switchLogged}
             loginState={loginPopup}
             signupState={signupPopup}
             onClose={() => {

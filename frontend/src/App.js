@@ -51,7 +51,7 @@ export default function App() {
   const switchLogged = () => {
     setLogged((prev) => !prev);
   };
-  
+
   const fetchQuickLogin = async () => {
     const requestOption = {
       method: "POST",
@@ -106,7 +106,7 @@ export default function App() {
                     renders the first on that matches the current URL
                 */}
         <BrowserRouter>
-          <Header id="headerContainer" shrink={shrink} />
+          <Header id="headerContainer" shrink={shrink} logged={logged} switchLogged={switchLogged}/>
 
           <Switch>
             <Route path="/DegreePlan1">
