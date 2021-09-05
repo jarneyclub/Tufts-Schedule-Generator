@@ -20,9 +20,7 @@ import {
 } from "@material-ui/core";
 import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import SearchIcon from "@material-ui/icons/Search";
-import { withStyles } from "@material-ui/core/styles";
 import PurpleSwitch from "./reusable/PurpleSwitch";
-import { useLovelySwitchStyles } from "@mui-treasury/styles/switch/lovely";
 import sStyle from "./style/Scheduler.module.css";
 import Dropdown from "./reusable/Dropdown";
 
