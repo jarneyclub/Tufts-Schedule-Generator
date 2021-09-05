@@ -30,6 +30,8 @@ import Calendar from "./reusable/Calendar";
 import CourseSearchBar from "./reusable/CourseSearchBar";
 import TimePrefSelector from "./reusable/TimePrefSelector";
 import SnackBarAlert from "./reusable/SnackBarAlert";
+import JarUserLogin from "./reusable/JarUserLogin";
+import Popup from "./reusable/Popup";
 
 const timePrefDefault = {
   Monday: [],
@@ -48,7 +50,14 @@ const boolStateDefault = {
 };
 
 function Scheduler(props) {
-  const { shrink } = props;
+  const {
+    shrink,
+    logged,
+    loginPopup,
+    signupPopup,
+    handleLoginPopup,
+    handleSignupPopup,
+  } = props;
 
   /* schedule Dropdown */
   const [scheduleOptions, setScheduleOptions] = useState([1, 2, 3, 4, 5]);
@@ -448,6 +457,23 @@ function Scheduler(props) {
           showAlert={showAlert}
           message={alertMessage}
         />
+      )}
+      {!logged && (
+        <Popup onClose={handleLoginPopup}>
+          <JarUserLogin
+            forcedPopup={true}
+            loginState={loginPopup}
+            signupState={signupPopup}
+            onClose={() => {
+              handleLoginPopup(false, false);
+              handleSignupPopup(false, false);
+            }}
+            onSwitch={() => {
+              handleLoginPopup(true);
+              handleSignupPopup(true);
+            }}
+          ></JarUserLogin>
+        </Popup>
       )}
     </div>
   );

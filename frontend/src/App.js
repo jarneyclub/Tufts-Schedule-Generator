@@ -7,11 +7,9 @@
  *
  */
 import { useState, useEffect } from "react";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
+import { MuiThemeProvider, createTheme } from "@material-ui/core";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Home from "./components/Home"; // routest to diff pages
-
-import WelcomePage from "./components/WelcomePage";
 
 import DegreePlan1 from "./components/DegreePlan1";
 import DegreePlan2 from "./components/DegreePlan2";
@@ -21,7 +19,7 @@ import Header from "./components/reusable/HeaderUser";
 
 import Eina from "./fonts/Eina03-SemiBold.ttf";
 
-const THEME = createMuiTheme({
+const THEME = createTheme({
   typography: {
     fontFamily: { Eina },
   },
@@ -30,7 +28,25 @@ const THEME = createMuiTheme({
 export default function App() {
   const [shrink, setShrink] = useState(window.innerWidth < 630);
   const [logged, setLogged] = useState(false);
-  const [userData, setUserData] = useState({});
+
+  const [loginPopup, setLoginPopup] = useState(false);
+  const [signupPopup, setSignupPopup] = useState(false);
+
+  const handleLoginPopup = (not: Boolean, set: Boolean) => {
+    if (not) {
+      setLoginPopup((prev) => !prev);
+    } else {
+      setLoginPopup(set);
+    }
+  };
+
+  const handleSignupPopup = (not: Boolean, set: Boolean) => {
+    if (not) {
+      setSignupPopup((prev) => !prev);
+    } else {
+      setSignupPopup(set);
+    }
+  };
 
   const fetchQuickLogin = async () => {
     const requestOption = {
@@ -47,6 +63,10 @@ export default function App() {
       })
       .then((result) => setLogged(result.data))
       .catch((error) => console.log("error from quick login: ", error));
+  };
+
+  const switchLogged = () => {
+    setLogged((prev) => !prev);
   };
 
   useEffect(() => {
@@ -88,19 +108,39 @@ export default function App() {
           <Header id="headerContainer" shrink={shrink} />
 
           <Switch>
-            <Route path="/Dashboard">
-              <WelcomePage />
-            </Route>
-
             <Route path="/DegreePlan1">
-              <DegreePlan1 />
+              <DegreePlan1
+                shrink={shrink}
+                logged={logged}
+                switchLogged={switchLogged}
+                loginPopup={loginPopup}
+                signupPopup={signupPopup}
+                handleLoginPopup={handleLoginPopup}
+                handleSignupPopup={handleSignupPopup}
+              />
             </Route>
             <Route path="/DegreePlan2">
-              <DegreePlan2 shrink={shrink} />
+              <DegreePlan2
+                shrink={shrink}
+                logged={logged}
+                switchLogged={switchLogged}
+                loginPopup={loginPopup}
+                signupPopup={signupPopup}
+                handleLoginPopup={handleLoginPopup}
+                handleSignupPopup={handleSignupPopup}
+              />
             </Route>
 
             <Route path="/Scheduler">
-              <Scheduler shrink={shrink} />
+              <Scheduler
+                shrink={shrink}
+                logged={logged}
+                switchLogged={switchLogged}
+                loginPopup={loginPopup}
+                signupPopup={signupPopup}
+                handleLoginPopup={handleLoginPopup}
+                handleSignupPopup={handleSignupPopup}
+              />
             </Route>
 
             <Route path="/">
