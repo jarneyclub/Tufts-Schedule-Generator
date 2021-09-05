@@ -569,6 +569,7 @@ paths:
                 properties:
                   req:
                     $ref: "#/components/schemas/DegreeReqPrivate"
+  /degreereqs/private:
     get:
       tags:
         - Degree Requirements
@@ -655,6 +656,26 @@ paths:
                 properties:
                   priv_dr_id: 
                     type: string
+  /degreereq/private/copy/{priv_dr_id}:
+    post:
+      tags:
+        - Degree Requirements
+      summary: Copy a private degree requirement into public degree requirement. Only for developers.
+      parameters:
+        - in: path
+          name: priv_dr_id
+          schema:
+            type: string
+      responses:
+        200:
+          description: Degree requirement
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  req:
+                    $ref: "#/components/schemas/DegreeReqPublic"
   ####################
   #                  #
   #     SCHEDULE     #

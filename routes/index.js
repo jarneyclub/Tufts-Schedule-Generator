@@ -56,6 +56,7 @@ router.get('/degreereqs/private', authController.authenticateToken, degreeReqCon
 router.get('/degreereq/private/:priv_dr_id', authController.authenticateToken, degreeReqController.getDegreeReqPrivate);
 router.delete('/degreereq/private/:priv_dr_id', authController.authenticateToken, degreeReqController.deleteDegreeReqPrivate);
 router.post('/degreereq/private/save', authController.authenticateToken, degreeReqController.saveDegreeReqPrivate);
+router.post('/degreereq/private/copy/:priv_dr_id', authController.authenticateToken, degreeReqController.copyDegreeReqPrivateToPublic);
 
 /*
 * Handle GET requests by MONGODB object id
@@ -103,7 +104,7 @@ router.post('/auth/login',
             authController.authenticateCredentialsWithPassport, 
             authController.signAccessTokenAndAttachCookie, 
             userController.sendLoginResponse);
-// TODO debug
+
 // authenticate token and extract credentials, sign access token, and send response with cookie
 router.post('/auth/login_cookie', authController.authenticateToken, userController.sendLoginResponse);
 ////////////////////////////////////////

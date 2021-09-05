@@ -138,7 +138,73 @@ exports.copyDegreeReqPublicToPrivate = async (pub_dr_id, userId) => {
         return insertedDrParsed;
     }
     catch (e) {
-        console.error("(degreeReq/getDegreeReqsPrivate) e: ", e);
+        console.error("(degreeReq/copyDegreeReqPublicToPrivate) e: ", e);
+        if (e.message !== undefined) {
+            if (e.message.indexOf("validation failed") > -1) {
+                /* error is mongoose validation error */
+                throw { id: "201", status: "400", title: "Degree Requirement Error", detail: e.message };
+                // throw { code: 1, message: e.message };
+            }
+            else if (e.message.indexOf("No public") > -1) {
+                /* error is mongoose validation error */
+                throw { id: "202", status: "404", title: "Degree Requirement Error", detail: e.message };
+                // throw { code: 2, message: e.message };
+            }
+            else {
+                throw { id: "203", status: "400", title: "Degree Requirement Error", detail: e.message };
+                // console.error(e);
+                // throw { code: 4, message: e };
+            }
+        }
+        else {
+            throw { id: "", status: "500", title: "Degree Requirement Error", detail: e.message };
+            // console.error(e);
+            // throw { code: 4, message: e };
+        }
+    }
+}
+
+
+ /**
+  * Copy private degree requirement into public.
+  *
+  * @param {*} priv_dr_id
+  * @param {*} userId
+  * @return {*} 
+  */
+ exports.copyDegreeReqPrivateToPublic = async (priv_dr_id) => {
+    try {
+        let dbDRPriv = mongoose.connection.collection("degree_reqs_private"); // get MongoDB collection
+        // let dbDRPriv = mongoose.connection.collection("degree_reqs_private"); // get MongoDB collection
+        let drPriv = await dbDRPriv.findOne({
+            _id: mongoose.Types.ObjectId(priv_dr_id)
+        });
+
+        if (drPriv === null)
+            throw "No private degree requirement was found with given identifier.";
+
+        // copy and insert private degree requirement into database
+        let drPub = new DegreeReqPublic({
+            program_name: drPriv.program_name,
+            school: drPriv.school,
+            degree: drPriv.degree,
+            parts: drPriv.parts,
+            part_id_tracker: drPriv.part_id_tracker
+        });
+        let insertedDr = await drPub.save();
+        // parse inserted private degree requirement for api response
+        let insertedDrParsed = {
+            pub_dr_id      : insertedDr._id.valueOf(),
+            program_name    : insertedDr.program_name, 
+            school          : insertedDr.school,
+            degree          : insertedDr.degree,
+            parts           : insertedDr.parts,
+            part_id_tracker : insertedDr.part_id_tracker
+        };
+        return insertedDrParsed;
+    }
+    catch (e) {
+        console.error("(degreeReq/copyDegreeReqPrivateToPublic) e: ", e);
         if (e.message !== undefined) {
             if (e.message.indexOf("validation failed") > -1) {
                 /* error is mongoose validation error */

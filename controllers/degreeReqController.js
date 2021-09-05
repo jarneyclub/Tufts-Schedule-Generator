@@ -237,6 +237,38 @@ exports.deleteDegreeReqPrivate = async (req, res) => {
     });
 }
 
+
+/** 
+ * Copy private degree requirement into public. Only available for developers.
+ * Preconditions:
+ * - req.role is set in previous middleware
+ * @param {any} req 
+ * @param {any} res 
+ */
+ exports.copyDegreeReqPrivateToPublic = async (req, res) => {
+    let start = Date.now(); // begin timing API endpoint
+    console.log("(drCnrtl/copyDegreeReqPrivateToPublic) req.role: ", req.role);
+    if (req.role !== "developer") {
+        throw {id: "601", status: "403", title: "Private Degree Requirement Error", detail : "User is not authorized to perform this action"};
+    }
+    else {
+        // get user request information
+        let privDrId = req.params.priv_dr_id;
+        // insert to database
+        degreeReqAPI.copyDegreeReqPrivateToPublic(privDrId)
+        .then(result => {
+            res.status(200);
+            res.json({
+                req: result,
+                time_taken: ((Date.now() - start).toString() + "ms")
+            });
+        })
+        .catch(err => {
+            errorHandler(err, "copyDegreeReqPrivateToPublic", res);
+        });
+    }
+}
+
 const errorHandler = (err, endpoint, res) => {
     console.error("(degreeReqController/errorhandler) err: ", err);
     if (err.detail !== undefined && err.title != undefined) {
@@ -248,3 +280,4 @@ const errorHandler = (err, endpoint, res) => {
         resHandler.respondWithCustomError("000", "500", "Internal Server Error", err, res);
     }
 }
+

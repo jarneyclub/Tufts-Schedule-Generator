@@ -23,7 +23,11 @@ exports.authenticateCredentialsWithPassport = async (req, res, next) => {
             return resHandler.respondWithCustomError("101", "400", "Login Error", "Authentication failed", res);
         }
         else {
+            console.log("(authenticateCredentialsWithPassport) user: ", user);
             // set credentials in request
+            req.role = user.role;
+            req.firstname = user.first_name;
+            req.lastname = user.last_name;
             req.userid = req.body.userid;
             req.password = req.body.password;
             next();
@@ -47,29 +51,40 @@ exports.signAccessTokenAndSendAsCookie = async (res, userid, password) => {
     if (result === null)
         resHandler.respondWithCustomError("104", "403", "Registration Error", "Email is not registered. Please register first.", res);
         
-    let token = jwt.sign({ userid: userid, password: password}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
+    let token = jwt.sign({ userid: userid, password: password, role: result.role}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
     // res.json({"token": token});
     res.cookie("access_token", token, {
     }).status(200).json({"data": {"first_name": result.first_name, "last_name": result.last_name, "userid": result.userid}});
 }
 
 /**
- * Attaches access token in the cookie of the response
+ * Signs a token with claims: userid, password, and role. 
+ * Sets the token as cookie. Passes control to next middleware.
  * 
  * Preconditions:
- * - req.userid and req.password is set in previous middleware
+ * - req.userid, req.password, req.role, req.firstname, req.lastname are set in previous middleware
+ * Postconditions:
+ * - access_token is set in cookie
  * @param {*} req
  * @param {*} res
  */
 exports.signAccessTokenAndAttachCookie = async (req, res, next) => {
-    let token = jwt.sign({ userid: req.userid, password: req.password}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
+    let token = jwt.sign({ userid: req.userid, password: req.password, role: req.role}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
     res.cookie("access_token", token, {
         // httpOnly: true
     });
     next();
 }
 
-/* Janith Kasun */
+/**
+ * Authenticates token from the request. Calls database 
+ * to check user identity. Sets req variables:
+ * userid, password, role, firstname, lastname. Passes 
+ * control to next middleware.
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 exports.authenticateToken = async (req, res, next) => {
     console.log("req.body", req.body);
     try {
@@ -101,6 +116,9 @@ exports.authenticateToken = async (req, res, next) => {
             
             req.userid = userdata.userid;
             req.password = userdata.password;
+            req.role = userdata.role;
+            req.firstname = result.first_name;
+            req.lastname = result.last_name;
             next();
         });
     } else {
