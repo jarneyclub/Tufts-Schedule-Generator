@@ -20,16 +20,15 @@ import JarUserLogin from "./JarUserLogin";
 /* scripts */
 
 function HeaderUser(props) {
-  const { shrink } = props;
-  // const [shrink, setShrink] = useState(window.innerWidth < 630);
+  const { shrink, logged, switchLogged} = props;
+
   const [shrinkExpandable, setShrinkExpandable] = useState(false);
   const [barMenu, setBarMenu] = useState(false);
 
   const [loginPopup, setLoginPopup] = useState(false);
   const [signupPopup, setSignupPopup] = useState(false);
 
-  /*  tells if a user is logged in */
-  const [jarUser, setJarUser] = useState(true);
+
   const navbarRef = useRef();
 
   console.log("pathName: ", window.location.pathname);
@@ -43,9 +42,9 @@ function HeaderUser(props) {
   };
 
   const handleLoginSignupPopup = () => {
-    if (jarUser) {
+    if (logged) {
       /*  Sign Out */
-      setJarUser(false);
+      switchLogged();
     } else {
       /*  Log in */
       handleLoginPopup();
@@ -62,7 +61,7 @@ function HeaderUser(props) {
           </Link>
           {
             /*  Logged in JAR User jarUser = true */
-            !shrink && jarUser && (
+            !shrink && (
               <div className={hStyle.navbarContainer}>
                 <div className={hStyle.verticalBar} />
                 <NavLink
@@ -96,22 +95,7 @@ function HeaderUser(props) {
           }
         </div>
 
-        {
-          /*  Guest User userJar = false */
-          !shrink && !jarUser && (
-            <div className={hStyle.navbarContainerGuest} ref={navbarRef}>
-              <NavLink
-                to="/Scheduler"
-                // activeClassName={hStyle.activeNavOption}
-                className={hStyle.navOption}
-                style={{ textDecoration: "none" }}
-              >
-                SCHEDULER 📅
-              </NavLink>
-            </div>
-          )
-        }
-
+       
         {!shrink && (
           <div className={hStyle.navbarContainer} ref={navbarRef}>
             <div>
@@ -120,7 +104,7 @@ function HeaderUser(props) {
                 className={hStyle.button}
                 style={{ padding: "5px" }}
               >
-                {jarUser ? "Sign out" : "Log in"}
+                {logged ? "Sign out" : "Log in"}
               </Button>
             </div>
             <div>
