@@ -20,9 +20,7 @@ import {
 } from "@material-ui/core";
 import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import SearchIcon from "@material-ui/icons/Search";
-import { withStyles } from "@material-ui/core/styles";
 import PurpleSwitch from "./reusable/PurpleSwitch";
-import { useLovelySwitchStyles } from "@mui-treasury/styles/switch/lovely";
 import sStyle from "./style/Scheduler.module.css";
 import Dropdown from "./reusable/Dropdown";
 
@@ -30,6 +28,8 @@ import Calendar from "./reusable/Calendar";
 import CourseSearchBar from "./reusable/CourseSearchBar";
 import TimePrefSelector from "./reusable/TimePrefSelector";
 import SnackBarAlert from "./reusable/SnackBarAlert";
+import JarUserLogin from "./reusable/JarUserLogin";
+import Popup from "./reusable/Popup";
 
 const timePrefDefault = {
   Monday: [],
@@ -48,7 +48,15 @@ const boolStateDefault = {
 };
 
 function Scheduler(props) {
-  const { shrink } = props;
+  const {
+    shrink,
+    logged,
+    switchLogged,
+    loginPopup,
+    signupPopup,
+    handleLoginPopup,
+    handleSignupPopup,
+  } = props;
 
   /* schedule Dropdown */
   const [scheduleOptions, setScheduleOptions] = useState([1, 2, 3, 4, 5]);
@@ -448,6 +456,24 @@ function Scheduler(props) {
           showAlert={showAlert}
           message={alertMessage}
         />
+      )}
+      {!logged && (
+        <Popup onClose={handleLoginPopup}>
+          <JarUserLogin
+            forcedPopup={true}
+            switchLogged={switchLogged}
+            loginState={loginPopup}
+            signupState={signupPopup}
+            onClose={() => {
+              handleLoginPopup(false, false);
+              handleSignupPopup(false, false);
+            }}
+            onSwitch={() => {
+              handleLoginPopup(true);
+              handleSignupPopup(true);
+            }}
+          ></JarUserLogin>
+        </Popup>
       )}
     </div>
   );

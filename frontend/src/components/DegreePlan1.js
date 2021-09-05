@@ -24,6 +24,7 @@ import Dropdown from "./reusable/Dropdown";
 import DegreeReqEdit from "./reusable/DegreeReqEdit";
 import dStyle from "./reusable/reusableStyles/Dropdown.module.css";
 import DegreeReqDisplay from "./reusable/DegreeReqDisplay";
+import JarUserLogin from "./reusable/JarUserLogin";
 
 /* scripts */
 
@@ -119,7 +120,15 @@ const degreeReqDefault = {
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function DegreePlan1(props) {
-  const { shrink } = props;
+  const {
+    shrink,
+    logged,
+    switchLogged,
+    loginPopup,
+    signupPopup,
+    handleLoginPopup,
+    handleSignupPopup,
+  } = props;
 
   const [degreeReqOptions, setDegreeReqOptions] = useState(
     []
@@ -293,6 +302,24 @@ function DegreePlan1(props) {
           </Link>
         </div>
       </div>
+      {!logged && (
+        <Popup onClose={handleLoginPopup}>
+          <JarUserLogin
+            forcedPopup={true}
+            switchLogged={switchLogged}
+            loginState={loginPopup}
+            signupState={signupPopup}
+            onClose={() => {
+              handleLoginPopup(false, false);
+              handleSignupPopup(false, false);
+            }}
+            onSwitch={() => {
+              handleLoginPopup(true);
+              handleSignupPopup(true);
+            }}
+          ></JarUserLogin>
+        </Popup>
+      )}
     </div>
   );
 }

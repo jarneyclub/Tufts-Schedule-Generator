@@ -27,7 +27,7 @@ import Dropdown from "./reusable/Dropdown";
 import CourseSearchBar from "./reusable/CourseSearchBar";
 import SnackBarAlert from "./reusable/SnackBarAlert";
 import DegreeReqDisplay from "./reusable/DegreeReqDisplay";
-
+import JarUserLogin from "./reusable/JarUserLogin";
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
  *                          Add PlanCard Popup                               *
@@ -265,7 +265,15 @@ const planCardsPlaceholder = [
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function DegreePlan2(props) {
-  const { shrink } = props;
+  const {
+    shrink,
+    logged,
+    switchLogged,
+    loginPopup,
+    signupPopup,
+    handleLoginPopup,
+    handleSignupPopup,
+  } = props;
   const [degreeReqTitle, setDegreeReqTitle] = useState("PLACEHOLDER"); // sets the title of degree requirement
   const [semesterPlanOptions, setSemesterPlanOptions] = useState([]); // sets the array of options for semester plans
   const [semesterPlanTitle, setSemesterPlanTitle] = useState(
@@ -640,6 +648,24 @@ function DegreePlan2(props) {
           showAlert={showAlert}
           message={alertMessage}
         />
+      )}
+      {!logged && (
+        <Popup onClose={handleLoginPopup}>
+          <JarUserLogin
+            forcedPopup={true}
+            switchLogged={switchLogged}
+            loginState={loginPopup}
+            signupState={signupPopup}
+            onClose={() => {
+              handleLoginPopup(false, false);
+              handleSignupPopup(false, false);
+            }}
+            onSwitch={() => {
+              handleLoginPopup(true);
+              handleSignupPopup(true);
+            }}
+          ></JarUserLogin>
+        </Popup>
       )}
     </div>
   );
