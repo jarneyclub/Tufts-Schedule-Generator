@@ -22,7 +22,7 @@ import { string } from "prop-types";
 
 // function JarUserLogin(props) {
 const JarUserLogin = React.forwardRef((props, ref) => {
-  const { onClose, onSwitch, loginState, signupState, forcedPopup } = props;
+  const { onClose, onSwitch, loginState, signupState, forcedPopup, switchLogged } = props;
   const [loginValues, setLoginValues] = useState({});
   const [loadMessage, setLoadMessage] = useState(false);
 
@@ -70,6 +70,7 @@ const JarUserLogin = React.forwardRef((props, ref) => {
         .then((result) => {
           console.log("data: ", result.data);
           setLoadMessage(false);
+          switchLogged && switchLogged();
           onClose();
         })
         .catch((error) => {
@@ -92,6 +93,7 @@ const JarUserLogin = React.forwardRef((props, ref) => {
         .then((result) => {
           console.log("data: ", result.data);
           setLoadMessage(false);
+          switchLogged && switchLogged();
           onClose();
         })
         .catch((error) => {

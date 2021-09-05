@@ -48,6 +48,10 @@ export default function App() {
     }
   };
 
+  const switchLogged = () => {
+    setLogged((prev) => !prev);
+  };
+  
   const fetchQuickLogin = async () => {
     const requestOption = {
       method: "POST",
@@ -65,9 +69,6 @@ export default function App() {
       .catch((error) => console.log("error from quick login: ", error));
   };
 
-  const switchLogged = () => {
-    setLogged((prev) => !prev);
-  };
 
   useEffect(() => {
     console.log("before fetchQuickLogin");

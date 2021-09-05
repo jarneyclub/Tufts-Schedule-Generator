@@ -123,6 +123,7 @@ function DegreePlan1(props) {
   const {
     shrink,
     logged,
+    switchLogged,
     loginPopup,
     signupPopup,
     handleLoginPopup,
@@ -305,6 +306,7 @@ function DegreePlan1(props) {
         <Popup onClose={handleLoginPopup}>
           <JarUserLogin
             forcedPopup={true}
+            switchLogged={switchLogged}
             loginState={loginPopup}
             signupState={signupPopup}
             onClose={() => {
