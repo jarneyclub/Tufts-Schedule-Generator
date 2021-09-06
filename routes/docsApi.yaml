@@ -130,37 +130,6 @@ paths:
                       userid:
                         type: string
                         description: user email
-  /auth/userinfo:
-    post:
-      tags:
-        - Account
-      summary: Get user information
-      parameters:
-        - in: header
-          name: Authorization
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                token:
-                  type: string
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  properties:
-                    firstname:
-                      type: string
-                    lastname:
-                      type: string
   ####################
   #                  #
   #     COURSES      #
@@ -681,11 +650,11 @@ paths:
   #     SCHEDULE     #
   #                  #
   ####################
-  /schedule/generate:
+  /schedule:
     post:
       tags:
         - Schedule
-      summary: Generate semester schedule based on user preferences and save to database
+      summary: Create a new semester schedule based on user preferences and save to database
       requestBody:
         required: true
         content:
@@ -709,6 +678,15 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Schedule"
+    delete:
+      tags:
+        - Schedule
+      summary: Delete saved schedule
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
   /schedules:
     get:
       tags:
@@ -731,16 +709,6 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/Schedule"
-  /schedule:
-    delete:
-      tags:
-        - Schedule
-      summary: Delete saved schedule
-      parameters:
-        - in: header
-          name: Authorization
-          schema:
-            type: string
   ####################
   #                  #
   #       OLD        #

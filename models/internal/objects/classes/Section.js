@@ -1,15 +1,15 @@
 
 /** Section class
  * 
- * @param {any} inputCourseID 
- * @param {any} inputCourseName 
- * @param {any} inputSectionName 
- * @param {any} inputSectionType 
- * @param {any} inputClasses
+ * @param {string} inputCourseID 
+ * @param {string} inputCourseName 
+ * @param {string} inputSectionName 
+ * @param {string} inputSectionType 
+ * @param {object} inputClasses {'0': Class, '1': Class}
  * @param {string} inputSectionStatus 'closed', 'waitlist', 'open'
  * @returns 
  */
-function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectionType, inputClasses, inputSectionStatus) {
+function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectionType, inputClasses, inputSectionStatus, inputSectionDatabaseId) {
     
     //////////////////////////////////////////
     //                                      //
@@ -22,7 +22,7 @@ function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectio
     const sectionName = inputSectionName;
     const sectionType = inputSectionType;
     const sectionStatus = inputSectionStatus;
-
+    const sectionDatabaseId = inputSectionDatabaseId;
     const classes = inputClasses;
 
     //////////////////////////////////////////
@@ -71,13 +71,21 @@ function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectio
         return sectionStatus;
     }
 
+    /** Get courseID of section
+     * @returns {string} course ID (e.g. COMP-0015)
+     */
+    function getSectionDatabaseId() {
+        return sectionDatabaseId;
+    }
+
     return {
         getCourseID,
         getSectionName,
         getSectionType,
         getCourseName,
         getClasses,
-        getSectionStatus
+        getSectionStatus,
+        getSectionDatabaseId
     }
 }
 

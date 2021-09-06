@@ -113,6 +113,6 @@ router.post('/auth/login_cookie', authController.authenticateToken, userControll
 //                                    //
 ////////////////////////////////////////
 
-router.post('/schedule/generate', scheduleController.generateSchedule);
+router.post('/schedule', scheduleController.generateSchedule);
 
 module.exports = router;

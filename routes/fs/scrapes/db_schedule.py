@@ -103,18 +103,19 @@ class db_schedule ():
             curr_section = sections_info[i]
             doc = {}
             doc["term_section_id"] = curr_section["section_id"]
-            doc["term_course_id"] = curr_section["course_id"]
-            doc["course_num"] = curr_section["course_num"]
-            doc["course_title"] = curr_section["course_title"]
-            doc["units"] = curr_section["units"]
-            doc["section_num"] = curr_section["section_num"]
-            doc["campus"] = curr_section["campus"]
-            doc["section_type"] = curr_section["section_type"]
-            doc["instr_mode"] = curr_section["instr_mode"]
-            doc["attributes"] = curr_section["attributes"]
-            doc["status"] = curr_section["status"]
-            doc["capacities"] = curr_section["capacities"]
-            doc["classes"] = curr_section["classes"]
+            doc["term_course_id"]  = curr_section["course_id"]
+            doc["course_num"]      = curr_section["course_num"]
+            doc["course_title"]    = curr_section["course_title"]
+            doc["units"]           = curr_section["units"]
+            doc["section_num"]     = curr_section["section_num"]
+            doc["campus"]          = curr_section["campus"]
+            doc["section_type"]    = curr_section["section_type"]
+            doc["instr_mode"]      = curr_section["instr_mode"]
+            doc["attributes"]      = curr_section["attributes"]
+            doc["status"]          = curr_section["status"]
+            doc["capacities"]      = curr_section["capacities"]
+            doc["classes"]         = curr_section["classes"]
+            doc["term"]            = self.curr_term
             docs_to_insert.append(doc)
         self.db.sections.drop()
         self.db["sections"].insert_many(docs_to_insert)

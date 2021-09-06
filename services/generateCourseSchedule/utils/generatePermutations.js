@@ -5,10 +5,8 @@ const generatePermutations = (global) => {
     return new Promise ((resolve, reject) => {
         
         let possibleDigits = global.possibleDigits;
-        let arrayCourses = global.arrayCourses;
 
         console.log("possibleDigits: ", possibleDigits)
-        console.log("arrayCourses: ", arrayCourses)
         
         let start = Date.now();
 

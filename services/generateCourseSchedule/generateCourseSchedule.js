@@ -48,7 +48,7 @@ const generateCourseSchedule = (arrayCourses, filter) => {
             }
         )
         .then(
-            // Uses arrayCourses
+            // Uses arrSectionTypes
             (global) => getPossibleDigits(global),
             (err) => {
                 console.log("(generateCourseSchedule) error detected: ", err);
@@ -56,7 +56,7 @@ const generateCourseSchedule = (arrayCourses, filter) => {
             }
         )
         .then(
-            // Uses arrayCourses, possibleDigits
+            // Uses possibleDigits
             (global) => generatePermutations(global)
         )
         .then(

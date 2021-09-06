@@ -3,9 +3,13 @@
  * @param {string} inputCourseName 
  * @param {list} inputListSectionTypes 
  * @param {list} inputListSections 
+ * @param {number} inputUnits 
+ * @param {string} inputCourseDatabaseId
  * @returns 
  */
-function Course (inputCourseId, inputCourseName, inputListSectionTypes, inputSections) {
+function Course (inputCourseId, inputCourseName, 
+                    inputListSectionTypes, inputSections, 
+                    inputUnits, inputCourseDatabaseId) {
     
     //////////////////////////////////////////
     //                                      //
@@ -20,10 +24,11 @@ function Course (inputCourseId, inputCourseName, inputListSectionTypes, inputSec
         "Laboratory": [Section]
     }
     */
-    const courseName = inputCourseName;
-    const courseID = inputCourseId;
-    const sectionTypes = inputListSectionTypes;
-
+    const courseName       = inputCourseName;
+    const courseID         = inputCourseId;
+    const sectionTypes     = inputListSectionTypes;
+    const units            = inputUnits;
+    const courseDatabaseId = inputCourseDatabaseId;
     // populateSections();
 
     //////////////////////////////////////////
@@ -68,36 +73,28 @@ function Course (inputCourseId, inputCourseName, inputListSectionTypes, inputSec
         return sectionTypes;
     }
 
-    //////////////////////////////////////////
-    //                                      //
-    //          Private Functions           //
-    //                                      //
-    //////////////////////////////////////////
-    
-    function populateSections () {
-
-        // initialize sections variable with section types
-        for (var index in inputListSectionTypes) {
-            var sectionType = inputListSectionTypes[index];
-            sections[sectionType] = [];
-        }
-
-        // assign an unsorted list of Sections by section type
-        for (var index in inputListSections) {
-            var section = inputListSections[index]; // a single Section object
-            var sectionType = section.getSectionType();
-
-            sections[sectionType].push(section);
-        }
+    /** Get amount of units for this section
+     * @returns {number} number of units
+     */
+    function getUnits() {
+        return units;
     }
 
+    /** 
+     * @returns {string} course database id
+     */
+    function getCourseDatabaseId() {
+        return courseDatabaseId;
+    }
 
     return {
         getSections,
         getSectionsByType,
         getCourseName,
         getCourseID,
-        getSectionTypes
+        getSectionTypes,
+        getUnits,
+        getCourseDatabaseId
     }
 }
 
