@@ -94,7 +94,7 @@ function AddMajorMinor(props) {
 const degreeReqDefault = {
   program_name: "Requirement #1",
   school: " ",
-  degree: "Ex. B.S. in Computer Science",
+  degree: " ",
   part_id_tracker: 1,
   parts: [
     {
@@ -161,13 +161,13 @@ function DegreePlan1(props) {
       })
       .then((result) => {
         console.log("get request result of semester plan: ", result);
-        // console.log("plans: ", result.plans);
 
         if (result.reqs.length === 0) {
           console.log("no private reqs");
           fetchCreatePrivateReqs(degreeReqDefault);
         } else {
           setDegreeReqOptions(result.reqs);
+          
         }
       })
       .catch((error) => {
@@ -289,6 +289,7 @@ function DegreePlan1(props) {
               <DegreeReqEdit
                 onClose={() => setEditDRPopup(false)}
                 isCreateMM={newMMPopup}
+                fetchCreate={fetchCreatePrivateReqs}
               />
             </Popup>
           )}
