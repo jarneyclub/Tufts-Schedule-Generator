@@ -69,7 +69,6 @@ export default function App() {
       .catch((error) => console.log("error from quick login: ", error));
   };
 
-
   useEffect(() => {
     console.log("before fetchQuickLogin");
     fetchQuickLogin();
@@ -106,7 +105,12 @@ export default function App() {
                     renders the first on that matches the current URL
                 */}
         <BrowserRouter>
-          <Header id="headerContainer" shrink={shrink} logged={logged} switchLogged={switchLogged}/>
+          <Header
+            id="headerContainer"
+            shrink={shrink}
+            logged={logged}
+            switchLogged={switchLogged}
+          />
 
           <Switch>
             <Route path="/DegreePlan1">

@@ -20,14 +20,13 @@ import JarUserLogin from "./JarUserLogin";
 /* scripts */
 
 function HeaderUser(props) {
-  const { shrink, logged, switchLogged} = props;
+  const { shrink, logged, switchLogged } = props;
 
   const [shrinkExpandable, setShrinkExpandable] = useState(false);
   const [barMenu, setBarMenu] = useState(false);
 
   const [loginPopup, setLoginPopup] = useState(false);
   const [signupPopup, setSignupPopup] = useState(false);
-
 
   const navbarRef = useRef();
 
@@ -95,7 +94,6 @@ function HeaderUser(props) {
           }
         </div>
 
-       
         {!shrink && (
           <div className={hStyle.navbarContainer} ref={navbarRef}>
             <div>
