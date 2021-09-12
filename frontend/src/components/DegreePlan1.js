@@ -99,7 +99,7 @@ const degreeReqDefault = {
   parts: [
     {
       part_id: 0,
-      part_name: "Major Requirements",
+      part_name: " ",
       part_desc: " ",
       part_req_id_tracker: 1,
       part_reqs: [
