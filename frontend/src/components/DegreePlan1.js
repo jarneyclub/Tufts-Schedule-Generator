@@ -167,7 +167,6 @@ function DegreePlan1(props) {
           fetchCreatePrivateReqs(degreeReqDefault);
         } else {
           setDegreeReqOptions(result.reqs);
-          
         }
       })
       .catch((error) => {
@@ -184,9 +183,11 @@ function DegreePlan1(props) {
     console.log("requestOption for fetchCreatePrivateReqs", requestOption);
     await fetch("https://jarney.club/api/degreereq/private", requestOption)
       .then((response) => response.json())
-      .then((result) =>
-        console.log("result from fetchCreatePrivateReqs", result)
-      )
+      .then((result) => {
+        console.log("result from fetchCreatePrivateReqs", result);
+        setEditDRPopup(false);
+        fetchPrivateReqs();
+      })
       .catch((error) =>
         console.log("error from fetchCreatePrivateReqs", error)
       );

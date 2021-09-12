@@ -59,7 +59,10 @@ function Scheduler(props) {
   } = props;
 
   /* schedule Dropdown */
-  const [scheduleOptions, setScheduleOptions] = useState(["Schedule 1", "schedule 2"]);
+  const [scheduleOptions, setScheduleOptions] = useState([
+    "Schedule 1",
+    "schedule 2",
+  ]);
   const [selectedSchedule, setSelectedSchedule] = useState(scheduleOptions[0]);
 
   /* filter Dropdown */
