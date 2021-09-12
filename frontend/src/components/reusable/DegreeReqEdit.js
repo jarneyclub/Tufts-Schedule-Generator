@@ -73,6 +73,7 @@ function DegreeReqEdit(props) {
   const handleAdd = () => {
     /* do something API??  */
     fetchCreate(detail);
+    // onClose();
   };
 
   const handleGeneralChange = (e) => {
