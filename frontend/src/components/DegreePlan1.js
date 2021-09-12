@@ -193,9 +193,32 @@ function DegreePlan1(props) {
       );
   };
 
+  const fetchSavePrivateReqs = async (values) => {
+    const requestOption = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    };
+    console.log("requestOption for fetchCreatePrivateReqs", requestOption);
+    await fetch("https://jarney.club/api/degreereq/private/save", requestOption)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log("result from fetchCreatePrivateReqs", result);
+        setEditDRPopup(false);
+        fetchPrivateReqs();
+      })
+      .catch((error) =>
+        console.log("error from fetchCreatePrivateReqs", error)
+      );
+  };
+
   useEffect(() => {
     fetchPrivateReqs();
   }, []);
+
+  useEffect(() => {
+    setDegreeReq(degreeReqOptions[degreeReqOptions.length - 1].program_name);
+  }, [degreeReqOptions]);
 
   return (
     // {/* * * * * * * The Big Ass Horizontal Display * * * * * * * */}
@@ -281,7 +304,10 @@ function DegreePlan1(props) {
                             displayed degree requirement */}
           <Button
             className={dp1Style.editButton}
-            onClick={() => setEditDRPopup(true)}
+            onClick={() => {
+              setNewMMPopup(false);
+              setEditDRPopup(true);
+            }}
           >
             edit
           </Button>
@@ -291,6 +317,10 @@ function DegreePlan1(props) {
                 onClose={() => setEditDRPopup(false)}
                 isCreateMM={newMMPopup}
                 fetchCreate={fetchCreatePrivateReqs}
+                fetchSave={fetchSavePrivateReqs}
+                reqDetail={degreeReqOptions.filter(
+                  (req) => req.program_name === selectedDegreeReq
+                )}
               />
             </Popup>
           )}
