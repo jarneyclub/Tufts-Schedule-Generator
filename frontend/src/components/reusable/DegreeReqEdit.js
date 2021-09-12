@@ -63,7 +63,7 @@ const degreeOptions = ["B.S.", "B.A."];
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 function DegreeReqEdit(props) {
-  const { onClose } = props;
+  const { onClose, fetchCreate } = props;
   const [detail, setDetail] = useState(drDefault);
 
   const handleClose = () => {
@@ -72,7 +72,7 @@ function DegreeReqEdit(props) {
 
   const handleAdd = () => {
     /* do something API??  */
-    fetchCreate();
+    fetchCreate(detail);
   };
 
   const handleGeneralChange = (e) => {
@@ -200,38 +200,38 @@ function DegreeReqEdit(props) {
   //     });
   // };
 
-  const fetchCreate = async (values) => {
-    // setLoadMessage(true);
+  // const fetchCreate = async (values) => {
+  //   // setLoadMessage(true);
 
-    const requestOption = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(detail),
-    };
-    console.log("requestOption clicked ", requestOption);
+  //   const requestOption = {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(detail),
+  //   };
+  //   console.log("requestOption clicked ", requestOption);
 
-    await fetch("https://jarney.club/api/degreereqs/private", requestOption)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error("Failed to fetch.");
-      })
-      .then((result) => {
-        console.log("result from post: ", result);
-        // setLoadMessage(false);
-        onClose();
-      })
-      .catch((error) => {
-        // setLoadMessage(false);
-        // console.log(error.data);
-        // handleAlert("error", "Error: Failed to Login");
-        // console.log("error login")
+  //   await fetch("https://jarney.club/api/degreereqs/private", requestOption)
+  //     .then((response) => {
+  //       if (response.ok) {
+  //         return response.json();
+  //       }
+  //       throw new Error("Failed to fetch.");
+  //     })
+  //     .then((result) => {
+  //       console.log("result from post: ", result);
+  //       // setLoadMessage(false);
+  //       onClose();
+  //     })
+  //     .catch((error) => {
+  //       // setLoadMessage(false);
+  //       // console.log(error.data);
+  //       // handleAlert("error", "Error: Failed to Login");
+  //       // console.log("error login")
 
-        // add an error message popup of some sort
-        console.log("error from post degreereq: ", error);
-      });
-  };
+  //       // add an error message popup of some sort
+  //       console.log("error from post degreereq: ", error);
+  //     });
+  // };
 
   return (
     <div className={dStyle.drContainer}>
