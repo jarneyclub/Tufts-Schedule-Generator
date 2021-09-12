@@ -36,7 +36,6 @@ const degreeReqPublic_Schema = new Schema({
         part_name: {
             type: String,
             trim: true,
-            required: 'Please enter the names of all parts of program requirement',
         },
         part_desc: String,
         part_req_id_tracker: {
