@@ -204,9 +204,24 @@ function Scheduler(props) {
     const requestOption = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(),
+      body: JSON.stringify({
+        sched_name: selectedSchedule,
+        term_course_ids: selectedCourses,
+        filter: {
+          misc: {
+            ignoreTU: coursePreference.time_unspecified,
+            ignoreM: coursePreference.online,
+            ignoreClosed: coursePreference.closed,
+            ignoreWL: coursePreference.waitlist,
+          },
+          time: timePref,
+        },
+      }),
     };
-    await fetch("", requestOption);
+    await fetch("https://jarney.club/api/schedule", requestOption)
+      .then((response) => response.json())
+      .then((result) => console.log("generate schedule result: ", result))
+      .catch((error) => console.log("generate schedule error: ", error));
   };
 
   useEffect(() => {
@@ -356,7 +371,12 @@ function Scheduler(props) {
             </div>
           </div>
           <div className={sStyle.rightButtonContainer}>
-            <Button className={sStyle.renderButton}>Render Schedule</Button>
+            <Button
+              className={sStyle.renderButton}
+              onClick={fetchGenerateSchedule}
+            >
+              Render Schedule
+            </Button>
           </div>
           <div className={sStyle.tabsContainer}>
             <div className={sStyle.tabBarsContainer}>

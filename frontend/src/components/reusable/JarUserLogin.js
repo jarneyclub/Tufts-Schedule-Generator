@@ -22,7 +22,14 @@ import { string } from "prop-types";
 
 // function JarUserLogin(props) {
 const JarUserLogin = React.forwardRef((props, ref) => {
-  const { onClose, onSwitch, loginState, signupState, forcedPopup, switchLogged } = props;
+  const {
+    onClose,
+    onSwitch,
+    loginState,
+    signupState,
+    forcedPopup,
+    switchLogged,
+  } = props;
   const [loginValues, setLoginValues] = useState({});
   const [loadMessage, setLoadMessage] = useState(false);
 
