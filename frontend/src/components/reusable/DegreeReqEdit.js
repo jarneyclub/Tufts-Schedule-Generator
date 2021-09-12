@@ -64,8 +64,8 @@ const degreeOptions = ["B.S.", "B.A."];
 
 function DegreeReqEdit(props) {
   const { onClose, fetchCreate, fetchSave, isCreateMM, reqDetail } = props;
-  const [detail, setDetail] = useState(drDefault);
-
+  const [detail, setDetail] = useState(isCreateMM ? drDefault : reqDetail);
+  console.log("DegreeReqEdit, isCreateMM: ", isCreateMM);
   const handleClose = () => {
     onClose();
   };
@@ -179,11 +179,11 @@ function DegreeReqEdit(props) {
     }));
   };
 
-  useEffect(() => {
-    if (!isCreateMM) {
-      setDetail(reqDetail);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!isCreateMM) {
+  //     setDetail(reqDetail);
+  //   }
+  // }, []);
 
   return (
     <div className={dStyle.drContainer}>
