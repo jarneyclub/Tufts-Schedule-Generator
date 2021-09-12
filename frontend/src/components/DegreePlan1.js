@@ -219,7 +219,7 @@ function DegreePlan1(props) {
   useEffect(() => {
     console.log("degreeReqOptions: ", degreeReqOptions);
     console.log("degreeReqOptions len: ", degreeReqOptions.length);
-    setDegreeReq(degreeReqOptions[degreeReqOptions.length - 1].program_name);
+    setDegreeReq(degreeReqOptions[degreeReqOptions.length - 1]?.program_name);
   }, [degreeReqOptions]);
 
   return (
