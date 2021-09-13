@@ -246,7 +246,7 @@ function Scheduler(props) {
           (result) => {
             setLoadMessage(false);
             console.log("show results: ", result);
-            setSearchCourseResult(result.data);
+            setSearchCourseResult(result.courses);
           },
           (error) => {
             setSearchCourseResult([]);
