@@ -150,7 +150,7 @@ function Scheduler(props) {
    */
   const checkCourseAdded = (courseID) => {
     for (let course of selectedCourses) {
-      if (course.gen_course_id === courseID) {
+      if (course.term_course_id === courseID) {
         console.log("false: course:" , course, " courseID:", courseID);
         return false;
       }
@@ -181,7 +181,7 @@ function Scheduler(props) {
   const handleDoubleClickSelected = (courseDetail) => {
     setSelectedCourses((prev) =>
       prev.filter(
-        (course) => course.gen_course_id !== courseDetail.gen_course_id
+        (course) => course.term_course_id !== courseDetail.term_course_id
       )
     );
   };
