@@ -299,7 +299,9 @@ function DegreePlan1(props) {
           {/* info returned from API call
                             display the info of the selected degree plan */}
           <div className={dp1Style.degreeReqListExpandable}>
-            <DegreeReqDisplay reqDetail={degreeReqDefault} />
+            <DegreeReqDisplay reqDetail={degreeReqOptions.filter(
+                  (req) => req.program_name === selectedDegreeReq
+                )[0]} />
           </div>
 
           {/* button that displays an overlay to edit current
