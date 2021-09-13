@@ -236,7 +236,7 @@ function Scheduler(props) {
     async function fetchData() {
       setLoadMessage(true);
       await fetch(
-        "https://jarney.club/api/courses/general?cnum="
+        "https://jarney.club/api/courses/term?cnum="
           .concat(courseSearchValue)
           .concat("&attr=")
           .concat(selectedAttribute)
