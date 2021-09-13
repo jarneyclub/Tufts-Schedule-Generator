@@ -212,7 +212,7 @@ function Scheduler(props) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         sched_name: selectedSchedule,
-        term_course_ids: selectedCourses,
+        term_course_ids: selectedCourses.map((course) => course.term_course_id),
         filter: {
           misc: {
             ignoreTU: coursePreference.time_unspecified,
