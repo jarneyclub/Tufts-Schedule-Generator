@@ -5,7 +5,7 @@ exports.getGeneralCourses = async (req, res) => {
     var start = Date.now(); // begin timing API endpoint
     let reqCourseNum = req.query.cnum.toUpperCase(); // get query string
     if (reqCourseNum === "") { // if no query string, return empty array
-        res.json({data: []});
+        res.json({courses: []});
     }
     else {
         let firstDigit = reqCourseNum.match(/\d/); // will give you the first digit in the string
@@ -46,7 +46,7 @@ exports.getTermCourses = async (req, res) => {
     // get query strings
     let reqCourseNum = req.query.cnum.toUpperCase();
     if (reqCourseNum === "") { // if no query string, return empty array
-        res.json({data: []});
+        res.json({courses: []});
     }
     else {
         let reqAttr      = req.query.attr;
@@ -127,4 +127,28 @@ exports.getAttributes = async (req, res) => {
         time_taken: timeTakenString
     };
     res.json(response);
+}
+
+exports.getPrograms = async (req, res) => {
+    var start = Date.now(); // begin timing API endpoint
+    let attributesCol = mongoose.connection.collection("program_names"); // get MongoDB collection
+    // get cursor of program names from database with queried course number
+    let cursor = attributesCol.find();
+    // convert cursor to list
+    let documents = [];
+    documents.push("");
+    await cursor.forEach((doc) => {
+        // parse database document
+        documents.push(doc["name"]);
+    });
+    var end = Date.now(); // End timing API endpoint
+    var difference = end - start;
+    let timeTakenString = difference.toString() + "ms";
+    // send response
+    let response = {
+        names: documents,
+        time_taken: timeTakenString
+    };
+    res.json(response);
+
 }
