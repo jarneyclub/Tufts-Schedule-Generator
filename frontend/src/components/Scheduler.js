@@ -162,6 +162,7 @@ function Scheduler(props) {
    *  purpose: for courseSearchBar, adds course to selectedCourseList
    */
   const handleDoubleClickCourseList = (courseDetail) => {
+      console.log("course to be added: ", courseDetail);
     if (checkCourseAdded(courseDetail.gen_course_id)) {
       setSelectedCourses((prev) => [...prev, courseDetail]);
       console.log("course added: " , selectedCourses);
