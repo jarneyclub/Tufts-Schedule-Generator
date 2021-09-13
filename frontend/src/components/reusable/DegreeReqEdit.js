@@ -9,7 +9,7 @@
  *      - All the Parts to this current Degree Requirement (DegreeReqPart)
  *
  */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   IconButton,
@@ -54,7 +54,7 @@ const drDefault = {
 };
 
 const schoolOptions = [" A&S", " ENG"];
-const degreeOptions = ["B.S.", "B.A."];
+
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
@@ -63,16 +63,18 @@ const degreeOptions = ["B.S.", "B.A."];
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 function DegreeReqEdit(props) {
-  const { onClose, fetchCreate } = props;
-  const [detail, setDetail] = useState(drDefault);
-
+  const { onClose, fetchCreate, fetchSave, isCreateMM, reqDetail } = props;
+  const [detail, setDetail] = useState(isCreateMM ? drDefault : reqDetail);
+  console.log("DegreeReqEdit, isCreateMM: ", isCreateMM);
+  console.log("DegreeReqEdit reqDetail: ", reqDetail);
   const handleClose = () => {
     onClose();
   };
 
   const handleAdd = () => {
     /* do something API??  */
-    fetchCreate(detail);
+    isCreateMM ? fetchCreate(detail) : fetchSave(detail);
+    // onClose();
   };
 
   const handleGeneralChange = (e) => {
@@ -178,60 +180,7 @@ function DegreeReqEdit(props) {
     }));
   };
 
-  // const fetchCreate = async () => {
-
-  //   const requestOption = {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json", "accept": "application/json" },
-  //     body: JSON.stringify(detail),
-  //   };
-
-  //   console.log("request option: ", requestOption)
-
-  //   await fetch("https://jarney.club/api/degreereqs/private", requestOption)
-  //     .then((response) => {
-  //       console.log("response: ", response);
-  //       return response.json();
-  //     })
-  //     .then((result) =>
-  //       console.log("result from fetchCreate: ", result))
-  //     .catch((error) => {
-  //       console.log("fetchCreate error: ", error);
-  //     });
-  // };
-
-  // const fetchCreate = async (values) => {
-  //   // setLoadMessage(true);
-
-  //   const requestOption = {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(detail),
-  //   };
-  //   console.log("requestOption clicked ", requestOption);
-
-  //   await fetch("https://jarney.club/api/degreereqs/private", requestOption)
-  //     .then((response) => {
-  //       if (response.ok) {
-  //         return response.json();
-  //       }
-  //       throw new Error("Failed to fetch.");
-  //     })
-  //     .then((result) => {
-  //       console.log("result from post: ", result);
-  //       // setLoadMessage(false);
-  //       onClose();
-  //     })
-  //     .catch((error) => {
-  //       // setLoadMessage(false);
-  //       // console.log(error.data);
-  //       // handleAlert("error", "Error: Failed to Login");
-  //       // console.log("error login")
-
-  //       // add an error message popup of some sort
-  //       console.log("error from post degreereq: ", error);
-  //     });
-  // };
+  
 
   return (
     <div className={dStyle.drContainer}>
@@ -244,7 +193,7 @@ function DegreeReqEdit(props) {
           <CancelIcon />
         </IconButton>
         <div className={pStyle.headerBody}>
-          === {detail.program_name} ===&nbsp;&nbsp;
+          === {detail?.program_name} ===&nbsp;&nbsp;
         </div>
         <span />
       </div>
@@ -253,6 +202,7 @@ function DegreeReqEdit(props) {
         <div className={dStyle.inputContainer}>
           <TextField
             size="medium"
+            value={detail?.program_name}
             onChange={handleGeneralChange}
             className={pStyle.inputAreaName}
             label="Name"
@@ -261,7 +211,7 @@ function DegreeReqEdit(props) {
 
           <Dropdown
             options={schoolOptions}
-            selectedOption={detail.school}
+            selectedOption={detail?.school}
             onOptionChange={handleGeneralChange}
             name="school"
             labelId="school_dropdown"
@@ -270,6 +220,7 @@ function DegreeReqEdit(props) {
 
           <TextField
             size="medium"
+            value={detail?.degree}
             onChange={handleGeneralChange}
             className={pStyle.inputAreaName}
             label="Degree"

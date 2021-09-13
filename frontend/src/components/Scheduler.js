@@ -59,12 +59,15 @@ function Scheduler(props) {
   } = props;
 
   /* schedule Dropdown */
-  const [scheduleOptions, setScheduleOptions] = useState([1, 2, 3, 4, 5]);
+  const [scheduleOptions, setScheduleOptions] = useState([
+    "Schedule 1",
+    "schedule 2",
+  ]);
   const [selectedSchedule, setSelectedSchedule] = useState(scheduleOptions[0]);
 
   /* filter Dropdown */
   const [attributes, setAttributes] = useState([]);
-  const [selectedAttribute, setSelectedAttribute] = useState("attributes[0]");
+  const [selectedAttribute, setSelectedAttribute] = useState("");
 
   const [coursePreference, setCoursePreference] = useState(boolStateDefault);
 
@@ -233,7 +236,7 @@ function Scheduler(props) {
     async function fetchData() {
       setLoadMessage(true);
       await fetch(
-        "https://jarney.club/api/courses/general?cnum="
+        "https://jarney.club/api/courses/term?cnum="
           .concat(courseSearchValue)
           .concat("&attr=")
           .concat(selectedAttribute)
@@ -242,7 +245,8 @@ function Scheduler(props) {
         .then(
           (result) => {
             setLoadMessage(false);
-            setSearchCourseResult(result.courses);
+            console.log("show results: ", result);
+            setSearchCourseResult(result.data);
           },
           (error) => {
             setSearchCourseResult([]);
