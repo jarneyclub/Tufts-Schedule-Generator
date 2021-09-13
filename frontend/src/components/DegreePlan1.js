@@ -322,7 +322,7 @@ function DegreePlan1(props) {
                 fetchSave={fetchSavePrivateReqs}
                 reqDetail={degreeReqOptions.filter(
                   (req) => req.program_name === selectedDegreeReq
-                )}
+                )[0]}
               />
             </Popup>
           )}
