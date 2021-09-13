@@ -56,7 +56,7 @@ function DegreeReqDisplay(props) {
       <div>School:&nbsp;{reqDetail?.school}</div>
       <div>Degree:&nbsp;{reqDetail?.degree}</div>
       <br />
-      {reqDetail.parts?.map((req) => (
+      {reqDetail?.parts?.map((req) => (
         <div>
           <div>{req?.part_name}</div>
           <div>{req?.part_desc}</div>
