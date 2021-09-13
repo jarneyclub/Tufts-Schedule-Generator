@@ -164,6 +164,7 @@ function Scheduler(props) {
   const handleDoubleClickCourseList = (courseDetail) => {
     if (checkCourseAdded(courseDetail.gen_course_id)) {
       setSelectedCourses((prev) => [...prev, courseDetail]);
+      console.log("course added: " , selectedCourses);
     } else {
       setAlertMessage("Course was already added!");
       setAlertSeverity("error");
