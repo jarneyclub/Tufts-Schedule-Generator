@@ -67,7 +67,7 @@ function Scheduler(props) {
 
   /* filter Dropdown */
   const [attributes, setAttributes] = useState([]);
-  const [selectedAttribute, setSelectedAttribute] = useState(attributes[0]);
+  const [selectedAttribute, setSelectedAttribute] = useState("");
 
   const [coursePreference, setCoursePreference] = useState(boolStateDefault);
 
