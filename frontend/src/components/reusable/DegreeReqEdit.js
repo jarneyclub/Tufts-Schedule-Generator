@@ -211,7 +211,7 @@ function DegreeReqEdit(props) {
 
           <Dropdown
             options={schoolOptions}
-            selectedOption={detail.school}
+            selectedOption={detail?.school}
             onOptionChange={handleGeneralChange}
             name="school"
             labelId="school_dropdown"
