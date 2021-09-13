@@ -53,8 +53,8 @@ function DegreeReqDisplay(props) {
 
   return (
     <div className={dStyle.displayContainer}>
-      <div>School:&nbsp;{reqDetail.school}</div>
-      <div>Degree:&nbsp;{reqDetail.degree}</div>
+      <div>School:&nbsp;{reqDetail?.school}</div>
+      <div>Degree:&nbsp;{reqDetail?.degree}</div>
       <br />
       {reqDetail.parts?.map((req) => (
         <div>
