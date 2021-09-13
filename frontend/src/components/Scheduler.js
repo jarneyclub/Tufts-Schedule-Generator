@@ -151,6 +151,7 @@ function Scheduler(props) {
   const checkCourseAdded = (courseID) => {
     for (let course of selectedCourses) {
       if (course.gen_course_id === courseID) {
+        console.log("false: course:" , course, " courseID:", courseID);
         return false;
       }
     }
