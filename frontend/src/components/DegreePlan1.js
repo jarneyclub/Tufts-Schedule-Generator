@@ -220,7 +220,7 @@ function DegreePlan1(props) {
     console.log("degreeReqOptions: ", degreeReqOptions);
     console.log("degreeReqOptions len: ", degreeReqOptions.length);
     setDegreeReq(degreeReqOptions[degreeReqOptions.length - 1]?.program_name);
-  }, [degreeReqOptions]);
+  }, [degreeReqOptions]); 
 
   return (
     // {/* * * * * * * The Big Ass Horizontal Display * * * * * * * */}
