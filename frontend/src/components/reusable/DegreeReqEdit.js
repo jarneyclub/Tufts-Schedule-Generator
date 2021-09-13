@@ -193,7 +193,7 @@ function DegreeReqEdit(props) {
           <CancelIcon />
         </IconButton>
         <div className={pStyle.headerBody}>
-          === {detail.program_name} ===&nbsp;&nbsp;
+          === {detail?.program_name} ===&nbsp;&nbsp;
         </div>
         <span />
       </div>
@@ -202,6 +202,7 @@ function DegreeReqEdit(props) {
         <div className={dStyle.inputContainer}>
           <TextField
             size="medium"
+            value={detail?.program_name}
             onChange={handleGeneralChange}
             className={pStyle.inputAreaName}
             label="Name"
@@ -219,6 +220,7 @@ function DegreeReqEdit(props) {
 
           <TextField
             size="medium"
+            value={detail?.degree}
             onChange={handleGeneralChange}
             className={pStyle.inputAreaName}
             label="Degree"
