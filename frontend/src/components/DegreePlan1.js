@@ -227,11 +227,11 @@ function DegreePlan1(props) {
     console.log("selected Degree Req Detail: ", selectedDegreeReqDetail)
   }, [selectedDegreeReq])
 
-  // useEffect(() => {
-  //   console.log("degreeReqOptions: ", degreeReqOptions);
-  //   console.log("degreeReqOptions len: ", degreeReqOptions.length);
-  //   setDegreeReq(degreeReqOptions[degreeReqOptions.length - 1]?.program_name);
-  // }, [degreeReqOptions]); 
+  useEffect(() => {
+    console.log("degreeReqOptions: ", degreeReqOptions);
+    console.log("degreeReqOptions len: ", degreeReqOptions.length);
+    setDegreeReq(degreeReqOptions[0]?.program_name);
+  }, [degreeReqOptions]); 
 
   return (
     // {/* * * * * * * The Big Ass Horizontal Display * * * * * * * */}
