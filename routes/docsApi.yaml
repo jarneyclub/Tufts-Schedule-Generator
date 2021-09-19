@@ -351,7 +351,7 @@ paths:
       responses:
         200:
           description: delete successful
-  /degreeplan/term/create:
+  /degreeplan/term:
     post:
       tags:
         - Degree Plan
