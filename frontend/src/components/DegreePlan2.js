@@ -481,7 +481,7 @@ function DegreePlan2(props) {
           console.log("prev semesterPlanOptions: ", semesterPlanOptions);
           setSemesterPlanOptions(result.plans);
           setCardOptions(result.plans[0].terms);
-          setSelectedSemester(result.plan[0].plan_name);
+          setSelectedSemester(result.plans[0].plan_name);
         }
       })
       .catch((error) => {
