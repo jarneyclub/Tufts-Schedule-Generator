@@ -137,6 +137,7 @@ function DegreePlan1(props) {
     useState(
       "PLACEHOLDER"
     ); /*  Holds the current private Degree Requirement Displayed */
+  const [selectedDegreeReqDetail, setDegreeReqDetail] = useState();
 
   const [editDRPopup, setEditDRPopup] =
     useState(false); /*  Degree Requirement Edit Popup */
@@ -215,6 +216,16 @@ function DegreePlan1(props) {
   useEffect(() => {
     fetchPrivateReqs();
   }, []);
+
+
+  useEffect(() => {
+    setDegreeReqDetail(degreeReqOptions.filter(
+      (req) => req.program_name === selectedDegreeReq.substr(3)
+    )[0])
+    console.log("degreeReqOptions: ", degreeReqOptions);
+    console.log("selected Degree Req: ", selectedDegreeReq.substr(3))
+    console.log("selected Degree Req Detail: ", selectedDegreeReqDetail)
+  }, [selectedDegreeReq])
 
   useEffect(() => {
     console.log("degreeReqOptions: ", degreeReqOptions);
@@ -299,9 +310,7 @@ function DegreePlan1(props) {
           {/* info returned from API call
                             display the info of the selected degree plan */}
           <div className={dp1Style.degreeReqListExpandable}>
-            <DegreeReqDisplay reqDetail={degreeReqOptions.filter(
-                  (req) => req.program_name === selectedDegreeReq
-                )[0]} />
+            <DegreeReqDisplay reqDetail={selectedDegreeReqDetail} />
           </div>
 
           {/* button that displays an overlay to edit current
