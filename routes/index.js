@@ -92,7 +92,7 @@ router.post('/degreereq/private/copy/:priv_dr_id', authController.authenticateTo
 ////////////////////////////////////////
 
 router.post('/auth/register',
-    body('userid').isEmail().normalizeEmail(),
+    body('userid').isEmail(),
     body('password').not().isEmpty(),
     body('password_confirmation').not().isEmpty(),
     userController.validateRegisterLocal,
