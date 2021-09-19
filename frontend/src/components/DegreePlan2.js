@@ -685,7 +685,7 @@ function DegreePlan2(props) {
       {/* popups */}
       {addSemesterPopup && (
         <Popup onClose={() => setAddSemesterPopup(false)}>
-          <AddSemester onClose={() => setAddSemesterPopup(false)} planID={()=>handleSelectedSemesterToID}/>
+          <AddSemester onClose={() => setAddSemesterPopup(false)} planID={()=>handleSelectedSemesterToID()}/>
         </Popup>
       )}
       {removeSemesterPopup && (
