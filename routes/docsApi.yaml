@@ -611,7 +611,7 @@ paths:
       responses:
         200:
           description: Update successful
-  /degreereq/private/save:
+  /degreereq/private:
     put:
       tags:
         - Degree Requirements
