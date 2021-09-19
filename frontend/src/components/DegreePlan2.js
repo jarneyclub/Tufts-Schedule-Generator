@@ -289,7 +289,7 @@ function DegreePlan2(props) {
   const [addSemesterPopup, setAddSemesterPopup] = useState(false);
   const [removeSemesterPopup, setRemoveSemesterPopup] = useState(false);
   const [searchCourseResult, setSearchCourseResult] = useState([]);
-  const [selectedSemester, setSelectedSemester] = useState();
+  const [selectedSemester, setSelectedSemester] = useState("");
 
   const [loadMessage, setLoadMessage] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
@@ -298,7 +298,7 @@ function DegreePlan2(props) {
 
   const handleSemesterPlanChange = (e) => {
     setSelectedSemester(e.target.value);
-    setSemesterPlanTitle(e.target.value);
+    //setSemesterPlanTitle(e.target.value);
     console.log("semesterPlanChange e:", e);
   };
 
@@ -491,8 +491,14 @@ function DegreePlan2(props) {
   /*  Initial fetching for plans when page first loads */
   useEffect(() => {
     fetchPlans();
-    setSemesterPlanTitle(selectedSemester)
+    
   }, []);
+
+  useEffect(() => {
+    // setSemesterPlanTitle(semesterPlanOptions[0])
+    console.log("semesterPlanOptions: ", semesterPlanOptions);
+    setSelectedSemester(semesterPlanOptions[0].plan_name)
+  },[semesterPlanOptions])
 
   useEffect(() => {
     console.log("cardOptions: ", cardOptions);
@@ -594,7 +600,7 @@ function DegreePlan2(props) {
             <div className={dp2Style.semesterPlanTitleContainer}>
               <div />
               <div className={dp2Style.semesterPlanTitle}>
-                {semesterPlanTitle}
+                {selectedSemester}
               </div>
               <div className={dp2Style.editSemesterButtonContainer}>
                 <IconButton
