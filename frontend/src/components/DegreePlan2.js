@@ -298,7 +298,7 @@ function DegreePlan2(props) {
 
   const handleSemesterPlanChange = (e) => {
     setSelectedSemester(e.target.value);
-    setSemesterPlanTitle(e.target.value);
+    //setSemesterPlanTitle(e.target.value);
     console.log("semesterPlanChange e:", e);
   };
 
@@ -491,8 +491,13 @@ function DegreePlan2(props) {
   /*  Initial fetching for plans when page first loads */
   useEffect(() => {
     fetchPlans();
-    setSemesterPlanTitle(selectedSemester)
+    
   }, []);
+
+  useEffect(() => {
+    // setSemesterPlanTitle(semesterPlanOptions[0])
+    setSelectedSemester(semesterPlanOptions[0])
+  },[semesterPlanOptions])
 
   useEffect(() => {
     console.log("cardOptions: ", cardOptions);
@@ -594,7 +599,7 @@ function DegreePlan2(props) {
             <div className={dp2Style.semesterPlanTitleContainer}>
               <div />
               <div className={dp2Style.semesterPlanTitle}>
-                {semesterPlanTitle}
+                {selectedSemester}
               </div>
               <div className={dp2Style.editSemesterButtonContainer}>
                 <IconButton
