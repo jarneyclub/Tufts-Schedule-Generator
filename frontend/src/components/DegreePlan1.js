@@ -222,6 +222,8 @@ function DegreePlan1(props) {
     setDegreeReqDetail(degreeReqOptions.filter(
       (req) => req.program_name === selectedDegreeReq
     )[0])
+    console.log("selected Degree Req: ", selectedDegreeReq)
+    console.log("selected Degree Req Detail: ", selectedDegreeReqDetail)
   }, [selectedDegreeReq])
 
   useEffect(() => {
