@@ -496,6 +496,7 @@ function DegreePlan2(props) {
 
   useEffect(() => {
     // setSemesterPlanTitle(semesterPlanOptions[0])
+    console.log("semesterPlanOptions: ", semesterPlanOptions);
     setSelectedSemester(semesterPlanOptions[0])
   },[semesterPlanOptions])
 
