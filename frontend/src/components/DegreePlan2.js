@@ -76,10 +76,12 @@ function AddSemester(props) {
     const yearTerm = selectedYear + " " + selectedTerm;
     console.log("yearTerm: ", yearTerm)
     console.log("planID: ", getPlanID());
+    const planID = getPlanID();
+    const value = {plan_id: planID, term: yearTerm};
     const requestOption = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({plan_id: getPlanID(), term: (selectedYear, " ", selectedTerm)}),
+      body: JSON.stringify(value),
     };
     console.log("requestOption for fetchCreatePrivateReqs", requestOption);
     await fetch("https://jarney.club/api/degreeplan/term", requestOption)
@@ -361,7 +363,8 @@ function DegreePlan2(props) {
     for(let i = 0; i < semesterPlanOptions.length; i++) {
       console.log("selectedSemester:", selectedSemester)
       console.log("semesterPlanOptions.planName:", semesterPlanOptions[i].plan_name)
-      if (semesterPlanOptions[i].plan_name === selectedSemester.substr(3))
+      console.log("true false? ",semesterPlanOptions[i].plan_name === selectedSemester )
+      if (semesterPlanOptions[i].plan_name === selectedSemester)
         return semesterPlanOptions[i].plan_term_id;
     }
   }
