@@ -52,6 +52,10 @@ const errorHandler = (e) => {
             /* error is mongoose validation error */
             throw { id: "202", status: "404", title: "Course Term Error", detail: e.message };
         }
+        else if (e.message.indexOf("No degree plan") > -1) {
+            /* error is mongoose validation error */
+            throw { id: "202", status: "404", title: "Course Term Error", detail: e.message };
+        }
         else {
             console.error(e.message);
             throw { id: "000", status: "500", title: "Course Term Error", detail: e.message };
