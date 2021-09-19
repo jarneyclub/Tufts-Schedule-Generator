@@ -105,7 +105,7 @@ function DegreeReqEdit(props) {
     setDetail((prev) => ({
       ...prev,
       parts: [
-        ...prev.parts,
+        ...prev?.parts,
         {
           ...drDefault.parts[0],
           part_id: prev.part_id_tracker,
