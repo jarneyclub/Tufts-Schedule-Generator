@@ -298,6 +298,7 @@ function DegreePlan2(props) {
 
   const handleSemesterPlanChange = (e) => {
     setSelectedSemester(e.target.value);
+    setSemesterPlanTitle(e.target.value);
     console.log("semesterPlanChange e:", e);
   };
 
@@ -490,6 +491,7 @@ function DegreePlan2(props) {
   /*  Initial fetching for plans when page first loads */
   useEffect(() => {
     fetchPlans();
+    setSemesterPlanTitle(selectedSemester)
   }, []);
 
   useEffect(() => {
@@ -521,6 +523,16 @@ function DegreePlan2(props) {
                     */}
           <div className={dp2Style.leftContainer}>
             {/* SEARCH CONTAINER for Courses */}
+            <div className={dp2Style.planSelectorContainer}>
+              <Dropdown
+                  options={semesterPlanOptions}
+                  isObject={true}
+                  objectField={"plan_name"}
+                  selectedOption={selectedSemester}
+                  onOptionChange={handleSemesterPlanChange}
+                  customStyle={{ fontSize: "20px"}}
+                />
+            </div>
             <div className={dp2Style.existListWrapper}>
               <TextField
                 // label="Search Course"
@@ -582,14 +594,7 @@ function DegreePlan2(props) {
             <div className={dp2Style.semesterPlanTitleContainer}>
               <div />
               <div className={dp2Style.semesterPlanTitle}>
-                <Dropdown
-                  options={semesterPlanOptions}
-                  isObject={true}
-                  objectField={"plan_name"}
-                  selectedOption={selectedSemester}
-                  onOptionChange={handleSemesterPlanChange}
-                  customStyle={{ fontSize: "20px", color: "#ffffff" }}
-                />
+                {semesterPlanTitle}
               </div>
               <div className={dp2Style.editSemesterButtonContainer}>
                 <IconButton
