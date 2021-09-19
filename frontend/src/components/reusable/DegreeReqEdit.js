@@ -53,7 +53,7 @@ const drDefault = {
   ],
 };
 
-const schoolOptions = [" A&S", " ENG"];
+const schoolDefaults = [" A&S", " ENG"];
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -65,6 +65,7 @@ const schoolOptions = [" A&S", " ENG"];
 function DegreeReqEdit(props) {
   const { onClose, fetchCreate, fetchSave, isCreateMM, reqDetail } = props;
   const [detail, setDetail] = useState(isCreateMM ? drDefault : reqDetail);
+  const [schoolOptions, setSchoolOptions] = useState(schoolDefaults);
   console.log("DegreeReqEdit, isCreateMM: ", isCreateMM);
   console.log("DegreeReqEdit reqDetail: ", reqDetail);
   const handleClose = () => {
@@ -181,7 +182,21 @@ function DegreeReqEdit(props) {
   };
 
   
+  const fetchSchoolOptions = async () => {
+    await fetch("https://jarney.club/api/courses/programs")
+      .then((response) => response.json())
+      .then((result) => {
+        console.log("result from schoolOptions", result);
+        setSchoolOptions(result.names)
+      })
+      .catch((error) =>
+        console.log("error from schoolOptions", error)
+      );
+  }
 
+  useEffect(() => {
+    fetchSchoolOptions();
+  }, [])
   return (
     <div className={dStyle.drContainer}>
       <div className={dStyle.headerContainer}>
