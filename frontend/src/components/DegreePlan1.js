@@ -198,7 +198,7 @@ function DegreePlan1(props) {
     const requestOption = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({req: values}),
+      body: JSON.stringify(values),
     };
     console.log("requestOption for fetchCreatePrivateReqs", requestOption);
     await fetch("https://jarney.club/api/degreereq/private/save", requestOption)
