@@ -298,6 +298,7 @@ function DegreePlan2(props) {
 
   const handleSemesterPlanChange = (e) => {
     setSelectedSemester(e.target.value);
+    setSemesterPlanTitle(e.target.value);
     console.log("semesterPlanChange e:", e);
   };
 
@@ -521,6 +522,16 @@ function DegreePlan2(props) {
                     */}
           <div className={dp2Style.leftContainer}>
             {/* SEARCH CONTAINER for Courses */}
+            <div>
+              <Dropdown
+                  options={semesterPlanOptions}
+                  isObject={true}
+                  objectField={"plan_name"}
+                  selectedOption={selectedSemester}
+                  onOptionChange={handleSemesterPlanChange}
+                  customStyle={{ fontSize: "20px", color: "#ffffff" }}
+                />
+            </div>
             <div className={dp2Style.existListWrapper}>
               <TextField
                 // label="Search Course"
