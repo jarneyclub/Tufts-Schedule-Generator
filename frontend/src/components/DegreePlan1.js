@@ -201,7 +201,7 @@ function DegreePlan1(props) {
       body: JSON.stringify(values),
     };
     console.log("requestOption for fetchCreatePrivateReqs", requestOption);
-    await fetch("https://jarney.club/api/degreereq/private/save", requestOption)
+    await fetch("https://jarney.club/api/degreereq/private", requestOption)
       .then((response) => response.json())
       .then((result) => {
         console.log("result from fetchCreatePrivateReqs", result);
