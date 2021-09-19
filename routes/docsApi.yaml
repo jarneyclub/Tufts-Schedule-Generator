@@ -384,8 +384,8 @@ paths:
                   plan_term_id:
                     type: string
                     example: "142391huafaowe12312"
-  /degreeplan/term/save:
-    post:
+  /degreeplan/term:
+    put:
       tags:
         - Degree Plan
       summary: Save a term in a degree plan
