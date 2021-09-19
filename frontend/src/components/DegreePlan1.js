@@ -331,9 +331,7 @@ function DegreePlan1(props) {
                 isCreateMM={newMMPopup}
                 fetchCreate={fetchCreatePrivateReqs}
                 fetchSave={fetchSavePrivateReqs}
-                reqDetail={degreeReqOptions.filter(
-                  (req) => req.program_name === selectedDegreeReq
-                )[0]}
+                reqDetail={selectedDegreeReqDetail}
               />
             </Popup>
           )}
