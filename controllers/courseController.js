@@ -138,16 +138,15 @@ exports.getPrograms = async (req, res) => {
     let documents = [];
     documents.push("");
     await cursor.forEach((doc) => {
-        // parse database document
-        documents.push(doc["name"]);
+        // append program names that are not empty string
+        if (doc["name"] != "")
+            documents.push(doc["name"]);
     });
-    var end = Date.now(); // End timing API endpoint
-    var difference = end - start;
-    let timeTakenString = difference.toString() + "ms";
+    console.log("(courseCntrl/getPrograms) documents: ", documents);
     // send response
     let response = {
         names: documents,
-        time_taken: timeTakenString
+        time_taken: (Date.now() - start).toString() + "ms"
     };
     res.json(response);
 

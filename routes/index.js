@@ -26,6 +26,7 @@ router.get('/', (req, res) => {
 router.get('/courses/general', courseController.getGeneralCourses);
 router.get('/courses/term', courseController.getTermCourses);
 router.get('/courses/attributes', courseController.getAttributes);
+router.get('/courses/programs', courseController.getPrograms);
 ////////////////////////////////////////
 //                                    //
 //            Degree Plan             //

@@ -200,6 +200,24 @@ paths:
                     items:
                       type: string
                       example: Graduate Teaching Assistantship
+  /courses/programs:
+    get:
+      tags:
+        - Courses
+      summary: Get the list of program names (e.g. School of A&S)
+      responses:
+        200:
+          description: List of program names
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  names:
+                    type: array
+                    items:
+                      type: string
+                      example: Cummings School DVM Program
   ####################
   #                  #
   #    DEGREE PLAN   #
@@ -645,6 +663,7 @@ paths:
                 properties:
                   req:
                     $ref: "#/components/schemas/DegreeReqPublic"
+
   ####################
   #                  #
   #     SCHEDULE     #
