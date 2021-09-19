@@ -70,8 +70,12 @@ function AddSemester(props) {
     onClose();
   };
 
+  
 
   const fetchAdd = async() => {
+    const yearTerm = selectedYear + " " + selectedTerm;
+    console.log("yearTerm: ", yearTerm)
+    console.log("planID: ", getPlanID());
     const requestOption = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
