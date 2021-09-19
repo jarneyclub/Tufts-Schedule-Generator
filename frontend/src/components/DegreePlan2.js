@@ -355,6 +355,8 @@ function DegreePlan2(props) {
 
   const handleSelectedSemesterToID = () => {
     for(let i = 0; i < semesterPlanOptions.length; i++) {
+      console.log("selectedSemester:", selectedSemester)
+      console.log("semesterPlanOptions.planName:", semesterPlanOptions[i].plan_name)
       if (semesterPlanOptions[i].plan_name === selectedSemester.substr(3))
         return semesterPlanOptions[i].plan_term_id;
     }
