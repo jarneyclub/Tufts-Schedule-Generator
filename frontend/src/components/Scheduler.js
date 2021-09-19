@@ -138,6 +138,7 @@ function Scheduler(props) {
 
   const handleSearchChange = (e) => {
     setCourseSearchValue(e.target.value);
+
   };
 
   const handleCloseAlert = () => {
@@ -249,13 +250,13 @@ function Scheduler(props) {
           (result) => {
             setLoadMessage(false);
             console.log("show results: ", result);
-            setSearchCourseResult(result.courses);
-          },
-          (error) => {
-            setSearchCourseResult([]);
-            console.log("error from Scheduler course search", error);
+            setSearchCourseResult((prev) => result.courses);
           }
-        );
+        )
+        .catch((error) => {
+           setSearchCourseResult([]);
+            console.log("error from Scheduler course search", error);
+        });
     }
     fetchData();
   }, [courseSearchValue, selectedAttribute]);
