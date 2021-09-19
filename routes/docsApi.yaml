@@ -673,7 +673,7 @@ paths:
     post:
       tags:
         - Schedule
-      summary: Create a new semester schedule based on user preferences and save to database
+      summary: Create a new semester schedule based on user preferences and save to database. If there is no time preference for a day, the API assumes the entire day is available for scheduling.
       requestBody:
         required: true
         content:

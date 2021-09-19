@@ -16,11 +16,21 @@ const preprocessFilter = (global) => {
             Saturday: 6,
             Sunday: 7
         }
-        /* Convert military time in filter to integers representing minutes */
         let newFilter = {
             time: {},
             misc: filter.misc
         }
+        /* Change empty time preferences to consider entire day's preference */
+        for (let dayString in filter.time) {
+            if (filter.time[dayString].length == 0) {
+                filter.time[dayString].push({
+                    "time_earliest": "00:00",
+                    "time_latest": "23:59"
+                });
+            }
+        }
+        console.log("(preprocessFilter) timePref before convert to int: ", filter.time);
+        /* Convert military time in filter to integers representing minutes */
         for (let dayString in filter.time) {
             let dayInt = dayToInteger[dayString];
             newFilter.time[dayInt] = filter.time[dayString];
