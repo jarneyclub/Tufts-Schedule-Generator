@@ -186,7 +186,6 @@ exports.getDegreeReqPrivate = async (req, res) => {
  * @param {any} res 
  */
 exports.saveDegreeReqPrivate = async (req, res) => {
-    // TODO: if from admin account, save the public degree requirement
     let start = Date.now(); // begin timing API endpoint
 
     // get user request information

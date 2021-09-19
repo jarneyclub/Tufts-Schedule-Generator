@@ -38,8 +38,13 @@ exports.generateSchedule = async (req, res) => {
                     "W": "waitlist" };
                 // parse section information
                 let currSection      = arrSections[j];
+                console.log("(schedgeCntrl/generateSchedule) currSection: ", currSection);
                 courseNum            = currSection.course_num;
                 courseTitle          = currSection.course_title;
+                console.log("(schedgeCntrl/generateSchedule) currSection.course_title: ", currSection.course_title);
+                console.log("(schedgeCntrl/generateSchedule) currSection['course_title']: ", currSection['course_title']);
+                console.log("(schedgeCntrl/generateSchedule) courseTitle: ", courseTitle);
+                console.log("(schedgeCntrl/generateSchedule) courseNum: ", courseNum);
                 let sectionId        = currSection._id;
                 let sectionUnits     = currSection.units;
                 let sectionNum       = currSection.section_num;
