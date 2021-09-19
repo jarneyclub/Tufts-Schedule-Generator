@@ -223,7 +223,7 @@ function DegreePlan1(props) {
       (req) => req.program_name === selectedDegreeReq.substr(3)
     )[0])
     console.log("degreeReqOptions: ", degreeReqOptions);
-    console.log("selected Degree Req: ", selectedDegreeReq.substr(3))
+    console.log("selected Degree Req: ", selectedDegreeReq)
     console.log("selected Degree Req Detail: ", selectedDegreeReqDetail)
   }, [selectedDegreeReq])
 
