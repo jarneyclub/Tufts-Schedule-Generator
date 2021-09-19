@@ -329,6 +329,7 @@ function DegreePlan2(props) {
         .then((response) => response.json())
         .then(
           (result) => {
+            setSearchCourseResult([]);
             setSearchCourseResult(result.courses);
             setLoadMessage(false);
           },
