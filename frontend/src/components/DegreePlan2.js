@@ -78,7 +78,7 @@ function AddSemester(props) {
       body: JSON.stringify({plan_id: planID, term: (selectedYear, " ", selectedTerm)}),
     };
     console.log("requestOption for fetchCreatePrivateReqs", requestOption);
-    await fetch("https://jarney.club/api/degreereq/private", requestOption)
+    await fetch("https://jarney.club/api/degreeplan/term", requestOption)
       .then((response) => response.json())
       .then((result) => {
         console.log("result from fetchAdd", result);
