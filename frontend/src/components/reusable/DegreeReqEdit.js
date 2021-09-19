@@ -244,7 +244,7 @@ function DegreeReqEdit(props) {
 
           {/* ------------ Parts ------------ */}
           <div className={dStyle.partsContainer}>
-            {detail.parts?.map((part) => (
+            {detail?.parts?.map((part) => (
               <DegreeReqPart
                 key={part.partID}
                 partDetail={part}
