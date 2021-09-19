@@ -528,8 +528,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  req:
-                    $ref: "#/components/schemas/DegreeReqPrivate"
+                  $ref: "#/components/schemas/DegreeReqPrivate"
   /degreereq/private:
     post:
       tags:
@@ -554,8 +553,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  req:
-                    $ref: "#/components/schemas/DegreeReqPrivate"
+                  $ref: "#/components/schemas/DegreeReqPrivate"
   /degreereqs/private:
     get:
       tags:
@@ -600,8 +598,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  req:
-                    $ref: "#/components/schemas/DegreeReqPrivate"
+                  $ref: "#/components/schemas/DegreeReqPrivate"
     delete:
       tags:
         - Degree Requirements
@@ -631,8 +628,7 @@ paths:
             schema:
               type: object
               properties:
-                req:
-                  $ref: "#/components/schemas/DegreeReqPrivate"
+                $ref: "#/components/schemas/DegreeReqPrivate"
       responses:
         200:
           description: Update successful
@@ -661,8 +657,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  req:
-                    $ref: "#/components/schemas/DegreeReqPublic"
+                  $ref: "#/components/schemas/DegreeReqPublic"
 
   ####################
   #                  #
