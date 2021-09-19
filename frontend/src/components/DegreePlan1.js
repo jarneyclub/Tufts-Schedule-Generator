@@ -223,14 +223,14 @@ function DegreePlan1(props) {
       (req) => req.program_name === selectedDegreeReq.substr(3)
     )[0])
     console.log("degreeReqOptions: ", degreeReqOptions);
-    console.log("selected Degree Req: ", selectedDegreeReq.substr(3))
+    console.log("selected Degree Req: ", selectedDegreeReq)
     console.log("selected Degree Req Detail: ", selectedDegreeReqDetail)
   }, [selectedDegreeReq])
 
   useEffect(() => {
     console.log("degreeReqOptions: ", degreeReqOptions);
     console.log("degreeReqOptions len: ", degreeReqOptions.length);
-    setDegreeReq(degreeReqOptions[degreeReqOptions.length - 1]?.program_name);
+    setDegreeReq(degreeReqOptions[0]?.program_name);
   }, [degreeReqOptions]); 
 
   return (
@@ -331,9 +331,7 @@ function DegreePlan1(props) {
                 isCreateMM={newMMPopup}
                 fetchCreate={fetchCreatePrivateReqs}
                 fetchSave={fetchSavePrivateReqs}
-                reqDetail={degreeReqOptions.filter(
-                  (req) => req.program_name === selectedDegreeReq
-                )[0]}
+                reqDetail={selectedDegreeReqDetail}
               />
             </Popup>
           )}
