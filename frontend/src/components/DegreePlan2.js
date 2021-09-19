@@ -481,6 +481,7 @@ function DegreePlan2(props) {
           console.log("prev semesterPlanOptions: ", semesterPlanOptions);
           setSemesterPlanOptions(result.plans);
           setCardOptions(result.plans[0].terms);
+          setSelectedSemester(result.plans[0].plan_name);
         }
       })
       .catch((error) => {
@@ -494,11 +495,11 @@ function DegreePlan2(props) {
     
   }, []);
 
-  useEffect(() => {
-    // setSemesterPlanTitle(semesterPlanOptions[0])
-    console.log("semesterPlanOptions: ", semesterPlanOptions);
-    setSelectedSemester(semesterPlanOptions[0].plan_name)
-  },[semesterPlanOptions])
+  // useEffect(() => {
+  //   // setSemesterPlanTitle(semesterPlanOptions[0])
+  //   console.log("semesterPlanOptions: ", semesterPlanOptions);
+  //   setSelectedSemester(semesterPlanOptions[0].plan_name)
+  // },[semesterPlanOptions])
 
   useEffect(() => {
     console.log("cardOptions: ", cardOptions);
