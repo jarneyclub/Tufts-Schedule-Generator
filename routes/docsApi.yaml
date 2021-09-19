@@ -612,8 +612,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  priv_dr_id: 
-                    type: string
+                  $ref: "#/components/schemas/DegreeReqPrivate"
   /degreereq/private/{priv_dr_id}:
     get: 
       tags:

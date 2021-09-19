@@ -294,7 +294,14 @@ exports.saveDegreeReqPrivate = async (priv_dr_id, schema) => {
         if (dr === null) {
             throw { id: "202", status: "400", title: "Degree Requirement Error", detail: "No private degree requirement was found with (priv_dr_id: " + priv_dr_id + ")"};
         }
-        return dr._id.valueOf();
+        return {
+            priv_dr_id      : priv_dr_id,
+            program_name    : schema.programName,
+            school          : schema.school,
+            degree          : schema.degree,
+            parts           : schema.parts,
+            part_id_tracker : schema.partIdTracker
+        }
     }
     catch (e) {
         console.error("(saveDegreeReqPrivate) e:", e);
