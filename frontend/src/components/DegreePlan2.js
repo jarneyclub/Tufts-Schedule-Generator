@@ -70,6 +70,10 @@ function AddSemester(props) {
     onClose();
   };
 
+
+  const fetchAdd = async() => {
+    fetch()
+  }
   return (
     <div className={pStyle.loginContainer}>
       <div className={pStyle.headerContainer}>
@@ -139,6 +143,7 @@ function RemoveSemester(props) {
   const handleRemove = () => {
     /* do something API?? pass in the selectedCards arr */
     handleRemoveCards(selectedCards);
+    console.log("selected Cards to remove: ", selectedCards);
     /* Then Close */
     onClose();
   };
