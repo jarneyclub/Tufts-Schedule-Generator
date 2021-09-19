@@ -263,6 +263,31 @@ const getDegreePlans = async (query) => {
 }
 
 /**
+ * Update Degree Plan Name
+ * @param {object} query
+ * @return {string} 
+ */
+const updateDegreePlanName = async (query) => {
+    try {
+        let updatedPlan = await Plan.findOneAndUpdate({
+            _id: mongoose.Types.ObjectId(query.plan_id)
+        }, {
+            plan_name: query.new_plan_name
+        }, {
+            new: true,
+            upsert: false
+        });
+        // confirm update
+        if (updatedPlan === null)
+            throw { id: "202", status: "404", title: "Degree Plan Error", detail: "Plan with given identifiers were not found" };
+        return updatedPlan._id.valueOf();
+    }
+    catch (e) {
+        errorHandler(e);
+    }
+}
+
+/**
  * Create a term associted with a plan with
  * empty courses
  * @param {*} planId
@@ -437,6 +462,7 @@ const errorHandler = (e) => {
 
 module.exports.createNewDegreePlan = createNewDegreePlan;
 module.exports.getDegreePlan = getDegreePlan;
+module.exports.updateDegreePlanName = updateDegreePlanName;
 module.exports.deleteDegreePlan = deleteDegreePlan;
 module.exports.deleteDegreePlanMultiple = deleteDegreePlanMultiple;
 module.exports.getDegreePlans = getDegreePlans;

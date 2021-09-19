@@ -291,10 +291,6 @@ paths:
         - Degree Plan
       summary: Delete a degree plan
       parameters:
-        - in: header
-          name: Authorization
-          schema:
-            type: string
         - in: path
           name: plan_id
           schema:
@@ -302,6 +298,23 @@ paths:
       responses:
         200:
           description: delete successful
+  /degreeplan/{plan_id}/plan_name/{new_name}:
+    patch:
+      tags:
+        - Degree Plan
+      summary: Update the name of a degree plan
+      parameters:
+        - in: path
+          name: plan_id
+          schema:
+            type: string
+        - in: path
+          name: new_name
+          schema:
+            type: string
+      responses:
+        200:
+          description: update successful
   /degreeplans:
     get:
       tags:

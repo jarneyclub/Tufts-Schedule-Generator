@@ -57,6 +57,29 @@ exports.getDegreePlan = async (req, res) => {
     })
 }
 
+exports.updateDegreePlanName = async (req, res) => {
+    var start = Date.now(); // begin timing API endpoint
+    console.log("(degreePlanCntrl/updateDegreePlanName) ", "req.params: ", req.params);
+    // get user request information
+    let query = {
+        plan_id: req.params.plan_id,
+        new_plan_name: req.params.new_name
+    }
+    
+    // get from database
+    degreePlanAPI.updateDegreePlanName(query)
+    .then(result => {
+            res.status(200);
+            res.json({
+                plan_id: result,
+                time_taken: ((Date.now() - start).toString() + "ms")
+            });
+    })
+    .catch(err => {
+        errorHandler(err, "updateDegreePlanName", res);
+    })
+}
+
 /* delete a degree plan */
 exports.deleteDegreePlan = async (req, res) => {
     var start = Date.now(); // begin timing API endpoint
