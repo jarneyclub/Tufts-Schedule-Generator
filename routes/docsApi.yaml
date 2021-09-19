@@ -381,7 +381,7 @@ paths:
             schema:
               type: object
               properties:
-                plan_id:
+                plan_term_id:
                   type: string
                 term:
                   type: string
