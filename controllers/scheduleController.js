@@ -88,6 +88,7 @@ exports.generateSchedule = async (req, res) => {
         CourseSchedule.generateCourseSchedule(arrCourses, filter)
         .then(
             async (weeklySchedule) => {
+                console.log("(scheduleCntrl/generateSchedule) weeklySchedule: ", weeklySchedule);
                 arrCoursesInfoToReturn = [];
                 for (let i = 0; i < arrCourses.length; i++) {
                     let courseInfo = {};
@@ -98,7 +99,7 @@ exports.generateSchedule = async (req, res) => {
                     arrCoursesInfoToReturn.push(courseInfo);
                 }
                 let createdSchedule = 
-                    await scheduleHandler.createSchedule(req.userid, sched_name, filter, 9999, arrCoursesInfoToReturn, weeklySchedule.data);
+                    await scheduleHandler.createSchedule(req.userid, sched_name, filter, "placeholder term", arrCoursesInfoToReturn, weeklySchedule);
                 let response = {
                     data: createdSchedule,
                     time_taken: (Date.now() - start).toString() + "ms"
@@ -197,7 +198,7 @@ exports.generateAndChangeSchedule = async (req, res) => {
                             mapSecTypeToSectionMap, Object.values(mapSecTypeToUnits).reduce(reducer), currTermCourseId);
             arrCourses.push(currCourseObj);
         } // (End of) iteration through courses
-        console.log("(api/schedule): ", "Processing sections from the database took ", (Date.now()- startDB).toString() + "ms");
+        console.log("(scheduleCntrl/generateAndChangeSchedule): ", "Processing sections from the database took ", (Date.now()- startDB).toString() + "ms");
         CourseSchedule.generateCourseSchedule(arrCourses, filter)
         .then(
             async (weeklySchedule) => {
