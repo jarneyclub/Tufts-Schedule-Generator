@@ -34,7 +34,7 @@ import JarUserLogin from "./reusable/JarUserLogin";
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function AddSemester(props) {
-  const { onClose } = props;
+  const { onClose, planID } = props;
 
   /* Year Dropdown */
   const [yearOptions, setYearOptions] = useState([
@@ -65,14 +65,28 @@ function AddSemester(props) {
 
   const handleAdd = () => {
     /* do something API??  */
-
+    fetchAdd();
     /* Then Close */
     onClose();
   };
 
 
   const fetchAdd = async() => {
-    fetch()
+    const requestOption = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({plan_id: planID, term: (selectedYear, " ", selectedTerm)}),
+    };
+    console.log("requestOption for fetchCreatePrivateReqs", requestOption);
+    await fetch("https://jarney.club/api/degreereq/private", requestOption)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log("result from fetchAdd", result);
+        
+      })
+      .catch((error) =>
+        console.log("error from fetchAdd", error)
+      );
   }
   return (
     <div className={pStyle.loginContainer}>
@@ -136,6 +150,15 @@ function RemoveSemester(props) {
     }
   };
 
+  const handleTermToID = () => {
+    let res =[];
+    for (let i = 0; i < cardOptions.length; i++) {
+      if (selectedCards.includes(cardOptions[i].term))
+        res.concat(cardOptions[i].plan_term_id);
+    }
+    return res;
+  }
+
   const handleClose = () => {
     onClose();
   };
@@ -144,9 +167,14 @@ function RemoveSemester(props) {
     /* do something API?? pass in the selectedCards arr */
     handleRemoveCards(selectedCards);
     console.log("selected Cards to remove: ", selectedCards);
+
     /* Then Close */
     onClose();
   };
+
+  const fetchDeleteTerms = async() => {
+    await fetch("https://jarney.club/api/degreeplan/term/");
+  }
 
   return (
     <div className={pStyle.loginContainer}>
@@ -296,6 +324,7 @@ function DegreePlan2(props) {
   const [searchCourseResult, setSearchCourseResult] = useState([]);
   const [selectedSemester, setSelectedSemester] = useState("");
 
+  
   const [loadMessage, setLoadMessage] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState();
@@ -303,6 +332,7 @@ function DegreePlan2(props) {
 
   const handleSemesterPlanChange = (e) => {
     setSelectedSemester(e.target.value);
+
     //setSemesterPlanTitle(e.target.value);
     console.log("semesterPlanChange e:", e);
   };
@@ -320,11 +350,17 @@ function DegreePlan2(props) {
     setShowAlert(false);
   };
   const handleTransferCourseDetail = (detail) => {
-    console.log("drag start course: ", detail);
     setTransferCourseDetail(detail);
-    console.log("transferCourseDetail: ", transferCourseDetail);
   };
 
+  const handleSelectedSemesterToID = () => {
+    for(let i = 0; i < semesterPlanOptions.length; i++) {
+      if (semesterPlanOptions[i].plan_name === selectedSemester.substr(3))
+        return semesterPlanOptions[i].plan_term_id;
+    }
+  }
+
+  
   useEffect(() => {
     async function fetchData() {
       await fetch(
@@ -647,7 +683,7 @@ function DegreePlan2(props) {
       {/* popups */}
       {addSemesterPopup && (
         <Popup onClose={() => setAddSemesterPopup(false)}>
-          <AddSemester onClose={() => setAddSemesterPopup(false)} />
+          <AddSemester onClose={() => setAddSemesterPopup(false)} planID={()=>handleSelectedSemesterToID}/>
         </Popup>
       )}
       {removeSemesterPopup && (
