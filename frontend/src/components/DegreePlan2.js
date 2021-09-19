@@ -77,6 +77,7 @@ function AddSemester(props) {
     console.log("yearTerm: ", yearTerm)
     console.log("planID: ", getPlanID());
     const planID = getPlanID();
+    console.log("planID:" , planID);
     const value = {plan_id: planID, term: yearTerm};
     const requestOption = {
       method: "POST",
@@ -338,8 +339,6 @@ function DegreePlan2(props) {
 
   const handleSemesterPlanChange = (e) => {
     setSelectedSemester(e.target.value);
-
-    //setSemesterPlanTitle(e.target.value);
     console.log("semesterPlanChange e:", e);
   };
 
@@ -364,8 +363,11 @@ function DegreePlan2(props) {
       console.log("selectedSemester:", selectedSemester)
       console.log("semesterPlanOptions.planName:", semesterPlanOptions[i].plan_name)
       console.log("true false? ",semesterPlanOptions[i].plan_name === selectedSemester )
-      if (semesterPlanOptions[i].plan_name === selectedSemester)
-        return semesterPlanOptions[i].plan_term_id;
+      if (semesterPlanOptions[i].plan_name === selectedSemester) {
+        console.log("should return here ")
+                return semesterPlanOptions[i].plan_term_id;
+
+      }
     }
   }
 
