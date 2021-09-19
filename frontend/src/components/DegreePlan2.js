@@ -593,14 +593,7 @@ function DegreePlan2(props) {
             <div className={dp2Style.semesterPlanTitleContainer}>
               <div />
               <div className={dp2Style.semesterPlanTitle}>
-                <Dropdown
-                  options={semesterPlanOptions}
-                  isObject={true}
-                  objectField={"plan_name"}
-                  selectedOption={selectedSemester}
-                  onOptionChange={handleSemesterPlanChange}
-                  customStyle={{ fontSize: "20px", color: "#ffffff" }}
-                />
+                {semesterPlanTitle}
               </div>
               <div className={dp2Style.editSemesterButtonContainer}>
                 <IconButton
