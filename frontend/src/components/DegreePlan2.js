@@ -34,7 +34,7 @@ import JarUserLogin from "./reusable/JarUserLogin";
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function AddSemester(props) {
-  const { onClose, planID } = props;
+  const { onClose, getPlanID } = props;
 
   /* Year Dropdown */
   const [yearOptions, setYearOptions] = useState([
@@ -75,7 +75,7 @@ function AddSemester(props) {
     const requestOption = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({plan_id: planID, term: (selectedYear, " ", selectedTerm)}),
+      body: JSON.stringify({plan_id: getPlanID(), term: (selectedYear, " ", selectedTerm)}),
     };
     console.log("requestOption for fetchCreatePrivateReqs", requestOption);
     await fetch("https://jarney.club/api/degreeplan/term", requestOption)
@@ -685,7 +685,7 @@ function DegreePlan2(props) {
       {/* popups */}
       {addSemesterPopup && (
         <Popup onClose={() => setAddSemesterPopup(false)}>
-          <AddSemester onClose={() => setAddSemesterPopup(false)} planID={()=>handleSelectedSemesterToID()}/>
+          <AddSemester onClose={() => setAddSemesterPopup(false)} getPlanID={handleSelectedSemesterToID}/>
         </Popup>
       )}
       {removeSemesterPopup && (
