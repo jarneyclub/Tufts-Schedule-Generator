@@ -247,10 +247,10 @@ function Scheduler(props) {
       )
         .then((response) => response.json())
         .then(
-          (result) => {
+          (result) => {            
+            setSearchCourseResult(result.courses);
             setLoadMessage(false);
             console.log("show results: ", result);
-            setSearchCourseResult((prev) => result.courses);
           }
         )
         .catch((error) => {
