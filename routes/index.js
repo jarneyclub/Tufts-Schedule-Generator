@@ -56,7 +56,7 @@ router.post('/degreereq/private', authController.authenticateToken, degreeReqCon
 router.get('/degreereqs/private', authController.authenticateToken, degreeReqController.getDegreeReqsPrivate);
 router.get('/degreereq/private/:priv_dr_id', authController.authenticateToken, degreeReqController.getDegreeReqPrivate);
 router.delete('/degreereq/private/:priv_dr_id', authController.authenticateToken, degreeReqController.deleteDegreeReqPrivate);
-router.post('/degreereq/private/save', authController.authenticateToken, degreeReqController.saveDegreeReqPrivate);
+router.put('/degreereq/private/save', authController.authenticateToken, degreeReqController.saveDegreeReqPrivate);
 router.post('/degreereq/private/copy/:priv_dr_id', authController.authenticateToken, degreeReqController.copyDegreeReqPrivateToPublic);
 
 /*

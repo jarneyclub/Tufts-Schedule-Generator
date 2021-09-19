@@ -615,7 +615,7 @@ paths:
         200:
           description: Update successful
   /degreereq/private/save:
-    post:
+    put:
       tags:
         - Degree Requirements
       summary: Save a degree requirement
