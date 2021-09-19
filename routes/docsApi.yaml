@@ -384,7 +384,6 @@ paths:
                   plan_term_id:
                     type: string
                     example: "142391huafaowe12312"
-  /degreeplan/term:
     put:
       tags:
         - Degree Plan
@@ -554,7 +553,6 @@ paths:
                 type: object
                 properties:
                   $ref: "#/components/schemas/DegreeReqPrivate"
-  /degreereqs/private:
     get:
       tags:
         - Degree Requirements
@@ -576,6 +574,33 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/DegreeReqPrivate"
+    put:
+      tags:
+        - Degree Requirements
+      summary: Save a degree requirement
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                $ref: "#/components/schemas/DegreeReqPrivate"
+      responses:
+        200:
+          description: Update successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  priv_dr_id: 
+                    type: string
   /degreereq/private/{priv_dr_id}:
     get: 
       tags:
@@ -611,34 +636,6 @@ paths:
       responses:
         200:
           description: Update successful
-  /degreereq/private:
-    put:
-      tags:
-        - Degree Requirements
-      summary: Save a degree requirement
-      parameters:
-        - in: header
-          name: Authorization
-          schema:
-            type: string
-      requestBody: 
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                $ref: "#/components/schemas/DegreeReqPrivate"
-      responses:
-        200:
-          description: Update successful
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  priv_dr_id: 
-                    type: string
   /degreereq/private/copy/{priv_dr_id}:
     post:
       tags:
