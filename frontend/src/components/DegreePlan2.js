@@ -289,7 +289,7 @@ function DegreePlan2(props) {
   const [addSemesterPopup, setAddSemesterPopup] = useState(false);
   const [removeSemesterPopup, setRemoveSemesterPopup] = useState(false);
   const [searchCourseResult, setSearchCourseResult] = useState([]);
-  const [selectedSemester, setSelectedSemester] = useState();
+  const [selectedSemester, setSelectedSemester] = useState("");
 
   const [loadMessage, setLoadMessage] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
