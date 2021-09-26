@@ -145,10 +145,6 @@ function DegreePlan2(props) {
   const [transferCourseDetail, setTransferCourseDetail] = useState({});
   const [cardOrigin, setCardOrigin] = useState("");
   /* Popups */
-  const [addSemesterPopup, setAddSemesterPopup] = useState(false);
-  const [removeSemesterPopup, setRemoveSemesterPopup] = useState(false);
-  const [addPlanPopup, setAddPlanPopup] = useState(false);
-  const [removePlanPopup, setPlanPopup] = useState(false);;
   const [popup, setPopup] = useState({
     "addSemester": false,
     "removeSemester": false, 
@@ -157,7 +153,8 @@ function DegreePlan2(props) {
     "removePlan": false
   })
   const [searchCourseResult, setSearchCourseResult] = useState([]);
-  const [selectedSemester, setSelectedSemester] = useState("");
+  const [selectedPlanName, setSelectedPlanName] = useState("");
+  const [selectedPlanID, setSelectedPlanID] = useState("");
 
   
   const [loadMessage, setLoadMessage] = useState(true);
@@ -174,8 +171,9 @@ function DegreePlan2(props) {
   }
 
   const handleSemesterPlanChange = (e) => {
-    setSelectedSemester(e.target.value);
+    setSelectedPlanName(e.target.value);
     console.log("semesterPlanChange e:", e);
+    setSelectedPlanID(handleSelectedPlanNameToID(e.target.value))
   };
 
   const handleRemoveCards = (cardsToRemove) => {
@@ -194,12 +192,12 @@ function DegreePlan2(props) {
     setTransferCourseDetail(detail);
   };
 
-  const handleSelectedSemesterToID = () => {
+  const handleSelectedPlanNameToID = () => {
     for(let i = 0; i < semesterPlanOptions.length; i++) {
-      console.log("selectedSemester:", selectedSemester)
+      console.log("selectedPlanName:", selectedPlanName)
       console.log("semesterPlanOptions.planName:", semesterPlanOptions[i].plan_name)
-      console.log("true false? ",semesterPlanOptions[i].plan_name === selectedSemester )
-      if (semesterPlanOptions[i].plan_name === selectedSemester) {
+      console.log("true false? ",semesterPlanOptions[i].plan_name === selectedPlanName )
+      if (semesterPlanOptions[i].plan_name === selectedPlanName) {
         console.log("should return here ")
                 return semesterPlanOptions[i].plan_term_id;
 
@@ -389,7 +387,8 @@ function DegreePlan2(props) {
           console.log("prev semesterPlanOptions: ", semesterPlanOptions);
           setSemesterPlanOptions(result.plans);
           setCardOptions(result.plans[0].terms);
-          setSelectedSemester(result.plans[0].plan_name);
+          setSelectedPlanName(result.plans[0].plan_name);
+          setSelectedPlanID(result.plans[0].plan_id)
         }
       })
       .catch((error) => {
@@ -443,7 +442,7 @@ function DegreePlan2(props) {
                   options={semesterPlanOptions}
                   isObject={true}
                   objectField={"plan_name"}
-                  selectedOption={selectedSemester}
+                  selectedOption={selectedPlanName}
                   onOptionChange={handleSemesterPlanChange}
                   customStyle={{ fontSize: "20px"}}
               />
@@ -530,7 +529,7 @@ function DegreePlan2(props) {
             <div className={dp2Style.semesterPlanTitleContainer}>
               <div />
               <div className={dp2Style.semesterPlanTitle}>
-                {selectedSemester}
+                {selectedPlanName}
               </div>
               <div className={dp2Style.editSemesterButtonContainer}>
                 <IconButton
@@ -571,7 +570,7 @@ function DegreePlan2(props) {
       {/* popups */}
       {popup.addSemester && (
         <Popup onClose={() => handlePopup("addSemester", false)}>
-          <AddSemester onClose={() => handlePopup("addSemester", false)} getPlanID={handleSelectedSemesterToID}/>
+          <AddSemester onClose={() => handlePopup("addSemester", false)} planID={selectedPlanID}/>
         </Popup>
       )}
       {popup.removeSemester && (

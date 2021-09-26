@@ -36,7 +36,7 @@ import JarUserLogin from "../reusable/JarUserLogin";
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function AddSemester(props) {
-  const { onClose, getPlanID } = props;
+  const { onClose, planID } = props;
 
   /* Year Dropdown */
   const [yearOptions, setYearOptions] = useState([
@@ -77,9 +77,7 @@ function AddSemester(props) {
   const fetchAdd = async() => {
     const yearTerm = selectedYear + " " + selectedTerm;
     console.log("yearTerm: ", yearTerm)
-    console.log("planID: ", getPlanID());
-    const planID = getPlanID();
-    console.log("planID:" , planID);
+    console.log("planID: ", planID);
     const value = {plan_id: planID, term: yearTerm};
     const requestOption = {
       method: "POST",
@@ -363,12 +361,9 @@ function RemovePlan(props) {
     /* do something API?? pass in the selectedCards arr */
     handleRemoveCards(selectedCards);
     console.log("selected Cards to remove: ", selectedCards);
-
     /* Then Close */
     onClose();
   };
-
-  
 
   return (
     <div className={pStyle.loginContainer}>
@@ -376,12 +371,12 @@ function RemovePlan(props) {
         <IconButton onClick={handleClose} className={pStyle.closeButton}>
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>REMOVE PLAN</div>
+        <div className={pStyle.headerBody}>&nbsp;</div>
         <div />
       </div>
       <div className={pStyle.formContainer}>
         <div className={pStyle.inputBarContainer}>
-          
+          Are you sure you want to remove
           
         </div>
 
