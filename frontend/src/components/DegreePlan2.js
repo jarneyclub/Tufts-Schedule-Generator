@@ -450,21 +450,21 @@ function DegreePlan2(props) {
               &nbsp;
               <IconButton
                 className={dp2Style.editPlanButton}
-                onClick={() => setPopup("editPlanName", true)}
+                onClick={() => handlePopup("editPlanName", true)}
               >
                 <ModeEditIcon fontSize="medium" />
               </IconButton>
               &nbsp;
               <IconButton
                 className={dp2Style.editPlanButton}
-                onClick={() => setPopup("addPlan", true)}
+                onClick={() => handlePopup("addPlan", true)}
               >
                 <AddBoxIcon fontSize="medium" />
               </IconButton>
               &nbsp;
               <IconButton
                 className={dp2Style.editPlanButton}
-                onClick={() => setPopup("removePlan", true)}
+                onClick={() => handlePopup("removePlan", true)}
               >
                 <IndeterminateCheckBoxIcon fontSize="medium" />
               </IconButton>
@@ -535,14 +535,14 @@ function DegreePlan2(props) {
               <div className={dp2Style.editSemesterButtonContainer}>
                 <IconButton
                   className={dp2Style.editSemesterButton}
-                  onClick={() => setPopup("addSemester", true)}
+                  onClick={() => handlePopup("addSemester", true)}
                 >
                   <AddBoxIcon fontSize="medium" />
                 </IconButton>
                 &nbsp;
                 <IconButton
                   className={dp2Style.editSemesterButton}
-                  onClick={() => setPopup("removeSemester", true)}
+                  onClick={() => handlePopup("removeSemester", true)}
                 >
                   <IndeterminateCheckBoxIcon fontSize="medium" />
                 </IconButton>
@@ -570,41 +570,41 @@ function DegreePlan2(props) {
 
       {/* popups */}
       {popup.addSemester && (
-        <Popup onClose={() => setPopup("addSemester", false)}>
-          <AddSemester onClose={() => setPopup("addSemester", false)} getPlanID={handleSelectedSemesterToID}/>
+        <Popup onClose={() => handlePopup("addSemester", false)}>
+          <AddSemester onClose={() => handlePopup("addSemester", false)} getPlanID={handleSelectedSemesterToID}/>
         </Popup>
       )}
       {popup.removeSemester && (
-        <Popup onClose={() => setPopup("removeSemester", false)}>
+        <Popup onClose={() => handlePopup("removeSemester", false)}>
           <RemoveSemester
-            onClose={() => setPopup("removeSemester", false)}
+            onClose={() => handlePopup("removeSemester", false)}
             cardOptions={cardOptions}
             handleRemoveCards={handleRemoveCards}
           />
         </Popup>
       )}
       {popup.editPlanName && (
-        <Popup onClose={() => setPopup("editPlanName", false)}>
+        <Popup onClose={() => handlePopup("editPlanName", false)}>
           <EditPlanName
-            onClose={() => setPopup("editPlanName", false)}
+            onClose={() => handlePopup("editPlanName", false)}
             cardOptions={cardOptions}
             handleRemoveCards={handleRemoveCards}
           />
         </Popup>
       )}
       {popup.addPlan && (
-        <Popup onClose={() => setPopup("addPlan", false)}>
+        <Popup onClose={() => handlePopup("addPlan", false)}>
           <AddPlan
-            onClose={() => setPopup("addPlan", false)}
+            onClose={() => handlePopup("addPlan", false)}
             cardOptions={cardOptions}
             handleRemoveCards={handleRemoveCards}
           />
         </Popup>
       )}
       {popup.removePlan && (
-        <Popup onClose={() => setPopup("removePlan", false)}>
+        <Popup onClose={() => handlePopup("removePlan", false)}>
           <RemovePlan
-            onClose={() => setPopup("removePlan", false)}
+            onClose={() => handlePopup("removePlan", false)}
             cardOptions={cardOptions}
             handleRemoveCards={handleRemoveCards}
           />
