@@ -115,6 +115,8 @@ router.post('/auth/login_cookie', authController.authenticateToken, userControll
 //                                    //
 ////////////////////////////////////////
 
-router.post('/schedule', scheduleController.generateSchedule);
+router.post('/schedule', scheduleController.makeEmptySchedule);
+router.patch('/schedule', scheduleController.updateSchedule);
+router.get('/schedules', scheduleController.getSchedules);
 
 module.exports = router;
