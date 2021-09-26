@@ -15,6 +15,7 @@ import {
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import AddBoxIcon from "@material-ui/icons/AddBox";
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
 import CancelIcon from "@material-ui/icons/Cancel";
 import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
@@ -474,6 +475,13 @@ function DegreePlan2(props) {
     );
   };
 
+  const semesterNameToID = (semesterName) => {
+    return semesterPlanOptions.map((plan) => {
+      if (plan.plan_name === semesterName)
+        return plan.plan_id;
+    })
+  }
+
   /*
    *  createnNewPlan()
    *  purpose: creates a new plan option with given name
@@ -508,6 +516,19 @@ function DegreePlan2(props) {
         console.log("error from login: ", error);
       });
   };
+
+  const deletePlan = async(planID) => {
+    
+    await fetch("https://jarney.club/api/degreeplan/".concat(planID))
+      .then((response) => response.json())
+      .then((result) => {
+        fetchPlans();
+        console.log("result from deletePlan: ", result);
+      })
+      .catch((error) => {
+        console.log("delete plan error: ", error);
+      })
+  }
 
   /*
    *  fetchPlans()
@@ -591,19 +612,26 @@ function DegreePlan2(props) {
                   onOptionChange={handleSemesterPlanChange}
                   customStyle={{ fontSize: "20px"}}
                 />
-                <IconButton
-                  className={dp2Style.editSemesterButton}
-                  onClick={() => setAddSemesterPopup(true)}
-                >
-                  <AddBoxIcon fontSize="medium" />
-                </IconButton>
-                &nbsp;
-                <IconButton
-                  className={dp2Style.editSemesterButton}
-                  onClick={() => setRemoveSemesterPopup(true)}
-                >
-                  <IndeterminateCheckBoxIcon fontSize="medium" />
-                </IconButton>
+              <IconButton
+                className={dp2Style.editPlanButton}
+                onClick={() => setAddSemesterPopup(true)}
+              >
+                <ModeEditIcon fontSize="medium" />
+              </IconButton>
+              &nbsp;
+              <IconButton
+                className={dp2Style.editPlanButton}
+                onClick={() => setAddSemesterPopup(true)}
+              >
+                <AddBoxIcon fontSize="medium" />
+              </IconButton>
+              &nbsp;
+              <IconButton
+                className={dp2Style.editPlanButton}
+                onClick={() => setRemoveSemesterPopup(true)}
+              >
+                <IndeterminateCheckBoxIcon fontSize="medium" />
+              </IconButton>
             </div>
             <div className={dp2Style.existListWrapper}>
               <TextField
