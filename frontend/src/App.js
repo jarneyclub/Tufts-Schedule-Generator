@@ -15,6 +15,7 @@ import DegreePlan1 from "./components/DegreePlan1";
 import DegreePlan2 from "./components/DegreePlan2";
 
 import Scheduler from "./components/Scheduler";
+import HelpPage from "./components/HelpPage";
 import Header from "./components/reusable/HeaderUser";
 
 import Eina from "./fonts/Eina03-SemiBold.ttf";
@@ -147,6 +148,19 @@ export default function App() {
                 handleSignupPopup={handleSignupPopup}
               />
             </Route>
+
+            <Route path="/HelpPage">
+                <HelpPage
+                  shrink={shrink}
+                  logged={logged}
+                  switchLogged={switchLogged}
+                  loginPopup={loginPopup}
+                  signupPopup={signupPopup}
+                  handleLoginPopup={handleLoginPopup}
+                  handleSigninPopup={handleSignupPopup}
+                />
+            </Route>
+
 
             <Route path="/">
               <Home />
