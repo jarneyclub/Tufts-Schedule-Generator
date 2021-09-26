@@ -29,190 +29,191 @@ import CourseSearchBar from "./reusable/CourseSearchBar";
 import SnackBarAlert from "./reusable/SnackBarAlert";
 import DegreeReqDisplay from "./reusable/DegreeReqDisplay";
 import JarUserLogin from "./reusable/JarUserLogin";
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *                                                                           *
- *                          Add PlanCard Popup                               *
- *                                                                           *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-function AddSemester(props) {
-  const { onClose, getPlanID } = props;
+import {AddSemester, RemoveSemester, AddPlan, RemovePlan} from "./reusable/DegreePlan2Popups"
+// /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+//  *                                                                           *
+//  *                          Add PlanCard Popup                               *
+//  *                                                                           *
+//  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+// function AddSemester(props) {
+//   const { onClose, getPlanID } = props;
 
-  /* Year Dropdown */
-  const [yearOptions, setYearOptions] = useState([
-    2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026,
-  ]); // will be replaced by API?!
-  const [selectedYear, setSelectedYear] = useState(yearOptions[0]);
+//   /* Year Dropdown */
+//   const [yearOptions, setYearOptions] = useState([
+//     2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026,
+//   ]); // will be replaced by API?!
+//   const [selectedYear, setSelectedYear] = useState(yearOptions[0]);
 
-  /* Term Dropdown */
-  const [termOptions, setTermOptions] = useState([
-    "FALL",
-    "SPRING",
-    "SUMMER",
-    "ANNUAL",
-  ]); // possible semesters
-  const [selectedTerm, setSelectedTerm] = useState(termOptions[0]);
+//   /* Term Dropdown */
+//   const [termOptions, setTermOptions] = useState([
+//     "FALL",
+//     "SPRING",
+//     "SUMMER",
+//     "ANNUAL",
+//   ]); // possible semesters
+//   const [selectedTerm, setSelectedTerm] = useState(termOptions[0]);
 
-  const handleTermChange = (e) => {
-    setSelectedTerm(e.target.value);
-  };
+//   const handleTermChange = (e) => {
+//     setSelectedTerm(e.target.value);
+//   };
 
-  const handleYearChange = (e) => {
-    setSelectedYear(e.target.value);
-  };
+//   const handleYearChange = (e) => {
+//     setSelectedYear(e.target.value);
+//   };
 
-  const handleClose = () => {
-    onClose();
-  };
+//   const handleClose = () => {
+//     onClose();
+//   };
 
-  const handleAdd = () => {
-    /* do something API??  */
-    fetchAdd();
-    /* Then Close */
-    onClose();
-  };
+//   const handleAdd = () => {
+//     /* do something API??  */
+//     fetchAdd();
+//     /* Then Close */
+//     onClose();
+//   };
 
   
 
-  const fetchAdd = async() => {
-    const yearTerm = selectedYear + " " + selectedTerm;
-    console.log("yearTerm: ", yearTerm)
-    console.log("planID: ", getPlanID());
-    const planID = getPlanID();
-    console.log("planID:" , planID);
-    const value = {plan_id: planID, term: yearTerm};
-    const requestOption = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(value),
-    };
-    console.log("requestOption for fetchCreatePrivateReqs", requestOption);
-    await fetch("https://jarney.club/api/degreeplan/term", requestOption)
-      .then((response) => response.json())
-      .then((result) => {
-        console.log("result from fetchAdd", result);
+//   const fetchAdd = async() => {
+//     const yearTerm = selectedYear + " " + selectedTerm;
+//     console.log("yearTerm: ", yearTerm)
+//     console.log("planID: ", getPlanID());
+//     const planID = getPlanID();
+//     console.log("planID:" , planID);
+//     const value = {plan_id: planID, term: yearTerm};
+//     const requestOption = {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify(value),
+//     };
+//     console.log("requestOption for fetchCreatePrivateReqs", requestOption);
+//     await fetch("https://jarney.club/api/degreeplan/term", requestOption)
+//       .then((response) => response.json())
+//       .then((result) => {
+//         console.log("result from fetchAdd", result);
         
-      })
-      .catch((error) =>
-        console.log("error from fetchAdd", error)
-      );
-  }
-  return (
-    <div className={pStyle.loginContainer}>
-      <div className={pStyle.headerContainer}>
-        <IconButton
-          type="button"
-          onClick={handleClose}
-          className={pStyle.closeButton}
-        >
-          <CancelIcon />
-        </IconButton>
-        <div className={pStyle.headerBody}>ADD CARD</div>
-        <div />
-      </div>
-      <div className={pStyle.formContainer}>
-        <div className={pStyle.dropdownContainer}>
-          <Dropdown
-            options={termOptions}
-            selectedOption={selectedTerm}
-            onOptionChange={handleTermChange}
-          />
-          <Dropdown
-            options={yearOptions}
-            selectedOption={selectedYear}
-            onOptionChange={handleYearChange}
-          />
-        </div>
+//       })
+//       .catch((error) =>
+//         console.log("error from fetchAdd", error)
+//       );
+//   }
+//   return (
+//     <div className={pStyle.loginContainer}>
+//       <div className={pStyle.headerContainer}>
+//         <IconButton
+//           type="button"
+//           onClick={handleClose}
+//           className={pStyle.closeButton}
+//         >
+//           <CancelIcon />
+//         </IconButton>
+//         <div className={pStyle.headerBody}>ADD CARD</div>
+//         <div />
+//       </div>
+//       <div className={pStyle.formContainer}>
+//         <div className={pStyle.dropdownContainer}>
+//           <Dropdown
+//             options={termOptions}
+//             selectedOption={selectedTerm}
+//             onOptionChange={handleTermChange}
+//           />
+//           <Dropdown
+//             options={yearOptions}
+//             selectedOption={selectedYear}
+//             onOptionChange={handleYearChange}
+//           />
+//         </div>
 
-        <Button value="ADD" className={pStyle.submitButton} onClick={handleAdd}>
-          ADD
-        </Button>
-      </div>
-    </div>
-  );
-}
+//         <Button value="ADD" className={pStyle.submitButton} onClick={handleAdd}>
+//           ADD
+//         </Button>
+//       </div>
+//     </div>
+//   );
+// }
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *                                                                           *
- *                            Remove PlanCard Popup                          *
- *                                                                           *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-function RemoveSemester(props) {
-  const { onClose, cardOptions, handleRemoveCards } = props;
-  console.log("cardoptions from removeSemester: ", cardOptions);
-  /*  Stores the cards to be deleted  */
-  const [selectedCards, setSelectedCards] = useState([]);
+// /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+//  *                                                                           *
+//  *                            Remove PlanCard Popup                          *
+//  *                                                                           *
+//  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+// function RemoveSemester(props) {
+//   const { onClose, cardOptions, handleRemoveCards } = props;
+//   console.log("cardoptions from removeSemester: ", cardOptions);
+//   /*  Stores the cards to be deleted  */
+//   const [selectedCards, setSelectedCards] = useState([]);
 
-  const handleCardChange = (e) => {
-    const val = e.target.value;
-    const pos = selectedCards.indexOf(val);
-    if (pos === -1) {
-      /* was not in selectedCards array, aka was not selected, now select */
-      setSelectedCards((prev) => prev.concat(val));
-      e.target.style.backgroundColor = "#5A32BF";
-      e.target.style.color = "#ffffff";
-    } else {
-      /* found in selectedCards array, aka was selected, now unselect */
-      setSelectedCards((prev) => prev.filter((card) => card !== val));
-      e.target.style.backgroundColor = "#ffffff";
-      e.target.style.color = "#5A32BF";
-    }
-  };
+//   const handleCardChange = (e) => {
+//     const val = e.target.value;
+//     const pos = selectedCards.indexOf(val);
+//     if (pos === -1) {
+//       /* was not in selectedCards array, aka was not selected, now select */
+//       setSelectedCards((prev) => prev.concat(val));
+//       e.target.style.backgroundColor = "#5A32BF";
+//       e.target.style.color = "#ffffff";
+//     } else {
+//       /* found in selectedCards array, aka was selected, now unselect */
+//       setSelectedCards((prev) => prev.filter((card) => card !== val));
+//       e.target.style.backgroundColor = "#ffffff";
+//       e.target.style.color = "#5A32BF";
+//     }
+//   };
 
-  const handleTermToID = () => {
-    let res =[];
-    for (let i = 0; i < cardOptions.length; i++) {
-      if (selectedCards.includes(cardOptions[i].term))
-        res.concat(cardOptions[i].plan_term_id);
-    }
-    return res;
-  }
+//   const handleTermToID = () => {
+//     let res =[];
+//     for (let i = 0; i < cardOptions.length; i++) {
+//       if (selectedCards.includes(cardOptions[i].term))
+//         res.concat(cardOptions[i].plan_term_id);
+//     }
+//     return res;
+//   }
 
-  const handleClose = () => {
-    onClose();
-  };
+//   const handleClose = () => {
+//     onClose();
+//   };
 
-  const handleRemove = () => {
-    /* do something API?? pass in the selectedCards arr */
-    handleRemoveCards(selectedCards);
-    console.log("selected Cards to remove: ", selectedCards);
+//   const handleRemove = () => {
+//     /* do something API?? pass in the selectedCards arr */
+//     handleRemoveCards(selectedCards);
+//     console.log("selected Cards to remove: ", selectedCards);
 
-    /* Then Close */
-    onClose();
-  };
+//     /* Then Close */
+//     onClose();
+//   };
 
-  const fetchDeleteTerms = async() => {
-    await fetch("https://jarney.club/api/degreeplan/term/");
-  }
+//   const fetchDeleteTerms = async() => {
+//     await fetch("https://jarney.club/api/degreeplan/term/");
+//   }
 
-  return (
-    <div className={pStyle.loginContainer}>
-      <div className={pStyle.headerContainer}>
-        <IconButton onClick={handleClose} className={pStyle.closeButton}>
-          <CancelIcon />
-        </IconButton>
-        <div className={pStyle.headerBody}>REMOVE CARDS</div>
-        <div />
-      </div>
-      <div className={pStyle.formContainer}>
-        <div className={pStyle.inputBarContainer}>
-          {cardOptions.map((card) => (
-            <input
-              type="button"
-              value={card.term}
-              key={card}
-              className={pStyle.inputBar}
-              onClick={(e) => handleCardChange(e)}
-            />
-          ))}
-        </div>
+//   return (
+//     <div className={pStyle.loginContainer}>
+//       <div className={pStyle.headerContainer}>
+//         <IconButton onClick={handleClose} className={pStyle.closeButton}>
+//           <CancelIcon />
+//         </IconButton>
+//         <div className={pStyle.headerBody}>REMOVE CARDS</div>
+//         <div />
+//       </div>
+//       <div className={pStyle.formContainer}>
+//         <div className={pStyle.inputBarContainer}>
+//           {cardOptions.map((card) => (
+//             <input
+//               type="button"
+//               value={card.term}
+//               key={card}
+//               className={pStyle.inputBar}
+//               onClick={(e) => handleCardChange(e)}
+//             />
+//           ))}
+//         </div>
 
-        <Button className={pStyle.submitButton} onClick={handleRemove}>
-          REMOVE
-        </Button>
-      </div>
-    </div>
-  );
-}
+//         <Button className={pStyle.submitButton} onClick={handleRemove}>
+//           REMOVE
+//         </Button>
+//       </div>
+//     </div>
+//   );
+// }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
