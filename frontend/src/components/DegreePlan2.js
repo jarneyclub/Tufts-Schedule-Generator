@@ -591,7 +591,6 @@ function DegreePlan2(props) {
                   onOptionChange={handleSemesterPlanChange}
                   customStyle={{ fontSize: "20px"}}
                 />
-                <div className={dp2Style.editSemesterButtonContainer}>
                 <IconButton
                   className={dp2Style.editSemesterButton}
                   onClick={() => setAddSemesterPopup(true)}
@@ -605,7 +604,6 @@ function DegreePlan2(props) {
                 >
                   <IndeterminateCheckBoxIcon fontSize="medium" />
                 </IconButton>
-              </div>
             </div>
             <div className={dp2Style.existListWrapper}>
               <TextField
