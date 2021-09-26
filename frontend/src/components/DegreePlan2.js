@@ -611,7 +611,8 @@ function DegreePlan2(props) {
                   selectedOption={selectedSemester}
                   onOptionChange={handleSemesterPlanChange}
                   customStyle={{ fontSize: "20px"}}
-                />
+              />
+              &nbsp;
               <IconButton
                 className={dp2Style.editPlanButton}
                 onClick={() => setAddSemesterPopup(true)}
