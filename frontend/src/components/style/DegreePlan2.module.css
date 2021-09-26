@@ -62,7 +62,7 @@
 .planSelectorContainer {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   
 
@@ -234,6 +234,15 @@ input {
   bottom: 0;
 
   color: #ffffff;
+}
+.editPlanButton {
+  height: 25px;
+  width: 25px;
+
+  top: 0;
+  bottom: 0;
+
+  color: #7048d5;
 }
 
 .planCardsContainer {
