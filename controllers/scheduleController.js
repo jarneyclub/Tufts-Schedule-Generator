@@ -15,7 +15,8 @@ const Class = require('../models/internal/objects/classes/Class.js');
 exports.makeEmptySchedule = async (req, res) => {
     const {sched_name} = req.body;
     var start = Date.now(); // begin timing API endpoint
-    await scheduleHandler.createSchedule(req.userid, sched_name, undefined, "placeholder term", undefined, undefined);
+    let createdSchedule =
+        await scheduleHandler.createSchedule(req.userid, sched_name, undefined, "placeholder term", undefined, undefined);
     let response = {
         data: createdSchedule,
         time_taken: (Date.now() - start).toString() + "ms"
