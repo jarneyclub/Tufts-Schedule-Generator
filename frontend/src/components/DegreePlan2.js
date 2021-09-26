@@ -15,7 +15,7 @@ import {
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import AddBoxIcon from "@material-ui/icons/AddBox";
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
 import CancelIcon from "@material-ui/icons/Cancel";
 import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
@@ -29,8 +29,13 @@ import CourseSearchBar from "./reusable/CourseSearchBar";
 import SnackBarAlert from "./reusable/SnackBarAlert";
 import DegreeReqDisplay from "./reusable/DegreeReqDisplay";
 import JarUserLogin from "./reusable/JarUserLogin";
-import {AddSemester, RemoveSemester, EditPlanName, AddPlan, RemovePlan} from "./reusable/DegreePlan2Popups"
-
+import {
+  AddSemester,
+  RemoveSemester,
+  EditPlanName,
+  AddPlan,
+  RemovePlan,
+} from "./reusable/DegreePlan2Popups";
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
@@ -146,34 +151,32 @@ function DegreePlan2(props) {
   const [cardOrigin, setCardOrigin] = useState("");
   /* Popups */
   const [popup, setPopup] = useState({
-    "addSemester": false,
-    "removeSemester": false, 
-    "editPlanName": false,
-    "addPlan": false,
-    "removePlan": false
-  })
+    addSemester: false,
+    removeSemester: false,
+    editPlanName: false,
+    addPlan: false,
+    removePlan: false,
+  });
   const [searchCourseResult, setSearchCourseResult] = useState([]);
   const [selectedPlanName, setSelectedPlanName] = useState("");
   const [selectedPlanID, setSelectedPlanID] = useState("");
 
-  
   const [loadMessage, setLoadMessage] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState();
   const [alertSeverity, setAlertSeverity] = useState();
 
-
   const handlePopup = (field, bit) => {
     setPopup((prev) => ({
       ...prev,
       [field]: bit,
-    }))
-  }
+    }));
+  };
 
   const handleSemesterPlanChange = (e) => {
     setSelectedPlanName(e.target.value);
     console.log("semesterPlanChange e:", e);
-    setSelectedPlanID(handleSelectedPlanNameToID(e.target.value))
+    setSelectedPlanID(handleSelectedPlanNameToID(e.target.value));
   };
 
   const handleRemoveCards = (cardsToRemove) => {
@@ -193,19 +196,23 @@ function DegreePlan2(props) {
   };
 
   const handleSelectedPlanNameToID = () => {
-    for(let i = 0; i < semesterPlanOptions.length; i++) {
-      console.log("selectedPlanName:", selectedPlanName)
-      console.log("semesterPlanOptions.planName:", semesterPlanOptions[i].plan_name)
-      console.log("true false? ",semesterPlanOptions[i].plan_name === selectedPlanName )
+    for (let i = 0; i < semesterPlanOptions.length; i++) {
+      console.log("selectedPlanName:", selectedPlanName);
+      console.log(
+        "semesterPlanOptions.planName:",
+        semesterPlanOptions[i].plan_name
+      );
+      console.log(
+        "true false? ",
+        semesterPlanOptions[i].plan_name === selectedPlanName
+      );
       if (semesterPlanOptions[i].plan_name === selectedPlanName) {
-        console.log("should return here ")
-                return semesterPlanOptions[i].plan_term_id;
-
+        console.log("should return here ");
+        return semesterPlanOptions[i].plan_term_id;
       }
     }
-  }
+  };
 
-  
   useEffect(() => {
     async function fetchData() {
       await fetch(
@@ -310,10 +317,9 @@ function DegreePlan2(props) {
 
   const semesterNameToID = (semesterName) => {
     return semesterPlanOptions.map((plan) => {
-      if (plan.plan_name === semesterName)
-        return plan.plan_id;
-    })
-  }
+      if (plan.plan_name === semesterName) return plan.plan_id;
+    });
+  };
 
   /*
    *  createnNewPlan()
@@ -350,8 +356,7 @@ function DegreePlan2(props) {
       });
   };
 
-  const deletePlan = async(planID) => {
-    
+  const deletePlan = async (planID) => {
     await fetch("https://jarney.club/api/degreeplan/".concat(planID))
       .then((response) => response.json())
       .then((result) => {
@@ -360,8 +365,8 @@ function DegreePlan2(props) {
       })
       .catch((error) => {
         console.log("delete plan error: ", error);
-      })
-  }
+      });
+  };
 
   /*
    *  fetchPlans()
@@ -388,7 +393,7 @@ function DegreePlan2(props) {
           setSemesterPlanOptions(result.plans);
           setCardOptions(result.plans[0].terms);
           setSelectedPlanName(result.plans[0].plan_name);
-          setSelectedPlanID(result.plans[0].plan_id)
+          setSelectedPlanID(result.plans[0].plan_id);
         }
       })
       .catch((error) => {
@@ -399,14 +404,7 @@ function DegreePlan2(props) {
   /*  Initial fetching for plans when page first loads */
   useEffect(() => {
     fetchPlans();
-    
   }, []);
-
-  // useEffect(() => {
-  //   // setSemesterPlanTitle(semesterPlanOptions[0])
-  //   console.log("semesterPlanOptions: ", semesterPlanOptions);
-  //   setSelectedSemester(semesterPlanOptions[0].plan_name)
-  // },[semesterPlanOptions])
 
   useEffect(() => {
     console.log("cardOptions: ", cardOptions);
@@ -439,12 +437,12 @@ function DegreePlan2(props) {
             {/* SEARCH CONTAINER for Courses */}
             <div className={dp2Style.planSelectorContainer}>
               <Dropdown
-                  options={semesterPlanOptions}
-                  isObject={true}
-                  objectField={"plan_name"}
-                  selectedOption={selectedPlanName}
-                  onOptionChange={handleSemesterPlanChange}
-                  customStyle={{ fontSize: "20px"}}
+                options={semesterPlanOptions}
+                isObject={true}
+                objectField={"plan_name"}
+                selectedOption={selectedPlanName}
+                onOptionChange={handleSemesterPlanChange}
+                customStyle={{ fontSize: "20px" }}
               />
               &nbsp;
               <IconButton
@@ -570,7 +568,11 @@ function DegreePlan2(props) {
       {/* popups */}
       {popup.addSemester && (
         <Popup onClose={() => handlePopup("addSemester", false)}>
-          <AddSemester onClose={() => handlePopup("addSemester", false)} planID={selectedPlanID}/>
+          <AddSemester
+            onClose={() => handlePopup("addSemester", false)}
+            planName={selectedPlanName}
+            planID={selectedPlanID}
+          />
         </Popup>
       )}
       {popup.removeSemester && (
@@ -579,6 +581,8 @@ function DegreePlan2(props) {
             onClose={() => handlePopup("removeSemester", false)}
             cardOptions={cardOptions}
             handleRemoveCards={handleRemoveCards}
+            planName={selectedPlanName}
+            planID={selectedPlanID}
           />
         </Popup>
       )}
@@ -587,7 +591,8 @@ function DegreePlan2(props) {
           <EditPlanName
             onClose={() => handlePopup("editPlanName", false)}
             cardOptions={cardOptions}
-            handleRemoveCards={handleRemoveCards}
+            planName={selectedPlanName}
+            planID={selectedPlanID}
           />
         </Popup>
       )}
@@ -596,7 +601,6 @@ function DegreePlan2(props) {
           <AddPlan
             onClose={() => handlePopup("addPlan", false)}
             cardOptions={cardOptions}
-            handleRemoveCards={handleRemoveCards}
           />
         </Popup>
       )}
@@ -605,7 +609,8 @@ function DegreePlan2(props) {
           <RemovePlan
             onClose={() => handlePopup("removePlan", false)}
             cardOptions={cardOptions}
-            handleRemoveCards={handleRemoveCards}
+            planName={selectedPlanName}
+            planID={selectedPlanID}
           />
         </Popup>
       )}

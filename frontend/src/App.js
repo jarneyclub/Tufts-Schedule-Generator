@@ -55,7 +55,7 @@ export default function App() {
   const fetchQuickLogin = async () => {
     const requestOption = {
       method: "POST",
-      headers: { "Content-Type": "application/json", },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({}),
     };
     await fetch("https://jarney.club/api/auth/login_cookie", requestOption)
