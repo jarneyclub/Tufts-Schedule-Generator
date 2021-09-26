@@ -55,7 +55,6 @@ const drDefault = {
 
 const schoolDefaults = [" A&S", " ENG"];
 
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
  *                     EXPORTED MAIN FUNCTIONAL COMPONENT                    *
@@ -181,22 +180,19 @@ function DegreeReqEdit(props) {
     }));
   };
 
-  
   const fetchSchoolOptions = async () => {
     await fetch("https://jarney.club/api/courses/programs")
       .then((response) => response.json())
       .then((result) => {
         console.log("result from schoolOptions", result);
-        setSchoolOptions(result.names)
+        setSchoolOptions(result.names);
       })
-      .catch((error) =>
-        console.log("error from schoolOptions", error)
-      );
-  }
+      .catch((error) => console.log("error from schoolOptions", error));
+  };
 
   useEffect(() => {
     fetchSchoolOptions();
-  }, [])
+  }, []);
   return (
     <div className={dStyle.drContainer}>
       <div className={dStyle.headerContainer}>

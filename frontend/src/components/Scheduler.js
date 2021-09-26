@@ -138,7 +138,6 @@ function Scheduler(props) {
 
   const handleSearchChange = (e) => {
     setCourseSearchValue(e.target.value);
-
   };
 
   const handleCloseAlert = () => {
@@ -152,7 +151,7 @@ function Scheduler(props) {
   const checkCourseAdded = (courseID) => {
     for (let course of selectedCourses) {
       if (course.term_course_id === courseID) {
-        console.log("false: course:" , course, " courseID:", courseID);
+        console.log("false: course:", course, " courseID:", courseID);
         return false;
       }
     }
@@ -164,10 +163,10 @@ function Scheduler(props) {
    *  purpose: for courseSearchBar, adds course to selectedCourseList
    */
   const handleDoubleClickCourseList = (courseDetail) => {
-      console.log("course to be added: ", courseDetail);
+    console.log("course to be added: ", courseDetail);
     if (checkCourseAdded(courseDetail.term_course_id)) {
       setSelectedCourses((prev) => [...prev, courseDetail]);
-      console.log("course added: " , selectedCourses);
+      console.log("course added: ", selectedCourses);
     } else {
       setAlertMessage("Course was already added!");
       setAlertSeverity("error");
@@ -246,17 +245,15 @@ function Scheduler(props) {
           .concat(selectedAttribute)
       )
         .then((response) => response.json())
-        .then(
-          (result) => {        
-            setSearchCourseResult([]);    
-            setSearchCourseResult(result.courses);
-            setLoadMessage(false);
-            console.log("show results: ", result);
-          }
-        )
+        .then((result) => {
+          setSearchCourseResult([]);
+          setSearchCourseResult(result.courses);
+          setLoadMessage(false);
+          console.log("show results: ", result);
+        })
         .catch((error) => {
-           setSearchCourseResult([]);
-            console.log("error from Scheduler course search", error);
+          setSearchCourseResult([]);
+          console.log("error from Scheduler course search", error);
         });
     }
     fetchData();

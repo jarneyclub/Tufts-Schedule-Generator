@@ -15,7 +15,7 @@ import {
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import AddBoxIcon from "@material-ui/icons/AddBox";
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
 import CancelIcon from "@material-ui/icons/Cancel";
 import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
@@ -36,7 +36,7 @@ import JarUserLogin from "../reusable/JarUserLogin";
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function AddSemester(props) {
-  const { onClose, planID } = props;
+  const { onClose, planID, planName } = props;
 
   /* Year Dropdown */
   const [yearOptions, setYearOptions] = useState([
@@ -46,10 +46,10 @@ function AddSemester(props) {
 
   /* Term Dropdown */
   const [termOptions, setTermOptions] = useState([
-    "FALL",
-    "SPRING",
-    "SUMMER",
-    "ANNUAL",
+    "Fall",
+    "Spring",
+    "Summer",
+    "Annual",
   ]); // possible semesters
   const [selectedTerm, setSelectedTerm] = useState(termOptions[0]);
 
@@ -72,13 +72,11 @@ function AddSemester(props) {
     onClose();
   };
 
-  
-
-  const fetchAdd = async() => {
+  const fetchAdd = async () => {
     const yearTerm = selectedYear + " " + selectedTerm;
-    console.log("yearTerm: ", yearTerm)
+    console.log("yearTerm: ", yearTerm);
     console.log("planID: ", planID);
-    const value = {plan_id: planID, term: yearTerm};
+    const value = { plan_id: planID, term: yearTerm };
     const requestOption = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -89,12 +87,9 @@ function AddSemester(props) {
       .then((response) => response.json())
       .then((result) => {
         console.log("result from fetchAdd", result);
-        
       })
-      .catch((error) =>
-        console.log("error from fetchAdd", error)
-      );
-  }
+      .catch((error) => console.log("error from fetchAdd", error));
+  };
   return (
     <div className={pStyle.loginContainer}>
       <div className={pStyle.headerContainer}>
@@ -105,7 +100,7 @@ function AddSemester(props) {
         >
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>ADD CARD</div>
+        <div className={pStyle.headerBody}>Add Card to {planName}</div>
         <div />
       </div>
       <div className={pStyle.formContainer}>
@@ -136,7 +131,7 @@ function AddSemester(props) {
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function RemoveSemester(props) {
-  const { onClose, cardOptions, handleRemoveCards } = props;
+  const { onClose, cardOptions, handleRemoveCards, planName, planID } = props;
   console.log("cardoptions from removeSemester: ", cardOptions);
   /*  Stores the cards to be deleted  */
   const [selectedCards, setSelectedCards] = useState([]);
@@ -158,13 +153,13 @@ function RemoveSemester(props) {
   };
 
   const handleTermToID = () => {
-    let res =[];
+    let res = [];
     for (let i = 0; i < cardOptions.length; i++) {
       if (selectedCards.includes(cardOptions[i].term))
         res.concat(cardOptions[i].plan_term_id);
     }
     return res;
-  }
+  };
 
   const handleClose = () => {
     onClose();
@@ -179,9 +174,9 @@ function RemoveSemester(props) {
     onClose();
   };
 
-  const fetchDeleteTerms = async() => {
+  const fetchDeleteTerms = async () => {
     await fetch("https://jarney.club/api/degreeplan/term/");
-  }
+  };
 
   return (
     <div className={pStyle.loginContainer}>
@@ -189,7 +184,7 @@ function RemoveSemester(props) {
         <IconButton onClick={handleClose} className={pStyle.closeButton}>
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>REMOVE CARDS</div>
+        <div className={pStyle.headerBody}>Remove Cards from {planName}</div>
         <div />
       </div>
       <div className={pStyle.formContainer}>
@@ -219,17 +214,18 @@ function RemoveSemester(props) {
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function EditPlanName(props) {
-  const { onClose, cardOptions, handleRemoveCards } = props;
+  const { onClose, cardOptions, handleRemoveCards, planName, planID } = props;
   console.log("cardoptions from removeSemester: ", cardOptions);
   /*  Stores the cards to be deleted  */
   const [selectedCards, setSelectedCards] = useState([]);
-
-
+  const [editName, setEditName] = useState(planName);
 
   const handleClose = () => {
     onClose();
   };
-
+  const handleEdit = (e) => {
+    setEditName(e.target.value);
+  };
   const handleRemove = () => {
     /* do something API?? pass in the selectedCards arr */
     handleRemoveCards(selectedCards);
@@ -238,8 +234,6 @@ function EditPlanName(props) {
     onClose();
   };
 
-  
-
   return (
     <div className={pStyle.loginContainer}>
       <div className={pStyle.headerContainer}>
@@ -247,19 +241,12 @@ function EditPlanName(props) {
           <CancelIcon />
         </IconButton>
         <div className={pStyle.headerBody}>EDIT PLAN NAME</div>
+
         <div />
       </div>
       <div className={pStyle.formContainer}>
         <div className={pStyle.inputBarContainer}>
-          {/* {cardOptions.map((card) => (
-            <input
-              type="button"
-              value={card.term}
-              key={card}
-              className={pStyle.inputBar}
-              onClick={(e) => handleCardChange(e)}
-            />
-          ))} */}
+          <TextField value={editName} onChange={handleEdit} />
         </div>
 
         <Button className={pStyle.submitButton} onClick={handleRemove}>
@@ -281,14 +268,14 @@ function AddPlan(props) {
   /*  Stores the cards to be deleted  */
   const [selectedCards, setSelectedCards] = useState([]);
 
-   const handleTermToID = () => {
-    let res =[];
+  const handleTermToID = () => {
+    let res = [];
     for (let i = 0; i < cardOptions.length; i++) {
       if (selectedCards.includes(cardOptions[i].term))
         res.concat(cardOptions[i].plan_term_id);
     }
     return res;
-  }
+  };
 
   const handleClose = () => {
     onClose();
@@ -303,8 +290,6 @@ function AddPlan(props) {
     onClose();
   };
 
-  
-
   return (
     <div className={pStyle.loginContainer}>
       <div className={pStyle.headerContainer}>
@@ -315,9 +300,7 @@ function AddPlan(props) {
         <div />
       </div>
       <div className={pStyle.formContainer}>
-        <div className={pStyle.inputBarContainer}>
-         
-        </div>
+        <div className={pStyle.inputBarContainer}></div>
 
         <Button className={pStyle.submitButton} onClick={handleRemove}>
           ADD
@@ -327,31 +310,25 @@ function AddPlan(props) {
   );
 }
 
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
  *                                Remove Plan Popup                          *
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function RemovePlan(props) {
-  const { onClose, cardOptions, handleRemoveCards } = props;
+  const { onClose, cardOptions, handleRemoveCards, planName, planID } = props;
   console.log("cardoptions from removeSemester: ", cardOptions);
   /*  Stores the cards to be deleted  */
   const [selectedCards, setSelectedCards] = useState([]);
 
-  const handleCardChange = (e) => {
-  
-    
-  };
-
   const handleTermToID = () => {
-    let res =[];
+    let res = [];
     for (let i = 0; i < cardOptions.length; i++) {
       if (selectedCards.includes(cardOptions[i].term))
         res.concat(cardOptions[i].plan_term_id);
     }
     return res;
-  }
+  };
 
   const handleClose = () => {
     onClose();
@@ -376,10 +353,11 @@ function RemovePlan(props) {
       </div>
       <div className={pStyle.formContainer}>
         <div className={pStyle.inputBarContainer}>
-          Are you sure you want to remove
-          
+          Are you sure you want to remove {planName}
         </div>
-
+        <Button className={pStyle.submitButton} onClick={handleClose}>
+          CANCEL
+        </Button>
         <Button className={pStyle.submitButton} onClick={handleRemove}>
           REMOVE
         </Button>
@@ -388,10 +366,4 @@ function RemovePlan(props) {
   );
 }
 
-export {
-  AddSemester, 
-  RemoveSemester,
-  EditPlanName, 
-  AddPlan,
-  RemovePlan
-}
+export { AddSemester, RemoveSemester, EditPlanName, AddPlan, RemovePlan };
