@@ -215,6 +215,62 @@ function RemoveSemester(props) {
   );
 }
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *                                                                           *
+ *                           Edit Plan Name Popup                            *
+ *                                                                           *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+function EditPlanName(props) {
+  const { onClose, cardOptions, handleRemoveCards } = props;
+  console.log("cardoptions from removeSemester: ", cardOptions);
+  /*  Stores the cards to be deleted  */
+  const [selectedCards, setSelectedCards] = useState([]);
+
+
+
+  const handleClose = () => {
+    onClose();
+  };
+
+  const handleRemove = () => {
+    /* do something API?? pass in the selectedCards arr */
+    handleRemoveCards(selectedCards);
+
+    /* Then Close */
+    onClose();
+  };
+
+  
+
+  return (
+    <div className={pStyle.loginContainer}>
+      <div className={pStyle.headerContainer}>
+        <IconButton onClick={handleClose} className={pStyle.closeButton}>
+          <CancelIcon />
+        </IconButton>
+        <div className={pStyle.headerBody}>EDIT PLAN NAME</div>
+        <div />
+      </div>
+      <div className={pStyle.formContainer}>
+        <div className={pStyle.inputBarContainer}>
+          {/* {cardOptions.map((card) => (
+            <input
+              type="button"
+              value={card.term}
+              key={card}
+              className={pStyle.inputBar}
+              onClick={(e) => handleCardChange(e)}
+            />
+          ))} */}
+        </div>
+
+        <Button className={pStyle.submitButton} onClick={handleRemove}>
+          SAVE CHANGE
+        </Button>
+      </div>
+    </div>
+  );
+}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
@@ -227,23 +283,7 @@ function AddPlan(props) {
   /*  Stores the cards to be deleted  */
   const [selectedCards, setSelectedCards] = useState([]);
 
-  const handleCardChange = (e) => {
-    const val = e.target.value;
-    const pos = selectedCards.indexOf(val);
-    if (pos === -1) {
-      /* was not in selectedCards array, aka was not selected, now select */
-      setSelectedCards((prev) => prev.concat(val));
-      e.target.style.backgroundColor = "#5A32BF";
-      e.target.style.color = "#ffffff";
-    } else {
-      /* found in selectedCards array, aka was selected, now unselect */
-      setSelectedCards((prev) => prev.filter((card) => card !== val));
-      e.target.style.backgroundColor = "#ffffff";
-      e.target.style.color = "#5A32BF";
-    }
-  };
-
-  const handleTermToID = () => {
+   const handleTermToID = () => {
     let res =[];
     for (let i = 0; i < cardOptions.length; i++) {
       if (selectedCards.includes(cardOptions[i].term))
@@ -273,24 +313,16 @@ function AddPlan(props) {
         <IconButton onClick={handleClose} className={pStyle.closeButton}>
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>REMOVE CARDS</div>
+        <div className={pStyle.headerBody}>ADD PLAN</div>
         <div />
       </div>
       <div className={pStyle.formContainer}>
         <div className={pStyle.inputBarContainer}>
-          {cardOptions.map((card) => (
-            <input
-              type="button"
-              value={card.term}
-              key={card}
-              className={pStyle.inputBar}
-              onClick={(e) => handleCardChange(e)}
-            />
-          ))}
+         
         </div>
 
         <Button className={pStyle.submitButton} onClick={handleRemove}>
-          REMOVE
+          ADD
         </Button>
       </div>
     </div>
@@ -310,19 +342,8 @@ function RemovePlan(props) {
   const [selectedCards, setSelectedCards] = useState([]);
 
   const handleCardChange = (e) => {
-    const val = e.target.value;
-    const pos = selectedCards.indexOf(val);
-    if (pos === -1) {
-      /* was not in selectedCards array, aka was not selected, now select */
-      setSelectedCards((prev) => prev.concat(val));
-      e.target.style.backgroundColor = "#5A32BF";
-      e.target.style.color = "#ffffff";
-    } else {
-      /* found in selectedCards array, aka was selected, now unselect */
-      setSelectedCards((prev) => prev.filter((card) => card !== val));
-      e.target.style.backgroundColor = "#ffffff";
-      e.target.style.color = "#5A32BF";
-    }
+  
+    
   };
 
   const handleTermToID = () => {
@@ -355,20 +376,13 @@ function RemovePlan(props) {
         <IconButton onClick={handleClose} className={pStyle.closeButton}>
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>REMOVE CARDS</div>
+        <div className={pStyle.headerBody}>REMOVE PLAN</div>
         <div />
       </div>
       <div className={pStyle.formContainer}>
         <div className={pStyle.inputBarContainer}>
-          {cardOptions.map((card) => (
-            <input
-              type="button"
-              value={card.term}
-              key={card}
-              className={pStyle.inputBar}
-              onClick={(e) => handleCardChange(e)}
-            />
-          ))}
+          
+          
         </div>
 
         <Button className={pStyle.submitButton} onClick={handleRemove}>
@@ -382,6 +396,7 @@ function RemovePlan(props) {
 export {
   AddSemester, 
   RemoveSemester,
+  EditPlanName, 
   AddPlan,
   RemovePlan
 }
