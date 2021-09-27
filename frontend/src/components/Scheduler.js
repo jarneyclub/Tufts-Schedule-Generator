@@ -465,7 +465,7 @@ function Scheduler(props) {
 
         <div className={sStyle.rightColumnWrapper}>
           <div className={sStyle.scheduleTitleContainer}>
-            <div className={sStyle.scheduleSelectorContainer}/>
+
             <Dropdown
               options={scheduleOptions}
               selectedOption={selectedSchedule}
