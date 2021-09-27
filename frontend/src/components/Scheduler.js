@@ -17,9 +17,13 @@ import {
   CircularProgress,
   FormGroup,
   FormLabel,
+  IconButton
 } from "@material-ui/core";
 import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import SearchIcon from "@material-ui/icons/Search";
+import AddBoxIcon from "@material-ui/icons/AddBox";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
 import PurpleSwitch from "./reusable/PurpleSwitch";
 import sStyle from "./style/Scheduler.module.css";
 import Dropdown from "./reusable/Dropdown";
@@ -82,6 +86,11 @@ function Scheduler(props) {
   const [timePrefState, setTimePrefState] = useState(false); // state of time pref overlay
   const [timePref, setTimePref] = useState(timePrefDefault); // time pref json that will be passed into post req
 
+  const [popup, setPopup] = useState({
+    editSchedule: false,
+    removeSchedule: false,
+    addSchedule: false,
+  })
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState();
   const [alertSeverity, setAlertSeverity] = useState();
@@ -95,6 +104,13 @@ function Scheduler(props) {
   const handleFilterChange = (e) => {
     setSelectedAttribute(e.target.value);
   };
+
+  const handlePopup = (field, bit) => {
+    setPopup((prev) => ({
+      ...prev,
+      [field]: bit
+    }))
+  }
 
   const handleAddTimePref = (dayName, timeValue) => {
     console.log("start time: ", timeValue);
@@ -456,6 +472,27 @@ function Scheduler(props) {
               onOptionChange={handleScheduleChange}
               customStyle={{ fontSize: "20px" }}
             />
+            &nbsp;
+              <IconButton
+                className={sStyle.editPlanButton}
+                onClick={() => handlePopup("editPlanName", true)}
+              >
+                <ModeEditIcon fontSize="medium" />
+              </IconButton>
+              &nbsp;
+              <IconButton
+                className={sStyle.editPlanButton}
+                onClick={() => handlePopup("addPlan", true)}
+              >
+                <AddBoxIcon fontSize="medium" />
+              </IconButton>
+              &nbsp;
+              <IconButton
+                className={sStyle.editPlanButton}
+                onClick={() => handlePopup("removePlan", true)}
+              >
+                <IndeterminateCheckBoxIcon fontSize="medium" />
+              </IconButton>
             <div />
           </div>
 
