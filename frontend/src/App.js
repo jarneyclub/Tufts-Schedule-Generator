@@ -96,11 +96,11 @@ export default function App() {
   return (
     <MuiThemeProvider theme={THEME}>
       <div
-        style={{
-          background:
-            "linear-gradient(-45deg, #ccbeee, #d9cef2, #fed7d7, #fec2c2)",
-          minHeight: "100vh",
-        }}
+        // style={{
+        //   background:
+        //     "linear-gradient(-45deg, #ccbeee, #d9cef2, #fed7d7, #fec2c2)",
+        //   minHeight: "100vh",
+        // }}
       >
         {/* A <Switch> looks through its children <Route>s and
                     renders the first on that matches the current URL
