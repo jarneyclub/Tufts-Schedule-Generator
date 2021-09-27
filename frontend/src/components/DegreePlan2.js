@@ -572,6 +572,7 @@ function DegreePlan2(props) {
             onClose={() => handlePopup("addSemester", false)}
             planName={selectedPlanName}
             planID={selectedPlanID}
+            refreshPlans={fetchPlans}
           />
         </Popup>
       )}
@@ -583,6 +584,7 @@ function DegreePlan2(props) {
             handleRemoveCards={handleRemoveCards}
             planName={selectedPlanName}
             planID={selectedPlanID}
+            refreshPlans={fetchPlans}
           />
         </Popup>
       )}
@@ -590,9 +592,9 @@ function DegreePlan2(props) {
         <Popup onClose={() => handlePopup("editPlanName", false)}>
           <EditPlanName
             onClose={() => handlePopup("editPlanName", false)}
-            cardOptions={cardOptions}
             planName={selectedPlanName}
             planID={selectedPlanID}
+            refreshPlans={fetchPlans}
           />
         </Popup>
       )}
@@ -600,7 +602,8 @@ function DegreePlan2(props) {
         <Popup onClose={() => handlePopup("addPlan", false)}>
           <AddPlan
             onClose={() => handlePopup("addPlan", false)}
-            cardOptions={cardOptions}
+            refreshPlans={fetchPlans}
+            createNewPlan={createNewPlan}
           />
         </Popup>
       )}
@@ -608,9 +611,9 @@ function DegreePlan2(props) {
         <Popup onClose={() => handlePopup("removePlan", false)}>
           <RemovePlan
             onClose={() => handlePopup("removePlan", false)}
-            cardOptions={cardOptions}
             planName={selectedPlanName}
             planID={selectedPlanID}
+            refreshPlans={fetchPlans}
           />
         </Popup>
       )}
