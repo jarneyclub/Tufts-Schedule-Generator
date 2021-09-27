@@ -316,7 +316,19 @@
   margin-bottom: 20px;
   height: 80vh;
 }
+.scheduleSelectorContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
 
+  /* border: 1px #5a32bf solid; */
+
+  width: 100%;
+  padding: 5px 1vw;
+
+  white-space: nowrap;
+}
 .scheduleTitleContainer {
   display: flex;
   flex-direction: row;
