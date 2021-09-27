@@ -304,8 +304,10 @@ function AddPlan(props) {
         <div />
       </div>
       <div className={pStyle.formContainer}>
-        <div className={pStyle.inputBarContainer}></div>
-        <TextField value={planName} onChange={handleNameChange} />
+        <div className={pStyle.inputBarContainer}>
+          <TextField value={planName} onChange={handleNameChange} />
+
+        </div>
         <Button className={pStyle.submitButton} onClick={handleAdd}>
           ADD
         </Button>
@@ -357,7 +359,7 @@ function RemovePlan(props) {
         <div className={pStyle.inputBarContainer}>
           Are you sure you want to remove {planName}?
         </div>
-        <Button className={pStyle.submitButton} onClick={handleClose}>
+        <Button className={pStyle.cancelButton} onClick={handleClose}>
           CANCEL
         </Button>
         <br />
