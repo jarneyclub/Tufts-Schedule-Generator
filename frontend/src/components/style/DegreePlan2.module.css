@@ -134,7 +134,7 @@ input {
 
   /* border-top: 1px solid #5a32bf; */
   width: 100%;
-  height: 200px;
+  max-height: 200px;
 
   overflow-y: scroll;
 }
