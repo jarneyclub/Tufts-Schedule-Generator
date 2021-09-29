@@ -425,9 +425,8 @@ function DegreePlan2(props) {
 
   useEffect(() => {
     console.log("cardOptions: ", cardOptions);
-    for (let card of cardOptions) {
-      fetchSaveTerm(card);
-    }
+    cardOptions?.map((card) => fetchSaveTerm(card));
+
   }, [cardOptions]);
 
  
