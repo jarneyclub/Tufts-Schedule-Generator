@@ -175,7 +175,7 @@ function DegreePlan2(props) {
     setSelectedPlanName(e.target.value);
     console.log("semesterPlanChange e:", e);
     setSelectedPlanID(handleSelectedPlanNameToID(e.target.value));
-    
+    setCardOptions(semesterPlanOptions.find((plan) => plan.plan_name === e.target.value))
   };
 
   const handleRemoveCards = (cardsToRemove) => {
