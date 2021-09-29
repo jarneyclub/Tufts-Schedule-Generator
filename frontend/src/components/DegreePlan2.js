@@ -175,6 +175,7 @@ function DegreePlan2(props) {
     setSelectedPlanName(e.target.value);
     console.log("semesterPlanChange e:", e);
     setSelectedPlanID(handleSelectedPlanNameToID(e.target.value));
+    
   };
 
   const handleRemoveCards = (cardsToRemove) => {
@@ -429,10 +430,7 @@ function DegreePlan2(props) {
     }
   }, [cardOptions]);
 
-  useEffect(() => {
-    setCardOptions(semesterPlanOptions.map((plan) => (plan.plan_name === selectedPlanName && plan.term)));
-
-  }, [selectedPlanName])
+ 
 
   return (
     <div style={{ marginTop: "80px" }}>
