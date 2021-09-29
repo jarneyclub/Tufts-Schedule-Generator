@@ -176,12 +176,12 @@ function DegreePlan2(props) {
     console.log("semesterPlanChange e:", e);
     setSelectedPlanID(handleSelectedPlanNameToID(e.target.value));
     console.log("e.target.value", e.target.value);
-    console.log("check: ", semesterPlanOptions[1].plan_name === e.target.value)
+    console.log("check: ", semesterPlanOptions[1].plan_name === e.target.value.substr(3))
     console.log("semesterPlanOptions ", semesterPlanOptions)
     console.log("before substr", e.target.value)
-    console.log("after substr", e.target.value.substr(4));
-    console.log(semesterPlanOptions.findIndex(plan => plan.plan_name === e.target.value.substr(4)))
-    setCardOptions(semesterPlanOptions.find( ({ plan_name }) => plan_name === e.target.value.substr(4) ))
+    console.log("after substr", e.target.value.substr(3));
+    console.log(semesterPlanOptions.findIndex(plan => plan.plan_name === e.target.value.substr(3)))
+    setCardOptions(semesterPlanOptions.find( ({ plan_name }) => plan_name === e.target.value.substr(3) ))
   };
 
   const handleRemoveCards = (cardsToRemove) => {
