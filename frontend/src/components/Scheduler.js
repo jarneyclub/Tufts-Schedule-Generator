@@ -35,12 +35,118 @@ import SnackBarAlert from "./reusable/SnackBarAlert";
 import JarUserLogin from "./reusable/JarUserLogin";
 import Popup from "./reusable/Popup";
 
+const timeDefault = [
+{
+  time_earliest: "08:00",
+  time_latest: "08:30",
+},
+{
+  time_earliest: "08:30",
+  time_latest: "09:00",
+},
+{
+  time_earliest: "09:00",
+  time_latest: "09:30",
+},
+{
+  time_earliest: "09:30",
+  time_latest: "10:00",
+},
+{
+  time_earliest: "10:00",
+  time_latest: "10:30",
+},
+{
+  time_earliest: "10:30",
+  time_latest: "11:00",
+},
+{
+  time_earliest: "11:00",
+  time_latest: "11:30",
+},
+{
+  time_earliest: "11:30",
+  time_latest: "12:00",
+},
+{
+  time_earliest: "12:00",
+  time_latest: "12:30",
+},
+{
+  time_earliest: "12:30",
+  time_latest: "13:00",
+},
+{
+  time_earliest: "13:00",
+  time_latest: "13:30",
+},
+{
+  time_earliest: "13:30",
+  time_latest: "14:00",
+},
+{
+  time_earliest: "14:00",
+  time_latest: "14:30",
+},
+{
+  time_earliest: "14:30",
+  time_latest: "15:00",
+},
+{
+  time_earliest: "15:00",
+  time_latest: "15:30",
+},
+{
+  time_earliest: "15:30",
+  time_latest: "16:00",
+},
+{
+  time_earliest: "16:00",
+  time_latest: "16:30",
+},
+{
+  time_earliest: "16:30",
+  time_latest: "17:00",
+},
+{
+  time_earliest: "17:00",
+  time_latest: "17:30",
+},
+{
+  time_earliest: "17:30",
+  time_latest: "18:00",
+},
+{
+  time_earliest: "18:00",
+  time_latest: "18:30",
+},
+{
+  time_earliest: "18:30",
+  time_latest: "19:00",
+},
+{
+  time_earliest: "19:00",
+  time_latest: "19:30",
+},
+{
+  time_earliest: "19:30",
+  time_latest: "20:00",
+},
+{
+  time_earliest: "20:00",
+  time_latest: "20:30",
+},
+{
+  time_earliest: "20:30",
+  time_latest: "21:00",
+}]
+
 const timePrefDefault = {
-  Monday: [],
-  Tuesday: [],
-  Wednesday: [],
-  Thursday: [],
-  Friday: [],
+  Monday: timeDefault,
+  Tuesday: timeDefault,
+  Wednesday: timeDefault,
+  Thursday: timeDefault,
+  Friday: timeDefault,
 };
 
 const boolStateDefault = {
@@ -151,6 +257,23 @@ function Scheduler(props) {
       [dayName]: prev[dayName].filter((obj) => obj.time_earliest !== timeValue),
     }));
   };
+
+  const handleAddAllDayTimePref = (dayName) => {
+    setTimePref((prev) => ({
+      ...prev,
+      [dayName]: {
+        time_earliest: "00:00",
+        time_latest: "23:59"
+      }
+    }))
+  }
+
+  const handleRemoveAllDayTimePref = (dayName) => {
+    setTimePref((prev) => ({
+      ...prev,
+      [dayName]: {},
+    }))
+  }
 
   const handleSearchChange = (e) => {
     setCourseSearchValue(e.target.value);
@@ -506,6 +629,8 @@ function Scheduler(props) {
         <TimePrefSelector
           onAddTimePref={handleAddTimePref}
           onRemoveTimePref={handleRemoveTimePref}
+          onRemoveEntireDay = {handleRemoveAllDayTimePref}
+          onAddEntireDay = {handleAddAllDayTimePref}
           timePrefState={timePrefState}
           timePref={timePref}
           onTimePrefStateChange={setTimePrefState}

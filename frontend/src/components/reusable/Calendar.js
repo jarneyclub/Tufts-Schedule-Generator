@@ -36,7 +36,10 @@ function Calendar(props) {
     timePref,
     handleAddTimePref,
     handleRemoveTimePref,
+    handleAddEntireDay,
+    handleRemoveEntireDay,
     shrink,
+
   } = props;
   const [daySelection, setDaySelection] = useState(0);
 
@@ -97,6 +100,8 @@ function Calendar(props) {
               timePrefDay={timePref && timePref[dayName]}
               addTimePref={handleAddTimePref}
               removeTimePref={handleRemoveTimePref}
+              addEntireDay={handleAddEntireDay}
+              removeEntireDay={handleRemoveEntireDay}
               singleDay={false}
             />
           ))
@@ -108,6 +113,8 @@ function Calendar(props) {
             timePrefDay={timePref && timePref[weekdays[daySelection]]}
             addTimePref={handleAddTimePref}
             removeTimePref={handleRemoveTimePref}
+            addEntireDay={handleAddEntireDay}
+            removeEntireDay={handleRemoveEntireDay}
             singleDay={true}
           />
         )}
