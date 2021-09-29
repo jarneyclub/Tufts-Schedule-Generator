@@ -90,7 +90,7 @@ function CalendarDay(props) {
     // eslint-disable-next-line no-unused-expressions
     timePrefDay &&
       timePrefDay.forEach((element) => {
-        if (element.time_earliest === timeName) {
+        if ((element.time_earliest === "00:00" && element.time_latest === "23:59") || element.time_earliest === timeName) {
           res = { backgroundColor: "#A1C97D" };
         }
       });
