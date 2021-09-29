@@ -175,6 +175,8 @@ function DegreePlan2(props) {
     setSelectedPlanName(e.target.value);
     console.log("semesterPlanChange e:", e);
     setSelectedPlanID(handleSelectedPlanNameToID(e.target.value));
+    console.log("e.target.value", e.target.value);
+    console.log("check: ", semesterPlanOptions[1].plan_name === e.target.value)
     console.log("semesterPlanOptions ", semesterPlanOptions)
     console.log(semesterPlanOptions.findIndex(plan => plan.plan_name === e.target.value))
     setCardOptions(semesterPlanOptions.find( ({ plan_name }) => plan_name === e.target.value ))
