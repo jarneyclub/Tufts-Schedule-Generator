@@ -140,9 +140,7 @@ function DegreePlan2(props) {
   } = props;
   const [degreeReqTitle, setDegreeReqTitle] = useState("PLACEHOLDER"); // sets the title of degree requirement
   const [semesterPlanOptions, setSemesterPlanOptions] = useState([]); // sets the array of options for semester plans
-  const [semesterPlanTitle, setSemesterPlanTitle] = useState(
-    "4 Year Plan Placeholder"
-  ); // sets the title of the degree plan
+  
   const [courseSearchValue, setCourseSearchValue] = useState("");
 
   /*  Stores the card options. Should be updated by API in UseEffect  */
@@ -430,6 +428,11 @@ function DegreePlan2(props) {
       fetchSaveTerm(card);
     }
   }, [cardOptions]);
+
+  useEffect(() => {
+    setCardOptions(semesterPlanOptions.map((plan) => (plan.plan_name === selectedPlanName && plan.term)));
+
+  }, [selectedPlanName])
 
   return (
     <div style={{ marginTop: "80px" }}>
