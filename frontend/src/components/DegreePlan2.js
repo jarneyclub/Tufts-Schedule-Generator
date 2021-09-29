@@ -283,6 +283,7 @@ function DegreePlan2(props) {
           : card
       )
     );
+    
     return true;
   };
 
@@ -315,11 +316,7 @@ function DegreePlan2(props) {
     );
   };
 
-  const semesterNameToID = (semesterName) => {
-    return semesterPlanOptions.map((plan) => {
-      if (plan.plan_name === semesterName) return plan.plan_id;
-    });
-  };
+
 
   /*
    *  createnNewPlan()
@@ -401,6 +398,27 @@ function DegreePlan2(props) {
       });
   };
 
+  const fetchSaveTerm = async (planTermDetails) => {
+    const requestOption = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(planTermDetails),
+    };
+
+    await fetch("https://jarney.club/api/degreeplan/term", requestOption)
+      .then((response) => {
+        console.log("response:", response);
+        return response.json();
+      })
+      .then((result) => {
+        console.log("result of save term: ", result);
+        /*  Creates a new plan for new users */
+        
+      })
+      .catch((error) => {
+        console.log("error from Degreeplan saveTerm ", error);
+      });
+  };
   /*  Initial fetching for plans when page first loads */
   useEffect(() => {
     fetchPlans();
@@ -408,6 +426,9 @@ function DegreePlan2(props) {
 
   useEffect(() => {
     console.log("cardOptions: ", cardOptions);
+    for (let card of cardOptions) {
+      fetchSaveTerm(card);
+    }
   }, [cardOptions]);
 
   return (

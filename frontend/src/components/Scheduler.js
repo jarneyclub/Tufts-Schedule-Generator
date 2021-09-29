@@ -261,10 +261,7 @@ function Scheduler(props) {
   const handleAddAllDayTimePref = (dayName) => {
     setTimePref((prev) => ({
       ...prev,
-      [dayName]: {
-        time_earliest: "00:00",
-        time_latest: "23:59"
-      }
+      [dayName]: timeDefault
     }))
   }
 

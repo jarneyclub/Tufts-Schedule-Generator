@@ -69,9 +69,6 @@ function CalendarDay(props) {
   console.log("TimePrefDay ", timePrefDay, " ", timePrefState);
   /*  To check if a time slot is highlighted during time pref selection  */
   const onHighlight = (e) => {
-    console.log("CalendaryD e: ", e);
-    console.log("CalendaryD e.target.style.backgroundColor: ", e.target);
-
     /*  Add highlight, add time pref to array  */
     if (e.target.style.backgroundColor.localeCompare("") === 0) {
       e.target.style.backgroundColor = "#A1C97D";
@@ -90,7 +87,7 @@ function CalendarDay(props) {
     // eslint-disable-next-line no-unused-expressions
     timePrefDay &&
       timePrefDay.forEach((element) => {
-        if ((element.time_earliest === "00:00" && element.time_latest === "23:59") || element.time_earliest === timeName) {
+        if (element.time_earliest === timeName) {
           res = { backgroundColor: "#A1C97D" };
         }
       });
