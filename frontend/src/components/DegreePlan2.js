@@ -179,7 +179,7 @@ function DegreePlan2(props) {
     console.log("check: ", semesterPlanOptions[1].plan_name === e.target.value)
     console.log("semesterPlanOptions ", semesterPlanOptions)
     console.log(semesterPlanOptions.findIndex(plan => plan.plan_name === e.target.value))
-    setCardOptions(semesterPlanOptions.find( ({ plan_name }) => plan_name === e.target.value ))
+    setCardOptions(semesterPlanOptions.find( ({ plan_name }) => plan_name === e.target.value.substr(3) ))
   };
 
   const handleRemoveCards = (cardsToRemove) => {
