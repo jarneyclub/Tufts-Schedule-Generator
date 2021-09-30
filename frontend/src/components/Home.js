@@ -53,7 +53,6 @@ function Home(props) {
             <Button
               type="submit"
               className={hStyle.button}
-              onClick={() => setLoginPopup(true)}
             >
               Start Your JARney 🏊
             </Button>
