@@ -173,8 +173,8 @@ function Scheduler(props) {
     "Schedule 1",
     "schedule 2",
   ]);
-  const [selectedSchedule, setSelectedSchedule] = useState(scheduleOptions[0]);
-
+  const [selectedSchedule, setSelectedSchedule] = useState("");
+  const [selectedScheduleID, setSelectedScheduleID] = useState("");
   /* filter Dropdown */
   const [attributes, setAttributes] = useState([]);
   const [selectedAttribute, setSelectedAttribute] = useState("");
@@ -204,6 +204,8 @@ function Scheduler(props) {
   /*  Control for schedule plan dropdown change  */
   const handleScheduleChange = (e) => {
     setSelectedSchedule(e.target.value);
+    const ind = scheduleOptions.findIndex(sched => sched.sched_name === e.target.value.substr(3));
+    setSelectedScheduleID(scheduleOptions[ind].sched_id)
   };
 
   /*  Control for search filter dropdown change  */
@@ -325,7 +327,13 @@ function Scheduler(props) {
   const fetchSavedSchedules = async () => {
     await fetch("https://jarney.club/api/schedules")
       .then((response) => response.json())
-      .then((result) => console.log("result from fetchSavedSchedule", result))
+      .then((result) => {
+        console.log("result from fetchSavedSchedule", result);
+        setScheduleOptions(result.schedules);
+        setSelectedSchedule(result.schedules[0].sched_name);
+        setSelectedScheduleID(result.schedules[0].sched_id);
+      
+      })
       .catch((error) => console.log("error from fetchSavedSchedules", error));
   };
 
@@ -344,10 +352,10 @@ function Scheduler(props) {
 
   const fetchGenerateSchedule = async () => {
     const requestOption = {
-      method: "POST",
+      method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        sched_name: selectedSchedule,
+        sched_id: selectedScheduleID,
         term_course_ids: selectedCourses.map((course) => course.term_course_id),
         filter: {
           misc: {
@@ -591,6 +599,8 @@ function Scheduler(props) {
               selectedOption={selectedSchedule}
               onOptionChange={handleScheduleChange}
               customStyle={{ fontSize: "20px" }}
+              isObject={true}
+              objectField={"sched_name"}
             />
             &nbsp;
               <IconButton
