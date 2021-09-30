@@ -36,7 +36,7 @@ import JarUserLogin from "../reusable/JarUserLogin";
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function AddSemester(props) {
-  const { onClose, planID, planName } = props;
+  const { onClose, planID, planName, refreshPlans } = props;
 
   /* Year Dropdown */
   const [yearOptions, setYearOptions] = useState([
@@ -69,7 +69,7 @@ function AddSemester(props) {
     /* do something API??  */
     fetchAdd();
     /* Then Close */
-    onClose();
+    
   };
 
   const fetchAdd = async () => {
@@ -86,7 +86,10 @@ function AddSemester(props) {
     await fetch("https://jarney.club/api/degreeplan/term", requestOption)
       .then((response) => response.json())
       .then((result) => {
-        console.log("result from fetchAdd", result);
+        refreshPlans();
+        console.log("result from fetchAdd", result);        
+        onClose();
+
       })
       .catch((error) => console.log("error from fetchAdd", error));
   };
