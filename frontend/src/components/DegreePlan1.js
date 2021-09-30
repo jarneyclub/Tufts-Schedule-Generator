@@ -133,6 +133,7 @@ function DegreePlan1(props) {
   const [degreeReqOptions, setDegreeReqOptions] = useState(
     []
   ); /*  ALL the private degree reqs to current user  */
+  const [publicReqOptions, setPublicReqOptions] = useState([]);
   const [selectedDegreeReq, setDegreeReq] =
     useState(
       "PLACEHOLDER"
@@ -153,6 +154,22 @@ function DegreePlan1(props) {
   const handleSearchChange = (e) => {
     setListSearchValue(e.target.value);
   };
+
+  const fetchPublicReqs = async() => {
+    await fetch("https://jarney.club/api/degreereqs/public")
+    .then((response) => {
+      console.log("get request response:", response);
+      return response.json();
+    })
+    .then((result) => {
+      console.log("get public req result: ", result);
+      setPublicReqOptions(result.reqs);
+
+    })
+    .catch((error) => {
+      console.log("error from Degreeplan fetchPublicReqs ", error);
+    });
+  }
 
   const fetchPrivateReqs = async () => {
     await fetch("https://jarney.club/api/degreereqs/private")
@@ -215,6 +232,7 @@ function DegreePlan1(props) {
 
   useEffect(() => {
     fetchPrivateReqs();
+    fetchPublicReqs();
   }, []);
 
   useEffect(() => {
@@ -271,7 +289,7 @@ function DegreePlan1(props) {
 
           <div className={dp1Style.searchListContainer}>
             {
-              []?.map((result) => <div/>)
+              publicReqOptions?.map((option) => <Button >{option.program_name}</Button>)
             }
           </div>
         </div>
