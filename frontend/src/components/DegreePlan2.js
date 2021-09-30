@@ -181,7 +181,7 @@ function DegreePlan2(props) {
     console.log("before substr", e.target.value)
     console.log("after substr", e.target.value.substr(3));
     const ind = semesterPlanOptions.findIndex(plan => plan.plan_name === e.target.value.substr(3));
-    setCardOptions(semesterPlanOptions[1].terms)
+    setCardOptions(semesterPlanOptions[ind].terms)
   };
 
   const handleRemoveCards = (cardsToRemove) => {

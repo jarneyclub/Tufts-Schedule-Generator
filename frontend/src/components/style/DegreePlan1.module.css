@@ -100,7 +100,7 @@ input {
   margin-top: 10px;
   margin-bottom: 10px;
 
-  border-top: 1px solid #5a32bf;
+  /* border-top: 1px solid #5a32bf; */
   width: 100%;
   max-height: 200px;
 
