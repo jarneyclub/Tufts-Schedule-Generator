@@ -20,7 +20,7 @@ import JarUserLogin from "./JarUserLogin";
 /* scripts */
 
 function HeaderUser(props) {
-  const { shrink, logged, switchLogged } = props;
+  const { shrink, logged, switchLogged, logRequired } = props;
 
   const [shrinkExpandable, setShrinkExpandable] = useState(false);
   const [barMenu, setBarMenu] = useState(false);
@@ -174,7 +174,7 @@ function HeaderUser(props) {
         </ClickAwayListener>
       )}
 
-      {(loginPopup || signupPopup) && (
+      {(!logRequired && loginPopup || signupPopup) && (
         <Popup onClose={handleLoginPopup}>
           <JarUserLogin
             loginState={loginPopup}

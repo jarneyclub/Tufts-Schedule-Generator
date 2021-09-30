@@ -128,6 +128,7 @@ function DegreePlan1(props) {
     signupPopup,
     handleLoginPopup,
     handleSignupPopup,
+    handleLogRequired
   } = props;
 
   const [degreeReqOptions, setDegreeReqOptions] = useState(
@@ -233,6 +234,7 @@ function DegreePlan1(props) {
   useEffect(() => {
     fetchPrivateReqs();
     fetchPublicReqs();
+    handleLogRequired(true);
   }, []);
 
   useEffect(() => {

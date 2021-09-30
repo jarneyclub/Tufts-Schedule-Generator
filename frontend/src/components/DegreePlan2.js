@@ -137,6 +137,7 @@ function DegreePlan2(props) {
     signupPopup,
     handleLoginPopup,
     handleSignupPopup,
+    handleLogRequired
   } = props;
   const [degreeReqTitle, setDegreeReqTitle] = useState("PLACEHOLDER"); // sets the title of degree requirement
   const [semesterPlanOptions, setSemesterPlanOptions] = useState([]); // sets the array of options for semester plans
@@ -423,6 +424,7 @@ function DegreePlan2(props) {
   /*  Initial fetching for plans when page first loads */
   useEffect(() => {
     fetchPlans();
+    handleLogRequired(true);
   }, []);
 
   useEffect(() => {

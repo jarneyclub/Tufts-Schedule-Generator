@@ -28,6 +28,7 @@ const THEME = createTheme({
 export default function App() {
   const [shrink, setShrink] = useState(window.innerWidth < 630);
   const [logged, setLogged] = useState(false);
+  const [logRequired, setLogRequired] = useState(false);
 
   const [loginPopup, setLoginPopup] = useState(false);
   const [signupPopup, setSignupPopup] = useState(false);
@@ -39,6 +40,10 @@ export default function App() {
       setLoginPopup(set);
     }
   };
+
+  const handleLogRequired = (bit) => {
+    setLogRequired(bit);
+  }
 
   const handleSignupPopup = (not: Boolean, set: Boolean) => {
     if (not) {
@@ -94,13 +99,7 @@ export default function App() {
 
   return (
     <MuiThemeProvider theme={THEME}>
-      <div
-        // style={{
-        //   background:
-        //     "linear-gradient(-45deg, #ccbeee, #d9cef2, #fed7d7, #fec2c2)",
-        //   minHeight: "100vh",
-        // }}
-      >
+      <div>
         {/* A <Switch> looks through its children <Route>s and
                     renders the first on that matches the current URL
                 */}
@@ -110,6 +109,9 @@ export default function App() {
             shrink={shrink}
             logged={logged}
             switchLogged={switchLogged}
+            loginPopup={loginPopup}
+            signupPopup={signupPopup}
+            logRequired={logRequired}
           />
 
           <Switch>
@@ -122,6 +124,7 @@ export default function App() {
                 signupPopup={signupPopup}
                 handleLoginPopup={handleLoginPopup}
                 handleSignupPopup={handleSignupPopup}
+                handleLogRequired={handleLogRequired}
               />
             </Route>
             <Route path="/DegreePlan2">
@@ -133,6 +136,8 @@ export default function App() {
                 signupPopup={signupPopup}
                 handleLoginPopup={handleLoginPopup}
                 handleSignupPopup={handleSignupPopup}
+                handleLogRequired={handleLogRequired}
+
               />
             </Route>
 
@@ -145,11 +150,16 @@ export default function App() {
                 signupPopup={signupPopup}
                 handleLoginPopup={handleLoginPopup}
                 handleSignupPopup={handleSignupPopup}
+                handleLogRequired={handleLogRequired}
+
               />
             </Route>
 
             <Route path="/">
-              <Home />
+              <Home 
+                handleLogRequired={handleLogRequired}
+
+              />
             </Route>
           </Switch>
         </BrowserRouter>

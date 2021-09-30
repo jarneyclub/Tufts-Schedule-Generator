@@ -166,6 +166,7 @@ function Scheduler(props) {
     signupPopup,
     handleLoginPopup,
     handleSignupPopup,
+    handleLogRequired
   } = props;
 
   /* schedule Dropdown */
@@ -377,6 +378,7 @@ function Scheduler(props) {
   useEffect(() => {
     fetchAttributes();
     fetchSavedSchedules();
+    handleLogRequired(true);
   }, []);
 
   useEffect(() => {

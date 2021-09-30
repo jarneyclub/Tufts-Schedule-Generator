@@ -7,7 +7,7 @@
  * existing account, create an account, or use the app as a guest user.
  */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@material-ui/core";
 import hStyle from "./style/Home.module.css";
 import LoginGraphic from "./res/homepage__.gif";
@@ -15,8 +15,10 @@ import DegreeGraphic from "./res/Icon_DegreePlanner.png";
 import SchedulerGraphic from "./res/Icon_Scheduler.png";
 import Popup from "./reusable/Popup";
 import JarUserLogin from "./reusable/JarUserLogin";
+import { Link } from "react-router-dom";
 
-function Home() {
+function Home(props) {
+  const {handleLogRequired} = props;
   const [loginPopup, setLoginPopup] = useState(false);
   const [signupPopup, setSignupPopup] = useState(false);
 
@@ -27,6 +29,10 @@ function Home() {
   const handleSignupPopup = () => {
     setSignupPopup((prev) => !prev);
   };
+
+  useEffect(() => {
+    handleLogRequired(false);
+  }, [])
 
   return (
     <div className={hStyle.homeContainer}>
@@ -43,6 +49,7 @@ function Home() {
           <br />
           Created by Tufts students, for Tufts students.
           <div className={hStyle.buttonContainer}>
+            <Link to="/DegreePlan1"> 
             <Button
               type="submit"
               className={hStyle.button}
@@ -50,6 +57,8 @@ function Home() {
             >
               Start Your JARney 🏊
             </Button>
+            </Link>
+            
             <br />
           </div>
         </div>
