@@ -270,7 +270,9 @@ function DegreePlan1(props) {
           </Button>
 
           <div className={dp1Style.searchListContainer}>
-            Course List placeholder1
+            {
+              []?.map((result) => <div/>)
+            }
           </div>
         </div>
 
