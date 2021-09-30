@@ -115,6 +115,9 @@ function CalendarDay(props) {
                 onMouseDown={() => setDragState((prev) => !prev)}
                 onMouseOver={(e) => dragState && onHighlight(e)}
                 onMouseUp={() => setDragState((prev) => !prev)}
+                onDragStart={() => setDragState((prev) => !prev)}
+                onDragEnter={(e) => dragState && onHighlight(e)}
+                onDragEnd={() => setDragState((prev) => !prev)}
                 onTouchStart={() => setDragState((prev) => !prev)}
                 onTouchMove={(e) => dragState && onHighlight(e)}
                 onTouchEnd={() => setDragState((prev) => !prev)}
