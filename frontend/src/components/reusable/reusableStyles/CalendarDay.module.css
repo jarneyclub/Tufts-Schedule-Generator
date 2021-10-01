@@ -25,5 +25,6 @@
 .eventsContainer {
   border: 1px solid #fc4e4e;
   position: absolute;
-  
+  transform: translateY(-1040px)
+
 }

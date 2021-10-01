@@ -57,6 +57,8 @@ function Calendar(props) {
     }
   };
 
+  console.log("classes: ", classes);
+
   return (
     <div className={cStyle.container}>
       {/*   This is the control of days for Single Day View  */}
