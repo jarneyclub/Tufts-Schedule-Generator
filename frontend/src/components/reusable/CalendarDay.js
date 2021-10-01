@@ -95,7 +95,7 @@ function CalendarDay(props) {
 
     return res;
   };
-
+  console.log("classes in ", dayName, classesDay);
   return (
     <div className={cStyle.dayContainer}>
       {/* {
