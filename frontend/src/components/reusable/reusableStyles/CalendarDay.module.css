@@ -9,8 +9,7 @@
   /* position: fixed; */
 }
 
-.timeContainer {
-}
+
 
 .timeSlot {
   height: 80px;
@@ -21,4 +20,10 @@
   border: 1px solid #c4c4c4;
 
   /* background-color: aqua; */
+}
+
+.eventsContainer {
+  border: 1px solid #fc4e4e;
+  position: absolute;
+  
 }

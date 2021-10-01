@@ -34,6 +34,7 @@ import TimePrefSelector from "./reusable/TimePrefSelector";
 import SnackBarAlert from "./reusable/SnackBarAlert";
 import JarUserLogin from "./reusable/JarUserLogin";
 import Popup from "./reusable/Popup";
+import { stepClasses } from "@mui/material";
 
 const timeDefault = [
 {
@@ -170,10 +171,7 @@ function Scheduler(props) {
   } = props;
 
   /* schedule Dropdown */
-  const [scheduleOptions, setScheduleOptions] = useState([
-    "Schedule 1",
-    "schedule 2",
-  ]);
+  const [scheduleOptions, setScheduleOptions] = useState([]);
   const [selectedSchedule, setSelectedSchedule] = useState("");
   const [selectedScheduleID, setSelectedScheduleID] = useState("");
   /* filter Dropdown */
@@ -185,6 +183,8 @@ function Scheduler(props) {
   const [selectedCourses, setSelectedCourses] = useState(
     []
   ); /*  The courses selected to generate schedule  */
+  
+  const [classes, setClasses] = useState({})
 
   const [degreeReqTab, setDegreeReqTab] = useState(1);
   const [searchCourseResult, setSearchCourseResult] = useState([]); // the list of courses returned by GET request
@@ -371,7 +371,11 @@ function Scheduler(props) {
     };
     await fetch("https://jarney.club/api/schedule", requestOption)
       .then((response) => response.json())
-      .then((result) => console.log("generate schedule result: ", result))
+      .then((result) => {
+        console.log("generate schedule result: ", result)
+        setClasses(result.data.classes);
+
+      })
       .catch((error) => console.log("generate schedule error: ", error));
   };
 
@@ -629,7 +633,7 @@ function Scheduler(props) {
           </div>
 
           <div className={sStyle.calendarContainer}>
-            <Calendar timePrefState={timePrefState} shrink={shrink} />
+            <Calendar timePrefState={timePrefState} shrink={shrink} classes={classes}/>
           </div>
         </div>
       </div>

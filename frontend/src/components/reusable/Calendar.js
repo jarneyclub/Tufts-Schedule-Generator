@@ -39,7 +39,7 @@ function Calendar(props) {
     handleAddEntireDay,
     handleRemoveEntireDay,
     shrink,
-
+    classes,
   } = props;
   const [daySelection, setDaySelection] = useState(0);
 
@@ -103,6 +103,7 @@ function Calendar(props) {
               addEntireDay={handleAddEntireDay}
               removeEntireDay={handleRemoveEntireDay}
               singleDay={false}
+              classesDay={classes?.dayName}
             />
           ))
         ) : (
@@ -116,6 +117,7 @@ function Calendar(props) {
             addEntireDay={handleAddEntireDay}
             removeEntireDay={handleRemoveEntireDay}
             singleDay={true}
+            classesDay={classes?.dayName}
           />
         )}
       </div>
