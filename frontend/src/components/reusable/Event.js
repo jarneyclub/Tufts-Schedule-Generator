@@ -36,7 +36,7 @@ function Event(props) {
 
   useEffect(() => {
     const transY = calculateTranslate();
-    const eventHeight = 1040;
+    const eventHeight = -1040;
     setCustomStyle({
       transform: ("translateY("+transY+"px)"),
       height: (""+eventHeight+"px"),
