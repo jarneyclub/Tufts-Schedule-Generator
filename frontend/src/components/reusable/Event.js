@@ -45,7 +45,7 @@ function Event(props) {
 
   return (
     <div className={eStyle.eventContainer}>
-     {details.details}
+     {details}
     </div>
   );
 }
