@@ -9,6 +9,7 @@
 
 import { useState } from "react";
 import cStyle from "./reusableStyles/CalendarDay.module.css";
+import Event from "./Event.js";
 /* scripts */
 const time = [
   "8",
@@ -132,9 +133,14 @@ function CalendarDay(props) {
             ))}
     
       </div>
-      <div className={cStyle.eventsContainer}>
+      {/* <div className={cStyle.eventsContainer}>
           {classesDay?.map((event) => <div>{event.details}</div>)}
-      </div>
+      </div> */}
+      {
+        classesDay?.map((event) => {
+          return <Event eventDetails={event.details}></Event>
+        })
+      }
 
     </div>
   );
