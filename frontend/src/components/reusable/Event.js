@@ -17,7 +17,7 @@ function Event(props) {
   const {details, name, location, time_start, time_end} = eventDetails;
   const [customStyle, setCustomStyle] = useState({});
 
-
+  console.log("eventDetails: ", eventDetails);
   const calculateHeight = () => {
     const start = time_start.split(":");
     const end = time_end.split(":");
@@ -42,12 +42,12 @@ function Event(props) {
 
 
   useEffect(() => {
-    const transY = calculateTranslate();
-    const eventHeight = calculateHeight;
-    setCustomStyle({
-      transform: ("translateY("+transY+"px)"),
-      height: (""+eventHeight+"px"),
-    });
+    // const transY = calculateTranslate();
+    // const eventHeight = calculateHeight;
+    // setCustomStyle({
+    //   transform: ("translateY("+transY+"px)"),
+    //   height: (""+eventHeight+"px"),
+    // });
   }, [])
 
   return (
