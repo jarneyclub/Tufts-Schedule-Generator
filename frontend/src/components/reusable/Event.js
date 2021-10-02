@@ -25,26 +25,33 @@ function Event(props) {
     const startMin = parseInt(start[0]) * 60 + parseInt(start[1]);
     const endMin = parseInt(end[0]) * 60 + parseInt(end[1]);
 
+    console.log("height: ", (endMin - startMin) / 60 * 80);
     return (endMin - startMin) / 60 * 80;
 
   }
 
   const calculateTranslate = () => {
+    let res = -1040;
+    const start = time_start.split(":");
+    res = res + (start[0] * 60 + start[1]) * 80 / 60; 
+    
+    console.log("translateY: ", res);
 
+    return res;
   }
 
 
   useEffect(() => {
     const transY = calculateTranslate();
-    const eventHeight = -1040;
+    const eventHeight = calculateHeight;
     setCustomStyle({
       transform: ("translateY("+transY+"px)"),
       height: (""+eventHeight+"px"),
-    })
+    });
   }, [])
 
   return (
-    <div className={eStyle.eventContainer}>
+    <div className={eStyle.eventContainer} style={customStyle}>
      {details}
     </div>
   );
