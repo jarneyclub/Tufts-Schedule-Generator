@@ -2,16 +2,11 @@
   white-space: normal;
   word-wrap: break-word;
 
-  color: #5a32bf;
-  background-color: #ffffff;
+  color: #ffffff;
+  background-color: #5a32bf;;
   position: absolute;
-  border: none;
-  border-left: 1px solid #5a32bf;
-  border-right: 10px solid #5a32bf;
-  border-top: 1px solid #5a32bf;
-  border-bottom: 1px solid #5a32bf;
+  border: 1px solid #5a32bf;
 
-  min-width: 80px;
   border-radius: 5px;
   
   z-index: 2;
@@ -48,16 +43,12 @@
       white-space: normal;
       word-wrap: break-word;
   
-      color: #5a32bf;
-      background-color: #ffffff;
+      color: #ffffff;
+      background-color: #5a32bf;;
       position: absolute;
-      border: none;
-      border-left: 1px solid #5a32bf;
-      border-right: 10px solid #5a32bf;
-      border-top: 1px solid #5a32bf;
-      border-bottom: 1px solid #5a32bf;
+      border: 1px solid #5a32bf;
   
-      min-width: 80px;
+  
       border-radius: 5px;
       
       z-index: 1;
