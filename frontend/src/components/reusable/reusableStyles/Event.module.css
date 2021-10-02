@@ -5,8 +5,8 @@
   color: #ffffff;
   background-color: #5a32bf;;
   position: absolute;
-  border: 1px solid #5a32bf;
-
+  border: 1px solid #ffffff;
+  width: 100%;
   border-radius: 5px;
   
   z-index: 2;
@@ -46,8 +46,8 @@
       color: #ffffff;
       background-color: #5a32bf;;
       position: absolute;
-      border: 1px solid #5a32bf;
-  
+      border: 1px solid #ffffff;
+      width: 100%;
   
       border-radius: 5px;
       
