@@ -138,7 +138,7 @@ function CalendarDay(props) {
       </div> */}
       {
         classesDay?.map((event) => {
-          return <Event eventDetails={event.details}></Event>
+          return <Event eventDetails={event}></Event>
         })
       }
 
