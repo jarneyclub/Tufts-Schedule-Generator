@@ -34,7 +34,8 @@ function Event(props) {
     let res = -1040;
     const start = time_start.split(":");
     res = res + (start[0] * 60 + start[1]) * 80 / 60; 
-    
+    console.log("start time: ", start);
+    console.log("Res: ", res);
     console.log("translateY: ", res);
 
     return res;
