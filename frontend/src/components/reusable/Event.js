@@ -33,7 +33,7 @@ function Event(props) {
   const calculateTranslate = () => {
     let res = -1040;
     const start = time_start.split(":");
-    res = res + (start[0] * 60 + start[1] - 480) * 80 / 60; 
+    res = res + (parseInt(start[0]) * 60 + parseInt(start[1]) - 480) * 80 / 60; 
     console.log("start time: ", start);
     console.log("Res: ", res);
     console.log("translateY: ", res);
