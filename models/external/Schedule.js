@@ -44,7 +44,7 @@ const schedule_Schema = new Schema({
         course_title: String,
         units_esti: Number
     }],
-    term: Number
+    term: String
 });
 
 schedule_Schema.plugin(mongodbErrorHandler);

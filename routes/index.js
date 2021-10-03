@@ -13,10 +13,6 @@ const scheduleController = require('../controllers/scheduleController.js')
 const userController = require('../controllers/auth/userController.js');
 const authController = require('../controllers/auth/authController.js');
 
-router.get('/', (req, res) => {
-    res.send("here")
-});
-
 ////////////////////////////////////////
 //                                    //
 //              Courses               //
@@ -26,6 +22,7 @@ router.get('/', (req, res) => {
 router.get('/courses/general', courseController.getGeneralCourses);
 router.get('/courses/term', courseController.getTermCourses);
 router.get('/courses/attributes', courseController.getAttributes);
+router.get('/courses/programs', courseController.getPrograms);
 ////////////////////////////////////////
 //                                    //
 //            Degree Plan             //
@@ -34,10 +31,12 @@ router.get('/courses/attributes', courseController.getAttributes);
 
 router.post('/degreeplan', authController.authenticateToken, degreePlanController.createDegreePlan);
 router.get('/degreeplan/:plan_id', authController.authenticateToken, degreePlanController.getDegreePlan);
+router.patch('/degreeplan/:plan_id/plan_name/:new_name', authController.authenticateToken, degreePlanController.updateDegreePlanName);
 router.delete('/degreeplan/:plan_id', authController.authenticateToken, degreePlanController.deleteDegreePlan);
+router.delete('/degreeplans', authController.authenticateToken, degreePlanController.deleteDegreePlanMultiple);
 router.get('/degreeplans', authController.authenticateToken, degreePlanController.getDegreePlans);
-router.post('/degreeplan/term/create', authController.authenticateToken, degreePlanController.createTerm);
-router.post('/degreeplan/term/save', authController.authenticateToken, degreePlanController.saveTerm);
+router.post('/degreeplan/term', authController.authenticateToken, degreePlanController.createTerm);
+router.put('/degreeplan/term', authController.authenticateToken, degreePlanController.saveTerm);
 router.post('/degreeplan/term/:plan_term_id', authController.authenticateToken, degreePlanController.deleteTerm);
 
 ////////////////////////////////////////
@@ -54,7 +53,8 @@ router.post('/degreereq/private', authController.authenticateToken, degreeReqCon
 router.get('/degreereqs/private', authController.authenticateToken, degreeReqController.getDegreeReqsPrivate);
 router.get('/degreereq/private/:priv_dr_id', authController.authenticateToken, degreeReqController.getDegreeReqPrivate);
 router.delete('/degreereq/private/:priv_dr_id', authController.authenticateToken, degreeReqController.deleteDegreeReqPrivate);
-router.post('/degreereq/private/save', authController.authenticateToken, degreeReqController.saveDegreeReqPrivate);
+router.put('/degreereq/private', authController.authenticateToken, degreeReqController.saveDegreeReqPrivate);
+router.post('/degreereq/private/copy/:priv_dr_id', authController.authenticateToken, degreeReqController.copyDegreeReqPrivateToPublic);
 
 /*
 * Handle GET requests by MONGODB object id
@@ -89,24 +89,30 @@ router.post('/degreereq/private/save', authController.authenticateToken, degreeR
 ////////////////////////////////////////
 
 router.post('/auth/register',
-    body('userid').isEmail().normalizeEmail(),
+    body('userid').isEmail(),
     body('password').not().isEmpty(),
     body('password_confirmation').not().isEmpty(),
     userController.validateRegisterLocal,
     userController.registerLocal,
-    authController.login);
+    userController.login);
 
-// router.post('/auth/register/guest', authController.checkGuestToken, userController.registerGuest, authController.loginGuest);
+// authenticate credentials with mongoose, sign access token, and send response with cookie
+// router.post('/auth/login', authController.authenticateCredentialsWithPassport, userController.login);
+router.post('/auth/login', 
+            authController.authenticateCredentialsWithPassport, 
+            authController.signAccessTokenAndAttachCookie, 
+            userController.sendLoginResponse);
 
-router.post('/auth/login', authController.authenticateLocal, authController.login);
-
-
+// authenticate token and extract credentials, sign access token, and send response with cookie
+router.post('/auth/login_cookie', authController.authenticateToken, userController.sendLoginResponse);
 ////////////////////////////////////////
 //                                    //
 //             Schedule               //
 //                                    //
 ////////////////////////////////////////
 
-router.post('/schedule/generate', scheduleController.generateSchedule);
+router.post('/schedule', scheduleController.makeEmptySchedule);
+router.patch('/schedule', scheduleController.updateSchedule);
+router.get('/schedules', scheduleController.getSchedules);
 
 module.exports = router;

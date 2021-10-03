@@ -29,9 +29,9 @@ const user_Schema = new Schema({
         type: String,
         trim: true
     },
-    guest: {
-        type: Boolean,
-        default: false
+    role: {
+        type: String,
+        default: "user"
     }
 });
 

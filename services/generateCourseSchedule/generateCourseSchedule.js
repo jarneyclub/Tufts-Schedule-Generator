@@ -41,27 +41,19 @@ const generateCourseSchedule = (arrayCourses, filter) => {
         // Uses filter
         preprocessFilter(global)
         .then(
-            (global) => applyFilter.createArrSectionTypes(global), 
-            (err) => {
-                console.log("(generateCourseSchedule) error detected: ", err);
-                reject(err);
-            }
-        )
+            (global) => applyFilter.createArrSectionTypes(global)
+        ).catch((err) => { throw err; })
         .then(
-            // Uses arrayCourses
-            (global) => getPossibleDigits(global),
-            (err) => {
-                console.log("(generateCourseSchedule) error detected: ", err);
-                reject(err);
-            }
-        )
+            // Uses arrSectionTypes
+            (global) => getPossibleDigits(global)
+        ).catch((err) => { throw err; })
         .then(
-            // Uses arrayCourses, possibleDigits
+            // Uses possibleDigits
             (global) => generatePermutations(global)
-        )
+        ).catch((err) => { throw err; })
         .then(
             (global) => getIdealSchedules(global)
-        )
+        ).catch((err) => { throw err; })
         .then(
             (global) => {
                 
@@ -78,6 +70,7 @@ const generateCourseSchedule = (arrayCourses, filter) => {
                 }
             }
         )
+        .catch((err) => { reject(err); })
     });
 }
 exports.generateCourseSchedule = generateCourseSchedule;

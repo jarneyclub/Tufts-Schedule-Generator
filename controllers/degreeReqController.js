@@ -85,7 +85,7 @@ exports.copyDegreeReqPublicToPrivate = async (req, res) => {
 
     // get user request information
     let pubDrId = req.params.pub_dr_id;
-    let userId  = req.user_id;
+    let userId  = req.userid;
     // insert to database
     degreeReqAPI.copyDegreeReqPublicToPrivate(pubDrId, userId)
     .then(result => {
@@ -114,7 +114,7 @@ exports.createDegreeReqPrivate = async (req, res) => {
         partIdTracker : req.body.part_id_tracker
     };
     // get from database
-    degreeReqAPI.createDegreeReqPrivate(req.user_id, schema)
+    degreeReqAPI.createDegreeReqPrivate(req.userid, schema)
     .then(result => {
         res.status(200);
         res.json({
@@ -137,7 +137,7 @@ exports.getDegreeReqsPrivate = async (req, res) => {
 
     // get user request information
     let query = {
-        userId: req.user_id
+        userId: req.userid
     }
     // get from database
     degreeReqAPI.getDegreeReqsPrivate(query)
@@ -163,7 +163,7 @@ exports.getDegreeReqPrivate = async (req, res) => {
 
     // get user request information
     let query = {
-        userId  : req.user_id,
+        userId  : req.userid,
         privDrId: req.params.priv_dr_id
     };
     // get from database
@@ -186,7 +186,6 @@ exports.getDegreeReqPrivate = async (req, res) => {
  * @param {any} res 
  */
 exports.saveDegreeReqPrivate = async (req, res) => {
-    // TODO: if from admin account, save the public degree requirement
     let start = Date.now(); // begin timing API endpoint
 
     // get user request information
@@ -222,7 +221,7 @@ exports.deleteDegreeReqPrivate = async (req, res) => {
     // get user request information
     let query = {
         privDrId : req.params.priv_dr_id,
-        userId   : req.user_id
+        userId   : req.userid
     };
     // delete from database
     degreeReqAPI.deleteDegreeReqPrivate(query)
@@ -235,5 +234,49 @@ exports.deleteDegreeReqPrivate = async (req, res) => {
     .catch(err => {
         errorHandler(err, "deleteDegreeReqPrivate", res);
     });
+}
+
+
+/** 
+ * Copy private degree requirement into public. Only available for developers.
+ * Preconditions:
+ * - req.role is set in previous middleware
+ * @param {any} req 
+ * @param {any} res 
+ */
+ exports.copyDegreeReqPrivateToPublic = async (req, res) => {
+    let start = Date.now(); // begin timing API endpoint
+    console.log("(drCnrtl/copyDegreeReqPrivateToPublic) req.role: ", req.role);
+    if (req.role !== "developer") {
+        throw {id: "601", status: "403", title: "Private Degree Requirement Error", detail : "User is not authorized to perform this action"};
+    }
+    else {
+        // get user request information
+        let privDrId = req.params.priv_dr_id;
+        // insert to database
+        degreeReqAPI.copyDegreeReqPrivateToPublic(privDrId)
+        .then(result => {
+            res.status(200);
+            res.json({
+                req: result,
+                time_taken: ((Date.now() - start).toString() + "ms")
+            });
+        })
+        .catch(err => {
+            errorHandler(err, "copyDegreeReqPrivateToPublic", res);
+        });
+    }
+}
+
+const errorHandler = (err, endpoint, res) => {
+    console.error("(degreeReqController/errorhandler) err: ", err);
+    if (err.detail !== undefined && err.title != undefined) {
+        /* this is internally formatted error */
+        resHandler.respondWithCustomError(err.id, err.status, err.title, err.detail, res);
+    }
+    else {
+        console.error("(degreeReqController/" + endpoint, err);
+        resHandler.respondWithCustomError("000", "500", "Internal Server Error", err, res);
+    }
 }
 

@@ -13,7 +13,7 @@ exports.createDegreePlan = async (req, res) => {
     // get user request information
     let query = {
         plan_name: req.body.plan_name,
-        user_id: req.user_id
+        user_id: req.userid
     }
     // insert to database
     degreePlanAPI.createNewDegreePlan(query)
@@ -39,7 +39,7 @@ exports.getDegreePlan = async (req, res) => {
     console.log("(controllers/getDegreePlan) ", "req.params: ", req.params);
     // get user request information
     let query = {
-        user_id: req.user_id,
+        user_id: req.userid,
         plan_id: req.params.plan_id
     }
     
@@ -57,12 +57,35 @@ exports.getDegreePlan = async (req, res) => {
     })
 }
 
+exports.updateDegreePlanName = async (req, res) => {
+    var start = Date.now(); // begin timing API endpoint
+    console.log("(degreePlanCntrl/updateDegreePlanName) ", "req.params: ", req.params);
+    // get user request information
+    let query = {
+        plan_id: req.params.plan_id,
+        new_plan_name: req.params.new_name
+    }
+    
+    // get from database
+    degreePlanAPI.updateDegreePlanName(query)
+    .then(result => {
+            res.status(200);
+            res.json({
+                plan_id: result,
+                time_taken: ((Date.now() - start).toString() + "ms")
+            });
+    })
+    .catch(err => {
+        errorHandler(err, "updateDegreePlanName", res);
+    })
+}
+
 /* delete a degree plan */
 exports.deleteDegreePlan = async (req, res) => {
     var start = Date.now(); // begin timing API endpoint
     // get user request information
     let query = {
-        user_id: req.user_id,
+        user_id: req.userid,
         plan_id: req.params.plan_id
     }
     // delete degree plan and referenced plan terms
@@ -79,6 +102,31 @@ exports.deleteDegreePlan = async (req, res) => {
 }
 
 /**
+ * DELETE api/degreeplans
+ * Delete multiple degree plans
+ * @param {any} req 
+ * @param {any} res 
+ */
+exports.deleteDegreePlanMultiple = async (req, res) => {
+    var start = Date.now(); // begin timing API endpoint
+    // delete multiple degree plans with userid and an array of plan ids
+    let query = {
+        user_id: req.userid,
+        plan_ids: req.body.plan_ids
+    }
+    degreePlanAPI.deleteDegreePlanMultiple(query)
+    .then(result => {
+        res.status(200);
+        res.json({
+            time_taken: ((Date.now() - start).toString() + "ms")
+        });
+    })
+    .catch(err => {
+        errorHandler(err, "deleteDegreePlan", res);
+    })
+}
+
+/**
  * Get degree plans
  * @param {any} req 
  * @param {any} res 
@@ -87,7 +135,7 @@ exports.getDegreePlans = async (req, res) => {
     var start = Date.now(); // begin timing API endpoint
     console.log("(dPController/getDP) here");
     let query = {
-        user_id: req.user_id
+        user_id: req.userid
     }
     let result = await degreePlanAPI.getDegreePlans(query)
     .then(result => {
@@ -157,7 +205,7 @@ exports.deleteTerm = async (req, res) => {
     var start = Date.now(); // begin timing API endpoint
 
     let query = {
-        userId : req.user_id,
+        userId : req.userid,
         planId : req.params.plan_term_id
     }
     degreePlanAPI.deleteTerm(query)

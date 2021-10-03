@@ -24,23 +24,7 @@ exports.createDegreeReqPublic = async (schema) => {
     }
     catch (e) {
         console.error("(degreeReq/createDegreeReqPublic) e: ", e);
-        if (e.message !== undefined) {
-            if (e.message.indexOf("validation failed") > -1) {
-                /* error is mongoose validation error */
-                // throw { code: 1, message: e.message };
-                throw { id: "201", status: "400", title: "Degree Requirement Error", detail: e.message };
-            }
-            else {
-                // console.error(e);
-                // throw { code: 4, message: e };
-                throw { id: "203", status: "400", title: "Degree Requirement Error", detail: e.message };
-            }
-        }
-        else {
-            // console.error(e);
-            // throw { code: 4, message: e };
-            throw { id: "", status: "500", title: "Degree Requirement Error", detail: e };
-        }
+        errorHandler(e);
     }
 }
 
@@ -72,9 +56,7 @@ exports.getDegreeReqsPublic = async () => {
     }
     catch (e) {
         console.error("(degreeReq/getDegreeReqsPrivate) e: ", e);
-        throw { id: "", status: "500", title: "Degree Requirement Error", detail: e };
-        // console.error(e);
-        // throw { code: 4, message: e };
+        errorHandler(e);
     }
 }
 
@@ -93,10 +75,7 @@ exports.deleteDegreeReqPublic = async (pubDrId) => {
         return true;
     }
     catch (e) {
-        console.error("(degreeReq/getDegreeReqsPrivate) e: ", e);
-        throw { id: "", status: "500", title: "Degree Requirement Error", detail: e };
-        // console.error(e);
-        // throw { code: 4, message: e };
+        errorHandler(e);
     }
 }
 
@@ -114,7 +93,8 @@ exports.copyDegreeReqPublicToPrivate = async (pub_dr_id, userId) => {
         });
 
         if (drPub === null)
-            throw "No public degree requirement was found with given identifier."
+            throw { id: "202", status: "400", title: "Degree Requirement Error", detail: "No public degree requirement was found with (pub_dr_id: " + pub_dr_id + ")" };
+            
 
         // copy and insert private degree requirement into database
         let drPriv = new DegreeReqPrivate({
@@ -138,29 +118,53 @@ exports.copyDegreeReqPublicToPrivate = async (pub_dr_id, userId) => {
         return insertedDrParsed;
     }
     catch (e) {
-        console.error("(degreeReq/getDegreeReqsPrivate) e: ", e);
-        if (e.message !== undefined) {
-            if (e.message.indexOf("validation failed") > -1) {
-                /* error is mongoose validation error */
-                throw { id: "201", status: "400", title: "Degree Requirement Error", detail: e.message };
-                // throw { code: 1, message: e.message };
-            }
-            else if (e.message.indexOf("No public") > -1) {
-                /* error is mongoose validation error */
-                throw { id: "202", status: "404", title: "Degree Requirement Error", detail: e.message };
-                // throw { code: 2, message: e.message };
-            }
-            else {
-                throw { id: "203", status: "400", title: "Degree Requirement Error", detail: e.message };
-                // console.error(e);
-                // throw { code: 4, message: e };
-            }
-        }
-        else {
-            throw { id: "", status: "500", title: "Degree Requirement Error", detail: e.message };
-            // console.error(e);
-            // throw { code: 4, message: e };
-        }
+        console.error("(degreeReq/copyDegreeReqPublicToPrivate) e: ", e);
+        errorHandler(e);
+    }
+}
+
+
+ /**
+  * Copy private degree requirement into public.
+  *
+  * @param {*} priv_dr_id
+  * @param {*} userId
+  * @return {*} 
+  */
+ exports.copyDegreeReqPrivateToPublic = async (priv_dr_id) => {
+    try {
+        let dbDRPriv = mongoose.connection.collection("degree_reqs_private"); // get MongoDB collection
+        // let dbDRPriv = mongoose.connection.collection("degree_reqs_private"); // get MongoDB collection
+        let drPriv = await dbDRPriv.findOne({
+            _id: mongoose.Types.ObjectId(priv_dr_id)
+        });
+
+        if (drPriv === null)
+            throw { id: "202", status: "400", title: "Degree Requirement Error", detail: "No private degree requirement was found with (priv_dr_id: " + priv_dr_id + ")" };
+
+        // copy and insert private degree requirement into database
+        let drPub = new DegreeReqPublic({
+            program_name: drPriv.program_name,
+            school: drPriv.school,
+            degree: drPriv.degree,
+            parts: drPriv.parts,
+            part_id_tracker: drPriv.part_id_tracker
+        });
+        let insertedDr = await drPub.save();
+        // parse inserted private degree requirement for api response
+        let insertedDrParsed = {
+            pub_dr_id      : insertedDr._id.valueOf(),
+            program_name    : insertedDr.program_name, 
+            school          : insertedDr.school,
+            degree          : insertedDr.degree,
+            parts           : insertedDr.parts,
+            part_id_tracker : insertedDr.part_id_tracker
+        };
+        return insertedDrParsed;
+    }
+    catch (e) {
+        console.error("(degreeReq/copyDegreeReqPrivateToPublic) e: ", e);
+        errorHandler(e);
     }
 }
 
@@ -195,22 +199,7 @@ exports.getDegreeReqsPrivate = async (query) => {
     }
     catch (e) {
         console.error("(degreeReq/getDegreeReqsPrivate) e: ", e);
-        if (e.message !== undefined) {
-            if (e.message.indexOf("No private") > -1) {
-                /* error is mongoose validation error */
-                throw { id: "202", status: "404", title: "Degree Requirement Error", detail: e.message };
-                // throw { code: 2, message: e.message };
-            }
-            else {
-                throw { id: "203", status: "400", title: "Degree Requirement Error", detail: e.message };
-                // throw { code: 4, message: e };
-            }
-        }
-        else {
-            console.error("(degreeReq) e:", e);
-            throw { id: "", status: "500", title: "Internal Server Error", detail: e };
-            // throw { code: 4, message: e };
-        }
+        errorHandler(e);
     }
 }
 
@@ -245,21 +234,7 @@ exports.createDegreeReqPrivate = async (userId, schema) => {
     }
     catch (e) {
         console.error("(degreeReq/createDegreeReqPrivate) e: ", e);
-        if (e.message !== undefined) {
-            if (e.message.indexOf("validation failed") > -1) {
-                /* error is mongoose validation error */
-                throw { id: "201", status: "400", title: "Degree Requirement Error", detail: e.message };
-                // throw { code: 1, message: e.message };
-            }
-            else {
-                throw { id: "203", status: "400", title: "Degree Requirement Error", detail: e.message };
-                // throw { code: 4, message: e };
-            }
-        }
-        else {
-            throw { id: "", status: "500", title: "Degree Requirement Error", detail: e.message };
-            // throw { code: 4, message: e };
-        }
+        errorHandler(e);
     }
 }
 
@@ -277,7 +252,7 @@ exports.getDegreeReqPrivate = async (query) => {
             _id     : mongoose.Types.ObjectId(query.privDrId)
         })
         if (doc === null)
-            throw "No private degree requirement with given fields was found."
+            throw { id: "202", status: "400", title: "Degree Requirement Error", detail: "No private degree requirement was found with (priv_dr_id: " + priv_dr_id + ")" };
         // parse document for api response
         let docParsed = {
             priv_dr_id      : doc._id.valueOf(),
@@ -290,18 +265,8 @@ exports.getDegreeReqPrivate = async (query) => {
         return docParsed;
     }
     catch (e) {
-        if (e.message !== undefined) {
-            if (e.message.indexOf("No private") > -1) {
-                /* error is resource not found */
-                throw { id: "202", status: "404", title: "Degree Requirement Error", detail: e.message };
-            }
-            else {
-                throw { id: "203", status: "400", title: "Degree Requirement Error", detail: e.message };
-            }
-        }
-        else {
-            throw { id: "", status: "500", title: "Degree Requirement Error", detail: e.message };
-        }
+        console.error("(getDegreeReqPrivate) e:", e);
+        errorHandler(e);
     }
 }
 
@@ -326,24 +291,21 @@ exports.saveDegreeReqPrivate = async (priv_dr_id, schema) => {
             new: true,
             upsert: false
         });
-        if (dr === null)
-            throw "Private degree requirement with given identifier was not found."
-        return dr._id.valueOf();
+        if (dr === null) {
+            throw { id: "202", status: "400", title: "Degree Requirement Error", detail: "No private degree requirement was found with (priv_dr_id: " + priv_dr_id + ")"};
+        }
+        return {
+            priv_dr_id      : priv_dr_id,
+            program_name    : schema.programName,
+            school          : schema.school,
+            degree          : schema.degree,
+            parts           : schema.parts,
+            part_id_tracker : schema.partIdTracker
+        }
     }
     catch (e) {
         console.error("(saveDegreeReqPrivate) e:", e);
-        if (e.message !== undefined) {
-            if (e.message.indexOf("was not found") > -1) {
-                /* error is mongoose validation error */
-                throw { id: "202", status: "404", title: "Degree Requirement Error", detail: e.message };
-            }
-            else {
-                throw { id: "203", status: "400", title: "Degree Requirement Error", detail: e.message };
-            }
-        }
-        else {
-            throw { id: "", status: "500", title: "Degree Requirement Error", detail: e.message };
-        }
+        errorHandler(e);
     }
 }
 
@@ -364,6 +326,41 @@ exports.deleteDegreeReqPrivate = async (query) => {
     }
     catch (e) {
         console.error("(deleteDegreeReqPrivate) e:", e);
-        throw { id: "", status: "500", title: "Internal Server Error", detail: e };
+        errorHandler(e);
+    }
+}
+
+
+const errorHandler = (e) => {
+    console.log("(degreeReq errorHandler)");
+    if (e.message !== undefined) {
+        if (e.message.indexOf("No private") > -1) {
+            /* error is mongoose validation error */
+            throw { id: "202", status: "404", title: "Degree Requirement Error", detail: e.message };
+            // throw { code: 2, message: e.message };
+        }
+        else if (e.message.indexOf("was not found") > -1) {
+            /* error is mongoose validation error */
+            throw { id: "202", status: "404", title: "Degree Requirement Error", detail: e.message };
+        }
+        else if (e.message.indexOf("validation failed") > -1) {
+            /* error is mongoose validation error */
+            // throw { code: 1, message: e.message };
+            throw { id: "201", status: "400", title: "Degree Requirement Error", detail: e.message };
+        }
+        else if (e.message.indexOf("No public") > -1) {
+            /* error is mongoose validation error */
+            throw { id: "202", status: "404", title: "Degree Requirement Error", detail: e.message };
+            // throw { code: 2, message: e.message };
+        }
+        else {
+            throw { id: "000", status: "500", title: "Degree Requirement Error", detail: e.message };
+        }
+    }
+    else {
+        if (e.detail !== undefined && e.title !== undefined) {
+            /* this is internally formatted error */
+            throw { id: e.id, status: e.status, title: e.title, detail: e.detail };
+        }
     }
 }

@@ -33,12 +33,12 @@ const createArrSectionTypes = (global) => {
         let ignoreM = false;
         let ignoreClosed = false;
         let ignoreWL = true;
-        // apply user filters if provided
+        // apply user filters if provided (reverse the booleans)
         if (filter.misc !== undefined) {
-            ignoreTU = filter.misc.ignoreTU;
-            ignoreM = filter.misc.ignoreM;
-            ignoreClosed = filter.misc.ignoreClosed;
-            ignoreWL = filter.misc.ignoreWL;
+            ignoreTU = !filter.misc.ignoreTU;
+            ignoreM = !filter.misc.ignoreM;
+            ignoreClosed = !filter.misc.ignoreClosed;
+            ignoreWL = !filter.misc.ignoreWL;
         }
 
         // record of filtered section information (for verbose error messages)

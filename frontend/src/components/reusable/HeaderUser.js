@@ -108,10 +108,14 @@ function HeaderUser(props) {
             <div>
               <IconButton
                 className={hStyle.button}
-                style={{ padding: "5px" }}
+                style={{ padding: "5px", color: "#5a32bf", textDecoration: "none" }}
                 aria-label="help"
               >
+                <Link
+                  to="/HelpPage"
+                  style={{textDecoration: "none"}}>
                 <HelpIcon />
+                </Link>
               </IconButton>
             </div>
           </div>

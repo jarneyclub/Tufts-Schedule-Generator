@@ -9,19 +9,19 @@ const degreeReqPublic_Schema = new Schema({
         type: String,
         unique: false,
         trim: true,
-        required: 'Please enter the program name!'
+        // required: 'Please enter the program name!'
     },
     school: {
         type: String,
         unique: false,
         trim: true,
-        required: 'Please enter the school name!'
+        // required: 'Please enter the school name!'
     },
     degree: {
         type: String,
         unique: false,
         trim: true,
-        required: 'Please enter the degree type!'
+        // required: 'Please enter the degree type!'
     },
     part_id_tracker: {
         type: Number,
@@ -36,7 +36,6 @@ const degreeReqPublic_Schema = new Schema({
         part_name: {
             type: String,
             trim: true,
-            required: 'Please enter the names of all parts of program requirement',
         },
         part_desc: String,
         part_req_id_tracker: {
