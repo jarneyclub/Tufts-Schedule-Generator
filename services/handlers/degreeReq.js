@@ -32,30 +32,35 @@ exports.createDegreeReqPublic = async (schema) => {
  * Get all public degree requirements
  * @returns 
  */
-exports.getDegreeReqsPublic = async () => {
+exports.getDegreeReqsPublic = async (programNameSubstring) => {
     try {
-        let dbDRPub = mongoose.connection.collection("degree_reqs_public"); // get MongoDB collection
-        let cursor = await dbDRPub.find();
-        // convert cursor into list
+        let dbDegreeReqPub = mongoose.connection.collection("degree_reqs_public"); // get MongoDB collection
+        let cursor;
+        if (programNameSubstring === "") {
+            cursor = dbDegreeReqPub.find().sort({"program_name": 1});
+        }
+        else {
+            cursor = dbDegreeReqPub.find({ "program_name": { "$regex": '^' + programNameSubstring } }).sort({"program_name": 1});
+        }
+
+        // convert cursor to list
         let documents = [];
         await cursor.forEach((doc) => {
-            // parse degree requirement
-            let docParsed = {
-                "pub_dr_id": doc._id.valueOf(),
-                "program_name": doc.program_name,
-                "school": doc.school,
-                "degree": doc.degree,
-                "parts": doc.parts,
-                "date_created": doc.date_created,
-                "part_id_tracker": doc.part_id_tracker
+            // parse database document
+            let docToInsert = {
+                "pub_dr_id": doc["_id"].valueOf(),
+                "program_name"    : doc["program_name"],
+                "school"  : doc["school"],
+                "degree"    : doc["degree"],
+                "part_id_tracker"    : doc["part_id_tracker"],
+                "parts"        : doc["parts"]
             };
-            documents.push(docParsed);
+            documents.push(docToInsert);
         });
-        // TODO: aggregate with renamed fields for more user friendly response (but need some documents in collection first)
         return documents;
     }
     catch (e) {
-        console.error("(degreeReq/getDegreeReqsPrivate) e: ", e);
+        console.error("(degreeReq/getDegreeReqsPublic) e: ", e);
         errorHandler(e);
     }
 }
