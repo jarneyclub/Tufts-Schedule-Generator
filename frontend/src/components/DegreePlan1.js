@@ -124,6 +124,24 @@ function DegreePlan1(props) {
     });
   }
 
+  const fetchPublicToPrivate = async() => {
+    const requestOption = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    };
+    
+    await fetch("https://jarney.club/api/degreereq/public/copy/".concat(publicDegreeReqDetail.pub_dr_id), requestOption)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log("result from fetchPublicToPrivate", result);
+       
+        fetchPrivateReqs();
+      })
+      .catch((error) =>
+        console.log("error from fetchPublicToPrivate", error)
+      ); 
+  }
+
   const fetchPrivateReqs = async () => {
     await fetch("https://jarney.club/api/degreereqs/private")
       .then((response) => {
@@ -291,12 +309,14 @@ function DegreePlan1(props) {
           <Button
             className={dp1Style.editButton}
             onClick={() => {
+              showPublicDegreeReq ? fetchPublicToPrivate() :
               setNewMMPopup(false);
               setEditDRPopup(true);
             }}
           >
-            edit
+            {showPublicDegreeReq? "Use List" :  "edit"}
           </Button>
+
           {editDRPopup && (
             <Popup onClose={() => setEditDRPopup(false)}>
               <DegreeReqEdit
