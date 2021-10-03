@@ -11,7 +11,7 @@
   flex-direction: row;
   justify-content: space-between;
   /* align-items: center; */
-  background-color: rgba(	252, 109, 109, 0.9);
+  background-color: rgba(	241, 237, 250	, 0.9);
   padding-left: 5vw;
   padding-right: 5vw;
 
@@ -72,46 +72,46 @@
   padding-left: 10px;
   padding-right: 10px;
   padding-top: 8px;
-  color: #efebf9;
+  color: #000000;
   font-weight: bold;
   line-height: 15px;
 }
 
 .navOption:hover {
-  color: #ffffff;
-  padding-bottom: 5.6%;
-  padding-top: 4.7%;
+  color: #5a32bf;
+  padding-bottom: 4.7%;
+  padding-top: 5.5%;
 
   height: 100%;
-  border-top: #ffffff 5px solid;
+  border-top: #5a32bf 5px solid;
 }
 
 .activeNavOption {
   padding-left: 10px;
   padding-right: 10px;
 
-  padding-bottom: 5.6%;
-  padding-top: 4.7%;
+  padding-bottom: 4.7%;
+  padding-top: 5.5%;
 
-  color: #ffffff;
+  color: #5a32bf;
   align-items: center;
 
   height: 100%;
-  border-top: #ffffff 5px solid;
+  border-top: #5a32bf 5px solid;
 
   white-space: nowrap;
 }
 
 .activeNavOption:hover {
-  color: #ffffff;
-  padding-bottom: 5.6%;
-  padding-top: 4.7%;
+  color: #5a32bf;
+  padding-bottom: 4.7%;
+  padding-top: 5.5%;
 
-  border-top: #ffffff 5px solid;
+  border-top: #5a32bf 5px solid;
 }
 
 .button {
-  color: #ffffff;
+  color: #000000;
 
   border: none;
 
@@ -153,7 +153,7 @@
 }
 
 .shrinkNavOption {
-  color: #808080;
+  color: #000000;
   font-size: 25px;
   font-weight: lighter;
 
