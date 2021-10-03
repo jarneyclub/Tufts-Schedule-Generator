@@ -203,7 +203,7 @@ function DegreePlan1(props) {
 
   useEffect(() => {
     fetchPrivateReqs();
-    fetchPublicReqs();
+ 
     handleLogRequired(true);
   }, []);
 
@@ -223,6 +223,10 @@ function DegreePlan1(props) {
     console.log("degreeReqOptions len: ", degreeReqOptions.length);
     setDegreeReq(degreeReqOptions[0]?.program_name);
   }, [degreeReqOptions]);
+
+  useEffect(() => {
+    fetchPublicReqs();
+  }, [listSearchValue])
 
   return (
     // {/* * * * * * * The Big Ass Horizontal Display * * * * * * * */}
