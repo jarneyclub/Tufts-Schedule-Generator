@@ -263,7 +263,7 @@ function DegreePlan1(props) {
 
           <div className={dp1Style.searchListContainer}>
             {
-              publicReqOptions?.map((option) => <Button onClick={() => handlePublicDegreeDisplay(option)}>{option.program_name}</Button>)
+              publicReqOptions?.map((option) => <Button className={dp1Style.publicReqButton} onClick={() => handlePublicDegreeDisplay(option)}>{option.program_name}</Button>)
             }
           </div>
         </div>

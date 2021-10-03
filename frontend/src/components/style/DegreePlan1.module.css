@@ -98,12 +98,18 @@ input {
   box-sizing: content-box;
   margin-top: 10px;
   margin-bottom: 10px;
-
+  /* background-color: rgba(239, 235, 249, 0.9);; */
   /* border-top: 1px solid #5a32bf; */
   width: 100%;
   max-height: 200px;
-
+  
   overflow-y: scroll;
+}
+
+.publicReqButton {
+  background-color: #7048d5;
+  color: #ffffff;
+  width: 80%;
 }
 
 .myListWrapper {
