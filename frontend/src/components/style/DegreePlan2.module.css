@@ -62,7 +62,7 @@
 .planSelectorContainer {
   display: flex;
   flex-direction: row;
-  align-items: stretch;
+  align-items: flex-end;
   justify-content: center;
   
 

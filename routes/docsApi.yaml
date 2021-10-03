@@ -538,9 +538,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  $ref: "#/components/schemas/DegreeReqPrivate"
+                $ref: "#/components/schemas/DegreeReqPrivate"
   /degreereq/private:
     post:
       tags:
@@ -563,9 +561,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  $ref: "#/components/schemas/DegreeReqPrivate"
+                $ref: "#/components/schemas/DegreeReqPrivate"
     get:
       tags:
         - Degree Requirements
@@ -602,8 +598,7 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                $ref: "#/components/schemas/DegreeReqPrivate"
+              $ref: "#/components/schemas/DegreeReqPrivate"
       responses:
         200:
           description: Update successful
@@ -612,7 +607,8 @@ paths:
               schema:
                 type: object
                 properties:
-                  $ref: "#/components/schemas/DegreeReqPrivate"
+                  priv_dr_id:
+                    type: string
   /degreereq/private/{priv_dr_id}:
     get: 
       tags:
@@ -635,7 +631,8 @@ paths:
               schema:
                 type: object
                 properties:
-                  $ref: "#/components/schemas/DegreeReqPrivate"
+                  req:
+                    $ref: "#/components/schemas/DegreeReqPrivate"
     delete:
       tags:
         - Degree Requirements
@@ -666,7 +663,8 @@ paths:
               schema:
                 type: object
                 properties:
-                  $ref: "#/components/schemas/DegreeReqPublic"
+                  req:
+                    $ref: "#/components/schemas/DegreeReqPublic"
 
   ####################
   #                  #
@@ -677,7 +675,7 @@ paths:
     post:
       tags:
         - Schedule
-      summary: Create a new semester schedule based on user preferences and save to database. If there is no time preference for a day, the API assumes the entire day is available for scheduling.
+      summary: Create an empty schedule on database and get back its empty contents with an ID.
       requestBody:
         required: true
         content:
@@ -686,6 +684,29 @@ paths:
               type: object
               properties:
                 sched_name:
+                  type: string
+      responses:
+        200:
+          description: An array of classes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Schedule"
+    patch:
+      tags:
+        - Schedule
+      summary: Generate and save to database a semester schedule based on user preferences. If there is no time preference for a day, the API assumes the entire day is available for scheduling.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sched_id:
                   type: string
                 term_course_ids:
                   type: array
@@ -700,7 +721,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Schedule"
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Schedule"
     delete:
       tags:
         - Schedule
@@ -732,135 +756,6 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/Schedule"
-  ####################
-  #                  #
-  #       OLD        #
-  #                  #
-  ####################
-  /courses/docs/db-id/:id:
-    get:
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-            minimum: 1
-            maximum: 1
-          description: The MongoDB object ID to query
-          example: "fe8fe71fbae1fdb75772bbe"
-      summary: a single course document matched with given ObjectId
-      responses:
-        200:
-          description: A single document.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    $ref: "#/components/schemas/CourseDocument"
-  /courses/docs/db-ids:
-    get:
-      parameters:
-        - in: query
-          name: id
-          required: true
-          schema:
-            type: string
-            minimum: 1
-            maximum: 7
-          description: The MongoDB object IDs to query
-      summary: a single course document matched with given ObjectId
-      responses:
-        200:
-          description: A single document.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      documents:
-                        type: array
-                        items:
-                          $ref: "#/components/schemas/CourseDocument"
-  /courses/docs/course-id/:id:
-    get:
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-            minimum: 1
-            maximum: 1
-          description: The course id to query
-          example: "COMP-0015"
-      summary: all course documents matched with given course id
-      responses:
-        200:
-          description: An array of course documents
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      documents:
-                        type: array
-                        items:
-                          $ref: "#/components/schemas/CourseDocument"
-  /courses/docs/course-name/:name:
-    get:
-      parameters:
-        - in: path
-          name: name
-          required: true
-          schema:
-            type: string
-            minimum: 1
-            maximum: 1
-          description: The course name to query
-          example: "Data Structures"
-      summary: all course documents matched with given course name
-      responses:
-        200:
-          description: An array of course documents
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      documents:
-                        type: array
-                        items:
-                          $ref: "#/components/schemas/CourseDocument"
-  /courses/alg/search-table:
-    get:
-      summary: all course documents with minimum details of which substring of its course id was matched with the key
-      responses:
-        200:
-          description: An array of course documents
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      key:
-                        type: array
-                        items:
-                          $ref: "#/components/schemas/CourseInfoMinimum"
 components:
   schemas:
 ####################
@@ -1161,7 +1056,6 @@ components:
       properties:
         sched_id:
           type: string
-          example: 1251iaawfuw11721
         sched_name:
           type: string
           example: My Schedule
@@ -1287,146 +1181,3 @@ components:
                   time_latest:
                     type: string
                     example: "23:59"
-####################
-#                  #
-#      OLD         #
-#                  #
-####################
-    CourseInfoMinimum: # Minimum details of a course (for search-table)
-      type: object
-      properties:
-        _id:
-          type: object
-          description: The MongoDB Object ID.
-          example: ObjectId('fe8fe71fbae1fdb75772bbe')
-        course_name:
-          type: string
-          description: The course's name.
-          example: Data Structures
-        course_id:
-          type: string
-          description: The course's id.
-          example: COMP-0015
-    CourseDocument: # Generic MongoDB course document
-      type: object
-      properties:
-        _id:
-          type: object
-          description: The MongoDB Object ID.
-          example: ObjectId('fe8fe71fbae1fdb75772bbe')
-        course_name:
-          type: string
-          description: The course's name.
-          example: Data Structures
-        course_id:
-          type: string
-          description: The course's id.
-          example: COMP-0015
-        available_section_types:
-          type: array
-          description: Array of all section types, "componenets", in the course.
-          example: ["Lecture", "Laboratory"]
-        sections:
-          type: object
-          description: Details of all sections in this course.
-          example: {
-              "Lecture": [
-                  {
-                      "section_id": "01-LEC",
-                      "classes": [
-                          {
-                              "time_start": 900,
-                              "time_end": 975,
-                              "day_of_week": 1,
-                              "faculties": [
-                                  "Mark A Sheldon"
-                              ],
-                              "room": "Virtual",
-                              "city": ""
-                          },
-                          {
-                              "time_start": 900,
-                              "time_end": 975,
-                              "day_of_week": 3,
-                              "faculties": [
-                                  "Mark A Sheldon"
-                              ],
-                              "room": "Virtual",
-                              "city": ""
-                          }
-                      ]
-                  }
-              ],
-              "Laboratory": [
-                {
-                    "section_id": "LA-LAB",
-                    "classes": [
-                        {
-                            "time_start": 540,
-                            "time_end": 615,
-                            "day_of_week": 2,
-                            "faculties": [
-                                "Mark A Sheldon"
-                            ],
-                            "room": "Virtual",
-                            "city": ""
-                        }
-                    ]
-                },
-                {
-                    "section_id": "LB-LAB",
-                    "classes": [
-                        {
-                            "time_start": 540,
-                            "time_end": 615,
-                            "days_of_ week": 2,
-                            "faculties": [
-                                "Mark A Sheldon"
-                            ],
-                            "room": "Virtual",
-                            "city": ""
-                        }
-                    ]
-                }
-
-              ]
-
-          }
-    classes:
-      type: array
-      items: 
-        $ref: "#/components/schemas/Class"
-      Section:
-        type: object
-        properties:
-          section_id:
-            type: string
-            example:
-              "01-LEC"
-          classes:
-            type: array
-            items: 
-              $ref: "#/components/schemas/Class"
-    Class:
-      type: object
-      properties:
-        time_start:
-          type: integer
-          example: 900
-        time_end:
-          type: integer
-          example: 975
-        day_of_week:
-          type: integer
-          example: 1
-        faculties:
-          type: array
-          description: array of the full names of instructors teaching this class
-          example:
-            ["Mark A Sheldon"]
-        room:
-          type: string
-          example: "Barnum Hall E204"
-        city:
-          type: string
-          example: "Medford"
