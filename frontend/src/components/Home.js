@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/self-closing-comp */
 /* * * *  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * LoginPage.js
+ * Home.js
  *
  * This is a page that prompts the user to choose between login into an
  * existing account, create an account, or use the app as a guest user.
@@ -37,22 +37,20 @@ function Home(props) {
   return (
     <div className={hStyle.homeContainer}>
       <div className={hStyle.horizontalContainer}>
-        <img
-          src={LoginGraphic}
-          alt="LoginGraphic"
-          className={hStyle.loginImage}
-        />
+        
         <div className={hStyle.content}>
           <h1 style={{ fontSize: "70px" }}>JARney.</h1>
           Plan out your Tufts experience, from four-year (or five-year!) plans
           to semesterly schedules.
           <br />
           Created by Tufts students, for Tufts students.
+          <br/><br/>
           <div className={hStyle.buttonContainer}>
             <Link to="/DegreePlan1"> 
             <Button
               type="submit"
               className={hStyle.button}
+              style={{textDecoration:"none"}}
             >
               Start Your JARney 🏊
             </Button>
@@ -61,6 +59,11 @@ function Home(props) {
             <br />
           </div>
         </div>
+        <img
+          src={LoginGraphic}
+          alt="LoginGraphic"
+          className={hStyle.loginImage}
+        />
       </div>
 
       <div className={hStyle.horizontalContainer}>
