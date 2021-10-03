@@ -34,7 +34,7 @@ import TimePrefSelector from "./reusable/TimePrefSelector";
 import SnackBarAlert from "./reusable/SnackBarAlert";
 import JarUserLogin from "./reusable/JarUserLogin";
 import Popup from "./reusable/Popup";
-import { stepClasses } from "@mui/material";
+import {AddSchedule, RemoveSchedule, EditScheduleName} from "./reusable/SchedulerPopup"
 
 const timeDefault = [
 {
@@ -194,7 +194,7 @@ function Scheduler(props) {
   const [timePref, setTimePref] = useState(timePrefDefault); // time pref json that will be passed into post req
 
   const [popup, setPopup] = useState({
-    editSchedule: false,
+    editScheduleName: false,
     removeSchedule: false,
     addSchedule: false,
   })
@@ -330,9 +330,14 @@ function Scheduler(props) {
       .then((response) => response.json())
       .then((result) => {
         console.log("result from fetchSavedSchedule", result);
-        setScheduleOptions(result.schedules);
-        setSelectedSchedule(result.schedules[0].sched_name);
-        setSelectedScheduleID(result.schedules[0].sched_id);
+        if (result.schedules.length === 0) {
+          fetchCreateSchedule("Schedule #1");
+        }
+        else {
+          setScheduleOptions(result.schedules);
+          setSelectedSchedule(result.schedules[0].sched_name);
+          setSelectedScheduleID(result.schedules[0].sched_id);
+        }
       
       })
       .catch((error) => console.log("error from fetchSavedSchedules", error));
@@ -378,6 +383,23 @@ function Scheduler(props) {
       })
       .catch((error) => console.log("generate schedule error: ", error));
   };
+
+  const fetchCreateSchedule = async(newName) => {
+    const requestOption = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({sched_name: newName})
+    };
+    await fetch("https://jarney.club/api/schedule", requestOption)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log("create schedule result: ", result)
+        // refresh
+        fetchSavedSchedules();
+      })
+      .catch((error) => console.log("generate schedule error: ", error)); 
+  }
+
 
   useEffect(() => {
     fetchAttributes();
@@ -637,7 +659,32 @@ function Scheduler(props) {
           </div>
         </div>
       </div>
-
+      {/* popups */}
+      {popup.addSchedule && (
+        <Popup onClose={() => handlePopup("addSchedule", false)}>
+          <AddSchedule
+            onClose={() => handlePopup("addSchedule", false)}
+            onCreateSchedule={fetchCreateSchedule}
+            scheduleOptions={scheduleOptions}
+          />
+        </Popup>
+      )}
+      {popup.removeSchedule && (
+        <Popup onClose={() => handlePopup("removeSchedule", false)}>
+          <RemoveSchedule
+            onClose={() => handlePopup("removeSchedule", false)}
+            scheduleID={selectedScheduleID}
+          />
+        </Popup>
+      )}
+      {popup.editScheduleName && (
+        <Popup onClose={() => handlePopup("editScheduleName", false)}>
+          <EditScheduleName
+            onClose={() => handlePopup("editScheduleName", false)}
+            
+          />
+        </Popup>
+      )}
       {timePrefState && (
         <TimePrefSelector
           onAddTimePref={handleAddTimePref}
