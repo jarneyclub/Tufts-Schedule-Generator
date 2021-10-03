@@ -540,7 +540,7 @@ function Scheduler(props) {
                 </FormGroup>
                 <Button
                   className={sStyle.timePrefButton}
-                  onClick={() => setTimePrefState((prev) => !prev)}
+                  onClick={() => setTimePrefState(true)}
                   startIcon={<QueryBuilderIcon />}
                 >
                   Edit Time Preference
@@ -693,7 +693,7 @@ function Scheduler(props) {
           onAddEntireDay = {handleAddAllDayTimePref}
           timePrefState={timePrefState}
           timePref={timePref}
-          onTimePrefStateChange={setTimePrefState}
+          onClose={()=> setTimePrefState(false)}
           shrink={shrink}
         />
       )}
