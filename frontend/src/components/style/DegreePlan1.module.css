@@ -38,7 +38,7 @@ input {
   /* flex: 1 0 0; */
   align-content: center;
   /* flex-grow: 1; */
-  width: 100vw;
+  width: 50vw;
   justify-content: flex-start;
   padding-left: 5vw;
   padding-right: 5vw;
@@ -149,7 +149,7 @@ input {
   display: flex;
   flex-direction: column;
   /* flex-grow: 2; */
-  width: 100vw;
+  width: 50vw;
 
   padding-left: 5vw;
   padding-right: 5vw;
@@ -222,6 +222,28 @@ input {
   border: #7048d5 solid 1px;
   color: #ffffff;
 }
+
+.saveButton {
+  border-radius: 12px;
+  border: #FC6D6D solid 1px;
+  box-sizing: border-box;
+
+  margin-top: 15px;
+  height: 35px;
+
+  padding-left: 1vw;
+  padding-right: 1vw;
+  text-align: center;
+  font-size: 13px;
+  color: #ffffff;
+
+  background-color: #FC6D6D;
+}
+.saveButton:hover {
+  background-color: #FC4E4E;
+  border: #FC4E4E solid 1px;
+  color: #ffffff;
+}
 .nextPageButton {
   text-align: right;
   font-size: 40px;
@@ -242,10 +264,10 @@ body {
 @media only screen and (min-width: 630) {
   .DegreeReqWrapper {
     flex-basis: 0;
-    width: 50vw;
+    width: 100vw;
   }
   .DegreeSearchWrapper {
     flex-basis: 0;
-    width: 50vw;
+    width: 100vw;
   }
 }
