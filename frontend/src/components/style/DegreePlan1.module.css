@@ -38,7 +38,7 @@ input {
   /* flex: 1 0 0; */
   align-content: center;
   /* flex-grow: 1; */
-  width: 100vw;
+  width: 50vw;
   justify-content: flex-start;
   padding-left: 5vw;
   padding-right: 5vw;
@@ -149,7 +149,7 @@ input {
   display: flex;
   flex-direction: column;
   /* flex-grow: 2; */
-  width: 100vw;
+  width: 50vw;
 
   padding-left: 5vw;
   padding-right: 5vw;
@@ -242,10 +242,10 @@ body {
 @media only screen and (min-width: 630) {
   .DegreeReqWrapper {
     flex-basis: 0;
-    width: 50vw;
+    width: 100vw;
   }
   .DegreeSearchWrapper {
     flex-basis: 0;
-    width: 50vw;
+    width: 100vw;
   }
 }
