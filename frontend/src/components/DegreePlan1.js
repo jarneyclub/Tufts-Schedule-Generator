@@ -311,7 +311,7 @@ function DegreePlan1(props) {
           {/* button that displays an overlay to edit current
                             displayed degree requirement */}
           <Button
-            className={dp1Style.editButton}
+            className={showPublicDegreeReq? dp1Style.saveButton : dp1Style.editButton}
             onClick={() => {
               if (showPublicDegreeReq) {
                 fetchPublicToPrivate() 

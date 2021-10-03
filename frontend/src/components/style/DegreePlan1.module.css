@@ -222,6 +222,28 @@ input {
   border: #7048d5 solid 1px;
   color: #ffffff;
 }
+
+.saveButton {
+  border-radius: 12px;
+  border: #FC6D6D solid 1px;
+  box-sizing: border-box;
+
+  margin-top: 15px;
+  height: 35px;
+
+  padding-left: 1vw;
+  padding-right: 1vw;
+  text-align: center;
+  font-size: 13px;
+  color: #ffffff;
+
+  background-color: #FC6D6D;
+}
+.saveButton:hover {
+  background-color: #FC4E4E;
+  border: #FC4E4E solid 1px;
+  color: #ffffff;
+}
 .nextPageButton {
   text-align: right;
   font-size: 40px;
