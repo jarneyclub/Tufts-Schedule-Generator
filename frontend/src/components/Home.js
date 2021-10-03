@@ -39,7 +39,7 @@ function Home(props) {
       <div className={hStyle.horizontalContainer}>
         
         <div className={hStyle.content}>
-          <h1 style={{ fontSize: "70px" }}>JARney.</h1>
+          <h1 style={{ fontSize: "70px" }}>Your JARney.</h1>
           Plan out your Tufts experience, from four-year (or five-year!) plans
           to semesterly schedules.
           <br />
@@ -51,7 +51,7 @@ function Home(props) {
               type="submit"
               className={hStyle.button}
             >
-              Start Your JARney 🏊
+              🏊 Quick Schedule 
             </Button>
             </Link>
             
