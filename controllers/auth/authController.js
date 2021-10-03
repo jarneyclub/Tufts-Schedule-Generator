@@ -55,7 +55,7 @@ exports.signAccessTokenAndSendAsCookie = async (res, userid, password) => {
     // res.json({"token": token});
     res.cookie("access_token", token, {
         httpOnly: true
-    }).status(200).json({"data": {"first_name": result.first_name, "last_name": result.last_name, "userid": result.userid}});
+    }).status(200).json({"data": {"first_name": result.first_name, "last_name": result.last_name, "userid": result.userid, "token": token}});
 }
 
 /**
@@ -74,6 +74,7 @@ exports.signAccessTokenAndAttachCookie = async (req, res, next) => {
     res.cookie("access_token", token, {
         httpOnly: true
     });
+    req.token = token;
     next();
 }
 

@@ -13,10 +13,6 @@ const scheduleController = require('../controllers/scheduleController.js')
 const userController = require('../controllers/auth/userController.js');
 const authController = require('../controllers/auth/authController.js');
 
-router.get('/', (req, res) => {
-    res.send("here")
-});
-
 ////////////////////////////////////////
 //                                    //
 //              Courses               //
