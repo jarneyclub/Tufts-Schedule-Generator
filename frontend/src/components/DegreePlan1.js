@@ -310,22 +310,12 @@ function DegreePlan1(props) {
 
           {/* button that displays an overlay to edit current
                             displayed degree requirement */}
-          <Button
+          {
+            <Button
             className={showPublicDegreeReq? dp1Style.saveButton : dp1Style.editButton}
-            onClick={() => {
-              if (showPublicDegreeReq) {
-                fetchPublicToPrivate() 
-              }
-              else {
-                setNewMMPopup(false);
-                setEditDRPopup(true);
-              }
-              
-            }}
-          >
-            {showPublicDegreeReq? "Use List" :  "edit"}
-          </Button>
-
+            onClick={() => {setNewMMPopup(false); setEditDRPopup(true);}}>Edit</Button>
+          
+          }
           {editDRPopup && (
             <Popup onClose={() => setEditDRPopup(false)}>
               <DegreeReqEdit
@@ -338,7 +328,12 @@ function DegreePlan1(props) {
             </Popup>
           )}
         </div>
-
+        
+        {showPublicDegreeReq && 
+          <Button
+          className={dp1Style.saveButton}
+          onClick={() => fetchPublicToPrivate()}>Use list</Button>
+        } 
         <div className={dp1Style.nextPageButton}>
           <Link to="/DegreePlan2">
             <IconButton className={dp1Style.nextPageButton}>
