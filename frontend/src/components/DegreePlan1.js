@@ -267,10 +267,10 @@ function DegreePlan1(props) {
       <div className={dp1Style.DegreeSearchWrapper}>
         {/* SEARCH CONTAINER for an Existing Degree Requirement */}
         <div className={dp1Style.existListWrapper}>
-          <h5>Public Degree Requirements</h5>
+          
           <TextField
             // label="Search Course"
-            placeholder="Search Degree"
+            placeholder="Look for your program..."
             onChange={handleSearchChange}
             value={listSearchValue}
             type="text"
