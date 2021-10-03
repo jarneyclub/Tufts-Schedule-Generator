@@ -67,7 +67,7 @@ const JarUserLogin = React.forwardRef((props, ref) => {
     console.log("requestOption clicked ", requestOption);
 
     if (loginState) {
-      await fetch("https://www.jarney.club/api/auth/login", requestOption)
+      await fetch("https://jarney.club/api/auth/login", requestOption)
         .then((response) => {
           if (response.ok) {
             return response.json();
