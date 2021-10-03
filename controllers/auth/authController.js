@@ -54,8 +54,9 @@ exports.signAccessTokenAndSendAsCookie = async (res, userid, password) => {
     let token = jwt.sign({ userid: userid, password: password, role: result.role}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
     // res.json({"token": token});
     res.cookie("access_token", token, {
-        maxAge: 24 * 60 * 60,
-        httpOnly: true
+        maxAge: 24 * 60 * 60 * 1000,
+        httpOnly: true,
+        secure: true
     }).status(200).json({"data": {"first_name": result.first_name, "last_name": result.last_name, "userid": result.userid, "token": token}});
 }
 
@@ -73,8 +74,9 @@ exports.signAccessTokenAndSendAsCookie = async (res, userid, password) => {
 exports.signAccessTokenAndAttachCookie = async (req, res, next) => {
     let token = jwt.sign({ userid: req.userid, password: req.password, role: req.role}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
     res.cookie("access_token", token, {
-        maxAge: 24 * 60 * 60,
-        httpOnly: true
+        maxAge: 24 * 60 * 60 * 1000,
+        httpOnly: true,
+        secure: true
     });
     req.token = token;
     next();
