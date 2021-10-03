@@ -1,5 +1,6 @@
 .dayContainer {
   flex-grow: 10;
+  position:relative
 }
 
 .timeSlotTitle {
@@ -9,12 +10,12 @@
   /* position: fixed; */
 }
 
-.timeContainer {
-}
+
 
 .timeSlot {
   height: 80px;
   border: 1px solid #c4c4c4;
+  position: relative;
 }
 .timeSlotOverlay {
   height: 40px;
@@ -22,3 +23,4 @@
 
   /* background-color: aqua; */
 }
+
