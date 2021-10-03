@@ -46,11 +46,10 @@ function Home(props) {
           Created by Tufts students, for Tufts students.
           <br/><br/>
           <div className={hStyle.buttonContainer}>
-            <Link to="/DegreePlan1"> 
+            <Link to="/DegreePlan1" style={{textDecoration:"none"}}> 
             <Button
               type="submit"
               className={hStyle.button}
-              style={{textDecoration:"none"}}
             >
               Start Your JARney 🏊
             </Button>
