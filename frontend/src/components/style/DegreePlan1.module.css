@@ -1,6 +1,4 @@
-.dp1Container {
-  /* background: linear-gradient(-45deg, #ccbeee, #d9cef2, #fed7d7, #fec2c2); */
-}
+
 
 /* * * * Note * * * * 
     that the h3 and h5 size affects the width of left and right col */
@@ -38,6 +36,7 @@ input {
   display: flex;
   flex-direction: column;
   /* flex: 1 0 0; */
+  align-items: flex-start;
   flex-grow: 1;
   justify-content: center;
   padding-left: 5vw;

@@ -309,9 +309,14 @@ function DegreePlan1(props) {
           <Button
             className={dp1Style.editButton}
             onClick={() => {
-              showPublicDegreeReq ? fetchPublicToPrivate() :
-              setNewMMPopup(false);
-              setEditDRPopup(true);
+              if (showPublicDegreeReq) {
+                fetchPublicToPrivate() 
+              }
+              else {
+                setNewMMPopup(false);
+                setEditDRPopup(true);
+              }
+              
             }}
           >
             {showPublicDegreeReq? "Use List" :  "edit"}
