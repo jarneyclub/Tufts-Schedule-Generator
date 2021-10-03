@@ -10,7 +10,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@material-ui/core";
 import hStyle from "./style/Home.module.css";
-import LoginGraphic from "./res/homepage__.gif";
+import LoginGraphic from "./res/homepage_final.gif";
 import DegreeGraphic from "./res/Icon_DegreePlanner.png";
 import SchedulerGraphic from "./res/Icon_Scheduler.png";
 import Popup from "./reusable/Popup";
@@ -39,7 +39,7 @@ function Home(props) {
       <div className={hStyle.horizontalContainer}>
         
         <div className={hStyle.content}>
-          <h1 style={{ fontSize: "70px" }}>JARney.</h1>
+          <h1 style={{ fontSize: "70px" }}>JARney<span style={{color: "#fc4e4e"}}>.</span></h1>
           Plan out your Tufts experience, from four-year (or five-year!) plans
           to semesterly schedules.
           <br />
