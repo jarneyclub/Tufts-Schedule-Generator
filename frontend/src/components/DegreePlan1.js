@@ -27,64 +27,6 @@ import DegreeReqDisplay from "./reusable/DegreeReqDisplay";
 import JarUserLogin from "./reusable/JarUserLogin";
 
 /* scripts */
-
-/*  =============== NON REUSABLE FUNCTIONAL COMPONENT =============== */
-function AddMajorMinor(props) {
-  const { onClose } = props;
-  const [name, setName] = useState("");
-  /*  If Major State === false, then Minor selected */
-  const [majorState, setMajorState] = useState(true);
-
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleClose = () => {
-    onClose();
-  };
-
-  const handleAdd = () => {
-    /* do something API??  */
-
-    /* Then Close */
-    onClose();
-  };
-
-  return (
-    <div className={pStyle.loginContainer}>
-      <div className={pStyle.headerContainer}>
-        <IconButton
-          type="button"
-          onClick={handleClose}
-          className={pStyle.closeButton}
-        >
-          <CancelIcon />
-        </IconButton>
-        <div className={pStyle.headerBody}>ADD NEW:</div>
-        <div />
-      </div>
-      <div className={pStyle.formContainer}>
-        <div className={pStyle.inputContainer}>
-          <TextField
-            // label="Search Course"
-            placeholder={majorState ? "Major Name" : "Minor Name"}
-            onChange={handleNameChange}
-            value={name}
-            type="text"
-            variant="outlined"
-            size="medium"
-            fullWidth
-            className={pStyle.inputAreaName}
-          />
-        </div>
-
-        <Button className={pStyle.submitButton} onClick={handleAdd}>
-          ADD
-        </Button>
-      </div>
-    </div>
-  );
-}
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
  *                                 CONSTANTS                                 *
@@ -141,6 +83,9 @@ function DegreePlan1(props) {
     ); /*  Holds the current private Degree Requirement Displayed */
   const [selectedDegreeReqDetail, setDegreeReqDetail] = useState();
 
+  const [publicDegreeReqDetail, setPublicDegreeReqDetail] = useState({});
+  const [showPublicDegreeReq, setShowPublicDegreeReq] = useState(false);
+
   const [editDRPopup, setEditDRPopup] =
     useState(false); /*  Degree Requirement Edit Popup */
 
@@ -150,11 +95,17 @@ function DegreePlan1(props) {
 
   const handleDegreeReqChange = (e) => {
     setDegreeReq(e.target.value);
+    setShowPublicDegreeReq(false);
   };
 
   const handleSearchChange = (e) => {
     setListSearchValue(e.target.value);
   };
+
+  const handlePublicDegreeDisplay = (detail) => {
+    setPublicDegreeReqDetail(detail);
+    setShowPublicDegreeReq(true);
+  }
 
   const fetchPublicReqs = async() => {
     await fetch("https://jarney.club/api/degreereqs/public?pname=".concat(listSearchValue))
@@ -290,7 +241,7 @@ function DegreePlan1(props) {
 
           <div className={dp1Style.searchListContainer}>
             {
-              publicReqOptions?.map((option) => <Button >{option.program_name}</Button>)
+              publicReqOptions?.map((option) => <Button onClick={() => handlePublicDegreeDisplay(option)}>{option.program_name}</Button>)
             }
           </div>
         </div>
@@ -327,12 +278,12 @@ function DegreePlan1(props) {
         <div className={dp1Style.DegreeReqListWrapper}>
           {/* displays the name of the current selected degree
                             requirement */}
-          <div className={dp1Style.DegreeReqListTitle}>{selectedDegreeReq}</div>
+          <div className={dp1Style.DegreeReqListTitle}>{!showPublicDegreeReq ? selectedDegreeReq : publicDegreeReqDetail.program_name}</div>
 
           {/* info returned from API call
                             display the info of the selected degree plan */}
           <div className={dp1Style.degreeReqListExpandable}>
-            <DegreeReqDisplay reqDetail={selectedDegreeReqDetail} />
+            <DegreeReqDisplay reqDetail={!showPublicDegreeReq ? selectedDegreeReqDetail : publicDegreeReqDetail} />
           </div>
 
           {/* button that displays an overlay to edit current
