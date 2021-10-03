@@ -94,7 +94,7 @@ h2 {
   background-color: #fc4e4e;
   color: #ffffff;
   text-transform: unset !important;
-  border: 1px #5a32bf;
+  /* border: 1px #5a32bf; */
   border-radius: 50px;
   box-shadow: 5px 5px #000000;
   min-height: 50px;
@@ -110,7 +110,7 @@ h2 {
   color: #ffffff;
   box-shadow: 5px 5px #5a32bf; 
   background-color: #fc4e4e;
-  border: #fc4e4e solid 1px;
+  /* border: #fc4e4e solid 1px; */
   text-decoration: none;
 }
 
