@@ -571,7 +571,7 @@ function DegreePlan2(props) {
                 <IconButton onClick={()=>handleSwitchReq(-1)}>
                   <ArrowLeftIcon fontSize="large" />
                 </IconButton>
-                <div>{degreeReqOptions[selectedDegreeReq]?.program_name}</div>
+                <div style={{color:"#ffffff"}}>{degreeReqOptions[selectedDegreeReq]?.program_name}</div>
                 <IconButton color="action" onClick={()=>handleSwitchReq(1)}>
                   <ArrowRightIcon fontSize="large" />
                 </IconButton>
