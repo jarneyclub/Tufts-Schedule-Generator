@@ -128,11 +128,13 @@ function DegreePlan1(props) {
     signupPopup,
     handleLoginPopup,
     handleSignupPopup,
+    handleLogRequired
   } = props;
 
   const [degreeReqOptions, setDegreeReqOptions] = useState(
     []
   ); /*  ALL the private degree reqs to current user  */
+  const [publicReqOptions, setPublicReqOptions] = useState([]);
   const [selectedDegreeReq, setDegreeReq] =
     useState(
       "PLACEHOLDER"
@@ -153,6 +155,22 @@ function DegreePlan1(props) {
   const handleSearchChange = (e) => {
     setListSearchValue(e.target.value);
   };
+
+  const fetchPublicReqs = async() => {
+    await fetch("https://jarney.club/api/degreereqs/public")
+    .then((response) => {
+      console.log("get request response:", response);
+      return response.json();
+    })
+    .then((result) => {
+      console.log("get public req result: ", result);
+      setPublicReqOptions(result.reqs);
+
+    })
+    .catch((error) => {
+      console.log("error from Degreeplan fetchPublicReqs ", error);
+    });
+  }
 
   const fetchPrivateReqs = async () => {
     await fetch("https://jarney.club/api/degreereqs/private")
@@ -215,23 +233,26 @@ function DegreePlan1(props) {
 
   useEffect(() => {
     fetchPrivateReqs();
+    fetchPublicReqs();
+    handleLogRequired(true);
   }, []);
 
-
   useEffect(() => {
-    setDegreeReqDetail(degreeReqOptions.filter(
-      (req) => req.program_name === selectedDegreeReq.substr(3)
-    )[0])
+    setDegreeReqDetail(
+      degreeReqOptions.filter(
+        (req) => req.program_name === selectedDegreeReq.substr(3)
+      )[0]
+    );
     console.log("degreeReqOptions: ", degreeReqOptions);
-    console.log("selected Degree Req: ", selectedDegreeReq)
-    console.log("selected Degree Req Detail: ", selectedDegreeReqDetail)
-  }, [selectedDegreeReq])
+    console.log("selected Degree Req: ", selectedDegreeReq);
+    console.log("selected Degree Req Detail: ", selectedDegreeReqDetail);
+  }, [selectedDegreeReq]);
 
   useEffect(() => {
     console.log("degreeReqOptions: ", degreeReqOptions);
     console.log("degreeReqOptions len: ", degreeReqOptions.length);
     setDegreeReq(degreeReqOptions[0]?.program_name);
-  }, [degreeReqOptions]); 
+  }, [degreeReqOptions]);
 
   return (
     // {/* * * * * * * The Big Ass Horizontal Display * * * * * * * */}
@@ -269,7 +290,9 @@ function DegreePlan1(props) {
           </Button>
 
           <div className={dp1Style.searchListContainer}>
-            Course List placeholder1
+            {
+              publicReqOptions?.map((option) => <Button >{option.program_name}</Button>)
+            }
           </div>
         </div>
 

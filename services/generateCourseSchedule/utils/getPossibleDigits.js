@@ -24,7 +24,7 @@ const getPossibleDigits = (global) => {
         
         /* add variables to global */
         global.possibleDigits = possibleDigits;
-        console.log("possibleDigits: ", possibleDigits);
+        console.log("(getPossibleDigits) possibleDigits: ", possibleDigits);
         resolve(global);
     });
     

@@ -121,7 +121,15 @@
   margin-bottom: 10px;
   height: 50px;
 }
+.cancelButton {
+  width: 80%;
+  background-color: #ffffff;
+  color: #fc4e4e;
+  height: 40px;
+  border: #fc4e4e 1px solid;
 
+  border-radius: 12px;
+}
 .submitButton {
   width: 80%;
   background-color: #fc4e4e;
@@ -133,6 +141,10 @@
 }
 .submitButton:hover {
   background-color: #fc6d6d;
+}
+.cancelButton:hover {
+  background-color: #fc6d6d;
+ 
 }
 @media only screen and (max-width: 744px) {
   .formContainer {

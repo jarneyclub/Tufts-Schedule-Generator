@@ -15,7 +15,7 @@ import {
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import AddBoxIcon from "@material-ui/icons/AddBox";
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
 import CancelIcon from "@material-ui/icons/Cancel";
 import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
@@ -36,7 +36,7 @@ import JarUserLogin from "../reusable/JarUserLogin";
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function AddSemester(props) {
-  const { onClose, getPlanID } = props;
+  const { onClose, planID, planName, refreshPlans } = props;
 
   /* Year Dropdown */
   const [yearOptions, setYearOptions] = useState([
@@ -46,10 +46,10 @@ function AddSemester(props) {
 
   /* Term Dropdown */
   const [termOptions, setTermOptions] = useState([
-    "FALL",
-    "SPRING",
-    "SUMMER",
-    "ANNUAL",
+    "Fall",
+    "Spring",
+    "Summer",
+    "Annual",
   ]); // possible semesters
   const [selectedTerm, setSelectedTerm] = useState(termOptions[0]);
 
@@ -69,18 +69,14 @@ function AddSemester(props) {
     /* do something API??  */
     fetchAdd();
     /* Then Close */
-    onClose();
+    
   };
 
-  
-
-  const fetchAdd = async() => {
+  const fetchAdd = async () => {
     const yearTerm = selectedYear + " " + selectedTerm;
-    console.log("yearTerm: ", yearTerm)
-    console.log("planID: ", getPlanID());
-    const planID = getPlanID();
-    console.log("planID:" , planID);
-    const value = {plan_id: planID, term: yearTerm};
+    console.log("yearTerm: ", yearTerm);
+    console.log("planID: ", planID);
+    const value = { plan_id: planID, term: yearTerm };
     const requestOption = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -90,13 +86,13 @@ function AddSemester(props) {
     await fetch("https://jarney.club/api/degreeplan/term", requestOption)
       .then((response) => response.json())
       .then((result) => {
-        console.log("result from fetchAdd", result);
-        
+        refreshPlans();
+        console.log("result from fetchAdd", result);        
+        onClose();
+
       })
-      .catch((error) =>
-        console.log("error from fetchAdd", error)
-      );
-  }
+      .catch((error) => console.log("error from fetchAdd", error));
+  };
   return (
     <div className={pStyle.loginContainer}>
       <div className={pStyle.headerContainer}>
@@ -107,7 +103,7 @@ function AddSemester(props) {
         >
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>ADD CARD</div>
+        <div className={pStyle.headerBody}>Add Card to {planName}</div>
         <div />
       </div>
       <div className={pStyle.formContainer}>
@@ -138,7 +134,7 @@ function AddSemester(props) {
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function RemoveSemester(props) {
-  const { onClose, cardOptions, handleRemoveCards } = props;
+  const { onClose, cardOptions, planName, planID, refreshPlans } = props;
   console.log("cardoptions from removeSemester: ", cardOptions);
   /*  Stores the cards to be deleted  */
   const [selectedCards, setSelectedCards] = useState([]);
@@ -159,14 +155,7 @@ function RemoveSemester(props) {
     }
   };
 
-  const handleTermToID = () => {
-    let res =[];
-    for (let i = 0; i < cardOptions.length; i++) {
-      if (selectedCards.includes(cardOptions[i].term))
-        res.concat(cardOptions[i].plan_term_id);
-    }
-    return res;
-  }
+
 
   const handleClose = () => {
     onClose();
@@ -174,16 +163,20 @@ function RemoveSemester(props) {
 
   const handleRemove = () => {
     /* do something API?? pass in the selectedCards arr */
-    handleRemoveCards(selectedCards);
-    console.log("selected Cards to remove: ", selectedCards);
-
-    /* Then Close */
-    onClose();
+   
+    fetchDeleteTerms();
+    
   };
 
-  const fetchDeleteTerms = async() => {
-    await fetch("https://jarney.club/api/degreeplan/term/");
-  }
+  const fetchDeleteTerms = async () => {
+    await fetch("https://jarney.club/api/degreeplan/term/")
+      .then((response) => response.json()) 
+      .then((result) => {
+        console.log("result from Degree Plan Term remove", result);
+        refreshPlans();
+        onClose();
+      })
+  };
 
   return (
     <div className={pStyle.loginContainer}>
@@ -191,7 +184,7 @@ function RemoveSemester(props) {
         <IconButton onClick={handleClose} className={pStyle.closeButton}>
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>REMOVE CARDS</div>
+        <div className={pStyle.headerBody}>Remove Cards from {planName}</div>
         <div />
       </div>
       <div className={pStyle.formContainer}>
@@ -221,26 +214,40 @@ function RemoveSemester(props) {
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function EditPlanName(props) {
-  const { onClose, cardOptions, handleRemoveCards } = props;
-  console.log("cardoptions from removeSemester: ", cardOptions);
-  /*  Stores the cards to be deleted  */
-  const [selectedCards, setSelectedCards] = useState([]);
+  const { onClose, refreshPlans, planName, planID } = props;
 
-
+  
+  const [editName, setEditName] = useState(planName);
 
   const handleClose = () => {
     onClose();
   };
-
-  const handleRemove = () => {
+  const handleEdit = (e) => {
+    setEditName(e.target.value);
+  };
+  const handleSaveEdit = () => {
     /* do something API?? pass in the selectedCards arr */
-    handleRemoveCards(selectedCards);
-
+    patchEditName();
+    refreshPlans();
     /* Then Close */
     onClose();
   };
 
-  
+  const patchEditName = async () => {
+    const requestOption = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+    };
+    const url = "https://jarney.club/api/degreereq/private/"
+      .concat(planID)
+      .concat("/plan_name/")
+      .concat(editName);
+    console.log("requestOption for fetchCreatePrivateReqs", requestOption);
+    await fetch(url, requestOption)
+      .then((response) => response.json())
+      .then((result) => console.log("result from editPlanName: ", result))
+      .catch((error) => console.log("error from editPlanName: ", error));
+  };
 
   return (
     <div className={pStyle.loginContainer}>
@@ -249,22 +256,15 @@ function EditPlanName(props) {
           <CancelIcon />
         </IconButton>
         <div className={pStyle.headerBody}>EDIT PLAN NAME</div>
+
         <div />
       </div>
       <div className={pStyle.formContainer}>
         <div className={pStyle.inputBarContainer}>
-          {/* {cardOptions.map((card) => (
-            <input
-              type="button"
-              value={card.term}
-              key={card}
-              className={pStyle.inputBar}
-              onClick={(e) => handleCardChange(e)}
-            />
-          ))} */}
+          <TextField value={editName} onChange={handleEdit} />
         </div>
 
-        <Button className={pStyle.submitButton} onClick={handleRemove}>
+        <Button className={pStyle.submitButton} onClick={handleSaveEdit}>
           SAVE CHANGE
         </Button>
       </div>
@@ -278,34 +278,24 @@ function EditPlanName(props) {
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function AddPlan(props) {
-  const { onClose, cardOptions, handleRemoveCards } = props;
-  console.log("cardoptions from removeSemester: ", cardOptions);
-  /*  Stores the cards to be deleted  */
-  const [selectedCards, setSelectedCards] = useState([]);
+  const { onClose, createNewPlan } = props;
 
-   const handleTermToID = () => {
-    let res =[];
-    for (let i = 0; i < cardOptions.length; i++) {
-      if (selectedCards.includes(cardOptions[i].term))
-        res.concat(cardOptions[i].plan_term_id);
-    }
-    return res;
-  }
+  const [planName, setPlanName] = useState("");
 
   const handleClose = () => {
     onClose();
   };
+  const handleNameChange = (e) => {
+    setPlanName(e.target.value);
+  };
 
-  const handleRemove = () => {
+  const handleAdd = () => {
     /* do something API?? pass in the selectedCards arr */
-    handleRemoveCards(selectedCards);
-    console.log("selected Cards to remove: ", selectedCards);
+    createNewPlan(planName);
 
     /* Then Close */
     onClose();
   };
-
-  
 
   return (
     <div className={pStyle.loginContainer}>
@@ -318,10 +308,10 @@ function AddPlan(props) {
       </div>
       <div className={pStyle.formContainer}>
         <div className={pStyle.inputBarContainer}>
-         
-        </div>
+          <TextField value={planName} onChange={handleNameChange} />
 
-        <Button className={pStyle.submitButton} onClick={handleRemove}>
+        </div>
+        <Button className={pStyle.submitButton} onClick={handleAdd}>
           ADD
         </Button>
       </div>
@@ -329,31 +319,13 @@ function AddPlan(props) {
   );
 }
 
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
  *                                Remove Plan Popup                          *
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function RemovePlan(props) {
-  const { onClose, cardOptions, handleRemoveCards } = props;
-  console.log("cardoptions from removeSemester: ", cardOptions);
-  /*  Stores the cards to be deleted  */
-  const [selectedCards, setSelectedCards] = useState([]);
-
-  const handleCardChange = (e) => {
-  
-    
-  };
-
-  const handleTermToID = () => {
-    let res =[];
-    for (let i = 0; i < cardOptions.length; i++) {
-      if (selectedCards.includes(cardOptions[i].term))
-        res.concat(cardOptions[i].plan_term_id);
-    }
-    return res;
-  }
+  const { onClose, planName, planID, refreshPlans } = props;
 
   const handleClose = () => {
     onClose();
@@ -361,14 +333,21 @@ function RemovePlan(props) {
 
   const handleRemove = () => {
     /* do something API?? pass in the selectedCards arr */
-    handleRemoveCards(selectedCards);
-    console.log("selected Cards to remove: ", selectedCards);
-
-    /* Then Close */
-    onClose();
+    fetchDelete();
   };
 
-  
+  const fetchDelete = async () => {
+    await fetch("https://jarney.club/api/degreeplan/".concat(planID), {
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        console.log("result from Degree plan Delete", result);
+        refreshPlans();
+        onClose();
+      })
+      .catch((error) => console.log("error from Degree Plan Delete", error));
+  };
 
   return (
     <div className={pStyle.loginContainer}>
@@ -376,15 +355,17 @@ function RemovePlan(props) {
         <IconButton onClick={handleClose} className={pStyle.closeButton}>
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>REMOVE PLAN</div>
+        <div className={pStyle.headerBody}>&nbsp;</div>
         <div />
       </div>
       <div className={pStyle.formContainer}>
         <div className={pStyle.inputBarContainer}>
-          
-          
+          Are you sure you want to remove {planName}?
         </div>
-
+        <Button className={pStyle.cancelButton} onClick={handleClose}>
+          CANCEL
+        </Button>
+        <br />
         <Button className={pStyle.submitButton} onClick={handleRemove}>
           REMOVE
         </Button>
@@ -393,10 +374,4 @@ function RemovePlan(props) {
   );
 }
 
-export {
-  AddSemester, 
-  RemoveSemester,
-  EditPlanName, 
-  AddPlan,
-  RemovePlan
-}
+export { AddSemester, RemoveSemester, EditPlanName, AddPlan, RemovePlan };

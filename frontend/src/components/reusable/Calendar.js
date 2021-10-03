@@ -36,7 +36,10 @@ function Calendar(props) {
     timePref,
     handleAddTimePref,
     handleRemoveTimePref,
+    handleAddEntireDay,
+    handleRemoveEntireDay,
     shrink,
+    classes,
   } = props;
   const [daySelection, setDaySelection] = useState(0);
 
@@ -53,6 +56,8 @@ function Calendar(props) {
       setDaySelection((prev) => prev + direction);
     }
   };
+
+  console.log("classes: ", classes);
 
   return (
     <div className={cStyle.container}>
@@ -97,7 +102,10 @@ function Calendar(props) {
               timePrefDay={timePref && timePref[dayName]}
               addTimePref={handleAddTimePref}
               removeTimePref={handleRemoveTimePref}
+              addEntireDay={handleAddEntireDay}
+              removeEntireDay={handleRemoveEntireDay}
               singleDay={false}
+              classesDay={classes[dayName]}
             />
           ))
         ) : (
@@ -108,7 +116,10 @@ function Calendar(props) {
             timePrefDay={timePref && timePref[weekdays[daySelection]]}
             addTimePref={handleAddTimePref}
             removeTimePref={handleRemoveTimePref}
+            addEntireDay={handleAddEntireDay}
+            removeEntireDay={handleRemoveEntireDay}
             singleDay={true}
+            classesDay={classes[weekdays[daySelection]]}
           />
         )}
       </div>

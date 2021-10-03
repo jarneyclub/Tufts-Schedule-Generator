@@ -9,6 +9,7 @@
 
 import { useState } from "react";
 import cStyle from "./reusableStyles/CalendarDay.module.css";
+import Event from "./Event.js";
 /* scripts */
 const time = [
   "8",
@@ -64,14 +65,12 @@ function CalendarDay(props) {
     addTimePref,
     removeTimePref,
     singleDay,
+    classesDay
   } = props;
 
   console.log("TimePrefDay ", timePrefDay, " ", timePrefState);
   /*  To check if a time slot is highlighted during time pref selection  */
   const onHighlight = (e) => {
-    console.log("CalendaryD e: ", e);
-    console.log("CalendaryD e.target.style.backgroundColor: ", e.target);
-
     /*  Add highlight, add time pref to array  */
     if (e.target.style.backgroundColor.localeCompare("") === 0) {
       e.target.style.backgroundColor = "#A1C97D";
@@ -97,7 +96,7 @@ function CalendarDay(props) {
 
     return res;
   };
-
+  console.log("classes in ", dayName, classesDay);
   return (
     <div className={cStyle.dayContainer}>
       {/* {
@@ -118,6 +117,9 @@ function CalendarDay(props) {
                 onMouseDown={() => setDragState((prev) => !prev)}
                 onMouseOver={(e) => dragState && onHighlight(e)}
                 onMouseUp={() => setDragState((prev) => !prev)}
+                onDragStart={() => setDragState((prev) => !prev)}
+                onDragEnter={(e) => dragState && onHighlight(e)}
+                onDragEnd={() => setDragState((prev) => !prev)}
                 onTouchStart={() => setDragState((prev) => !prev)}
                 onTouchMove={(e) => dragState && onHighlight(e)}
                 onTouchEnd={() => setDragState((prev) => !prev)}
@@ -125,10 +127,21 @@ function CalendarDay(props) {
               />
             ))
           : /* Normal Calendar View */
+          
             time.map((timeName) => (
               <div className={cStyle.timeSlot} key={timeName} />
             ))}
+    
       </div>
+      {/* <div className={cStyle.eventsContainer}>
+          {classesDay?.map((event) => <div>{event.details}</div>)}
+      </div> */}
+      {
+        classesDay?.map((event) => {
+          return <Event eventDetails={event}></Event>
+        })
+      }
+
     </div>
   );
 }

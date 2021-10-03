@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/self-closing-comp */
 /* * * *  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * LoginPage.js
+ * Home.js
  *
  * This is a page that prompts the user to choose between login into an
  * existing account, create an account, or use the app as a guest user.
  */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@material-ui/core";
 import hStyle from "./style/Home.module.css";
 import LoginGraphic from "./res/homepage__.gif";
@@ -15,8 +15,10 @@ import DegreeGraphic from "./res/Icon_DegreePlanner.png";
 import SchedulerGraphic from "./res/Icon_Scheduler.png";
 import Popup from "./reusable/Popup";
 import JarUserLogin from "./reusable/JarUserLogin";
+import { Link } from "react-router-dom";
 
-function Home() {
+function Home(props) {
+  const {handleLogRequired} = props;
   const [loginPopup, setLoginPopup] = useState(false);
   const [signupPopup, setSignupPopup] = useState(false);
 
@@ -28,31 +30,40 @@ function Home() {
     setSignupPopup((prev) => !prev);
   };
 
+  useEffect(() => {
+    handleLogRequired(false);
+  }, [])
+
   return (
     <div className={hStyle.homeContainer}>
       <div className={hStyle.horizontalContainer}>
-        <img
-          src={LoginGraphic}
-          alt="LoginGraphic"
-          className={hStyle.loginImage}
-        />
+        
         <div className={hStyle.content}>
           <h1 style={{ fontSize: "70px" }}>JARney.</h1>
           Plan out your Tufts experience, from four-year (or five-year!) plans
           to semesterly schedules.
           <br />
           Created by Tufts students, for Tufts students.
+          <br/><br/>
           <div className={hStyle.buttonContainer}>
+            <Link to="/DegreePlan1"> 
             <Button
               type="submit"
               className={hStyle.button}
-              onClick={() => setLoginPopup(true)}
+              style={{textDecoration:"none"}}
             >
               Start Your JARney 🏊
             </Button>
+            </Link>
+            
             <br />
           </div>
         </div>
+        <img
+          src={LoginGraphic}
+          alt="LoginGraphic"
+          className={hStyle.loginImage}
+        />
       </div>
 
       <div className={hStyle.horizontalContainer}>

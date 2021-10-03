@@ -54,7 +54,8 @@ input {
   border-radius: 12px;
   background-color: rgba(239, 235, 249, 0.9);
   /* background-color: #efebf9; */
-  box-shadow: 0 6px 20px 0 rgba(90, 50, 191, 0.19);
+  box-shadow: 0 4px 8px 0 rgba(90, 50, 191, 0.2),
+    0 6px 20px 0 rgba(90, 50, 191, 0.19);
 
   box-sizing: border-box;
   margin-top: 10px;
@@ -99,9 +100,9 @@ input {
   margin-top: 10px;
   margin-bottom: 10px;
 
-  border-top: 1px solid #5a32bf;
+  /* border-top: 1px solid #5a32bf; */
   width: 100%;
-  height: 200px;
+  max-height: 200px;
 
   overflow-y: scroll;
 }
