@@ -83,17 +83,20 @@ h2 {
   color: #000000;
   font-size: 18px;
   max-width: 50ch;
+  padding-left: 1vw;
+  /* padding-right: 1vw; */
   /* flex: 0 0 36.666667%;
     max-width: 36.666667% */
   /* text-align: center; */
 }
 
 .button {
-  background-color: #5a32bf;
+  background-color: #fc4e4e;
   color: #ffffff;
-
+  text-transform: unset !important;
+  /* border: 1px #5a32bf; */
   border-radius: 50px;
-
+  box-shadow: 5px 5px #000000;
   min-height: 50px;
 
   text-align: center;
@@ -104,8 +107,10 @@ h2 {
 }
 
 .button:hover {
+  color: #ffffff;
+  box-shadow: 5px 5px #5a32bf; 
   background-color: #fc4e4e;
-  border: #fc4e4e solid 1px;
+  /* border: #fc4e4e solid 1px; */
   text-decoration: none;
 }
 

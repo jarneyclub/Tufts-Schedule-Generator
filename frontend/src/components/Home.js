@@ -39,23 +39,22 @@ function Home(props) {
       <div className={hStyle.horizontalContainer}>
         
         <div className={hStyle.content}>
-          <h1 style={{ fontSize: "70px" }}>JARney<span style={{color: "#fc4e4e"}}>.</span></h1>
+          <h1 style={{ fontSize: "70px" }}>Your JARney<span style={{color: "#fc4e4e"}}>.</span></h1>
           Plan out your Tufts experience, from four-year (or five-year!) plans
           to semesterly schedules.
           <br />
           Created by Tufts students, for Tufts students.
           <br/><br/>
           <div className={hStyle.buttonContainer}>
-            <Link to="/DegreePlan1"> 
+            <Link to="/Scheduler" style={{textDecoration:"none"}}> 
             <Button
               type="submit"
               className={hStyle.button}
-              style={{textDecoration:"none"}}
             >
-              Start Your JARney 🏊
+              🏊 Quick Schedule 
             </Button>
             </Link>
-            
+            f
             <br />
           </div>
         </div>

@@ -479,7 +479,7 @@ paths:
                 properties:
                   pub_dr_id:
                     type: string
-  /degree/req/public/{pub_dr_id}:
+  /degreereq/public/{pub_dr_id}:
     delete:
       tags:
         - Degree Requirements
@@ -500,15 +500,16 @@ paths:
     get:
       tags:
         - Degree Requirements
-      summary: Get a list of public degree requirements
+      summary: Get a list of public degree requirements offered in this term of which program name matches given program name
+      description: example. _BASE_URL/degreereqs/public/?pname=Computer%20Science%20BS
       parameters:
-        - in: header
-          name: Authorization
+        - in: query
+          name: pname
           schema:
             type: string
       responses:
         200:
-          description: Degree requirements
+          description: An array of Term Course information
           content:
             application/json:
               schema:

@@ -1,6 +1,8 @@
 // load database api
 const degreeReqAPI = require('../services/handlers/degreeReq.js');
 const resHandler = require("./utils/resHandler.js");
+const mongoose = require('mongoose');
+
 /**
  * Create a public degree requirement
  * @param {any} req 
@@ -37,19 +39,20 @@ exports.createDegreeReqPublic = async (req, res) => {
  * @param {any} res 
  */
 exports.getDegreeReqsPublic = async (req, res) => {
-    let start = Date.now(); // begin timing API endpoint
-    
-    // get from database
-    degreeReqAPI.getDegreeReqsPublic()
-    .then(result => {
+    var start = Date.now(); // begin timing API endpoint
+    // get query strings
+    let programNameSubstring = req.query.pname;
+    // Get list of degree requirements from database
+    degreeReqAPI.getDegreeReqsPublic(programNameSubstring)
+    .then(documents => {
         res.status(200);
         res.json({
-            reqs: result,
+            reqs: documents,
             time_taken: ((Date.now() - start).toString() + "ms")
         });
     })
     .catch(err => {
-        errorHandler(err, "getDegreeReqsPublic", res);
+        errorHandler(err, "createDegreeReqPublic", res);
     });
 }
 
@@ -235,7 +238,6 @@ exports.deleteDegreeReqPrivate = async (req, res) => {
         errorHandler(err, "deleteDegreeReqPrivate", res);
     });
 }
-
 
 /** 
  * Copy private degree requirement into public. Only available for developers.

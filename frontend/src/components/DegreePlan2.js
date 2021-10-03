@@ -160,6 +160,9 @@ function DegreePlan2(props) {
   const [selectedPlanName, setSelectedPlanName] = useState("");
   const [selectedPlanID, setSelectedPlanID] = useState("");
 
+  const [degreeReqOptions, setDegreeReqOptions] = useState([]);
+  const [selectedDegreeReq, setSelectedDegreeReq] = useState(0);
+
   const [loadMessage, setLoadMessage] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState();
@@ -318,6 +321,16 @@ function DegreePlan2(props) {
     );
   };
 
+  const handleSwitchReq = (direction) => {
+    if (selectedDegreeReq === (degreeReqOptions.length - 1) && direction === 1) {
+      setSelectedDegreeReq(0);
+    } else if (selectedDegreeReq === 0 && direction === -1) {
+      setSelectedDegreeReq(4);
+    } else {
+      setSelectedDegreeReq((prev) => prev + direction);
+    }
+  }
+
 
 
   /*
@@ -421,10 +434,35 @@ function DegreePlan2(props) {
         console.log("error from Degreeplan saveTerm ", error);
       });
   };
+
+  const fetchPrivateReqs = async () => {
+    await fetch("https://jarney.club/api/degreereqs/private")
+      .then((response) => {
+        console.log("get request response:", response);
+        return response.json();
+      })
+      .then((result) => {
+        console.log("get request result of semester plan: ", result);
+
+        if (result.reqs.length === 0) {
+          console.log("no private reqs");
+          
+        } else {
+          setDegreeReqOptions(result.reqs);
+          
+        }
+      })
+      .catch((error) => {
+        console.log("error from Degreeplan fetchPrivateReqs ", error);
+      });
+  };
+  
   /*  Initial fetching for plans when page first loads */
   useEffect(() => {
     fetchPlans();
+    fetchPrivateReqs();
     handleLogRequired(true);
+
   }, []);
 
   useEffect(() => {
@@ -530,16 +568,16 @@ function DegreePlan2(props) {
             {/* Degree Requirment Container */}
             <div className={dp2Style.degreeReqContainer}>
               <div className={dp2Style.degreeReqTitleContainer}>
-                <IconButton>
+                <IconButton onClick={()=>handleSwitchReq(-1)}>
                   <ArrowLeftIcon fontSize="large" />
                 </IconButton>
-                <div>{degreeReqTitle}</div>
-                <IconButton color="action">
+                <div style={{color:"#ffffff"}}>{degreeReqOptions[selectedDegreeReq]?.program_name}</div>
+                <IconButton color="action" onClick={()=>handleSwitchReq(1)}>
                   <ArrowRightIcon fontSize="large" />
                 </IconButton>
               </div>
               <div className={dp2Style.degreeReqDetailContainer}>
-                <DegreeReqDisplay reqDetail={degreeReqDefault} />
+                <DegreeReqDisplay reqDetail={degreeReqOptions[selectedDegreeReq]} />
               </div>
             </div>
           </div>

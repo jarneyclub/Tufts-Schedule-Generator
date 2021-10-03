@@ -27,64 +27,6 @@ import DegreeReqDisplay from "./reusable/DegreeReqDisplay";
 import JarUserLogin from "./reusable/JarUserLogin";
 
 /* scripts */
-
-/*  =============== NON REUSABLE FUNCTIONAL COMPONENT =============== */
-function AddMajorMinor(props) {
-  const { onClose } = props;
-  const [name, setName] = useState("");
-  /*  If Major State === false, then Minor selected */
-  const [majorState, setMajorState] = useState(true);
-
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleClose = () => {
-    onClose();
-  };
-
-  const handleAdd = () => {
-    /* do something API??  */
-
-    /* Then Close */
-    onClose();
-  };
-
-  return (
-    <div className={pStyle.loginContainer}>
-      <div className={pStyle.headerContainer}>
-        <IconButton
-          type="button"
-          onClick={handleClose}
-          className={pStyle.closeButton}
-        >
-          <CancelIcon />
-        </IconButton>
-        <div className={pStyle.headerBody}>ADD NEW:</div>
-        <div />
-      </div>
-      <div className={pStyle.formContainer}>
-        <div className={pStyle.inputContainer}>
-          <TextField
-            // label="Search Course"
-            placeholder={majorState ? "Major Name" : "Minor Name"}
-            onChange={handleNameChange}
-            value={name}
-            type="text"
-            variant="outlined"
-            size="medium"
-            fullWidth
-            className={pStyle.inputAreaName}
-          />
-        </div>
-
-        <Button className={pStyle.submitButton} onClick={handleAdd}>
-          ADD
-        </Button>
-      </div>
-    </div>
-  );
-}
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
  *                                 CONSTANTS                                 *
@@ -141,6 +83,9 @@ function DegreePlan1(props) {
     ); /*  Holds the current private Degree Requirement Displayed */
   const [selectedDegreeReqDetail, setDegreeReqDetail] = useState();
 
+  const [publicDegreeReqDetail, setPublicDegreeReqDetail] = useState({});
+  const [showPublicDegreeReq, setShowPublicDegreeReq] = useState(false);
+
   const [editDRPopup, setEditDRPopup] =
     useState(false); /*  Degree Requirement Edit Popup */
 
@@ -150,19 +95,26 @@ function DegreePlan1(props) {
 
   const handleDegreeReqChange = (e) => {
     setDegreeReq(e.target.value);
+    setShowPublicDegreeReq(false);
   };
 
   const handleSearchChange = (e) => {
     setListSearchValue(e.target.value);
   };
 
+  const handlePublicDegreeDisplay = (detail) => {
+    setPublicDegreeReqDetail(detail);
+    setShowPublicDegreeReq(true);
+  }
+
   const fetchPublicReqs = async() => {
-    await fetch("https://jarney.club/api/degreereqs/public")
+    await fetch("https://jarney.club/api/degreereqs/public?pname=".concat(listSearchValue))
     .then((response) => {
       console.log("get request response:", response);
       return response.json();
     })
     .then((result) => {
+      setPublicReqOptions([]);
       console.log("get public req result: ", result);
       setPublicReqOptions(result.reqs);
 
@@ -170,6 +122,24 @@ function DegreePlan1(props) {
     .catch((error) => {
       console.log("error from Degreeplan fetchPublicReqs ", error);
     });
+  }
+
+  const fetchPublicToPrivate = async() => {
+    const requestOption = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    };
+    
+    await fetch("https://jarney.club/api/degreereq/public/copy/".concat(publicDegreeReqDetail.pub_dr_id), requestOption)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log("result from fetchPublicToPrivate", result);
+       
+        fetchPrivateReqs();
+      })
+      .catch((error) =>
+        console.log("error from fetchPublicToPrivate", error)
+      ); 
   }
 
   const fetchPrivateReqs = async () => {
@@ -233,7 +203,7 @@ function DegreePlan1(props) {
 
   useEffect(() => {
     fetchPrivateReqs();
-    fetchPublicReqs();
+ 
     handleLogRequired(true);
   }, []);
 
@@ -254,6 +224,10 @@ function DegreePlan1(props) {
     setDegreeReq(degreeReqOptions[0]?.program_name);
   }, [degreeReqOptions]);
 
+  useEffect(() => {
+    fetchPublicReqs();
+  }, [listSearchValue])
+
   return (
     // {/* * * * * * * The Big Ass Horizontal Display * * * * * * * */}
     // {/* Encapsulates both 1) the search side, and 2) the degree req
@@ -266,10 +240,10 @@ function DegreePlan1(props) {
       <div className={dp1Style.DegreeSearchWrapper}>
         {/* SEARCH CONTAINER for an Existing Degree Requirement */}
         <div className={dp1Style.existListWrapper}>
-          <h5>Public Degree Requirements</h5>
+          
           <TextField
             // label="Search Course"
-            placeholder="Search Degree"
+            placeholder="Look for your program..."
             onChange={handleSearchChange}
             value={listSearchValue}
             type="text"
@@ -285,13 +259,11 @@ function DegreePlan1(props) {
             }}
             className={dp1Style.inputSearch}
           />
-          <Button type="submit" className={dp1Style.searchButton}>
-            search
-          </Button>
+          
 
           <div className={dp1Style.searchListContainer}>
             {
-              publicReqOptions?.map((option) => <Button >{option.program_name}</Button>)
+              publicReqOptions?.map((option) => <Button className={dp1Style.publicReqButton} onClick={() => handlePublicDegreeDisplay(option)}>{option.program_name}</Button>)
             }
           </div>
         </div>
@@ -328,25 +300,22 @@ function DegreePlan1(props) {
         <div className={dp1Style.DegreeReqListWrapper}>
           {/* displays the name of the current selected degree
                             requirement */}
-          <div className={dp1Style.DegreeReqListTitle}>{selectedDegreeReq}</div>
+          <div className={dp1Style.DegreeReqListTitle}>{!showPublicDegreeReq ? selectedDegreeReq : publicDegreeReqDetail.program_name}</div>
 
           {/* info returned from API call
                             display the info of the selected degree plan */}
           <div className={dp1Style.degreeReqListExpandable}>
-            <DegreeReqDisplay reqDetail={selectedDegreeReqDetail} />
+            <DegreeReqDisplay reqDetail={!showPublicDegreeReq ? selectedDegreeReqDetail : publicDegreeReqDetail} />
           </div>
 
           {/* button that displays an overlay to edit current
                             displayed degree requirement */}
-          <Button
-            className={dp1Style.editButton}
-            onClick={() => {
-              setNewMMPopup(false);
-              setEditDRPopup(true);
-            }}
-          >
-            edit
-          </Button>
+          {
+            <Button
+            className={showPublicDegreeReq? dp1Style.saveButton : dp1Style.editButton}
+            onClick={() => {setNewMMPopup(false); setEditDRPopup(true);}}>Edit</Button>
+          
+          }
           {editDRPopup && (
             <Popup onClose={() => setEditDRPopup(false)}>
               <DegreeReqEdit
@@ -359,7 +328,12 @@ function DegreePlan1(props) {
             </Popup>
           )}
         </div>
-
+        
+        {showPublicDegreeReq && 
+          <Button
+          className={dp1Style.saveButton}
+          onClick={() => fetchPublicToPrivate()}>Use list</Button>
+        } 
         <div className={dp1Style.nextPageButton}>
           <Link to="/DegreePlan2">
             <IconButton className={dp1Style.nextPageButton}>

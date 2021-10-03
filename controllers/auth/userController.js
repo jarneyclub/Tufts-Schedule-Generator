@@ -31,7 +31,7 @@ exports.login = async (req, res) => {
 exports.sendLoginResponse = async (req, res) => {
     console.log("(usrCntrl/sendLoginResponse) req.userid: ", req.userid);
 
-    res.json({"data": {"first_name": req.firstname, "last_name": req.lastname, "userid": req.userid}});
+    res.json({"data": {"first_name": req.firstname, "last_name": req.lastname, "userid": req.userid, "token": req.token}});
 };
 
 /**
@@ -45,7 +45,6 @@ exports.sendLoginResponse = async (req, res) => {
  */
 exports.validateRegisterLocal = async (req, res, next) => {
     const {first_name, last_name, userid, password, password_confirmation} = req.body;
-
     // check if email addresses match
     let pwsMatch = (password === password_confirmation);
     if (!pwsMatch)
