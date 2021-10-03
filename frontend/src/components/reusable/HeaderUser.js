@@ -34,10 +34,12 @@ function HeaderUser(props) {
 
   const handleLoginPopup = () => {
     setLoginPopup((prev) => !prev);
+    switchLogged();
   };
 
   const handleSignupPopup = () => {
     setSignupPopup((prev) => !prev);
+    switchLogged();
   };
 
   const handleLoginSignupPopup = () => {
@@ -182,7 +184,7 @@ function HeaderUser(props) {
         <Popup onClose={handleLoginPopup}>
           <JarUserLogin
             loginState={loginPopup}
-            singupState={signupPopup}
+            signupState={signupPopup}
             onClose={() => {
               setLoginPopup(false);
               setSignupPopup(false);
