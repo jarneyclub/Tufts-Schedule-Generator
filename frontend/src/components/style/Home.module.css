@@ -83,6 +83,8 @@ h2 {
   color: #000000;
   font-size: 18px;
   max-width: 50ch;
+  padding-left: 1vw;
+  /* padding-right: 1vw; */
   /* flex: 0 0 36.666667%;
     max-width: 36.666667% */
   /* text-align: center; */
@@ -91,9 +93,10 @@ h2 {
 .button {
   background-color: #5a32bf;
   color: #ffffff;
+  text-transform: unset !important;
 
   border-radius: 50px;
-
+  box-shadow: 5px 5px #fc4e4e;
   min-height: 50px;
 
   text-align: center;
