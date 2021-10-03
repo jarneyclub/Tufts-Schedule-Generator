@@ -112,7 +112,7 @@
 
 .button {
   color: #000000;
-
+  text-transform: unset !important;
   border: none;
 
   box-sizing: border-box;
