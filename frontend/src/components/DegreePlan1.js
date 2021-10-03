@@ -157,12 +157,13 @@ function DegreePlan1(props) {
   };
 
   const fetchPublicReqs = async() => {
-    await fetch("https://jarney.club/api/degreereqs/public")
+    await fetch("https://jarney.club/api/degreereqs/public?pname=".concat(listSearchValue))
     .then((response) => {
       console.log("get request response:", response);
       return response.json();
     })
     .then((result) => {
+      setPublicReqOptions([]);
       console.log("get public req result: ", result);
       setPublicReqOptions(result.reqs);
 
@@ -285,9 +286,7 @@ function DegreePlan1(props) {
             }}
             className={dp1Style.inputSearch}
           />
-          <Button type="submit" className={dp1Style.searchButton}>
-            search
-          </Button>
+          
 
           <div className={dp1Style.searchListContainer}>
             {
