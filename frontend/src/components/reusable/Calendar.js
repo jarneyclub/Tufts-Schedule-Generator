@@ -105,7 +105,7 @@ function Calendar(props) {
               addEntireDay={handleAddEntireDay}
               removeEntireDay={handleRemoveEntireDay}
               singleDay={false}
-              classesDay={classes[dayName]&& classes[dayName]}
+              classesDay={classes && classes[dayName]}
             />
           ))
         ) : (
