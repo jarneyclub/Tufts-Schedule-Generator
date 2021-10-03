@@ -36,11 +36,13 @@ input {
   display: flex;
   flex-direction: column;
   /* flex: 1 0 0; */
-  align-content: flex-start;
-  flex-grow: 1;
-  justify-content: center;
+  align-content: center;
+  /* flex-grow: 1; */
+  width: 100vw;
+  justify-content: flex-start;
   padding-left: 5vw;
   padding-right: 5vw;
+  padding-top: 20px;
 }
 
 /* Includes the currently saved degree req drop down */
@@ -102,14 +104,19 @@ input {
   /* border-top: 1px solid #5a32bf; */
   width: 100%;
   max-height: 200px;
-  
+
   overflow-y: scroll;
 }
 
 .publicReqButton {
-  background-color: #7048d5;
-  color: #ffffff;
+  background-color: #efebf9;
+  color: #5a32bf;
   width: 80%;
+}
+
+.publicReqButton:hover {
+  background-color: #efebf9;
+  color: #fc4e4e; 
 }
 
 .myListWrapper {
@@ -141,7 +148,8 @@ input {
 .DegreeReqWrapper {
   display: flex;
   flex-direction: column;
-  flex-grow: 2;
+  /* flex-grow: 2; */
+  width: 100vw;
 
   padding-left: 5vw;
   padding-right: 5vw;
@@ -234,8 +242,10 @@ body {
 @media only screen and (min-width: 630) {
   .DegreeReqWrapper {
     flex-basis: 0;
+    width: 50vw;
   }
   .DegreeSearchWrapper {
     flex-basis: 0;
+    width: 50vw;
   }
 }
