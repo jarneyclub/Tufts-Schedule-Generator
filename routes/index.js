@@ -56,32 +56,6 @@ router.delete('/degreereq/private/:priv_dr_id', authController.authenticateToken
 router.put('/degreereq/private', authController.authenticateToken, degreeReqController.saveDegreeReqPrivate);
 router.post('/degreereq/private/copy/:priv_dr_id', authController.authenticateToken, degreeReqController.copyDegreeReqPrivateToPublic);
 
-/*
-* Handle GET requests by MONGODB object id
-* USAGE: BASEURL/api/courses/db-id/?id={MONGODB_ID}
-* */
-// router.get('/courses/docs/db-id/:id', docsController.sendSingleDocumentByOID);
-
-/*
-* Handle GET requests by MONGODB object id
-* USAGE: BASEURL/api/courses/db-ids/?id={MONGODB_ID}&?id={MONGODB_ID}
-*/
-// router.get('/courses/docs/db-ids', docsController.sendMultipleDocumentsByOIDs);
-
-// router.get('/courses/docs/course-id/:id', docsController.sendDocumentsByCourseID);
-
-// router.get('/courses/docs/course-name/:name', docsController.sendDocumentsByCourseName);
-
-// router.get('/courses/list/course-name', listController.sendListCourseNames);
-
-// router.get('/courses/list/course-id', listController.sendListCourseIDs);
-
-// router.get('/courses/alg/search-table', searchIndexController.sendSearchIndex);
-
-// router.get('/courses/db/search-table', searchIndexController.postSearchIndexToDB);
-
-// router.post('/courses/schedule', courseScheduleController.generateCourseSchedule);
-
 ////////////////////////////////////////
 //                                    //
 //              Auth                  //
@@ -97,7 +71,6 @@ router.post('/auth/register',
     userController.login);
 
 // authenticate credentials with mongoose, sign access token, and send response with cookie
-// router.post('/auth/login', authController.authenticateCredentialsWithPassport, userController.login);
 router.post('/auth/login', 
             authController.authenticateCredentialsWithPassport, 
             authController.signAccessTokenAndAttachCookie, 
@@ -111,8 +84,8 @@ router.post('/auth/login_cookie', authController.authenticateToken, userControll
 //                                    //
 ////////////////////////////////////////
 
-router.post('/schedule', scheduleController.makeEmptySchedule);
-router.patch('/schedule', scheduleController.updateSchedule);
-router.get('/schedules', scheduleController.getSchedules);
+router.post('/schedule', authController.authenticateToken, scheduleController.makeEmptySchedule);
+router.patch('/schedule', authController.authenticateToken, scheduleController.updateSchedule);
+router.get('/schedules', authController.authenticateToken, scheduleController.getSchedules);
 
 module.exports = router;
