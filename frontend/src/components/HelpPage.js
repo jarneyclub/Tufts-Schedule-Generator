@@ -5,6 +5,14 @@
  * has a feedback form.
  */
 
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
+} from "@material-ui/core";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+
 import MuiAccordion from '@material-ui/core/Accordion';
 import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
 import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
@@ -34,6 +42,7 @@ const AccordionDetails = withStyles({
     },
     expanded: {},
 })(MuiAccordionDetails);
+
 
 function HelpPage () {
     return (
@@ -87,7 +96,9 @@ function HelpPage () {
                 </div>
             </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
 
 export default HelpPage;

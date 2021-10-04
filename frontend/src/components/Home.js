@@ -16,9 +16,9 @@ import SchedulerGraphic from "./res/Icon_Scheduler.png";
 import Popup from "./reusable/Popup";
 import JarUserLogin from "./reusable/JarUserLogin";
 import { Link } from "react-router-dom";
-
+import EventIcon from "@mui/icons-material/Event";
 function Home(props) {
-  const {handleLogRequired} = props;
+  const { handleLogRequired } = props;
   const [loginPopup, setLoginPopup] = useState(false);
   const [signupPopup, setSignupPopup] = useState(false);
 
@@ -32,29 +32,32 @@ function Home(props) {
 
   useEffect(() => {
     handleLogRequired(false);
-  }, [])
+  }, []);
 
   return (
     <div className={hStyle.homeContainer}>
       <div className={hStyle.horizontalContainer}>
-        
         <div className={hStyle.content}>
+
           <h1 style={{ fontSize: "70px" }}>Your JARney<span style={{color: "#fc4e4e"}}>.</span></h1>
+
           Plan out your Tufts experience, from four-year (or five-year!) plans
           to semesterly schedules.
           <br />
           Created by Tufts students, for Tufts students.
-          <br/><br/>
+          <br />
+          <br />
           <div className={hStyle.buttonContainer}>
-            <Link to="/Scheduler" style={{textDecoration:"none"}}> 
-            <Button
-              type="submit"
-              className={hStyle.button}
-            >
-              🏊 Quick Schedule 
-            </Button>
+            <Link to="/Scheduler" style={{ textDecoration: "none" }}>
+              <Button
+                type="submit"
+                className={hStyle.button}
+                startIcon={<EventIcon />}
+              >
+                Quick Schedule
+              </Button>
             </Link>
-            f
+
             <br />
           </div>
         </div>

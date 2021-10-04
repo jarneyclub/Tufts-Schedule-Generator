@@ -5,13 +5,15 @@
 }
 
 .formContainer {
+
     display: flex;
+
 }
 
 .horizontalContainer {
-    padding-left: 2vw;
-    padding-right: 2vw;
-    padding-top: 20vh;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  padding-top: 20vh;
 }
 
 .image{
@@ -27,6 +29,7 @@ Accordion {
 }
 
 .contactForm {
+
     display: flex; 
     flex-direction: column;
     width: 60%;

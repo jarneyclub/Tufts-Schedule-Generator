@@ -45,7 +45,7 @@ export default function App() {
 
   const handleLogRequired = (bit) => {
     setLogRequired(bit);
-  }
+  };
 
   const handleSignupPopup = (not: Boolean, set: Boolean) => {
     if (not) {
@@ -139,7 +139,6 @@ export default function App() {
                 handleLoginPopup={handleLoginPopup}
                 handleSignupPopup={handleSignupPopup}
                 handleLogRequired={handleLogRequired}
-
               />
             </Route>
 
@@ -153,28 +152,23 @@ export default function App() {
                 handleLoginPopup={handleLoginPopup}
                 handleSignupPopup={handleSignupPopup}
                 handleLogRequired={handleLogRequired}
-
               />
             </Route>
 
             <Route path="/HelpPage">
-                <HelpPage
-                  shrink={shrink}
-                  logged={logged}
-                  switchLogged={switchLogged}
-                  loginPopup={loginPopup}
-                  signupPopup={signupPopup}
-                  handleLoginPopup={handleLoginPopup}
-                  handleSigninPopup={handleSignupPopup}
-                />
+              <HelpPage
+                shrink={shrink}
+                logged={logged}
+                switchLogged={switchLogged}
+                loginPopup={loginPopup}
+                signupPopup={signupPopup}
+                handleLoginPopup={handleLoginPopup}
+                handleSigninPopup={handleSignupPopup}
+              />
             </Route>
 
-
             <Route path="/">
-              <Home 
-                handleLogRequired={handleLogRequired}
-
-              />
+              <Home handleLogRequired={handleLogRequired} />
             </Route>
           </Switch>
         </BrowserRouter>

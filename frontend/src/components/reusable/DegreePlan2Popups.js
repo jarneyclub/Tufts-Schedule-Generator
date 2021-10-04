@@ -69,7 +69,6 @@ function AddSemester(props) {
     /* do something API??  */
     fetchAdd();
     /* Then Close */
-    
   };
 
   const fetchAdd = async () => {
@@ -87,9 +86,8 @@ function AddSemester(props) {
       .then((response) => response.json())
       .then((result) => {
         refreshPlans();
-        console.log("result from fetchAdd", result);        
+        console.log("result from fetchAdd", result);
         onClose();
-
       })
       .catch((error) => console.log("error from fetchAdd", error));
   };
@@ -155,27 +153,24 @@ function RemoveSemester(props) {
     }
   };
 
-
-
   const handleClose = () => {
     onClose();
   };
 
   const handleRemove = () => {
     /* do something API?? pass in the selectedCards arr */
-   
+
     fetchDeleteTerms();
-    
   };
 
   const fetchDeleteTerms = async () => {
     await fetch("https://jarney.club/api/degreeplan/term/")
-      .then((response) => response.json()) 
+      .then((response) => response.json())
       .then((result) => {
         console.log("result from Degree Plan Term remove", result);
         refreshPlans();
         onClose();
-      })
+      });
   };
 
   return (
@@ -216,7 +211,6 @@ function RemoveSemester(props) {
 function EditPlanName(props) {
   const { onClose, refreshPlans, planName, planID } = props;
 
-  
   const [editName, setEditName] = useState(planName);
 
   const handleClose = () => {
@@ -309,7 +303,6 @@ function AddPlan(props) {
       <div className={pStyle.formContainer}>
         <div className={pStyle.inputBarContainer}>
           <TextField value={planName} onChange={handleNameChange} />
-
         </div>
         <Button className={pStyle.submitButton} onClick={handleAdd}>
           ADD
