@@ -16,6 +16,7 @@ import {
   InputAdornment,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
+import EditIcon from "@mui/icons-material/Edit";
 import CancelIcon from "@material-ui/icons/Cancel";
 import dp1Style from "./style/DegreePlan1.module.css";
 import pStyle from "./reusable/reusableStyles/Popup.module.css";
@@ -70,7 +71,7 @@ function DegreePlan1(props) {
     signupPopup,
     handleLoginPopup,
     handleSignupPopup,
-    handleLogRequired
+    handleLogRequired,
   } = props;
 
   const [degreeReqOptions, setDegreeReqOptions] = useState(
@@ -105,42 +106,46 @@ function DegreePlan1(props) {
   const handlePublicDegreeDisplay = (detail) => {
     setPublicDegreeReqDetail(detail);
     setShowPublicDegreeReq(true);
-  }
+  };
 
-  const fetchPublicReqs = async() => {
-    await fetch("https://jarney.club/api/degreereqs/public?pname=".concat(listSearchValue))
-    .then((response) => {
-      console.log("get request response:", response);
-      return response.json();
-    })
-    .then((result) => {
-      setPublicReqOptions([]);
-      console.log("get public req result: ", result);
-      setPublicReqOptions(result.reqs);
+  const fetchPublicReqs = async () => {
+    await fetch(
+      "https://jarney.club/api/degreereqs/public?pname=".concat(listSearchValue)
+    )
+      .then((response) => {
+        console.log("get request response:", response);
+        return response.json();
+      })
+      .then((result) => {
+        setPublicReqOptions([]);
+        console.log("get public req result: ", result);
+        setPublicReqOptions(result.reqs);
+      })
+      .catch((error) => {
+        console.log("error from Degreeplan fetchPublicReqs ", error);
+      });
+  };
 
-    })
-    .catch((error) => {
-      console.log("error from Degreeplan fetchPublicReqs ", error);
-    });
-  }
-
-  const fetchPublicToPrivate = async() => {
+  const fetchPublicToPrivate = async () => {
     const requestOption = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     };
-    
-    await fetch("https://jarney.club/api/degreereq/public/copy/".concat(publicDegreeReqDetail.pub_dr_id), requestOption)
+
+    await fetch(
+      "https://jarney.club/api/degreereq/public/copy/".concat(
+        publicDegreeReqDetail.pub_dr_id
+      ),
+      requestOption
+    )
       .then((response) => response.json())
       .then((result) => {
         console.log("result from fetchPublicToPrivate", result);
-       
+
         fetchPrivateReqs();
       })
-      .catch((error) =>
-        console.log("error from fetchPublicToPrivate", error)
-      ); 
-  }
+      .catch((error) => console.log("error from fetchPublicToPrivate", error));
+  };
 
   const fetchPrivateReqs = async () => {
     await fetch("https://jarney.club/api/degreereqs/private")
@@ -203,7 +208,7 @@ function DegreePlan1(props) {
 
   useEffect(() => {
     fetchPrivateReqs();
- 
+
     handleLogRequired(true);
   }, []);
 
@@ -226,7 +231,7 @@ function DegreePlan1(props) {
 
   useEffect(() => {
     fetchPublicReqs();
-  }, [listSearchValue])
+  }, [listSearchValue]);
 
   return (
     // {/* * * * * * * The Big Ass Horizontal Display * * * * * * * */}
@@ -240,7 +245,6 @@ function DegreePlan1(props) {
       <div className={dp1Style.DegreeSearchWrapper}>
         {/* SEARCH CONTAINER for an Existing Degree Requirement */}
         <div className={dp1Style.existListWrapper}>
-          
           <TextField
             // label="Search Course"
             placeholder="Look for your program..."
@@ -259,12 +263,16 @@ function DegreePlan1(props) {
             }}
             className={dp1Style.inputSearch}
           />
-          
 
           <div className={dp1Style.searchListContainer}>
-            {
-              publicReqOptions?.map((option) => <Button className={dp1Style.publicReqButton} onClick={() => handlePublicDegreeDisplay(option)}>{option.program_name}</Button>)
-            }
+            {publicReqOptions?.map((option) => (
+              <Button
+                className={dp1Style.publicReqButton}
+                onClick={() => handlePublicDegreeDisplay(option)}
+              >
+                {option.program_name}
+              </Button>
+            ))}
           </div>
         </div>
 
@@ -300,22 +308,38 @@ function DegreePlan1(props) {
         <div className={dp1Style.DegreeReqListWrapper}>
           {/* displays the name of the current selected degree
                             requirement */}
-          <div className={dp1Style.DegreeReqListTitle}>{!showPublicDegreeReq ? selectedDegreeReq : publicDegreeReqDetail.program_name}</div>
+          <div className={dp1Style.DegreeReqListTitle}>
+            {!showPublicDegreeReq
+              ? selectedDegreeReq
+              : publicDegreeReqDetail.program_name}
+          </div>
 
           {/* info returned from API call
                             display the info of the selected degree plan */}
           <div className={dp1Style.degreeReqListExpandable}>
-            <DegreeReqDisplay reqDetail={!showPublicDegreeReq ? selectedDegreeReqDetail : publicDegreeReqDetail} />
+            <DegreeReqDisplay
+              reqDetail={
+                !showPublicDegreeReq
+                  ? selectedDegreeReqDetail
+                  : publicDegreeReqDetail
+              }
+            />
           </div>
 
           {/* button that displays an overlay to edit current
                             displayed degree requirement */}
-          { !showPublicDegreeReq && 
+          {!showPublicDegreeReq && (
             <Button
-            className={dp1Style.editButton}
-            onClick={() => {setNewMMPopup(false); setEditDRPopup(true);}}>Edit</Button>
-          
-          }
+              className={dp1Style.editButton}
+              onClick={() => {
+                setNewMMPopup(false);
+                setEditDRPopup(true);
+              }}
+              startIcon={<EditIcon />}
+            >
+              Edit
+            </Button>
+          )}
           {editDRPopup && (
             <Popup onClose={() => setEditDRPopup(false)}>
               <DegreeReqEdit
@@ -328,12 +352,15 @@ function DegreePlan1(props) {
             </Popup>
           )}
         </div>
-        
-        {showPublicDegreeReq && 
+
+        {showPublicDegreeReq && (
           <Button
-          className={dp1Style.saveButton}
-          onClick={() => fetchPublicToPrivate()}>Use list</Button>
-        } 
+            className={dp1Style.saveButton}
+            onClick={() => fetchPublicToPrivate()}
+          >
+            Add to my list
+          </Button>
+        )}
         <div className={dp1Style.nextPageButton}>
           <Link to="/DegreePlan2">
             <IconButton className={dp1Style.nextPageButton}>

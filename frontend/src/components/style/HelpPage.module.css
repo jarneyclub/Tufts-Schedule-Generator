@@ -1,28 +1,27 @@
 .formContainer {
-    display: flex;
-
+  display: flex;
 }
 
 .horizontalContainer {
-    padding-left: 2vw;
-    padding-right: 2vw;
-    padding-top: 20vh;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  padding-top: 20vh;
 }
 
 .contactForm {
-    display: flex; 
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .contactForm input {
-    margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 
 .contactForm textarea {
-    margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 
-.contactForm input.submit{
-    color:#ffffff;
-    background-color: #5a32bf;
+.contactForm input.submit {
+  color: #ffffff;
+  background-color: #5a32bf;
 }

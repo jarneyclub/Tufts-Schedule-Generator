@@ -110,13 +110,15 @@ function HeaderUser(props) {
             <div>
               <IconButton
                 className={hStyle.button}
-                style={{ padding: "5px", color: "#5a32bf", textDecoration: "none" }}
+                style={{
+                  padding: "5px",
+                  color: "#5a32bf",
+                  textDecoration: "none",
+                }}
                 aria-label="help"
               >
-                <Link
-                  to="/HelpPage"
-                  style={{textDecoration: "none"}}>
-                <HelpIcon />
+                <Link to="/HelpPage" style={{ textDecoration: "none" }}>
+                  <HelpIcon />
                 </Link>
               </IconButton>
             </div>
@@ -180,7 +182,7 @@ function HeaderUser(props) {
         </ClickAwayListener>
       )}
 
-      {(!logRequired && loginPopup || signupPopup) && (
+      {((!logRequired && loginPopup) || signupPopup) && (
         <Popup onClose={handleLoginPopup}>
           <JarUserLogin
             loginState={loginPopup}

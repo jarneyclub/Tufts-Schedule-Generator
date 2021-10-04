@@ -31,10 +31,7 @@ function TimePrefSelector(props) {
         </div>
       </div>
       <br />
-      <Button
-        className={sStyle.saveTimePrefButton}
-        onClick={onClose}
-      >
+      <Button className={sStyle.saveTimePrefButton} onClick={onClose}>
         Save Time Preference
       </Button>
       <br />
