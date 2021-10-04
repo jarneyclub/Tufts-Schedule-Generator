@@ -1,6 +1,6 @@
 .eventContainer {
   display: flex;
-  z-index: -2;
+  z-index: -1;
   flex-direction: column;
   align-items: center;
   white-space: normal;
@@ -42,7 +42,7 @@
   .eventContainer {
     white-space: normal;
     word-wrap: break-word;
-    z-index: -100;
+    z-index: -1;
 
     color: #ffffff;
     background-color: #a0c3d1;
