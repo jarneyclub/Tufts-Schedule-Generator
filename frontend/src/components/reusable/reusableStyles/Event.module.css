@@ -42,7 +42,7 @@
   .eventContainer {
     white-space: normal;
     word-wrap: break-word;
-    z-index: -2;
+    z-index: -100;
 
     color: #ffffff;
     background-color: #a0c3d1;
