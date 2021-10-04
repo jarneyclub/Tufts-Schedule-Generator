@@ -140,6 +140,8 @@ input {
   cursor: pointer;
   border: #fc4e4e solid 1px;
   border-radius: 12px;
+  margin-top: 10px;
+  text-transform: unset !important;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

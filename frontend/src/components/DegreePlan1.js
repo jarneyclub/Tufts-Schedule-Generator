@@ -298,7 +298,7 @@ function DegreePlan1(props) {
               setEditDRPopup(true);
             }}
           >
-            --- create a new major/ minor ---
+            --- Create a new major/ minor ---
           </Button>
         </div>
       </div>
