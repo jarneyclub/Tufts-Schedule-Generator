@@ -361,13 +361,6 @@ function DegreePlan1(props) {
             Add to my list
           </Button>
         )}
-        <div className={dp1Style.nextPageButton}>
-          <Link to="/DegreePlan2">
-            <IconButton className={dp1Style.nextPageButton}>
-              <DateRangeIcon fontSize="medium" aria-label="Next Page" />
-            </IconButton>
-          </Link>
-        </div>
       </div>
       {!logged && (
         <Popup onClose={handleLoginPopup}>
