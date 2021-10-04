@@ -343,6 +343,7 @@ function Scheduler(props) {
           setScheduleOptions(result.schedules);
           setSelectedSchedule(result.schedules[0].sched_name);
           setSelectedScheduleID(result.schedules[0].sched_id);
+          setSearchCourseResult(result.schedules[0].courses);
         }
       })
       .catch((error) => console.log("error from fetchSavedSchedules", error));

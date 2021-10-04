@@ -53,7 +53,7 @@ function Event(props) {
     <div className={eStyle.eventContainer} style={customStyle}>
       <div>{details}</div>
       <div>{name}</div>
-      <div>{time_start, "~", time_end}</div>
+      <div>{time_start.concat("~").concat(time_end)}</div>
       <div>{location}</div>
 
     </div>
