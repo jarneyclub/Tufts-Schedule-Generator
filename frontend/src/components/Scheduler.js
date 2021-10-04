@@ -643,21 +643,21 @@ function Scheduler(props) {
             &nbsp;
             <IconButton
               className={sStyle.editPlanButton}
-              onClick={() => handlePopup("editPlanName", true)}
+              onClick={() => handlePopup("editScheduleName", true)}
             >
               <ModeEditIcon fontSize="medium" />
             </IconButton>
             &nbsp;
             <IconButton
               className={sStyle.editPlanButton}
-              onClick={() => handlePopup("addPlan", true)}
+              onClick={() => handlePopup("addSchedule", true)}
             >
               <AddBoxIcon fontSize="medium" />
             </IconButton>
             &nbsp;
             <IconButton
               className={sStyle.editPlanButton}
-              onClick={() => handlePopup("removePlan", true)}
+              onClick={() => handlePopup("removeSchedule", true)}
             >
               <IndeterminateCheckBoxIcon fontSize="medium" />
             </IconButton>
