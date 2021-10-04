@@ -27,7 +27,7 @@ function TimePrefSelector(props) {
           Drag or Click to Select Your Preferred Time Frame
         </div>
         <div>
-          **Time Frame Set for the Entire Day if No Selection Made For the Day**
+          ** Time slot highlighted in green indicates preferred time **
         </div>
       </div>
       <br />
