@@ -51,9 +51,11 @@ function Event(props) {
 
   return (
     <div className={eStyle.eventContainer} style={customStyle}>
-      {details}
-      <br />
-      {(time_start, "~", time_end)}
+      <div>{details}</div>
+      <div>{name}</div>
+      <div>{time_start, "~", time_end}</div>
+      <div>{location}</div>
+
     </div>
   );
 }
