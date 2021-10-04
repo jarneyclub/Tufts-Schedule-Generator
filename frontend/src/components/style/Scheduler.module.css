@@ -158,6 +158,7 @@
 .timePrefButton {
   border-radius: 12px;
   border: #7048d5 solid 1px;
+  text-transform: unset !important;
 
   box-sizing: border-box;
 
@@ -180,6 +181,7 @@
 .saveTimePrefButton {
   border-radius: 12px;
   border: #ffffff solid 1px;
+  text-transform: unset !important;
 
   box-sizing: border-box;
 

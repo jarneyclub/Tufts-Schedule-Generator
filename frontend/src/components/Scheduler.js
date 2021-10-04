@@ -546,7 +546,7 @@ function Scheduler(props) {
                   onClick={() => setTimePrefState(true)}
                   startIcon={<QueryBuilderIcon />}
                 >
-                  Edit Time Preference
+                  Edit time preference
                 </Button>
               </FormControl>
             </div>
@@ -556,7 +556,7 @@ function Scheduler(props) {
               className={sStyle.renderButton}
               onClick={fetchGenerateSchedule}
             >
-              Render Schedule
+              Render schedule
             </Button>
           </div>
           <div className={sStyle.tabsContainer}>
