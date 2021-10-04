@@ -137,7 +137,7 @@ function AddSchedule(props) {
 
   const handleAdd = () => {
     /* do something API?? pass in the selectedCards arr */
-    if (!false) {
+    if (!handleCheckDuplicate) {
       onCreateSchedule(scheduleName);
       /* Then Close */
       onClose();
