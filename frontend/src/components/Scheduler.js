@@ -214,6 +214,7 @@ function Scheduler(props) {
       (sched) => sched.sched_name === e.target.value.substr(3)
     );
     setSelectedScheduleID(scheduleOptions[ind].sched_id);
+    setSelectedCourses(scheduleOptions[ind].courses)
   };
 
   /*  Control for search filter dropdown change  */
