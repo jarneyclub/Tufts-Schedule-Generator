@@ -38,9 +38,9 @@ function Home(props) {
     <div className={hStyle.homeContainer}>
       <div className={hStyle.horizontalContainer}>
         <div className={hStyle.content}>
-
-          <h1 style={{ fontSize: "70px" }}>Your JARney<span style={{color: "#fc4e4e"}}>.</span></h1>
-
+          <h1 style={{ fontSize: "70px" }}>
+            Your JARney<span style={{ color: "#fc4e4e" }}>.</span>
+          </h1>
           Plan out your Tufts experience, from four-year (or five-year!) plans
           to semesterly schedules.
           <br />

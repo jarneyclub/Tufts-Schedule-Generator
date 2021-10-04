@@ -1,13 +1,11 @@
 .bodyContainer {
-    background: linear-gradient(-45deg, #f1edfa, #f1edfa, #ccbeee, #f1edfa );
-    /* background-size: 400% 400%; */
-    animation: gradient 15s ease infinite;
+  background: linear-gradient(-45deg, #f1edfa, #f1edfa, #ccbeee, #f1edfa);
+  /* background-size: 400% 400%; */
+  animation: gradient 15s ease infinite;
 }
 
 .formContainer {
-
-    display: flex;
-
+  display: flex;
 }
 
 .horizontalContainer {
@@ -16,38 +14,37 @@
   padding-top: 20vh;
 }
 
-.image{
-    width: 40%;
+.image {
+  width: 40%;
 }
 
 .imgContainer {
-    width: 30%;
+  width: 30%;
 }
 
 Accordion {
-    font-size: 100px;
+  font-size: 100px;
 }
 
 .contactForm {
-
-    display: flex; 
-    flex-direction: column;
-    width: 60%;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  align-items: center;
 }
 
 .contactForm input {
-    margin: 1em;
+  margin: 1em;
 }
 
 .contactForm textarea {
-    margin: 1em;
-    border-radius: 5px;
-    border-color: #5a32bf;
-    width: 80%;
+  margin: 1em;
+  border-radius: 5px;
+  border-color: #5a32bf;
+  width: 80%;
 }
 
-.contactForm input[name="submit"]{
-    color:#ffffff;
-    background-color: #5a32bf;
+.contactForm input[name="submit"] {
+  color: #ffffff;
+  background-color: #5a32bf;
 }

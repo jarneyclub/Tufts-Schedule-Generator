@@ -5,13 +5,13 @@
  * has a feedback form.
  */
 
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Typography,
-} from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+// import {
+//   Accordion,
+//   AccordionSummary,
+//   AccordionDetails,
+//   Typography,
+// } from "@material-ui/core";
+// import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import MuiAccordion from '@material-ui/core/Accordion';
 import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
@@ -96,8 +96,7 @@ function HelpPage () {
                 </div>
             </div>
         </div>
-      </div>
-    </div>
+      
   );
 }
 
