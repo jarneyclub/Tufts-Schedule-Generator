@@ -98,7 +98,7 @@ h2 {
   text-transform: unset !important;
   /* border: 1px #5a32bf; */
   border-radius: 50px;
-  box-shadow: 5px 5px #000000;
+  box-shadow: 5px 5px #f0e4aa;
   min-height: 50px;
 
   text-align: center;
@@ -110,7 +110,7 @@ h2 {
 
 .button:hover {
   color: #ffffff;
-  box-shadow: 5px 5px #000000;
+  box-shadow: 5px 5px #f0e4aa;
   background-color: #5a32bf;
   /* border: #fc4e4e solid 1px; */
   text-decoration: none;
