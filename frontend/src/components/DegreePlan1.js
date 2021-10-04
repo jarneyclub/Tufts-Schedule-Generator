@@ -17,6 +17,8 @@ import {
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import EditIcon from "@mui/icons-material/Edit";
+import AddBoxIcon from "@material-ui/icons/AddBox";
+import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
 import CancelIcon from "@material-ui/icons/Cancel";
 import dp1Style from "./style/DegreePlan1.module.css";
 import pStyle from "./reusable/reusableStyles/Popup.module.css";
@@ -93,6 +95,18 @@ function DegreePlan1(props) {
   const [listSearchValue, setListSearchValue] = useState("");
   const [newMMPopup, setNewMMPopup] =
     useState(false); /* Add new Major / Minor Popup */
+    const [popup, setPopup] = useState({
+   
+      removeReq: false,
+      addReq: false,
+    });
+
+  const handlePopup = (field, bit) => {
+    setPopup((prev) => ({
+      ...prev,
+      [field]: bit,
+    }));
+  };
 
   const handleDegreeReqChange = (e) => {
     setDegreeReq(e.target.value);
@@ -281,7 +295,7 @@ function DegreePlan1(props) {
 
           {/* options will be an array returned by API
                             options - degree req of current user */}
-          <div style={{ width: "90%" }}>
+          <div className={dp1Style.dropdownListWrapper} style={{ width: "90%" }}>
             <Dropdown
               options={degreeReqOptions}
               isObject={true}
@@ -290,7 +304,25 @@ function DegreePlan1(props) {
               onOptionChange={handleDegreeReqChange}
             />
           </div>
-
+          &nbsp;
+  
+            <IconButton
+              className={dp1Style.editPlanButton}
+              onClick={() => {
+                setNewMMPopup(true);
+                setEditDRPopup(true);
+              }}
+            >
+              <AddBoxIcon fontSize="medium" />
+            </IconButton>
+            &nbsp;
+            <IconButton
+              className={dp1Style.editPlanButton}
+              onClick={() => handlePopup("removeReq", true)}
+            >
+              <IndeterminateCheckBoxIcon fontSize="medium" />
+            </IconButton>
+{/* 
           <Button
             className={dp1Style.newMajorMinorButton}
             onClick={() => {
@@ -299,7 +331,7 @@ function DegreePlan1(props) {
             }}
           >
             --- Create a new major/ minor ---
-          </Button>
+          </Button> */}
         </div>
       </div>
 
