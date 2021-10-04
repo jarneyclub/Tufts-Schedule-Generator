@@ -303,9 +303,8 @@ function DegreePlan1(props) {
               selectedOption={selectedDegreeReq}
               onOptionChange={handleDegreeReqChange}
             />
-          </div>
-          &nbsp;
-  
+            &nbsp;
+            
             <IconButton
               className={dp1Style.editPlanButton}
               onClick={() => {
@@ -322,16 +321,9 @@ function DegreePlan1(props) {
             >
               <IndeterminateCheckBoxIcon fontSize="medium" />
             </IconButton>
-{/* 
-          <Button
-            className={dp1Style.newMajorMinorButton}
-            onClick={() => {
-              setNewMMPopup(true);
-              setEditDRPopup(true);
-            }}
-          >
-            --- Create a new major/ minor ---
-          </Button> */}
+
+          </div>
+          
         </div>
       </div>
 
