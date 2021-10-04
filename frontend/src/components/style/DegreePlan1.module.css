@@ -148,7 +148,7 @@ input {
 .DegreeReqWrapper {
   display: flex;
   flex-direction: column;
-  /* flex-grow: 2; */
+  align-items: center;
   width: 50vw;
 
   padding-left: 5vw;
@@ -173,7 +173,7 @@ input {
 
   box-sizing: content-box;
   margin-top: 1vh;
-
+  width: 100%;
   padding-bottom: 10px;
 }
 
@@ -230,7 +230,7 @@ input {
 
   margin-top: 15px;
   height: 35px;
-  width: 80%;
+  width: 100%;
   padding-left: 1vw;
   padding-right: 1vw;
   text-align: center;
