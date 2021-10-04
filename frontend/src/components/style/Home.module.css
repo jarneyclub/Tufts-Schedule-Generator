@@ -100,7 +100,7 @@ h2 {
   border-radius: 50px;
   box-shadow: 5px 5px #a0c3d1;
   min-height: 50px;
-
+  padding: 0 1vw;
   text-align: center;
   font-size: 15px;
   line-height: 22px;
