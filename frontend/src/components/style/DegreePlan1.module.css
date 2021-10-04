@@ -135,10 +135,11 @@ input {
 
 .newMajorMinorButton {
   font-size: 10px;
-  color: #7048d5;
+  color: #ffffff;
+  background-color: #fc4e4e;
   cursor: pointer;
-  border-bottom: #5a32bf solid 1px;
-  border-radius: none;
+  border: #fc4e4e solid 1px;
+  border-radius: 12px;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
