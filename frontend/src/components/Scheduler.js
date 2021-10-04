@@ -385,7 +385,12 @@ function Scheduler(props) {
         console.log("generate schedule result: ", result);
         setClasses(result.data.classes);
       })
-      .catch((error) => console.log("generate schedule error: ", error));
+      .catch((error) => {
+        console.log("generate schedule error: ", error);
+        setAlertMessage(error);
+        setAlertSeverity("error");
+        setShowAlert(true);
+      });
   };
 
   const fetchCreateSchedule = async (newName) => {
@@ -400,6 +405,9 @@ function Scheduler(props) {
         console.log("create schedule result: ", result);
         // refresh
         fetchSavedSchedules();
+        setAlertMessage("Create success!");
+        setAlertSeverity("success");
+        setShowAlert(true);
       })
       .catch((error) => console.log("generate schedule error: ", error));
   };
@@ -680,6 +688,9 @@ function Scheduler(props) {
           <RemoveSchedule
             onClose={() => handlePopup("removeSchedule", false)}
             scheduleID={selectedScheduleID}
+            onShowAlert={() => setShowAlert(true)}
+            setAlertMessage={setAlertMessage}
+            setAlertSeverity={setAlertSeverity}
           />
         </Popup>
       )}
@@ -687,6 +698,9 @@ function Scheduler(props) {
         <Popup onClose={() => handlePopup("editScheduleName", false)}>
           <EditScheduleName
             onClose={() => handlePopup("editScheduleName", false)}
+            onShowAlert={() => setShowAlert(true)}
+            setAlertMessage={setAlertMessage}
+            setAlertSeverity={setAlertSeverity}
           />
         </Popup>
       )}

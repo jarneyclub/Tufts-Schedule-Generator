@@ -19,11 +19,11 @@ import HelpPage from "./components/HelpPage";
 import Header from "./components/reusable/HeaderUser";
 
 import EinaBold from "./fonts/Eina03-SemiBold.ttf";
-import EinaRegular from './fonts/Eina03-Regular.ttf';
+import EinaRegular from "./fonts/Eina03-Regular.ttf";
 
 const THEME = createTheme({
   typography: {
-    fontFamily: {EinaRegular},
+    fontFamily: { EinaRegular },
   },
 });
 

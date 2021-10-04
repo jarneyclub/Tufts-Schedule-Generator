@@ -205,7 +205,7 @@
 .renderButton {
   border-radius: 12px;
   border: #fc6d6d solid 1px;
-
+  text-transform: unset !important;
   box-sizing: border-box;
 
   height: 35px;
