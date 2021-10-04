@@ -201,7 +201,7 @@ input {
 
 .editButton {
   border-radius: 12px;
-  border: #7048d5 solid 1px;
+  border: #fc4e4e solid 1px;
   box-sizing: border-box;
   text-transform: unset !important;
   margin-top: 15px;
@@ -211,13 +211,13 @@ input {
   padding-right: 1vw;
   text-align: center;
   font-size: 13px;
-  color: #7048d5;
+  color: #fc4e4e;
   width: 80%;
   background-color: #efebf9;
 }
 .editButton:hover {
-  background-color: #7048d5;
-  border: #7048d5 solid 1px;
+  background-color: #fc6d6d;
+  border: #fc6d6d solid 1px;
   color: #ffffff;
 }
 
@@ -260,6 +260,9 @@ body {
 
 /* Helps to wrap the left and right when screen is too small */
 @media only screen and (max-width: 630) {
+  .horizontalWrapper {
+    flex-direction: column;
+  }
   .DegreeReqWrapper {
     width: 100vw;
   }
