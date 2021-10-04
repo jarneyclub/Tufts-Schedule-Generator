@@ -132,16 +132,33 @@ input {
   padding-bottom: 10px;
   padding-top: 10px;
 }
+.dropdownListWrapper {
+  display: flex;
+  flex-direction: row;
+}
+.editPlanButton {
+  height: 25px;
+  width: 25px;
 
+  top: 0;
+  bottom: 0;
+
+  color: #7048d5;
+}
 .newMajorMinorButton {
   font-size: 10px;
   color: #ffffff;
-  background-color: #fc4e4e;
+  background-color: #fc6d6d;
   cursor: pointer;
-  border: #fc4e4e solid 1px;
+  border: #fc6d6d solid 1px;
   border-radius: 12px;
   margin-top: 10px;
   text-transform: unset !important;
+}
+
+.newMajorMinorButton:hover {
+  background-color: #fc4e4e;
+  border: #fc4e4e solid 1px; 
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
