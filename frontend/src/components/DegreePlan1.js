@@ -310,9 +310,9 @@ function DegreePlan1(props) {
 
           {/* button that displays an overlay to edit current
                             displayed degree requirement */}
-          {
+          { !showPublicDegreeReq && 
             <Button
-            className={showPublicDegreeReq? dp1Style.saveButton : dp1Style.editButton}
+            className={dp1Style.editButton}
             onClick={() => {setNewMMPopup(false); setEditDRPopup(true);}}>Edit</Button>
           
           }
