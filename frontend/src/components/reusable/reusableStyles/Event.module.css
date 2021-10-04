@@ -1,9 +1,12 @@
 .eventContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   white-space: normal;
-  word-wrap: break-word;
-
+  word-wrap: no-wrap;
+  padding: 0 1vw;
   color: #ffffff;
-  background-color: #7048d5;
+  background-color: #a0c3d1;
   position: absolute;
   border: 1px solid #ffffff;
   width: 100%;
@@ -40,7 +43,7 @@
     word-wrap: break-word;
 
     color: #ffffff;
-    background-color: #7048d5;
+    background-color: #a0c3d1;
     position: absolute;
     border: 1px solid #ffffff;
     width: 100%;
