@@ -112,6 +112,7 @@ h2 {
   color: #ffffff;
   box-shadow: 5px 5px #a0c3d1;
   background-color: #5a32bf;
+  padding: 0 1vw;
   /* border: #fc4e4e solid 1px; */
   text-decoration: none;
 }
