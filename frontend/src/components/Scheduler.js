@@ -39,6 +39,9 @@ import {
   RemoveSchedule,
   EditScheduleName,
 } from "./reusable/SchedulerPopup";
+import {
+  DegreeReqExpress,
+} from "./reusable/TabSwitch";
 
 const timeDefault = [
   {
@@ -627,7 +630,13 @@ function Scheduler(props) {
                       justifyContent: "space-between",
                     }}
                   />
-                ))}
+                ))
+              }
+              {
+                degreeReqTab === 2 && 
+                  <DegreeReqExpress />
+              }
+
             </div>
           </div>
         </div>
