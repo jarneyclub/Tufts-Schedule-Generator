@@ -36,6 +36,7 @@ import {
   AddPlan,
   RemovePlan,
 } from "./reusable/DegreePlan2Popups";
+import { DegreeReqExpress } from "./reusable/TabSwitch";
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
@@ -559,7 +560,7 @@ function DegreePlan2(props) {
             </div>
 
             {/* Degree Requirment Container */}
-            <div className={dp2Style.degreeReqContainer}>
+            {/* <div className={dp2Style.degreeReqContainer}>
               <div className={dp2Style.degreeReqTitleContainer}>
                 <IconButton onClick={() => handleSwitchReq(-1)}>
                   <ArrowLeftIcon fontSize="large" />
@@ -576,7 +577,8 @@ function DegreePlan2(props) {
                   reqDetail={degreeReqOptions[selectedDegreeReq]}
                 />
               </div>
-            </div>
+            </div> */}
+            <DegreeReqExpress />
           </div>
 
           {/* * * * Contains: * * * *
