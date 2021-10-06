@@ -1,7 +1,3 @@
-.dp1Container {
-  /* background: linear-gradient(-45deg, #ccbeee, #d9cef2, #fed7d7, #fec2c2); */
-}
-
 /* * * * Note * * * * 
     that the h3 and h5 size affects the width of left and right col */
 h5 {
@@ -38,10 +34,13 @@ input {
   display: flex;
   flex-direction: column;
   /* flex: 1 0 0; */
-  flex-grow: 1;
-  justify-content: center;
+  align-content: center;
+  /* flex-grow: 1; */
+  width: 50vw;
+  justify-content: flex-start;
   padding-left: 5vw;
   padding-right: 5vw;
+  padding-top: 20px;
 }
 
 /* Includes the currently saved degree req drop down */
@@ -51,13 +50,13 @@ input {
   align-items: center;
 
   /* border: 1px solid #5a32bf; */
-  border-radius: 12px;
-  background-color: rgba(239, 235, 249, 0.9);
+  /* border-radius: 12px;
+  background-color: rgba(239, 235, 249, 0.9); */
   /* background-color: #efebf9; */
-  box-shadow: 0 4px 8px 0 rgba(90, 50, 191, 0.2),
+  /* box-shadow: 0 4px 8px 0 rgba(90, 50, 191, 0.2),
     0 6px 20px 0 rgba(90, 50, 191, 0.19);
 
-  box-sizing: border-box;
+  box-sizing: border-box; */
   margin-top: 10px;
   padding-bottom: 10px;
   padding-top: 10px;
@@ -99,12 +98,23 @@ input {
   box-sizing: content-box;
   margin-top: 10px;
   margin-bottom: 10px;
-
+  /* background-color: rgba(239, 235, 249, 0.9);; */
   /* border-top: 1px solid #5a32bf; */
   width: 100%;
   max-height: 200px;
 
   overflow-y: scroll;
+}
+
+.publicReqButton {
+  background-color: #efebf9;
+  color: #5a32bf;
+  width: 80%;
+}
+
+.publicReqButton:hover {
+  background-color: #efebf9;
+  color: #fc4e4e;
 }
 
 .myListWrapper {
@@ -122,13 +132,36 @@ input {
   padding-bottom: 10px;
   padding-top: 10px;
 }
+.dropdownListWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+.editPlanButton {
+  height: 25px;
+  width: 25px;
 
+  top: 0;
+  bottom: 0;
+
+  color: #7048d5;
+}
 .newMajorMinorButton {
   font-size: 10px;
-  color: #7048d5;
+  color: #ffffff;
+  background-color: #fc6d6d;
   cursor: pointer;
-  border-bottom: #5a32bf solid 1px;
-  border-radius: none;
+  border: #fc6d6d solid 1px;
+  border-radius: 12px;
+  margin-top: 10px;
+  text-transform: unset !important;
+}
+
+.newMajorMinorButton:hover {
+  background-color: #fc4e4e;
+  border: #fc4e4e solid 1px; 
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -136,7 +169,8 @@ input {
 .DegreeReqWrapper {
   display: flex;
   flex-direction: column;
-  flex-grow: 2;
+  align-items: center;
+  width: 50vw;
 
   padding-left: 5vw;
   padding-right: 5vw;
@@ -160,7 +194,7 @@ input {
 
   box-sizing: content-box;
   margin-top: 1vh;
-
+  width: 100%;
   padding-bottom: 10px;
 }
 
@@ -190,9 +224,9 @@ input {
 
 .editButton {
   border-radius: 12px;
-  border: #7048d5 solid 1px;
+  border: #fc4e4e solid 1px;
   box-sizing: border-box;
-
+  text-transform: unset !important;
   margin-top: 15px;
   height: 35px;
 
@@ -200,13 +234,35 @@ input {
   padding-right: 1vw;
   text-align: center;
   font-size: 13px;
-  color: #7048d5;
-
+  color: #fc4e4e;
+  width: 80%;
   background-color: #efebf9;
 }
 .editButton:hover {
-  background-color: #7048d5;
-  border: #7048d5 solid 1px;
+  background-color: #fc6d6d;
+  border: #fc6d6d solid 1px;
+  color: #ffffff;
+}
+
+.saveButton {
+  border-radius: 12px;
+  border: #fc6d6d solid 1px;
+  box-sizing: border-box;
+  text-transform: unset !important;
+  margin-top: 15px;
+  height: 35px;
+  width: 100%;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  text-align: center;
+  font-size: 13px;
+  color: #ffffff;
+
+  background-color: #fc6d6d;
+}
+.saveButton:hover {
+  background-color: #fc4e4e;
+  border: #fc4e4e solid 1px;
   color: #ffffff;
 }
 .nextPageButton {
@@ -226,11 +282,14 @@ body {
 }
 
 /* Helps to wrap the left and right when screen is too small */
-@media only screen and (min-width: 630) {
+@media only screen and (max-width: 630) {
+  .horizontalWrapper {
+    flex-direction: column;
+  }
   .DegreeReqWrapper {
-    flex-basis: 0;
+    width: 100vw;
   }
   .DegreeSearchWrapper {
-    flex-basis: 0;
+    width: 100vw;
   }
 }

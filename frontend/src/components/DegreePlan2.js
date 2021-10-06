@@ -36,6 +36,7 @@ import {
   AddPlan,
   RemovePlan,
 } from "./reusable/DegreePlan2Popups";
+import { DegreeReqExpress } from "./reusable/TabSwitch";
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
@@ -137,11 +138,11 @@ function DegreePlan2(props) {
     signupPopup,
     handleLoginPopup,
     handleSignupPopup,
-    handleLogRequired
+    handleLogRequired,
   } = props;
   const [degreeReqTitle, setDegreeReqTitle] = useState("PLACEHOLDER"); // sets the title of degree requirement
   const [semesterPlanOptions, setSemesterPlanOptions] = useState([]); // sets the array of options for semester plans
-  
+
   const [courseSearchValue, setCourseSearchValue] = useState("");
 
   /*  Stores the card options. Should be updated by API in UseEffect  */
@@ -179,9 +180,11 @@ function DegreePlan2(props) {
     setSelectedPlanName(e.target.value);
     console.log("semesterPlanChange e:", e);
     setSelectedPlanID(handleSelectedPlanNameToID(e.target.value));
-  
-    const ind = semesterPlanOptions.findIndex(plan => plan.plan_name === e.target.value.substr(3));
-    setCardOptions(semesterPlanOptions[ind].terms)
+
+    const ind = semesterPlanOptions.findIndex(
+      (plan) => plan.plan_name === e.target.value.substr(3)
+    );
+    setCardOptions(semesterPlanOptions[ind].terms);
   };
 
   const handleRemoveCards = (cardsToRemove) => {
@@ -288,7 +291,7 @@ function DegreePlan2(props) {
           : card
       )
     );
-    
+
     return true;
   };
 
@@ -322,16 +325,14 @@ function DegreePlan2(props) {
   };
 
   const handleSwitchReq = (direction) => {
-    if (selectedDegreeReq === (degreeReqOptions.length - 1) && direction === 1) {
+    if (selectedDegreeReq === degreeReqOptions.length - 1 && direction === 1) {
       setSelectedDegreeReq(0);
     } else if (selectedDegreeReq === 0 && direction === -1) {
       setSelectedDegreeReq(4);
     } else {
       setSelectedDegreeReq((prev) => prev + direction);
     }
-  }
-
-
+  };
 
   /*
    *  createnNewPlan()
@@ -428,7 +429,6 @@ function DegreePlan2(props) {
       .then((result) => {
         console.log("result of save term: ", result);
         /*  Creates a new plan for new users */
-        
       })
       .catch((error) => {
         console.log("error from Degreeplan saveTerm ", error);
@@ -446,32 +446,26 @@ function DegreePlan2(props) {
 
         if (result.reqs.length === 0) {
           console.log("no private reqs");
-          
         } else {
           setDegreeReqOptions(result.reqs);
-          
         }
       })
       .catch((error) => {
         console.log("error from Degreeplan fetchPrivateReqs ", error);
       });
   };
-  
+
   /*  Initial fetching for plans when page first loads */
   useEffect(() => {
     fetchPlans();
     fetchPrivateReqs();
     handleLogRequired(true);
-
   }, []);
 
   useEffect(() => {
     console.log("cardOptions: ", cardOptions);
     cardOptions?.map((card) => fetchSaveTerm(card));
-
   }, [cardOptions]);
-
- 
 
   return (
     <div style={{ marginTop: "80px" }}>
@@ -566,20 +560,25 @@ function DegreePlan2(props) {
             </div>
 
             {/* Degree Requirment Container */}
-            <div className={dp2Style.degreeReqContainer}>
+            {/* <div className={dp2Style.degreeReqContainer}>
               <div className={dp2Style.degreeReqTitleContainer}>
-                <IconButton onClick={()=>handleSwitchReq(-1)}>
+                <IconButton onClick={() => handleSwitchReq(-1)}>
                   <ArrowLeftIcon fontSize="large" />
                 </IconButton>
-                <div style={{color:"#ffffff"}}>{degreeReqOptions[selectedDegreeReq]?.program_name}</div>
-                <IconButton color="action" onClick={()=>handleSwitchReq(1)}>
+                <div style={{ color: "#ffffff" }}>
+                  {degreeReqOptions[selectedDegreeReq]?.program_name}
+                </div>
+                <IconButton color="action" onClick={() => handleSwitchReq(1)}>
                   <ArrowRightIcon fontSize="large" />
                 </IconButton>
               </div>
               <div className={dp2Style.degreeReqDetailContainer}>
-                <DegreeReqDisplay reqDetail={degreeReqOptions[selectedDegreeReq]} />
+                <DegreeReqDisplay
+                  reqDetail={degreeReqOptions[selectedDegreeReq]}
+                />
               </div>
-            </div>
+            </div> */}
+            <DegreeReqExpress />
           </div>
 
           {/* * * * Contains: * * * *

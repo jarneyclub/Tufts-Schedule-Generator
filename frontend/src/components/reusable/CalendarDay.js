@@ -65,7 +65,7 @@ function CalendarDay(props) {
     addTimePref,
     removeTimePref,
     singleDay,
-    classesDay
+    classesDay,
   } = props;
 
   console.log("TimePrefDay ", timePrefDay, " ", timePrefState);
@@ -127,21 +127,17 @@ function CalendarDay(props) {
               />
             ))
           : /* Normal Calendar View */
-          
+
             time.map((timeName) => (
               <div className={cStyle.timeSlot} key={timeName} />
             ))}
-    
       </div>
       {/* <div className={cStyle.eventsContainer}>
           {classesDay?.map((event) => <div>{event.details}</div>)}
       </div> */}
-      {
-        classesDay?.map((event) => {
-          return <Event eventDetails={event}></Event>
-        })
-      }
-
+      {classesDay?.map((event) => {
+        return <Event eventDetails={event}></Event>;
+      })}
     </div>
   );
 }

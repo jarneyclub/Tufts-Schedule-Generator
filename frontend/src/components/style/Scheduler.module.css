@@ -158,6 +158,7 @@
 .timePrefButton {
   border-radius: 12px;
   border: #7048d5 solid 1px;
+  text-transform: unset !important;
 
   box-sizing: border-box;
 
@@ -180,6 +181,7 @@
 .saveTimePrefButton {
   border-radius: 12px;
   border: #ffffff solid 1px;
+  text-transform: unset !important;
 
   box-sizing: border-box;
 
@@ -203,7 +205,7 @@
 .renderButton {
   border-radius: 12px;
   border: #fc6d6d solid 1px;
-
+  text-transform: unset !important;
   box-sizing: border-box;
 
   height: 35px;
@@ -316,7 +318,6 @@
   margin-bottom: 20px;
   height: 80vh;
 }
-
 
 .scheduleTitleContainer {
   display: flex;

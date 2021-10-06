@@ -36,9 +36,16 @@ import JarUserLogin from "../reusable/JarUserLogin";
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function EditScheduleName(props) {
-  const { onClose, refreshPlans, planName, planID } = props;
+  const {
+    onClose,
+    refreshPlans,
+    planName,
+    planID,
+    onShowAlert,
+    setAlertMessage,
+    setAlertSeverity,
+  } = props;
 
-  
   const [editName, setEditName] = useState(planName);
 
   const handleClose = () => {
@@ -51,7 +58,7 @@ function EditScheduleName(props) {
     /* do something API?? pass in the selectedCards arr */
     patchEditName();
     refreshPlans();
-    /* Then Close */
+
     onClose();
   };
 
@@ -67,8 +74,18 @@ function EditScheduleName(props) {
     console.log("requestOption for fetchCreatePrivateReqs", requestOption);
     await fetch(url, requestOption)
       .then((response) => response.json())
-      .then((result) => console.log("result from editPlanName: ", result))
-      .catch((error) => console.log("error from editPlanName: ", error));
+      .then((result) => {
+        console.log("result from editPlanName: ", result);
+        setAlertMessage("Schedule name changed!");
+        setAlertSeverity("success");
+        onShowAlert();
+      })
+      .catch((error) => {
+        console.log("error from editPlanName: ", error);
+        setAlertMessage(error);
+        setAlertSeverity("warning");
+        onShowAlert();
+      });
   };
 
   return (
@@ -100,7 +117,7 @@ function EditScheduleName(props) {
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function AddSchedule(props) {
-  const { onClose, onCreateSchedule, scheduleOptions} = props;
+  const { onClose, onCreateSchedule, scheduleOptions } = props;
 
   const [scheduleName, setScheduleName] = useState("");
 
@@ -112,25 +129,21 @@ function AddSchedule(props) {
   };
   const handleCheckDuplicate = () => {
     scheduleOptions?.map((opt) => {
-      if (opt.sched_name === scheduleName) 
-        return true;
-  })
+      if (opt.sched_name === scheduleName) return true;
+    });
 
-    return false
-  }
+    return false;
+  };
 
   const handleAdd = () => {
     /* do something API?? pass in the selectedCards arr */
-    if (!false) {
+    if (!handleCheckDuplicate) {
       onCreateSchedule(scheduleName);
       /* Then Close */
       onClose();
+    } else {
+      // give warning
     }
-    else {
-      // give warning 
-
-    }
-    
   };
 
   return (
@@ -145,7 +158,6 @@ function AddSchedule(props) {
       <div className={pStyle.formContainer}>
         <div className={pStyle.inputBarContainer}>
           <TextField value={scheduleName} onChange={handleNameChange} />
-
         </div>
         <Button className={pStyle.submitButton} onClick={handleAdd}>
           ADD
@@ -161,7 +173,15 @@ function AddSchedule(props) {
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function RemoveSchedule(props) {
-  const { onClose, planName, planID, refreshPlans } = props;
+  const {
+    onClose,
+    planName,
+    planID,
+    refreshPlans,
+    onShowAlert,
+    setAlertMessage,
+    setAlertSeverity,
+  } = props;
 
   const handleClose = () => {
     onClose();
@@ -180,6 +200,9 @@ function RemoveSchedule(props) {
       .then((result) => {
         console.log("result from Degree plan Delete", result);
         refreshPlans();
+        setAlertMessage("Schedule deleted!");
+        setAlertSeverity("success");
+        onShowAlert();
         onClose();
       })
       .catch((error) => console.log("error from Degree Plan Delete", error));
@@ -210,4 +233,4 @@ function RemoveSchedule(props) {
   );
 }
 
-export {  EditScheduleName, AddSchedule, RemoveSchedule };
+export { EditScheduleName, AddSchedule, RemoveSchedule };

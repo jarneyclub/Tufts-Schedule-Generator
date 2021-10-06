@@ -10,11 +10,10 @@
 import { useEffect, useState } from "react";
 import eStyle from "./reusableStyles/Event.module.css";
 
-
 function Event(props) {
-  const {eventDetails} = props;
+  const { eventDetails } = props;
 
-  const {details, name, location, time_start, time_end} = eventDetails;
+  const { details, name, location, time_start, time_end } = eventDetails;
   const [customStyle, setCustomStyle] = useState({});
 
   console.log("eventDetails: ", eventDetails);
@@ -25,35 +24,38 @@ function Event(props) {
     const startMin = parseInt(start[0]) * 60 + parseInt(start[1]);
     const endMin = parseInt(end[0]) * 60 + parseInt(end[1]);
 
-    console.log("height: ", (endMin - startMin) / 60 * 80);
-    return (endMin - startMin) / 60 * 80;
-
-  }
+    console.log("height: ", ((endMin - startMin) / 60) * 80);
+    return ((endMin - startMin) / 60) * 80;
+  };
 
   const calculateTranslate = () => {
     let res = -1040;
     const start = time_start.split(":");
-    res = res + (parseInt(start[0]) * 60 + parseInt(start[1]) - 480) * 80 / 60; 
+    res =
+      res + ((parseInt(start[0]) * 60 + parseInt(start[1]) - 480) * 80) / 60;
     console.log("start time: ", start);
     console.log("Res: ", res);
     console.log("translateY: ", res);
 
     return res;
-  }
-
+  };
 
   useEffect(() => {
     const transY = calculateTranslate();
     const eventHeight = calculateHeight();
     setCustomStyle({
-      transform: ("translateY("+transY+"px)"),
-      height: (""+eventHeight+"px"),
+      transform: "translateY(" + transY + "px)",
+      height: "" + eventHeight + "px",
     });
-  }, [])
+  }, []);
 
   return (
     <div className={eStyle.eventContainer} style={customStyle}>
-     {details}<br/>{time_start , "~" , time_end}
+      <div>{details}</div>
+      <div>{name}</div>
+      <div>{time_start.concat("~").concat(time_end)}</div>
+      <div>{location}</div>
+
     </div>
   );
 }

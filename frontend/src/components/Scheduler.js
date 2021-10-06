@@ -17,7 +17,7 @@ import {
   CircularProgress,
   FormGroup,
   FormLabel,
-  IconButton
+  IconButton,
 } from "@material-ui/core";
 import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import SearchIcon from "@material-ui/icons/Search";
@@ -34,113 +34,121 @@ import TimePrefSelector from "./reusable/TimePrefSelector";
 import SnackBarAlert from "./reusable/SnackBarAlert";
 import JarUserLogin from "./reusable/JarUserLogin";
 import Popup from "./reusable/Popup";
-import {AddSchedule, RemoveSchedule, EditScheduleName} from "./reusable/SchedulerPopup"
+import {
+  AddSchedule,
+  RemoveSchedule,
+  EditScheduleName,
+} from "./reusable/SchedulerPopup";
+import {
+  DegreeReqExpress,
+} from "./reusable/TabSwitch";
 
 const timeDefault = [
-{
-  time_earliest: "08:00",
-  time_latest: "08:30",
-},
-{
-  time_earliest: "08:30",
-  time_latest: "09:00",
-},
-{
-  time_earliest: "09:00",
-  time_latest: "09:30",
-},
-{
-  time_earliest: "09:30",
-  time_latest: "10:00",
-},
-{
-  time_earliest: "10:00",
-  time_latest: "10:30",
-},
-{
-  time_earliest: "10:30",
-  time_latest: "11:00",
-},
-{
-  time_earliest: "11:00",
-  time_latest: "11:30",
-},
-{
-  time_earliest: "11:30",
-  time_latest: "12:00",
-},
-{
-  time_earliest: "12:00",
-  time_latest: "12:30",
-},
-{
-  time_earliest: "12:30",
-  time_latest: "13:00",
-},
-{
-  time_earliest: "13:00",
-  time_latest: "13:30",
-},
-{
-  time_earliest: "13:30",
-  time_latest: "14:00",
-},
-{
-  time_earliest: "14:00",
-  time_latest: "14:30",
-},
-{
-  time_earliest: "14:30",
-  time_latest: "15:00",
-},
-{
-  time_earliest: "15:00",
-  time_latest: "15:30",
-},
-{
-  time_earliest: "15:30",
-  time_latest: "16:00",
-},
-{
-  time_earliest: "16:00",
-  time_latest: "16:30",
-},
-{
-  time_earliest: "16:30",
-  time_latest: "17:00",
-},
-{
-  time_earliest: "17:00",
-  time_latest: "17:30",
-},
-{
-  time_earliest: "17:30",
-  time_latest: "18:00",
-},
-{
-  time_earliest: "18:00",
-  time_latest: "18:30",
-},
-{
-  time_earliest: "18:30",
-  time_latest: "19:00",
-},
-{
-  time_earliest: "19:00",
-  time_latest: "19:30",
-},
-{
-  time_earliest: "19:30",
-  time_latest: "20:00",
-},
-{
-  time_earliest: "20:00",
-  time_latest: "20:30",
-},
-{
-  time_earliest: "20:30",
-  time_latest: "21:00",
-}]
+  {
+    time_earliest: "08:00",
+    time_latest: "08:30",
+  },
+  {
+    time_earliest: "08:30",
+    time_latest: "09:00",
+  },
+  {
+    time_earliest: "09:00",
+    time_latest: "09:30",
+  },
+  {
+    time_earliest: "09:30",
+    time_latest: "10:00",
+  },
+  {
+    time_earliest: "10:00",
+    time_latest: "10:30",
+  },
+  {
+    time_earliest: "10:30",
+    time_latest: "11:00",
+  },
+  {
+    time_earliest: "11:00",
+    time_latest: "11:30",
+  },
+  {
+    time_earliest: "11:30",
+    time_latest: "12:00",
+  },
+  {
+    time_earliest: "12:00",
+    time_latest: "12:30",
+  },
+  {
+    time_earliest: "12:30",
+    time_latest: "13:00",
+  },
+  {
+    time_earliest: "13:00",
+    time_latest: "13:30",
+  },
+  {
+    time_earliest: "13:30",
+    time_latest: "14:00",
+  },
+  {
+    time_earliest: "14:00",
+    time_latest: "14:30",
+  },
+  {
+    time_earliest: "14:30",
+    time_latest: "15:00",
+  },
+  {
+    time_earliest: "15:00",
+    time_latest: "15:30",
+  },
+  {
+    time_earliest: "15:30",
+    time_latest: "16:00",
+  },
+  {
+    time_earliest: "16:00",
+    time_latest: "16:30",
+  },
+  {
+    time_earliest: "16:30",
+    time_latest: "17:00",
+  },
+  {
+    time_earliest: "17:00",
+    time_latest: "17:30",
+  },
+  {
+    time_earliest: "17:30",
+    time_latest: "18:00",
+  },
+  {
+    time_earliest: "18:00",
+    time_latest: "18:30",
+  },
+  {
+    time_earliest: "18:30",
+    time_latest: "19:00",
+  },
+  {
+    time_earliest: "19:00",
+    time_latest: "19:30",
+  },
+  {
+    time_earliest: "19:30",
+    time_latest: "20:00",
+  },
+  {
+    time_earliest: "20:00",
+    time_latest: "20:30",
+  },
+  {
+    time_earliest: "20:30",
+    time_latest: "21:00",
+  },
+];
 
 const timePrefDefault = {
   Monday: timeDefault,
@@ -167,7 +175,7 @@ function Scheduler(props) {
     signupPopup,
     handleLoginPopup,
     handleSignupPopup,
-    handleLogRequired
+    handleLogRequired,
   } = props;
 
   /* schedule Dropdown */
@@ -183,8 +191,8 @@ function Scheduler(props) {
   const [selectedCourses, setSelectedCourses] = useState(
     []
   ); /*  The courses selected to generate schedule  */
-  
-  const [classes, setClasses] = useState({})
+
+  const [classes, setClasses] = useState({});
 
   const [degreeReqTab, setDegreeReqTab] = useState(1);
   const [searchCourseResult, setSearchCourseResult] = useState([]); // the list of courses returned by GET request
@@ -197,7 +205,7 @@ function Scheduler(props) {
     editScheduleName: false,
     removeSchedule: false,
     addSchedule: false,
-  })
+  });
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState();
   const [alertSeverity, setAlertSeverity] = useState();
@@ -205,8 +213,11 @@ function Scheduler(props) {
   /*  Control for schedule plan dropdown change  */
   const handleScheduleChange = (e) => {
     setSelectedSchedule(e.target.value);
-    const ind = scheduleOptions.findIndex(sched => sched.sched_name === e.target.value.substr(3));
-    setSelectedScheduleID(scheduleOptions[ind].sched_id)
+    const ind = scheduleOptions.findIndex(
+      (sched) => sched.sched_name === e.target.value.substr(3)
+    );
+    setSelectedScheduleID(scheduleOptions[ind].sched_id);
+    setSelectedCourses(scheduleOptions[ind].courses)
   };
 
   /*  Control for search filter dropdown change  */
@@ -217,9 +228,9 @@ function Scheduler(props) {
   const handlePopup = (field, bit) => {
     setPopup((prev) => ({
       ...prev,
-      [field]: bit
-    }))
-  }
+      [field]: bit,
+    }));
+  };
 
   const handleAddTimePref = (dayName, timeValue) => {
     console.log("start time: ", timeValue);
@@ -264,16 +275,16 @@ function Scheduler(props) {
   const handleAddAllDayTimePref = (dayName) => {
     setTimePref((prev) => ({
       ...prev,
-      [dayName]: timeDefault
-    }))
-  }
+      [dayName]: timeDefault,
+    }));
+  };
 
   const handleRemoveAllDayTimePref = (dayName) => {
     setTimePref((prev) => ({
       ...prev,
       [dayName]: {},
-    }))
-  }
+    }));
+  };
 
   const handleSearchChange = (e) => {
     setCourseSearchValue(e.target.value);
@@ -332,13 +343,12 @@ function Scheduler(props) {
         console.log("result from fetchSavedSchedule", result);
         if (result.schedules.length === 0) {
           fetchCreateSchedule("Schedule #1");
-        }
-        else {
+        } else {
           setScheduleOptions(result.schedules);
           setSelectedSchedule(result.schedules[0].sched_name);
           setSelectedScheduleID(result.schedules[0].sched_id);
+          setSelectedCourses(result.schedules[0].courses);
         }
-      
       })
       .catch((error) => console.log("error from fetchSavedSchedules", error));
   };
@@ -377,29 +387,35 @@ function Scheduler(props) {
     await fetch("https://jarney.club/api/schedule", requestOption)
       .then((response) => response.json())
       .then((result) => {
-        console.log("generate schedule result: ", result)
+        console.log("generate schedule result: ", result);
         setClasses(result.data.classes);
-
       })
-      .catch((error) => console.log("generate schedule error: ", error));
+      .catch((error) => {
+        console.log("generate schedule error: ", error);
+        setAlertMessage(error);
+        setAlertSeverity("error");
+        setShowAlert(true);
+      });
   };
 
-  const fetchCreateSchedule = async(newName) => {
+  const fetchCreateSchedule = async (newName) => {
     const requestOption = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({sched_name: newName})
+      body: JSON.stringify({ sched_name: newName }),
     };
     await fetch("https://jarney.club/api/schedule", requestOption)
       .then((response) => response.json())
       .then((result) => {
-        console.log("create schedule result: ", result)
+        console.log("create schedule result: ", result);
         // refresh
         fetchSavedSchedules();
+        setAlertMessage("Create success!");
+        setAlertSeverity("success");
+        setShowAlert(true);
       })
-      .catch((error) => console.log("generate schedule error: ", error)); 
-  }
-
+      .catch((error) => console.log("generate schedule error: ", error));
+  };
 
   useEffect(() => {
     fetchAttributes();
@@ -543,7 +559,7 @@ function Scheduler(props) {
                   onClick={() => setTimePrefState(true)}
                   startIcon={<QueryBuilderIcon />}
                 >
-                  Edit Time Preference
+                  Edit time preference
                 </Button>
               </FormControl>
             </div>
@@ -553,7 +569,7 @@ function Scheduler(props) {
               className={sStyle.renderButton}
               onClick={fetchGenerateSchedule}
             >
-              Render Schedule
+              Render schedule
             </Button>
           </div>
           <div className={sStyle.tabsContainer}>
@@ -614,14 +630,19 @@ function Scheduler(props) {
                       justifyContent: "space-between",
                     }}
                   />
-                ))}
+                ))
+              }
+              {
+                degreeReqTab === 2 && 
+                  <DegreeReqExpress />
+              }
+
             </div>
           </div>
         </div>
 
         <div className={sStyle.rightColumnWrapper}>
           <div className={sStyle.scheduleTitleContainer}>
-
             <Dropdown
               options={scheduleOptions}
               selectedOption={selectedSchedule}
@@ -631,31 +652,35 @@ function Scheduler(props) {
               objectField={"sched_name"}
             />
             &nbsp;
-              <IconButton
-                className={sStyle.editPlanButton}
-                onClick={() => handlePopup("editPlanName", true)}
-              >
-                <ModeEditIcon fontSize="medium" />
-              </IconButton>
-              &nbsp;
-              <IconButton
-                className={sStyle.editPlanButton}
-                onClick={() => handlePopup("addPlan", true)}
-              >
-                <AddBoxIcon fontSize="medium" />
-              </IconButton>
-              &nbsp;
-              <IconButton
-                className={sStyle.editPlanButton}
-                onClick={() => handlePopup("removePlan", true)}
-              >
-                <IndeterminateCheckBoxIcon fontSize="medium" />
-              </IconButton>
+            <IconButton
+              className={sStyle.editPlanButton}
+              onClick={() => handlePopup("editScheduleName", true)}
+            >
+              <ModeEditIcon fontSize="medium" />
+            </IconButton>
+            &nbsp;
+            <IconButton
+              className={sStyle.editPlanButton}
+              onClick={() => handlePopup("addSchedule", true)}
+            >
+              <AddBoxIcon fontSize="medium" />
+            </IconButton>
+            &nbsp;
+            <IconButton
+              className={sStyle.editPlanButton}
+              onClick={() => handlePopup("removeSchedule", true)}
+            >
+              <IndeterminateCheckBoxIcon fontSize="medium" />
+            </IconButton>
             <div />
           </div>
 
           <div className={sStyle.calendarContainer}>
-            <Calendar timePrefState={timePrefState} shrink={shrink} classes={classes}/>
+            <Calendar
+              timePrefState={timePrefState}
+              shrink={shrink}
+              classes={classes}
+            />
           </div>
         </div>
       </div>
@@ -674,6 +699,9 @@ function Scheduler(props) {
           <RemoveSchedule
             onClose={() => handlePopup("removeSchedule", false)}
             scheduleID={selectedScheduleID}
+            onShowAlert={() => setShowAlert(true)}
+            setAlertMessage={setAlertMessage}
+            setAlertSeverity={setAlertSeverity}
           />
         </Popup>
       )}
@@ -681,7 +709,9 @@ function Scheduler(props) {
         <Popup onClose={() => handlePopup("editScheduleName", false)}>
           <EditScheduleName
             onClose={() => handlePopup("editScheduleName", false)}
-            
+            onShowAlert={() => setShowAlert(true)}
+            setAlertMessage={setAlertMessage}
+            setAlertSeverity={setAlertSeverity}
           />
         </Popup>
       )}
@@ -689,11 +719,11 @@ function Scheduler(props) {
         <TimePrefSelector
           onAddTimePref={handleAddTimePref}
           onRemoveTimePref={handleRemoveTimePref}
-          onRemoveEntireDay = {handleRemoveAllDayTimePref}
-          onAddEntireDay = {handleAddAllDayTimePref}
+          onRemoveEntireDay={handleRemoveAllDayTimePref}
+          onAddEntireDay={handleAddAllDayTimePref}
           timePrefState={timePrefState}
           timePref={timePref}
-          onClose={()=> setTimePrefState(false)}
+          onClose={() => setTimePrefState(false)}
           shrink={shrink}
         />
       )}
