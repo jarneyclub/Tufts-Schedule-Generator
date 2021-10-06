@@ -38,6 +38,7 @@ function Dropdown(props) {
   // }, []);
 
   const handleChange = (e) => {
+    console.log("e", e);
     onOptionChange(e);
   };
 
@@ -58,13 +59,17 @@ function Dropdown(props) {
         style={customStyle}
       >
         {!isObject
-          ? options?.map((opt) => (
-              <option value={opt} key={opt}>
+          ? options?.map((opt, idx) => (
+              <option value={opt} key={opt} index={idx}>
                 &nbsp;&nbsp;&nbsp;{opt}
               </option>
             ))
-          : options?.map((opt) => (
-              <option value={opt.objectField} key={opt[objectField]}>
+          : options?.map((opt, idx) => (
+              <option
+                value={opt.objectField}
+                key={opt[objectField]}
+                index={idx}
+              >
                 &nbsp;&nbsp;&nbsp;{opt[objectField]}
               </option>
             ))}

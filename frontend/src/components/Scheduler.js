@@ -39,9 +39,7 @@ import {
   RemoveSchedule,
   EditScheduleName,
 } from "./reusable/SchedulerPopup";
-import {
-  DegreeReqExpress,
-} from "./reusable/TabSwitch";
+import { DegreeReqExpress } from "./reusable/TabSwitch";
 
 const timeDefault = [
   {
@@ -217,7 +215,7 @@ function Scheduler(props) {
       (sched) => sched.sched_name === e.target.value.substr(3)
     );
     setSelectedScheduleID(scheduleOptions[ind].sched_id);
-    setSelectedCourses(scheduleOptions[ind].courses)
+    setSelectedCourses(scheduleOptions[ind].courses);
   };
 
   /*  Control for search filter dropdown change  */
@@ -630,13 +628,8 @@ function Scheduler(props) {
                       justifyContent: "space-between",
                     }}
                   />
-                ))
-              }
-              {
-                degreeReqTab === 2 && 
-                  <DegreeReqExpress />
-              }
-
+                ))}
+              {degreeReqTab === 2 && <DegreeReqExpress />}
             </div>
           </div>
         </div>
