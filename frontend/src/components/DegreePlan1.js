@@ -95,11 +95,10 @@ function DegreePlan1(props) {
   const [listSearchValue, setListSearchValue] = useState("");
   const [newMMPopup, setNewMMPopup] =
     useState(false); /* Add new Major / Minor Popup */
-    const [popup, setPopup] = useState({
-   
-      removeReq: false,
-      addReq: false,
-    });
+  const [popup, setPopup] = useState({
+    removeReq: false,
+    addReq: false,
+  });
 
   const handlePopup = (field, bit) => {
     setPopup((prev) => ({
@@ -295,7 +294,10 @@ function DegreePlan1(props) {
 
           {/* options will be an array returned by API
                             options - degree req of current user */}
-          <div className={dp1Style.dropdownListWrapper} style={{ width: "90%" }}>
+          <div
+            className={dp1Style.dropdownListWrapper}
+            style={{ width: "90%" }}
+          >
             <Dropdown
               options={degreeReqOptions}
               isObject={true}
@@ -304,7 +306,6 @@ function DegreePlan1(props) {
               onOptionChange={handleDegreeReqChange}
             />
             &nbsp;
-            
             <IconButton
               className={dp1Style.editPlanButton}
               onClick={() => {
@@ -321,9 +322,7 @@ function DegreePlan1(props) {
             >
               <IndeterminateCheckBoxIcon fontSize="medium" />
             </IconButton>
-
           </div>
-          
         </div>
       </div>
 
