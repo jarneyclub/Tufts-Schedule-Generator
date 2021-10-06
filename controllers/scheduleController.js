@@ -149,9 +149,31 @@ exports.updateSchedule = async (req, res) => {
  * @param {*} res
  */
 exports.getSchedules = async (req, res) => {
-    let userId = req.query.userId
-    let schedules = await scheduleHandler.getSchedulesOfUser(userId);
-    res.json({schedules: schedules});
+    try {
+        let userId = req.query.userId
+        let schedules = await scheduleHandler.getSchedulesOfUser(userId);
+        res.json({schedules: schedules});
+    }
+    catch (err) {
+        errorHandler(err, "getSchedules", res);
+    }
+}
+
+/**
+ * PATCH /schedule/name
+ * @param {*} req
+ * @param {*} res
+ */
+exports.changeScheduleName = async (req, res) => {
+    try {
+        let {sched_id, new_name} = req.body;
+        let newSchedule = await scheduleHandler.changeScheduleName(sched_id, new_name);
+        res.json({schedule: newSchedule});
+    }
+    catch (err) {
+        errorHandler(err, "changeScheduleName", res);
+    }
+
 }
 
 const errorHandler = (err, endpoint, res) => {
