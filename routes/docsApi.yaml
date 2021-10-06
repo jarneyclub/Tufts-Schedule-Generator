@@ -254,19 +254,15 @@ paths:
                   terms:
                     type: array
                     items:
-                      $ref: "#/components/schemas/DegreePlanTerm"
-  /degreeplan/{planid}:
+                      $ref: "#/components/schemas/DegreePlan"
+  /degreeplan/?plan_id={planid}:
     get:
       tags:
         - Degree Plan
       summary: Load a degree plan
       parameters:
-        - in: header
-          name: Authorization
-          schema:
-            type: string
-        - in: path
-          name: planid
+        - in: query
+          name: plan_id
           schema:
             type: string
       responses:
@@ -277,21 +273,24 @@ paths:
               schema: 
                 type: object
                 properties:
-                  plan_id:
-                    type: string
-                  plan_name:
-                    type: string
-                  courses:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/DegreePlanTerm"
-  /degreeplan/{plan_id}:
+                  plan:
+                    type: object
+                    properties:
+                      plan_id:
+                        type: string
+                      plan_name:
+                        type: string
+                      terms:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/DegreePlanTerm"
+  /degreeplan/?plan_id={planid}:
     delete:
       tags:
         - Degree Plan
       summary: Delete a degree plan
       parameters:
-        - in: path
+        - in: query
           name: plan_id
           schema:
             type: string
@@ -442,10 +441,27 @@ paths:
                   type: array
                   items:
                     type: string
-      
+                plan_id:
+                  type: string
       responses:
         200:
-          description: Update successful
+          description: Changed degree plan
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  plan:
+                    type: object
+                    properties:
+                      plan_id:
+                        type: string
+                      plan_name:
+                        type: string
+                      courses:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/DegreePlanTerm"
   ####################
   #                  #
   #    DEGREE REQ    #

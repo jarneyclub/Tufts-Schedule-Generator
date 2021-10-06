@@ -55,8 +55,8 @@ exports.signAccessTokenAndSendAsCookie = async (res, userid, password) => {
     // res.json({"token": token});
     res.cookie("access_token", token, {
         maxAge: 24 * 60 * 60 * 1000,
-        httpOnly: true,
-        secure: true
+        // httpOnly: true,
+        // secure: true
     }).status(200).json({"data": {"first_name": result.first_name, "last_name": result.last_name, "userid": result.userid, "token": token}});
 }
 
@@ -75,8 +75,8 @@ exports.signAccessTokenAndAttachCookie = async (req, res, next) => {
     let token = jwt.sign({ userid: req.userid, password: req.password, role: req.role}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
     res.cookie("access_token", token, {
         maxAge: 24 * 60 * 60 * 1000,
-        httpOnly: true,
-        secure: true
+        // httpOnly: true,
+        // secure: true
     });
     req.token = token;
     next();
@@ -92,9 +92,9 @@ exports.signAccessTokenAndAttachCookie = async (req, res, next) => {
  * @param {*} next
  */
 exports.authenticateToken = async (req, res, next) => {
-    console.log("req.body", req.body);
+    console.log("(authenticateToken) req.body", req.body);
     try {
-        console.log("req.cookies", req.cookies);
+        console.log("(authenticateToken) req.cookies", req.cookies);
     }
     catch (e) {
         console.log("ERROR IN REQ.COOKIES");
