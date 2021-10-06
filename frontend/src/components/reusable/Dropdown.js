@@ -60,7 +60,7 @@ function Dropdown(props) {
       >
         {!isObject
           ? options?.map((opt, idx) => (
-              <option value={opt} key={opt} index={idx}>
+              <option value={opt} key={opt} id={idx}>
                 &nbsp;&nbsp;&nbsp;{opt}
               </option>
             ))
