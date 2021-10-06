@@ -30,7 +30,7 @@ function DegreeReqExpress() {
     if (selectedDegreeReq === degreeReqOptions.length - 1 && direction === 1) {
       setSelectedDegreeReq(0);
     } else if (selectedDegreeReq === 0 && direction === -1) {
-      setSelectedDegreeReq(4);
+      setSelectedDegreeReq(degreeReqOptions.length - 1);
     } else {
       setSelectedDegreeReq((prev) => prev + direction);
     }
