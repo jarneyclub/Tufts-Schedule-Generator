@@ -261,7 +261,7 @@ function DegreePlan1(props) {
         <div className={dp1Style.existListWrapper}>
           <TextField
             // label="Search Course"
-            placeholder="Look for your program..."
+            placeholder="Look for other programs..."
             onChange={handleSearchChange}
             value={listSearchValue}
             type="text"
