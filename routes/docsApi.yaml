@@ -377,7 +377,7 @@ paths:
                         type: string
                       plan_name:
                         type: string
-                      courses:
+                      terms:
                         type: array
                         items:
                           $ref: "#/components/schemas/DegreePlanTerm"
@@ -494,7 +494,7 @@ paths:
                         type: string
                       plan_name:
                         type: string
-                      courses:
+                      terms:
                         type: array
                         items:
                           $ref: "#/components/schemas/DegreePlanTerm"
