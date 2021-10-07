@@ -80,10 +80,10 @@ function DegreePlan1(props) {
     []
   ); /*  ALL the private degree reqs to current user  */
   const [publicReqOptions, setPublicReqOptions] = useState([]);
-  const [selectedDegreeReq, setDegreeReq] =
-    useState(
-      "PLACEHOLDER"
-    ); /*  Holds the current private Degree Requirement Displayed */
+
+  const [selectedDegreeReqIdx, setSelectedDegreeReqIdx] = useState(0);
+  const [selectedDegreeReq, setDegreeReq] = useState(""); /*  Holds the current private Degree Requirement Displayed */
+  
   const [selectedDegreeReqDetail, setDegreeReqDetail] = useState();
 
   const [publicDegreeReqDetail, setPublicDegreeReqDetail] = useState({});
@@ -95,11 +95,10 @@ function DegreePlan1(props) {
   const [listSearchValue, setListSearchValue] = useState("");
   const [newMMPopup, setNewMMPopup] =
     useState(false); /* Add new Major / Minor Popup */
-    const [popup, setPopup] = useState({
-   
-      removeReq: false,
-      addReq: false,
-    });
+  const [popup, setPopup] = useState({
+    removeReq: false,
+    addReq: false,
+  });
 
   const handlePopup = (field, bit) => {
     setPopup((prev) => ({
@@ -110,6 +109,7 @@ function DegreePlan1(props) {
 
   const handleDegreeReqChange = (e) => {
     setDegreeReq(e.target.value);
+    setSelectedDegreeReqIdx(e.target.selectedIndex);
     setShowPublicDegreeReq(false);
   };
 
@@ -295,16 +295,19 @@ function DegreePlan1(props) {
 
           {/* options will be an array returned by API
                             options - degree req of current user */}
-          <div className={dp1Style.dropdownListWrapper} style={{ width: "90%" }}>
+          <div
+            className={dp1Style.dropdownListWrapper}
+            style={{ width: "90%" }}
+          >
             <Dropdown
               options={degreeReqOptions}
               isObject={true}
               objectField={"program_name"}
               selectedOption={selectedDegreeReq}
+              selectedIdx={selectedDegreeReqIdx}
               onOptionChange={handleDegreeReqChange}
             />
             &nbsp;
-            
             <IconButton
               className={dp1Style.editPlanButton}
               onClick={() => {
@@ -321,9 +324,7 @@ function DegreePlan1(props) {
             >
               <IndeterminateCheckBoxIcon fontSize="medium" />
             </IconButton>
-
           </div>
-          
         </div>
       </div>
 
@@ -334,7 +335,7 @@ function DegreePlan1(props) {
                             requirement */}
           <div className={dp1Style.DegreeReqListTitle}>
             {!showPublicDegreeReq
-              ? selectedDegreeReq
+              ? degreeReqOptions[selectedDegreeReqIdx]?.program_name
               : publicDegreeReqDetail.program_name}
           </div>
 
@@ -344,7 +345,7 @@ function DegreePlan1(props) {
             <DegreeReqDisplay
               reqDetail={
                 !showPublicDegreeReq
-                  ? selectedDegreeReqDetail
+                  ? degreeReqOptions[selectedDegreeReqIdx]
                   : publicDegreeReqDetail
               }
             />

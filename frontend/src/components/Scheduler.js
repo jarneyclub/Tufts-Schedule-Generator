@@ -39,9 +39,7 @@ import {
   RemoveSchedule,
   EditScheduleName,
 } from "./reusable/SchedulerPopup";
-import {
-  DegreeReqExpress,
-} from "./reusable/TabSwitch";
+import { DegreeReqExpress } from "./reusable/TabSwitch";
 
 const timeDefault = [
   {
@@ -182,10 +180,11 @@ function Scheduler(props) {
   const [scheduleOptions, setScheduleOptions] = useState([]);
   const [selectedSchedule, setSelectedSchedule] = useState("");
   const [selectedScheduleID, setSelectedScheduleID] = useState("");
+  const [selectedScheduleIdx, setSelectedScheduleIdx] = useState(0);
   /* filter Dropdown */
   const [attributes, setAttributes] = useState([]);
   const [selectedAttribute, setSelectedAttribute] = useState("");
-
+  const [selectedAttributeIdx, setSelectedAttributeIdx] = useState(0);
   const [coursePreference, setCoursePreference] = useState(boolStateDefault);
 
   const [selectedCourses, setSelectedCourses] = useState(
@@ -212,17 +211,17 @@ function Scheduler(props) {
 
   /*  Control for schedule plan dropdown change  */
   const handleScheduleChange = (e) => {
-    setSelectedSchedule(e.target.value);
-    const ind = scheduleOptions.findIndex(
-      (sched) => sched.sched_name === e.target.value.substr(3)
-    );
-    setSelectedScheduleID(scheduleOptions[ind].sched_id);
-    setSelectedCourses(scheduleOptions[ind].courses)
+    setSelectedSchedule(scheduleOptions[e.target.selectedIndex].sched_name);
+   
+    setSelectedScheduleIdx(e.target.selectedIndex);
+    setSelectedScheduleID(scheduleOptions[e.target.selectedIndex].sched_id);
+    setSelectedCourses(scheduleOptions[e.target.selectedIndex].courses);
   };
 
   /*  Control for search filter dropdown change  */
   const handleFilterChange = (e) => {
-    setSelectedAttribute(e.target.value);
+    setSelectedAttributeIdx(e.target.selectedIndex)
+    setSelectedAttribute(attributes[e.target.selectedIndex]);
   };
 
   const handlePopup = (field, bit) => {
@@ -482,6 +481,7 @@ function Scheduler(props) {
                   classes={sStyle.dropdown}
                   options={attributes}
                   selectedOption={selectedAttribute}
+                  selectedIdx={selectedAttributeIdx}
                   onOptionChange={handleFilterChange}
                   labelId="filter"
                   labelName="Filter"
@@ -630,13 +630,8 @@ function Scheduler(props) {
                       justifyContent: "space-between",
                     }}
                   />
-                ))
-              }
-              {
-                degreeReqTab === 2 && 
-                  <DegreeReqExpress />
-              }
-
+                ))}
+              {degreeReqTab === 2 && <DegreeReqExpress />}
             </div>
           </div>
         </div>
@@ -646,6 +641,7 @@ function Scheduler(props) {
             <Dropdown
               options={scheduleOptions}
               selectedOption={selectedSchedule}
+              selectedIdx={selectedScheduleIdx}
               onOptionChange={handleScheduleChange}
               customStyle={{ fontSize: "20px" }}
               isObject={true}

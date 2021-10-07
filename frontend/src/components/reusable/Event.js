@@ -55,7 +55,6 @@ function Event(props) {
       <div>{name}</div>
       <div>{time_start.concat("~").concat(time_end)}</div>
       <div>{location}</div>
-
     </div>
   );
 }
