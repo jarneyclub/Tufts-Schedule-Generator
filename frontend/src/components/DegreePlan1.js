@@ -80,10 +80,10 @@ function DegreePlan1(props) {
     []
   ); /*  ALL the private degree reqs to current user  */
   const [publicReqOptions, setPublicReqOptions] = useState([]);
-  const [selectedDegreeReq, setDegreeReq] =
-    useState(
-      "PLACEHOLDER"
-    ); /*  Holds the current private Degree Requirement Displayed */
+
+  const [selectedDegreeReqIdx, setSelectedDegreeReqIdx] = useState(0);
+  const [selectedDegreeReq, setDegreeReq] = useState(""); /*  Holds the current private Degree Requirement Displayed */
+  
   const [selectedDegreeReqDetail, setDegreeReqDetail] = useState();
 
   const [publicDegreeReqDetail, setPublicDegreeReqDetail] = useState({});
@@ -109,6 +109,7 @@ function DegreePlan1(props) {
 
   const handleDegreeReqChange = (e) => {
     setDegreeReq(e.target.value);
+    setSelectedDegreeReqIdx(e.target.selectedIndex);
     setShowPublicDegreeReq(false);
   };
 
@@ -303,6 +304,7 @@ function DegreePlan1(props) {
               isObject={true}
               objectField={"program_name"}
               selectedOption={selectedDegreeReq}
+              selectedIdx={selectedDegreeReqIdx}
               onOptionChange={handleDegreeReqChange}
             />
             &nbsp;

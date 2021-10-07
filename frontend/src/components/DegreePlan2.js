@@ -160,6 +160,7 @@ function DegreePlan2(props) {
   const [searchCourseResult, setSearchCourseResult] = useState([]);
   const [selectedPlanName, setSelectedPlanName] = useState("");
   const [selectedPlanID, setSelectedPlanID] = useState("");
+  const [selectedPlanIdx, setSelectedPlanIdx] = useState(0);
 
   const [degreeReqOptions, setDegreeReqOptions] = useState([]);
   const [selectedDegreeReq, setSelectedDegreeReq] = useState(0);
@@ -179,12 +180,13 @@ function DegreePlan2(props) {
   const handleSemesterPlanChange = (e) => {
     setSelectedPlanName(e.target.value);
     console.log("semesterPlanChange e:", e);
+    setSelectedPlanIdx(e.target.selectedIndex);
     setSelectedPlanID(handleSelectedPlanNameToID(e.target.value));
 
-    const ind = semesterPlanOptions.findIndex(
-      (plan) => plan.plan_name === e.target.value.substr(3)
-    );
-    setCardOptions(semesterPlanOptions[ind].terms);
+    // const ind = semesterPlanOptions.findIndex(
+    //   (plan) => plan.plan_name === e.target.value.substr(3)
+    // );
+    setCardOptions(semesterPlanOptions[e.target.selectedIndex].terms);
   };
 
   const handleRemoveCards = (cardsToRemove) => {
@@ -498,6 +500,7 @@ function DegreePlan2(props) {
                 isObject={true}
                 objectField={"plan_name"}
                 selectedOption={selectedPlanName}
+                selectedIdx = {selectedPlanIdx}
                 onOptionChange={handleSemesterPlanChange}
                 customStyle={{ fontSize: "20px" }}
               />
