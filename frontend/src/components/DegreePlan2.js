@@ -563,24 +563,7 @@ function DegreePlan2(props) {
             </div>
 
             {/* Degree Requirment Container */}
-            {/* <div className={dp2Style.degreeReqContainer}>
-              <div className={dp2Style.degreeReqTitleContainer}>
-                <IconButton onClick={() => handleSwitchReq(-1)}>
-                  <ArrowLeftIcon fontSize="large" />
-                </IconButton>
-                <div style={{ color: "#ffffff" }}>
-                  {degreeReqOptions[selectedDegreeReq]?.program_name}
-                </div>
-                <IconButton color="action" onClick={() => handleSwitchReq(1)}>
-                  <ArrowRightIcon fontSize="large" />
-                </IconButton>
-              </div>
-              <div className={dp2Style.degreeReqDetailContainer}>
-                <DegreeReqDisplay
-                  reqDetail={degreeReqOptions[selectedDegreeReq]}
-                />
-              </div>
-            </div> */}
+         
             <DegreeReqExpress />
           </div>
 
@@ -592,7 +575,7 @@ function DegreePlan2(props) {
             <div className={dp2Style.semesterPlanTitleContainer}>
               <div />
               <div className={dp2Style.semesterPlanTitle}>
-                {selectedPlanName}
+                {semesterPlanOptions[selectedPlanIdx]?.plan_name}
               </div>
               <div className={dp2Style.editSemesterButtonContainer}>
                 <IconButton
