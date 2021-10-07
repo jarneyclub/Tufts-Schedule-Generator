@@ -345,7 +345,7 @@ function DegreePlan1(props) {
             <DegreeReqDisplay
               reqDetail={
                 !showPublicDegreeReq
-                  ? selectedDegreeReqDetail
+                  ? degreeReqOptions[selectedDegreeReqIdx]
                   : publicDegreeReqDetail
               }
             />
