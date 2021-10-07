@@ -41,7 +41,7 @@ function EditScheduleName(props) {
     scheduleID,
     scheduleName,
     onClose,
-    refreshPlans,
+    refreshSchedules,
     onShowAlert,
     setAlertMessage,
     setAlertSeverity,
@@ -78,7 +78,7 @@ function EditScheduleName(props) {
         setAlertMessage("Schedule name changed!");
         setAlertSeverity("success");
         onShowAlert();
-        refreshPlans();
+        refreshSchedules();
         onClose();
       })
       .catch((error) => {
