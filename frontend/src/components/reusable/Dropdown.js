@@ -22,6 +22,7 @@ function Dropdown(props) {
   const {
     options,
     selectedOption,
+    selectedIdx,
     onOptionChange,
     name,
     labelName,
@@ -49,7 +50,7 @@ function Dropdown(props) {
     <FormControl className={dStyle.formContainer}>
       <InputLabel htmlFor={labelId}>{labelName}</InputLabel>
       <Select
-        value={selectedOption}
+        value={selectedIdx}
         native
         onChange={(e) => handleChange(e)}
         name={name}
@@ -60,15 +61,14 @@ function Dropdown(props) {
       >
         {!isObject
           ? options?.map((opt, idx) => (
-              <option value={opt} key={opt} id={idx}>
+              <option value={idx} key={opt} >
                 &nbsp;&nbsp;&nbsp;{opt}
               </option>
             ))
           : options?.map((opt, idx) => (
               <option
-                value={opt.objectField}
+                value={idx}
                 key={opt[objectField]}
-                index={idx}
               >
                 &nbsp;&nbsp;&nbsp;{opt[objectField]}
               </option>

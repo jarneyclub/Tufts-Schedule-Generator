@@ -180,10 +180,11 @@ function Scheduler(props) {
   const [scheduleOptions, setScheduleOptions] = useState([]);
   const [selectedSchedule, setSelectedSchedule] = useState("");
   const [selectedScheduleID, setSelectedScheduleID] = useState("");
+  const [selectedScheduleIdx, setSelectedScheduleIdx] = useState(0);
   /* filter Dropdown */
   const [attributes, setAttributes] = useState([]);
   const [selectedAttribute, setSelectedAttribute] = useState("");
-
+  const [selectedAttributeIdx, setSelectedAttributeIdx] = useState(0);
   const [coursePreference, setCoursePreference] = useState(boolStateDefault);
 
   const [selectedCourses, setSelectedCourses] = useState(
@@ -214,12 +215,14 @@ function Scheduler(props) {
     const ind = scheduleOptions.findIndex(
       (sched) => sched.sched_name === e.target.value.substr(3)
     );
-    setSelectedScheduleID(scheduleOptions[ind].sched_id);
-    setSelectedCourses(scheduleOptions[ind].courses);
+    setSelectedScheduleIdx(e.target.selectedIndex);
+    setSelectedScheduleID(scheduleOptions[e.target.selectedIndex].sched_id);
+    setSelectedCourses(scheduleOptions[e.target.selectedIndex].courses);
   };
 
   /*  Control for search filter dropdown change  */
   const handleFilterChange = (e) => {
+    setSelectedAttributeIdx(e.target.selectedIndex)
     setSelectedAttribute(e.target.value);
   };
 
@@ -480,6 +483,7 @@ function Scheduler(props) {
                   classes={sStyle.dropdown}
                   options={attributes}
                   selectedOption={selectedAttribute}
+                  selectedIdx={selectedAttributeIdx}
                   onOptionChange={handleFilterChange}
                   labelId="filter"
                   labelName="Filter"
@@ -639,6 +643,7 @@ function Scheduler(props) {
             <Dropdown
               options={scheduleOptions}
               selectedOption={selectedSchedule}
+              selectedIdx={selectedScheduleIdx}
               onOptionChange={handleScheduleChange}
               customStyle={{ fontSize: "20px" }}
               isObject={true}
