@@ -344,7 +344,7 @@ paths:
                           type: array
                           items:
                             $ref: "#/components/schemas/DegreePlanTerm"
-/degreeplan/terms:
+  /degreeplan/terms:
     delete:
       tags:
         - Degree Plan
