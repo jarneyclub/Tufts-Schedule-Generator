@@ -335,7 +335,7 @@ function DegreePlan1(props) {
                             requirement */}
           <div className={dp1Style.DegreeReqListTitle}>
             {!showPublicDegreeReq
-              ? degreeReqOptions[selectedDegreeReqIdx].program_name
+              ? degreeReqOptions[selectedDegreeReqIdx]?.program_name
               : publicDegreeReqDetail.program_name}
           </div>
 
