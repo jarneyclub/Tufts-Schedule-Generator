@@ -211,10 +211,8 @@ function Scheduler(props) {
 
   /*  Control for schedule plan dropdown change  */
   const handleScheduleChange = (e) => {
-    setSelectedSchedule(e.target.value);
-    const ind = scheduleOptions.findIndex(
-      (sched) => sched.sched_name === e.target.value.substr(3)
-    );
+    setSelectedSchedule(scheduleOptions[e.target.selectedIndex].sched_name);
+   
     setSelectedScheduleIdx(e.target.selectedIndex);
     setSelectedScheduleID(scheduleOptions[e.target.selectedIndex].sched_id);
     setSelectedCourses(scheduleOptions[e.target.selectedIndex].courses);
@@ -223,7 +221,7 @@ function Scheduler(props) {
   /*  Control for search filter dropdown change  */
   const handleFilterChange = (e) => {
     setSelectedAttributeIdx(e.target.selectedIndex)
-    setSelectedAttribute(e.target.value);
+    setSelectedAttribute(attributes[e.target.selectedIndex]);
   };
 
   const handlePopup = (field, bit) => {
