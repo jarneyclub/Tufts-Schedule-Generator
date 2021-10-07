@@ -344,6 +344,43 @@ paths:
                           type: array
                           items:
                             $ref: "#/components/schemas/DegreePlanTerm"
+/degreeplan/terms:
+    delete:
+      tags:
+        - Degree Plan
+      summary: Delete terms from a degree plan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                plan_term_ids:
+                  type: array
+                  items:
+                    type: string
+                plan_id:
+                  type: string
+      responses:
+        200:
+          description: Changed degree plan
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  plan:
+                    type: object
+                    properties:
+                      plan_id:
+                        type: string
+                      plan_name:
+                        type: string
+                      courses:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/DegreePlanTerm"
   /degreeplan/term:
     post:
       tags:
