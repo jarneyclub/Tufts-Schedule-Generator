@@ -284,7 +284,6 @@ paths:
                         type: array
                         items:
                           $ref: "#/components/schemas/DegreePlanTerm"
-  /degreeplan/?plan_id={planid}:
     delete:
       tags:
         - Degree Plan

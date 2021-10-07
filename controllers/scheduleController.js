@@ -176,6 +176,19 @@ exports.changeScheduleName = async (req, res) => {
 
 }
 
+exports.deleteSchedule = async (req, res) => {
+    try {
+        let {sched_id} = req.body;
+        await scheduleHandler.deleteSchedule(sched_id);
+        res.json({});
+    }
+    catch (err) {
+        errorHandler(err, "deleteSchedule", res);
+    }
+}
+
+
+
 const errorHandler = (err, endpoint, res) => {
     console.error("(degreeReqController/errorhandler) err: ", err);
     if (err.detail !== undefined && err.title != undefined) {

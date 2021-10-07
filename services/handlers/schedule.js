@@ -102,3 +102,9 @@ exports.getSchedulesOfUser = async (userId) => {
     return documents
 
 }
+
+exports.deleteSchedule = async (id) => {
+    let scheduleCollection = mongoose.connection.collection("schedules"); // get MongoDB collection
+    await scheduleCollection.deleteOne({_id: mongoose.Types.ObjectId(id)});
+    return true;
+}
