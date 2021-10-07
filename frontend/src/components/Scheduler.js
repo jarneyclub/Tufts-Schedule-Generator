@@ -708,6 +708,8 @@ function Scheduler(props) {
             onShowAlert={() => setShowAlert(true)}
             setAlertMessage={setAlertMessage}
             setAlertSeverity={setAlertSeverity}
+            scheduleID={scheduleOptions[selectedScheduleIdx].sched_id}
+            scheduleName={scheduleOptions[selectedScheduleIdx].sched_name}
           />
         </Popup>
       )}

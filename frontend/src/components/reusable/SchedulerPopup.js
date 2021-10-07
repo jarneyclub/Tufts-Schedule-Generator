@@ -29,6 +29,7 @@ import CourseSearchBar from "../reusable/CourseSearchBar";
 import SnackBarAlert from "../reusable/SnackBarAlert";
 import DegreeReqDisplay from "../reusable/DegreeReqDisplay";
 import JarUserLogin from "../reusable/JarUserLogin";
+import { json } from "body-parser";
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
@@ -37,16 +38,16 @@ import JarUserLogin from "../reusable/JarUserLogin";
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function EditScheduleName(props) {
   const {
+    scheduleID,
+    scheduleName,
     onClose,
     refreshPlans,
-    planName,
-    planID,
     onShowAlert,
     setAlertMessage,
     setAlertSeverity,
   } = props;
 
-  const [editName, setEditName] = useState(planName);
+  const [editName, setEditName] = useState(scheduleName);
 
   const handleClose = () => {
     onClose();
@@ -57,28 +58,28 @@ function EditScheduleName(props) {
   const handleSaveEdit = () => {
     /* do something API?? pass in the selectedCards arr */
     patchEditName();
-    refreshPlans();
-
-    onClose();
+    
   };
 
   const patchEditName = async () => {
     const requestOption = {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        sched_id: scheduleID,
+        new_name: editName,
+      })
     };
-    const url = "https://jarney.club/api/schedule"
-      .concat(planID)
-      .concat("/plan_name/")
-      .concat(editName);
     console.log("requestOption for fetchCreatePrivateReqs", requestOption);
-    await fetch(url, requestOption)
+    await fetch("https://jarney.club/api/schedule/name", requestOption)
       .then((response) => response.json())
       .then((result) => {
-        console.log("result from editPlanName: ", result);
+        console.log("result from editScheduleName: ", result);
         setAlertMessage("Schedule name changed!");
         setAlertSeverity("success");
         onShowAlert();
+        refreshPlans();
+        onClose();
       })
       .catch((error) => {
         console.log("error from editPlanName: ", error);
