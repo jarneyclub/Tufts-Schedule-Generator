@@ -36,7 +36,10 @@ import JarUserLogin from "../reusable/JarUserLogin";
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function AddSemester(props) {
-  const { onClose, planID, planName, refreshPlans } = props;
+  const { onClose, planID, planName, refreshPlans,
+    onShowAlert,
+    setAlertMessage,
+    setAlertSeverity, } = props;
 
   /* Year Dropdown */
   const [yearOptions, setYearOptions] = useState([
@@ -61,14 +64,9 @@ function AddSemester(props) {
     setSelectedYear(e.target.value);
   };
 
-  const handleClose = () => {
-    onClose();
-  };
-
   const handleAdd = () => {
     /* do something API??  */
     fetchAdd();
-    /* Then Close */
   };
 
   const fetchAdd = async () => {
@@ -87,6 +85,9 @@ function AddSemester(props) {
       .then((result) => {
         refreshPlans();
         console.log("result from fetchAdd", result);
+        setAlertMessage("Term added!");
+        setAlertSeverity("success");
+        onShowAlert();
         onClose();
       })
       .catch((error) => console.log("error from fetchAdd", error));
@@ -96,7 +97,7 @@ function AddSemester(props) {
       <div className={pStyle.headerContainer}>
         <IconButton
           type="button"
-          onClick={handleClose}
+          onClick={onClose}
           className={pStyle.closeButton}
         >
           <CancelIcon />
@@ -132,7 +133,9 @@ function AddSemester(props) {
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function RemoveSemester(props) {
-  const { onClose, cardOptions, planName, planID, refreshPlans } = props;
+  const { onClose, cardOptions, planName, planID, refreshPlans, onShowAlert,
+    setAlertMessage,
+    setAlertSeverity, } = props;
   console.log("cardoptions from removeSemester: ", cardOptions);
   /*  Stores the cards to be deleted  */
   const [selectedCards, setSelectedCards] = useState([]);
@@ -164,11 +167,22 @@ function RemoveSemester(props) {
   };
 
   const fetchDeleteTerms = async () => {
-    await fetch("https://jarney.club/api/degreeplan/term/")
+    const requestOption = {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ 
+        plan_term_ids: selectedCards,
+        plan_id: planID,
+      }),
+    }; 
+    await fetch("https://jarney.club/api/degreeplan/terms", requestOption)
       .then((response) => response.json())
       .then((result) => {
-        console.log("result from Degree Plan Term remove", result);
+        console.log("result from Degree Plan Terms remove", result);
         refreshPlans();
+        setAlertMessage("Plan(s) removed!");
+        setAlertSeverity("success");
+        onShowAlert();
         onClose();
       });
   };
@@ -194,7 +208,10 @@ function RemoveSemester(props) {
             />
           ))}
         </div>
-
+        <Button className={pStyle.cancelButton} onClick={handleClose}>
+          CANCEL
+        </Button>
+        <br />
         <Button className={pStyle.submitButton} onClick={handleRemove}>
           REMOVE
         </Button>
@@ -209,7 +226,9 @@ function RemoveSemester(props) {
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function EditPlanName(props) {
-  const { onClose, refreshPlans, planName, planID } = props;
+  const { onClose, refreshPlans, planName, planID, onShowAlert,
+    setAlertMessage,
+    setAlertSeverity, } = props;
 
   const [editName, setEditName] = useState(planName);
 
@@ -222,9 +241,9 @@ function EditPlanName(props) {
   const handleSaveEdit = () => {
     /* do something API?? pass in the selectedCards arr */
     patchEditName();
-    refreshPlans();
+    
     /* Then Close */
-    onClose();
+    
   };
 
   const patchEditName = async () => {
@@ -239,7 +258,14 @@ function EditPlanName(props) {
     console.log("requestOption for fetchCreatePrivateReqs", requestOption);
     await fetch(url, requestOption)
       .then((response) => response.json())
-      .then((result) => console.log("result from editPlanName: ", result))
+      .then((result) => {
+        console.log("result from editPlanName: ", result)
+        refreshPlans();
+        setAlertMessage("Plan(s) removed!");
+        setAlertSeverity("success");
+        onShowAlert();
+        onClose();
+      })
       .catch((error) => console.log("error from editPlanName: ", error));
   };
 
@@ -318,7 +344,9 @@ function AddPlan(props) {
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function RemovePlan(props) {
-  const { onClose, planName, planID, refreshPlans } = props;
+  const { onClose, planName, planID, refreshPlans, onShowAlert,
+    setAlertMessage,
+    setAlertSeverity, } = props;
 
   const handleClose = () => {
     onClose();
@@ -330,9 +358,7 @@ function RemovePlan(props) {
   };
 
   const fetchDelete = async () => {
-    await fetch("https://jarney.club/api/degreeplan/".concat(planID), {
-      method: "DELETE",
-    })
+    await fetch("https://jarney.club/api/degreeplan/?plan_id=".concat(planID))
       .then((response) => response.json())
       .then((result) => {
         console.log("result from Degree plan Delete", result);

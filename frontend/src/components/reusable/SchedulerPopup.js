@@ -64,7 +64,7 @@ function EditScheduleName(props) {
   const patchEditName = async () => {
     const requestOption = {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "accept": "application/json" },
       body: JSON.stringify({
         sched_id: scheduleID,
         new_name: editName,
