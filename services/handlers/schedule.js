@@ -56,7 +56,7 @@ exports.updateSchedule = async (id, filter, courses, classes) => {
     }
 }
 
-exports.updateScheduleName = async (id, newName) => {
+exports.changeScheduleName = async (id, newName) => {
     // TODO no schedule with given id was found
     // update schedule 
     let newSchedule = await Schedule.findOneAndUpdate({
@@ -73,7 +73,7 @@ exports.updateScheduleName = async (id, newName) => {
         sched_name : newSchedule.sched_name,
         user_id    : newSchedule.user_id,
         filter     : newSchedule.filter,
-        classes     : classes,
+        classes    : newSchedule.classes,
         courses    : newSchedule.courses,
         term       : newSchedule.term
     }
