@@ -361,7 +361,7 @@ function RemovePlan(props) {
   const fetchDelete = async () => {
     const requestOption = {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
+      headers: { "accept": "*/*" },
     };
     await fetch("https://jarney.club/api/degreeplan?plan_id=".concat(planID), requestOption)
       .then((response) => response.json())
