@@ -23,11 +23,13 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import dp1Style from "./style/DegreePlan1.module.css";
 import pStyle from "./reusable/reusableStyles/Popup.module.css";
 import Popup from "./reusable/Popup";
+import SnackBarAlert from "./reusable/SnackBarAlert";
 import Dropdown from "./reusable/Dropdown";
 import DegreeReqEdit from "./reusable/DegreeReqEdit";
 import dStyle from "./reusable/reusableStyles/Dropdown.module.css";
 import DegreeReqDisplay from "./reusable/DegreeReqDisplay";
 import JarUserLogin from "./reusable/JarUserLogin";
+import { RemovePrivReq } from "./reusable/DegreePlan1Popup";
 
 /* scripts */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -96,9 +98,13 @@ function DegreePlan1(props) {
   const [newMMPopup, setNewMMPopup] =
     useState(false); /* Add new Major / Minor Popup */
   const [popup, setPopup] = useState({
-    removeReq: false,
+    removePrivateReq: false,
     addReq: false,
   });
+
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState();
+  const [alertSeverity, setAlertSeverity] = useState();
 
   const handlePopup = (field, bit) => {
     setPopup((prev) => ({
@@ -107,10 +113,14 @@ function DegreePlan1(props) {
     }));
   };
 
+  const handleCloseAlert = () => {
+    setShowAlert(false);
+  };
+
   const handleDegreeReqChange = (e) => {
     setDegreeReq(e.target.value);
     setSelectedDegreeReqIdx(e.target.selectedIndex);
-    setShowPublicDegreeReq(false);
+
   };
 
   const handleSearchChange = (e) => {
@@ -400,7 +410,7 @@ function DegreePlan1(props) {
                 isCreateMM={newMMPopup}
                 fetchCreate={fetchCreatePrivateReqs}
                 fetchSave={fetchSavePrivateReqs}
-                reqDetail={selectedDegreeReqDetail}
+                reqDetail={degreeReqOptions[selectedDegreeReqIdx]}
               />
             </Popup>
           )}
@@ -415,6 +425,27 @@ function DegreePlan1(props) {
           </Button>
         )} */}
       </div>
+      {
+        popup.removePrivateReq && 
+        <RemovePrivReq 
+          onClose={()=>handlePopup("removePrivateReq", false)}
+          privateReqName={degreeReqOptions[selectedDegreeReqIdx].program_name}
+          privateReqID={degreeReqOptions[selectedDegreeReqIdx]}
+          refreshPrivateReq={fetchPrivateReqs}
+          onShowAlert={() => setShowAlert(true)}
+          setAlertMessage={setAlertMessage}
+          setAlertSeverity={setAlertSeverity}
+        
+        />
+      }
+      {showAlert && (
+        <SnackBarAlert
+          severity={alertSeverity}
+          onCloseAlert={handleCloseAlert}
+          showAlert={showAlert}
+          message={alertMessage}
+        />
+      )}
       {!logged && (
         <Popup onClose={handleLoginPopup}>
           <JarUserLogin
