@@ -247,14 +247,17 @@ paths:
               schema:
                 type: object
                 properties:
-                  plan_id: 
-                    type: string
-                  plan_name:
-                    type: string
-                  terms:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/DegreePlan"
+                  plan:
+                    type: object
+                    properties:
+                      plan_id: 
+                        type: string
+                      plan_name:
+                        type: string
+                      terms:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/DegreePlan"
   /degreeplan?plan_id={planid}:
     get:
       tags:
