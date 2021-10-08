@@ -92,9 +92,9 @@ exports.signAccessTokenAndAttachCookie = async (req, res, next) => {
  * @param {*} next
  */
 exports.authenticateToken = async (req, res, next) => {
-    console.log("(authenticateToken) req.body", req.body);
+    // console.log("(authenticateToken) req.body", req.body);
     try {
-        console.log("(authenticateToken) req.cookies", req.cookies);
+        // console.log("(authenticateToken) req.cookies", req.cookies);
     }
     catch (e) {
         console.log("ERROR IN REQ.COOKIES");
@@ -108,7 +108,7 @@ exports.authenticateToken = async (req, res, next) => {
 
     if (token) {
         jwt.verify(token, process.env.TOKEN_SECRET, async (err, userdata) => {
-            console.log("(authenticateToken) userdata: ", userdata);
+            // console.log("(authenticateToken) userdata: ", userdata);
             if (err)
                 resHandler.respondWithCustomError("305", "401", "Authentication Error", "Token is invalid", res);
             let dbUsers = mongoose.connection.collection("users"); // get MongoDB collection
