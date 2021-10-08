@@ -255,7 +255,7 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/DegreePlan"
-  /degreeplan/?plan_id={planid}:
+  /degreeplan?plan_id={planid}:
     get:
       tags:
         - Degree Plan
