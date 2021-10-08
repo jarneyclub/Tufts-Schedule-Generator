@@ -292,7 +292,9 @@ function DegreePlan1(props) {
         {
           showPublicDegreeReq && 
           <div className={dp1Style.degreeReqListExpandable}>
-            <DegreeReqDisplay reqDetail={publicDegreeReqDetail}/>
+            <div className={dp1Style.degreeReqListExpandable}>
+              <DegreeReqDisplay reqDetail={publicDegreeReqDetail}/>
+            </div>
             <Button
             className={dp1Style.saveButton}
             onClick={() => fetchPublicToPrivate()}
