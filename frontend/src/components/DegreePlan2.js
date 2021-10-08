@@ -651,8 +651,8 @@ function DegreePlan2(props) {
         <Popup onClose={() => handlePopup("removePlan", false)}>
           <RemovePlan
             onClose={() => handlePopup("removePlan", false)}
-            planName={selectedPlanName}
-            planID={selectedPlanID}
+            planName={semesterPlanOptions[selectedPlanIdx]?.plan_name}
+            planID={semesterPlanOptions[selectedPlanIdx]?.plan_id}
             refreshPlans={fetchPlans}
             onShowAlert={() => setShowAlert(true)}
             setAlertMessage={setAlertMessage}
