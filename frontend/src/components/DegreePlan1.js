@@ -360,11 +360,7 @@ function DegreePlan1(props) {
                             display the info of the selected degree plan */}
           <div className={dp1Style.degreeReqListExpandable}>
             <DegreeReqDisplay
-              reqDetail={
-                !showPublicDegreeReq
-                  ? degreeReqOptions[selectedDegreeReqIdx]
-                  : publicDegreeReqDetail
-              }
+              reqDetail={degreeReqOptions[selectedDegreeReqIdx]}
             />
           </div>
 
