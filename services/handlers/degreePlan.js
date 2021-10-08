@@ -142,17 +142,14 @@ const getDegreePlan = async (query) => {
 const deleteDegreePlan = async (query) => {
     try {
         // get degree plan from database
-        const { plan_name, plan_id, terms } = await this.getDegreePlan(query);
+        const { plan_id, user_id } = await this.getDegreePlan(query);
 
         let dbPlans = mongoose.connection.collection("plans"); // get MongoDB collection
         let dbPlanTerms = mongoose.connection.collection("plan_terms"); // get MongoDB collection
         // delete all referenced plan terms
-        for (let i = 0; i < terms.length; i++) {
-            const {courses, plan_term_id, term} = terms[i];
-            await dbPlanTerms.deleteOne({_id: mongoose.Types.ObjectId(plan_term_id)})
-        }
+        await dbPlanTerms.deleteMany({ plan_id: mongoose.Types.ObjectId(plan_id) }); // delete all plan terms
         // delete degree plan
-        await dbPlans.deleteOne({_id: mongoose.Types.ObjectId(plan_id)});
+        await dbPlans.deleteOne({_id: mongoose.Types.ObjectId(plan_id), user_id: user_id});
 
         return true
 
