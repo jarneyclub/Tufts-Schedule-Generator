@@ -359,7 +359,7 @@ function RemovePlan(props) {
   };
 
   const fetchDelete = async () => {
-    await fetch("https://jarney.club/api/degreeplan/?plan_id=".concat(planID))
+    await fetch("https://jarney.club/api/degreeplan?plan_id=".concat(planID))
       .then((response) => response.json())
       .then((result) => {
         console.log("result from Degree plan Delete", result);
