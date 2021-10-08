@@ -150,7 +150,7 @@ const deleteDegreePlan = async (query) => {
         const { plan_name, plan_id, terms, user_id } = await this.getDegreePlan(query);
         if (user_id !== query.user_id) {
             /* the owner of the plan is not the request sender */
-            throw { id: "203", status: "403", title: "Degree Plan Error (deleteDegreePlan)", detail: "You do not have permission to delete this degree plan." };
+            throw { id: "203", status: "403", title: "Degree Plan Error (deleteDegreePlan)", detail: "You (" + query.user_id + ") do not have permission to delete this degree plan." };
         }
         // delete all referenced plan terms
         let dbPlanTerms = mongoose.connection.collection("plan_terms"); // get MongoDB collection
