@@ -706,8 +706,11 @@ function Scheduler(props) {
           <EditScheduleName
             onClose={() => handlePopup("editScheduleName", false)}
             onShowAlert={() => setShowAlert(true)}
+            refreshSchedules={fetchSavedSchedules}
             setAlertMessage={setAlertMessage}
             setAlertSeverity={setAlertSeverity}
+            scheduleID={scheduleOptions[selectedScheduleIdx].sched_id}
+            scheduleName={scheduleOptions[selectedScheduleIdx].sched_name}
           />
         </Popup>
       )}
