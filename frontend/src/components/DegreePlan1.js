@@ -419,7 +419,8 @@ function DegreePlan1(props) {
       </div>
       {
         popup.removePrivateReq && 
-        <RemovePrivReq 
+        <Popup onClose={()=>handlePopup("removePrivateReq", false)}>
+          <RemovePrivReq 
           onClose={()=>handlePopup("removePrivateReq", false)}
           privateReqName={degreeReqOptions[selectedDegreeReqIdx].program_name}
           privateReqID={degreeReqOptions[selectedDegreeReqIdx]}
@@ -428,7 +429,9 @@ function DegreePlan1(props) {
           setAlertMessage={setAlertMessage}
           setAlertSeverity={setAlertSeverity}
         
-        />
+          />
+        </Popup>
+        
       }
       {showAlert && (
         <SnackBarAlert
