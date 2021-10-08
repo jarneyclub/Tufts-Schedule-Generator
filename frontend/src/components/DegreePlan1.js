@@ -289,6 +289,19 @@ function DegreePlan1(props) {
             ))}
           </div>
         </div>
+        {
+          showPublicDegreeReq && 
+          <div className={dp1Style.degreeReqListExpandable}>
+            <DegreeReqDisplay reqDetail={publicDegreeReqDetail}/>
+            <Button
+            className={dp1Style.saveButton}
+            onClick={() => fetchPublicToPrivate()}
+          >
+            Add to my list
+          </Button>
+          </div>
+        }
+        
 
         
       </div>
@@ -355,7 +368,7 @@ function DegreePlan1(props) {
 
           {/* button that displays an overlay to edit current
                             displayed degree requirement */}
-          {!showPublicDegreeReq && (
+        
             <Button
               className={dp1Style.editButton}
               onClick={() => {
@@ -366,7 +379,7 @@ function DegreePlan1(props) {
             >
               Edit
             </Button>
-          )}
+          
           {editDRPopup && (
             <Popup onClose={() => setEditDRPopup(false)}>
               <DegreeReqEdit
@@ -380,14 +393,14 @@ function DegreePlan1(props) {
           )}
         </div>
 
-        {showPublicDegreeReq && (
+        {/* {showPublicDegreeReq && (
           <Button
             className={dp1Style.saveButton}
             onClick={() => fetchPublicToPrivate()}
           >
             Add to my list
           </Button>
-        )}
+        )} */}
       </div>
       {!logged && (
         <Popup onClose={handleLoginPopup}>
