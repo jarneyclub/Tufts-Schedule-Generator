@@ -150,6 +150,7 @@ const deleteDegreePlan = async (query) => {
         const { plan_name, plan_id, terms, user_id } = await this.getDegreePlan(query);
         if (user_id !== query.user_id) {
             /* the owner of the plan is not the request sender */
+            console.log("(degreePlan/deleteDegreePlan) deleteDegreePlan Userid mismatch", "user_id: ", user_id, "query.user_id: ", query.user_id);
             throw { id: "203", status: "403", title: "Degree Plan Error (deleteDegreePlan)", detail: "You (" + query.user_id + ") do not have permission to delete this degree plan." };
         }
         // delete all referenced plan terms
@@ -441,7 +442,6 @@ const errorHandler = (e, functionName) => {
             throw { id: "202", status: "404", title: "Degree Plan Error (" + functionName + ")", detail: e.message };
         }
         else {
-            console.error(e.message);
             throw { id: "000", status: "500", title: "Degree Plan Error (" + functionName + ")", detail: e.message };
         }
     }
