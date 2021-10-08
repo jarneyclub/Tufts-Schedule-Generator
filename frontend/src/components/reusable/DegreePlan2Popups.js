@@ -141,7 +141,7 @@ function RemoveSemester(props) {
   const [selectedCards, setSelectedCards] = useState([]);
 
   const handleCardChange = (e) => {
-    const val = e.target.value;
+    const val = e.target.id;
     const pos = selectedCards.indexOf(val);
     if (pos === -1) {
       /* was not in selectedCards array, aka was not selected, now select */
@@ -202,6 +202,7 @@ function RemoveSemester(props) {
             <input
               type="button"
               value={card.term}
+              id={card.plan_term_id}
               key={card}
               className={pStyle.inputBar}
               onClick={(e) => handleCardChange(e)}
