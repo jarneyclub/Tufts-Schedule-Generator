@@ -326,15 +326,7 @@ function DegreePlan2(props) {
     );
   };
 
-  const handleSwitchReq = (direction) => {
-    if (selectedDegreeReq === degreeReqOptions.length - 1 && direction === 1) {
-      setSelectedDegreeReq(0);
-    } else if (selectedDegreeReq === 0 && direction === -1) {
-      setSelectedDegreeReq(4);
-    } else {
-      setSelectedDegreeReq((prev) => prev + direction);
-    }
-  };
+  
 
   /*
    *  createnNewPlan()
@@ -368,18 +360,6 @@ function DegreePlan2(props) {
 
         // add an error message popup of some sort
         console.log("error from login: ", error);
-      });
-  };
-
-  const deletePlan = async (planID) => {
-    await fetch("https://jarney.club/api/degreeplan/".concat(planID))
-      .then((response) => response.json())
-      .then((result) => {
-        fetchPlans();
-        console.log("result from deletePlan: ", result);
-      })
-      .catch((error) => {
-        console.log("delete plan error: ", error);
       });
   };
 
@@ -621,6 +601,9 @@ function DegreePlan2(props) {
             planName={selectedPlanName}
             planID={selectedPlanID}
             refreshPlans={fetchPlans}
+            onShowAlert={() => setShowAlert(true)}
+            setAlertMessage={setAlertMessage}
+            setAlertSeverity={setAlertSeverity}
           />
         </Popup>
       )}
@@ -633,6 +616,9 @@ function DegreePlan2(props) {
             planName={selectedPlanName}
             planID={selectedPlanID}
             refreshPlans={fetchPlans}
+            onShowAlert={() => setShowAlert(true)}
+            setAlertMessage={setAlertMessage}
+            setAlertSeverity={setAlertSeverity}
           />
         </Popup>
       )}
@@ -643,6 +629,9 @@ function DegreePlan2(props) {
             planName={selectedPlanName}
             planID={selectedPlanID}
             refreshPlans={fetchPlans}
+            onShowAlert={() => setShowAlert(true)}
+            setAlertMessage={setAlertMessage}
+            setAlertSeverity={setAlertSeverity}
           />
         </Popup>
       )}
@@ -652,6 +641,9 @@ function DegreePlan2(props) {
             onClose={() => handlePopup("addPlan", false)}
             refreshPlans={fetchPlans}
             createNewPlan={createNewPlan}
+            onShowAlert={() => setShowAlert(true)}
+            setAlertMessage={setAlertMessage}
+            setAlertSeverity={setAlertSeverity}
           />
         </Popup>
       )}
@@ -662,6 +654,9 @@ function DegreePlan2(props) {
             planName={selectedPlanName}
             planID={selectedPlanID}
             refreshPlans={fetchPlans}
+            onShowAlert={() => setShowAlert(true)}
+            setAlertMessage={setAlertMessage}
+            setAlertSeverity={setAlertSeverity}
           />
         </Popup>
       )}
