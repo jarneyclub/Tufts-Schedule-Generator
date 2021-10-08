@@ -125,7 +125,7 @@ input {
   box-shadow: 0 4px 8px 0 rgba(90, 50, 191, 0.2),
     0 6px 20px 0 rgba(90, 50, 191, 0.19);
   border-radius: 12px;
-
+  width: 100%;
   box-sizing: border-box;
   margin-top: 10px;
   align-items: center;

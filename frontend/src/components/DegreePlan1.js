@@ -295,7 +295,7 @@ function DegreePlan1(props) {
 
       {/* * * * * * Includes the Degree Requirement Table * * * * * */}
       <div className={dp1Style.DegreeReqWrapper}>
-      <div className={dp1Style.myListWrapper}>
+        <div className={dp1Style.myListWrapper}>
           <h5>My Degree Requirements</h5>
 
           {/* options will be an array returned by API
@@ -335,11 +335,11 @@ function DegreePlan1(props) {
           
           {/* displays the name of the current selected degree
                             requirement */}
-          <div className={dp1Style.DegreeReqListTitle}>
+          {/* <div className={dp1Style.DegreeReqListTitle}>
             {!showPublicDegreeReq
               ? degreeReqOptions[selectedDegreeReqIdx]?.program_name
               : publicDegreeReqDetail.program_name}
-          </div>
+          </div> */}
 
           {/* info returned from API call
                             display the info of the selected degree plan */}
