@@ -84,10 +84,12 @@ exports.updateDegreePlanName = async (req, res) => {
 exports.deleteDegreePlan = async (req, res) => {
     var start = Date.now(); // begin timing API endpoint
     // get user request information
+    console.log("(dPCntrl/deleteDegreePlan) received request with query: ", req.query);
     let query = {
         user_id: req.userid,
         plan_id: req.query.plan_id
     }
+
     // delete degree plan and referenced plan terms
     degreePlanAPI.deleteDegreePlan(query)
     .then(result => {
