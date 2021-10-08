@@ -54,6 +54,7 @@ const createNewDegreePlan = async (schema) => {
         let result = {
             plan_id: newPlan._id.valueOf(),
             plan_name: newPlan.plan_name,
+            user_id: newPlan.user_id,
             terms: insertedPlanTerms
         };
         return result;
@@ -73,9 +74,12 @@ const getDegreePlan = async (query) => {
     try {
         let dbPlans = mongoose.connection.collection("plans"); // get MongoDB collection
         console.log("(database) getDegreePlan", "query: ", query);
+        queryUserId = query.user_id;
+        queryPlanId = query.plan_id;
+
         let matchStage = { $match: {
-            user_id: query.user_id,
-            _id: mongoose.Types.ObjectId(query.plan_id)
+            user_id: queryUserId,
+            _id: mongoose.Types.ObjectId(queryPlanId)
         }};
         let lookupStage = {
             $lookup: {
@@ -109,6 +113,7 @@ const getDegreePlan = async (query) => {
             let docToInsert = {
                 plan_name: doc["plan_name"],
                 plan_id: doc["_id"].valueOf(),
+                user_id: doc["user_id"],
                 terms: doc["terms"]
             }
             // convert term integer ids to desc e.g. 2218 -> "Fall 2018"
@@ -142,13 +147,16 @@ const getDegreePlan = async (query) => {
 const deleteDegreePlan = async (query) => {
     try {
         // get degree plan from database
-        const { plan_id, user_id } = await this.getDegreePlan(query);
-
-        let dbPlans = mongoose.connection.collection("plans"); // get MongoDB collection
-        let dbPlanTerms = mongoose.connection.collection("plan_terms"); // get MongoDB collection
+        const { plan_name, plan_id, terms, user_id } = await this.getDegreePlan(query);
+        if (user_id !== query.user_id) {
+            /* the owner of the plan is not the request sender */
+            throw { id: "203", status: "403", title: "Degree Plan Error", detail: "You do not have permission to delete this degree plan." };
+        }
         // delete all referenced plan terms
+        let dbPlanTerms = mongoose.connection.collection("plan_terms"); // get MongoDB collection
         await dbPlanTerms.deleteMany({ plan_id: mongoose.Types.ObjectId(plan_id) }); // delete all plan terms
         // delete degree plan
+        let dbPlans = mongoose.connection.collection("plans"); // get MongoDB collection
         await dbPlans.deleteOne({_id: mongoose.Types.ObjectId(plan_id), user_id: user_id});
 
         return true
