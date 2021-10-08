@@ -331,6 +331,42 @@ function DegreePlan1(props) {
       {/* * * * * * Includes the Degree Requirement Table * * * * * */}
       <div className={dp1Style.DegreeReqWrapper}>
         <div className={dp1Style.DegreeReqListWrapper}>
+        <div className={dp1Style.myListWrapper}>
+          <h5>My Degree Requirements</h5>
+
+          {/* options will be an array returned by API
+                            options - degree req of current user */}
+          <div
+            className={dp1Style.dropdownListWrapper}
+            style={{ width: "90%" }}
+          >
+            <Dropdown
+              options={degreeReqOptions}
+              isObject={true}
+              objectField={"program_name"}
+              selectedOption={selectedDegreeReq}
+              selectedIdx={selectedDegreeReqIdx}
+              onOptionChange={handleDegreeReqChange}
+            />
+            &nbsp;
+            <IconButton
+              className={dp1Style.editPlanButton}
+              onClick={() => {
+                setNewMMPopup(true);
+                setEditDRPopup(true);
+              }}
+            >
+              <AddBoxIcon fontSize="medium" />
+            </IconButton>
+            &nbsp;
+            <IconButton
+              className={dp1Style.editPlanButton}
+              onClick={() => handlePopup("removeReq", true)}
+            >
+              <IndeterminateCheckBoxIcon fontSize="medium" />
+            </IconButton>
+          </div>
+        </div>
           {/* displays the name of the current selected degree
                             requirement */}
           <div className={dp1Style.DegreeReqListTitle}>
