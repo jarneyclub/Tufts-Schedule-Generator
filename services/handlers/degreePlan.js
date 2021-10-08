@@ -48,7 +48,6 @@ const createNewDegreePlan = async (schema) => {
         // convert term int ids to term descriptions (e.g. 2218 -> "Fall 2018")
         for (let i = 0; i < insertedPlanTerms.length; i++) {
             insertedPlanTerms[i].term = termIntegerToDesc(insertedPlanTerms[i].term);
-            console.log("(degreePlan) termDesc: ", termDesc);
         }
         // formulate and send response
         let result = {
@@ -102,7 +101,8 @@ const getDegreePlan = async (query) => {
                         }
                     }
                 },
-                plan_name: "$plan_name"
+                plan_name: "$plan_name",
+                user_id: "$user_id"
             }
         };
         let cursor = dbPlans.aggregate([matchStage, lookupStage, projectionStage]);
@@ -150,7 +150,6 @@ const deleteDegreePlan = async (query) => {
         const { plan_name, plan_id, terms, user_id } = await this.getDegreePlan(query);
         if (user_id !== query.user_id) {
             /* the owner of the plan is not the request sender */
-            console.log("(degreePlan/deleteDegreePlan) deleteDegreePlan Userid mismatch", "user_id: ", user_id, "query.user_id: ", query.user_id);
             throw { id: "203", status: "403", title: "Degree Plan Error (deleteDegreePlan)", detail: "You (" + query.user_id + ") do not have permission to delete this degree plan." };
         }
         // delete all referenced plan terms
