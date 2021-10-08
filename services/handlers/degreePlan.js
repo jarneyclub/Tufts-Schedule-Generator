@@ -60,7 +60,7 @@ const createNewDegreePlan = async (schema) => {
         return result;
     }
     catch (e) {
-        errorHandler(e);
+        errorHandler(e, "createNewDegreePlan");
     }
 }
 
@@ -132,7 +132,7 @@ const getDegreePlan = async (query) => {
         return documents[0];
     }
     catch (e) {
-        errorHandler(e);
+        errorHandler(e, "getDegreePlan");
     }
 }
 
@@ -150,7 +150,7 @@ const deleteDegreePlan = async (query) => {
         const { plan_name, plan_id, terms, user_id } = await this.getDegreePlan(query);
         if (user_id !== query.user_id) {
             /* the owner of the plan is not the request sender */
-            throw { id: "203", status: "403", title: "Degree Plan Error", detail: "You do not have permission to delete this degree plan." };
+            throw { id: "203", status: "403", title: "Degree Plan Error (deleteDegreePlan)", detail: "You do not have permission to delete this degree plan." };
         }
         // delete all referenced plan terms
         let dbPlanTerms = mongoose.connection.collection("plan_terms"); // get MongoDB collection
@@ -163,7 +163,7 @@ const deleteDegreePlan = async (query) => {
 
     }
     catch (e) {
-        errorHandler(e);
+        errorHandler(e, "deleteDegreePlan");
     }
 }
 
@@ -194,7 +194,7 @@ const deleteDegreeTermMultiple = async (query) => {
         return newDegreePlan;
     }
     catch (e) {
-        errorHandler(e);
+        errorHandler(e, "deleteDegreeTermMultiple");
     }
 }
 
@@ -255,7 +255,7 @@ const getDegreePlans = async (query) => {
         return documents;
     }
     catch (e) {
-        errorHandler(e);
+        errorHandler(e, "getDegreePlans");
     }
 }
 
@@ -276,11 +276,11 @@ const updateDegreePlanName = async (query) => {
         });
         // confirm update
         if (updatedPlan === null)
-            throw { id: "202", status: "404", title: "Degree Plan Error", detail: "Plan with given identifiers were not found" };
+            throw { id: "202", status: "404", title: "Degree Plan Error (updateDegreePlanName) ", detail: "Plan with given identifiers were not found" };
         return updatedPlan._id.valueOf();
     }
     catch (e) {
-        errorHandler(e);
+        errorHandler(e, "updateDegreePlanName");
     }
 }
 
@@ -301,7 +301,7 @@ const createTerm = async (planId, planTermDesc, arrCourses) => {
         return planTerm._id.valueOf();
     }
     catch (e) {
-        errorHandler(e);
+        errorHandler(e, "createTerm");
     }
 }
 
@@ -333,11 +333,11 @@ const saveTerm = async (plan_term_id, setParams) => {
         });
         // confirm update
         if (planTerm === null)
-            throw { id: "202", status: "404", title: "Degree Plan Error", detail: "Plan term with given identifiers were not found" };
+            throw { id: "202", status: "404", title: "Degree Plan Error (saveTerm)", detail: "Plan term with given identifiers were not found. (planTerm == null)" };
         return planTerm._id.valueOf();
     }
     catch (e) {
-        errorHandler(e);
+        errorHandler(e, "saveTerm");
     }
 }
 
@@ -353,11 +353,11 @@ const deleteTerm = async (query) => {
         let dbPlanTerms = mongoose.connection.collection("plan_terms"); // get MongoDB collection
         let deleteResult = await dbPlanTerms.deleteOne({ user_id: query.userId, _id: mongoose.Types.ObjectId(query.planId) });
         if (deleteResult.n === 0)
-            throw { id: "202", status: "404", title: "Degree Plan Error", detail: "Plan term with given identifiers were not found" };
+            throw { id: "202", status: "404", title: "Degree Plan Error (deleteTerm)", detail: "Plan term with given identifiers were not found" };
         return true
     }
     catch (e) {
-        errorHandler(e);
+        errorHandler(e, "deleteTerm");
     }
 }
 
@@ -429,20 +429,20 @@ const descToTermInteger = (termDesc) => {
     }
 }
 
-const errorHandler = (e) => {
+const errorHandler = (e, functionName) => {
     if (e.message !== undefined) {
         if (e.message.indexOf("validation failed") > -1) {
             // console.log(e.errors['plan_name']);
             /* error is mongoose validation error */
-            throw { id: "201", status: "400", title: "Degree Plan Error", detail: e.message };
+            throw { id: "201", status: "400", title: "Degree Plan Error (" + functionName + ")" , detail: e.message };
         }
         else if (e.message.indexOf("No degree plan") > -1) {
             /* error is mongoose validation error */
-            throw { id: "202", status: "404", title: "Degree Plan Error", detail: e.message };
+            throw { id: "202", status: "404", title: "Degree Plan Error (" + functionName + ")", detail: e.message };
         }
         else {
             console.error(e.message);
-            throw { id: "000", status: "500", title: "Degree Plan Error", detail: e.message };
+            throw { id: "000", status: "500", title: "Degree Plan Error (" + functionName + ")", detail: e.message };
         }
     }
     else {
@@ -451,7 +451,7 @@ const errorHandler = (e) => {
             throw { id: e.id, status: e.status, title: e.title, detail: e.detail };
         }
         else {
-            throw { id: "000", status: "500", title: "Degree Plan Error", detail: e.message };
+            throw { id: "000", status: "500", title: "Degree Plan Error (" + functionName + ")", detail: e.message };
         }
     }
 }
