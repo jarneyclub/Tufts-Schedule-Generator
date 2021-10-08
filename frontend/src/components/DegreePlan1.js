@@ -278,32 +278,34 @@ function DegreePlan1(props) {
             }}
             className={dp1Style.inputSearch}
           />
-
-          <div className={dp1Style.searchListContainer}>
-            {publicReqOptions?.map((option) => (
-              <Button
-                className={dp1Style.publicReqButton}
-                onClick={() => handlePublicDegreeDisplay(option)}
-              >
-                {option.program_name}
-              </Button>
-            ))}
-          </div>
         </div>
-        {
-          showPublicDegreeReq && 
-          <div className={dp1Style.degreeReqListExpandable}>
-            <div className={dp1Style.DegreeReqListWrapper}>
-              <DegreeReqDisplay reqDetail={publicDegreeReqDetail}/>
+          <div className={dp1Style.DegreeReqListWrapper}>
+            <div className={dp1Style.searchListContainer}>
+              {publicReqOptions?.map((option) => (
+                <Button
+                  className={dp1Style.publicReqButton}
+                  onClick={() => handlePublicDegreeDisplay(option)}
+                >
+                  {option.program_name}
+                </Button>
+              ))}
             </div>
-            <Button
-            className={dp1Style.saveButton}
-            onClick={() => fetchPublicToPrivate()}
-          >
-            Add to my list
-          </Button>
+            {
+              showPublicDegreeReq && 
+              <div className={dp1Style.degreeReqListExpandable}>
+                  <DegreeReqDisplay reqDetail={publicDegreeReqDetail}/>
+                  <Button
+                  className={dp1Style.saveButton}
+                  onClick={() => fetchPublicToPrivate()}
+                >
+                  Add to my list
+                </Button>
+              </div>
+            }
           </div>
-        }
+          
+        
+        
         
 
         
