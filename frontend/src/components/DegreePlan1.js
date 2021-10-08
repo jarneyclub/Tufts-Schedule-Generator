@@ -245,6 +245,7 @@ function DegreePlan1(props) {
 
   useEffect(() => {
     fetchPublicReqs();
+    setShowPublicDegreeReq(false);
   }, [listSearchValue]);
 
   return (
@@ -292,7 +293,7 @@ function DegreePlan1(props) {
         {
           showPublicDegreeReq && 
           <div className={dp1Style.degreeReqListExpandable}>
-            <div className={dp1Style.degreeReqListExpandable}>
+            <div className={dp1Style.DegreeReqListWrapper}>
               <DegreeReqDisplay reqDetail={publicDegreeReqDetail}/>
             </div>
             <Button
