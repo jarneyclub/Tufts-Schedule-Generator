@@ -323,14 +323,6 @@ function DegreePlan1(props) {
         </div>
           
             
-            
-         
-          
-        
-        
-        
-
-        
       </div>
 
       {/* * * * * * Includes the Degree Requirement Table * * * * * */}
@@ -365,7 +357,7 @@ function DegreePlan1(props) {
             &nbsp;
             <IconButton
               className={dp1Style.editPlanButton}
-              onClick={() => handlePopup("removeReq", true)}
+              onClick={() => handlePopup("removePrivateReq", true)}
             >
               <IndeterminateCheckBoxIcon fontSize="medium" />
             </IconButton>
