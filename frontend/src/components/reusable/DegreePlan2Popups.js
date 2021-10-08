@@ -180,7 +180,7 @@ function RemoveSemester(props) {
       .then((result) => {
         console.log("result from Degree Plan Terms remove", result);
         refreshPlans();
-        setAlertMessage("Plan(s) removed!");
+        setAlertMessage("Term(s) removed!");
         setAlertSeverity("success");
         onShowAlert();
         onClose();
@@ -262,7 +262,7 @@ function EditPlanName(props) {
       .then((result) => {
         console.log("result from editPlanName: ", result)
         refreshPlans();
-        setAlertMessage("Plan(s) removed!");
+        setAlertMessage("Plan name changed successfully!");
         setAlertSeverity("success");
         onShowAlert();
         onClose();
@@ -364,6 +364,9 @@ function RemovePlan(props) {
       .then((result) => {
         console.log("result from Degree plan Delete", result);
         refreshPlans();
+        setAlertMessage("Plan removed!");
+        setAlertSeverity("success");
+        onShowAlert();
         onClose();
       })
       .catch((error) => console.log("error from Degree Plan Delete", error));
