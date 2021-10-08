@@ -58,11 +58,6 @@ exports.updateSchedule = async (req, res) => {
                 let currSection      = arrSections[j];
                 courseNum            = currSection.course_num;
                 courseTitle          = currSection.course_title;
-                /* TODO: debug courseTitle is undefined*/
-                console.log("(scheduleCntrl) currSection: ", currSection);
-                console.log("(scheduleCntrl) currSection.course_title: ", currSection.course_title);
-                console.log("(scheduleCntrl) currSection['course_title']: ", currSection['course_title']);
-                console.log("(scheduleCntrl) courseTitle: ", courseTitle);
                 let sectionId        = currSection._id;
                 let sectionUnits     = currSection.units;
                 let sectionNum       = currSection.section_num;

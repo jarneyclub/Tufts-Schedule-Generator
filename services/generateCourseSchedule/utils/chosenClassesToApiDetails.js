@@ -45,8 +45,7 @@ const chosenClassesToApiDetails = (global) => {
 
         let location = room + "," + city;
         let eventName = sectionName;
-        // commented Sep 30 2021 becuase courseName was getting undefined
-        let eventDetails = /*courseName +*/ ", " + courseId;
+        let eventDetails = courseName + ", " + courseId;
 
         let eventObject = {
             name: eventName,
