@@ -51,7 +51,7 @@ exports.signAccessTokenAndSendAsCookie = async (res, userid, password) => {
     if (result === null)
         resHandler.respondWithCustomError("104", "403", "Registration Error", "Email is not registered. Please register first.", res);
         
-    let token = jwt.sign({ userid: userid, password: password, role: result.role}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
+    let token = jwt.sign({ userid: userid, role: result.role}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
     // res.json({"token": token});
     res.cookie("access_token", token, {
         maxAge: 24 * 60 * 60 * 1000,
@@ -72,7 +72,7 @@ exports.signAccessTokenAndSendAsCookie = async (res, userid, password) => {
  * @param {*} res
  */
 exports.signAccessTokenAndAttachCookie = async (req, res, next) => {
-    let token = jwt.sign({ userid: req.userid, password: req.password, role: req.role}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
+    let token = jwt.sign({ userid: req.userid, role: req.role}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
     res.cookie("access_token", token, {
         maxAge: 24 * 60 * 60 * 1000,
         httpOnly: true,
@@ -121,7 +121,6 @@ exports.authenticateToken = async (req, res, next) => {
                         "Authentication Error", "Token is invalid. Wrong user.", res);
             
             req.userid = userdata.userid;
-            req.password = userdata.password;
             req.role = userdata.role;
             req.firstname = result.first_name;
             req.lastname = result.last_name;
