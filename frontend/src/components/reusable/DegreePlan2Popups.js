@@ -252,7 +252,7 @@ function EditPlanName(props) {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
     };
-    const url = "https://jarney.club/api/degreereq/private/"
+    const url = "https://jarney.club/api/degreeplan/"
       .concat(planID)
       .concat("/plan_name/")
       .concat(editName);
