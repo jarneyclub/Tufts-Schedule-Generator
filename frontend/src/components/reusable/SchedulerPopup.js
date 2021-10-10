@@ -128,23 +128,13 @@ function AddSchedule(props) {
   const handleNameChange = (e) => {
     setScheduleName(e.target.value);
   };
-  const handleCheckDuplicate = () => {
-    scheduleOptions?.map((opt) => {
-      if (opt.sched_name === scheduleName) return true;
-    });
-
-    return false;
-  };
+  
 
   const handleAdd = () => {
     /* do something API?? pass in the selectedCards arr */
-    if (!handleCheckDuplicate) {
+
       onCreateSchedule(scheduleName);
-      /* Then Close */
-      onClose();
-    } else {
-      // give warning
-    }
+
   };
 
   return (

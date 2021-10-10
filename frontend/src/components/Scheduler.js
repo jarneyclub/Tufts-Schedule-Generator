@@ -344,9 +344,10 @@ function Scheduler(props) {
           fetchCreateSchedule("Schedule #1");
         } else {
           setScheduleOptions(result.schedules);
-          setSelectedSchedule(result.schedules[0].sched_name);
-          setSelectedScheduleID(result.schedules[0].sched_id);
-          setSelectedCourses(result.schedules[0].courses);
+          setSelectedSchedule(result.schedules[selectedScheduleIdx].sched_name);
+          setSelectedScheduleID(result.schedules[selectedScheduleIdx].sched_id);
+          setSelectedCourses(result.schedules[selectedScheduleIdx]?.courses);
+          setClasses(result.schedules[selectedScheduleIdx]?.classes);
         }
       })
       .catch((error) => console.log("error from fetchSavedSchedules", error));
@@ -412,6 +413,8 @@ function Scheduler(props) {
         setAlertMessage("Create success!");
         setAlertSeverity("success");
         setShowAlert(true);
+        handlePopup("addSchedule", false)
+        
       })
       .catch((error) => console.log("generate schedule error: ", error));
   };
