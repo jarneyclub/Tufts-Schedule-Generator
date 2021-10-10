@@ -272,8 +272,6 @@ function DegreePlan1(props) {
         {/* SEARCH CONTAINER for an Existing Degree Requirement */}
         <div className={dp1Style.myListWrapper}>
           <h5 style={{textAlign:"center"}}>Public degree requirements</h5>
-        </div>
-        <div className={dp1Style.existListWrapper}>
           <TextField
             // label="Search Course"
             placeholder="Look for other programs..."
@@ -292,7 +290,10 @@ function DegreePlan1(props) {
             }}
             className={dp1Style.inputSearch}
           />
-          <div className={dp1Style.searchListContainer}>
+        </div>
+        <div className={dp1Style.existListWrapper}>
+          
+            <div className={dp1Style.searchListContainer}>
               {publicReqOptions?.map((option) => (
                 <Button
                   className={dp1Style.publicReqButton}
