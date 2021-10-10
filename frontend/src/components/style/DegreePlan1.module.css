@@ -122,7 +122,7 @@ input {
 .myListWrapper {
   display: flex;
   flex-direction: column;
-  background-color: rgba(239, 235, 249, 0.9);
+  /* background-color: rgba(239, 235, 249, 0.9); */
   /* background-color: #efebf9; */
   box-shadow: 0 4px 8px 0 rgba(90, 50, 191, 0.2),
     0 6px 20px 0 rgba(90, 50, 191, 0.19);
