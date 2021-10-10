@@ -40,7 +40,7 @@ exports.getDegreeReqsPublic = async (programNameSubstring) => {
             cursor = dbDegreeReqPub.find().sort({"program_name": 1});
         }
         else {
-            cursor = dbDegreeReqPub.find({ "program_name": { "$regex": '^' + programNameSubstring } }).sort({"program_name": 1});
+            cursor = dbDegreeReqPub.find({ "program_name": { "$regex": '^' + programNameSubstring, '$options' : 'i' } }).sort({"program_name": 1});
         }
 
         // convert cursor to list

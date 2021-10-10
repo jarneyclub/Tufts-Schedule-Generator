@@ -549,7 +549,7 @@ paths:
       responses:
         200:
           description: Update successful
-  /degreereqs/public:
+  /degreereqs/public?pname={name_substr}:
     get:
       tags:
         - Degree Requirements
