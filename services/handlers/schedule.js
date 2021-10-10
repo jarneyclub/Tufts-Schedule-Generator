@@ -13,7 +13,7 @@ exports.createSchedule   = async (userId, scheduleName, filter, term, courses, c
         sched_name: scheduleName,
         user_id: userId,
         filter: filter,
-        classes: classes,
+        events: classes,
         courses: courses,
         term: term
     });
@@ -39,7 +39,7 @@ exports.updateSchedule = async (id, filter, courses, classes) => {
     }, {
         filter     : filter,
         courses    : courses,
-        classes    : classes
+        events    : classes
     }, {
         new: true,
         upsert: false
@@ -50,7 +50,7 @@ exports.updateSchedule = async (id, filter, courses, classes) => {
         sched_name : newSchedule.sched_name,
         user_id    : newSchedule.user_id,
         filter     : newSchedule.filter,
-        classes     : classes,
+        classes    : classes,
         courses    : newSchedule.courses,
         term       : newSchedule.term
     }
@@ -94,7 +94,7 @@ exports.getSchedulesOfUser = async (userId) => {
             filter     : doc.filter,
             term       : doc.term,
             courses    : doc.courses,
-            classes    : doc.classes
+            classes    : doc.events
         };
         documents.push(docParsed);
     });
