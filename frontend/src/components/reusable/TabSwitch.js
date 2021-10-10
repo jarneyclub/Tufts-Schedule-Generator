@@ -60,7 +60,7 @@ function DegreeReqExpress() {
           <ArrowLeftIcon fontSize="large" />
         </IconButton>
         <div style={{ color: "#ffffff" }}>
-          {degreeReqOptions[selectedDegreeReq]?.program_name}
+        ✓
         </div>
         <IconButton color="action" onClick={() => handleSwitchReq(1)}>
           <ArrowRightIcon fontSize="large" />
