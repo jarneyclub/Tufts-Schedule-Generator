@@ -85,7 +85,7 @@ function DegreePlan1(props) {
 
   const [selectedDegreeReqIdx, setSelectedDegreeReqIdx] = useState(0);
   const [selectedDegreeReq, setDegreeReq] = useState(""); /*  Holds the current private Degree Requirement Displayed */
-  
+  const [showLastPrivateReq, setShowLastPrivateReq] = useState(false);
   const [selectedDegreeReqDetail, setDegreeReqDetail] = useState();
 
   const [publicDegreeReqDetail, setPublicDegreeReqDetail] = useState({});
@@ -165,13 +165,14 @@ function DegreePlan1(props) {
       .then((response) => response.json())
       .then((result) => {
         console.log("result from fetchPublicToPrivate", result);
-
-        fetchPrivateReqs();
+        setShowPublicDegreeReq(false);
+        fetchPrivateReqs(true);
+        setSelectedDegreeReqIdx()
       })
       .catch((error) => console.log("error from fetchPublicToPrivate", error));
   };
 
-  const fetchPrivateReqs = async () => {
+  const fetchPrivateReqs = async (showLast) => {
     await fetch("https://jarney.club/api/degreereqs/private")
       .then((response) => {
         console.log("get request response:", response);
@@ -186,6 +187,7 @@ function DegreePlan1(props) {
         } else {
           setDegreeReqOptions(result.reqs);
         }
+
       })
       .catch((error) => {
         console.log("error from Degreeplan fetchPrivateReqs ", error);
@@ -237,20 +239,19 @@ function DegreePlan1(props) {
   }, []);
 
   useEffect(() => {
-    setDegreeReqDetail(
-      degreeReqOptions.filter(
-        (req) => req.program_name === selectedDegreeReq.substr(3)
-      )[0]
-    );
+    setDegreeReqDetail(degreeReqOptions[selectedDegreeReqIdx]);
     console.log("degreeReqOptions: ", degreeReqOptions);
-    console.log("selected Degree Req: ", selectedDegreeReq);
     console.log("selected Degree Req Detail: ", selectedDegreeReqDetail);
-  }, [selectedDegreeReq]);
+  }, [selectedDegreeReqIdx]);
 
   useEffect(() => {
     console.log("degreeReqOptions: ", degreeReqOptions);
     console.log("degreeReqOptions len: ", degreeReqOptions.length);
-    setDegreeReq(degreeReqOptions[0]?.program_name);
+    if (showLastPrivateReq) {
+      setSelectedDegreeReqIdx(degreeReqOptions.length - 1)
+    }
+    
+    // setDegreeReq(degreeReqOptions[0]?.program_name);
   }, [degreeReqOptions]);
 
   useEffect(() => {
@@ -343,7 +344,7 @@ function DegreePlan1(props) {
               options={degreeReqOptions}
               isObject={true}
               objectField={"program_name"}
-              selectedOption={selectedDegreeReq}
+              selectedOption={degreeReqOptions[selectedDegreeReqIdx]}
               selectedIdx={selectedDegreeReqIdx}
               onOptionChange={handleDegreeReqChange}
             />
