@@ -185,6 +185,7 @@ input {
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: scroll;
   background-color: rgba(239, 235, 249, 0.9);
 
   box-shadow: 0 4px 8px 0 rgba(90, 50, 191, 0.2),
