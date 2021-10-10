@@ -53,7 +53,7 @@ function DegreeReqDisplay(props) {
 
   return (
     <div className={dStyle.displayContainer}>
-      <div style={{textAlign:"center", fontWeight:"heavy"}}>{reqDetail?.program_name}</div>
+      <div style={{textAlign:"center", color: "#5A32BF"}}>{reqDetail?.program_name}</div>
       <div>School:&nbsp;{reqDetail?.school}</div>
       <div>Degree:&nbsp;{reqDetail?.degree}</div>
       <br />
