@@ -145,7 +145,7 @@ exports.updateSchedule = async (req, res) => {
  */
 exports.getSchedules = async (req, res) => {
     try {
-        let userId = req.query.userId
+        let userId = req.userid;
         let schedules = await scheduleHandler.getSchedulesOfUser(userId);
         res.json({schedules: schedules});
     }
