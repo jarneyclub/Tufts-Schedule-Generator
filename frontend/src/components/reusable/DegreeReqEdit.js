@@ -82,6 +82,7 @@ function DegreeReqEdit(props) {
   const handleGeneralChange = (e) => {
     console.log("e:", e);
     if (e.target.name === "school") {
+      setSelectedSchoolIdx(e.target.selectedIndex);
       setDetail((prev) => ({
         ...prev,
         [e.target.name]: schoolOptions[e.target.value],
