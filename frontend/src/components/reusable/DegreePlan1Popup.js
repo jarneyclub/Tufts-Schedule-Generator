@@ -63,11 +63,20 @@ function RemovePrivReq(props) {
       .then((response) => response.json())
       .then((result) => {
         console.log("result from Degree plan Delete", result);
-        refreshPrivateReq();
-        setAlertMessage("Private requirement deleted!");
-        setAlertSeverity("success");
-        onShowAlert();
-        onClose();
+        
+
+        if (!result.error) {
+          refreshPrivateReq();
+          setAlertMessage("Private requirement deleted!");
+          setAlertSeverity("success");
+          onShowAlert();
+          onClose();
+        }
+        else {
+          setAlertMessage(result.error);
+          setAlertSeverity("warning");
+          onShowAlert(true);
+        }
       })
       .catch((error) => console.log("error from Degree Plan Delete", error));
   };

@@ -84,12 +84,20 @@ function AddSemester(props) {
     await fetch("https://jarney.club/api/degreeplan/term", requestOption)
       .then((response) => response.json())
       .then((result) => {
-        refreshPlans();
-        console.log("result from fetchAdd", result);
-        setAlertMessage("Term added!");
-        setAlertSeverity("success");
-        onShowAlert();
-        onClose();
+        if (!result.error) {
+          refreshPlans();
+          console.log("result from fetchAdd", result);
+          setAlertMessage("Term added!");
+          setAlertSeverity("success");
+          onShowAlert();
+          onClose();
+        }
+        else {
+          setAlertMessage(result.error);
+          setAlertSeverity("warning");
+          onShowAlert(true);
+        }
+        
       })
       .catch((error) => console.log("error from fetchAdd", error));
   };
@@ -179,12 +187,20 @@ function RemoveSemester(props) {
     await fetch("https://jarney.club/api/degreeplan/terms", requestOption)
       .then((response) => response.json())
       .then((result) => {
-        console.log("result from Degree Plan Terms remove", result);
-        refreshPlans();
-        setAlertMessage("Term(s) removed!");
-        setAlertSeverity("success");
-        onShowAlert();
-        onClose();
+        if (!result.error) {
+          console.log("result from Degree Plan Terms remove", result);
+          refreshPlans();
+          setAlertMessage("Term(s) removed!");
+          setAlertSeverity("success");
+          onShowAlert();
+          onClose();
+        }
+        else {
+          setAlertMessage(result.error);
+          setAlertSeverity("warning");
+          onShowAlert(true);
+        }
+        
       });
   };
 
@@ -262,11 +278,19 @@ function EditPlanName(props) {
       .then((response) => response.json())
       .then((result) => {
         console.log("result from editPlanName: ", result)
-        refreshPlans();
-        setAlertMessage("Plan name changed successfully!");
-        setAlertSeverity("success");
-        onShowAlert();
-        onClose();
+        
+        if (!result.error) {
+          refreshPlans();
+          setAlertMessage("Plan name changed successfully!");
+          setAlertSeverity("success");
+          onShowAlert();
+          onClose();
+        }
+        else {
+          setAlertMessage(result.error);
+          setAlertSeverity("warning");
+          onShowAlert(true);
+        }
       })
       .catch((error) => console.log("error from editPlanName: ", error));
   };
@@ -368,11 +392,19 @@ function RemovePlan(props) {
       .then((response) => response.json())
       .then((result) => {
         console.log("result from Degree plan Delete", result);
-        refreshPlans();
-        setAlertMessage("Plan removed!");
-        setAlertSeverity("success");
-        onShowAlert();
-        onClose();
+
+        if (!result.error) {
+          refreshPlans();
+          setAlertMessage("Plan removed!");
+          setAlertSeverity("success");
+          onShowAlert();
+          onClose();
+        }
+        else {
+          setAlertMessage(result.error);
+          setAlertSeverity("warning");
+          onShowAlert(true);
+        }
       })
       .catch((error) => console.log("error from Degree Plan Delete", error));
   };

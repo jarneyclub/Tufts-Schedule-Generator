@@ -75,17 +75,23 @@ function EditScheduleName(props) {
       .then((response) => response.json())
       .then((result) => {
         console.log("result from editScheduleName: ", result);
-        setAlertMessage("Schedule name changed!");
-        setAlertSeverity("success");
-        onShowAlert();
-        refreshSchedules();
-        onClose();
+        
+        if (!result.error) {
+          setAlertMessage("Schedule name changed!");
+          setAlertSeverity("success");
+          onShowAlert();
+          refreshSchedules();
+          onClose();
+        }
+        else {
+          setAlertMessage(result.error);
+          setAlertSeverity("warning");
+          onShowAlert(true);
+        }
       })
       .catch((error) => {
         console.log("error from editPlanName: ", error);
-        setAlertMessage(error);
-        setAlertSeverity("warning");
-        onShowAlert();
+        
       });
   };
 
@@ -190,11 +196,19 @@ function RemoveSchedule(props) {
       .then((response) => response.json())
       .then((result) => {
         console.log("result from Degree plan Delete", result);
-        refreshPlans();
-        setAlertMessage("Schedule deleted!");
-        setAlertSeverity("success");
-        onShowAlert();
-        onClose();
+        
+        if (!result.error) {
+          refreshPlans();
+          setAlertMessage("Schedule deleted!");
+          setAlertSeverity("success");
+          onShowAlert();
+          onClose();
+        }
+        else {
+          setAlertMessage(result.error);
+          setAlertSeverity("warning");
+          onShowAlert(true);
+        }
       })
       .catch((error) => console.log("error from Degree Plan Delete", error));
   };

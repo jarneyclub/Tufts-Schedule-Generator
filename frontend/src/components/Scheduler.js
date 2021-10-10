@@ -424,11 +424,19 @@ function Scheduler(props) {
       .then((result) => {
         console.log("create schedule result: ", result);
         // refresh
-        fetchSavedSchedules();
-        setAlertMessage("Create success!");
-        setAlertSeverity("success");
-        setShowAlert(true);
-        handlePopup("addSchedule", false)
+        if (!result.error) {
+          fetchSavedSchedules();
+          setAlertMessage("Create success!");
+          setAlertSeverity("success");
+          setShowAlert(true);
+          handlePopup("addSchedule", false)
+        }
+        else {
+          setAlertMessage(result.error);
+          setAlertSeverity("warning");
+          setShowAlert(true);
+        }
+        
         
       })
       .catch((error) => console.log("generate schedule error: ", error));
