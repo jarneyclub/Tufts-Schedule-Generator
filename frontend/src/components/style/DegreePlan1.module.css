@@ -187,7 +187,6 @@ input {
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-y: scroll;
   background-color: rgba(239, 235, 249, 0.9);
 
   box-shadow: 0 4px 8px 0 rgba(90, 50, 191, 0.2),
@@ -223,6 +222,7 @@ input {
   height: 350px;
   width: 100%;
   padding: 10px 1vw;
+  overflow-y: scroll;
 }
 
 .editButton {
@@ -285,17 +285,7 @@ body {
 }
 
 /* Helps to wrap the left and right when screen is too small */
-@media (max-width: 630) {
-  /* .horizontalWrapper {
-    flex-direction: column;
-  } */
-  /* .DegreeReqWrapper {
-    width: 100vw;
-  }
-  .DegreeSearchWrapper {
-    width: 100vw;
-  } */
-}
+
 @media only screen and (max-width: 700px) {
   .DegreeReqWrapper {
     width: 100vw;

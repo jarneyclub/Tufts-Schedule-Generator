@@ -74,7 +74,7 @@ function DegreeReqDisplay(props) {
           <div>{req?.part_desc}</div>
           {req?.part_reqs?.map((course) => (
             <div>
-              <div>&nbsp;▪&nbsp;{course?.course_num}</div>
+              {course?.course_num&& <div>&nbsp;▪&nbsp;{course?.course_num}</div>}
               <div>{course?.course_note}</div>
             </div>
           ))}
