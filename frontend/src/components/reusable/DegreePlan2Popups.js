@@ -46,7 +46,7 @@ function AddSemester(props) {
     2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026,
   ]); // will be replaced by API?!
   const [selectedYear, setSelectedYear] = useState(yearOptions[0]);
-
+  const [selectedYearIdx, setSelectedYearIdx] = useState(0);
   /* Term Dropdown */
   const [termOptions, setTermOptions] = useState([
     "Fall",
@@ -61,6 +61,7 @@ function AddSemester(props) {
   };
 
   const handleYearChange = (e) => {
+    setSelectedYearIdx(e.target.selectedIndex);
     setSelectedYear(e.target.value);
   };
 
@@ -70,7 +71,7 @@ function AddSemester(props) {
   };
 
   const fetchAdd = async () => {
-    const yearTerm = selectedYear + " " + selectedTerm;
+    const yearTerm = yearOptions[selectedYearIdx] + " " + selectedTerm;
     console.log("yearTerm: ", yearTerm);
     console.log("planID: ", planID);
     const value = { plan_id: planID, term: yearTerm };
