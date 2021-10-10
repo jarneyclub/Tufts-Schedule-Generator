@@ -423,7 +423,7 @@ function DegreePlan1(props) {
           <RemovePrivReq 
           onClose={()=>handlePopup("removePrivateReq", false)}
           privateReqName={degreeReqOptions[selectedDegreeReqIdx].program_name}
-          privateReqID={degreeReqOptions[selectedDegreeReqIdx]}
+          privateReqID={degreeReqOptions[selectedDegreeReqIdx].priv_dr_id}
           refreshPrivateReq={fetchPrivateReqs}
           onShowAlert={() => setShowAlert(true)}
           setAlertMessage={setAlertMessage}
