@@ -391,16 +391,16 @@ function Scheduler(props) {
         if (!result.error) {
           setClasses(result.data.classes);
         }
-        else if (result.error){
-          console.log("the erros annoyi")
+        else {
+          setAlertMessage(result.error);
+          setAlertSeverity("warning");
+          setShowAlert(true);
         }
        
       })
       .catch((error) => {
         console.log("generate schedule error: ", error);
-        setAlertMessage(error);
-        setAlertSeverity("error");
-        setShowAlert(true);
+        
       });
   };
 
