@@ -54,17 +54,29 @@ function DegreeReqDisplay(props) {
   return (
     <div className={dStyle.displayContainer}>
       <div style={{textAlign:"center", color: "#5A32BF"}}>{reqDetail?.program_name}</div>
-      <div>School:&nbsp;{reqDetail?.school}</div>
-      <div>Degree:&nbsp;{reqDetail?.degree}</div>
+      {reqDetail?.school && 
+        <div>
+          <div style={{color:"#FC4E4E"}}>School:&nbsp;</div>
+          <div>{reqDetail?.school}</div>
+        </div>
+      }
+      {reqDetail?.degree && 
+        <div>
+          <div style={{color:"#FC4E4E"}}>Degree:&nbsp;</div>
+          <div>{reqDetail?.degree}</div>
+        </div>
+      }
+      
       <br />
       {reqDetail?.parts?.map((req) => (
         <div>
-          <div>{req?.part_name}</div>
+          <div style={{color:"#FC4E4E"}}>{req?.part_name}</div>
           <div>{req?.part_desc}</div>
           {req?.part_reqs?.map((course) => (
             <div>
-              <div>{course?.course_num}</div>
+              <div style={{color:"#a0c3d1"}}>{course?.course_num}</div>
               <div>{course?.course_note}</div>
+              <br/>
             </div>
           ))}
         </div>
