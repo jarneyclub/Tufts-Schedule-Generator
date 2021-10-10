@@ -197,6 +197,7 @@ function HeaderUser(props) {
               handleLoginPopup();
               handleSignupPopup();
             }}
+            switchLogged={switchLogged}
           />
         </Popup>
       )}
