@@ -269,12 +269,8 @@ function DegreePlan1(props) {
                     This flexbox has flex-direction: column */}
       <div className={dp1Style.DegreeSearchWrapper}>
         {/* SEARCH CONTAINER for an Existing Degree Requirement */}
-        <div
-            className={dp1Style.dropdownListWrapper}
-            style={{ width: "90%" }}
-          >
+        <div className={dp1Style.myListWrapper}>
           <h5 style={{textAlign:"center"}}>Public degree requirements</h5>
-
         </div>
         <div className={dp1Style.existListWrapper}>
           <TextField
@@ -335,7 +331,7 @@ function DegreePlan1(props) {
       {/* * * * * * Includes the Degree Requirement Table * * * * * */}
       <div className={dp1Style.DegreeReqWrapper}>
         <div className={dp1Style.myListWrapper}>
-          <h5 >My degree requirements</h5>
+          <h5>My degree requirements</h5>
 
           {/* options will be an array returned by API
                             options - degree req of current user */}
@@ -415,14 +411,7 @@ function DegreePlan1(props) {
           )}
         </div>
 
-        {/* {showPublicDegreeReq && (
-          <Button
-            className={dp1Style.saveButton}
-            onClick={() => fetchPublicToPrivate()}
-          >
-            Add to my list
-          </Button>
-        )} */}
+       
       </div>
       {
         popup.removePrivateReq && 
