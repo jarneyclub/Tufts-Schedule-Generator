@@ -388,7 +388,7 @@ function Scheduler(props) {
       .then((response) => response.json())
       .then((result) => {
         console.log("generate schedule result: ", result);
-        setClasses(result.data.classes);
+        !result.error && setClasses(result.data.classes);
       })
       .catch((error) => {
         console.log("generate schedule error: ", error);
