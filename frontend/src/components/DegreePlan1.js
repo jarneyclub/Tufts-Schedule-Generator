@@ -369,15 +369,7 @@ function DegreePlan1(props) {
           </div>
         </div>
         <div className={dp1Style.DegreeReqListWrapper}>
-          
-          {/* displays the name of the current selected degree
-                            requirement */}
-          {/* <div className={dp1Style.DegreeReqListTitle}>
-            {!showPublicDegreeReq
-              ? degreeReqOptions[selectedDegreeReqIdx]?.program_name
-              : publicDegreeReqDetail.program_name}
-          </div> */}
-
+         
           {/* info returned from API call
                             display the info of the selected degree plan */}
           <div className={dp1Style.degreeReqListExpandable}>
