@@ -98,15 +98,17 @@ function HeaderUser(props) {
 
         {!shrink && (
           <div className={hStyle.navbarContainer} ref={navbarRef}>
-            <div>
-              <Button
-                onClick={handleLoginSignupPopup}
-                className={hStyle.button}
-                style={{ padding: "5px" }}
-              >
-                {logged ? "Sign out" : "Log in"}
-              </Button>
-            </div>
+            { !(loginPopup || signupPopup) &&
+              <div>
+                <Button
+                  onClick={handleLoginSignupPopup}
+                  className={hStyle.button}
+                  style={{ padding: "5px" }}
+                >
+                  {logged ? "Sign out" : "Log in"}
+                </Button>
+              </div>
+            }
             <div>
               <IconButton
                 className={hStyle.button}
