@@ -269,7 +269,13 @@ function DegreePlan1(props) {
                     This flexbox has flex-direction: column */}
       <div className={dp1Style.DegreeSearchWrapper}>
         {/* SEARCH CONTAINER for an Existing Degree Requirement */}
-        <h5 style={{textAlign:"center"}}>Public degree requirements list:</h5>
+        <div
+            className={dp1Style.dropdownListWrapper}
+            style={{ width: "90%" }}
+          >
+          <h5 style={{textAlign:"center"}}>Public degree requirements</h5>
+
+        </div>
         <div className={dp1Style.existListWrapper}>
           <TextField
             // label="Search Course"
@@ -329,7 +335,7 @@ function DegreePlan1(props) {
       {/* * * * * * Includes the Degree Requirement Table * * * * * */}
       <div className={dp1Style.DegreeReqWrapper}>
         <div className={dp1Style.myListWrapper}>
-          <h5 style={{color:"#000000"}}>My Degree Requirements</h5>
+          <h5 >My degree requirements</h5>
 
           {/* options will be an array returned by API
                             options - degree req of current user */}
