@@ -216,6 +216,7 @@ function Scheduler(props) {
     setSelectedScheduleIdx(e.target.selectedIndex);
     setSelectedScheduleID(scheduleOptions[e.target.selectedIndex].sched_id);
     setSelectedCourses(scheduleOptions[e.target.selectedIndex].courses);
+    setClasses(scheduleOptions[e.target.selectedIndex]?.classes);
   };
 
   /*  Control for search filter dropdown change  */
