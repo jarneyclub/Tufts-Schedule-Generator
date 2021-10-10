@@ -61,11 +61,11 @@ exports.getTermCourses = async (req, res) => {
             // let re = new RegExp(reqCourseNum, "g");
             if ( reqCourseNum === "" ) {
                 /* only attribute is provided */
-                cursor = dbCourses.find({"attributes": {"$all": [reqAttr]}}).sort({"course_num": -1});
+                cursor = dbCourses.find({"attributes": {"$all": [reqAttr]}}).sort({"course_num": 1});
             }
             else if ( reqAttr === "" ) {
                 /* only course_num is provided */
-                cursor = dbCourses.find({ "course_num": { "$regex": '^' + reqCourseNum } }).sort({"course_num": -1});
+                cursor = dbCourses.find({ "course_num": { "$regex": '^' + reqCourseNum } }).sort({"course_num": 1});
             }
             else {
                 /* all parameters are provided */
@@ -76,7 +76,7 @@ exports.getTermCourses = async (req, res) => {
                     "attributes": {
                         "$all": [reqAttr]
                     }
-                }).sort({"course_num": -1});
+                }).sort({"course_num": 1});
             }
         }
         // convert cursor to list
