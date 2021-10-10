@@ -92,36 +92,7 @@ const planCardsPlaceholder = [
     term: 2215,
     courses: [],
   },
-  {
-    plan_term_id: "FALL 2022",
-    term: 2215,
-    courses: [],
-  },
-  {
-    plan_term_id: "SPRING 2023",
-    term: 2215,
-    courses: [],
-  },
-  {
-    plan_term_id: "FALL 2023",
-    term: 2215,
-    courses: [],
-  },
-  {
-    plan_term_id: "SPRING 2024",
-    term: 2215,
-    courses: [],
-  },
-  {
-    plan_term_id: "FALL 2024",
-    term: 2215,
-    courses: [],
-  },
-  {
-    plan_term_id: "SPRING 2025",
-    term: 2215,
-    courses: [],
-  },
+  
 ];
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -140,7 +111,6 @@ function DegreePlan2(props) {
     handleSignupPopup,
     handleLogRequired,
   } = props;
-  const [degreeReqTitle, setDegreeReqTitle] = useState("PLACEHOLDER"); // sets the title of degree requirement
   const [semesterPlanOptions, setSemesterPlanOptions] = useState([]); // sets the array of options for semester plans
 
   const [courseSearchValue, setCourseSearchValue] = useState("");
