@@ -269,7 +269,7 @@ function DegreePlan1(props) {
                     This flexbox has flex-direction: column */}
       <div className={dp1Style.DegreeSearchWrapper}>
         {/* SEARCH CONTAINER for an Existing Degree Requirement */}
-        Public degree requirements list:
+        <h1>Public degree requirements list:</h1>
         <div className={dp1Style.existListWrapper}>
           <TextField
             // label="Search Course"
