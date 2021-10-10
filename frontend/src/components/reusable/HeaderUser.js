@@ -47,6 +47,9 @@ function HeaderUser(props) {
       /*  Sign Out */
       switchLogged();
     } 
+    else {
+      setLoginPopup(true);
+    }
   };
 
   return (
