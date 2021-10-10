@@ -350,7 +350,7 @@
 .timePrefOverlay {
   display: flex;
   flex-direction: column;
-
+  z-index: 30;
   align-items: center;
 
   top: 80px; /* gives the overlay effect */
