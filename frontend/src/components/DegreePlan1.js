@@ -233,10 +233,15 @@ function DegreePlan1(props) {
   };
 
   useEffect(() => {
-    fetchPrivateReqs();
-
     handleLogRequired(true);
+    fetchPrivateReqs();
+    fetchPublicReqs();
   }, []);
+
+  useEffect(() => {
+    fetchPrivateReqs();
+    fetchPublicReqs();
+  }, [logged])
 
   useEffect(() => {
     setDegreeReqDetail(degreeReqOptions[selectedDegreeReqIdx]);

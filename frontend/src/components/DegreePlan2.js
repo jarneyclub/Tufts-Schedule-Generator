@@ -415,6 +415,11 @@ function DegreePlan2(props) {
   }, []);
 
   useEffect(() => {
+    fetchPlans();
+    fetchPrivateReqs();
+  }, [logged])
+
+  useEffect(() => {
     console.log("cardOptions: ", cardOptions);
     cardOptions?.map((card) => fetchSaveTerm(card));
   }, [cardOptions]);

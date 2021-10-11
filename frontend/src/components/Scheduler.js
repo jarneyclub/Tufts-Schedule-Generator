@@ -449,6 +449,11 @@ function Scheduler(props) {
   }, []);
 
   useEffect(() => {
+    fetchAttributes();
+    fetchSavedSchedules();;
+  }, [logged])
+
+  useEffect(() => {
     async function fetchData() {
       setLoadMessage(true);
       await fetch(
