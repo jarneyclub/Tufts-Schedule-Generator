@@ -11,8 +11,7 @@
   word-wrap: no-wrap;
   padding: 0 1vw;
   color: #ffffff;
-  background: linear-gradient(rgba(160,195,209, 0.5), rgba(160,195,209, 0.5)),
-  linear-gradient(white, white);
+  background: #a0c3d1;
   position: absolute;
   border: 1px solid #919da1;
   width: 100%;
@@ -50,8 +49,7 @@
     z-index: -1;
 
     color: rgb(31,54,64);
-    background: linear-gradient(rgba(160,195,209, 0.5), rgba(160,195,209, 0.5)),
-                linear-gradient(white, white);
+    background: #a0c3d1;
     position: absolute;
     border: 1px solid #a0c3d1;
     width: 100%;
