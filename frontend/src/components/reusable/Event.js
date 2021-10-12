@@ -53,10 +53,10 @@ function Event(props) {
 
   return (
     <div className={eStyle.eventContainer} style={customStyle}>
-      <div div style={{textAlign:"left"}}>{time_start.concat("~").concat(time_end)}</div>
-      <div style={{textAlign:"left"}}>{details}</div>
-      <div style={{textAlign:"left"}}>{name}</div>
-      <div style={{textAlign:"left"}}>{location}</div>
+      <div >{time_start.concat("~").concat(time_end)}</div>
+      <div >{details}</div>
+      <div >{name}</div>
+      <div >{location}</div>
     </div>
     
   );
