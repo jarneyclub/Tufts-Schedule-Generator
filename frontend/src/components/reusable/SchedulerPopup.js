@@ -101,7 +101,7 @@ function EditScheduleName(props) {
         <IconButton onClick={handleClose} className={pStyle.closeButton}>
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>EDIT PLAN NAME</div>
+        <div className={pStyle.headerBody}>EDIT PLAN NAME&nbsp;&nbsp;&nbsp;&nbsp;</div>
 
         <div />
       </div>
@@ -149,7 +149,7 @@ function AddSchedule(props) {
         <IconButton onClick={handleClose} className={pStyle.closeButton}>
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>ADD SCHEDULE</div>
+        <div className={pStyle.headerBody}>ADD SCHEDULE&nbsp;&nbsp;&nbsp;&nbsp;</div>
         <div />
       </div>
       <div className={pStyle.formContainer}>
@@ -173,7 +173,7 @@ function RemoveSchedule(props) {
   const {
     onClose,
     planName,
-    planID,
+    scheduleID,
     refreshPlans,
     onShowAlert,
     setAlertMessage,
@@ -190,7 +190,7 @@ function RemoveSchedule(props) {
   };
 
   const fetchDelete = async () => {
-    await fetch("https://jarney.club/api/degreeplan/".concat(planID), {
+    await fetch("https://jarney.club/api/degreeplan/".concat(scheduleID), {
       method: "DELETE",
     })
       .then((response) => response.json())

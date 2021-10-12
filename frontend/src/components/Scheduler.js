@@ -732,7 +732,8 @@ function Scheduler(props) {
         <Popup onClose={() => handlePopup("removeSchedule", false)}>
           <RemoveSchedule
             onClose={() => handlePopup("removeSchedule", false)}
-            scheduleID={selectedScheduleID}
+            scheduleID={scheduleOptions[selectedScheduleIdx].sched_id}
+            scheduleName={scheduleOptions[selectedScheduleIdx].sched_name}
             onShowAlert={() => setShowAlert(true)}
             setAlertMessage={setAlertMessage}
             setAlertSeverity={setAlertSeverity}
