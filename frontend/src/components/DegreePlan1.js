@@ -90,6 +90,7 @@ function DegreePlan1(props) {
 
   const [publicDegreeReqDetail, setPublicDegreeReqDetail] = useState({});
   const [showPublicDegreeReq, setShowPublicDegreeReq] = useState(false);
+  // const [addedPublicDegree]
 
   const [editDRPopup, setEditDRPopup] =
     useState(false); /*  Degree Requirement Edit Popup */
