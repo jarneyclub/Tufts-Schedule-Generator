@@ -322,13 +322,15 @@ function DegreePlan2(props) {
         console.log("data: ", result);
         fetchPlans();
         setLoadMessage(false);
+        setAlertMessage("Plan added!");
+        setAlertSeverity("success");
+        setShowAlert(true);
       })
       .catch((error) => {
         setLoadMessage(false);
-        // console.log(error.data);
-        // handleAlert("error", "Error: Failed to Login");
-
-        // add an error message popup of some sort
+        setAlertMessage(error);
+        setAlertSeverity("error");
+        setShowAlert(true);
         console.log("error from login: ", error);
       });
   };

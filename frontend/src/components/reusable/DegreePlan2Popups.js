@@ -111,7 +111,7 @@ function AddSemester(props) {
         >
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>Add Card to {planName}</div>
+        <div className={pStyle.headerBody}>Add Card to {planName}&nbsp;&nbsp;&nbsp;&nbsp;</div>
         <div />
       </div>
       <div className={pStyle.formContainer}>
@@ -210,7 +210,7 @@ function RemoveSemester(props) {
         <IconButton onClick={handleClose} className={pStyle.closeButton}>
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>Remove Cards from {planName}</div>
+        <div className={pStyle.headerBody}>Remove Cards from {planName}&nbsp;&nbsp;&nbsp;&nbsp;</div>
         <div />
       </div>
       <div className={pStyle.formContainer}>
@@ -301,7 +301,7 @@ function EditPlanName(props) {
         <IconButton onClick={handleClose} className={pStyle.closeButton}>
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>EDIT PLAN NAME</div>
+        <div className={pStyle.headerBody}>EDIT PLAN NAME&nbsp;&nbsp;&nbsp;&nbsp;</div>
 
         <div />
       </div>
@@ -349,7 +349,7 @@ function AddPlan(props) {
         <IconButton onClick={handleClose} className={pStyle.closeButton}>
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>ADD PLAN</div>
+        <div className={pStyle.headerBody}>ADD PLAN&nbsp;&nbsp;&nbsp;&nbsp;</div>
         <div />
       </div>
       <div className={pStyle.formContainer}>
