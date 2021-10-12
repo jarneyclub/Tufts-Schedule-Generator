@@ -355,7 +355,7 @@ function Scheduler(props) {
             waitlist: result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreWL,
             closed: result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreClosed,
             online: result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreM,
-            time_unspecified: result.schedules[selectedScheduleIdx]?.filter?.misc.ignoreTU,
+            time_unspecified: result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreTU,
           }))
            }
       })
