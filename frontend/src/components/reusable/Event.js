@@ -9,6 +9,8 @@
 
 import { useEffect, useState } from "react";
 import eStyle from "./reusableStyles/Event.module.css";
+import EinaBold from "../../fonts/Eina03-SemiBold.ttf";
+import EinaRegular from "../../fonts/Eina03-Regular.ttf";
 
 function Event(props) {
   const { eventDetails } = props;
@@ -52,9 +54,9 @@ function Event(props) {
   return (
     <div className={eStyle.eventContainerBackground}>
       <div className={eStyle.eventContainer} style={customStyle}>
-        <div style={{textAlign:"center"}}>{details}</div>
+        <div div style={{textAlign:"center", fontFamily: "EinaRegular"}}>{time_start.concat("~").concat(time_end)}</div>
+        <div style={{textAlign:"center", fontFamily: "EinaBold"}}>{details}</div>
         <div style={{textAlign:"center"}}>{name}</div>
-        <div style={{textAlign:"center"}}>{time_start.concat("~").concat(time_end)}</div>
         <div style={{textAlign:"center"}}>{location}</div>
       </div>
     </div>
