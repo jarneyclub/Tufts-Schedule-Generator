@@ -6,7 +6,7 @@ const mongodbErrorHandler = require('mongoose-mongodb-errors');
 const schedule_Schema = new Schema({
     // sched_id is substituted with _id
     user_id: {
-        type: mongoose.ObjectId
+        type: String
         // if not provided this is not a user generated issue
     },
     sched_name: {

@@ -51,7 +51,7 @@ exports.signAccessTokenAndSendAsCookie = async (res, userid, password) => {
     if (result === null)
         resHandler.respondWithCustomError("104", "403", "Registration Error", "Email is not registered. Please register first.", res);
         
-    let token = jwt.sign({ userid: userid, password: password, role: result.role}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
+    let token = jwt.sign({ userid: userid, role: result.role}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
     // res.json({"token": token});
     res.cookie("access_token", token, {
         maxAge: 24 * 60 * 60 * 1000,
@@ -72,7 +72,7 @@ exports.signAccessTokenAndSendAsCookie = async (res, userid, password) => {
  * @param {*} res
  */
 exports.signAccessTokenAndAttachCookie = async (req, res, next) => {
-    let token = jwt.sign({ userid: req.userid, password: req.password, role: req.role}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
+    let token = jwt.sign({ userid: req.userid, role: req.role}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
     res.cookie("access_token", token, {
         maxAge: 24 * 60 * 60 * 1000,
         httpOnly: true,
@@ -92,9 +92,9 @@ exports.signAccessTokenAndAttachCookie = async (req, res, next) => {
  * @param {*} next
  */
 exports.authenticateToken = async (req, res, next) => {
-    console.log("req.body", req.body);
+    // console.log("(authenticateToken) req.body", req.body);
     try {
-        console.log("req.cookies", req.cookies);
+        // console.log("(authenticateToken) req.cookies", req.cookies);
     }
     catch (e) {
         console.log("ERROR IN REQ.COOKIES");
@@ -108,7 +108,7 @@ exports.authenticateToken = async (req, res, next) => {
 
     if (token) {
         jwt.verify(token, process.env.TOKEN_SECRET, async (err, userdata) => {
-            console.log("(authenticateToken) userdata: ", userdata);
+            // console.log("(authenticateToken) userdata: ", userdata);
             if (err)
                 resHandler.respondWithCustomError("305", "401", "Authentication Error", "Token is invalid", res);
             let dbUsers = mongoose.connection.collection("users"); // get MongoDB collection
@@ -121,7 +121,6 @@ exports.authenticateToken = async (req, res, next) => {
                         "Authentication Error", "Token is invalid. Wrong user.", res);
             
             req.userid = userdata.userid;
-            req.password = userdata.password;
             req.role = userdata.role;
             req.firstname = result.first_name;
             req.lastname = result.last_name;

@@ -58,11 +58,6 @@ exports.updateSchedule = async (req, res) => {
                 let currSection      = arrSections[j];
                 courseNum            = currSection.course_num;
                 courseTitle          = currSection.course_title;
-                /* TODO: debug courseTitle is undefined*/
-                console.log("(scheduleCntrl) currSection: ", currSection);
-                console.log("(scheduleCntrl) currSection.course_title: ", currSection.course_title);
-                console.log("(scheduleCntrl) currSection['course_title']: ", currSection['course_title']);
-                console.log("(scheduleCntrl) courseTitle: ", courseTitle);
                 let sectionId        = currSection._id;
                 let sectionUnits     = currSection.units;
                 let sectionNum       = currSection.section_num;
@@ -149,10 +144,45 @@ exports.updateSchedule = async (req, res) => {
  * @param {*} res
  */
 exports.getSchedules = async (req, res) => {
-    let userId = req.query.userId
-    let schedules = await scheduleHandler.getSchedulesOfUser(userId);
-    res.json({schedules: schedules});
+    try {
+        let userId = req.userid;
+        let schedules = await scheduleHandler.getSchedulesOfUser(userId);
+        res.json({schedules: schedules});
+    }
+    catch (err) {
+        errorHandler(err, "getSchedules", res);
+    }
 }
+
+/**
+ * PATCH /schedule/name
+ * @param {*} req
+ * @param {*} res
+ */
+exports.changeScheduleName = async (req, res) => {
+    try {
+        let {sched_id, new_name} = req.body;
+        let newSchedule = await scheduleHandler.changeScheduleName(sched_id, new_name);
+        res.json({schedule: newSchedule});
+    }
+    catch (err) {
+        errorHandler(err, "changeScheduleName", res);
+    }
+
+}
+
+exports.deleteSchedule = async (req, res) => {
+    try {
+        let {sched_id} = req.body;
+        await scheduleHandler.deleteSchedule(sched_id);
+        res.json({});
+    }
+    catch (err) {
+        errorHandler(err, "deleteSchedule", res);
+    }
+}
+
+
 
 const errorHandler = (err, endpoint, res) => {
     console.error("(degreeReqController/errorhandler) err: ", err);

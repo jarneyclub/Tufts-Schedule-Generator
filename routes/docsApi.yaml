@@ -247,26 +247,25 @@ paths:
               schema:
                 type: object
                 properties:
-                  plan_id: 
-                    type: string
-                  plan_name:
-                    type: string
-                  terms:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/DegreePlanTerm"
-  /degreeplan/{planid}:
+                  plan:
+                    type: object
+                    properties:
+                      plan_id: 
+                        type: string
+                      plan_name:
+                        type: string
+                      terms:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/DegreePlan"
+  /degreeplan?plan_id={planid}:
     get:
       tags:
         - Degree Plan
       summary: Load a degree plan
       parameters:
-        - in: header
-          name: Authorization
-          schema:
-            type: string
-        - in: path
-          name: planid
+        - in: query
+          name: plan_id
           schema:
             type: string
       responses:
@@ -277,21 +276,23 @@ paths:
               schema: 
                 type: object
                 properties:
-                  plan_id:
-                    type: string
-                  plan_name:
-                    type: string
-                  courses:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/DegreePlanTerm"
-  /degreeplan/{plan_id}:
+                  plan:
+                    type: object
+                    properties:
+                      plan_id:
+                        type: string
+                      plan_name:
+                        type: string
+                      terms:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/DegreePlanTerm"
     delete:
       tags:
         - Degree Plan
       summary: Delete a degree plan
       parameters:
-        - in: path
+        - in: query
           name: plan_id
           schema:
             type: string
@@ -346,10 +347,11 @@ paths:
                           type: array
                           items:
                             $ref: "#/components/schemas/DegreePlanTerm"
+  /degreeplan/terms:
     delete:
       tags:
         - Degree Plan
-      summary: Delete multiple degree plans. Access token must be provided in the cookie
+      summary: Delete terms from a degree plan
       requestBody:
         required: true
         content:
@@ -357,13 +359,31 @@ paths:
             schema:
               type: object
               properties:
-                plan_ids:
+                plan_term_ids:
                   type: array
                   items:
                     type: string
+                plan_id:
+                  type: string
       responses:
         200:
-          description: delete successful
+          description: Changed degree plan
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  plan:
+                    type: object
+                    properties:
+                      plan_id:
+                        type: string
+                      plan_name:
+                        type: string
+                      terms:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/DegreePlanTerm"
   /degreeplan/term:
     post:
       tags:
@@ -437,10 +457,6 @@ paths:
         - Degree Plan
       summary: Delete a term from a degree plan
       parameters:
-        - in: header
-          name: Authorization
-          schema:
-            type: string
         - in: path
           name: plan_term_id
           schema:
@@ -448,6 +464,43 @@ paths:
       responses:
         200:
           description: Update successful
+    /degreeplan/terms:
+      delete:
+        tags:
+        - Degree Plan
+      summary: Delete multiple terms from degree plan
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                plan_term_ids:
+                  type: array
+                  items:
+                    type: string
+                plan_id:
+                  type: string
+      responses:
+        200:
+          description: Changed degree plan
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  plan:
+                    type: object
+                    properties:
+                      plan_id:
+                        type: string
+                      plan_name:
+                        type: string
+                      terms:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/DegreePlanTerm"
   ####################
   #                  #
   #    DEGREE REQ    #
@@ -496,7 +549,7 @@ paths:
       responses:
         200:
           description: Update successful
-  /degreereqs/public:
+  /degreereqs/public?pname={name_substr}:
     get:
       tags:
         - Degree Requirements
@@ -545,11 +598,6 @@ paths:
       tags:
         - Degree Requirements
       summary: Create a private degree requirement
-      parameters:
-        - in: header
-          name: Authorization
-          schema:
-            type: string
       requestBody: 
         required: true
         content:
@@ -740,11 +788,6 @@ paths:
       tags:
         - Schedule
       summary: Get saved schedules
-      parameters:
-        - in: header
-          name: Authorization
-          schema:
-            type: string
       responses:
         200:
           description: An array of arrays of classes
@@ -757,6 +800,32 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/Schedule"
+  /schedule/name:
+    patch:
+      tags:
+        - Schedule
+      summary: Change name of schedule
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sched_id:
+                  type: string
+                new_name:
+                  type: string
+      responses:
+        200:
+          description: An array of arrays of classes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  schedule:
+                    $ref: "#/components/schemas/Schedule"
 components:
   schemas:
 ####################

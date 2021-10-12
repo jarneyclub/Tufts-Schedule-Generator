@@ -30,10 +30,10 @@ router.get('/courses/programs', courseController.getPrograms);
 ////////////////////////////////////////
 
 router.post('/degreeplan', authController.authenticateToken, degreePlanController.createDegreePlan);
-router.get('/degreeplan/:plan_id', authController.authenticateToken, degreePlanController.getDegreePlan);
+router.get('/degreeplan', authController.authenticateToken, degreePlanController.getDegreePlan);
 router.patch('/degreeplan/:plan_id/plan_name/:new_name', authController.authenticateToken, degreePlanController.updateDegreePlanName);
-router.delete('/degreeplan/:plan_id', authController.authenticateToken, degreePlanController.deleteDegreePlan);
-router.delete('/degreeplans', authController.authenticateToken, degreePlanController.deleteDegreePlanMultiple);
+router.delete('/degreeplan/terms', authController.authenticateToken, degreePlanController.deleteDegreeTermMultiple);
+router.delete('/degreeplan', authController.authenticateToken, degreePlanController.deleteDegreePlan);
 router.get('/degreeplans', authController.authenticateToken, degreePlanController.getDegreePlans);
 router.post('/degreeplan/term', authController.authenticateToken, degreePlanController.createTerm);
 router.put('/degreeplan/term', authController.authenticateToken, degreePlanController.saveTerm);
@@ -86,6 +86,7 @@ router.post('/auth/login_cookie', authController.authenticateToken, userControll
 
 router.post('/schedule', authController.authenticateToken, scheduleController.makeEmptySchedule);
 router.patch('/schedule', authController.authenticateToken, scheduleController.updateSchedule);
+router.patch('/schedule/name', authController.authenticateToken, scheduleController.changeScheduleName);
 router.get('/schedules', authController.authenticateToken, scheduleController.getSchedules);
 
 module.exports = router;

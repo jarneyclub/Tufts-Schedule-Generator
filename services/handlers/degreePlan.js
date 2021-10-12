@@ -48,18 +48,18 @@ const createNewDegreePlan = async (schema) => {
         // convert term int ids to term descriptions (e.g. 2218 -> "Fall 2018")
         for (let i = 0; i < insertedPlanTerms.length; i++) {
             insertedPlanTerms[i].term = termIntegerToDesc(insertedPlanTerms[i].term);
-            console.log("(degreePlan) termDesc: ", termDesc);
         }
         // formulate and send response
         let result = {
             plan_id: newPlan._id.valueOf(),
             plan_name: newPlan.plan_name,
+            user_id: newPlan.user_id,
             terms: insertedPlanTerms
         };
         return result;
     }
     catch (e) {
-        errorHandler(e);
+        errorHandler(e, "createNewDegreePlan");
     }
 }
 
@@ -73,9 +73,12 @@ const getDegreePlan = async (query) => {
     try {
         let dbPlans = mongoose.connection.collection("plans"); // get MongoDB collection
         console.log("(database) getDegreePlan", "query: ", query);
+        queryUserId = query.user_id;
+        queryPlanId = query.plan_id;
+
         let matchStage = { $match: {
-            user_id: query.user_id,
-            _id: mongoose.Types.ObjectId(query.plan_id)
+            user_id: queryUserId,
+            _id: mongoose.Types.ObjectId(queryPlanId)
         }};
         let lookupStage = {
             $lookup: {
@@ -98,7 +101,8 @@ const getDegreePlan = async (query) => {
                         }
                     }
                 },
-                plan_name: "$plan_name"
+                plan_name: "$plan_name",
+                user_id: "$user_id"
             }
         };
         let cursor = dbPlans.aggregate([matchStage, lookupStage, projectionStage]);
@@ -109,6 +113,7 @@ const getDegreePlan = async (query) => {
             let docToInsert = {
                 plan_name: doc["plan_name"],
                 plan_id: doc["_id"].valueOf(),
+                user_id: doc["user_id"],
                 terms: doc["terms"]
             }
             // convert term integer ids to desc e.g. 2218 -> "Fall 2018"
@@ -127,7 +132,7 @@ const getDegreePlan = async (query) => {
         return documents[0];
     }
     catch (e) {
-        errorHandler(e);
+        errorHandler(e, "getDegreePlan");
     }
 }
 
@@ -142,62 +147,54 @@ const getDegreePlan = async (query) => {
 const deleteDegreePlan = async (query) => {
     try {
         // get degree plan from database
-        const { plan_name, plan_id, terms } = await this.getDegreePlan(query);
-
-        let dbPlans = mongoose.connection.collection("plans"); // get MongoDB collection
-        let dbPlanTerms = mongoose.connection.collection("plan_terms"); // get MongoDB collection
-        // delete all referenced plan terms
-        for (let i = 0; i < terms.length; i++) {
-            const {courses, plan_term_id, term} = terms[i];
-            await dbPlanTerms.deleteOne({_id: mongoose.Types.ObjectId(plan_term_id)})
+        const { plan_name, plan_id, terms, user_id } = await this.getDegreePlan(query);
+        if (user_id !== query.user_id) {
+            /* the owner of the plan is not the request sender */
+            throw { id: "203", status: "403", title: "Degree Plan Error (deleteDegreePlan)", detail: "You (" + query.user_id + ") do not have permission to delete this degree plan." };
         }
+        // delete all referenced plan terms
+        let dbPlanTerms = mongoose.connection.collection("plan_terms"); // get MongoDB collection
+        await dbPlanTerms.deleteMany({ plan_id: mongoose.Types.ObjectId(plan_id) }); // delete all plan terms
         // delete degree plan
-        await dbPlans.deleteOne({_id: mongoose.Types.ObjectId(plan_id)});
+        let dbPlans = mongoose.connection.collection("plans"); // get MongoDB collection
+        await dbPlans.deleteOne({_id: mongoose.Types.ObjectId(plan_id), user_id: user_id});
 
         return true
 
     }
     catch (e) {
-        errorHandler(e);
+        errorHandler(e, "deleteDegreePlan");
     }
 }
 
-/** Delete degree plans from the database
+/** Delete degree plan terms from the database (only terms of one plan)
  * @param {any} query 
  * @returns {Promise} true or error
  */
-const deleteDegreePlanMultiple = async (query) => {
+const deleteDegreeTermMultiple = async (query) => {
     try {
-        let user_id = query.user_id;
-        let plan_ids = query.plan_ids;
+        let plan_term_ids = query.plan_term_ids;
+        let plan_id       = query.plan_id;
+        let user_id       = query.user_id;
 
-        // get mongodb collections
-        let dbPlans = mongoose.connection.collection("plans"); // get MongoDB collection
         let dbPlanTerms = mongoose.connection.collection("plan_terms"); // get MongoDB collection
-
-        // delete degree plans
-        for (let j = 0; j < plan_ids.length; j++) {
-            // get degree plan from database
-            const { plan_name, plan_id, terms } = await this.getDegreePlan({
-                user_id: user_id,
-                plan_id: plan_ids[j]
+        console.log("(dP/deleteDegreeTermMultiple) query: ", query);
+        // delete all referenced plan terms
+        for (let i = 0; i < plan_term_ids.length; i++) {
+            await dbPlanTerms.deleteOne({
+                _id     : mongoose.Types.ObjectId(plan_term_ids[i]), 
+                plan_id : mongoose.Types.ObjectId(plan_id)
             });
-            console.log("(degreePlan/degreeDegreePlanMultiple) plan_id: ", plan_id );
-
-            // delete all referenced plan terms
-            for (let i = 0; i < terms.length; i++) {
-                const {courses, plan_term_id, term} = terms[i];
-                await dbPlanTerms.deleteOne({_id: mongoose.Types.ObjectId(plan_term_id)});
-            }
-
-            // delete degree plan
-            await dbPlans.deleteOne({_id: mongoose.Types.ObjectId(plan_id)});
         }
-
-        return true;
+        // console.log("(dP/deleteDegreeTermMultiple) plan_id: ", plan_id);
+        let newDegreePlan = getDegreePlan({
+            user_id: user_id,
+            plan_id: plan_id
+        });
+        return newDegreePlan;
     }
     catch (e) {
-        errorHandler(e);
+        errorHandler(e, "deleteDegreeTermMultiple");
     }
 }
 
@@ -258,7 +255,7 @@ const getDegreePlans = async (query) => {
         return documents;
     }
     catch (e) {
-        errorHandler(e);
+        errorHandler(e, "getDegreePlans");
     }
 }
 
@@ -279,11 +276,11 @@ const updateDegreePlanName = async (query) => {
         });
         // confirm update
         if (updatedPlan === null)
-            throw { id: "202", status: "404", title: "Degree Plan Error", detail: "Plan with given identifiers were not found" };
+            throw { id: "202", status: "404", title: "Degree Plan Error (updateDegreePlanName) ", detail: "Plan with given identifiers were not found" };
         return updatedPlan._id.valueOf();
     }
     catch (e) {
-        errorHandler(e);
+        errorHandler(e, "updateDegreePlanName");
     }
 }
 
@@ -304,7 +301,7 @@ const createTerm = async (planId, planTermDesc, arrCourses) => {
         return planTerm._id.valueOf();
     }
     catch (e) {
-        errorHandler(e);
+        errorHandler(e, "createTerm");
     }
 }
 
@@ -336,11 +333,11 @@ const saveTerm = async (plan_term_id, setParams) => {
         });
         // confirm update
         if (planTerm === null)
-            throw { id: "202", status: "404", title: "Degree Plan Error", detail: "Plan term with given identifiers were not found" };
+            throw { id: "202", status: "404", title: "Degree Plan Error (saveTerm)", detail: "Plan term with given identifiers were not found. (planTerm == null)" };
         return planTerm._id.valueOf();
     }
     catch (e) {
-        errorHandler(e);
+        errorHandler(e, "saveTerm");
     }
 }
 
@@ -356,11 +353,11 @@ const deleteTerm = async (query) => {
         let dbPlanTerms = mongoose.connection.collection("plan_terms"); // get MongoDB collection
         let deleteResult = await dbPlanTerms.deleteOne({ user_id: query.userId, _id: mongoose.Types.ObjectId(query.planId) });
         if (deleteResult.n === 0)
-            throw { id: "202", status: "404", title: "Degree Plan Error", detail: "Plan term with given identifiers were not found" };
+            throw { id: "202", status: "404", title: "Degree Plan Error (deleteTerm)", detail: "Plan term with given identifiers were not found" };
         return true
     }
     catch (e) {
-        errorHandler(e);
+        errorHandler(e, "deleteTerm");
     }
 }
 
@@ -432,21 +429,19 @@ const descToTermInteger = (termDesc) => {
     }
 }
 
-const errorHandler = (e) => {
-    console.log("(degreePlan errorHandler)");
+const errorHandler = (e, functionName) => {
     if (e.message !== undefined) {
         if (e.message.indexOf("validation failed") > -1) {
             // console.log(e.errors['plan_name']);
             /* error is mongoose validation error */
-            throw { id: "201", status: "400", title: "Degree Plan Error", detail: e.message };
+            throw { id: "201", status: "400", title: "Degree Plan Error (" + functionName + ")" , detail: e.message };
         }
         else if (e.message.indexOf("No degree plan") > -1) {
             /* error is mongoose validation error */
-            throw { id: "202", status: "404", title: "Degree Plan Error", detail: e.message };
+            throw { id: "202", status: "404", title: "Degree Plan Error (" + functionName + ")", detail: e.message };
         }
         else {
-            console.error(e.message);
-            throw { id: "000", status: "500", title: "Degree Plan Error", detail: e.message };
+            throw { id: "000", status: "500", title: "Degree Plan Error (" + functionName + ")", detail: e.message };
         }
     }
     else {
@@ -455,7 +450,7 @@ const errorHandler = (e) => {
             throw { id: e.id, status: e.status, title: e.title, detail: e.detail };
         }
         else {
-            throw { id: "000", status: "500", title: "Degree Plan Error", detail: e.message };
+            throw { id: "000", status: "500", title: "Degree Plan Error (" + functionName + ")", detail: e.message };
         }
     }
 }
@@ -464,7 +459,6 @@ module.exports.createNewDegreePlan = createNewDegreePlan;
 module.exports.getDegreePlan = getDegreePlan;
 module.exports.updateDegreePlanName = updateDegreePlanName;
 module.exports.deleteDegreePlan = deleteDegreePlan;
-module.exports.deleteDegreePlanMultiple = deleteDegreePlanMultiple;
 module.exports.getDegreePlans = getDegreePlans;
 module.exports.createTerm = createTerm;
 module.exports.saveTerm = saveTerm;
@@ -472,3 +466,4 @@ module.exports.deleteTerm = deleteTerm;
 module.exports.getNextTerm = getNextTerm;
 module.exports.termIntegerToDesc = termIntegerToDesc;
 module.exports.descToTermInteger = descToTermInteger;
+module.exports.deleteDegreeTermMultiple = deleteDegreeTermMultiple;
