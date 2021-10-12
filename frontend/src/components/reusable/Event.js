@@ -50,12 +50,15 @@ function Event(props) {
   }, []);
 
   return (
-    <div className={eStyle.eventContainer} style={customStyle}>
-      <div style={{textAlign:"center"}}>{details}</div>
-      <div style={{textAlign:"center"}}>{name}</div>
-      <div style={{textAlign:"center"}}>{time_start.concat("~").concat(time_end)}</div>
-      <div style={{textAlign:"center"}}>{location}</div>
+    <div className={eStyle.eventContainerBackground}>
+      <div className={eStyle.eventContainer} style={customStyle}>
+        <div style={{textAlign:"center"}}>{details}</div>
+        <div style={{textAlign:"center"}}>{name}</div>
+        <div style={{textAlign:"center"}}>{time_start.concat("~").concat(time_end)}</div>
+        <div style={{textAlign:"center"}}>{location}</div>
+      </div>
     </div>
+    
   );
 }
 

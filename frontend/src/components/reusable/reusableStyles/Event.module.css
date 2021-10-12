@@ -1,3 +1,7 @@
+.eventContainerBackground {
+  background-color: #ffffff;
+}
+
 .eventContainer {
   display: flex;
   z-index: -1;
@@ -6,10 +10,10 @@
   white-space: normal;
   word-wrap: no-wrap;
   padding: 0 1vw;
-  color: #ffffff;
+  color: rgb(31,54,64);
   background-color: rgba(160,195,209, 0.5);
   position: absolute;
-  border: 1px solid #a0c3d1;
+  border: 1px solid #919da1;
   width: 100%;
   border-radius: 5px;
 
@@ -44,8 +48,8 @@
     word-wrap: break-word;
     z-index: -1;
 
-    color: #ffffff;
-    background-color: #a0c3d1;
+    color: rgb(31,54,64);
+    background-color: rgba(160,195,209, 0.5);;
     position: absolute;
     border: 1px solid #a0c3d1;
     width: 100%;
