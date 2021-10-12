@@ -393,7 +393,14 @@ function Scheduler(props) {
         },
       }),
     };
-    await fetch("https://jarney.club/api/schedule", requestOption)
+
+    const checkCourses = (selectedCourses.length > 0);
+    if (!checkCourses) {
+      setAlertMessage("You need at least 1 course to render schedule.");
+      setAlertSeverity("warning");
+      setShowAlert(true); 
+    }
+    checkCourses && await fetch("https://jarney.club/api/schedule", requestOption)
       .then((response) => response.json())
       .then((result) => {
         console.log("generate schedule result: ", result);
