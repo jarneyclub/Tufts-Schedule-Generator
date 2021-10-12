@@ -16,7 +16,7 @@
   z-index: 2;
   cursor: pointer;
   -webkit-appearance: none;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 .eventButtonHover {
