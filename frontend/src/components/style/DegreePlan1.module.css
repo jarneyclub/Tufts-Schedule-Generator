@@ -107,8 +107,8 @@ input {
 }
 
 .publicReqButton {
-  background-color: #efebf9;
-  color: #5a32bf;
+  background-color: rgba(160,195,209, 0.1);
+  color: #ffffff;
   width: 80%;
   margin-bottom: 10px;
 
