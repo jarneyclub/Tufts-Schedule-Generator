@@ -74,16 +74,12 @@
 h1 {
   color: #000000;
   font-size: 70px;
-  font-family: neuzeit-grotesk, sans-serif;
-  font-style: normal;
-  font-weight: 700;
+
 }
 h2 {
   color: #000000;
   font-size: 50px;
-  font-family: neuzeit-grotesk, sans-serif;
-  font-style: normal;
-  font-weight: 400;
+ 
 }
 
 .content {
