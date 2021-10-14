@@ -141,7 +141,7 @@ function CalendarDay(props) {
         timePrefState && 
         
           <PurpleSwitch
-            checked={entireDayOn}
+            checked={timePrefDay?.length === 26}
             name="allDay"
             onChange={handleAllDaySwitch}
           />
