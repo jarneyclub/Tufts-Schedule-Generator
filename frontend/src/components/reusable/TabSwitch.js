@@ -60,7 +60,7 @@ function DegreeReqExpress() {
           <ArrowLeftIcon fontSize="large" />
         </IconButton>
         <div style={{ color: "#ffffff" }}>
-        Requirements
+        ✓
         </div>
         <IconButton color="action" onClick={() => handleSwitchReq(1)}>
           <ArrowRightIcon fontSize="large" />

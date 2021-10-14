@@ -70,7 +70,7 @@ function CalendarDay(props) {
   const [dragState, setDragState] = useState(false);
   const [entireDayOn, setEntireDayOn] = useState()
   // eslint-disable-next-line no-unused-vars
-  timePrefState && setEntireDayOn(timePrefDay?.length === 26);
+  // timePrefState && setEntireDayOn(timePrefDay?.length === 26);
 
   console.log("TimePrefDay ", timePrefDay, " ", timePrefState);
   /*  To check if a time slot is highlighted during time pref selection  */
@@ -135,7 +135,7 @@ function CalendarDay(props) {
         timePrefState && 
         
           <PurpleSwitch
-            checked={entireDayOn}
+            checked={true}
             name="allDay"
             onChange={handleAllDaySwitch}
           />
