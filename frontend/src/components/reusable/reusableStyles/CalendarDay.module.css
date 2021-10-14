@@ -3,6 +3,12 @@
   position: relative;
 }
 
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
 .timeSlotTitle {
   height: 40px;
   min-width: 80px;

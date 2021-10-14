@@ -10,6 +10,7 @@
 import { useEffect, useState } from "react";
 import cStyle from "./reusableStyles/CalendarDay.module.css";
 import Event from "./Event.js";
+import { Button } from "@material-ui/core";
 import PurpleSwitch from "../reusable/PurpleSwitch";
 /* scripts */
 const time = [
@@ -115,6 +116,19 @@ function CalendarDay(props) {
     }
     
   }
+  const handleAddAll = () => {
+    if (timePrefDay.length !== 26) {
+      overlayTime.forEach((timeName) => {
+        addTimePref(dayName, timeName);
+      })  
+    }
+  }
+
+  const handleRemoveAll = () => {
+    if (timePrefDay.length > 0) {
+      removeEntireDay(dayName);
+    } 
+  }
   console.log("classes in ", dayName, classesDay);
   // useEffect(() => {
   //   if (timePrefState && entireDayOn) {
@@ -137,7 +151,7 @@ function CalendarDay(props) {
         !singleDay ? <div className={cStyle.timeSlotTitle}>{dayName}</div> : <div>&nbsp;</div>
       } */}
       <div className={cStyle.timeSlotTitle}>{!singleDay ? dayName : " "}</div>
-      {
+      {/* {
         timePrefState && 
         
           <PurpleSwitch
@@ -145,6 +159,15 @@ function CalendarDay(props) {
             name="allDay"
             onChange={handleAllDaySwitch}
           />
+                    
+      } */}
+      {
+        timePrefState && 
+        <div className={cStyle.buttonContainer}>
+          <Button onClick={handleAddAll}>Remove all</Button>
+          <Button onClick={handleRemoveAll}>Select all</Button>
+        </div>
+          
                     
       }
       <div className={cStyle.timeContainer}>
