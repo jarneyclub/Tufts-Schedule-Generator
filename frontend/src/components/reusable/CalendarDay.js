@@ -68,9 +68,9 @@ function CalendarDay(props) {
     classesDay,
   } = props;
   const [dragState, setDragState] = useState(false);
-  const [entireDayOn, setEntireDayOn] = useState(timePrefDay.length === 26)
+  const [entireDayOn, setEntireDayOn] = useState()
   // eslint-disable-next-line no-unused-vars
-  
+  timePrefState && setEntireDayOn(timePrefDay?.length === 26);
 
   console.log("TimePrefDay ", timePrefDay, " ", timePrefState);
   /*  To check if a time slot is highlighted during time pref selection  */
