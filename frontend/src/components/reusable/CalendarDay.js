@@ -102,11 +102,11 @@ function CalendarDay(props) {
   };
 
   const handleAllDaySwitch = () => {
-    if (entireDayOn) {
+    if (timePrefDay.length > 0) {
       removeEntireDay(dayName);
     }
-    else {
-      overlayTime.foreach((timeName) => {
+    else if (timePrefDay.length == 0){
+      overlayTime.forEach((timeName) => {
         addTimePref(dayName, timeName);
       }) 
       
@@ -135,7 +135,7 @@ function CalendarDay(props) {
         timePrefState && 
         
           <PurpleSwitch
-            checked={true}
+            checked={timePrefDay.length == 0}
             name="allDay"
             onChange={handleAllDaySwitch}
           />
