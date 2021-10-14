@@ -103,12 +103,12 @@ function CalendarDay(props) {
   console.log("classes in ", dayName, classesDay);
 
   useEffect(() => {
-    if (entireDayOn) {
+    if (timePrefState && entireDayOn) {
       overlayTime.foreach((timeName) => {
         addTimePref(dayName, timeName);
       })
     }
-    else{ 
+    else if (timePrefState) { 
       removeEntireDay(dayName);
     }
   }, [entireDayOn])
