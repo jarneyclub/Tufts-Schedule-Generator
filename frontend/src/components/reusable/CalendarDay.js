@@ -100,6 +100,19 @@ function CalendarDay(props) {
 
     return res;
   };
+
+  const handleAllDaySwitch = () => {
+    if (entireDayOn) {
+      removeEntireDay(dayName);
+    }
+    else {
+      overlayTime.foreach((timeName) => {
+        addTimePref(dayName, timeName);
+      }) 
+      
+    }
+    setEntireDayOn((prev) => !prev)
+  }
   console.log("classes in ", dayName, classesDay);
 
   // useEffect(() => {
@@ -123,8 +136,8 @@ function CalendarDay(props) {
         
           <PurpleSwitch
             checked={entireDayOn}
-            name="waitlist"
-            onChange={() => setEntireDayOn((prev) => !prev)}
+            name="allDay"
+            onChange={handleAllDaySwitch}
           />
                     
       }
