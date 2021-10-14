@@ -73,8 +73,8 @@ function CalendarDay(props) {
   // timePrefState && setEntireDayOn(timePrefDay?.length === 26);
 
   console.log("TimePrefDay ", timePrefDay, " ", timePrefState);
- timePrefState && console.log(timePrefDay.length
-    );
+//  timePrefState && console.log(timePrefDay.length
+//     );
   /*  To check if a time slot is highlighted during time pref selection  */
   const onHighlight = (e) => {
     /*  Add highlight, add time pref to array  */
@@ -107,7 +107,7 @@ function CalendarDay(props) {
     if (timePrefDay.length > 0) {
       removeEntireDay(dayName);
     }
-    else if (timePrefDay.length == 0){
+    else if (timePrefDay.length === 0){
       overlayTime.forEach((timeName) => {
         addTimePref(dayName, timeName);
       }) 
@@ -126,6 +126,11 @@ function CalendarDay(props) {
   //     removeEntireDay(dayName);
   //   }
   // }, [entireDayOn])
+
+  useEffect(() => {
+    timePrefState && setEntireDayOn(timePrefDay.length === 26);
+  }, [timePrefState])
+
   return (
     <div className={cStyle.dayContainer}>
       {/* {
@@ -136,7 +141,7 @@ function CalendarDay(props) {
         timePrefState && 
         
           <PurpleSwitch
-            checked={timePrefDay.length == 0}
+            checked={entireDayOn}
             name="allDay"
             onChange={handleAllDaySwitch}
           />
