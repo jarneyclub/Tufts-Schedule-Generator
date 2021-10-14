@@ -128,7 +128,7 @@ function CalendarDay(props) {
   // }, [entireDayOn])
 
   useEffect(() => {
-    timePrefState && setEntireDayOn(timePrefDay.length === 26);
+    timePrefDay && setEntireDayOn(timePrefDay?.length === 26);
   }, [timePrefState])
 
   return (
