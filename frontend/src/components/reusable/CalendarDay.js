@@ -7,9 +7,10 @@
  *
  */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import cStyle from "./reusableStyles/CalendarDay.module.css";
 import Event from "./Event.js";
+import PurpleSwitch from "../reusable/PurpleSwitch";
 /* scripts */
 const time = [
   "8",
@@ -56,17 +57,20 @@ const overlayTime = [
 ];
 
 function CalendarDay(props) {
-  const [dragState, setDragState] = useState(false);
-  // eslint-disable-next-line no-unused-vars
   const {
     dayName,
     timePrefState,
     timePrefDay,
     addTimePref,
     removeTimePref,
+    removeEntireDay,
     singleDay,
     classesDay,
   } = props;
+  const [dragState, setDragState] = useState(false);
+  const [entireDayOn, setEntireDayOn] = useState(timePrefDay.length === 26)
+  // eslint-disable-next-line no-unused-vars
+  
 
   console.log("TimePrefDay ", timePrefDay, " ", timePrefState);
   /*  To check if a time slot is highlighted during time pref selection  */
@@ -97,12 +101,33 @@ function CalendarDay(props) {
     return res;
   };
   console.log("classes in ", dayName, classesDay);
+
+  useEffect(() => {
+    if (entireDayOn) {
+      overlayTime.foreach((timeName) => {
+        addTimePref(dayName, timeName);
+      })
+    }
+    else{ 
+      removeEntireDay(dayName);
+    }
+  }, [entireDayOn])
   return (
     <div className={cStyle.dayContainer}>
       {/* {
         !singleDay ? <div className={cStyle.timeSlotTitle}>{dayName}</div> : <div>&nbsp;</div>
       } */}
       <div className={cStyle.timeSlotTitle}>{!singleDay ? dayName : " "}</div>
+      {
+        timePrefState && 
+        
+          <PurpleSwitch
+            checked={entireDayOn}
+            name="waitlist"
+            onChange={() => setEntireDayOn((prev) => !prev)}
+          />
+                    
+      }
       <div className={cStyle.timeContainer}>
         {timePrefState
           ? /* Time Pref Selection View */
