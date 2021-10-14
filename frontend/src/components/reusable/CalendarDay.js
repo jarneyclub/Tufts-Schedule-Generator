@@ -10,8 +10,11 @@
 import { useEffect, useState } from "react";
 import cStyle from "./reusableStyles/CalendarDay.module.css";
 import Event from "./Event.js";
-import { Button } from "@material-ui/core";
+import { Button, IconButton } from "@material-ui/core";
+
 import PurpleSwitch from "../reusable/PurpleSwitch";
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 /* scripts */
 const time = [
   "8",
@@ -164,8 +167,8 @@ function CalendarDay(props) {
       {
         timePrefState && 
         <div className={cStyle.buttonContainer}>
-          <Button className={cStyle.removeAllButton} onClick={handleRemoveAll}>☐</Button>
-          <Button className={cStyle.addAllButton} onClick={handleAddAll}>☑</Button>
+          <IconButton className={cStyle.removeAllButton} onClick={handleRemoveAll}><CheckBoxIcon /></IconButton>
+          <IconButton className={cStyle.addAllButton} onClick={handleAddAll}><CheckBoxOutlineBlankIcon/></IconButton>
         </div>
           
                     
