@@ -272,6 +272,13 @@ function Scheduler(props) {
     }));
   };
 
+  const handleRemoveTimePrefAllDay = (dayName) => {
+    setTimePref((prev) => ({
+      ...prev, 
+      [dayName] : [],
+    }))
+  }
+
   const handleAddAllDayTimePref = (dayName) => {
     setTimePref((prev) => ({
       ...prev,
@@ -279,12 +286,7 @@ function Scheduler(props) {
     }));
   };
 
-  const handleRemoveAllDayTimePref = (dayName) => {
-    setTimePref((prev) => ({
-      ...prev,
-      [dayName]: {},
-    }));
-  };
+  
 
   const handleSearchChange = (e) => {
     setCourseSearchValue(e.target.value);
@@ -757,7 +759,8 @@ function Scheduler(props) {
         <TimePrefSelector
           onAddTimePref={handleAddTimePref}
           onRemoveTimePref={handleRemoveTimePref}
-          onRemoveEntireDay={handleRemoveAllDayTimePref}
+          onRemoveEntireDay={handleRemoveTimePrefAllDay}
+          
           onAddEntireDay={handleAddAllDayTimePref}
           timePrefState={timePrefState}
           timePref={timePref}
