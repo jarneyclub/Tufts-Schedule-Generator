@@ -164,8 +164,8 @@ function CalendarDay(props) {
       {
         timePrefState && 
         <div className={cStyle.buttonContainer}>
-          <Button classname={cStyle.removeAllButton} onClick={handleRemoveAll}>- Remove all</Button>
-          <Button classname={cStyle.addAllButton} onClick={handleAddAll}>+ Select all</Button>
+          <Button className={cStyle.removeAllButton} onClick={handleRemoveAll}>☐</Button>
+          <Button className={cStyle.addAllButton} onClick={handleAddAll}>☑</Button>
         </div>
           
                     
