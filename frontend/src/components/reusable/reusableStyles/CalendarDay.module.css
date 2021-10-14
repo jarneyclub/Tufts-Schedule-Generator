@@ -12,6 +12,7 @@
 .addAllButton {
   text-transform: unset !important;
   width: 50%;
+  color: #A1C97D;
 }
 .removeAllButton {
   text-transform: unset !important;
