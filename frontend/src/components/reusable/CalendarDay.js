@@ -73,6 +73,8 @@ function CalendarDay(props) {
   // timePrefState && setEntireDayOn(timePrefDay?.length === 26);
 
   console.log("TimePrefDay ", timePrefDay, " ", timePrefState);
+ timePrefState && console.log(timePrefDay.length
+    );
   /*  To check if a time slot is highlighted during time pref selection  */
   const onHighlight = (e) => {
     /*  Add highlight, add time pref to array  */
@@ -111,10 +113,9 @@ function CalendarDay(props) {
       }) 
       
     }
-    setEntireDayOn((prev) => !prev)
+    
   }
   console.log("classes in ", dayName, classesDay);
-
   // useEffect(() => {
   //   if (timePrefState && entireDayOn) {
   //     overlayTime.foreach((timeName) => {
