@@ -102,16 +102,16 @@ function CalendarDay(props) {
   };
   console.log("classes in ", dayName, classesDay);
 
-  useEffect(() => {
-    if (timePrefState && entireDayOn) {
-      overlayTime.foreach((timeName) => {
-        addTimePref(dayName, timeName);
-      })
-    }
-    else if (timePrefState) { 
-      removeEntireDay(dayName);
-    }
-  }, [entireDayOn])
+  // useEffect(() => {
+  //   if (timePrefState && entireDayOn) {
+  //     overlayTime.foreach((timeName) => {
+  //       addTimePref(dayName, timeName);
+  //     })
+  //   }
+  //   else if (timePrefState) { 
+  //     removeEntireDay(dayName);
+  //   }
+  // }, [entireDayOn])
   return (
     <div className={cStyle.dayContainer}>
       {/* {
