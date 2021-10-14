@@ -9,6 +9,15 @@
   width: 100%;
 }
 
+.addAllButton {
+  text-transform: unset !important;
+  width: 50%;
+}
+.removeAllButton {
+  text-transform: unset !important;
+  width: 50%;
+
+}
 .timeSlotTitle {
   height: 40px;
   min-width: 80px;
