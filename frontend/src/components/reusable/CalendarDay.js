@@ -129,7 +129,7 @@ function CalendarDay(props) {
 
   useEffect(() => {
     timePrefDay && setEntireDayOn(timePrefDay?.length === 26);
-  }, [timePrefState])
+  }, [])
 
   return (
     <div className={cStyle.dayContainer}>
@@ -141,7 +141,7 @@ function CalendarDay(props) {
         timePrefState && 
         
           <PurpleSwitch
-            checked={timePrefDay?.length === 26}
+            checked={timePrefDay ? timePrefDay?.length === 26 : false}
             name="allDay"
             onChange={handleAllDaySwitch}
           />
