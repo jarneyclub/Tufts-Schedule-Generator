@@ -643,13 +643,12 @@ function Scheduler(props) {
               <div className={sStyle.infoTitle}>Total SHUs count:&nbsp;</div>
               <div classname={sStyle.infoDetail}>{unitsCount}</div>
             </div>
-            
-            
           </div>
+
           {popup.showCourseInfo && (
             <CourseInfoExpress courseInfo={courseInfo} onClose={() => handlePopup("showCourseInfo", false)}/>
-            
           )}
+
           <div className={sStyle.tabsContainer}>
             <div className={sStyle.tabBarsContainer}>
               <div
