@@ -27,7 +27,7 @@ import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox"
 import PurpleSwitch from "./reusable/PurpleSwitch";
 import sStyle from "./style/Scheduler.module.css";
 import Dropdown from "./reusable/Dropdown";
-
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Calendar from "./reusable/Calendar";
 import CourseSearchBar from "./reusable/CourseSearchBar";
 import TimePrefSelector from "./reusable/TimePrefSelector";
@@ -638,13 +638,15 @@ function Scheduler(props) {
           </div>
 
           <div className={sStyle.infoContainer}>
+            <div style={{color: "#919da1"}}>More:</div>
             <div className={sStyle.unitsContainer}>
               <div className={sStyle.infoTitle}>Total SHUs count:&nbsp;</div>
               <div classname={sStyle.infoDetail}>{unitsCount}</div>
             </div>
             
             {popup.showCourseInfo && (
-              <CourseInfoExpress courseInfo={courseInfo} />
+               <ClickAwayListener onClickAway={() => handlePopup("showCourseInfo", false)}><CourseInfoExpress courseInfo={courseInfo} /></ClickAwayListener>
+              
             )}
           </div>
 
