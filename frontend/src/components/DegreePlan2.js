@@ -83,6 +83,7 @@ const courses = [
   },
 ];
 
+const currentYear = new Date.getFullYear();
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
@@ -130,7 +131,17 @@ function DegreePlan2(props) {
   const [alertMessage, setAlertMessage] = useState();
   const [alertSeverity, setAlertSeverity] = useState();
 
-  const [unitsCount, setUnitsCount] = useState(0);
+  const [currentTerm, setCurrentTerm] = useState("Fall");
+  // const [unitsCount, setUnitsCount] = useState(0);
+  // const [completedUnitsCount, setCompletedUnitsCount] = useState(0);
+  // const [currentUnitsCount, setCurrentUnitsCount] = useState(0);
+  // const [futureUnitsCount, setFutureUnitsCount] = useState(0);
+  const [unitsCount, setUnitsCount] = useState({
+    total: 0,
+    completed: 0,
+    current: 0,
+    future: 0, 
+  })
   const [courseInfo, setCourseInfo] = useState({});
 
   const handlePopup = (field, bit) => {
@@ -140,6 +151,12 @@ function DegreePlan2(props) {
     }));
   };
 
+  const handleUnitsCount = (field, bit) => {
+    setUnitsCount((prev) => ({
+      ...prev,
+      [field]: bit,
+    }))
+  }
   const handleSemesterPlanChange = (e) => {
     setSelectedPlanName(e.target.value);
     console.log("semesterPlanChange e:", e);
@@ -421,13 +438,36 @@ function DegreePlan2(props) {
   useEffect(() => {
     console.log("cardOptions: ", cardOptions);
     cardOptions?.map((card) => fetchSaveTerm(card));
-    let tempCount = 0;
+    let totalCount = 0;
+    let completedCount = 0;
+    let currentCount = 0;
+    
+    // counts total units 
     cardOptions?.forEach((card) => {
+      const time = card?.term.split(" ");
       card?.courses.forEach((course) => {
-        tempCount += course.units_esti;
+        totalCount += course?.units_esti;
+        if (parseInt(time[0]) < currentYear) {
+          completedCount += course.units_esti;
+        }
+        else if (parseInt(time[0]) === currentYear) {
+          if (((time[1] === "Spring" || time[1] === "Summer") && currentTerm === "Fall") || (time[1] === "Spring" && currentTerm === "Summer"))
+            completedCount += course?.units_esti;
+          else if (time[1] === currentTerm) 
+            currentCount += course?.units_esti;
+        }
       })
+      
     })
-    setUnitsCount(tempCount);
+    // setUnitsCount(totalCount);
+    // setCompletedUnitsCount(completedCount);
+    // setCurrentUnitsCount(currentCount);
+    handleUnitsCount("total", totalCount);
+    handleUnitsCount("completed", completedCount);
+    handleUnitsCount("current", currentCount);
+    handleUnitsCount("future", totalCount - completedCount - currentCount);
+
+
   }, [cardOptions]);
 
  
@@ -528,11 +568,23 @@ function DegreePlan2(props) {
             
 
             <div className={sStyle.infoContainer}>
-            <div style={{color: "#919da1"}}>More:</div>
-            <div className={sStyle.unitsContainer}>
-              <div className={sStyle.infoTitle}>Total SHUs count:&nbsp;</div>
-              <div classname={sStyle.infoDetail}>{unitsCount}</div>
-            </div>
+              <div style={{color: "#919da1"}}>More:</div>
+              <div className={sStyle.unitsContainer}>
+                <div className={sStyle.infoTitle}>Total SHUs:&nbsp;</div>
+                <div classname={sStyle.infoDetail}>{unitsCount.total}</div>
+              </div>
+              <div className={sStyle.unitsContainer}>
+                <div className={sStyle.infoTitle}>Completed SHUs:&nbsp;</div>
+                <div classname={sStyle.infoDetail}>{unitsCount.completed}</div>
+              </div>
+              <div className={sStyle.unitsContainer}>
+                <div className={sStyle.infoTitle}>SHUs in progress:&nbsp;</div>
+                <div classname={sStyle.infoDetail}>{unitsCount.current}</div>
+              </div>
+              <div className={sStyle.unitsContainer}>
+                <div className={sStyle.infoTitle}>SHUs left:&nbsp;</div>
+                <div classname={sStyle.infoDetail}>{unitsCount.future}</div>
+              </div>
           </div>
 
           {popup.showCourseInfo && (
