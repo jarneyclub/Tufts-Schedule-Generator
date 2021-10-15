@@ -1,3 +1,10 @@
+
+.infoContainer{
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+}
+
 .infoTitle {
   color: #fc4e4e;
 }
