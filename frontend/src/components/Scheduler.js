@@ -644,12 +644,12 @@ function Scheduler(props) {
               <div classname={sStyle.infoDetail}>{unitsCount}</div>
             </div>
             
-            {popup.showCourseInfo && (
-               <ClickAwayListener onClickAway={() => {handlePopup("showCourseInfo", false); console.log("clickedOutside")}}><CourseInfoExpress courseInfo={courseInfo} /></ClickAwayListener>
-              
-            )}
+            
           </div>
-
+          {popup.showCourseInfo && (
+            <ClickAwayListener onClickAway={() => {handlePopup("showCourseInfo", false); console.log("clickedOutside")}}><CourseInfoExpress courseInfo={courseInfo} /></ClickAwayListener>
+            
+          )}
           <div className={sStyle.tabsContainer}>
             <div className={sStyle.tabBarsContainer}>
               <div
