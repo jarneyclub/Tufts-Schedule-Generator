@@ -41,6 +41,7 @@
 
 .progressBarCompleted {
   background-color: rgba(160,195,209, 0.5);
+  color: #a0c3d1;
   height: 100%;
   border-bottom-left-radius: 15px;
   border-top-left-radius: 15px;
@@ -49,12 +50,14 @@
 }
 .progressBarCurrent {
   background-color: rgba(240,228,170, 0.5);
+  color: #f0e4aa;
   height: 100%;
   
   transition: width 1s ease-in-out;
 }
 .progressBarFuture {
-  background-color: rgba(252,109,109,0.5);
+  background-color: rgba(	252, 78, 78,0.5);
+  color: #FC4E4E;
   height: 100%;
   border-bottom-right-radius: 15px;
   border-top-right-radius: 15px;

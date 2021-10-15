@@ -479,7 +479,7 @@ function DegreePlan2(props) {
                     Progress Bar
                 */}
         <div className={dp2Style.progressBarContainer}>
-          <div className={dp2Style.progressBarTitle}>Progress </div>
+          {/* <div className={dp2Style.progressBarTitle}>Progress </div> */}
           {/* {!shrink ? (
             <div className={dp2Style.progressBar} > 
               <div className={dp2Style.progressBarCompleted} style={{width: ((unitsCount.completed / unitsCount.total * 100) + "%")}}/>
@@ -491,9 +491,9 @@ function DegreePlan2(props) {
             <div className={dp2Style.progressBarTitle}>&nbsp;☃&nbsp;</div>
           )} */}
           <div className={dp2Style.progressBar} > 
-              <div className={dp2Style.progressBarCompleted} style={{width: ((unitsCount.completed / unitsCount.total * 100) + "%")}}/>
-              <div className={dp2Style.progressBarCurrent} style={{width: ((unitsCount.current / unitsCount.total * 100) + "%")}}/>
-              <div className={dp2Style.progressBarFuture} style={{width: ((unitsCount.future / unitsCount.total * 100) + "%")}}/>
+              <div className={dp2Style.progressBarCompleted} style={{width: ((unitsCount.completed / unitsCount.total * 100) + "%")}}>{((unitsCount.completed / unitsCount.total * 100) + "%")}</div>
+              <div className={dp2Style.progressBarCurrent} style={{width: ((unitsCount.current / unitsCount.total * 100) + "%")}}>{((unitsCount.current / unitsCount.total * 100) + "%")}</div>
+              <div className={dp2Style.progressBarFuture} style={{width: ((unitsCount.future / unitsCount.total * 100) + "%")}}>{((unitsCount.future / unitsCount.total * 100) + "%")}</div>
 
             </div>
 
