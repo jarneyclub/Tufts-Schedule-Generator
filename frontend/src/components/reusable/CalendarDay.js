@@ -70,6 +70,7 @@ function CalendarDay(props) {
     removeEntireDay,
     singleDay,
     classesDay,
+    onEventClick,
   } = props;
   const [dragState, setDragState] = useState(false);
   const [entireDayOn, setEntireDayOn] = useState();
@@ -151,16 +152,7 @@ function CalendarDay(props) {
         !singleDay ? <div className={cStyle.timeSlotTitle}>{dayName}</div> : <div>&nbsp;</div>
       } */}
       <div className={cStyle.timeSlotTitle}>{!singleDay ? dayName : " "}</div>
-      {/* {
-        timePrefState && 
-        
-          <PurpleSwitch
-            checked={timePrefDay ? timePrefDay?.length === 26 : false}
-            name="allDay"
-            onChange={handleAllDaySwitch}
-          />
-                    
-      } */}
+
       {timePrefState && (
         <div className={cStyle.buttonContainer}>
           <IconButton
@@ -207,7 +199,7 @@ function CalendarDay(props) {
           {classesDay?.map((event) => <div>{event.details}</div>)}
       </div> */}
       {classesDay?.map((event) => {
-        return <Event eventDetails={event}></Event>;
+        return <Event eventDetails={event} onEventClick={onEventClick}></Event>;
       })}
     </div>
   );
