@@ -36,6 +36,11 @@
   margin-right: 1vw;
 }
 
+.progressBarCompleted {
+  background-color: aquamarine;
+  height: 100%;
+}
+
 /* * * * * * * * * * * HORIZONTAL WRAPPER * * * * * * * * * * */
 .horizontalWrapper {
   display: flex;
