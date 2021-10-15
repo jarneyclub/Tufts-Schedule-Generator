@@ -637,6 +637,7 @@ function Scheduler(props) {
 
           <div className={sStyle.infoContainer}>
             <div>Total SHUs count: {unitsCount}</div>
+            <br/>
             {popup.showCourseInfo && (
               <CourseInfoExpress courseInfo={courseInfo} />
             )}
@@ -748,6 +749,7 @@ function Scheduler(props) {
               timePrefState={timePrefState}
               shrink={shrink}
               classes={classes}
+              onEventClick={handleShowCourseInfo}
             />
           </div>
         </div>
