@@ -5,6 +5,7 @@ import {
   TextField,
   IconButton,
   CircularProgress,
+  ClickAwayListener,
 } from "@material-ui/core";
 
 import React from "react";
@@ -148,7 +149,7 @@ function DegreePlanExpress() {
 }
 
 const CourseInfoExpress = (props) => {
-  const { courseInfo } = props;
+  const { courseInfo, onClose } = props;
 
   const {
     details,
@@ -164,7 +165,8 @@ const CourseInfoExpress = (props) => {
   } = courseInfo;
 
   return (
-    <div className={tStyle.courseInfoContainer}>
+    <ClickAwayListener onClickAway={onClose}>
+      <div className={tStyle.courseInfoContainer}>
       <div style={{color:"#919da1"}}>More about this course... </div>
       {course_num && (
         <div className={tStyle.infoContainer}>
@@ -224,6 +226,8 @@ const CourseInfoExpress = (props) => {
         </div>
       )}
     </div>
+    </ClickAwayListener>
+    
   );
 };
 
