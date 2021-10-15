@@ -66,7 +66,7 @@ function DegreeReqEdit(props) {
   const [detail, setDetail] = useState(isCreateMM ? drDefault : reqDetail);
   const [schoolOptions, setSchoolOptions] = useState(schoolDefaults);
   const [selectedSchoolIdx, setSelectedSchoolIdx] = useState(0);
-  
+
   console.log("DegreeReqEdit, isCreateMM: ", isCreateMM);
   console.log("DegreeReqEdit reqDetail: ", reqDetail);
   const handleClose = () => {
@@ -86,16 +86,13 @@ function DegreeReqEdit(props) {
       setDetail((prev) => ({
         ...prev,
         [e.target.name]: schoolOptions[e.target.value],
-      })); 
-    }
-    else {
+      }));
+    } else {
       setDetail((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+        ...prev,
+        [e.target.name]: e.target.value,
+      }));
     }
-    
-
   };
 
   /*  Controlled input for note  */
@@ -217,7 +214,7 @@ function DegreeReqEdit(props) {
           <CancelIcon />
         </IconButton>
         <div className={pStyle.headerBody}>
-           {detail?.program_name}  &nbsp;&nbsp;&nbsp;&nbsp;
+          {detail?.program_name} &nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         <span />
       </div>

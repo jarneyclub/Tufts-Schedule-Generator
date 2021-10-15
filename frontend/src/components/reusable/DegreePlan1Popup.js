@@ -57,13 +57,15 @@ function RemovePrivReq(props) {
   };
 
   const fetchDelete = async () => {
-    await fetch("https://jarney.club/api/degreereq/private/".concat(privateReqID), {
-      method: "DELETE",
-    })
+    await fetch(
+      "https://jarney.club/api/degreereq/private/".concat(privateReqID),
+      {
+        method: "DELETE",
+      }
+    )
       .then((response) => response.json())
       .then((result) => {
         console.log("result from Degree plan Delete", result);
-        
 
         if (!result.error) {
           refreshPrivateReq();
@@ -71,8 +73,7 @@ function RemovePrivReq(props) {
           setAlertSeverity("success");
           onShowAlert();
           onClose();
-        }
-        else {
+        } else {
           setAlertMessage(result.error);
           setAlertSeverity("warning");
           onShowAlert(true);

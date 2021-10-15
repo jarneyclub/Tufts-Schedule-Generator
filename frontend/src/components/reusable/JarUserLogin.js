@@ -125,7 +125,7 @@ const JarUserLogin = React.forwardRef((props, ref) => {
         )}
 
         <div className={jStyle.headerBody}>
-          {loginState ? "Open my JAR" : "Get my JAR"}&nbsp;&nbsp;&nbsp;
+          {loginState ? "Open my JAR" : "Get my JAR"}&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         {!forcedPopup && <div />}
       </div>

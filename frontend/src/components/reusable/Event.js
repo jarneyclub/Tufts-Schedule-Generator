@@ -9,9 +9,11 @@
 
 import { useEffect, useState } from "react";
 import eStyle from "./reusableStyles/Event.module.css";
+import EinaBold from "../../fonts/Eina03-SemiBold.ttf";
+import EinaRegular from "../../fonts/Eina03-Regular.ttf";
 
 function Event(props) {
-  const { eventDetails } = props;
+  const { eventDetails, onEventClick } = props;
 
   const { details, name, location, time_start, time_end } = eventDetails;
   const [customStyle, setCustomStyle] = useState({});
@@ -39,7 +41,9 @@ function Event(props) {
 
     return res;
   };
-
+  const handleOnClick = () => {
+    onEventClick(eventDetails);
+  }
   useEffect(() => {
     const transY = calculateTranslate();
     const eventHeight = calculateHeight();
@@ -50,10 +54,12 @@ function Event(props) {
   }, []);
 
   return (
-    <div className={eStyle.eventContainer} style={customStyle}>
+    <div className={eStyle.eventContainer} style={customStyle} onClick={handleOnClick}>
+      <div style={{ fontWeight: "lighter" }}>
+        {time_start.concat("~").concat(time_end)}
+      </div>
       <div>{details}</div>
       <div>{name}</div>
-      <div>{time_start.concat("~").concat(time_end)}</div>
       <div>{location}</div>
     </div>
   );

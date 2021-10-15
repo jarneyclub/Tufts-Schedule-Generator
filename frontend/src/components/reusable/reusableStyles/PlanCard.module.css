@@ -9,6 +9,7 @@
   background: #ffffff;
   height: 250px;
   min-width: 220px;
+  max-width: 25%;
   overflow: auto;
   /* padding-left: 1vw; 
   padding-right: 1vw; */
@@ -31,4 +32,10 @@
   .cardContainer {
     flex: 0 0 95%;
   }
+}
+@media only screen and (max-width: 985px) {
+  .cardContainer {
+    max-width: none;
+  }
+  
 }

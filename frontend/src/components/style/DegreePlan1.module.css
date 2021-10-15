@@ -107,11 +107,10 @@ input {
 }
 
 .publicReqButton {
-  background-color: #efebf9;
+  background-color: rgba(160, 195, 209, 0.1);
   color: #5a32bf;
   width: 80%;
   margin-bottom: 10px;
-
 }
 
 .publicReqButton:hover {
@@ -289,6 +288,7 @@ body {
 @media only screen and (max-width: 700px) {
   .DegreeReqWrapper {
     width: 100vw;
+    border-left: none;
   }
   .DegreeSearchWrapper {
     width: 100vw;

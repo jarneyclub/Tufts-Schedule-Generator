@@ -3,6 +3,21 @@
   position: relative;
 }
 
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.addAllButton {
+  text-transform: unset !important;
+  width: 50%;
+  color: #a1c97d;
+}
+.removeAllButton {
+  text-transform: unset !important;
+  width: 50%;
+}
 .timeSlotTitle {
   height: 40px;
   min-width: 80px;

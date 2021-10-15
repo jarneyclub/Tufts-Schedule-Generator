@@ -1,0 +1,19 @@
+.courseInfoContainer {
+  width: 100%;
+  margin: 10px 0;
+  padding: 5px 1vw;
+  border: solid 2px #a0c3d1; 
+  border-radius: 12px;
+  box-shadow: 0 4px 8px 0 rgba(90, 50, 191, 0.2),
+    0 6px 20px 0 rgba(90, 50, 191, 0.19)
+}
+
+.infoContainer{
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+}
+
+.infoTitle {
+  color: #fc4e4e;
+}

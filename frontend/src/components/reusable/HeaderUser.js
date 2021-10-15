@@ -46,8 +46,7 @@ function HeaderUser(props) {
     if (logged) {
       /*  Sign Out */
       switchLogged();
-    } 
-    else {
+    } else {
       setLoginPopup(true);
     }
   };
@@ -98,7 +97,7 @@ function HeaderUser(props) {
 
         {!shrink && (
           <div className={hStyle.navbarContainer} ref={navbarRef}>
-            { !((!logRequired && loginPopup)  || signupPopup) &&
+            {!((!logRequired && loginPopup) || signupPopup) && (
               <div>
                 <Button
                   onClick={handleLoginSignupPopup}
@@ -108,7 +107,7 @@ function HeaderUser(props) {
                   {logged ? "Sign out" : "Log in"}
                 </Button>
               </div>
-            }
+            )}
             <div>
               <IconButton
                 className={hStyle.button}

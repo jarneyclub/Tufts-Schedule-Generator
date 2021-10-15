@@ -133,6 +133,29 @@
   margin: 10px 0;
 }
 
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-height: 300px;
+  margin: 10px 0;
+  padding: 10px 1vw;
+  background-color: rgba(239, 235, 249, 0.9);
+  border-radius: 12px;
+  width: 100%
+
+}
+
+.unitsContainer{
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+}
+
+.infoTitle {
+  color: #fc4e4e;
+}
+
 .leftCheckboxContainer {
   /* display: flex;
   flex-wrap: wrap;

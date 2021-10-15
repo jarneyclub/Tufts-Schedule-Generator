@@ -58,32 +58,33 @@ function EditScheduleName(props) {
   const handleSaveEdit = () => {
     /* do something API?? pass in the selectedCards arr */
     patchEditName();
-    
   };
 
   const patchEditName = async () => {
     const requestOption = {
       method: "PATCH",
-      headers: { "Content-Type": "application/json", "accept": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
       body: JSON.stringify({
         sched_id: scheduleID,
         new_name: editName,
-      })
+      }),
     };
     console.log("requestOption for fetchCreatePrivateReqs", requestOption);
     await fetch("https://jarney.club/api/schedule/name", requestOption)
       .then((response) => response.json())
       .then((result) => {
         console.log("result from editScheduleName: ", result);
-        
+
         if (!result.error) {
           setAlertMessage("Schedule name changed!");
           setAlertSeverity("success");
           onShowAlert();
           refreshSchedules();
           onClose();
-        }
-        else {
+        } else {
           setAlertMessage(result.error);
           setAlertSeverity("warning");
           onShowAlert(true);
@@ -91,7 +92,6 @@ function EditScheduleName(props) {
       })
       .catch((error) => {
         console.log("error from editPlanName: ", error);
-        
       });
   };
 
@@ -101,7 +101,9 @@ function EditScheduleName(props) {
         <IconButton onClick={handleClose} className={pStyle.closeButton}>
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>EDIT PLAN NAME</div>
+        <div className={pStyle.headerBody}>
+          EDIT PLAN NAME&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
 
         <div />
       </div>
@@ -134,13 +136,11 @@ function AddSchedule(props) {
   const handleNameChange = (e) => {
     setScheduleName(e.target.value);
   };
-  
 
   const handleAdd = () => {
     /* do something API?? pass in the selectedCards arr */
 
-      onCreateSchedule(scheduleName);
-
+    onCreateSchedule(scheduleName);
   };
 
   return (
@@ -149,7 +149,9 @@ function AddSchedule(props) {
         <IconButton onClick={handleClose} className={pStyle.closeButton}>
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>ADD SCHEDULE</div>
+        <div className={pStyle.headerBody}>
+          ADD SCHEDULE&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
         <div />
       </div>
       <div className={pStyle.formContainer}>
@@ -173,7 +175,7 @@ function RemoveSchedule(props) {
   const {
     onClose,
     planName,
-    planID,
+    scheduleID,
     refreshPlans,
     onShowAlert,
     setAlertMessage,
@@ -190,21 +192,20 @@ function RemoveSchedule(props) {
   };
 
   const fetchDelete = async () => {
-    await fetch("https://jarney.club/api/degreeplan/".concat(planID), {
+    await fetch("https://jarney.club/api/degreeplan/".concat(scheduleID), {
       method: "DELETE",
     })
       .then((response) => response.json())
       .then((result) => {
         console.log("result from Degree plan Delete", result);
-        
+
         if (!result.error) {
           refreshPlans();
           setAlertMessage("Schedule deleted!");
           setAlertSeverity("success");
           onShowAlert();
           onClose();
-        }
-        else {
+        } else {
           setAlertMessage(result.error);
           setAlertSeverity("warning");
           onShowAlert(true);

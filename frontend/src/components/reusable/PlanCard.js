@@ -16,6 +16,7 @@ function PlanCard(props) {
     onTransferCourse,
     cardOrigin,
     handleCardOrigin,
+    tabExpress,
   } = props;
 
   const dragOver = (e) => {
@@ -50,25 +51,41 @@ function PlanCard(props) {
       className={pStyle.cardContainer}
       onDragOver={dragOver}
       onDrop={drop}
-      id={cardDetail.plan_term_id}
+      id={cardDetail?.plan_term_id}
     >
-      <div className={pStyle.cardTitle}>{cardDetail.term}</div>
+      <div className={pStyle.cardTitle}>{cardDetail?.term}</div>
       <div className={pStyle.courseContainer}>
-        {cardDetail.courses?.map((course) => (
-          <CourseSearchBar
-            draggable={true}
-            courseDetail={course}
-            key={course.gen_course_id}
-            onTransferCourse={onTransferCourse}
-            origin={cardDetail.plan_term_id}
-            handleCardOrigin={handleCardOrigin}
-            onDoubleClick={handleDoubleClick}
-            customStyle={{
-              border: "none",
-              justifyContent: "space-between",
-            }}
-          />
-        ))}
+        {tabExpress
+          ? cardDetail?.courses?.map((course) => (
+              <CourseSearchBar
+                draggable={false}
+                courseDetail={course}
+                key={course.gen_course_id}
+                onTransferCourse={onTransferCourse}
+                origin={cardOrigin}
+                handleCardOrigin={handleCardOrigin}
+                onDoubleClick={handleDoubleClick}
+                customStyle={{
+                  border: "none",
+                  justifyContent: "space-between",
+                }}
+              />
+            ))
+          : cardDetail.courses?.map((course) => (
+              <CourseSearchBar
+                draggable={true}
+                courseDetail={course}
+                key={course.gen_course_id}
+                onTransferCourse={onTransferCourse}
+                origin={cardDetail.plan_term_id}
+                handleCardOrigin={handleCardOrigin}
+                onDoubleClick={handleDoubleClick}
+                customStyle={{
+                  border: "none",
+                  justifyContent: "space-between",
+                }}
+              />
+            ))}
       </div>
     </div>
   );

@@ -92,7 +92,6 @@ const planCardsPlaceholder = [
     term: 2215,
     courses: [],
   },
-  
 ];
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -296,8 +295,6 @@ function DegreePlan2(props) {
     );
   };
 
-  
-
   /*
    *  createnNewPlan()
    *  purpose: creates a new plan option with given name
@@ -322,13 +319,15 @@ function DegreePlan2(props) {
         console.log("data: ", result);
         fetchPlans();
         setLoadMessage(false);
+        setAlertMessage("Plan added!");
+        setAlertSeverity("success");
+        setShowAlert(true);
       })
       .catch((error) => {
         setLoadMessage(false);
-        // console.log(error.data);
-        // handleAlert("error", "Error: Failed to Login");
-
-        // add an error message popup of some sort
+        setAlertMessage(error);
+        setAlertSeverity("error");
+        setShowAlert(true);
         console.log("error from login: ", error);
       });
   };
@@ -415,6 +414,11 @@ function DegreePlan2(props) {
   }, []);
 
   useEffect(() => {
+    fetchPlans();
+    fetchPrivateReqs();
+  }, [logged]);
+
+  useEffect(() => {
     console.log("cardOptions: ", cardOptions);
     cardOptions?.map((card) => fetchSaveTerm(card));
   }, [cardOptions]);
@@ -450,7 +454,7 @@ function DegreePlan2(props) {
                 isObject={true}
                 objectField={"plan_name"}
                 selectedOption={selectedPlanName}
-                selectedIdx = {selectedPlanIdx}
+                selectedIdx={selectedPlanIdx}
                 onOptionChange={handleSemesterPlanChange}
                 customStyle={{ fontSize: "20px" }}
               />
@@ -513,7 +517,7 @@ function DegreePlan2(props) {
             </div>
 
             {/* Degree Requirment Container */}
-         
+
             <DegreeReqExpress />
           </div>
 
