@@ -1,3 +1,7 @@
+.courseInfoContainer {
+  border: solid 1px #fc4e4e; 
+  border-radius: 12px;
+}
 
 .infoContainer{
   display: flex;
