@@ -137,6 +137,9 @@
   display: flex;
   flex-direction: column;
   max-height: 300px;
+  margin: 10px 0;
+  padding: 10px 1vw;
+  background-color: rgba(239, 235, 249, 0.9); 
 }
 .leftCheckboxContainer {
   /* display: flex;
