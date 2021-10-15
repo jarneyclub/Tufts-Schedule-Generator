@@ -64,7 +64,7 @@ function CourseSearchBar(props) {
     // if (origin === "schedulerTab" || origin === "") {
     //   onClick(courseDetail);
     // }
-    onClick();
+    onClick(courseDetail);
   };
 
   return (
