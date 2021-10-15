@@ -52,6 +52,7 @@
   display: flex;
   flex-direction: column;
   flex: 1 0 25%;
+  width: 25vw;
   align-items: center;
 
   padding-right: 1vw;
@@ -192,7 +193,7 @@ input {
   display: flex;
   flex-direction: column;
   flex: 3 0 75%;
-
+  width: 75vw;
   /* border: #5a32bf solid 1px; */
 
   border-radius: 12px;
@@ -249,7 +250,7 @@ input {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: flex-start;
 
   /* background-color: #5a32bf; */
   height: 600px;
@@ -283,4 +284,10 @@ input {
   color: #ffffff;
   height: 50px;
   border: none;
+}
+
+
+@media only screen and (max-width: 1334px) {
+  
+  
 }
