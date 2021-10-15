@@ -7,6 +7,8 @@ import {
   CircularProgress,
 } from "@material-ui/core";
 
+import React from "react";
+
 import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import dp2Style from "../style/DegreePlan2.module.css";

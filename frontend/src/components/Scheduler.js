@@ -645,7 +645,7 @@ function Scheduler(props) {
             </div>
             
             {popup.showCourseInfo && (
-               <ClickAwayListener onClickAway={() => handlePopup("showCourseInfo", false)}><CourseInfoExpress courseInfo={courseInfo} /></ClickAwayListener>
+               <ClickAwayListener onClickAway={() => {handlePopup("showCourseInfo", false); console.log("clickedOutside")}}><CourseInfoExpress courseInfo={courseInfo} /></ClickAwayListener>
               
             )}
           </div>
