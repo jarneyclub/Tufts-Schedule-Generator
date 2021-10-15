@@ -8,9 +8,9 @@
   /* background: rgba(254, 215, 215, 0.25); */
   background: #ffffff;
   height: 250px;
-  /* min-width: 300px;
-  max-width: 33%; */
-  width: 33%;
+  min-width: 300px;
+  max-width: 33%;
+ 
   overflow: auto;
   /* padding-left: 1vw; 
   padding-right: 1vw; */
