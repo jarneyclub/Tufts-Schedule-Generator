@@ -27,11 +27,11 @@
   font-size: 25px;
 }
 .progressBar {
-  border: #5a32bf 2px solid;
+  /* border: #5a32bf 2px solid; */
   border-radius: 15px;
   width: 75%;
   height: 30px;
-
+  width: 88%;
   margin-left: 1vw;
   margin-right: 1vw;
   display: flex;

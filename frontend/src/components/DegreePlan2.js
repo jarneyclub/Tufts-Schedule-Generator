@@ -491,7 +491,7 @@ function DegreePlan2(props) {
             <div className={dp2Style.progressBarTitle}>&nbsp;☃&nbsp;</div>
           )}
 
-          <div className={dp2Style.progressBarTitle}>100%</div>
+          {/* <div className={dp2Style.progressBarTitle}>100%</div> */}
         </div>
 
         <div className={dp2Style.horizontalWrapper}>
