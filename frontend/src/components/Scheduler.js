@@ -497,8 +497,9 @@ function Scheduler(props) {
     let tempCount = 0;
     selectedCourses.forEach((course) => {
       console.log("coursees check", course);
-      tempCount += parseInt(course?.units_esti);
+      tempCount += course?.units_esti;
     })
+    setUnitsCount(tempCount);
   }, [selectedCourses])
 
   return (
