@@ -10,6 +10,7 @@ import {
 import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import dp2Style from "../style/DegreePlan2.module.css";
+import tStyle from "./reusableStyles/TabSwitch.module.css";
 import DegreeReqDisplay from "../reusable/DegreeReqDisplay";
 import PlanCard from "./PlanCard";
 
@@ -142,4 +143,80 @@ function DegreePlanExpress() {
   );
 }
 
-export { DegreeReqExpress, DegreePlanExpress };
+const CourseInfoExpress = (props) => {
+  const { courseInfo } = props;
+  
+  const {details, location, name, time_start, time_end, term_section_id, instructor, course_num, course_title, units_esti} = courseInfo;
+
+
+
+  return(
+    <div> 
+      course_num && 
+      {
+        <div>
+          <div className={tStyle.infoTitle}>Course title: </div>
+          <div className={tStyle.infoDetail}>{course_num}</div>
+        </div>
+        
+      }
+      
+      course_title && 
+      {
+        <div>
+          <div className={tStyle.infoTitle}>Course title: </div>
+          <div classname={tStyle.infoDetail}>{course_title}</div>
+        </div>
+        
+      }
+      units_esti && 
+      {
+        <div>
+          <div className={tStyle.infoTitle}>SHUs: </div>
+          <div classname={tStyle.infoDetail}>{units_esti}</div>
+        </div>
+        
+      }
+      time_start && 
+      {
+        <div>
+          <div classname={tStyle.infoDetail}>{time_start}~{time_end}</div>
+        </div>
+        
+      }
+      details && 
+      {
+        <div>
+          <div className={tStyle.infoTitle}>Course: </div>
+          <div classname={tStyle.infoDetail}>{details}</div>
+        </div>
+        
+      }
+      location && 
+      {
+        <div>
+          <div classname={tStyle.infoDetail}>{location}</div>
+        </div>
+      }
+      name && 
+      {
+        <div>
+          <div className={tStyle.infoTitle}>Section detail: </div>
+          <div classname={tStyle.infoDetail}>{name}</div>
+        </div>
+        
+      }
+      instructor && 
+      {
+        <div>
+          <div className={tStyle.infoTitle}>Instructor: </div>
+          <div classname={tStyle.infoDetail}>{instructor}</div>
+        </div>
+        
+      }
+    </div>
+    
+  );
+}
+
+export { DegreeReqExpress, DegreePlanExpress, CourseInfoExpress };
