@@ -483,7 +483,9 @@ function DegreePlan2(props) {
           {!shrink ? (
             <div className={dp2Style.progressBar} > 
               <div className={dp2Style.progressBarCompleted} style={{width: ((unitsCount.completed / unitsCount.total * 100) + "%")}}/>
-            
+              <div className={dp2Style.progressBarCurrent} style={{width: ((unitsCount.current / unitsCount.total * 100) + "%")}}/>
+              <div className={dp2Style.progressBarFuture} style={{width: ((unitsCount.future / unitsCount.total * 100) + "%")}}/>
+
             </div>
           ) : (
             <div className={dp2Style.progressBarTitle}>&nbsp;☃&nbsp;</div>

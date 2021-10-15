@@ -34,10 +34,23 @@
 
   margin-left: 1vw;
   margin-right: 1vw;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }
 
 .progressBarCompleted {
-  background-color: aquamarine;
+  background-color: #A1C97D;
+  height: 100%;
+  border-radius: 15px;
+}
+.progressBarCurrent {
+  background-color: #f0e4aa;
+  height: 100%;
+  border-radius: 15px;
+}
+.progressBarFuture {
+  background-color: #FC6D6D;
   height: 100%;
   border-radius: 15px;
 }
