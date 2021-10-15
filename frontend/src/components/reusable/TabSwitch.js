@@ -130,8 +130,11 @@ function DegreePlanExpress() {
         </IconButton>
       </div>
       <div className={dp2Style.degreeReqDetailContainer}>
-        {degreePlanOptions &&
-          <PlanCard cardDetail={degreePlanOptions[selectedDegreePlan]}/>
+        {degreePlanOptions && 
+          degreePlanOptions[selectedDegreePlan].map((card) => (
+            <PlanCard cardDetail={card?.terms}/>
+          ))
+          
         }
         
       </div>
