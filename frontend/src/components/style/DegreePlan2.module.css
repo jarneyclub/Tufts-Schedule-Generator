@@ -288,6 +288,11 @@ input {
 
 
 @media only screen and (max-width: 1334px) {
-  
+  .leftContainer {
+    width: 100vw;
+  }
+  .rightContainer {
+    width: 100vw;
+  }
   
 }
