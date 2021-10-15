@@ -495,8 +495,9 @@ function Scheduler(props) {
 
   useEffect(() => {
     let tempCount = 0;
-    selectedCourses.map((courses) => {
-      tempCount += parseInt(courses?.units_esti);
+    selectedCourses.forEach((course) => {
+      console.log("coursees check", course);
+      tempCount += parseInt(course?.units_esti);
     })
   }, [selectedCourses])
 
