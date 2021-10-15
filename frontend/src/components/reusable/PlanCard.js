@@ -17,6 +17,7 @@ function PlanCard(props) {
     cardOrigin,
     handleCardOrigin,
     tabExpress,
+    onClick,
   } = props;
 
   const dragOver = (e) => {
@@ -69,6 +70,7 @@ function PlanCard(props) {
                   border: "none",
                   justifyContent: "space-between",
                 }}
+                onClick={onClick}
               />
             ))
           : cardDetail.courses?.map((course) => (
