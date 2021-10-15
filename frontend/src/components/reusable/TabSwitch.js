@@ -123,14 +123,14 @@ function DegreePlanExpress() {
           <ArrowLeftIcon fontSize="large" />
         </IconButton>
         <div style={{ color: "#ffffff" }}>
-          {degreePlanOptions[selectedDegreePlan].plan_name}
+          {degreePlanOptions[selectedDegreePlan]?.plan_name}
         </div>
         <IconButton color="action" onClick={() => handleSwitchReq(1)}>
           <ArrowRightIcon fontSize="large" />
         </IconButton>
       </div>
       <div className={dp2Style.degreeReqDetailContainer}>
-        {
+        {degreePlanOptions &&
           <PlanCard cardDetail={degreePlanOptions[selectedDegreePlan]}/>
         }
         
