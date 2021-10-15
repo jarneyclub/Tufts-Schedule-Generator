@@ -520,6 +520,7 @@ function DegreePlan2(props) {
                     onTransferCourse={handleTransferCourseDetail}
                     origin={"courseList"}
                     draggable={true}
+                    onClick={handleShowCourseInfo}
                   />
                 ))}
               </div>

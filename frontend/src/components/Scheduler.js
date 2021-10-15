@@ -567,6 +567,7 @@ function Scheduler(props) {
                       border: "none",
                       justifyContent: "space-between",
                     }}
+                    onClick={handleShowCourseInfo}
                   />
                 ))}
             </div>
