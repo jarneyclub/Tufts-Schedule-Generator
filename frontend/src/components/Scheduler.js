@@ -497,6 +497,7 @@ function Scheduler(props) {
 
   useEffect(() => {
     fetchData();
+    handlePopup("showCourseInfo", false);
   }, [courseSearchValue, selectedAttribute]);
 
   useEffect(() => {
@@ -506,6 +507,7 @@ function Scheduler(props) {
       tempCount += course?.units_esti;
     });
     setUnitsCount(tempCount);
+    handlePopup("showCourseInfo", false);
   }, [selectedCourses]);
 
   return (
@@ -636,7 +638,10 @@ function Scheduler(props) {
           </div>
 
           <div className={sStyle.infoContainer}>
-            <div>Total SHUs count: {unitsCount}</div>
+            <div className={sStyle.unitsContainer}>
+              <div className={sStyle.infoTitle}>Total SHUs count:&nbsp;</div>
+              <div classname={sStyle.infoDetail}>{unitsCount}</div>
+            </div>
             <br/>
             {popup.showCourseInfo && (
               <CourseInfoExpress courseInfo={courseInfo} />

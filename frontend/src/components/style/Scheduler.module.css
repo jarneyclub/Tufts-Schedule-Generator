@@ -145,6 +145,17 @@
   width: 100%
 
 }
+
+.unitsContainer{
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+}
+
+.infoTitle {
+  color: #fc4e4e;
+}
+
 .leftCheckboxContainer {
   /* display: flex;
   flex-wrap: wrap;
