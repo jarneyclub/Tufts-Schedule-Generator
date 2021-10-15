@@ -89,6 +89,7 @@ function CourseSearchBar(props) {
           </IconButton>
         </div>
       )}
+      {(origin === "degreePlanExpress") && <div>&nbsp;</div>}
     </div>
   );
 }
