@@ -27,7 +27,7 @@
   font-size: 25px;
 }
 .progressBar {
-  border: #5a32bf 1px solid;
+  border: #5a32bf 2px solid;
   border-radius: 15px;
   width: 75%;
   height: 30px;
@@ -40,7 +40,7 @@
 }
 
 .progressBarCompleted {
-  background-color: #a0c3d1;
+  background-color: rgba(160,195,209, 0.5);
   height: 100%;
   border-bottom-left-radius: 15px;
   border-top-left-radius: 15px;
@@ -48,13 +48,13 @@
  
 }
 .progressBarCurrent {
-  background-color: #f0e4aa;
+  background-color: rgba(240,228,170, 0.5);
   height: 100%;
   
   transition: width 1s ease-in-out;
 }
 .progressBarFuture {
-  background-color: #FC6D6D;
+  background-color: rgba(252,109,109,0.5);
   height: 100%;
   border-bottom-right-radius: 15px;
   border-top-right-radius: 15px;
