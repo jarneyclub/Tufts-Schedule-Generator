@@ -164,28 +164,28 @@ const CourseInfoExpress = (props) => {
   return (
     <div>
       {course_num && (
-        <div>
+        <div className={tStyle.infoContainer}>
           <div className={tStyle.infoTitle}>Course title: </div>
-          <div className={tStyle.infoDetail}>{course_num}</div>
+          <div className={tStyle.infoDetail}>{course_num}&nbsp;{course_title}</div>
         </div>
       )}
 
-      {course_title && (
-        <div>
+      {/* {course_title && (
+        <div className={tStyle.infoContainer}>
           <div className={tStyle.infoTitle}>Course title: </div>
           <div classname={tStyle.infoDetail}>{course_title}</div>
         </div>
-      )}
+      )} */}
 
       {units_esti && (
-        <div>
+        <div className={tStyle.infoContainer}>
           <div className={tStyle.infoTitle}>SHUs: </div>
           <div classname={tStyle.infoDetail}>{units_esti}</div>
         </div>
       )}
 
       {time_start && (
-        <div>
+        <div className={tStyle.infoContainer}>
           <div classname={tStyle.infoDetail}>
             {time_start}~{time_end}
           </div>
@@ -193,27 +193,27 @@ const CourseInfoExpress = (props) => {
       )}
 
       {details && (
-        <div>
+        <div className={tStyle.infoContainer}>
           <div className={tStyle.infoTitle}>Course: </div>
           <div classname={tStyle.infoDetail}>{details}</div>
         </div>
       )}
 
       {location && (
-        <div>
+        <div className={tStyle.infoContainer}>
           <div classname={tStyle.infoDetail}>{location}</div>
         </div>
       )}
 
       {name && (
-        <div>
+        <div className={tStyle.infoContainer}>
           <div className={tStyle.infoTitle}>Section detail: </div>
           <div classname={tStyle.infoDetail}>{name}</div>
         </div>
       )}
 
       {instructor && (
-        <div>
+        <div className={tStyle.infoContainer}>
           <div className={tStyle.infoTitle}>Instructor: </div>
           <div classname={tStyle.infoDetail}>{instructor}</div>
         </div>
