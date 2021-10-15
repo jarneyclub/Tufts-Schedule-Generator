@@ -294,5 +294,9 @@ input {
   .rightContainer {
     width: 100vw;
   }
+
+  .planCardsContainer {
+    justify-content: center;
+  }
   
 }
