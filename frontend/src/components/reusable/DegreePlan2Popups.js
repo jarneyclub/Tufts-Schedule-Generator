@@ -35,6 +35,8 @@ import JarUserLogin from "../reusable/JarUserLogin";
  *                          Add PlanCard Popup                               *
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+// const yearOptions = []
+const termOptions = ["Fall", "Spring", "Summer", "Annual"]
 function AddSemester(props) {
   const {
     onClose,
@@ -53,16 +55,13 @@ function AddSemester(props) {
   const [selectedYear, setSelectedYear] = useState(yearOptions[0]);
   const [selectedYearIdx, setSelectedYearIdx] = useState(0);
   /* Term Dropdown */
-  const [termOptions, setTermOptions] = useState([
-    "Fall",
-    "Spring",
-    "Summer",
-    "Annual",
-  ]); // possible semesters
+ 
   const [selectedTerm, setSelectedTerm] = useState(termOptions[0]);
+  const [selectedTermIdx, setSelectedTermIdx] = useState(0);
 
   const handleTermChange = (e) => {
     setSelectedTerm(e.target.value);
+    setSelectedTermIdx(e.target.selectedIndex);
   };
 
   const handleYearChange = (e) => {
@@ -76,7 +75,7 @@ function AddSemester(props) {
   };
 
   const fetchAdd = async () => {
-    const yearTerm = yearOptions[selectedYearIdx] + " " + selectedTerm;
+    const yearTerm = yearOptions[selectedYearIdx] + " " + termOptions[selectedTermIdx];
     console.log("yearTerm: ", yearTerm);
     console.log("planID: ", planID);
     const value = { plan_id: planID, term: yearTerm };
