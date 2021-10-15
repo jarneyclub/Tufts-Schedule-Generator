@@ -133,6 +133,10 @@
   margin: 10px 0;
 }
 
+.inforContainer {
+  display: flex;
+  flex-direction: column;
+}
 .leftCheckboxContainer {
   /* display: flex;
   flex-wrap: wrap;

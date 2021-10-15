@@ -12,12 +12,11 @@
 .addAllButton {
   text-transform: unset !important;
   width: 50%;
-  color: #A1C97D;
+  color: #a1c97d;
 }
 .removeAllButton {
   text-transform: unset !important;
   width: 50%;
-
 }
 .timeSlotTitle {
   height: 40px;

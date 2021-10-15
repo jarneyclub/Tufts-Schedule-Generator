@@ -13,8 +13,8 @@ import Event from "./Event.js";
 import { Button, IconButton } from "@material-ui/core";
 
 import PurpleSwitch from "../reusable/PurpleSwitch";
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 /* scripts */
 const time = [
   "8",
@@ -72,13 +72,13 @@ function CalendarDay(props) {
     classesDay,
   } = props;
   const [dragState, setDragState] = useState(false);
-  const [entireDayOn, setEntireDayOn] = useState()
+  const [entireDayOn, setEntireDayOn] = useState();
   // eslint-disable-next-line no-unused-vars
   // timePrefState && setEntireDayOn(timePrefDay?.length === 26);
 
   console.log("TimePrefDay ", timePrefDay, " ", timePrefState);
-//  timePrefState && console.log(timePrefDay.length
-//     );
+  //  timePrefState && console.log(timePrefDay.length
+  //     );
   /*  To check if a time slot is highlighted during time pref selection  */
   const onHighlight = (e) => {
     /*  Add highlight, add time pref to array  */
@@ -110,28 +110,25 @@ function CalendarDay(props) {
   const handleAllDaySwitch = () => {
     if (timePrefDay.length > 0) {
       removeEntireDay(dayName);
-    }
-    else if (timePrefDay.length === 0){
+    } else if (timePrefDay.length === 0) {
       overlayTime.forEach((timeName) => {
         addTimePref(dayName, timeName);
-      }) 
-      
+      });
     }
-    
-  }
+  };
   const handleAddAll = () => {
     if (timePrefDay.length !== 26) {
       overlayTime.forEach((timeName) => {
         addTimePref(dayName, timeName);
-      })  
+      });
     }
-  }
+  };
 
   const handleRemoveAll = () => {
     if (timePrefDay.length > 0) {
       removeEntireDay(dayName);
-    } 
-  }
+    }
+  };
   console.log("classes in ", dayName, classesDay);
   // useEffect(() => {
   //   if (timePrefState && entireDayOn) {
@@ -139,14 +136,14 @@ function CalendarDay(props) {
   //       addTimePref(dayName, timeName);
   //     })
   //   }
-  //   else if (timePrefState) { 
+  //   else if (timePrefState) {
   //     removeEntireDay(dayName);
   //   }
   // }, [entireDayOn])
 
   useEffect(() => {
     timePrefDay && setEntireDayOn(timePrefDay?.length === 26);
-  }, [])
+  }, []);
 
   return (
     <div className={cStyle.dayContainer}>
@@ -164,15 +161,19 @@ function CalendarDay(props) {
           />
                     
       } */}
-      {
-        timePrefState && 
+      {timePrefState && (
         <div className={cStyle.buttonContainer}>
-          <IconButton className={cStyle.removeAllButton} onClick={handleRemoveAll}><CheckBoxOutlineBlankIcon /></IconButton>
-          <IconButton className={cStyle.addAllButton} onClick={handleAddAll}><CheckBoxIcon/></IconButton>
+          <IconButton
+            className={cStyle.removeAllButton}
+            onClick={handleRemoveAll}
+          >
+            <CheckBoxOutlineBlankIcon />
+          </IconButton>
+          <IconButton className={cStyle.addAllButton} onClick={handleAddAll}>
+            <CheckBoxIcon />
+          </IconButton>
         </div>
-          
-                    
-      }
+      )}
       <div className={cStyle.timeContainer}>
         {timePrefState
           ? /* Time Pref Selection View */

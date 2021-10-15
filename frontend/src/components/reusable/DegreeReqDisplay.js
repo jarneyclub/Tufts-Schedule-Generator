@@ -53,28 +53,32 @@ function DegreeReqDisplay(props) {
 
   return (
     <div className={dStyle.displayContainer}>
-      <div style={{textAlign:"center", color: "#5A32BF"}}>{reqDetail?.program_name}</div>
-      {reqDetail?.school && 
+      <div style={{ textAlign: "center", color: "#5A32BF" }}>
+        {reqDetail?.program_name}
+      </div>
+      {reqDetail?.school && (
         <div>
-          <div style={{color:"#FC4E4E"}}>School:&nbsp;</div>
+          <div style={{ color: "#FC4E4E" }}>School:&nbsp;</div>
           <div>{reqDetail?.school}</div>
         </div>
-      }
-      {reqDetail?.degree && 
+      )}
+      {reqDetail?.degree && (
         <div>
-          <div style={{color:"#FC4E4E"}}>Degree:&nbsp;</div>
+          <div style={{ color: "#FC4E4E" }}>Degree:&nbsp;</div>
           <div>{reqDetail?.degree}</div>
         </div>
-      }
-      
+      )}
+
       <br />
       {reqDetail?.parts?.map((req) => (
         <div>
-          <div style={{color:"#FC4E4E"}}>{req?.part_name}</div>
+          <div style={{ color: "#FC4E4E" }}>{req?.part_name}</div>
           <div>{req?.part_desc}</div>
           {req?.part_reqs?.map((course) => (
             <div>
-              {course?.course_num&& <div>&nbsp;▪&nbsp;{course?.course_num}</div>}
+              {course?.course_num && (
+                <div>&nbsp;▪&nbsp;{course?.course_num}</div>
+              )}
               <div>{course?.course_note}</div>
             </div>
           ))}

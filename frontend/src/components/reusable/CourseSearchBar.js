@@ -60,10 +60,10 @@ function CourseSearchBar(props) {
   };
 
   const handleOnClick = () => {
-    if (origin === "schedulerTab" ) {
+    if (origin === "schedulerTab") {
       onClick(courseDetail);
     }
-  }
+  };
 
   return (
     <div
@@ -90,14 +90,18 @@ function CourseSearchBar(props) {
         </div>
       )}
       {(origin === "schedulerTab" ||
-        !(origin === "courseList" || origin === "schedulerCourseList" || origin === "degreePlanExpress")) && (
+        !(
+          origin === "courseList" ||
+          origin === "schedulerCourseList" ||
+          origin === "degreePlanExpress"
+        )) && (
         <div className={cStyle.actionButton}>
           <IconButton onClick={handleDoubleClick}>
             <RemoveIcon style={{ fill: "#ffffff" }} />
           </IconButton>
         </div>
       )}
-      {(origin === "degreePlanExpress") && <div>&nbsp;</div>}
+      {origin === "degreePlanExpress" && <div>&nbsp;</div>}
     </div>
   );
 }

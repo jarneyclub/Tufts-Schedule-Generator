@@ -61,9 +61,7 @@ function DegreeReqExpress() {
         <IconButton onClick={() => handleSwitchReq(-1)}>
           <ArrowLeftIcon fontSize="large" />
         </IconButton>
-        <div style={{ color: "#ffffff" }}>
-        ✓
-        </div>
+        <div style={{ color: "#ffffff" }}>✓</div>
         <IconButton color="action" onClick={() => handleSwitchReq(1)}>
           <ArrowRightIcon fontSize="large" />
         </IconButton>
@@ -75,13 +73,15 @@ function DegreeReqExpress() {
   );
 }
 
-
 function DegreePlanExpress() {
   const [degreePlanOptions, setDegreePlanOptions] = useState([]);
   const [selectedDegreePlan, setSelectedDegreePlan] = useState(0);
 
   const handleSwitchReq = (direction) => {
-    if (selectedDegreePlan === degreePlanOptions.length - 1 && direction === 1) {
+    if (
+      selectedDegreePlan === degreePlanOptions.length - 1 &&
+      direction === 1
+    ) {
       setSelectedDegreePlan(0);
     } else if (selectedDegreePlan === 0 && direction === -1) {
       setSelectedDegreePlan(degreePlanOptions.length - 1);
@@ -131,13 +131,15 @@ function DegreePlanExpress() {
         </IconButton>
       </div>
       <div className={dp2Style.degreeReqDetailContainer}>
-        {degreePlanOptions && 
+        {degreePlanOptions &&
           degreePlanOptions[selectedDegreePlan]?.terms?.map((card) => (
-            <PlanCard key={card.plan_term_id} cardDetail={card} tabExpress={true} cardOrigin={"degreePlanExpress"}/>
-          ))
-          
-        }
-        
+            <PlanCard
+              key={card.plan_term_id}
+              cardDetail={card}
+              tabExpress={true}
+              cardOrigin={"degreePlanExpress"}
+            />
+          ))}
       </div>
     </div>
   );
@@ -145,78 +147,79 @@ function DegreePlanExpress() {
 
 const CourseInfoExpress = (props) => {
   const { courseInfo } = props;
-  
-  const {details, location, name, time_start, time_end, term_section_id, instructor, course_num, course_title, units_esti} = courseInfo;
 
+  const {
+    details,
+    location,
+    name,
+    time_start,
+    time_end,
+    term_section_id,
+    instructor,
+    course_num,
+    course_title,
+    units_esti,
+  } = courseInfo;
 
-
-  return(
-    <div> 
-      course_num && 
-      {
+  return (
+    <div>
+      {course_num && (
         <div>
           <div className={tStyle.infoTitle}>Course title: </div>
           <div className={tStyle.infoDetail}>{course_num}</div>
         </div>
-        
-      }
-      
-      course_title && 
-      {
+      )}
+
+      {course_title && (
         <div>
           <div className={tStyle.infoTitle}>Course title: </div>
           <div classname={tStyle.infoDetail}>{course_title}</div>
         </div>
-        
-      }
-      units_esti && 
-      {
+      )}
+
+      {units_esti && (
         <div>
           <div className={tStyle.infoTitle}>SHUs: </div>
           <div classname={tStyle.infoDetail}>{units_esti}</div>
         </div>
-        
-      }
-      time_start && 
-      {
+      )}
+
+      {time_start && (
         <div>
-          <div classname={tStyle.infoDetail}>{time_start}~{time_end}</div>
+          <div classname={tStyle.infoDetail}>
+            {time_start}~{time_end}
+          </div>
         </div>
-        
-      }
-      details && 
-      {
+      )}
+
+      {details && (
         <div>
           <div className={tStyle.infoTitle}>Course: </div>
           <div classname={tStyle.infoDetail}>{details}</div>
         </div>
-        
-      }
-      location && 
-      {
+      )}
+
+      {location && (
         <div>
           <div classname={tStyle.infoDetail}>{location}</div>
         </div>
-      }
-      name && 
-      {
+      )}
+
+      {name && (
         <div>
           <div className={tStyle.infoTitle}>Section detail: </div>
           <div classname={tStyle.infoDetail}>{name}</div>
         </div>
-        
-      }
-      instructor && 
-      {
+      )}
+
+      {instructor && (
         <div>
           <div className={tStyle.infoTitle}>Instructor: </div>
           <div classname={tStyle.infoDetail}>{instructor}</div>
         </div>
-        
-      }
+      )}
     </div>
-    
   );
-}
+};
 
 export { DegreeReqExpress, DegreePlanExpress, CourseInfoExpress };
