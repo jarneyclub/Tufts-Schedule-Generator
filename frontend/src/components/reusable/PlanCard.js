@@ -86,6 +86,7 @@ function PlanCard(props) {
                   border: "none",
                   justifyContent: "space-between",
                 }}
+                onClick={onClick}
               />
             ))}
       </div>
