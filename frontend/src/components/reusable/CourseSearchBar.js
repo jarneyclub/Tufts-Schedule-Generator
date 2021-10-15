@@ -60,10 +60,11 @@ function CourseSearchBar(props) {
   };
 
   const handleOnClick = () => {
-    console.log("origin: ", origin)
-    if (origin === "schedulerTab" || origin === "") {
-      onClick(courseDetail);
-    }
+    // console.log("origin: ", origin)
+    // if (origin === "schedulerTab" || origin === "") {
+    //   onClick(courseDetail);
+    // }
+    onClick();
   };
 
   return (
