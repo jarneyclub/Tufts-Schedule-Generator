@@ -39,7 +39,11 @@ import {
   RemoveSchedule,
   EditScheduleName,
 } from "./reusable/SchedulerPopup";
-import { DegreeReqExpress, DegreePlanExpress, CourseInfoExpress } from "./reusable/TabSwitch";
+import {
+  DegreeReqExpress,
+  DegreePlanExpress,
+  CourseInfoExpress,
+} from "./reusable/TabSwitch";
 
 const timeDefault = [
   {
@@ -169,7 +173,7 @@ const popupDefault = {
   removeSchedule: false,
   addSchedule: false,
   showCourseInfo: false,
-}
+};
 
 function Scheduler(props) {
   const {
@@ -193,9 +197,9 @@ function Scheduler(props) {
   const [selectedAttribute, setSelectedAttribute] = useState("");
   const [selectedAttributeIdx, setSelectedAttributeIdx] = useState(0);
   const [coursePreference, setCoursePreference] = useState(boolStateDefault);
-  
+
   /*  The courses selected to generate schedule  */
-  const [selectedCourses, setSelectedCourses] = useState([]); 
+  const [selectedCourses, setSelectedCourses] = useState([]);
 
   const [classes, setClasses] = useState({});
 
@@ -218,7 +222,7 @@ function Scheduler(props) {
   /*  Control for schedule plan dropdown change  */
   const handleScheduleChange = (e) => {
     setSelectedSchedule(scheduleOptions[e.target.selectedIndex].sched_name);
-   
+
     setSelectedScheduleIdx(e.target.selectedIndex);
     setSelectedScheduleID(scheduleOptions[e.target.selectedIndex].sched_id);
     setSelectedCourses(scheduleOptions[e.target.selectedIndex].courses);
@@ -227,7 +231,7 @@ function Scheduler(props) {
 
   /*  Control for search filter dropdown change  */
   const handleFilterChange = (e) => {
-    setSelectedAttributeIdx(e.target.selectedIndex)
+    setSelectedAttributeIdx(e.target.selectedIndex);
     setSelectedAttribute(attributes[e.target.selectedIndex]);
   };
 
@@ -280,10 +284,10 @@ function Scheduler(props) {
 
   const handleRemoveTimePrefAllDay = (dayName) => {
     setTimePref((prev) => ({
-      ...prev, 
-      [dayName] : [],
-    }))
-  }
+      ...prev,
+      [dayName]: [],
+    }));
+  };
 
   const handleAddAllDayTimePref = (dayName) => {
     setTimePref((prev) => ({
@@ -295,7 +299,7 @@ function Scheduler(props) {
   const handleShowCourseInfo = (info) => {
     setCourseInfo(info);
     handlePopup("showCourseInfo", true);
-  }
+  };
 
   const handleSearchChange = (e) => {
     setCourseSearchValue(e.target.value);
@@ -362,13 +366,17 @@ function Scheduler(props) {
           setClasses(result.schedules[selectedScheduleIdx]?.classes);
           setTimePref(result.schedules[selectedScheduleIdx]?.filter?.time);
           setCoursePreference((prev) => ({
-            ...prev, 
-            waitlist: result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreWL,
-            closed: result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreClosed,
-            online: result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreM,
-            time_unspecified: result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreTU,
-          }))
-           }
+            ...prev,
+            waitlist:
+              result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreWL,
+            closed:
+              result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreClosed,
+            online:
+              result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreM,
+            time_unspecified:
+              result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreTU,
+          }));
+        }
       })
       .catch((error) => console.log("error from fetchSavedSchedules", error));
   };
@@ -405,30 +413,28 @@ function Scheduler(props) {
       }),
     };
 
-    const checkCourses = (selectedCourses.length > 0);
+    const checkCourses = selectedCourses.length > 0;
     if (!checkCourses) {
       setAlertMessage("You need at least 1 course to render schedule.");
       setAlertSeverity("warning");
-      setShowAlert(true); 
+      setShowAlert(true);
     }
-    checkCourses && await fetch("https://jarney.club/api/schedule", requestOption)
-      .then((response) => response.json())
-      .then((result) => {
-        console.log("generate schedule result: ", result);
-        if (!result.error) {
-          setClasses(result.data.classes);
-        }
-        else {
-          setAlertMessage(result.error);
-          setAlertSeverity("warning");
-          setShowAlert(true);
-        }
-       
-      })
-      .catch((error) => {
-        console.log("generate schedule error: ", error);
-        
-      });
+    checkCourses &&
+      (await fetch("https://jarney.club/api/schedule", requestOption)
+        .then((response) => response.json())
+        .then((result) => {
+          console.log("generate schedule result: ", result);
+          if (!result.error) {
+            setClasses(result.data.classes);
+          } else {
+            setAlertMessage(result.error);
+            setAlertSeverity("warning");
+            setShowAlert(true);
+          }
+        })
+        .catch((error) => {
+          console.log("generate schedule error: ", error);
+        }));
   };
 
   const fetchCreateSchedule = async (newName) => {
@@ -447,39 +453,36 @@ function Scheduler(props) {
           setAlertMessage("Create success!");
           setAlertSeverity("success");
           setShowAlert(true);
-          handlePopup("addSchedule", false)
-        }
-        else {
+          handlePopup("addSchedule", false);
+        } else {
           setAlertMessage(result.error);
           setAlertSeverity("warning");
           setShowAlert(true);
         }
-        
-        
       })
       .catch((error) => console.log("generate schedule error: ", error));
   };
 
-  const fetchData = async() => {
+  const fetchData = async () => {
     setLoadMessage(true);
-      await fetch(
-        "https://jarney.club/api/courses/term?cnum="
-          .concat(courseSearchValue)
-          .concat("&attr=")
-          .concat(selectedAttribute)
-      )
-        .then((response) => response.json())
-        .then((result) => {
-          setSearchCourseResult([]);
-          setSearchCourseResult(result.courses);
-          setLoadMessage(false);
-          console.log("show results: ", result);
-        })
-        .catch((error) => {
-          setSearchCourseResult([]);
-          console.log("error from Scheduler course search", error);
-        });
-  }
+    await fetch(
+      "https://jarney.club/api/courses/term?cnum="
+        .concat(courseSearchValue)
+        .concat("&attr=")
+        .concat(selectedAttribute)
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setSearchCourseResult([]);
+        setSearchCourseResult(result.courses);
+        setLoadMessage(false);
+        console.log("show results: ", result);
+      })
+      .catch((error) => {
+        setSearchCourseResult([]);
+        console.log("error from Scheduler course search", error);
+      });
+  };
 
   useEffect(() => {
     fetchAttributes();
@@ -489,8 +492,8 @@ function Scheduler(props) {
 
   useEffect(() => {
     fetchAttributes();
-    fetchSavedSchedules();;
-  }, [logged])
+    fetchSavedSchedules();
+  }, [logged]);
 
   useEffect(() => {
     fetchData();
@@ -501,9 +504,9 @@ function Scheduler(props) {
     selectedCourses.forEach((course) => {
       console.log("coursees check", course);
       tempCount += course?.units_esti;
-    })
+    });
     setUnitsCount(tempCount);
-  }, [selectedCourses])
+  }, [selectedCourses]);
 
   return (
     <div>
@@ -565,8 +568,6 @@ function Scheduler(props) {
                   />
                 ))}
             </div>
-
-            
 
             <div className={sStyle.preferenceContainer}>
               <FormControl className={sStyle.leftCheckboxContainer}>
@@ -634,16 +635,12 @@ function Scheduler(props) {
             </Button>
           </div>
 
-
-          <div className={sStyle.preferenceContainer  }>
-              <div>Total SHUs: {unitsCount}</div>
-              {
-                popup.showCourseInfo && 
-                <CourseInfoExpress courseInfo={courseInfo} />
-              }
-              
-            </div>
-
+          <div className={sStyle.preferenceContainer}>
+            <div>Total SHUs: {unitsCount}</div>
+            {popup.showCourseInfo && (
+              <CourseInfoExpress courseInfo={courseInfo} />
+            )}
+          </div>
 
           <div className={sStyle.tabsContainer}>
             <div className={sStyle.tabBarsContainer}>
@@ -795,7 +792,6 @@ function Scheduler(props) {
           onAddTimePref={handleAddTimePref}
           onRemoveTimePref={handleRemoveTimePref}
           onRemoveEntireDay={handleRemoveTimePrefAllDay}
-          
           onAddEntireDay={handleAddAllDayTimePref}
           timePrefState={timePrefState}
           timePref={timePref}

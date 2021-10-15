@@ -92,7 +92,6 @@ const planCardsPlaceholder = [
     term: 2215,
     courses: [],
   },
-  
 ];
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -296,8 +295,6 @@ function DegreePlan2(props) {
     );
   };
 
-  
-
   /*
    *  createnNewPlan()
    *  purpose: creates a new plan option with given name
@@ -419,7 +416,7 @@ function DegreePlan2(props) {
   useEffect(() => {
     fetchPlans();
     fetchPrivateReqs();
-  }, [logged])
+  }, [logged]);
 
   useEffect(() => {
     console.log("cardOptions: ", cardOptions);
@@ -457,7 +454,7 @@ function DegreePlan2(props) {
                 isObject={true}
                 objectField={"plan_name"}
                 selectedOption={selectedPlanName}
-                selectedIdx = {selectedPlanIdx}
+                selectedIdx={selectedPlanIdx}
                 onOptionChange={handleSemesterPlanChange}
                 customStyle={{ fontSize: "20px" }}
               />
@@ -520,7 +517,7 @@ function DegreePlan2(props) {
             </div>
 
             {/* Degree Requirment Container */}
-         
+
             <DegreeReqExpress />
           </div>
 

@@ -84,7 +84,8 @@ function DegreePlan1(props) {
   const [publicReqOptions, setPublicReqOptions] = useState([]);
 
   const [selectedDegreeReqIdx, setSelectedDegreeReqIdx] = useState(0);
-  const [selectedDegreeReq, setDegreeReq] = useState(""); /*  Holds the current private Degree Requirement Displayed */
+  const [selectedDegreeReq, setDegreeReq] =
+    useState(""); /*  Holds the current private Degree Requirement Displayed */
   const [showLastPrivateReq, setShowLastPrivateReq] = useState(false);
   const [selectedDegreeReqDetail, setDegreeReqDetail] = useState();
 
@@ -121,7 +122,6 @@ function DegreePlan1(props) {
   const handleDegreeReqChange = (e) => {
     setDegreeReq(e.target.value);
     setSelectedDegreeReqIdx(e.target.selectedIndex);
-
   };
 
   const handleSearchChange = (e) => {
@@ -168,7 +168,7 @@ function DegreePlan1(props) {
         console.log("result from fetchPublicToPrivate", result);
         setShowPublicDegreeReq(false);
         fetchPrivateReqs(true);
-        setSelectedDegreeReqIdx()
+        setSelectedDegreeReqIdx();
       })
       .catch((error) => console.log("error from fetchPublicToPrivate", error));
   };
@@ -188,7 +188,6 @@ function DegreePlan1(props) {
         } else {
           setDegreeReqOptions(result.reqs);
         }
-
       })
       .catch((error) => {
         console.log("error from Degreeplan fetchPrivateReqs ", error);
@@ -242,7 +241,7 @@ function DegreePlan1(props) {
   useEffect(() => {
     fetchPrivateReqs();
     fetchPublicReqs();
-  }, [logged])
+  }, [logged]);
 
   useEffect(() => {
     setDegreeReqDetail(degreeReqOptions[selectedDegreeReqIdx]);
@@ -254,9 +253,9 @@ function DegreePlan1(props) {
     console.log("degreeReqOptions: ", degreeReqOptions);
     console.log("degreeReqOptions len: ", degreeReqOptions.length);
     if (showLastPrivateReq) {
-      setSelectedDegreeReqIdx(degreeReqOptions.length - 1)
+      setSelectedDegreeReqIdx(degreeReqOptions.length - 1);
     }
-    
+
     // setDegreeReq(degreeReqOptions[0]?.program_name);
   }, [degreeReqOptions]);
 
@@ -277,7 +276,7 @@ function DegreePlan1(props) {
       <div className={dp1Style.DegreeSearchWrapper}>
         {/* SEARCH CONTAINER for an Existing Degree Requirement */}
         <div className={dp1Style.myListWrapper}>
-          <h5 style={{textAlign:"center"}}>Public degree requirements</h5>
+          <h5 style={{ textAlign: "center" }}>Public degree requirements</h5>
           <TextField
             // label="Search Course"
             placeholder="Look for other programs..."
@@ -298,42 +297,32 @@ function DegreePlan1(props) {
           />
         </div>
         <div className={dp1Style.existListWrapper}>
-          
-            <div className={dp1Style.searchListContainer}>
-              {publicReqOptions?.map((option) => (
-                <Button
-                  className={dp1Style.publicReqButton}
-                  onClick={() => handlePublicDegreeDisplay(option)}
-                >
-                  {option.program_name}
-                </Button>
-              ))}
-            </div>
-            {
-              showPublicDegreeReq && 
-              <div className={dp1Style.DegreeReqListWrapper}>
-                <div className={dp1Style.degreeReqListExpandable}>
-                  <DegreeReqDisplay reqDetail={publicDegreeReqDetail}/>
-                  
-                </div>
-              </div>
-              
-            }
-            {
-              showPublicDegreeReq && 
+          <div className={dp1Style.searchListContainer}>
+            {publicReqOptions?.map((option) => (
               <Button
-                  className={dp1Style.saveButton}
-                  onClick={() => fetchPublicToPrivate()}
-                >
-                  Add to my list
-                </Button>
-            }
-
-
-
+                className={dp1Style.publicReqButton}
+                onClick={() => handlePublicDegreeDisplay(option)}
+              >
+                {option.program_name}
+              </Button>
+            ))}
+          </div>
+          {showPublicDegreeReq && (
+            <div className={dp1Style.DegreeReqListWrapper}>
+              <div className={dp1Style.degreeReqListExpandable}>
+                <DegreeReqDisplay reqDetail={publicDegreeReqDetail} />
+              </div>
+            </div>
+          )}
+          {showPublicDegreeReq && (
+            <Button
+              className={dp1Style.saveButton}
+              onClick={() => fetchPublicToPrivate()}
+            >
+              Add to my list
+            </Button>
+          )}
         </div>
-          
-            
       </div>
 
       {/* * * * * * Includes the Degree Requirement Table * * * * * */}
@@ -375,7 +364,6 @@ function DegreePlan1(props) {
           </div>
         </div>
         <div className={dp1Style.DegreeReqListWrapper}>
-         
           {/* info returned from API call
                             display the info of the selected degree plan */}
           <div className={dp1Style.degreeReqListExpandable}>
@@ -386,18 +374,18 @@ function DegreePlan1(props) {
 
           {/* button that displays an overlay to edit current
                             displayed degree requirement */}
-        
-            <Button
-              className={dp1Style.editButton}
-              onClick={() => {
-                setNewMMPopup(false);
-                setEditDRPopup(true);
-              }}
-              startIcon={<EditIcon />}
-            >
-              Edit
-            </Button>
-          
+
+          <Button
+            className={dp1Style.editButton}
+            onClick={() => {
+              setNewMMPopup(false);
+              setEditDRPopup(true);
+            }}
+            startIcon={<EditIcon />}
+          >
+            Edit
+          </Button>
+
           {editDRPopup && (
             <Popup onClose={() => setEditDRPopup(false)}>
               <DegreeReqEdit
@@ -410,25 +398,20 @@ function DegreePlan1(props) {
             </Popup>
           )}
         </div>
-
-       
       </div>
-      {
-        popup.removePrivateReq && 
-        <Popup onClose={()=>handlePopup("removePrivateReq", false)}>
-          <RemovePrivReq 
-          onClose={()=>handlePopup("removePrivateReq", false)}
-          privateReqName={degreeReqOptions[selectedDegreeReqIdx].program_name}
-          privateReqID={degreeReqOptions[selectedDegreeReqIdx].priv_dr_id}
-          refreshPrivateReq={fetchPrivateReqs}
-          onShowAlert={() => setShowAlert(true)}
-          setAlertMessage={setAlertMessage}
-          setAlertSeverity={setAlertSeverity}
-        
+      {popup.removePrivateReq && (
+        <Popup onClose={() => handlePopup("removePrivateReq", false)}>
+          <RemovePrivReq
+            onClose={() => handlePopup("removePrivateReq", false)}
+            privateReqName={degreeReqOptions[selectedDegreeReqIdx].program_name}
+            privateReqID={degreeReqOptions[selectedDegreeReqIdx].priv_dr_id}
+            refreshPrivateReq={fetchPrivateReqs}
+            onShowAlert={() => setShowAlert(true)}
+            setAlertMessage={setAlertMessage}
+            setAlertSeverity={setAlertSeverity}
           />
         </Popup>
-        
-      }
+      )}
       {showAlert && (
         <SnackBarAlert
           severity={alertSeverity}
