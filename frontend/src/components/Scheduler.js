@@ -635,7 +635,7 @@ function Scheduler(props) {
             </Button>
           </div>
 
-          <div className={sStyle.preferenceContainer}>
+          <div className={sStyle.infoContainer}>
             <div>Total SHUs: {unitsCount}</div>
             {popup.showCourseInfo && (
               <CourseInfoExpress courseInfo={courseInfo} />
