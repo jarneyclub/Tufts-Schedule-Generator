@@ -39,6 +39,7 @@ function CourseSearchBar(props) {
     draggable,
     onDoubleClick,
     customStyle,
+    onClick,
   } = props;
   const { course_num, course_title, units_esti } = courseDetail;
 
@@ -58,6 +59,12 @@ function CourseSearchBar(props) {
     }
   };
 
+  const handleOnClick = () => {
+    if (origin === "schedulerTab" ) {
+      onClick(courseDetail);
+    }
+  }
+
   return (
     <div
       className={cStyle.barContainer}
@@ -65,6 +72,7 @@ function CourseSearchBar(props) {
       onDragStart={handleDragStart}
       id={course_num.concat(course_title)}
       onDoubleClick={handleDoubleClick}
+      onClick={handleOnClick}
       style={customStyle}
     >
       {(origin === "schedulerCourseList" ||

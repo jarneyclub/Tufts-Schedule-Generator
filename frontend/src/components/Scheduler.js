@@ -292,7 +292,10 @@ function Scheduler(props) {
     }));
   };
 
-  
+  const handleShowCourseInfo = (info) => {
+    setCourseInfo(info);
+    handlePopup("showCourseInfo", true);
+  }
 
   const handleSearchChange = (e) => {
     setCourseSearchValue(e.target.value);
@@ -633,7 +636,7 @@ function Scheduler(props) {
 
 
           <div className={sStyle.preferenceContainer  }>
-              <div>Total SHUs selected: {unitsCount}</div>
+              <div>Total SHUs: {unitsCount}</div>
               {
                 popup.showCourseInfo && 
                 <CourseInfoExpress courseInfo={courseInfo} />
@@ -694,6 +697,7 @@ function Scheduler(props) {
                     key={course.course_num.concat(course.course_title)}
                     draggable={false}
                     onDoubleClick={handleDoubleClickSelected}
+                    onClick={handleShowCourseInfo}
                     origin={"schedulerTab"}
                     customStyle={{
                       border: "none",
