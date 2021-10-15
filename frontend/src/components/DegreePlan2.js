@@ -281,6 +281,7 @@ function DegreePlan2(props) {
   };
 
   const handleShowCourseInfo = (info) => {
+    console.log("from handleshowcourseinfo", info);
     setCourseInfo(info);
     handlePopup("showCourseInfo", true);
   }
