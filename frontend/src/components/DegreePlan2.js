@@ -29,6 +29,7 @@ import CourseSearchBar from "./reusable/CourseSearchBar";
 import SnackBarAlert from "./reusable/SnackBarAlert";
 import DegreeReqDisplay from "./reusable/DegreeReqDisplay";
 import JarUserLogin from "./reusable/JarUserLogin";
+import {CourseInfoExpress } from "./reusable/TabSwitch";
 import {
   AddSemester,
   RemoveSemester,
@@ -37,6 +38,7 @@ import {
   RemovePlan,
 } from "./reusable/DegreePlan2Popups";
 import { DegreeReqExpress } from "./reusable/TabSwitch";
+import sStyle from "./style/Scheduler.module.css";
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
@@ -125,6 +127,7 @@ function DegreePlan2(props) {
     editPlanName: false,
     addPlan: false,
     removePlan: false,
+    showCourseInfo: false,
   });
   const [searchCourseResult, setSearchCourseResult] = useState([]);
   const [selectedPlanName, setSelectedPlanName] = useState("");
@@ -138,6 +141,9 @@ function DegreePlan2(props) {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState();
   const [alertSeverity, setAlertSeverity] = useState();
+
+  const [unitsCount, setUnitsCount] = useState(0);
+  const [courseInfo, setCourseInfo] = useState({});
 
   const handlePopup = (field, bit) => {
     setPopup((prev) => ({
@@ -273,6 +279,11 @@ function DegreePlan2(props) {
   const handleCardOrigin = (origin) => {
     setCardOrigin(origin);
   };
+
+  const handleShowCourseInfo = (info) => {
+    setCourseInfo(info);
+    handlePopup("showCourseInfo", true);
+  }
 
   /*
    *  handleRemoveCourse()
@@ -423,6 +434,10 @@ function DegreePlan2(props) {
     cardOptions?.map((card) => fetchSaveTerm(card));
   }, [cardOptions]);
 
+  useEffect(() => {
+
+  }, [])
+
   return (
     <div style={{ marginTop: "80px" }}>
       <div className={dp2Style.contentContainer}>
@@ -515,9 +530,22 @@ function DegreePlan2(props) {
                 ))}
               </div>
             </div>
+            
+
+            <div className={sStyle.infoContainer}>
+            <div style={{color: "#919da1"}}>More:</div>
+            <div className={sStyle.unitsContainer}>
+              <div className={sStyle.infoTitle}>Total SHUs count:&nbsp;</div>
+              <div classname={sStyle.infoDetail}>{unitsCount}</div>
+            </div>
+          </div>
+
+          {popup.showCourseInfo && (
+            <CourseInfoExpress courseInfo={courseInfo} onClose={() => handlePopup("showCourseInfo", false)}/>
+          )}
+
 
             {/* Degree Requirment Container */}
-
             <DegreeReqExpress />
           </div>
 
@@ -560,6 +588,7 @@ function DegreePlan2(props) {
                   onRemoveCourse={handleRemoveCourse}
                   handleCardOrigin={handleCardOrigin}
                   cardOrigin={cardOrigin}
+                  onClick={handleShowCourseInfo}
                 />
               ))}
             </div>
