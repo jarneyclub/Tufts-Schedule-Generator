@@ -88,5 +88,5 @@ router.post('/schedule', authController.authenticateToken, scheduleController.ma
 router.patch('/schedule', authController.authenticateToken, scheduleController.updateSchedule);
 router.patch('/schedule/name', authController.authenticateToken, scheduleController.changeScheduleName);
 router.get('/schedules', authController.authenticateToken, scheduleController.getSchedules);
-
+router.delete('/schedule', authController.authenticateToken, scheduleController.deleteSchedule);
 module.exports = router;

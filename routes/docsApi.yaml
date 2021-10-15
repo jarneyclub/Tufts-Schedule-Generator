@@ -778,11 +778,16 @@ paths:
       tags:
         - Schedule
       summary: Delete saved schedule
-      parameters:
-        - in: header
-          name: Authorization
-          schema:
-            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sched_id:
+                  type: string
+        
   /schedules:
     get:
       tags:
