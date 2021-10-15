@@ -479,7 +479,7 @@ function DegreePlan2(props) {
                     Progress Bar
                 */}
         <div className={dp2Style.progressBarContainer}>
-          <div className={dp2Style.progressBarTitle}>PLAN PROGRESS </div>
+          {/* <div className={dp2Style.progressBarTitle}>PLAN PROGRESS </div> */}
           {!shrink ? (
             <div className={dp2Style.progressBar} > 
               <div className={dp2Style.progressBarCompleted} style={{width: ((unitsCount.completed / unitsCount.total * 100) + "%")}}/>
