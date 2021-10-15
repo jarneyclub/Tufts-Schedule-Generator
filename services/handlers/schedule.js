@@ -40,7 +40,6 @@ exports.updateSchedule = async (id, filter, courses, classes) => {
         courses    : courses,
         events     : classes
     }, {
-        new: true,
         upsert: false
     });
 

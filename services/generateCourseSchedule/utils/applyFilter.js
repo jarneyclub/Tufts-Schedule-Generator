@@ -25,7 +25,7 @@ const createArrSectionTypes = (global) => {
         let start = Date.now(); // start timer
 
         let arrayCourses = global.arrayCourses;
-        let filter = global.filter;
+        let filter = global.filterPreprocessed;
         let timePref = filter.time;
 
         // default miscellaneous filters

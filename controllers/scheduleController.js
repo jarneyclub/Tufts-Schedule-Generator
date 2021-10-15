@@ -115,6 +115,7 @@ exports.updateSchedule = async (req, res) => {
                     courseInfo.units_esti = arrCourses[i].getUnits();
                     arrCoursesInfoToReturn.push(courseInfo);
                 }
+                /* update schedule on database */
                 let createdSchedule = 
                     await scheduleHandler.updateSchedule(sched_id, filter, arrCoursesInfoToReturn, weeklySchedule);
                 let response = {
@@ -124,6 +125,7 @@ exports.updateSchedule = async (req, res) => {
                 res.json(response);
             },
             (error) => {
+                console.log("(scheduleController/updateSchedule) ERROR: ", error);
                 let response = {
                     error: error,
                     time_taken: (Date.now() - start).toString() + "ms"
