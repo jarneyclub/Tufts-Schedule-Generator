@@ -39,7 +39,7 @@ import {
   RemoveSchedule,
   EditScheduleName,
 } from "./reusable/SchedulerPopup";
-import { DegreeReqExpress, DegreePlanExpress } from "./reusable/TabSwitch";
+import { DegreeReqExpress, DegreePlanExpress, CourseInfoExpress } from "./reusable/TabSwitch";
 
 const timeDefault = [
   {
@@ -164,6 +164,13 @@ const boolStateDefault = {
   timePrefState: false,
 };
 
+const popupDefault = {
+  editScheduleName: false,
+  removeSchedule: false,
+  addSchedule: false,
+  showCourseInfo: false,
+}
+
 function Scheduler(props) {
   const {
     shrink,
@@ -186,10 +193,9 @@ function Scheduler(props) {
   const [selectedAttribute, setSelectedAttribute] = useState("");
   const [selectedAttributeIdx, setSelectedAttributeIdx] = useState(0);
   const [coursePreference, setCoursePreference] = useState(boolStateDefault);
-
-  const [selectedCourses, setSelectedCourses] = useState(
-    []
-  ); /*  The courses selected to generate schedule  */
+  
+  /*  The courses selected to generate schedule  */
+  const [selectedCourses, setSelectedCourses] = useState([]); 
 
   const [classes, setClasses] = useState({});
 
@@ -200,11 +206,11 @@ function Scheduler(props) {
   const [timePrefState, setTimePrefState] = useState(false); // state of time pref overlay
   const [timePref, setTimePref] = useState(timePrefDefault); // time pref json that will be passed into post req
 
-  const [popup, setPopup] = useState({
-    editScheduleName: false,
-    removeSchedule: false,
-    addSchedule: false,
-  });
+  const [popup, setPopup] = useState(popupDefault);
+
+  const [courseInfo, setCourseInfo] = useState({});
+  const [unitsCount, setUnitsCount] = useState(0);
+
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState();
   const [alertSeverity, setAlertSeverity] = useState();
@@ -451,20 +457,8 @@ function Scheduler(props) {
       .catch((error) => console.log("generate schedule error: ", error));
   };
 
-  useEffect(() => {
-    fetchAttributes();
-    fetchSavedSchedules();
-    handleLogRequired(true);
-  }, []);
-
-  useEffect(() => {
-    fetchAttributes();
-    fetchSavedSchedules();;
-  }, [logged])
-
-  useEffect(() => {
-    async function fetchData() {
-      setLoadMessage(true);
+  const fetchData = async() => {
+    setLoadMessage(true);
       await fetch(
         "https://jarney.club/api/courses/term?cnum="
           .concat(courseSearchValue)
@@ -482,9 +476,29 @@ function Scheduler(props) {
           setSearchCourseResult([]);
           console.log("error from Scheduler course search", error);
         });
-    }
+  }
+
+  useEffect(() => {
+    fetchAttributes();
+    fetchSavedSchedules();
+    handleLogRequired(true);
+  }, []);
+
+  useEffect(() => {
+    fetchAttributes();
+    fetchSavedSchedules();;
+  }, [logged])
+
+  useEffect(() => {
     fetchData();
   }, [courseSearchValue, selectedAttribute]);
+
+  useEffect(() => {
+    let tempCount = 0;
+    selectedCourses.map((courses) => {
+      tempCount += parseInt(courses?.units_esti);
+    })
+  }, [selectedCourses])
 
   return (
     <div>
@@ -546,6 +560,8 @@ function Scheduler(props) {
                   />
                 ))}
             </div>
+
+            
 
             <div className={sStyle.preferenceContainer}>
               <FormControl className={sStyle.leftCheckboxContainer}>
@@ -612,6 +628,18 @@ function Scheduler(props) {
               Render schedule
             </Button>
           </div>
+
+
+          <div className={sStyle.preferenceContainer  }>
+              <div>Total SHUs selected: {unitsCount}</div>
+              {
+                popup.showCourseInfo && 
+                <CourseInfoExpress courseInfo={courseInfo} />
+              }
+              
+            </div>
+
+
           <div className={sStyle.tabsContainer}>
             <div className={sStyle.tabBarsContainer}>
               <div
