@@ -27,7 +27,7 @@ import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox"
 import PurpleSwitch from "./reusable/PurpleSwitch";
 import sStyle from "./style/Scheduler.module.css";
 import Dropdown from "./reusable/Dropdown";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import { ClickAwayListener } from '@mui/material';
 import Calendar from "./reusable/Calendar";
 import CourseSearchBar from "./reusable/CourseSearchBar";
 import TimePrefSelector from "./reusable/TimePrefSelector";
