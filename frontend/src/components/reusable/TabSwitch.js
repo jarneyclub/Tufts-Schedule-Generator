@@ -105,7 +105,7 @@ function DegreePlanExpress() {
         }
       })
       .catch((error) => {
-        console.log("error from Degreeplan fetchPrivateReqs ", error);
+        console.log("error from Degreeplan fetchPlans ", error);
       });
   };
 
@@ -131,7 +131,7 @@ function DegreePlanExpress() {
       </div>
       <div className={dp2Style.degreeReqDetailContainer}>
         {degreePlanOptions && 
-          degreePlanOptions[selectedDegreePlan]?.map((card) => (
+          degreePlanOptions[selectedDegreePlan]?.terms?.map((card) => (
             <PlanCard cardDetail={card?.terms}/>
           ))
           
