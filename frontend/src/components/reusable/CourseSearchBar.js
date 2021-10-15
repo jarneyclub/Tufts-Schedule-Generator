@@ -82,7 +82,7 @@ function CourseSearchBar(props) {
         </div>
       )}
       {(origin === "schedulerTab" ||
-        !(origin === "courseList" || origin === "schedulerCourseList")) && (
+        !(origin === "courseList" || origin === "schedulerCourseList" || origin === "degreePlanExpress")) && (
         <div className={cStyle.actionButton}>
           <IconButton onClick={handleDoubleClick}>
             <RemoveIcon style={{ fill: "#ffffff" }} />
