@@ -83,18 +83,6 @@ const courses = [
   },
 ];
 
-const planCardsPlaceholder = [
-  {
-    plan_term_id: "FALL 2021",
-    term: 2215,
-    courses: [],
-  },
-  {
-    plan_term_id: "SPRING 2022",
-    term: 2215,
-    courses: [],
-  },
-];
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
@@ -117,7 +105,7 @@ function DegreePlan2(props) {
   const [courseSearchValue, setCourseSearchValue] = useState("");
 
   /*  Stores the card options. Should be updated by API in UseEffect  */
-  const [cardOptions, setCardOptions] = useState(planCardsPlaceholder);
+  const [cardOptions, setCardOptions] = useState([]);
   const [transferCourseDetail, setTransferCourseDetail] = useState({});
   const [cardOrigin, setCardOrigin] = useState("");
   /* Popups */
@@ -433,11 +421,16 @@ function DegreePlan2(props) {
   useEffect(() => {
     console.log("cardOptions: ", cardOptions);
     cardOptions?.map((card) => fetchSaveTerm(card));
+    let tempCount = 0;
+    cardOptions?.forEach((card) => {
+      card?.courses.forEach((course) => {
+        tempCount += course.units_esti;
+      })
+    })
+    setUnitsCount(tempCount);
   }, [cardOptions]);
 
-  useEffect(() => {
-
-  }, [])
+ 
 
   return (
     <div style={{ marginTop: "80px" }}>
