@@ -62,7 +62,7 @@ function PlanCard(props) {
             courseDetail={course}
             key={course.gen_course_id}
             onTransferCourse={onTransferCourse}
-            origin={cardDetail.plan_term_id}
+            origin={cardOrigin}
             handleCardOrigin={handleCardOrigin}
             onDoubleClick={handleDoubleClick}
             customStyle={{

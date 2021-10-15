@@ -132,7 +132,7 @@ function DegreePlanExpress() {
       <div className={dp2Style.degreeReqDetailContainer}>
         {degreePlanOptions && 
           degreePlanOptions[selectedDegreePlan]?.terms?.map((card) => (
-            <PlanCard key={card.plan_term_id} cardDetail={card} tabExpress={true}/>
+            <PlanCard key={card.plan_term_id} cardDetail={card} tabExpress={true} cardOrigin={"degreePlanExpress"}/>
           ))
           
         }
