@@ -639,11 +639,36 @@ function Scheduler(props) {
           </div>
 
           <div className={sStyle.infoContainer}>
-            <div style={{color: "#919da1"}}>More:</div>
+            <div style={{color: "#919da1"}}>Quick summary:</div>
             <div className={sStyle.unitsContainer}>
-              <div className={sStyle.infoTitle}>Total SHUs count:&nbsp;</div>
+              <div className={sStyle.infoTitle}>SHUs scheduled:&nbsp;</div>
               <div classname={sStyle.infoDetail}>{unitsCount}</div>
             </div>
+            {
+              [classes]?.TimeUnspecified &&
+              <div> 
+                <div style={{color: "#919da1"}}>Time Unspecified:</div> 
+                {
+                  classes?.TimeUnspecified?.map((course) => (
+                    <CourseSearchBar
+                      draggable={false}
+                      courseDetail={course}
+                      key={course.name}
+                      origin={"degreePlanExpress"}
+                      customStyle={{
+                        border: "none",
+                        justifyContent: "space-between",
+                      }}
+                      onClick={handleShowCourseInfo}
+                    />)
+                )
+                }
+                
+              </div>
+               
+            }
+           
+
           </div>
 
           {popup.showCourseInfo && (
