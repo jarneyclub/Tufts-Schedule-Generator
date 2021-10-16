@@ -491,13 +491,13 @@ function DegreePlan2(props) {
             <div className={dp2Style.progressBarTitle}>&nbsp;☃&nbsp;</div>
           )} */}
           <div className={dp2Style.progressBar} > 
-              <div className={dp2Style.progressBarCompleted} style={{width: ((unitsCount.completed / unitsCount.total * 100) + "%")}}>Completed</div>
-              <div className={dp2Style.progressBarCurrent} style={{width: ((unitsCount.current / unitsCount.total * 100) + "%")}}>IP</div>
+              <div className={dp2Style.progressBarCompleted} style={{width: ((unitsCount.completed / unitsCount.total * 100) + "%")}}></div>
+              <div className={dp2Style.progressBarCurrent} style={{width: ((unitsCount.current / unitsCount.total * 100) + "%")}}></div>
               <div className={dp2Style.progressBarFuture} style={{width: ((unitsCount.future / unitsCount.total * 100) + "%")}} />
 
             </div>
 
-          {/* <div className={dp2Style.progressBarTitle}>100%</div> */}
+          <div className={dp2Style.progressBarTitle}>{parseInt((unitsCount.current + unitsCount.completed) / unitsCount.total * 100) + "%"}</div>
         </div>
 
         <div className={dp2Style.horizontalWrapper}>
@@ -579,21 +579,21 @@ function DegreePlan2(props) {
             
 
             <div className={sStyle.infoContainer}>
-              <div style={{color: "#919da1"}}>Quick Summary:</div>
+              <div style={{color: "#919da1"}}>Quick summary:</div>
               <div className={sStyle.unitsContainer}>
-                <div className={sStyle.infoTitle}>Total SHUs:&nbsp;</div>
+                <div className={sStyle.infoTitle}>Total:&nbsp;</div>
                 <div classname={sStyle.infoDetail}>{unitsCount.total}</div>
               </div>
               <div className={sStyle.unitsContainer}>
-                <div className={sStyle.infoTitle}>Completed SHUs:&nbsp;</div>
+                <div className={sStyle.infoTitle}>Completed:&nbsp;</div>
                 <div classname={sStyle.infoDetail}>{unitsCount.completed}</div>
               </div>
               <div className={sStyle.unitsContainer}>
-                <div className={sStyle.infoTitle}>SHUs in progress:&nbsp;</div>
+                <div className={sStyle.infoTitle}>In progress:&nbsp;</div>
                 <div classname={sStyle.infoDetail}>{unitsCount.current}</div>
               </div>
               <div className={sStyle.unitsContainer}>
-                <div className={sStyle.infoTitle}>SHUs left:&nbsp;</div>
+                <div className={sStyle.infoTitle}>Remaining:&nbsp;</div>
                 <div classname={sStyle.infoDetail}>{unitsCount.future}</div>
               </div>
           </div>
