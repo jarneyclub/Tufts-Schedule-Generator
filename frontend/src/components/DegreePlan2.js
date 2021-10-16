@@ -579,7 +579,7 @@ function DegreePlan2(props) {
             
 
             <div className={sStyle.infoContainer}>
-              <div style={{color: "#919da1"}}>More:</div>
+              <div style={{color: "#919da1"}}>Quick Summary:</div>
               <div className={sStyle.unitsContainer}>
                 <div className={sStyle.infoTitle}>Total SHUs:&nbsp;</div>
                 <div classname={sStyle.infoDetail}>{unitsCount.total}</div>
