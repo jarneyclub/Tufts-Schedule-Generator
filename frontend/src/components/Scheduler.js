@@ -33,6 +33,7 @@ import CourseSearchBar from "./reusable/CourseSearchBar";
 import TimePrefSelector from "./reusable/TimePrefSelector";
 import SnackBarAlert from "./reusable/SnackBarAlert";
 import JarUserLogin from "./reusable/JarUserLogin";
+import Event from "./reusable/Event"
 import Popup from "./reusable/Popup";
 import {
   AddSchedule,
@@ -652,16 +653,10 @@ function Scheduler(props) {
                 <div style={{color: "#919da1"}}>Time Unspecified:</div> 
                 {
                   classes?.TimeUnspecified?.map((course) => (
-                    <CourseSearchBar
-                      draggable={false}
-                      courseDetail={course}
+                    <Event
+                      eventDetails={course}
                       key={course.name}
-                      origin={"degreePlanExpress"}
-                      customStyle={{
-                        border: "none",
-                        justifyContent: "space-between",
-                      }}
-                      onClick={handleShowCourseInfo}
+                      onEventClick={handleShowCourseInfo}
                     />)
                 )
                 }
