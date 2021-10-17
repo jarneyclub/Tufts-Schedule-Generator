@@ -20,8 +20,7 @@ const chosenClassesToApiDetails = (global) => {
         "Friday": [],
         "Saturday": [],
         "Sunday": [],
-        "TimeUnspecified": [],
-        "Unscheduled": [] // UNUSED
+        "TimeUnspecified": []
     }
 
     for (let i in classes) {

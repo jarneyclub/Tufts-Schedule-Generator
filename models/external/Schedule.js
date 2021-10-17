@@ -36,7 +36,7 @@ const schedule_Schema = new Schema({
         Wednesday:   [{details: String, location: String, name: String, time_start: String, time_end: String, term_section_id: String, instructor: String}],
         Thursday:    [{details: String, location: String, name: String, time_start: String, time_end: String, term_section_id: String, instructor: String}],
         Friday:      [{details: String, location: String, name: String, time_start: String, time_end: String, term_section_id: String, instructor: String}],
-        Unscheduled: [{details: String, location: String, name: String, time_start: String, time_end: String, term_section_id: String, instructor: String}]
+        TimeUnspecified: [{details: String, location: String, name: String, time_start: String, time_end: String, term_section_id: String, instructor: String}]
     },
     courses: [{
         term_course_id: String,
