@@ -642,26 +642,25 @@ function Scheduler(props) {
           </div>
 
           <div className={sStyle.infoContainer}>
-            <div style={{color: "rgba(0, 0, 0, 0.54)"}}>Quick summary:</div>
+            <div style={{color: "rgba(0, 0, 0, 0.54)"}}>Quick summary</div>
             <div className={sStyle.unitsContainer}>
               <div className={sStyle.infoTitle}>SHUs scheduled:&nbsp;</div>
               <div classname={sStyle.infoDetail}>{unitsCount}</div>
             </div>
-            {
+            {/* {
               classes?.TimeUnspecified  &&
               <div> 
-                <div style={{color: "rgba(0, 0, 0, 0.54)"}}>Time Unspecified:</div> 
+                <div style={{color: "rgba(0, 0, 0, 0.54)"}}>Time Unspecified</div> 
                 {
                   classes?.TimeUnspecified?.map((course) => (
                     <Button className={sStyle.tuButton}onClick={() => handleShowCourseInfo(course)}>{course.details}</Button>)
                   )
                 }
                
-                
-                
+              
               </div>
                
-            }
+            } */}
            
 
           </div>
@@ -778,6 +777,29 @@ function Scheduler(props) {
               classes={classes}
               onEventClick={handleShowCourseInfo}
             />
+          </div>
+          <div className={sStyle.infoContainer}>
+            <div style={{color: "rgba(0, 0, 0, 0.54)"}}>Quick summary</div>
+            <div className={sStyle.unitsContainer}>
+              <div className={sStyle.infoTitle}>SHUs scheduled:&nbsp;</div>
+              <div classname={sStyle.infoDetail}>{unitsCount}</div>
+            </div>
+            {
+              classes?.TimeUnspecified  &&
+              <div> 
+                <div style={{color: "rgba(0, 0, 0, 0.54)"}}>Time Unspecified</div> 
+                {
+                  classes?.TimeUnspecified?.map((course) => (
+                    <Button className={sStyle.tuButton}onClick={() => handleShowCourseInfo(course)}>{course.details}</Button>)
+                  )
+                }
+               
+              
+              </div>
+               
+            }
+           
+
           </div>
         </div>
       </div>

@@ -73,7 +73,7 @@ function DegreeReqDisplay(props) {
       {reqDetail?.parts?.map((req) => (
         <div>
           <div style={{ color: "#FC4E4E" }}>{req?.part_name}</div>
-          <div>{req?.part_desc}</div>
+          <div style={{wordWrap: "wrap"}}>{req?.part_desc}</div>
           {req?.part_reqs?.map((course) => (
             <div>
               {course?.course_num && (
