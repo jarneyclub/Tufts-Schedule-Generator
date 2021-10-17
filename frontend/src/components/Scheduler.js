@@ -364,6 +364,8 @@ function Scheduler(props) {
           setSelectedScheduleID(result.schedules[selectedScheduleIdx].sched_id);
           setSelectedCourses(result.schedules[selectedScheduleIdx]?.courses);
           setClasses(result.schedules[selectedScheduleIdx]?.classes);
+          console.log("classes", classes);
+          console.log("res classes:",result.schedules[selectedScheduleIdx]?.classes );
           setTimePref(result.schedules[selectedScheduleIdx]?.filter?.time);
           setCoursePreference((prev) => ({
             ...prev,
