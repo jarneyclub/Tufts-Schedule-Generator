@@ -653,11 +653,7 @@ function Scheduler(props) {
                 <div style={{color: "#919da1"}}>Time Unspecified:</div> 
                 {
                   classes?.TimeUnspecified?.map((course) => (
-                    <Event
-                      eventDetails={course}
-                      key={course.name}
-                      onEventClick={handleShowCourseInfo}
-                    />)
+                    <Button onClick={() => handleShowCourseInfo(course)}>{course.details}</Button>)
                 )
                 }
                 
