@@ -647,7 +647,7 @@ function Scheduler(props) {
               <div classname={sStyle.infoDetail}>{unitsCount}</div>
             </div>
             {
-              [classes]?.TimeUnspecified &&
+              (classes?.TimeUnspecified !== 0) &&
               <div> 
                 <div style={{color: "#919da1"}}>Time Unspecified:</div> 
                 {
