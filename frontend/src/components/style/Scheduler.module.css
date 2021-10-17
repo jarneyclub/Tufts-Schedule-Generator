@@ -148,10 +148,6 @@
 .tuContainer {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
-  max-height: 300px;
-  margin: 10px 0;
-  padding: 10px 1vw;
 
   width: 100%
 
@@ -274,8 +270,10 @@
   border: 1px solid #a0c3d1;
   border-left: 8px solid #a0c3d1;
   text-transform: unset !important;
-  margin-bottom: 5px;
-  width: 100%;
+  margin: 1vw;
+  min-width: 30%;
+  min-height: 70%;
+  overflow-y:scroll;
 }
 /* * * 3rd * * */
 .tabsContainer {
