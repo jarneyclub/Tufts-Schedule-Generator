@@ -73,7 +73,7 @@ function CourseSearchBar(props) {
       className={cStyle.barContainer}
       draggable={draggable}
       onDragStart={handleDragStart}
-      id={course_num.concat(course_title)}
+      id={course_num?.concat(course_title)}
       onDoubleClick={handleDoubleClick}
       onClick={handleOnClick}
       style={customStyle}

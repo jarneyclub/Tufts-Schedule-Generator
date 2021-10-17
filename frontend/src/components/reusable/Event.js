@@ -56,7 +56,7 @@ function Event(props) {
   return (
     <div className={eStyle.eventContainer} style={customStyle} onClick={handleOnClick}>
       <div style={{ fontWeight: "lighter" }}>
-        {time_start.concat("~").concat(time_end)}
+        {time_start?.concat("~")?.concat(time_end)}
       </div>
       <div>{details}</div>
       <div>{name}</div>
