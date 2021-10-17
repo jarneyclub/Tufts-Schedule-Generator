@@ -653,9 +653,11 @@ function Scheduler(props) {
                 <div style={{color: "rgba(0, 0, 0, 0.54)"}}>Time Unspecified:</div> 
                 {
                   classes?.TimeUnspecified?.map((course) => (
-                    <Button className={sStyle.renderButton}onClick={() => handleShowCourseInfo(course)}>{course.details}</Button>)
-                )
+                    <Button className={sStyle.tuButton}onClick={() => handleShowCourseInfo(course)}>{course.details}</Button>)
+                  )
                 }
+               
+                
                 
               </div>
                

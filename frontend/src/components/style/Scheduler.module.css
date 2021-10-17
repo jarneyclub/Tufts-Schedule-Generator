@@ -263,7 +263,7 @@
   border: 1px solid #919da1;
   border-left: 8px solid #a0c3d1;
   text-transform: unset !important;
-
+  margin-bottom: 5px;
 }
 /* * * 3rd * * */
 .tabsContainer {
