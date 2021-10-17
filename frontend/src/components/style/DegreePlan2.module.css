@@ -211,7 +211,7 @@ input {
 .degreeReqDetailContainer {
   height: 300px;
   padding: 10px 1vw;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   background-color: rgba(239, 235, 249, 0.9);
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
