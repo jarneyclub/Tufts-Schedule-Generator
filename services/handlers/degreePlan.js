@@ -123,6 +123,19 @@ const getDegreePlan = async (query) => {
                 currTerm.term = termIntegerToDesc(currTerm.term);
                 newTerms.push(currTerm);
             }
+            newTerms.sort((termA, termB) => {
+                if (termA.term < termB.term) {
+                    return -1;
+                } else if (termA.term > termB.term) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+            for (let i = 0; i < newTerms.length; i++) {
+                newTerms[i].term = termIntegerToDesc(currTerm.term);
+            }
+            
             docToInsert.terms = newTerms; // update terms
             documents.push(docToInsert); // append to documents
         });
@@ -247,6 +260,18 @@ const getDegreePlans = async (query) => {
                 let currTerm = docToInsert.terms[i];
                 currTerm.term = termIntegerToDesc(currTerm.term);
                 newTerms.push(currTerm);
+            }
+            newTerms.sort((termA, termB) => {
+                if (termA.term < termB.term) {
+                    return -1;
+                } else if (termA.term > termB.term) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+            for (let i = 0; i < newTerms.length; i++) {
+                newTerms[i].term = termIntegerToDesc(currTerm.term);
             }
             docToInsert.terms = newTerms; // update terms
             documents.push(docToInsert);
