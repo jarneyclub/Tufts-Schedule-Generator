@@ -783,13 +783,16 @@ function Scheduler(props) {
 
           {
               classes?.TimeUnspecified  &&
-              <div className={sStyle.tuContainer}> 
+              <div className={sStyle.infoContainer}> 
                 <div style={{color: "rgba(0, 0, 0, 0.54)"}}>Time Unspecified</div> 
-                {
+                <div className={sStyle.tuContainer}>
+                  {
                   classes?.TimeUnspecified?.map((course) => (
-                    <Button className={sStyle.tuButton}onClick={() => handleShowCourseInfo(course)}>{course.details}</Button>)
+                    <Button className={sStyle.tuButton} onClick={() => handleShowCourseInfo(course)}>{course.details}</Button>)
                   )
                 }
+                </div>
+                
                
               
               </div>
