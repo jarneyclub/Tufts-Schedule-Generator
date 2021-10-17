@@ -261,6 +261,7 @@ const getDegreePlans = async (query) => {
                 currTerm.term = termIntegerToDesc(currTerm.term);
                 newTerms.push(currTerm);
             }
+            console.log("(getDegreePlans) newTerms before sort: ", newTerms);
             newTerms.sort((termA, termB) => {
                 if (termA.term < termB.term) {
                     return -1;
@@ -270,6 +271,7 @@ const getDegreePlans = async (query) => {
                     return 0;
                 }
             });
+            console.log("(getDegreePlans) newTerms after sort: ", newTerms);
             for (let i = 0; i < newTerms.length; i++) {
                 newTerms[i].term = termIntegerToDesc(currTerm.term);
             }
