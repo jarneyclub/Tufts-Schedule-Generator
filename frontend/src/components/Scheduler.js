@@ -641,29 +641,6 @@ function Scheduler(props) {
             </Button>
           </div>
 
-          <div className={sStyle.infoContainer}>
-            <div style={{color: "rgba(0, 0, 0, 0.54)"}}>Quick summary</div>
-            <div className={sStyle.unitsContainer}>
-              <div className={sStyle.infoTitle}>SHUs scheduled:&nbsp;</div>
-              <div classname={sStyle.infoDetail}>{unitsCount}</div>
-            </div>
-            {/* {
-              classes?.TimeUnspecified  &&
-              <div> 
-                <div style={{color: "rgba(0, 0, 0, 0.54)"}}>Time Unspecified</div> 
-                {
-                  classes?.TimeUnspecified?.map((course) => (
-                    <Button className={sStyle.tuButton}onClick={() => handleShowCourseInfo(course)}>{course.details}</Button>)
-                  )
-                }
-               
-              
-              </div>
-               
-            } */}
-           
-
-          </div>
 
           {popup.showCourseInfo && (
             <CourseInfoExpress courseInfo={courseInfo} onClose={() => handlePopup("showCourseInfo", false)}/>
@@ -733,6 +710,30 @@ function Scheduler(props) {
               {degreeReqTab === 3 && <DegreePlanExpress />}
             </div>
           </div>
+
+          <div className={sStyle.infoContainer}>
+            <div style={{color: "rgba(0, 0, 0, 0.54)"}}>Quick summary</div>
+            <div className={sStyle.unitsContainer}>
+              <div className={sStyle.infoTitle}>SHUs scheduled:&nbsp;</div>
+              <div classname={sStyle.infoDetail}>{unitsCount}</div>
+            </div>
+            {/* {
+              classes?.TimeUnspecified  &&
+              <div> 
+                <div style={{color: "rgba(0, 0, 0, 0.54)"}}>Time Unspecified</div> 
+                {
+                  classes?.TimeUnspecified?.map((course) => (
+                    <Button className={sStyle.tuButton}onClick={() => handleShowCourseInfo(course)}>{course.details}</Button>)
+                  )
+                }
+               
+              
+              </div>
+               
+            } */}
+           
+
+          </div>
         </div>
 
         <div className={sStyle.rightColumnWrapper}>
@@ -769,6 +770,7 @@ function Scheduler(props) {
             </IconButton>
             <div />
           </div>
+          
 
           <div className={sStyle.calendarContainer}>
             <Calendar
@@ -778,15 +780,10 @@ function Scheduler(props) {
               onEventClick={handleShowCourseInfo}
             />
           </div>
-          <div className={sStyle.infoContainer}>
-            <div style={{color: "rgba(0, 0, 0, 0.54)"}}>Quick summary</div>
-            <div className={sStyle.unitsContainer}>
-              <div className={sStyle.infoTitle}>SHUs scheduled:&nbsp;</div>
-              <div classname={sStyle.infoDetail}>{unitsCount}</div>
-            </div>
-            {
+
+          {
               classes?.TimeUnspecified  &&
-              <div> 
+              <div className={sStyle.tuContainer}> 
                 <div style={{color: "rgba(0, 0, 0, 0.54)"}}>Time Unspecified</div> 
                 {
                   classes?.TimeUnspecified?.map((course) => (
@@ -797,10 +794,8 @@ function Scheduler(props) {
               
               </div>
                
-            }
+          }
            
-
-          </div>
         </div>
       </div>
       {/* popups */}
