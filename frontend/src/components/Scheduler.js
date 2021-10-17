@@ -642,7 +642,7 @@ function Scheduler(props) {
           </div>
 
           <div className={sStyle.infoContainer}>
-            <div style={{color: "#919da1"}}>Quick summary:</div>
+            <div style={{color: "rgba(0, 0, 0, 0.54)"}}>Quick summary:</div>
             <div className={sStyle.unitsContainer}>
               <div className={sStyle.infoTitle}>SHUs scheduled:&nbsp;</div>
               <div classname={sStyle.infoDetail}>{unitsCount}</div>
@@ -650,10 +650,10 @@ function Scheduler(props) {
             {
               (classes?.TimeUnspecified !== 0) &&
               <div> 
-                <div style={{color: "#919da1"}}>Time Unspecified:</div> 
+                <div style={{color: "rgba(0, 0, 0, 0.54)"}}>Time Unspecified:</div> 
                 {
                   classes?.TimeUnspecified?.map((course) => (
-                    <Button onClick={() => handleShowCourseInfo(course)}>{course.details}</Button>)
+                    <Button className={sStyle.renderButton}onClick={() => handleShowCourseInfo(course)}>{course.details}</Button>)
                 )
                 }
                 
