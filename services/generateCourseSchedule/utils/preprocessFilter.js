@@ -40,7 +40,7 @@ const preprocessFilter = (global) => {
         /*    Combine adjacent time intervals in the time preferences section of filter.
              e.g. 10:00-11:00, 11:00-12:00 should be 10:00-12:00                     
         */
-        console.log("(preprocessFilter) global.filterPreprocessed.time after conversion: ", global.filterPreprocessed.time);
+        // console.log("(preprocessFilter) global.filterPreprocessed.time after conversion: ", global.filterPreprocessed.time);
         // console.log("(preprocessFilter) timePref before: ", global.filterPreprocessed.time);
         for (let day in global.filterPreprocessed.time) {
 
@@ -93,8 +93,8 @@ const preprocessFilter = (global) => {
             global.filterPreprocessed.time[day] = dayPreferences;
 
         }
-        console.log("(preprocessFilter) global.filterPreprocessed after: ", global.filterPreprocessed.time);
-        console.log("(preprocessFilter) global.filter after: ", global.filter);
+        // console.log("(preprocessFilter) global.filterPreprocessed after: ", global.filterPreprocessed.time);
+        // console.log("(preprocessFilter) global.filter after: ", global.filter);
 
         resolve(global);
     });
