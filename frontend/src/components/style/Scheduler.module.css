@@ -145,6 +145,18 @@
   width: 100%
 
 }
+.tuContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  max-height: 300px;
+  margin: 10px 0;
+  padding: 10px 1vw;
+  background-color: rgba(239, 235, 249, 0.9);
+  border-radius: 12px;
+  width: 100%
+
+}
 
 .unitsContainer{
   display: flex;
@@ -354,7 +366,7 @@
 
   /* border: #42312B solid 1px; */
   margin-bottom: 20px;
-  height: 80vh;
+  height: 90vh;
 }
 
 .scheduleTitleContainer {
