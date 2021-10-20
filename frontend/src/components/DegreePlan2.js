@@ -6,6 +6,7 @@
  */
 
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import {
   Button,
   InputAdornment,
@@ -474,6 +475,9 @@ function DegreePlan2(props) {
 
   return (
     <div style={{ marginTop: "80px" }}>
+      <Helmet>
+        <title>JARney | Degree Plan</title>
+      </Helmet>
       <div className={dp2Style.contentContainer}>
         {/* * * * * Contains * * * * * 
                     Progress Bar

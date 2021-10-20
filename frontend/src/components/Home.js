@@ -8,6 +8,7 @@
  */
 
 import { useEffect, useState } from "react";
+import { Helmet } from 'react-helmet';
 import { Button } from "@material-ui/core";
 import hStyle from "./style/Home.module.css";
 import LoginGraphic from "./res/homepage_final.gif";
@@ -36,6 +37,10 @@ function Home(props) {
 
   return (
     <div className={hStyle.homeContainer}>
+      <Helmet>
+        <title>JARney | Home</title>
+      </Helmet>
+      
       <div className={hStyle.horizontalContainer}>
         <div className={hStyle.content}>
           <h1 style={{ fontSize: "70px" }}>
