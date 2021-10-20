@@ -43,7 +43,7 @@ function Event(props) {
   };
   const handleOnClick = () => {
     onEventClick(eventDetails);
-  }
+  };
   useEffect(() => {
     const transY = calculateTranslate();
     const eventHeight = calculateHeight();
@@ -54,7 +54,11 @@ function Event(props) {
   }, []);
 
   return (
-    <div className={eStyle.eventContainer} style={customStyle} onClick={handleOnClick}>
+    <div
+      className={eStyle.eventContainer}
+      style={customStyle}
+      onClick={handleOnClick}
+    >
       <div style={{ fontWeight: "lighter" }}>
         {time_start?.concat("~")?.concat(time_end)}
       </div>

@@ -28,13 +28,13 @@ import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox"
 import PurpleSwitch from "./reusable/PurpleSwitch";
 import sStyle from "./style/Scheduler.module.css";
 import Dropdown from "./reusable/Dropdown";
-import { ClickAwayListener } from '@mui/material';
+import { ClickAwayListener } from "@mui/material";
 import Calendar from "./reusable/Calendar";
 import CourseSearchBar from "./reusable/CourseSearchBar";
 import TimePrefSelector from "./reusable/TimePrefSelector";
 import SnackBarAlert from "./reusable/SnackBarAlert";
 import JarUserLogin from "./reusable/JarUserLogin";
-import Event from "./reusable/Event"
+import Event from "./reusable/Event";
 import Popup from "./reusable/Popup";
 import {
   AddSchedule,
@@ -367,7 +367,10 @@ function Scheduler(props) {
           setSelectedCourses(result.schedules[selectedScheduleIdx]?.courses);
           setClasses(result.schedules[selectedScheduleIdx]?.classes);
           console.log("classes", classes);
-          console.log("res classes:",result.schedules[selectedScheduleIdx]?.classes );
+          console.log(
+            "res classes:",
+            result.schedules[selectedScheduleIdx]?.classes
+          );
           setTimePref(result.schedules[selectedScheduleIdx]?.filter?.time);
           setCoursePreference((prev) => ({
             ...prev,
@@ -645,9 +648,11 @@ function Scheduler(props) {
             </Button>
           </div>
 
-
           {popup.showCourseInfo && (
-            <CourseInfoExpress courseInfo={courseInfo} onClose={() => handlePopup("showCourseInfo", false)}/>
+            <CourseInfoExpress
+              courseInfo={courseInfo}
+              onClose={() => handlePopup("showCourseInfo", false)}
+            />
           )}
 
           <div className={sStyle.tabsContainer}>
@@ -716,7 +721,7 @@ function Scheduler(props) {
           </div>
 
           <div className={sStyle.infoContainer}>
-            <div style={{color: "rgba(0, 0, 0, 0.54)"}}>Quick summary</div>
+            <div style={{ color: "rgba(0, 0, 0, 0.54)" }}>Quick summary</div>
             <div className={sStyle.unitsContainer}>
               <div className={sStyle.infoTitle}>SHUs scheduled:&nbsp;</div>
               <div classname={sStyle.infoDetail}>{unitsCount}</div>
@@ -735,8 +740,6 @@ function Scheduler(props) {
               </div>
                
             } */}
-           
-
           </div>
         </div>
 
@@ -774,7 +777,6 @@ function Scheduler(props) {
             </IconButton>
             <div />
           </div>
-          
 
           <div className={sStyle.calendarContainer}>
             <Calendar
@@ -785,24 +787,23 @@ function Scheduler(props) {
             />
           </div>
 
-          {
-              classes?.TimeUnspecified  &&
-              <div className={sStyle.infoContainer}> 
-                <div style={{color: "rgba(0, 0, 0, 0.54)"}}>Time Unspecified</div> 
-                <div className={sStyle.tuContainer}>
-                  {
-                  classes?.TimeUnspecified?.map((course) => (
-                    <Button className={sStyle.tuButton} onClick={() => handleShowCourseInfo(course)}>{course.details}</Button>)
-                  )
-                }
-                </div>
-                
-               
-              
+          {classes?.TimeUnspecified && (
+            <div className={sStyle.infoContainer}>
+              <div style={{ color: "rgba(0, 0, 0, 0.54)" }}>
+                Time Unspecified
               </div>
-               
-          }
-           
+              <div className={sStyle.tuContainer}>
+                {classes?.TimeUnspecified?.map((course) => (
+                  <Button
+                    className={sStyle.tuButton}
+                    onClick={() => handleShowCourseInfo(course)}
+                  >
+                    {course.details}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
       {/* popups */}

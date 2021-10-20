@@ -142,18 +142,16 @@
   padding: 10px 1vw;
   background-color: rgba(239, 235, 249, 0.9);
   border-radius: 12px;
-  width: 100%
-
+  width: 100%;
 }
 .tuContainer {
   display: flex;
   flex-direction: row;
 
-  width: 100%
-
+  width: 100%;
 }
 
-.unitsContainer{
+.unitsContainer {
   display: flex;
   flex-direction: row;
   align-content: flex-start;
@@ -258,7 +256,6 @@
   border: #fc4e4e solid 1px;
 }
 
-
 .tuButton {
   padding: 0 1vw;
   color: #a0c3d1;
@@ -273,7 +270,7 @@
   margin: 1vw;
   min-width: 30%;
   min-height: 70%;
-  overflow-y:scroll;
+  overflow-y: scroll;
 }
 /* * * 3rd * * */
 .tabsContainer {
