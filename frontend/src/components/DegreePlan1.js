@@ -7,6 +7,7 @@
  */
 
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import DateRangeIcon from "@material-ui/icons/DateRange";
 import {
@@ -270,6 +271,9 @@ function DegreePlan1(props) {
     //           side.
     //           This flexbox has flex-direction: row */}
     <div className={dp1Style.horizontalWrapper}>
+      <Helmet>
+        <title>JARney | Degree Requirement</title>
+      </Helmet>
       {/* * * * * * * Includes Degree Req Selector * * * * * * */}
       {/* Includes 1) Existing degree req search list, 2) My List.
                     This flexbox has flex-direction: column */}

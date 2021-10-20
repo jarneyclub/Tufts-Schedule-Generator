@@ -8,6 +8,7 @@
  */
 
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
 import {
   InputAdornment,
   TextField,
@@ -515,6 +516,9 @@ function Scheduler(props) {
 
   return (
     <div>
+      <Helmet>
+        <title>JARney | Scheduler</title>
+      </Helmet>
       <div className={sStyle.horizontalWrapper}>
         <div className={sStyle.leftColumnWrapper}>
           {/* CourseContainer 
