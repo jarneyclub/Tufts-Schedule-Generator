@@ -158,7 +158,7 @@ function Home(props) {
           <br />
           <br />
           <br />
-          <br />
+      
         </div>
       </div>
 
@@ -196,6 +196,8 @@ function Home(props) {
           </Link>
           <br />
           <br />
+          <br />
+          <br /> <br />
           <br />
           <br /> <br />
           <br />
