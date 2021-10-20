@@ -78,13 +78,7 @@ function Home(props) {
                 Quick Schedule
               </Button>
             </Link>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
+          
           </div>
         </div>
       </div>
@@ -115,9 +109,6 @@ function Home(props) {
           </Link>
           <br />
           <br /> <br />
-          <br />
-          <br />
-          <br />
           <br />
           <br />
         </div>
@@ -153,10 +144,7 @@ function Home(props) {
           <br />
           <br />
           <br />
-          <br />
-          <br />
-          <br />
-          <br />
+       
           <br />
       
         </div>
@@ -199,8 +187,7 @@ function Home(props) {
           <br />
           <br /> <br />
           <br />
-          <br /> <br />
-          <br />
+   
         </div>
       </div>
       <div
