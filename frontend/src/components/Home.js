@@ -79,6 +79,12 @@ function Home(props) {
               </Button>
             </Link>
             <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
           </div>
         </div>
       </div>
@@ -107,6 +113,13 @@ function Home(props) {
               Search
             </Button>
           </Link>
+          <br />
+          <br /> <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
         </div>
       </div>
 
@@ -136,6 +149,16 @@ function Home(props) {
               Plan
             </Button>
           </Link>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
         </div>
       </div>
 
@@ -143,6 +166,10 @@ function Home(props) {
         className={hStyle.verticalContainer}
         style={{ backgroundColor: "#efebf9" }}
       >
+        {/* <br />
+          <br />
+          <br />
+          <br /> */}
         <img
           src={SchedulerGraphic}
           alt="Scheduler Graphic"
@@ -167,6 +194,11 @@ function Home(props) {
               Quick Schedule
             </Button>
           </Link>
+          <br />
+          <br />
+          <br />
+          <br /> <br />
+          <br />
         </div>
       </div>
       <div
@@ -179,7 +211,7 @@ function Home(props) {
           className={hStyle.logoImage}
         />
         <div className={hStyle.footerContent}>
-          Hope you enjoy this upgraded SIS.
+          Hope you enjoyed this upgraded SIS.
           <br />
           Visit us on instagram for most updated information!
           <br />
