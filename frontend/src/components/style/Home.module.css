@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  top: 80px;
+  margin-top: 80px;
 
   /* background: linear-gradient(-45deg, #f1edfa, #f1edfa, #ccbeee, #f1edfa ); */
   background-color: #ffffff;
@@ -26,6 +26,8 @@
   padding-left: 1vw;
   padding-right: 1vw;
   /* padding-top: 20vh; */
+
+  /* margin-bottom: 30px; */
 }
 
 .horizontalContainer {
@@ -190,11 +192,23 @@ h3 {
 }
 
 @media only screen and (max-width: 600px) {
+  .homeContainer {
+  }
+  .verticalContainer {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    height: 100vh;
+    /* margin-bottom: 40px; */
+  }
   .loginImage {
     height: 300px;
+    margin-top: 100px;
   }
   h2 {
     font-size: 28px !important;
+  }
+  .button {
+    margin-bottom: 30px;
   }
 }
 
