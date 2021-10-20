@@ -48,18 +48,17 @@
   border-bottom-left-radius: 15px;
   border-top-left-radius: 15px;
   transition: width 1s ease-in-out;
- 
 }
 .progressBarCurrent {
   background-color: #efebf9;
   color: #f0e4aa;
   height: 100%;
-  
+
   transition: width 1s ease-in-out;
 }
 .progressBarFuture {
   background-color: #ffffff;
-  color: #FC4E4E;
+  color: #fc4e4e;
   height: 100%;
   border-bottom-right-radius: 15px;
   border-top-right-radius: 15px;
@@ -316,7 +315,6 @@ input {
   border: none;
 }
 
-
 @media only screen and (max-width: 1334px) {
   .leftContainer {
     width: 100vw;
@@ -328,5 +326,4 @@ input {
   .planCardsContainer {
     justify-content: center;
   }
-  
 }

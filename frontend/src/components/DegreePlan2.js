@@ -30,7 +30,7 @@ import CourseSearchBar from "./reusable/CourseSearchBar";
 import SnackBarAlert from "./reusable/SnackBarAlert";
 import DegreeReqDisplay from "./reusable/DegreeReqDisplay";
 import JarUserLogin from "./reusable/JarUserLogin";
-import {CourseInfoExpress } from "./reusable/TabSwitch";
+import { CourseInfoExpress } from "./reusable/TabSwitch";
 import {
   AddSemester,
   RemoveSemester,
@@ -141,8 +141,8 @@ function DegreePlan2(props) {
     total: 0,
     completed: 0,
     current: 0,
-    future: 0, 
-  })
+    future: 0,
+  });
   const [courseInfo, setCourseInfo] = useState({});
 
   const handlePopup = (field, bit) => {
@@ -156,8 +156,8 @@ function DegreePlan2(props) {
     setUnitsCount((prev) => ({
       ...prev,
       [field]: bit,
-    }))
-  }
+    }));
+  };
   const handleSemesterPlanChange = (e) => {
     setSelectedPlanName(e.target.value);
     console.log("semesterPlanChange e:", e);
@@ -290,7 +290,7 @@ function DegreePlan2(props) {
     console.log("from handleshowcourseinfo", info);
     setCourseInfo(info);
     handlePopup("showCourseInfo", true);
-  }
+  };
 
   /*
    *  handleRemoveCourse()
@@ -442,24 +442,25 @@ function DegreePlan2(props) {
     let totalCount = 0;
     let completedCount = 0;
     let currentCount = 0;
-    
-    // counts total units 
+
+    // counts total units
     cardOptions?.forEach((card) => {
       const time = card?.term.split(" ");
       card?.courses.forEach((course) => {
         totalCount += course?.units_esti;
         if (parseInt(time[0]) < currentYear) {
           completedCount += course.units_esti;
-        }
-        else if (parseInt(time[0]) === currentYear) {
-          if (((time[1] === "Spring" || time[1] === "Summer") && currentTerm === "Fall") || (time[1] === "Spring" && currentTerm === "Summer"))
+        } else if (parseInt(time[0]) === currentYear) {
+          if (
+            ((time[1] === "Spring" || time[1] === "Summer") &&
+              currentTerm === "Fall") ||
+            (time[1] === "Spring" && currentTerm === "Summer")
+          )
             completedCount += course?.units_esti;
-          else if (time[1] === currentTerm) 
-            currentCount += course?.units_esti;
+          else if (time[1] === currentTerm) currentCount += course?.units_esti;
         }
-      })
-      
-    })
+      });
+    });
     // setUnitsCount(totalCount);
     // setCompletedUnitsCount(completedCount);
     // setCurrentUnitsCount(currentCount);
@@ -467,11 +468,7 @@ function DegreePlan2(props) {
     handleUnitsCount("completed", completedCount);
     handleUnitsCount("current", currentCount);
     handleUnitsCount("future", totalCount - completedCount - currentCount);
-
-
   }, [cardOptions]);
-
- 
 
   return (
     <div style={{ marginTop: "80px" }}>
@@ -494,14 +491,33 @@ function DegreePlan2(props) {
           ) : (
             <div className={dp2Style.progressBarTitle}>&nbsp;☃&nbsp;</div>
           )} */}
-          <div className={dp2Style.progressBar} > 
-              <div className={dp2Style.progressBarCompleted} style={{width: ((unitsCount.completed / unitsCount.total * 100) + "%")}}></div>
-              <div className={dp2Style.progressBarCurrent} style={{width: ((unitsCount.current / unitsCount.total * 100) + "%")}}></div>
-              <div className={dp2Style.progressBarFuture} style={{width: ((unitsCount.future / unitsCount.total * 100) + "%")}} />
+          <div className={dp2Style.progressBar}>
+            <div
+              className={dp2Style.progressBarCompleted}
+              style={{
+                width: (unitsCount.completed / unitsCount.total) * 100 + "%",
+              }}
+            ></div>
+            <div
+              className={dp2Style.progressBarCurrent}
+              style={{
+                width: (unitsCount.current / unitsCount.total) * 100 + "%",
+              }}
+            ></div>
+            <div
+              className={dp2Style.progressBarFuture}
+              style={{
+                width: (unitsCount.future / unitsCount.total) * 100 + "%",
+              }}
+            />
+          </div>
 
-            </div>
-
-          <div className={dp2Style.progressBarTitle}>{parseInt((unitsCount.current + unitsCount.completed) / unitsCount.total * 100) + "%"}</div>
+          <div className={dp2Style.progressBarTitle}>
+            {parseInt(
+              ((unitsCount.current + unitsCount.completed) / unitsCount.total) *
+                100
+            ) + "%"}
+          </div>
         </div>
 
         <div className={dp2Style.horizontalWrapper}>
@@ -580,10 +596,9 @@ function DegreePlan2(props) {
                 ))}
               </div>
             </div>
-            
 
             <div className={sStyle.infoContainer}>
-              <div style={{color: "#919da1"}}>Quick SHUs summary</div>
+              <div style={{ color: "#919da1" }}>Quick SHUs summary</div>
               <div className={sStyle.unitsContainer}>
                 <div className={sStyle.infoTitle}>Total:&nbsp;</div>
                 <div classname={sStyle.infoDetail}>{unitsCount.total}</div>
@@ -600,12 +615,14 @@ function DegreePlan2(props) {
                 <div className={sStyle.infoTitle}>Remaining:&nbsp;</div>
                 <div classname={sStyle.infoDetail}>{unitsCount.future}</div>
               </div>
-          </div>
+            </div>
 
-          {popup.showCourseInfo && (
-            <CourseInfoExpress courseInfo={courseInfo} onClose={() => handlePopup("showCourseInfo", false)}/>
-          )}
-
+            {popup.showCourseInfo && (
+              <CourseInfoExpress
+                courseInfo={courseInfo}
+                onClose={() => handlePopup("showCourseInfo", false)}
+              />
+            )}
 
             {/* Degree Requirment Container */}
             <DegreeReqExpress />

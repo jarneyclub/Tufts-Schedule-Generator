@@ -3,63 +3,89 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  top: 80px;
 
   /* background: linear-gradient(-45deg, #f1edfa, #f1edfa, #ccbeee, #f1edfa ); */
-  background-color: #f1edfa;
+  background-color: #ffffff;
+  /* background-color: #7048d5; */
 
   /* background-size: 400% 400%; */
   animation: gradient 15s ease infinite;
+}
+
+.verticalContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+
+  height: 90vh;
+  width: 100%;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  /* padding-top: 20vh; */
 }
 
 .horizontalContainer {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   align-content: center;
   flex-wrap: wrap;
+}
 
-  height: 100vh;
+.footerContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+
+  bottom: 0;
+  height: 30vh;
   width: 100%;
   padding-left: 1vw;
   padding-right: 1vw;
-  padding-top: 20vh;
-  /* 
-  background-image: url("../res/pexels-moose-photos-1037995.jpg");
-  background-size: cover; */
-  /* background-repeat: no-repeat; */
+  /* padding-top: 20vh; */
+}
+
+.footerContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  color: #000000;
+  font-size: 18px;
+  max-width: 50ch;
+  padding-left: 1vw;
+  font-family: neuzeit-grotesk, sans-serif;
+  font-style: normal;
+  font-weight: 300;
 }
 
 .loginImage {
-  width: 30vw;
+  /* width: 40vw; */
+  height: 500px;
   /* max-height: 50vh;
   flex: 0 0 46.666667%; */
 
   /* float: right; */
 }
-
+.logoImage {
+  height: 100px;
+}
 .schedulerImage {
-  height: 50vh;
+  height: 40vh;
   float: left;
 }
 
 .loginGraphicContainer {
   flex-grow: 1;
   /* padding-right: 2vw; */
-}
-
-.verticalContainer {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  align-items: center;
-  justify-content: center;
-  height: auto;
-  /* max-width: 54vw; */
-  border: none;
-  border-radius: 12px;
-  padding: 15px 1vw;
-  background-color: #ffffff;
 }
 
 .bodyContainer {
@@ -72,12 +98,42 @@
 }
 
 h1 {
-  color: #000000;
-  font-size: 70px;
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+  background-image: linear-gradient(-45deg, #fec2c2, #5a32bf);
+  background-image: conic-gradient(-45deg, #fec2c2, #5a32bf);
+
+  font-size: 92px !important;
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  font-family: SF Pro Display, SF Pro Icons, Helvetica Neue, Helvetica, Arial,
+    sans-serif;
 }
+
 h2 {
-  color: #000000;
-  font-size: 50px;
+  color: #a0c3d1;
+
+  font-size: 32px !important;
+  line-height: 1.125;
+  font-weight: 500;
+  letter-spacing: 0.004em;
+  font-family: neuzeit-grotesk, sans-serif;
+  margin: 20px auto 0;
+}
+
+h3 {
+  color: #a0c3d1;
+
+  font-size: 52px !important;
+  line-height: 1.125;
+  font-weight: 500;
+  letter-spacing: 0.004em;
+  font-family: neuzeit-grotesk, sans-serif;
+  margin: 20px auto 0;
 }
 
 .content {
@@ -98,7 +154,7 @@ h2 {
   border-radius: 50px;
   box-shadow: 5px 5px #a0c3d1;
   min-height: 50px;
-  padding: 0 1vw;
+  padding: 0 2vw;
   text-align: center;
   font-size: 15px;
   line-height: 22px;
@@ -110,7 +166,7 @@ h2 {
   color: #ffffff;
   box-shadow: 5px 5px #a0c3d1;
   background-color: #5a32bf;
-  padding: 0 1vw;
+  padding: 0 2vw;
   /* border: #fc4e4e solid 1px; */
   text-decoration: none;
 }
@@ -133,11 +189,12 @@ h2 {
   }
 }
 
-@media only screen and (max-width: 813px) {
-  .horizontalContainer {
-    /* flex-direction: column-reverse; */
-    /* flex-wrap: nowrap; */
-    padding-top: 10vh;
+@media only screen and (max-width: 600px) {
+  .loginImage {
+    height: 300px;
+  }
+  h2 {
+    font-size: 28px !important;
   }
 }
 

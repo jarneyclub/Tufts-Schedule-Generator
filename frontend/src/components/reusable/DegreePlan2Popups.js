@@ -36,7 +36,7 @@ import JarUserLogin from "../reusable/JarUserLogin";
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 // const yearOptions = []
-const termOptions = ["Fall", "Spring", "Summer", "Annual"]
+const termOptions = ["Fall", "Spring", "Summer", "Annual"];
 function AddSemester(props) {
   const {
     onClose,
@@ -55,7 +55,7 @@ function AddSemester(props) {
   const [selectedYear, setSelectedYear] = useState(yearOptions[0]);
   const [selectedYearIdx, setSelectedYearIdx] = useState(0);
   /* Term Dropdown */
- 
+
   const [selectedTerm, setSelectedTerm] = useState(termOptions[0]);
   const [selectedTermIdx, setSelectedTermIdx] = useState(0);
 
@@ -75,7 +75,8 @@ function AddSemester(props) {
   };
 
   const fetchAdd = async () => {
-    const yearTerm = yearOptions[selectedYearIdx] + " " + termOptions[selectedTermIdx];
+    const yearTerm =
+      yearOptions[selectedYearIdx] + " " + termOptions[selectedTermIdx];
     console.log("yearTerm: ", yearTerm);
     console.log("planID: ", planID);
     const value = { plan_id: planID, term: yearTerm };
