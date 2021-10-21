@@ -680,8 +680,8 @@ function DegreePlan2(props) {
         <Popup onClose={() => handlePopup("addSemester", false)}>
           <AddSemester
             onClose={() => handlePopup("addSemester", false)}
-            planName={selectedPlanName}
-            planID={selectedPlanID}
+            planName={semesterPlanOptions[selectedPlanIdx]?.plan_name}
+            planID={semesterPlanOptions[selectedPlanIdx]?.plan_id}
             refreshPlans={fetchPlans}
             onShowAlert={() => setShowAlert(true)}
             setAlertMessage={setAlertMessage}
@@ -695,8 +695,8 @@ function DegreePlan2(props) {
             onClose={() => handlePopup("removeSemester", false)}
             cardOptions={cardOptions}
             handleRemoveCards={handleRemoveCards}
-            planName={selectedPlanName}
-            planID={selectedPlanID}
+            planName={semesterPlanOptions[selectedPlanIdx]?.plan_name}
+            planID={semesterPlanOptions[selectedPlanIdx]?.plan_id}
             refreshPlans={fetchPlans}
             onShowAlert={() => setShowAlert(true)}
             setAlertMessage={setAlertMessage}
@@ -708,8 +708,8 @@ function DegreePlan2(props) {
         <Popup onClose={() => handlePopup("editPlanName", false)}>
           <EditPlanName
             onClose={() => handlePopup("editPlanName", false)}
-            planName={selectedPlanName}
-            planID={selectedPlanID}
+            planName={semesterPlanOptions[selectedPlanIdx]?.plan_name}
+            planID={semesterPlanOptions[selectedPlanIdx]?.plan_id}
             refreshPlans={fetchPlans}
             onShowAlert={() => setShowAlert(true)}
             setAlertMessage={setAlertMessage}
