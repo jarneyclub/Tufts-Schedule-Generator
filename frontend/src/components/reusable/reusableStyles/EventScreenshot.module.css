@@ -1,0 +1,17 @@
+.rowContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+
+}
+
+.eventsContainer{ 
+  display: flex;
+  flex-direction: column;
+
+}
+
+
+.classContainer {
+  border: 1px solid #7048d5;
+}
