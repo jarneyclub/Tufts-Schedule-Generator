@@ -56,7 +56,7 @@ function Event(props) {
   return (
     <div
       className={eStyle.eventContainer}
-      style={customStyle}
+      style={{transform: `translate(${calculateTranslate}px`, height:`${calculateHeight}px`}}
       onClick={handleOnClick}
     >
       <div style={{ fontWeight: "lighter" }}>
