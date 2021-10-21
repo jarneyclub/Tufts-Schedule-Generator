@@ -273,7 +273,7 @@ const getDegreePlans = async (query) => {
             });
             console.log("(getDegreePlans) newTerms after sort: ", newTerms);
             for (let i = 0; i < newTerms.length; i++) {
-                newTerms[i].term = termIntegerToDesc(currTerm.term);
+                newTerms[i].term = termIntegerToDesc(newTerms[i].term);
             }
             docToInsert.terms = newTerms; // update terms
             documents.push(docToInsert);
