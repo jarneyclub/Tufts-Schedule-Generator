@@ -410,10 +410,10 @@ function Scheduler(props) {
         term_course_ids: selectedCourses.map((course) => course.term_course_id),
         filter: {
           misc: {
-            ignoreTU: coursePreference.time_unspecified,
-            ignoreM: coursePreference.online,
-            ignoreClosed: coursePreference.closed,
-            ignoreWL: coursePreference.waitlist,
+            ignoreTU: !(coursePreference.time_unspecified),
+            ignoreM: !(coursePreference.online),
+            ignoreClosed: !(coursePreference.closed),
+            ignoreWL: !(coursePreference.waitlist),
           },
           time: timePref,
         },
