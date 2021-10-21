@@ -111,7 +111,7 @@
 }
 
 .button {
-  color: #000000;
+  color: #000000 !important;
   text-transform: unset !important;
   border: none;
 
@@ -143,24 +143,31 @@
   align-items: center;
   justify-content: center;
   width: 100vw;
-  background-color: #efebf9;
+  background-color: #a0c3d1;
   /* border-bottom: 5px solid #fc4e4e; */
   border-bottom-left-radius: 10px;
   /* box-sizing: content-box; */
   overflow-y: visible;
-  transform: translate(-95%, 81px);
+  transform: translate(-5vw, 81px);
   color: #ffffff;
 }
 
 .shrinkNavOption {
-  color: #000000;
+  color: #ffffff;
   font-size: 25px;
   font-weight: lighter;
-
+  font-family: neuzeit-grotesk, sans-serif;
+  font-style: normal;
+  font-weight: 300;
   padding-top: 1%;
   padding-bottom: 1%;
   width: 100%;
   text-align: center;
+  background-color: linear-gradient(
+      rgba(160, 195, 209, 0.5),
+      rgba(160, 195, 209, 0.5)
+    ),
+    linear-gradient(white, white);
 }
 
 .shrinkNavOption:hover {

@@ -109,19 +109,19 @@ function HeaderUser(props) {
               </div>
             )}
             <div>
-              <IconButton
-                className={hStyle.button}
-                style={{
-                  padding: "5px",
-                  color: "#5a32bf",
-                  textDecoration: "none",
-                }}
-                aria-label="help"
-              >
-                <Link to="/HelpPage" style={{ textDecoration: "none" }}>
+              <NavLink to="/HelpPage">
+                <IconButton
+                  className={hStyle.button}
+                  style={{
+                    padding: "5px",
+                    color: "#5a32bf",
+                    textDecoration: "none",
+                  }}
+                  aria-label="help"
+                >
                   <HelpIcon />
-                </Link>
-              </IconButton>
+                </IconButton>
+              </NavLink>
             </div>
           </div>
         )}
@@ -145,41 +145,60 @@ function HeaderUser(props) {
             !barMenu && setShrinkExpandable(false);
             setBarMenu(false);
           }}
+          // className={hStyle.shrinkContainer}
         >
-          <div className={hStyle.shrinkContainer}>
-            {shrinkExpandable && (
-              <div className={hStyle.expandableContainer}>
-                <NavLink
-                  to="/DegreePlan1"
-                  activeClassName={hStyle.activeShrinkNavOption}
-                  className={hStyle.shrinkNavOption}
-                  onClick={() => setShrinkExpandable((prev) => !prev)}
-                  style={{ textDecoration: "none" }}
-                >
-                  Degree Plan Editor
-                </NavLink>
-                <NavLink
-                  to="/DegreePlan2"
-                  activeClassName={hStyle.activeShrinkNavOption}
-                  className={hStyle.shrinkNavOption}
-                  onClick={() => setShrinkExpandable((prev) => !prev)}
-                  style={{ textDecoration: "none" }}
-                >
-                  Degree Plan
-                </NavLink>
+          {shrinkExpandable ? (
+            <div className={hStyle.expandableContainer}>
+              <NavLink
+                to="/Home"
+                activeClassName={hStyle.activeShrinkNavOption}
+                className={hStyle.shrinkNavOption}
+                onClick={() => setShrinkExpandable((prev) => !prev)}
+                style={{ textDecoration: "none" }}
+              >
+                Home
+              </NavLink>
+              <NavLink
+                to="/DegreePlan1"
+                activeClassName={hStyle.activeShrinkNavOption}
+                className={hStyle.shrinkNavOption}
+                onClick={() => setShrinkExpandable((prev) => !prev)}
+                style={{ textDecoration: "none" }}
+              >
+                Degree requirement
+              </NavLink>
+              <NavLink
+                to="/DegreePlan2"
+                activeClassName={hStyle.activeShrinkNavOption}
+                className={hStyle.shrinkNavOption}
+                onClick={() => setShrinkExpandable((prev) => !prev)}
+                style={{ textDecoration: "none" }}
+              >
+                Degree plan
+              </NavLink>
 
-                <NavLink
-                  to="/Scheduler"
-                  activeClassName={hStyle.activeShrinkNavOption}
-                  className={hStyle.shrinkNavOption}
-                  onClick={() => setShrinkExpandable((prev) => !prev)}
-                  style={{ textDecoration: "none" }}
-                >
-                  Scheduler
-                </NavLink>
-              </div>
-            )}
-          </div>
+              <NavLink
+                to="/Scheduler"
+                activeClassName={hStyle.activeShrinkNavOption}
+                className={hStyle.shrinkNavOption}
+                onClick={() => setShrinkExpandable((prev) => !prev)}
+                style={{ textDecoration: "none" }}
+              >
+                Scheduler
+              </NavLink>
+              <NavLink
+                to="/HelpPage"
+                activeClassName={hStyle.activeShrinkNavOption}
+                className={hStyle.shrinkNavOption}
+                onClick={() => setShrinkExpandable((prev) => !prev)}
+                style={{ textDecoration: "none" }}
+              >
+                Help
+              </NavLink>
+            </div>
+          ) : (
+            <div />
+          )}
         </ClickAwayListener>
       )}
 

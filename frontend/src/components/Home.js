@@ -50,11 +50,14 @@ function Home(props) {
         className={hStyle.verticalContainer}
         style={{ backgroundColor: "#f1edfa" }}
       >
-        <img
-          src={LoginGraphic}
-          alt="LoginGraphic"
-          className={hStyle.loginImage}
-        />
+        <div>
+          <img
+            src={LoginGraphic}
+            alt="LoginGraphic"
+            className={hStyle.loginImage}
+          />
+        </div>
+
         <h1>
           JARney<span style={{ color: "#fc4e4e !important" }}>.</span>
         </h1>
@@ -78,7 +81,6 @@ function Home(props) {
                 Quick Schedule
               </Button>
             </Link>
-          
           </div>
         </div>
       </div>
@@ -109,8 +111,6 @@ function Home(props) {
           </Link>
           <br />
           <br /> <br />
-          <br />
-          <br />
         </div>
       </div>
 
@@ -142,11 +142,6 @@ function Home(props) {
           </Link>
           <br />
           <br />
-          <br />
-          <br />
-       
-          <br />
-      
         </div>
       </div>
 
@@ -183,11 +178,6 @@ function Home(props) {
             </Button>
           </Link>
           <br />
-          <br />
-          <br />
-          <br /> <br />
-          <br />
-   
         </div>
       </div>
       <div

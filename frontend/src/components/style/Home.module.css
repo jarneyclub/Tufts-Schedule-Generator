@@ -21,7 +21,7 @@
   align-content: center;
   text-align: center;
 
-  height: 90vh;
+  height: 90%;
   width: 100%;
   padding-left: 1vw;
   padding-right: 1vw;
@@ -48,7 +48,7 @@
   text-align: center;
 
   bottom: 0;
-  height: 30vh;
+  height: 50%;
   width: 100%;
   padding-left: 1vw;
   padding-right: 1vw;
@@ -192,19 +192,18 @@ h3 {
   }
 }
 
-@media only screen and (max-width: 600px),
-      screen and (max-height: 1200px) {
+@media only screen and (max-width: 600px), screen and (max-height: 1200px) {
   .homeContainer {
   }
   .verticalContainer {
     padding-top: 30px;
     padding-bottom: 30px;
-    height: 100vh;
+    height: 100%;
     /* margin-bottom: 40px; */
   }
   .loginImage {
     height: 300px;
-    margin-top: 100px;
+    /* margin-top: 100px; */
   }
   h2 {
     font-size: 28px !important;
@@ -213,19 +212,16 @@ h3 {
     margin-bottom: 30px;
   }
 }
-@media only screen and (max-width: 550px),
-      screen and (max-height: 800px) {
-  .homeContainer {
-  }
+@media only screen and (max-width: 550px), screen and (max-height: 800px) {
   .verticalContainer {
     padding-top: 30px;
     padding-bottom: 30px;
-    height: 100vh;
+    height: 100%;
     /* margin-bottom: 40px; */
   }
   .loginImage {
     height: 300px;
-    margin-top: 50px;
+    /* margin-top: 50px; */
   }
   h2 {
     font-size: 28px !important;
@@ -235,44 +231,39 @@ h3 {
   }
 }
 
-@media only screen and (max-width: 450px), 
-  screen and (max-height: 780px) {
- 
+@media only screen and (max-width: 450px), screen and (max-height: 780px) {
   .verticalContainer {
     /* padding-top: 30px; */
     padding-bottom: 30px;
-    height: 130vh;
+    height: 130%;
     /* margin-bottom: 40px; */
   }
   .loginImage {
     height: 300px;
-    margin-top: 100px;
+    /* margin-top: 100px; */
   }
- 
+
   .button {
     margin-bottom: 50px;
   }
 }
-@media only screen and (max-width: 450px), 
-  screen and (max-height: 500px) {
- 
+@media only screen and (max-width: 450px), screen and (max-height: 500px) {
   .verticalContainer {
     padding-top: 30px;
     padding-bottom: 50px;
-    min-height: 120vh;
-    
+    min-height: 120%;
   }
-  
+
   .loginImage {
     height: 300px;
     /* margin-top: 300px; */
   }
- 
+
   .button {
     margin-bottom: 50px;
   }
   .footerContainer {
-    min-height: 90vh;
+    min-height: 90%;
   }
 
   h1 {
@@ -286,7 +277,6 @@ h3 {
     font-size: 32px !important;
   }
 }
-
 
 Accordion {
   background-color: #5a32bf;
