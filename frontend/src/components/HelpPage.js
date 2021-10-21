@@ -13,12 +13,15 @@
 // } from "@material-ui/core";
 // import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
+import { useState } from "react";
 import MuiAccordion from "@material-ui/core/Accordion";
 import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
 import MuiAccordionDetails from "@material-ui/core/AccordionDetails";
 import { withStyles } from "@material-ui/core/styles";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-
+import SendIcon from "@mui/icons-material/Send";
+import { Button, TextField, Input } from "@material-ui/core";
+import * as Yup from "yup";
 import hStyle from "./style/HelpPage.module.css";
 import feedbackJumbo from "./res/feedback.png";
 
@@ -41,11 +44,27 @@ const AccordionDetails = withStyles({
   expanded: {},
 })(MuiAccordionDetails);
 
+const contactFormDefault = {
+  name: "",
+  email: "",
+  message: "",
+};
 function HelpPage() {
+  const [contactForm, setContactForm] = useState(contactFormDefault);
+
+  const handleSubmit = () => {};
+
+  const handleContactForm = (field, e) => {
+    setContactForm((prev) => ({
+      ...prev,
+      [field]: e.target.value,
+    }));
+  };
   return (
     <div className={hStyle.bodyContainer}>
       <div className={hStyle.horizontalContainer}>
-        <h1>Frequently Asked Questions</h1>
+        <h2>Frequently Asked Questions</h2>
+
         <Accordion>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             How do I make my own degree?
@@ -66,23 +85,60 @@ function HelpPage() {
         </Accordion>
         <p></p>
       </div>
+      <br />
+      <br />
       <div className={hStyle.horizontalContainer}>
-        <h1>Contact us!</h1>
-        <div className={hStyle.formContainer}>
+        <h2>Contact us!</h2>
+        <div className={hStyle.titleRow}>
           <form id="contactForm" className={hStyle.contactForm}>
-            <input type="text" name="Name" placeholder="Name" required />
-            <input type="email" name="email" placeholder="Email" required />
-            <textarea name="msg" placeholder="Message" required></textarea>
-            <input
-              type="button"
-              class={hStyle.contactForm.submit}
-              name="submit"
-              value="Submit"
+            <TextField
+              type="text"
+              name="Name"
+              label="Name"
+              required
+              fullWidth
+              variant="filled"
+              value={contactForm.name}
+              onChange={(value) => handleContactForm("name", value)}
             />
+
+            <TextField
+              type="email"
+              name="email"
+              label="Email"
+              required
+              fullWidth
+              variant="filled"
+              value={contactForm.email}
+              onChange={(value) => handleContactForm("email", value)}
+            />
+
+            <br />
+            <TextField
+              type="msg"
+              label="Message"
+              required
+              fullWidth
+              variant="filled"
+              multiline
+              rows={4}
+              value={contactForm.message}
+              onChange={(value) => handleContactForm("message", value)}
+            />
+            <Button
+              type="submit"
+              className={hStyle.button}
+              startIcon={<SendIcon />}
+              onClick={handleSubmit}
+            >
+              Share with us
+            </Button>
           </form>
-        </div>
-        <div className={hStyle.imgContainer}>
-          <img src={feedbackJumbo} alt="feedbackJumbo" />
+          <img
+            src={feedbackJumbo}
+            alt="feedbackJumbo"
+            className={hStyle.imgContainer}
+          />
         </div>
       </div>
     </div>
