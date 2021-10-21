@@ -44,18 +44,18 @@ function Event(props) {
   const handleOnClick = () => {
     onEventClick(eventDetails);
   };
-  useEffect(() => {
-    const transY = calculateTranslate();
-    const eventHeight = calculateHeight();
-    // setCustomStyle({
-    //   transform: "translateY(" + transY + "px)",
-    //   height: "" + eventHeight + "px",
-    // });
-    setCustomStyle({
-      transform: transY ,
-      height: eventHeight,
-    });
-  }, []);
+  // useEffect(() => {
+  //   const transY = calculateTranslate();
+  //   const eventHeight = calculateHeight();
+  //   // setCustomStyle({
+  //   //   transform: "translateY(" + transY + "px)",
+  //   //   height: "" + eventHeight + "px",
+  //   // });
+  //   setCustomStyle({
+  //     transform: transY ,
+  //     height: eventHeight,
+  //   });
+  // }, []);
 
   const transY = calculateTranslate();
   const eventHeight = calculateHeight();
