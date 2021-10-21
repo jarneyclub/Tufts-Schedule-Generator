@@ -208,6 +208,10 @@ input {
 }
 
 .degreeReqDetailContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
   height: 300px;
   padding: 10px 1vw;
   overflow-y: scroll;
