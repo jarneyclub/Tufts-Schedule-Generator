@@ -143,17 +143,20 @@
   align-items: center;
   justify-content: center;
   width: 100vw;
-  background-color: #a0c3d1;
+  background-color: #efebf9;
   /* border-bottom: 5px solid #fc4e4e; */
   border-bottom-left-radius: 10px;
   /* box-sizing: content-box; */
   overflow-y: visible;
   transform: translate(-5vw, 81px);
   color: #ffffff;
+  box-shadow: 0 4px 8px 0 rgba(90, 50, 191, 0.2),
+    0 6px 20px 0 rgba(90, 50, 191, 0.19);
+  
 }
 
 .shrinkNavOption {
-  color: #ffffff;
+  color: #000000;
   font-size: 25px;
   font-weight: lighter;
   font-family: neuzeit-grotesk, sans-serif;
@@ -168,6 +171,7 @@
       rgba(160, 195, 209, 0.5)
     ),
     linear-gradient(white, white);
+ 
 }
 
 .shrinkNavOption:hover {
@@ -184,8 +188,10 @@
   padding-top: 1%;
   padding-bottom: 1%;
   background-color: #7048d5;
-  /* border-left: 10px #fc4e4e solid;
-  border-right: 10px #fc4e4e solid; */
+  font-weight: lighter;
+  font-family: neuzeit-grotesk, sans-serif;
+  font-style: normal;
+  font-weight: 300;
 
   width: 100%;
   text-align: center;
@@ -194,6 +200,6 @@
 .activeShrinkNavOption:hover {
   /* width: 100%; */
   color: #ffffff;
-  font-weight: normal;
+  
   background-color: #7048d5;
 }

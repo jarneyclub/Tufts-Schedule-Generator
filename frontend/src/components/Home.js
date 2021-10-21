@@ -47,7 +47,7 @@ function Home(props) {
       </Helmet>
 
       <div
-        className={hStyle.verticalContainer}
+        className={hStyle.mainVerticalContainer}
         style={{ backgroundColor: "#f1edfa" }}
       >
         <div>
@@ -85,6 +85,7 @@ function Home(props) {
         </div>
       </div>
 
+      {/* <div className={hStyle.horizontalContainer}> */}
       <div className={hStyle.verticalContainer}>
         <img
           src={SandglassGraphic}
@@ -149,10 +150,7 @@ function Home(props) {
         className={hStyle.verticalContainer}
         style={{ backgroundColor: "#efebf9" }}
       >
-        {/* <br />
-          <br />
-          <br />
-          <br /> */}
+ 
         <img
           src={SchedulerGraphic}
           alt="Scheduler Graphic"
@@ -180,6 +178,11 @@ function Home(props) {
           <br />
         </div>
       </div>
+
+      {/* </div> */}
+
+
+
       <div
         className={hStyle.footerContainer}
         style={{ backgroundColor: "#a0c3d1" }}
