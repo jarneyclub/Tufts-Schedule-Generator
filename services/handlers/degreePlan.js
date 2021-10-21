@@ -254,15 +254,14 @@ const getDegreePlans = async (query) => {
                 plan_id: doc["_id"].valueOf(),
                 terms: doc["terms"]
             }
-            // convert term integer ids to desc e.g. 2218 -> "Fall 2018"
-            newTerms = [];
+            // get terms 
+            planTerms = [];
             for (let i = 0; i < docToInsert.terms.length; i++) {
                 let currTerm = docToInsert.terms[i];
-                currTerm.term = termIntegerToDesc(currTerm.term);
-                newTerms.push(currTerm);
+                planTerms.push(currTerm);
             }
-            console.log("(getDegreePlans) newTerms before sort: ", newTerms);
-            newTerms.sort((termA, termB) => {
+            console.log("(getDegreePlans) planTerms before sort: ", planTerms);
+            planTerms.sort((termA, termB) => {
                 if (termA.term < termB.term) {
                     return -1;
                 } else if (termA.term > termB.term) {
@@ -271,11 +270,12 @@ const getDegreePlans = async (query) => {
                     return 0;
                 }
             });
-            console.log("(getDegreePlans) newTerms after sort: ", newTerms);
-            for (let i = 0; i < newTerms.length; i++) {
-                newTerms[i].term = termIntegerToDesc(newTerms[i].term);
+            console.log("(getDegreePlans) planTerms after sort: ", planTerms);
+            // convert term integer ids to desc e.g. 2218 -> "Fall 2018"
+            for (let i = 0; i < planTerms.length; i++) {
+                planTerms[i].term = termIntegerToDesc(planTerms[i].term);
             }
-            docToInsert.terms = newTerms; // update terms
+            docToInsert.terms = planTerms; // update terms
             documents.push(docToInsert);
         });
 
