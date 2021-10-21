@@ -25,6 +25,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
+import LinkedCameraIcon from '@mui/icons-material/LinkedCamera';
 import PurpleSwitch from "./reusable/PurpleSwitch";
 import sStyle from "./style/Scheduler.module.css";
 import Dropdown from "./reusable/Dropdown";
@@ -35,6 +36,7 @@ import TimePrefSelector from "./reusable/TimePrefSelector";
 import SnackBarAlert from "./reusable/SnackBarAlert";
 import JarUserLogin from "./reusable/JarUserLogin";
 import Event from "./reusable/Event";
+import EventScreenshot from "./reusable/EventScreenshot";
 import Popup from "./reusable/Popup";
 import {
   AddSchedule,
@@ -175,6 +177,7 @@ const popupDefault = {
   removeSchedule: false,
   addSchedule: false,
   showCourseInfo: false,
+  eventScreenshot: false,
 };
 
 function Scheduler(props) {
@@ -433,6 +436,9 @@ function Scheduler(props) {
           console.log("generate schedule result: ", result);
           if (!result.error) {
             setClasses(result.data.classes);
+            setAlertMessage("Render success!");
+            setAlertSeverity("success");
+            setShowAlert(true); 
           } else {
             setAlertMessage(result.error);
             setAlertSeverity("warning");
@@ -775,6 +781,13 @@ function Scheduler(props) {
             >
               <IndeterminateCheckBoxIcon fontSize="medium" />
             </IconButton>
+            &nbsp;
+            <IconButton
+              className={sStyle.editPlanButton}
+              onClick={() => handlePopup("eventScreenshot", true)}
+            >
+              <LinkedCameraIcon fontSize="medium" />
+            </IconButton>
             <div />
           </div>
 
@@ -840,6 +853,19 @@ function Scheduler(props) {
             scheduleName={scheduleOptions[selectedScheduleIdx].sched_name}
           />
         </Popup>
+      )}
+      {popup.eventScreenshot && (
+        <Popup onClose={() => handlePopup("eventScreenshot", false)}>
+        <EventScreenshot
+          onClose={() => handlePopup("eventScreenshot", false)}
+          onShowAlert={() => setShowAlert(true)}
+          setAlertMessage={setAlertMessage}
+          setAlertSeverity={setAlertSeverity}
+          scheduleID={scheduleOptions[selectedScheduleIdx].sched_id}
+          scheduleName={scheduleOptions[selectedScheduleIdx].sched_name}
+          classDetails={classes}
+        />
+      </Popup>
       )}
       {timePrefState && (
         <TimePrefSelector
