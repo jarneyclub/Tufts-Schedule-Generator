@@ -47,7 +47,7 @@ function EventScreenshot(props) {
           <div className={eStyle.eventsContainer}>
             <div>{title}</div>
             {
-              classDetails?.title?.map((details) => (
+              classDetails[title]?.map((details) => (
                 <Class classDetail={details}/>
               ))
             }
