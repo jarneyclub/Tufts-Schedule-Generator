@@ -32,6 +32,7 @@ exports.createSchedule   = async (userId, scheduleName, filter, term, courses, c
 
 exports.updateSchedule = async (id, filter, courses, classes) => {
     // TODO no schedule with given id was found
+    console.log("(schedule/updateSchedule) classes: ", classes);
     // update schedule 
     let newSchedule = await Schedule.findOneAndUpdate({
         _id: mongoose.Types.ObjectId(id)
@@ -40,6 +41,7 @@ exports.updateSchedule = async (id, filter, courses, classes) => {
         courses    : courses,
         events     : classes
     }, {
+        new: true,
         upsert: false
     });
 
@@ -48,7 +50,7 @@ exports.updateSchedule = async (id, filter, courses, classes) => {
         sched_name : newSchedule.sched_name,
         user_id    : newSchedule.user_id,
         filter     : newSchedule.filter,
-        classes    : classes,
+        classes    : newSchedule.events,
         courses    : newSchedule.courses,
         term       : newSchedule.term
     }

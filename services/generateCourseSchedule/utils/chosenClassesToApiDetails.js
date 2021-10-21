@@ -85,8 +85,6 @@ const chosenClassesToApiDetails = (global) => {
                 result["Sunday"].push(eventObject);
                 break;
         }
-
-
     }
 
     return result;
