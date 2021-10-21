@@ -133,7 +133,7 @@ const getDegreePlan = async (query) => {
             });
             // convert term integer ids to desc e.g. 2218 -> "Fall 2018"
             for (let i = 0; i < planTerms.length; i++) {
-                planTerms[i].term = termIntegerToDesc(currTerm.term);
+                planTerms[i].term = termIntegerToDesc(planTerms[i].term);
             }
             
             docToInsert.terms = planTerms; // update terms
