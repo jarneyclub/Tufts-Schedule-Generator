@@ -51,12 +51,16 @@ function Event(props) {
       transform: "translateY(" + transY + "px)",
       height: "" + eventHeight + "px",
     });
+    setCustomStyle({
+      transform: transY ,
+      height: eventHeight,
+    });
   }, []);
 
   return (
     <div
       className={eStyle.eventContainer}
-      style={{transform: `translate(${calculateTranslate}px`, height:`${calculateHeight}px`}}
+      style={{transform: `translate(${customStyle.transform}px`, height:`${customStyle.height}px`}}
       onClick={handleOnClick}
     >
       <div style={{ fontWeight: "lighter" }}>
