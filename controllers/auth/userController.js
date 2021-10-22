@@ -16,7 +16,7 @@ const authController = require("./authController.js");
 exports.login = async (req, res) => {
     const { userid, password } = req.body;
     // check user credentials and respond
-    await authController.signAccessTokenAndSendAsCookie(res, userid, password);
+    await authController.signAccessTokenAndSendAsCookie(res, userid);
 };
 
 /**

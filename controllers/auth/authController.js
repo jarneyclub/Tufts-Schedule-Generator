@@ -40,9 +40,8 @@ exports.authenticateCredentialsWithPassport = async (req, res, next) => {
  * Sign and set JWT to cookie and respond to request with basic user data
  * @param {*} res
  * @param {*} userid
- * @param {*} password
  */
-exports.signAccessTokenAndSendAsCookie = async (res, userid, password) => {
+exports.signAccessTokenAndSendAsCookie = async (res, userid) => {
     let dbUsers = mongoose.connection.collection("users"); // get MongoDB collection
     let result = await dbUsers.findOne({
         userid: userid
