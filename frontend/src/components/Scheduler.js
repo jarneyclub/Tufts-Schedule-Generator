@@ -653,7 +653,14 @@ function Scheduler(props) {
               Render schedule
             </Button>
           </div>
-
+          <div className={sStyle.infoContainer}>
+            <div style={{ color: "rgba(0, 0, 0, 0.54)" }}>Quick summary</div>
+            <div className={sStyle.unitsContainer}>
+              <div className={sStyle.infoTitle}>SHUs scheduled:&nbsp;</div>
+              <div classname={sStyle.infoDetail}>{unitsCount}</div>
+            </div>
+         
+          </div>
           {popup.showCourseInfo && (
             <CourseInfoExpress
               courseInfo={courseInfo}
@@ -726,27 +733,7 @@ function Scheduler(props) {
             </div>
           </div>
 
-          <div className={sStyle.infoContainer}>
-            <div style={{ color: "rgba(0, 0, 0, 0.54)" }}>Quick summary</div>
-            <div className={sStyle.unitsContainer}>
-              <div className={sStyle.infoTitle}>SHUs scheduled:&nbsp;</div>
-              <div classname={sStyle.infoDetail}>{unitsCount}</div>
-            </div>
-            {/* {
-              classes?.TimeUnspecified  &&
-              <div> 
-                <div style={{color: "rgba(0, 0, 0, 0.54)"}}>Time Unspecified</div> 
-                {
-                  classes?.TimeUnspecified?.map((course) => (
-                    <Button className={sStyle.tuButton}onClick={() => handleShowCourseInfo(course)}>{course.details}</Button>)
-                  )
-                }
-               
-              
-              </div>
-               
-            } */}
-          </div>
+         
         </div>
 
         <div className={sStyle.rightColumnWrapper}>
