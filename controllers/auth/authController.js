@@ -85,14 +85,14 @@ exports.signAccessTokenAndAttachCookie = async (req, res, next) => {
  * Set token to expire after a second
  * @param {*} res
  */
- exports.setToExpireToken = async (res, req) => {
-    let token = jwt.sign({ userid: "NONE", role: "NONE"}, process.env.TOKEN_SECRET, { expiresIn: '1s'});
+ exports.setToExpireToken = async (req, res) => {
+    let token = jwt.sign({}, process.env.TOKEN_SECRET, { expiresIn: '1s'});
     // res.json({"token": token});
     res.cookie("access_token", token, {
         maxAge: 1000,
         httpOnly: true,
         secure: true
-    }).status(200);
+    }).status(200).send();
 }
 
 
@@ -133,12 +133,13 @@ exports.authenticateToken = async (req, res, next) => {
             if (result === null)
                 resHandler.respondWithCustomError("307", "401",
                         "Authentication Error", "Token is invalid. Wrong user.", res);
-            
-            req.userid = userdata.userid;
-            req.role = userdata.role;
-            req.firstname = result.first_name;
-            req.lastname = result.last_name;
-            next();
+            else {
+                req.userid = userdata.userid;
+                req.role = userdata.role;
+                req.firstname = result.first_name;
+                req.lastname = result.last_name;
+                next();
+            }
         });
     } else {
         resHandler.respondWithCustomError("306", "401",
