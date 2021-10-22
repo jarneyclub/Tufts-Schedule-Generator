@@ -1,0 +1,47 @@
+.screenshotContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%; 
+  align-items: center;
+}
+
+.rowContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  background-color: #efebf9;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.eventsContainer{ 
+  display: flex;
+  flex-direction: column;
+  width: 15%;
+  align-items: center;
+  text-align: center;
+
+
+}
+
+
+.classContainer {
+  border: 1px solid #7048d5;
+  background-color: #ffffff; 
+  display: flex;
+  flex-direction: column;
+  overflow-wrap: break-word;
+  width: 100%;
+  align-items: center;
+  text-align: center;
+}
+
+.button {
+  width: 80%;
+  height: 25px;
+  padding: 0 2vw;
+  border: 1px solid #7048d5;
+  text-transform: unset !important;
+  color: #7048d5;
+}

@@ -495,28 +495,31 @@ function DegreePlan2(props) {
             <div
               className={dp2Style.progressBarCompleted}
               style={{
-                width: (unitsCount.completed / unitsCount.total) * 100 + "%",
+                width: (unitsCount.total !== 0 ? (unitsCount.completed / unitsCount.total) * 100 + "%" : "0%"),
               }}
             ></div>
             <div
               className={dp2Style.progressBarCurrent}
               style={{
-                width: (unitsCount.current / unitsCount.total) * 100 + "%",
+                width: (unitsCount.total !== 0 ? (unitsCount.current / unitsCount.total) * 100 + "%" : "0%"),
               }}
             ></div>
             <div
               className={dp2Style.progressBarFuture}
               style={{
-                width: (unitsCount.future / unitsCount.total) * 100 + "%",
+                width: (unitsCount.total !== 0 ? (unitsCount.future / unitsCount.total) * 100 + "%" : "0%"),
               }}
             />
           </div>
 
           <div className={dp2Style.progressBarTitle}>
-            {parseInt(
+            {unitsCount.total !== 0 ? 
+            parseInt(
               ((unitsCount.current + unitsCount.completed) / unitsCount.total) *
                 100
-            ) + "%"}
+            ) + "%"
+            : "0%"
+          }
           </div>
         </div>
 
