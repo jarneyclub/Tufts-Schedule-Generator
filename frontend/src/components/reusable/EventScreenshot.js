@@ -14,13 +14,15 @@ const columnTitles = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "T
 
 
 function Class(props) {
-  const { classDetail } = props;
+  const { classDetail, tu } = props;
   const { name, details, location, instructors, time_start, time_end} = classDetail;
 
 
   return (
     <div className={eStyle.classContainer}>
-      <div>{time_start}~{time_end}</div>
+      {
+        !tu && <div>{time_start}~{time_end}</div>
+      }
       <div>{details}</div>
       <div>{name}</div>
       <div>{location}</div>
@@ -45,10 +47,10 @@ function EventScreenshot(props) {
       {
         columnTitles.map((title) => (
           <div className={eStyle.eventsContainer}>
-            <div>{title}</div>
+            <div>{title !== "TimeUnspecified" ? title : "Time Unspecified"}</div>
             {
               classDetails[title]?.map((details) => (
-                <Class classDetail={details}/>
+                <Class classDetail={details} tu={title === "TimeUnspecified"}/>
               ))
             }
           </div>
