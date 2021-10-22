@@ -1124,7 +1124,7 @@ components:
           example: "11:20"
         term_section_id:
           type: string
-        instructor:
+        instructors:
           type: string
     Schedule:
       type: object
