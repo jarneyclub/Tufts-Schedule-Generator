@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  width: 80%;
+  width: 100%;
+  background-color: #efebf9;
 }
 
 .eventsContainer{ 
@@ -10,6 +11,7 @@
   flex-direction: column;
   width: 15%;
   align-items: center;
+  text-align: center;
 
 
 }
@@ -23,4 +25,5 @@
   overflow-wrap: break-word;
   width: 100%;
   align-items: center;
+  text-align: center;
 }
