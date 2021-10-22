@@ -4,6 +4,7 @@
   width: 100%; 
   align-items: center;
   background-color: #efebf9;
+  padding: 20px 0;
 }
 
 .rowContainer {
@@ -52,7 +53,7 @@
 
 @media only screen and (max-width: 680px){
   .titleContainer {
-    font-size: 3vw;
+    font-size: 2vw;
 
   }
   
