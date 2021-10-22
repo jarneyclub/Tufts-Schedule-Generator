@@ -37,7 +37,7 @@
   width: 100%;
   align-items: center;
   text-align: center;
-  font-size: 2vw;
+  /* font-size: 2vw; */
 
 }
 
@@ -55,6 +55,9 @@
   .titleContainer {
     font-size: 2vw;
 
+  }
+  .classContainer {
+    font-size: 2vw;
   }
   
   
