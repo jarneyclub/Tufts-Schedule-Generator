@@ -17,6 +17,7 @@ function Class(props) {
   const { classDetail, tu } = props;
   const { name, details, location, instructors, time_start, time_end} = classDetail;
   const detail = details.split(',');
+  const loc = location.split(',');
 
   return (
     <div className={eStyle.classContainer}>
@@ -26,7 +27,7 @@ function Class(props) {
       <div>{detail[0]}</div>
       <div>{detail[1]}</div>
       <div>{name}</div>
-      <div>{location}</div>
+      <div>{loc[0]}</div>
     </div>
   )
 
