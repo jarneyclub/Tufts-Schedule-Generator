@@ -20,8 +20,7 @@ const chosenClassesToApiDetails = (global) => {
         "Friday": [],
         "Saturday": [],
         "Sunday": [],
-        "TimeUnspecified": [],
-        "Unscheduled": [] // UNUSED
+        "TimeUnspecified": []
     }
 
     for (let i in classes) {
@@ -38,11 +37,13 @@ const chosenClassesToApiDetails = (global) => {
         let time_end_military = timeUtils.integerToMilitaryTime(time_end);
 
         let sectionName = singleClass.getSectionName();
+        let sectionId = singleClass.getSectionID();
         let courseId = singleClass.getCourseID();
         let courseName = singleClass.getCourseName();
         let room = singleClass.getLocation();
         let city = singleClass.getCity();
-
+        let instructors = singleClass.getInstructors();
+        console.log("(chosenClassesToApiDet):", "instructors: ", instructors);
         let location = room + "," + city;
         let eventName = sectionName;
         let eventDetails = courseName + ", " + courseId;
@@ -51,6 +52,8 @@ const chosenClassesToApiDetails = (global) => {
             name: eventName,
             details: eventDetails,
             location: location,
+            instructors: instructors,
+            term_section_id: sectionId,
             time_start: time_start_military,
             time_end: time_end_military
         }
@@ -84,8 +87,6 @@ const chosenClassesToApiDetails = (global) => {
                 result["Sunday"].push(eventObject);
                 break;
         }
-
-
     }
 
     return result;

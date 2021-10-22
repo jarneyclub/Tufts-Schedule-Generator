@@ -16,7 +16,7 @@ const authController = require("./authController.js");
 exports.login = async (req, res) => {
     const { userid, password } = req.body;
     // check user credentials and respond
-    await authController.signAccessTokenAndSendAsCookie(res, userid, password);
+    await authController.signAccessTokenAndSendAsCookie(res, userid);
 };
 
 /**
@@ -31,7 +31,7 @@ exports.login = async (req, res) => {
 exports.sendLoginResponse = async (req, res) => {
     console.log("(usrCntrl/sendLoginResponse) req.userid: ", req.userid);
 
-    res.json({"data": {"first_name": req.firstname, "last_name": req.lastname, "userid": req.userid, "token": req.token}});
+    res.json({"data": {"first_name": req.firstname, "last_name": req.lastname, "userid": req.userid}});
 };
 
 /**

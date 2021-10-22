@@ -25,9 +25,9 @@ const createArrSectionTypes = (global) => {
         let start = Date.now(); // start timer
 
         let arrayCourses = global.arrayCourses;
-        let filter = global.filter;
+        let filter = global.filterPreprocessed;
         let timePref = filter.time;
-
+        // console.log("(applyFilter/createArrSectionTypes) filter.misc: ", filter.misc);
         // default miscellaneous filters
         let ignoreTU = false;
         let ignoreM = false;
@@ -35,11 +35,13 @@ const createArrSectionTypes = (global) => {
         let ignoreWL = true;
         // apply user filters if provided (reverse the booleans)
         if (filter.misc !== undefined) {
-            ignoreTU = !filter.misc.ignoreTU;
-            ignoreM = !filter.misc.ignoreM;
-            ignoreClosed = !filter.misc.ignoreClosed;
-            ignoreWL = !filter.misc.ignoreWL;
+            ignoreTU = filter.misc.ignoreTU;
+            ignoreM = filter.misc.ignoreM;
+            ignoreClosed = filter.misc.ignoreClosed;
+            ignoreWL = filter.misc.ignoreWL;
         }
+        console.log("(applyFilter/createArrSectionTypes) filter.misc: ", filter.misc);
+
 
         // record of filtered section information (for verbose error messages)
         let filtrationRecord = {
@@ -121,7 +123,7 @@ const createArrSectionTypes = (global) => {
                         else {
                             /* Class time is unspecified */
 
-                            if (ignoreTU !== undefined && ignoreTU === true) {  
+                            if (ignoreTU !== undefined && ignoreTU === true) {
                                 /* Cannot insert this Section (TU filter) */
 
                                 console.log("(applyFilter) Time was not specified. Ignoring...");

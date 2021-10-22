@@ -40,9 +40,8 @@ exports.authenticateCredentialsWithPassport = async (req, res, next) => {
  * Sign and set JWT to cookie and respond to request with basic user data
  * @param {*} res
  * @param {*} userid
- * @param {*} password
  */
-exports.signAccessTokenAndSendAsCookie = async (res, userid, password) => {
+exports.signAccessTokenAndSendAsCookie = async (res, userid) => {
     let dbUsers = mongoose.connection.collection("users"); // get MongoDB collection
     let result = await dbUsers.findOne({
         userid: userid
@@ -83,6 +82,21 @@ exports.signAccessTokenAndAttachCookie = async (req, res, next) => {
 }
 
 /**
+ * Set token to expire after a second
+ * @param {*} res
+ */
+ exports.setToExpireToken = async (req, res) => {
+    let token = jwt.sign({}, process.env.TOKEN_SECRET, { expiresIn: '1s'});
+    // res.json({"token": token});
+    res.cookie("access_token", token, {
+        maxAge: 1000,
+        httpOnly: true,
+        secure: true
+    }).status(200).send();
+}
+
+
+/**
  * Authenticates token from the request. Calls database 
  * to check user identity. Sets req variables:
  * userid, password, role, firstname, lastname. Passes 
@@ -119,12 +133,13 @@ exports.authenticateToken = async (req, res, next) => {
             if (result === null)
                 resHandler.respondWithCustomError("307", "401",
                         "Authentication Error", "Token is invalid. Wrong user.", res);
-            
-            req.userid = userdata.userid;
-            req.role = userdata.role;
-            req.firstname = result.first_name;
-            req.lastname = result.last_name;
-            next();
+            else {
+                req.userid = userdata.userid;
+                req.role = userdata.role;
+                req.firstname = result.first_name;
+                req.lastname = result.last_name;
+                next();
+            }
         });
     } else {
         resHandler.respondWithCustomError("306", "401",

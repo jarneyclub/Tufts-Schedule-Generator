@@ -31,12 +31,12 @@ const schedule_Schema = new Schema({
         }
     },
     events: {
-        Monday:      [{details: String, location: String, name: String, time_start: String, time_end: String, term_section_id: String, instructor: String}],
-        Tuesday:     [{details: String, location: String, name: String, time_start: String, time_end: String, term_section_id: String, instructor: String}],
-        Wednesday:   [{details: String, location: String, name: String, time_start: String, time_end: String, term_section_id: String, instructor: String}],
-        Thursday:    [{details: String, location: String, name: String, time_start: String, time_end: String, term_section_id: String, instructor: String}],
-        Friday:      [{details: String, location: String, name: String, time_start: String, time_end: String, term_section_id: String, instructor: String}],
-        Unscheduled: [{details: String, location: String, name: String, time_start: String, time_end: String, term_section_id: String, instructor: String}]
+        Monday:      [{details: String, location: String, name: String, time_start: String, time_end: String, term_section_id: String, instructors: String}],
+        Tuesday:     [{details: String, location: String, name: String, time_start: String, time_end: String, term_section_id: String, instructors: String}],
+        Wednesday:   [{details: String, location: String, name: String, time_start: String, time_end: String, term_section_id: String, instructors: String}],
+        Thursday:    [{details: String, location: String, name: String, time_start: String, time_end: String, term_section_id: String, instructors: String}],
+        Friday:      [{details: String, location: String, name: String, time_start: String, time_end: String, term_section_id: String, instructors: String}],
+        TimeUnspecified: [{details: String, location: String, name: String, time_start: String, time_end: String, term_section_id: String, instructors: String}]
     },
     courses: [{
         term_course_id: String,

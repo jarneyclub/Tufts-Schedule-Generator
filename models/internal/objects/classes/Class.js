@@ -16,7 +16,7 @@
  * @param {any} inputInstructors
  * @returns 
  */
-function Class(inputCourseID, inputCourseName, inputSectionName, inputSectionType, inputDay, inputStartTime, inputEndTime, inputLocation, inputCity, inputInstructors) {
+function Class(inputCourseID, inputCourseName, inputSectionName, inputSectionType, inputDay, inputStartTime, inputEndTime, inputLocation, inputCity, inputInstructors, inputSectionId) {
 
     //////////////////////////////////////////
     //                                      //
@@ -28,6 +28,7 @@ function Class(inputCourseID, inputCourseName, inputSectionName, inputSectionTyp
     const courseName = inputCourseName;
     const sectionName = inputSectionName;
     const sectionType = inputSectionType;
+    const sectionId = inputSectionId;
 
     const dayOfWeek = inputDay
 
@@ -87,6 +88,14 @@ function Class(inputCourseID, inputCourseName, inputSectionName, inputSectionTyp
         return courseID
     }
 
+    /** Get courseID of section
+     * @returns {string} course ID (e.g. COMP-0015)
+     */
+    function getSectionID() {
+        return sectionId;
+    }
+    
+
     /** Get courseName of section
     * @returns {string} course name
     */
@@ -133,7 +142,8 @@ function Class(inputCourseID, inputCourseName, inputSectionName, inputSectionTyp
         getSectionName,
         getLocation,
         getCity,
-        getSectionType
+        getSectionType,
+        getSectionID
     }
 }
 

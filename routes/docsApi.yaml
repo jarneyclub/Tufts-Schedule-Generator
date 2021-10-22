@@ -130,6 +130,14 @@ paths:
                       userid:
                         type: string
                         description: user email
+  /auth/logout:
+    post:
+      tags:
+        - Account
+      summary: Log out of account. Only sets token to expire after a second.
+      responses:
+        200:
+          description: Successful logout
   ####################
   #                  #
   #     COURSES      #
@@ -778,11 +786,16 @@ paths:
       tags:
         - Schedule
       summary: Delete saved schedule
-      parameters:
-        - in: header
-          name: Authorization
-          schema:
-            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sched_id:
+                  type: string
+        
   /schedules:
     get:
       tags:
@@ -1119,7 +1132,7 @@ components:
           example: "11:20"
         term_section_id:
           type: string
-        instructor:
+        instructors:
           type: string
     Schedule:
       type: object

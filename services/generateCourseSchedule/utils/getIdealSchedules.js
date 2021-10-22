@@ -28,7 +28,7 @@ const getIdealSchedules = (global) => {
 
         let references = global.references;
         let chosenPermutations = global.chosenPermutations;
-        let filter = global.filter;
+        let filter = global.filterPreprocessed;
 
         let start = Date.now();
         let arraySectionTypes = global.arrSecTypes; //used 
