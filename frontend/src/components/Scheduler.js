@@ -732,7 +732,7 @@ function Scheduler(props) {
               <div className={sStyle.infoTitle}>SHUs scheduled:&nbsp;</div>
               <div classname={sStyle.infoDetail}>{unitsCount}</div>
             </div>
-            {
+            {/* {
               classes?.TimeUnspecified  &&
               <div> 
                 <div style={{color: "rgba(0, 0, 0, 0.54)"}}>Time Unspecified</div> 
@@ -745,7 +745,7 @@ function Scheduler(props) {
               
               </div>
                
-            }
+            } */}
           </div>
         </div>
 
@@ -800,7 +800,7 @@ function Scheduler(props) {
             />
           </div>
 
-          {/* {classes?.TimeUnspecified && (
+          {classes?.TimeUnspecified && (
             <div className={sStyle.infoContainer}>
               <div style={{ color: "rgba(0, 0, 0, 0.54)" }}>
                 Time Unspecified
@@ -816,7 +816,7 @@ function Scheduler(props) {
                 ))}
               </div>
             </div>
-          )} */}
+          )}
         </div>
       </div>
       {/* popups */}
