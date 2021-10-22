@@ -7,6 +7,7 @@
  *
  */
 
+import { Button } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import eStyle from "./reusableStyles/EventScreenshot.module.css";
 
@@ -46,6 +47,7 @@ function EventScreenshot(props) {
 
   return (
     <div className={eStyle.rowContainer}>
+      <Button onClick={onClose}>Return to scheduler</Button>
       {
         columnTitles.map((title) => (
           <div className={eStyle.eventsContainer}>
