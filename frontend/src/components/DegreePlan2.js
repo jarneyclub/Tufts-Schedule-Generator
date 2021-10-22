@@ -502,8 +502,8 @@ function DegreePlan2(props) {
               className={dp2Style.progressBarCurrent}
               style={{
                 width: (unitsCount.total !== 0 ? (unitsCount.current / unitsCount.total) * 100 + "%" : "0%"),
-                borderBottomLeftRadius: (unitsCount.completed !== 0 ? "none" : "15px"),
-                borderTopLeftRadius: (unitsCount.completed !== 0 ? "none" : "15px")
+                borderBottomLeftRadius: (unitsCount.completed !== 0 ? "15px" : "none"),
+                borderTopLeftRadius: (unitsCount.completed !== 0 ? "15px" : "none")
               }}
             ></div>
             <div
