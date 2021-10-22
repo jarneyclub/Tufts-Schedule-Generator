@@ -8,10 +8,11 @@
 .eventsContainer{ 
   display: flex;
   flex-direction: column;
-
+  width: 15%;
 }
 
 
 .classContainer {
   border: 1px solid #7048d5;
+  background-color: #ffffff; 
 }
