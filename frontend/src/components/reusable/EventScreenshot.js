@@ -46,9 +46,12 @@ function EventScreenshot(props) {
 
 
   return (
-    <div className={eStyle.rowContainer}>
-      <Button onClick={onClose}>Return to scheduler</Button>
-      {
+    <div className={eStyle.screenshotContainer}>
+      <Button onClick={onClose} className={eStyle.button}>Return to scheduler</Button>
+      <br/>
+      <br/>
+      <div className={eStyle.rowContainer}>
+        {
         columnTitles.map((title) => (
           <div className={eStyle.eventsContainer}>
             <div>{title !== "TimeUnspecified" ? title : "Unspecified"}</div>
@@ -60,6 +63,8 @@ function EventScreenshot(props) {
           </div>
         ))
       }
+      </div>
+      
     </div>
   );
 }
