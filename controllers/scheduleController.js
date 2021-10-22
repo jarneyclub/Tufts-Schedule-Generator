@@ -81,7 +81,7 @@ exports.updateSchedule = async (req, res) => {
                     let currClassObj = 
                         new Class(courseNum, courseTitle, sectionNum, sectionType, 
                                     classDayOfWeek, classStartTime, classEndTime, 
-                                    classRoom, classCampus, classInstructor);
+                                    classRoom, classCampus, classInstructor, sectionId);
                     mapClassObj[mapClassObjIndex] = currClassObj;
                     mapClassObjIndex++;
                 } // (End of) iteration through classes

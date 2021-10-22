@@ -37,6 +37,7 @@ const chosenClassesToApiDetails = (global) => {
         let time_end_military = timeUtils.integerToMilitaryTime(time_end);
 
         let sectionName = singleClass.getSectionName();
+        let sectionId = singleClass.getSectionID();
         let courseId = singleClass.getCourseID();
         let courseName = singleClass.getCourseName();
         let room = singleClass.getLocation();
@@ -52,6 +53,7 @@ const chosenClassesToApiDetails = (global) => {
             details: eventDetails,
             location: location,
             instructors: instructors,
+            term_section_id: sectionId,
             time_start: time_start_military,
             time_end: time_end_military
         }
