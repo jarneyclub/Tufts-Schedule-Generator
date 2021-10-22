@@ -141,6 +141,8 @@ router.post('/auth/login',
             authController.signAccessTokenAndAttachCookie, 
             userController.sendLoginResponse);
 
+router.post('/auth/logout', authController.setToExpireToken);
+
 // authenticate token and extract credentials, sign access token, and send response with cookie
 router.post('/auth/login_cookie', 
              authController.authenticateToken, 

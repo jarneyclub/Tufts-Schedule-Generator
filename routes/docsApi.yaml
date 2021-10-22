@@ -130,6 +130,14 @@ paths:
                       userid:
                         type: string
                         description: user email
+  /auth/logout:
+    post:
+      tags:
+        - Account
+      summary: Log out of account. Only sets token to expire after a second.
+      responses:
+        200:
+          description: Successful logout
   ####################
   #                  #
   #     COURSES      #

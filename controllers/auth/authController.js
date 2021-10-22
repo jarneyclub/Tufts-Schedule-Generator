@@ -82,6 +82,21 @@ exports.signAccessTokenAndAttachCookie = async (req, res, next) => {
 }
 
 /**
+ * Set token to expire after a second
+ * @param {*} res
+ */
+ exports.setToExpireToken = async (res, req) => {
+    let token = jwt.sign({ userid: "NONE", role: "NONE"}, process.env.TOKEN_SECRET, { expiresIn: '1s'});
+    // res.json({"token": token});
+    res.cookie("access_token", token, {
+        maxAge: 1000,
+        httpOnly: true,
+        secure: true
+    }).status(200);
+}
+
+
+/**
  * Authenticates token from the request. Calls database 
  * to check user identity. Sets req variables:
  * userid, password, role, firstname, lastname. Passes 
