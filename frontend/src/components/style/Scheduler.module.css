@@ -446,11 +446,11 @@ body {
 
 @media only screen and (max-width: 1040px){
   .leftColumnWrapper {
-    flex: 1 1 40%;
+    flex: 1 1 39%;
   }
 
   .rightColumnWrapper {
-    flex: 7 1 60%;
+    flex: 7 1 59%;
   }
   
   

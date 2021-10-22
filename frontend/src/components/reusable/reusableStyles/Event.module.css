@@ -4,7 +4,7 @@
   flex-direction: column;
   align-items: flex-start;
   white-space: normal;
-  word-wrap: no-wrap;
+  
   padding: 0 1vw;
   color: #a0c3d1;
   background: linear-gradient(
@@ -17,7 +17,8 @@
   border-left: 8px solid #a0c3d1;
   width: 100%;
   border-radius: 5px;
-
+  font-size: 1.5vw;
+  overflow-wrap: break-word;
   z-index: 2;
   cursor: pointer;
   -webkit-appearance: none;
@@ -30,7 +31,7 @@
   flex-direction: column;
   align-items: flex-start;
   white-space: normal;
-  word-wrap: no-wrap;
+ 
   padding: 0 1vw;
   color: #ffffff;
   background: #a0c3d1;

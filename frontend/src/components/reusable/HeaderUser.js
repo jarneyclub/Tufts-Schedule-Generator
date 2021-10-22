@@ -46,10 +46,22 @@ function HeaderUser(props) {
     if (logged) {
       /*  Sign Out */
       switchLogged();
+      fetchLogout();
     } else {
       setLoginPopup(true);
     }
   };
+
+  const fetchLogout = async() => {
+    await fetch("https://jarney.club/api/auth/logout", {method: "POST"})
+      .then((response) => response.json())
+      .then((result) => {
+        
+      })
+      .error ((error) => {
+        
+      })
+  }
 
   return (
     <div className={hStyle.headerContainer} id="headerContainer">

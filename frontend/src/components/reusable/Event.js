@@ -16,7 +16,8 @@ function Event(props) {
   const { eventDetails, onEventClick } = props;
 
   const { details, name, location, time_start, time_end } = eventDetails;
-  const [customStyle, setCustomStyle] = useState({});
+  const detail = details.split(',');
+  const loc  = location.split(',');
 
   console.log("eventDetails: ", eventDetails);
   const calculateHeight = () => {
@@ -44,18 +45,7 @@ function Event(props) {
   const handleOnClick = () => {
     onEventClick(eventDetails);
   };
-  // useEffect(() => {
-  //   const transY = calculateTranslate();
-  //   const eventHeight = calculateHeight();
-  //   // setCustomStyle({
-  //   //   transform: "translateY(" + transY + "px)",
-  //   //   height: "" + eventHeight + "px",
-  //   // });
-  //   setCustomStyle({
-  //     transform: transY ,
-  //     height: eventHeight,
-  //   });
-  // }, []);
+  
 
   const transY = calculateTranslate();
   const eventHeight = calculateHeight();
@@ -67,12 +57,17 @@ function Event(props) {
       style={{transform: `translateY(${transY}px`, height:`${eventHeight}px`}}
       onClick={handleOnClick}
     >
-      <div style={{ fontWeight: "lighter" }}>
-        {time_start?.concat("~")?.concat(time_end)}
-      </div>
-      <div>{details}</div>
+      {
+      time_start !== time_end &&
+        <div >
+          {time_start}&nbsp;~&nbsp;{time_end}
+        </div>
+      }
+      
+      <div>{detail[0]}</div>
+      <div>{detail[1]}</div>
       <div>{name}</div>
-      <div>{location}</div>
+      <div>{loc[0]}</div>
     </div>
   );
 }
