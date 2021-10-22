@@ -3,6 +3,7 @@
   flex-direction: column;
   width: 100%; 
   align-items: center;
+  background-color: #efebf9;
 }
 
 .rowContainer {
@@ -10,7 +11,7 @@
   flex-direction: row;
   flex-wrap: nowrap;
   width: 100%;
-  background-color: #efebf9;
+  /* background-color: #efebf9; */
   justify-content: center;
   padding: 10px 0;
 }
@@ -35,6 +36,8 @@
   width: 100%;
   align-items: center;
   text-align: center;
+  font-size: 2vw;
+
 }
 
 .button {
@@ -44,4 +47,14 @@
   border: 1px solid #7048d5;
   text-transform: unset !important;
   color: #7048d5;
+  
+}
+
+@media only screen and (max-width: 680px){
+  .titleContainer {
+    font-size: 3vw;
+
+  }
+  
+  
 }
