@@ -71,6 +71,7 @@ function CalendarDay(props) {
     singleDay,
     classesDay,
     onEventClick,
+    shrink
   } = props;
   const [dragState, setDragState] = useState(false);
   const [entireDayOn, setEntireDayOn] = useState();
@@ -199,7 +200,7 @@ function CalendarDay(props) {
           {classesDay?.map((event) => <div>{event.details}</div>)}
       </div> */}
       {classesDay?.map((event) => {
-        return <Event eventDetails={event} onEventClick={onEventClick}></Event>;
+        return <Event shrink={shrink} eventDetails={event} onEventClick={onEventClick}></Event>;
       })}
     </div>
   );
