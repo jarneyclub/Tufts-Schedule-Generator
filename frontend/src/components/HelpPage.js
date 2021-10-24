@@ -117,7 +117,7 @@ function HelpPage() {
       <div className={hStyle.horizontalContainer}>
         <h2>Contact us!</h2>
         <div className={hStyle.titleRow}>
-          <form id="contactForm" className={hStyle.contactForm}>
+          <div id="contactForm" className={hStyle.contactForm}>
             <TextField
               type="text"
               name="Name"
@@ -160,7 +160,7 @@ function HelpPage() {
             >
               Share with us
             </Button>
-          </form>
+          </div>
           <br/>
           <img
             src={feedbackJumbo}
