@@ -74,7 +74,7 @@ function HelpPage() {
     console.log("Response submitted")
     await fetch("https://jarney.club/api/responses", {
       method: "POST",
-      body: contactForm
+      body: JSON.stringify(contactForm)
     })
       .then((response) => response.json())
       .then((result) => {
