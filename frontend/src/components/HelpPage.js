@@ -71,6 +71,7 @@ function HelpPage() {
   }
 
   const fetchSendResponses = async  () => {
+    console.log("Response submitted")
     await fetch("https://jarney.club/api/responses", {
       method: "POST",
       body: contactForm
@@ -155,7 +156,7 @@ function HelpPage() {
               type="submit"
               className={hStyle.button}
               startIcon={<SendIcon />}
-              onClick={handleSubmit}
+              onClick={fetchSendResponses}
             >
               Share with us
             </Button>
