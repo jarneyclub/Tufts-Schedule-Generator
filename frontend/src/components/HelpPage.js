@@ -72,10 +72,13 @@ function HelpPage() {
 
   const fetchSendResponses = async  () => {
     console.log("Response submitted")
-    await fetch("https://jarney.club/api/responses", {
+    const requestOption = {
       method: "POST",
-      body: JSON.stringify(contactForm)
-    })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(contactForm),
+    };
+
+    await fetch("https://jarney.club/api/responses", requestOption)
       .then((response) => response.json())
       .then((result) => {
         setAlertMessage("Thank you for your feedback!")
