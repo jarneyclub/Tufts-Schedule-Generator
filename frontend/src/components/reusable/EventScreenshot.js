@@ -54,8 +54,8 @@ function EventScreenshot(props) {
   
   const setClassPalette = () => {
     let paletteIdx = 0;
-    columnTitles.map((title) => {
-      classDetails[title].map((detail)  => {
+    columnTitles.forEach((title) => {
+      classDetails[title].forEach((detail)  => {
         if(!sectionIDCSS.hasOwnProperty(detail.term_section_id)) {
           setSectionIDCSS((prev) => ({
             ...prev,
