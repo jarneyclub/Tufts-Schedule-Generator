@@ -61,8 +61,8 @@ function EventScreenshot(props) {
             ...prev,
             [detail.term_section_id]: palette[paletteIdx],
           }))
-          paletteIdx < (palette.length - 1) ? paletteIdx++ : (paletteIdx = 0);
-          
+          (paletteIdx <= (palette.length - 1)) ? (paletteIdx++) : (paletteIdx = 0);
+          console.log("paletteIdx: ", paletteIdx);
         }
       })
     })
