@@ -45,39 +45,39 @@ exports.getTermCourses = async (req, res) => {
     var start = Date.now(); // begin timing API endpoint
     // get query strings
     let reqCourseNum = req.query.cnum.toUpperCase();
-    if (reqCourseNum === "") { // if no query string, return empty array
+    let reqAttr      = req.query.attr;
+    let dbCourses = mongoose.connection.collection("courses"); // get MongoDB collection
+    // get cursor of courses from database with query parameters
+    let cursor;
+    if ( reqCourseNum === "" && reqAttr === "" ) {
+        /* no parameters are provided */
+
+        // if no query string, return empty array
         res.json({courses: []});
+
+        // send every courses
+        // cursor = dbCourses.find().sort({"course_num": 1});
     }
     else {
-        let reqAttr      = req.query.attr;
-        let dbCourses = mongoose.connection.collection("courses"); // get MongoDB collection
-        // get cursor of courses from database with query parameters
-        let cursor;
-        if ( reqCourseNum === "" && reqAttr === "" ) {
-            /* no parameters are provided */
-            cursor = dbCourses.find().sort({"course_num": 1});
+        // let re = new RegExp(reqCourseNum, "g");
+        if ( reqCourseNum === "" ) {
+            /* only attribute is provided */
+            cursor = dbCourses.find({"attributes": {"$all": [reqAttr]}}).sort({"course_num": 1});
+        }
+        else if ( reqAttr === "" ) {
+            /* only course_num is provided */
+            cursor = dbCourses.find({ "course_num": { "$regex": '^' + reqCourseNum } }).sort({"course_num": 1});
         }
         else {
-            // let re = new RegExp(reqCourseNum, "g");
-            if ( reqCourseNum === "" ) {
-                /* only attribute is provided */
-                cursor = dbCourses.find({"attributes": {"$all": [reqAttr]}}).sort({"course_num": 1});
-            }
-            else if ( reqAttr === "" ) {
-                /* only course_num is provided */
-                cursor = dbCourses.find({ "course_num": { "$regex": '^' + reqCourseNum } }).sort({"course_num": 1});
-            }
-            else {
-                /* all parameters are provided */
-                cursor = dbCourses.find({
-                    "course_num": {
-                        "$regex": '^' + reqCourseNum
-                    },
-                    "attributes": {
-                        "$all": [reqAttr]
-                    }
-                }).sort({"course_num": 1});
-            }
+            /* all parameters are provided */
+            cursor = dbCourses.find({
+                "course_num": {
+                    "$regex": '^' + reqCourseNum
+                },
+                "attributes": {
+                    "$all": [reqAttr]
+                }
+            }).sort({"course_num": 1});
         }
         // convert cursor to list
         let documents = [];
@@ -104,6 +104,7 @@ exports.getTermCourses = async (req, res) => {
         };
         res.json(response);
     }
+    
 }
 
 exports.getAttributes = async (req, res) => {
