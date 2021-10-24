@@ -49,7 +49,8 @@ function EventScreenshot(props) {
   const { classDetails, onClose } = props;
 
   // const [paletteIdx, setPaletteIdx] = useState(0);
-  const [sectionIDCSS, setSectionIDCSS] =  useState({});
+  // const [sectionIDCSS, setSectionIDCSS] =  useState({});
+  let sectionIDCSS = {};
   console.log("eventScreenshot:", classDetails);
   
   const setClassPalette = () => {
@@ -58,10 +59,14 @@ function EventScreenshot(props) {
       classDetails[title].forEach(detail  => {
         if(!sectionIDCSS.hasOwnProperty(detail.term_section_id)) {
           console.log("detail id:" , detail.term_section_id)
-          setSectionIDCSS((prev) => ({
-            ...prev,
-            [detail.term_section_id]: palette[paletteIdx],
-          }))
+          // setSectionIDCSS((prev) => ({
+          //   ...prev,
+          //   [detail.term_section_id]: palette[paletteIdx],
+          // }))
+          sectionIDCSS = {
+            ...sectionIDCSS, 
+            [detail.term_section_id]: palette[paletteIdx]
+          }
           
           (paletteIdx <= (palette.length - 1)) ? (paletteIdx++) : (paletteIdx = 0);
           console.log("paletteIdx: ", paletteIdx);
