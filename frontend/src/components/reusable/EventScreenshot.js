@@ -12,16 +12,25 @@ import { useEffect, useState } from "react";
 import eStyle from "./reusableStyles/EventScreenshot.module.css";
 
 const columnTitles = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "TimeUnspecified"]
+const customStyleDefault = {backgroundColor : "#ffffff", color:"#000000"};
+const palette = [
+  {backgroundColor:"#ffffff", color: "#a0c3d1", borderLeft: "5px solid #a0c3d1"},
+  {backgroundColor:"#ffffff", color: "#7048d5", borderLeft: "5px solid #7048d5"}, 
+  {backgroundColor:"#ffffff", color: "#FC6D6D", borderLeft: "5px solid #FC6D6D"}, 
+  {backgroundColor:"#f0e4aa", color: "#50514F", borderLeft: "5px solid #50514F"}, 
+  {backgroundColor:"#ffffff", color: "#70C1B3", borderLeft: "5px solid #70C1B3"}, 
+  {backgroundColor:"#ffffff", color: "#247BA0", borderLeft: "5px solid #7247BA"}, 
+  {backgroundColor:"#ffffff", color: "#7048d5", borderLeft: "5px solid #7048d5"}, 
 
-
+]
 function Class(props) {
-  const { classDetail, tu } = props;
-  const { name, details, location, instructors, time_start, time_end} = classDetail;
+  const { classDetail, tu, customStyle } = props;
+  const { name, details, location, instructors, time_start, time_end, term_section_id} = classDetail;
   const detail = details.split(',');
   const loc = location.split(',');
 
   return (
-    <div className={eStyle.classContainer}>
+    <div className={eStyle.classContainer} style={customStyle}>
       {
         !tu && <div>{time_start}&nbsp;~&nbsp;{time_end}</div>
       }
@@ -39,11 +48,33 @@ function Class(props) {
 function EventScreenshot(props) {
   const { classDetails, onClose } = props;
 
-
- 
+  // const [paletteIdx, setPaletteIdx] = useState(0);
+  const [sectionIDCSS, setSectionIDCSS] =  useState({});
   console.log("eventScreenshot:", classDetails);
   
-
+  const setClassPalette = () => {
+    let paletteIdx = 0;
+    columnTitles.forEach((title) => {
+      classDetails[title].forEach(detail  => {
+        if(!sectionIDCSS.hasOwnProperty(detail.term_section_id)) {
+          console.log("detail id:" , detail.term_section_id)
+          setSectionIDCSS((prev) => ({
+            ...prev,
+            [detail.term_section_id]: palette[paletteIdx],
+          }))
+          
+          (paletteIdx <= (palette.length - 1)) ? (paletteIdx++) : (paletteIdx = 0);
+          console.log("paletteIdx: ", paletteIdx);
+        }
+      })
+    })
+    
+    
+  }
+  useEffect(() => {
+    setClassPalette();
+  }, [])
+    
 
   return (
     <div className={eStyle.screenshotContainer}>
@@ -57,7 +88,7 @@ function EventScreenshot(props) {
             <div className={eStyle.titleContainer}>{title !== "TimeUnspecified" ? title : "Unspecified"}</div>
             {
               classDetails[title]?.map((details) => (
-                <Class classDetail={details} tu={title === "TimeUnspecified"}/>
+                <Class classDetail={details} tu={title === "TimeUnspecified"} customStyle={sectionIDCSS[details.term_section_id]}/>
               ))
             }
           </div>
