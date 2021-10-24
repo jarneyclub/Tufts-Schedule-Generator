@@ -57,6 +57,7 @@ function EventScreenshot(props) {
     columnTitles.forEach((title) => {
       classDetails[title].forEach(detail  => {
         if(!sectionIDCSS.hasOwnProperty(detail.term_section_id)) {
+          console.log("detail id:" , detail.term_section_id)
           setSectionIDCSS((prev) => ({
             ...prev,
             [detail.term_section_id]: palette[paletteIdx],
