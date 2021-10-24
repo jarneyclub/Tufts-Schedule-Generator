@@ -90,7 +90,7 @@ function Calendar(props) {
           <div className={cStyle.timeSlotTitle} />
           {time.map((timeSlot) => (
             <div className={cStyle.timeSlot} key={timeSlot}>
-              {timeSlot}
+              {timeSlot?.substr(0, 3).toUpperCase}
             </div>
           ))}
         </div>
