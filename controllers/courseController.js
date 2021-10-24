@@ -44,65 +44,184 @@ exports.getGeneralCourses = async (req, res) => {
 exports.getTermCourses = async (req, res) => {
     var start = Date.now(); // begin timing API endpoint
     // get query strings
-    let reqCourseNum = req.query.cnum.toUpperCase();
+    let reqCourseInput = req.query.cnum.toUpperCase();
     let reqAttr      = req.query.attr;
     let dbCourses = mongoose.connection.collection("courses"); // get MongoDB collection
-    // get cursor of courses from database with query parameters
-    let cursor;
-    if ( reqCourseNum === "" && reqAttr === "" ) {
+
+    // Check if both inputs are empty
+    if ( reqCourseInput === "" && reqAttr === "" ) {
         /* no parameters are provided */
 
         // if no query string, return empty array
         res.json({courses: []});
-
         // send every courses
-        // cursor = dbCourses.find().sort({"course_num": 1});
+        // cursorCourseNum = dbCourses.find().sort({"course_num": 1});
     }
     else {
-        // let re = new RegExp(reqCourseNum, "g");
-        if ( reqCourseNum === "" ) {
+        /* some parameters are provided */
+
+        if ( reqCourseInput === "" ) {
             /* only attribute is provided */
-            cursor = dbCourses.find({"attributes": {"$all": [reqAttr]}}).sort({"course_num": 1});
+
+            let cursorAttributes = 
+                dbCourses.find({"attributes": {"$all": [reqAttr]}}).sort({"course_num": 1});
+
+            let documents = [];
+            await cursorAttributes.forEach((doc) => {
+                // parse database document
+                let docToInsert = {
+                    "term_course_id": doc["term_course_id"],
+                    "course_num"    : doc["course_num"],
+                    "course_title"  : doc["course_title"],
+                    "units_esti"    : doc["units_esti"],
+                    "attributes"    : doc["attributes"],
+                    "closed"        : doc["closed"],
+                    "last_term"     : doc["last_term"]
+                };
+                documents.push(docToInsert);
+            });
         }
         else if ( reqAttr === "" ) {
-            /* only course_num is provided */
-            cursor = dbCourses.find({ "course_num": { "$regex": '^' + reqCourseNum } }).sort({"course_num": 1});
+            /* only reqCourseInput is provided */
+
+            // query courses in database by course num and course title
+            let cursorCourseNum = 
+                dbCourses.find({ "course_num": { "$regex": '^' + reqCourseInput } }).sort({"course_num": 1});
+            let cursorCourseTitle = 
+                dbCourses.find({ "course_title": { "$regex": reqCourseInput, "$options": "i"} }).sort({"course_num": 1});
+
+            let termCourseIdMap = {}; // map unique courses from both cnum and ctitle cursors
+            // map term course id to a course document from the course num cursor
+            await cursorCourseNum.forEach((doc) => {
+                // parse database document
+                let docToInsert = {
+                    "term_course_id": doc["term_course_id"],
+                    "course_num"    : doc["course_num"],
+                    "course_title"  : doc["course_title"],
+                    "units_esti"    : doc["units_esti"],
+                    "attributes"    : doc["attributes"],
+                    "closed"        : doc["closed"],
+                    "last_term"     : doc["last_term"]
+                };
+                termCourseIdMap[doc["term_course_id"]] = docToInsert;
+            });
+            // map term course id to a course document from the course title cursor
+            await cursorCourseTitle.forEach((doc) => {
+                // parse database document
+                console.log("doc: ", doc);
+                let docToInsert = {
+                    "term_course_id": doc["term_course_id"],
+                    "course_num"    : doc["course_num"],
+                    "course_title"  : doc["course_title"],
+                    "units_esti"    : doc["units_esti"],
+                    "attributes"    : doc["attributes"],
+                    "closed"        : doc["closed"],
+                    "last_term"     : doc["last_term"]
+                };
+                termCourseIdMap[doc["term_course_id"]] = docToInsert;
+            });
+            
+            // get course documents array
+            let documents = [];
+            for (currTermCourseId in termCourseIdMap) {
+                let currCourseDoc = termCourseIdMap[currTermCourseId];
+                documents.push(currCourseDoc);
+            }
+
+            // sort array by course num
+            documents.sort((docA, docB) => {
+                if (docA.course_num < docB.course_num) {
+                    return -1;
+                } else if (docA.course_num > docB.course_num) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+
+            // send response
+            res.json({
+                courses: documents,
+                time_taken: (Date.now() - start).toString() + "ms"
+            });
+
         }
         else {
             /* all parameters are provided */
-            cursor = dbCourses.find({
+            // get cursor matching user input with course num and attr
+            let cursorCourseNumAttr = dbCourses.find({
                 "course_num": {
-                    "$regex": '^' + reqCourseNum
+                    "$regex": '^' + reqCourseInput
                 },
                 "attributes": {
                     "$all": [reqAttr]
                 }
-            }).sort({"course_num": 1});
+            });
+            // get cursor matching user input with course title and attr
+            let cursorCourseTitleAttr = dbCourses.find({
+                "course_title": { 
+                    "$regex": reqCourseInput, 
+                    "$options": "i"
+                },
+                "attributes": {
+                    "$all": [reqAttr]
+                }
+            });
+
+            let termCourseIdMap = {}; // map unique courses from both cnum and ctitle cursors
+            // map term course id to a course document from the course num cursor
+            await cursorCourseNumAttr.forEach((doc) => {
+                // parse database document
+                let docToInsert = {
+                    "term_course_id": doc["term_course_id"],
+                    "course_num"    : doc["course_num"],
+                    "course_title"  : doc["course_title"],
+                    "units_esti"    : doc["units_esti"],
+                    "attributes"    : doc["attributes"],
+                    "closed"        : doc["closed"],
+                    "last_term"     : doc["last_term"]
+                };
+                termCourseIdMap[doc["term_course_id"]] = docToInsert;
+            });
+            // map term course id to a course document from the course title cursor
+            await cursorCourseTitleAttr.forEach((doc) => {
+                // parse database document
+                let docToInsert = {
+                    "term_course_id": doc["term_course_id"],
+                    "course_num"    : doc["course_num"],
+                    "course_title"  : doc["course_title"],
+                    "units_esti"    : doc["units_esti"],
+                    "attributes"    : doc["attributes"],
+                    "closed"        : doc["closed"],
+                    "last_term"     : doc["last_term"]
+                };
+                termCourseIdMap[doc["term_course_id"]] = docToInsert;
+            });
+            
+            // get course documents array
+            let documents = [];
+            for (currTermCourseId in termCourseIdMap) {
+                let currCourseDoc = termCourseIdMap[currTermCourseId];
+                documents.push(currCourseDoc);
+            }
+
+            // sort array by course num
+            documents.sort((docA, docB) => {
+                if (docA.course_num < docB.course_num) {
+                    return -1;
+                } else if (docA.course_num > docB.course_num) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+
+            // send response
+            res.json({
+                courses: documents,
+                time_taken: (Date.now() - start).toString() + "ms"
+            });
         }
-        // convert cursor to list
-        let documents = [];
-        await cursor.forEach((doc) => {
-            // parse database document
-            let docToInsert = {
-                "term_course_id": doc["term_course_id"],
-                "course_num"    : doc["course_num"],
-                "course_title"  : doc["course_title"],
-                "units_esti"    : doc["units_esti"],
-                "attributes"    : doc["attributes"],
-                "closed"        : doc["closed"],
-                "last_term"     : doc["last_term"]
-            };
-            documents.push(docToInsert);
-        });
-        var end = Date.now(); // End timing API endpoint
-        var difference = end - start;
-        let timeTakenString = difference.toString() + "ms";
-        // send response
-        let response = {
-            courses: documents,
-            time_taken: timeTakenString
-        };
-        res.json(response);
     }
     
 }
