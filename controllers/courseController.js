@@ -10,17 +10,20 @@ exports.getGeneralCourses = async (req, res) => {
     }
     else {
         let firstDigit = reqCourseNum.match(/\d/); // will give you the first digit in the string
-        let indexFirstDigit = reqCourseNum.indexOf(firstDigit);
         // let numberOfChrsAfterIncludingFirstDig = reqCourseNum.length - indexFirstDigit;
         // if (reqCourseNum[indexFirstDigit - 1] !== "-")
             // reqCourseNum = reqCourseNum.substring(0, indexFirstDigit) + "-" + reqCourseNum.substring(indexFirstDigit, reqCourseNum.length);
         // console.log("(getGeneralCourses) reqCourseNum: ", reqCourseNum)
         let dbCoursesGeneral = mongoose.connection.collection("courses_general"); // get MongoDB collection
         // get cursor of courses from database with queried course number
-        let cursor = dbCoursesGeneral.find({"course_num": {"$regex": '^' + reqCourseNum}}).sort({"course_num": 1});
-        // convert cursor to list
-        let documents = [];
-        await cursor.forEach((doc) => {
+        let cursorCourseNum = dbCoursesGeneral.find({"course_num": {"$regex": '^' + reqCourseNum}});
+        let cursorCourseNumCleaned = 
+            dbCoursesGeneral.find({"course_num": {"$regex": '^' + cleanCourseNum(reqCourseNum)}});
+        let cursorCourseTitle = 
+            dbCourses.find({ "course_title": { "$regex": reqCourseNum, "$options": "i"} }).sort({"course_num": 1});
+        let termCourseIdMap = {}; // map unique courses from both cnum and cleaned cnum
+        // match user input with general courses' course num
+        await cursorCourseNum.forEach((doc) => {
             // parse database document
             let docToInsert = {
                 "gen_course_id" : doc["_id"].valueOf(),
@@ -28,17 +31,54 @@ exports.getGeneralCourses = async (req, res) => {
                 "course_title"  : doc["course_title"],
                 "units_esti"    : doc["units_esti"]
             };
-            documents.push(docToInsert);
+            termCourseIdMap[doc["_id"].valueOf()] = docToInsert;
         });
-        var end = Date.now(); // End timing API endpoint
-        var difference = end - start;
-        let timeTakenString = difference.toString() + "ms";
+        // match user input with general courses' course title
+        await cursorCourseTitle.forEach((doc) => {
+            // parse database document
+            let docToInsert = {
+                "gen_course_id" : doc["_id"].valueOf(),
+                "course_num"    : doc["course_num"],
+                "course_title"  : doc["course_title"],
+                "units_esti"    : doc["units_esti"]
+            };
+            termCourseIdMap[doc["_id"].valueOf()] = docToInsert;
+        });
+        // match cleaned user input with general courses' course title
+        await cursorCourseNumCleaned.forEach((doc) => {
+            // parse database document
+            let docToInsert = {
+                "gen_course_id" : doc["_id"].valueOf(),
+                "course_num"    : doc["course_num"],
+                "course_title"  : doc["course_title"],
+                "units_esti"    : doc["units_esti"]
+            };
+            termCourseIdMap[doc["_id"].valueOf()] = docToInsert;
+        });
+
+        // get course documents array
+        let documents = [];
+        for (currTermCourseId in termCourseIdMap) {
+            let currCourseDoc = termCourseIdMap[currTermCourseId];
+            documents.push(currCourseDoc);
+        }
+
+        // sort array by course num
+        documents.sort((docA, docB) => {
+            if (docA.course_num < docB.course_num) {
+                return -1;
+            } else if (docA.course_num > docB.course_num) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
+
         // send response
-        let response = {
+        res.json({
             courses: documents,
-            time_taken: timeTakenString
-        };
-        res.json(response);
+            time_taken: (Date.now() - start).toString() + "ms"
+        });
     }
 }
 
