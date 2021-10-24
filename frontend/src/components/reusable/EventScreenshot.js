@@ -19,7 +19,7 @@ const palette = [
   {backgroundColor:"#ffffff", color: "#FC6D6D", borderLeft: "5px solid #FC6D6D"}, 
   {backgroundColor:"#f0e4aa", color: "#50514F", borderLeft: "5px solid #50514F"}, 
   {backgroundColor:"#ffffff", color: "#70C1B3", borderLeft: "5px solid #70C1B3"}, 
-  {backgroundColor:"#ffffff", color: "#247BA0", borderLeft: "5px solid #7247BA"}, 
+  {backgroundColor:"#ffffff", color: "#247BA0", borderLeft: "5px solid #247BA0"}, 
   {backgroundColor:"#ffffff", color: "#7048d5", borderLeft: "5px solid #7048d5"}, 
 
 ]
