@@ -66,7 +66,10 @@ function EventScreenshot(props) {
     })
     
   }
-  setClassPalette();
+  useEffect(() => {
+    setClassPalette();
+  }, [])
+    
 
   return (
     <div className={eStyle.screenshotContainer}>
