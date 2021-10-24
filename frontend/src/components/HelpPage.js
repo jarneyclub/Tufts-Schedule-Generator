@@ -82,7 +82,7 @@ function HelpPage() {
         setAlertSeverity("success") ;
         setShowAlert(true);
       })
-      .error((error) =>{
+      .catch((error) =>{
 
       })
   }
