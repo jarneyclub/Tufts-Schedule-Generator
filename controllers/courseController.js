@@ -16,11 +16,12 @@ exports.getGeneralCourses = async (req, res) => {
         // console.log("(getGeneralCourses) reqCourseNum: ", reqCourseNum)
         let dbCoursesGeneral = mongoose.connection.collection("courses_general"); // get MongoDB collection
         // get cursor of courses from database with queried course number
-        let cursorCourseNum = dbCoursesGeneral.find({"course_num": {"$regex": '^' + reqCourseNum}});
+        let cursorCourseNum = 
+            dbCoursesGeneral.find({"course_num": {"$regex": '^' + reqCourseNum}});
         let cursorCourseNumCleaned = 
             dbCoursesGeneral.find({"course_num": {"$regex": '^' + cleanCourseNum(reqCourseNum)}});
         let cursorCourseTitle = 
-            dbCourses.find({ "course_title": { "$regex": reqCourseNum, "$options": "i"} }).sort({"course_num": 1});
+            dbCoursesGeneral.find({ "course_title": { "$regex": reqCourseNum, "$options": "i"} });
         let termCourseIdMap = {}; // map unique courses from both cnum and cleaned cnum
         // match user input with general courses' course num
         await cursorCourseNum.forEach((doc) => {
@@ -133,11 +134,11 @@ exports.getTermCourses = async (req, res) => {
 
             // query courses in database by course num and course title
             let cursorCourseNum = 
-                dbCourses.find({ "course_num": { "$regex": '^' + reqCourseInput } }).sort({"course_num": 1});
+                dbCourses.find({ "course_num": { "$regex": '^' + reqCourseInput } });
             let cursorCourseNumCleaned =
-                dbCourses.find({ "course_num": { "$regex": '^' + cleanCourseNum(reqCourseInput) } }).sort({"course_num": 1});
+                dbCourses.find({ "course_num": { "$regex": '^' + cleanCourseNum(reqCourseInput) } });
             let cursorCourseTitle = 
-                dbCourses.find({ "course_title": { "$regex": reqCourseInput, "$options": "i"} }).sort({"course_num": 1});
+                dbCourses.find({ "course_title": { "$regex": reqCourseInput, "$options": "i"} });
 
             let termCourseIdMap = {}; // map unique courses from both cnum and ctitle cursors
             // map term course id to a course document from the course num cursor
