@@ -41,6 +41,7 @@ function Calendar(props) {
     shrink,
     classes,
     onEventClick,
+
   } = props;
   const [daySelection, setDaySelection] = useState(0);
 
@@ -108,6 +109,7 @@ function Calendar(props) {
               singleDay={false}
               classesDay={classes && classes[dayName]}
               onEventClick={onEventClick}
+              
             />
           ))
         ) : (
@@ -123,6 +125,7 @@ function Calendar(props) {
             singleDay={true}
             classesDay={classes[weekdays[daySelection]]}
             onEventClick={onEventClick}
+            shrink={shrink}
           />
         )}
       </div>
