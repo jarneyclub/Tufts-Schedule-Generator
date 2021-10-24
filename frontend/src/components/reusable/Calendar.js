@@ -73,7 +73,7 @@ function Calendar(props) {
           >
             <ArrowLeftIcon fontSize="large" />
           </IconButton>
-          <div>{weekdays[daySelection].substr().toUpperCase()}</div>
+          <div>{weekdays[daySelection].substr(0,3).toUpperCase()}</div>
           <IconButton
             onClick={() => {
               onDayChange(1);
