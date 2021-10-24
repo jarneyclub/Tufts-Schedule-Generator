@@ -36,7 +36,7 @@ input {
   /* flex: 1 0 0; */
   align-content: center;
   /* flex-grow: 1; */
-  width: 50vw;
+  width: 48vw;
   justify-content: flex-start;
   padding-left: 5vw;
   padding-right: 5vw;
@@ -171,7 +171,7 @@ input {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 50vw;
+  width: 48vw;
 
   padding-left: 5vw;
   padding-right: 5vw;
