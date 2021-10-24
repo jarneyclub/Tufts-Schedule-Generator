@@ -22,6 +22,7 @@ require('./models/external/DegreeReqPrivate');
 require('./models/external/DegreeReqPublic');
 require('./models/external/Schedule');
 require('./models/external/Section');
+require('./models/external/Response');
 // start app
 const app = require('./app');
 app.set('port', process.env.PORT || 7777);
