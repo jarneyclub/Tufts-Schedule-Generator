@@ -27,7 +27,6 @@ function Event(props) {
     const startMin = parseInt(start[0]) * 60 + parseInt(start[1]);
     const endMin = parseInt(end[0]) * 60 + parseInt(end[1]);
 
-    console.log("height: ", ((endMin - startMin) / 60) * 80);
     return ((endMin - startMin) / 60) * 80;
   };
 
@@ -36,9 +35,7 @@ function Event(props) {
     const start = time_start.split(":");
     res =
       res + ((parseInt(start[0]) * 60 + parseInt(start[1]) - 480) * 80) / 60;
-    console.log("start time: ", start);
-    console.log("Res: ", res);
-    console.log("translateY: ", res);
+
 
     return res;
   };
