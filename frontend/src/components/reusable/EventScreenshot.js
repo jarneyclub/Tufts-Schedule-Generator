@@ -49,7 +49,7 @@ function EventScreenshot(props) {
   const { classDetails, onClose } = props;
 
   // const [paletteIdx, setPaletteIdx] = useState(0);
-  // const [sectionIDCSS, setSectionIDCSS] =  useState({});
+  const [classCSS, setClassCSS] =  useState({});
   let sectionIDCSS = {};
   console.log("eventScreenshot:", classDetails);
   
@@ -73,6 +73,7 @@ function EventScreenshot(props) {
         }
       })
     })
+    setClassCSS(sectionIDCSS);
     
     
   }
@@ -93,7 +94,7 @@ function EventScreenshot(props) {
             <div className={eStyle.titleContainer}>{title !== "TimeUnspecified" ? title : "Unspecified"}</div>
             {
               classDetails[title]?.map((details) => (
-                <Class classDetail={details} tu={title === "TimeUnspecified"} customStyle={sectionIDCSS[details.term_section_id]}/>
+                <Class classDetail={details} tu={title === "TimeUnspecified"} customStyle={classCSS[details.term_section_id]}/>
               ))
             }
           </div>
