@@ -123,7 +123,7 @@ function Calendar(props) {
             addEntireDay={handleAddEntireDay}
             removeEntireDay={handleRemoveEntireDay}
             singleDay={true}
-            classesDay={classes[weekdays[daySelection]]}
+            classesDay={classes && classes[weekdays[daySelection]]}
             onEventClick={onEventClick}
             shrink={shrink}
           />
