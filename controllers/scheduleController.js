@@ -81,12 +81,12 @@ exports.updateSchedule = async (req, res) => {
                     let currClassObj = 
                         new Class(courseNum, courseTitle, sectionNum, sectionType, 
                                     classDayOfWeek, classStartTime, classEndTime, 
-                                    classRoom, classCampus, classInstructor, sectionId);
+                                    classRoom, classCampus, classInstructor, sectionId, currTermCourseId);
                     mapClassObj[mapClassObjIndex] = currClassObj;
                     mapClassObjIndex++;
                 } // (End of) iteration through classes
                 let currSectionObj = 
-                    new Section(courseNum, courseTitle, sectionNum, sectionType, mapClassObj, sectionStatus, sectionId);
+                    new Section(courseNum, courseTitle, sectionNum, sectionType, mapClassObj, sectionStatus, sectionId, currTermCourseId);
                 
                 // append section object to mapSecTypeToSectionMap
                 if (mapSecTypeToSectionMap[sectionType] === undefined)
