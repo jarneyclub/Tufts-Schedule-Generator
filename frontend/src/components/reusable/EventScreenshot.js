@@ -67,7 +67,7 @@ function EventScreenshot(props) {
             ...sectionIDCSS, 
             [detail.term_section_id]: palette[paletteIdx]
           }
-          
+          console.log("sectionIDCSS", sectionIDCSS);
           (paletteIdx <= (palette.length - 1)) ? (paletteIdx++) : (paletteIdx = 0);
           console.log("paletteIdx: ", paletteIdx);
         }
