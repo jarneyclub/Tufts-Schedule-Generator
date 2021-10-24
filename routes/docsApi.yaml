@@ -839,7 +839,7 @@ paths:
                 properties:
                   schedule:
                     $ref: "#/components/schemas/Schedule"
-/responses:
+  /responses:
     post:
       tags:
         - Responses
