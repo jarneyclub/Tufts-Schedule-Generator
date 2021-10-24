@@ -55,12 +55,13 @@ function EventScreenshot(props) {
   const setClassPalette = () => {
     let paletteIdx = 0;
     columnTitles.forEach((title) => {
-      classDetails[title].forEach((detail)  => {
+      classDetails[title].forEach(detail  => {
         if(!sectionIDCSS.hasOwnProperty(detail.term_section_id)) {
           setSectionIDCSS((prev) => ({
             ...prev,
             [detail.term_section_id]: palette[paletteIdx],
           }))
+          
           (paletteIdx <= (palette.length - 1)) ? (paletteIdx++) : (paletteIdx = 0);
           console.log("paletteIdx: ", paletteIdx);
         }
