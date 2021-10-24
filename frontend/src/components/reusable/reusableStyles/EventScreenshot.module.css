@@ -23,7 +23,7 @@
   width: 15%;
   align-items: center;
   text-align: center;
-
+  margin-left: 1vw;
 
 }
 
@@ -38,6 +38,7 @@
   align-items: center;
   text-align: center;
   /* font-size: 2vw; */
+  margin-bottom: 5px;
 
 }
 
