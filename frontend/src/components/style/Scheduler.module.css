@@ -458,7 +458,7 @@ body {
   
   
 }
-@media only screen and (max-width: 669.99){
+@media only screen and (max-width: 669.99px){
   .overlayTitle {
     font-size: 20px !important;
   } 
