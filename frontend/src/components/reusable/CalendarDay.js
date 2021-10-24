@@ -152,7 +152,7 @@ function CalendarDay(props) {
       {/* {
         !singleDay ? <div className={cStyle.timeSlotTitle}>{dayName}</div> : <div>&nbsp;</div>
       } */}
-      <div className={cStyle.timeSlotTitle}>{!singleDay ? dayName : " "}</div>
+      <div className={cStyle.timeSlotTitle}>{!singleDay ? dayName.substr(0,3).toUpperCase() : " "}</div>
 
       {timePrefState && (
         <div className={cStyle.buttonContainer}>
