@@ -26,7 +26,7 @@ function TimePrefSelector(props) {
         <div className={sStyle.overlayTitle}>
           Drag or Click to Select Your Preferred Time Frame
         </div>
-        <div>** Time slot highlighted in green indicates preferred time **</div>
+        <div>** Time slot highlighted indicates preferred time **</div>
       </div>
       <br />
       <Button className={sStyle.saveTimePrefButton} onClick={onClose}>
@@ -45,6 +45,8 @@ function TimePrefSelector(props) {
           shrink={shrink}
         />
       </div>
+      <br/>
+      <br/>
     </div>
   );
 }
