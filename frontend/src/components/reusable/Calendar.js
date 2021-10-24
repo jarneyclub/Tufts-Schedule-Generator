@@ -73,7 +73,7 @@ function Calendar(props) {
           >
             <ArrowLeftIcon fontSize="large" />
           </IconButton>
-          <div>{weekdays[daySelection]}</div>
+          <div>{weekdays[daySelection].substr().toUpperCase()}</div>
           <IconButton
             onClick={() => {
               onDayChange(1);
@@ -90,7 +90,7 @@ function Calendar(props) {
           <div className={cStyle.timeSlotTitle} />
           {time.map((timeSlot) => (
             <div className={cStyle.timeSlot} key={timeSlot}>
-              {timeSlot?.substr(0, 3).toUpperCase}
+              {timeSlot}
             </div>
           ))}
         </div>
