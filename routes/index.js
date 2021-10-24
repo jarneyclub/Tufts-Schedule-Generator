@@ -9,6 +9,7 @@ const courseController = require('../controllers/courseController.js');
 const degreePlanController = require('../controllers/degreePlanController.js');
 const degreeReqController = require('../controllers/degreeReqController.js');
 const scheduleController = require('../controllers/scheduleController.js')
+const responsesController = require('../controllers/responsesController.js')
 // const listController = require('../controllers/courses/listController.js');
 const userController = require('../controllers/auth/userController.js');
 const authController = require('../controllers/auth/authController.js');
@@ -174,4 +175,14 @@ router.delete('/schedule',
                authController.authenticateToken, 
                authController.signAccessTokenAndAttachCookie, 
                scheduleController.deleteSchedule);
+
+////////////////////////////////////////
+//                                    //
+//         Customer Responses         //
+//                                    //
+////////////////////////////////////////
+
+router.post('/responses', 
+            responsesController.saveCustomerResponse);
+
 module.exports = router;

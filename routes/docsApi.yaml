@@ -839,6 +839,30 @@ paths:
                 properties:
                   schedule:
                     $ref: "#/components/schemas/Schedule"
+  /responses:
+    post:
+      tags:
+        - Responses
+      summary: Save a customer feedback from "Contact Us" page
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: 
+                  type: string
+                email: 
+                  type: string
+                message:
+                  type: string
+      responses:
+        200:
+          description: Update was successful
+        400:
+          description: Input could not be validated
+
 components:
   schemas:
 ####################
