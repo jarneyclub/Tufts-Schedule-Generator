@@ -54,16 +54,19 @@ function EventScreenshot(props) {
   
   const setClassPalette = () => {
     let paletteIdx = 0;
-    classDetails.map((detail)  => {
-      if(!sectionIDCSS.hasOwnProperty(detail.term_section_id)) {
-        setSectionIDCSS((prev) => ({
-          ...prev,
-          [detail.term_section_id]: palette[paletteIdx],
-        }))
-        paletteIdx < (palette.length - 1) ? paletteIdx++ : (paletteIdx = 0);
-        
-      }
+    columnTitles.map((title) => {
+      classDetails[title].map((detail)  => {
+        if(!sectionIDCSS.hasOwnProperty(detail.term_section_id)) {
+          setSectionIDCSS((prev) => ({
+            ...prev,
+            [detail.term_section_id]: palette[paletteIdx],
+          }))
+          paletteIdx < (palette.length - 1) ? paletteIdx++ : (paletteIdx = 0);
+          
+        }
+      })
     })
+    
     
   }
   useEffect(() => {
