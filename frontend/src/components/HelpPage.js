@@ -49,9 +49,10 @@ const contactFormDefault = {
   email: "",
   message: "",
 };
+
 function HelpPage() {
   const [contactForm, setContactForm] = useState(contactFormDefault);
-  const [showAlert, setShowAlert] = useState("false");
+  const [showAlert, setShowAlert] = useState(false);
   const [alertSeverity, setAlertSeverity] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
   const handleSubmit = () => {
@@ -66,7 +67,7 @@ function HelpPage() {
   };
 
   const handleCloseAlert = () => {
-    setShowAlert("false");
+    setShowAlert(false);
   }
 
   const fetchSendResponses = async  () => {
@@ -78,10 +79,10 @@ function HelpPage() {
       .then((result) => {
         setAlertMessage("Thank you for your feedback!")
         setAlertSeverity("success") ;
-        setShowAlert("true");
+        setShowAlert(true);
       })
       .error((error) =>{
-        
+
       })
   }
 
@@ -159,6 +160,7 @@ function HelpPage() {
               Share with us
             </Button>
           </form>
+          <br/>
           <img
             src={feedbackJumbo}
             alt="feedbackJumbo"
