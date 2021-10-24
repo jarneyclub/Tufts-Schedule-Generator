@@ -425,9 +425,10 @@
 .overlayCalendarContainer {
   background-color: #ffffff;
 
-  width: 80%;
+  width: 100%;
   overflow-y: scroll;
   height: 75vh;
+  padding-bottom: 10vh;
 
 }
 
