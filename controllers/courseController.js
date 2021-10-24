@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 // TODO: PUT 00 or - if it doesnt exist in the query
 // TODO: when no coursenum input, return empty array
+
 exports.getGeneralCourses = async (req, res) => {
     var start = Date.now(); // begin timing API endpoint
     let reqCourseNum = req.query.cnum.toUpperCase(); // get query string
@@ -45,6 +46,7 @@ exports.getTermCourses = async (req, res) => {
     var start = Date.now(); // begin timing API endpoint
     // get query strings
     let reqCourseInput = req.query.cnum.toUpperCase();
+    
     let reqAttr      = req.query.attr;
     let dbCourses = mongoose.connection.collection("courses"); // get MongoDB collection
 
@@ -87,12 +89,28 @@ exports.getTermCourses = async (req, res) => {
             // query courses in database by course num and course title
             let cursorCourseNum = 
                 dbCourses.find({ "course_num": { "$regex": '^' + reqCourseInput } }).sort({"course_num": 1});
+            let cursorCourseNumCleaned =
+                dbCourses.find({ "course_num": { "$regex": '^' + cleanCourseNum(reqCourseInput) } }).sort({"course_num": 1});
             let cursorCourseTitle = 
                 dbCourses.find({ "course_title": { "$regex": reqCourseInput, "$options": "i"} }).sort({"course_num": 1});
 
             let termCourseIdMap = {}; // map unique courses from both cnum and ctitle cursors
             // map term course id to a course document from the course num cursor
             await cursorCourseNum.forEach((doc) => {
+                // parse database document
+                let docToInsert = {
+                    "term_course_id": doc["term_course_id"],
+                    "course_num"    : doc["course_num"],
+                    "course_title"  : doc["course_title"],
+                    "units_esti"    : doc["units_esti"],
+                    "attributes"    : doc["attributes"],
+                    "closed"        : doc["closed"],
+                    "last_term"     : doc["last_term"]
+                };
+                termCourseIdMap[doc["term_course_id"]] = docToInsert;
+            });
+            // map term course id to a course document from the course num cursor
+            await cursorCourseNumCleaned.forEach((doc) => {
                 // parse database document
                 let docToInsert = {
                     "term_course_id": doc["term_course_id"],
@@ -157,6 +175,13 @@ exports.getTermCourses = async (req, res) => {
                     "$all": [reqAttr]
                 }
             });
+            let cursorCourseNumCleanedAttr = dbCourses.find({ 
+                "course_num": { 
+                    "$regex": '^' + cleanCourseNum(reqCourseInput) 
+                },
+                "attributes": {
+                    "$all": [reqAttr]
+            }});
             // get cursor matching user input with course title and attr
             let cursorCourseTitleAttr = dbCourses.find({
                 "course_title": { 
@@ -171,6 +196,20 @@ exports.getTermCourses = async (req, res) => {
             let termCourseIdMap = {}; // map unique courses from both cnum and ctitle cursors
             // map term course id to a course document from the course num cursor
             await cursorCourseNumAttr.forEach((doc) => {
+                // parse database document
+                let docToInsert = {
+                    "term_course_id": doc["term_course_id"],
+                    "course_num"    : doc["course_num"],
+                    "course_title"  : doc["course_title"],
+                    "units_esti"    : doc["units_esti"],
+                    "attributes"    : doc["attributes"],
+                    "closed"        : doc["closed"],
+                    "last_term"     : doc["last_term"]
+                };
+                termCourseIdMap[doc["term_course_id"]] = docToInsert;
+            });
+            // map term course id to a course document from the course num cursor
+            await cursorCourseNumCleanedAttr.forEach((doc) => {
                 // parse database document
                 let docToInsert = {
                     "term_course_id": doc["term_course_id"],
@@ -270,4 +309,71 @@ exports.getPrograms = async (req, res) => {
     };
     res.json(response);
 
+}
+
+////////////////////////////////////////
+//                                    //
+//         Private Functions          //
+//                                    //
+////////////////////////////////////////
+const cleanCourseNum = (courseNum) => {
+    let numDigits = 0;
+    let numDigitsAfterLastDash = 0;
+    let numDashes = 0;
+    let indexOfLastDash = 0;
+    let indexOfLastNonDigit = 0;
+    for (let i = 0; i < courseNum.length; i++) {
+        let currCharStr = courseNum[i];
+        if (currCharStr.charCodeAt(0) >= 48 && 
+            currCharStr.charCodeAt(0) <= 57) {
+            /* currCharStr is a digit */
+            numDigits++;
+            if (numDashes > 0) {
+                /* a dash was previously found */
+                numDigitsAfterLastDash++;
+            }
+        } else if (currCharStr == '-') {
+            /* currCharStr is a dash */
+            indexOfLastDash = i;
+            indexOfLastNonDigit = i;
+            numDashes++;
+            numDigitsAfterLastDash = 0;
+        } else {
+            /* currCharStr is not a digit or a dash */
+            indexOfLastNonDigit = i;
+        }
+    }
+    let finalStr;
+    if (numDigitsAfterLastDash < 4 && numDigitsAfterLastDash > 0) {
+        /* Cases: CS-15, CS-015, CS-0015, CS-0200, CS-200*/
+        let numZeroesToAdd = 4 - numDigitsAfterLastDash;
+        let strToAdd = "";
+        for (let i = 0; i < numZeroesToAdd; i++)
+            strToAdd += "0";
+        let strFirstPart = courseNum.substring(0, indexOfLastDash + 1);
+        let strLastPart = courseNum.substring(indexOfLastDash + 1, courseNum.length);
+        finalStr = strFirstPart + strToAdd + strLastPart;
+    } else if (numDigitsAfterLastDash == 0) {
+        /* Cases: CS15, CS015, CS0015, CS200, CS-*/
+        let numZeroesToAdd = 4 - numDigits;
+        if (numDashes == 0) {
+            /* no dash found */
+            let strToAdd = "-";
+            for (let i = 0; i < numZeroesToAdd; i++)
+                strToAdd += "0";
+            let strFirstPart = courseNum.substring(0, indexOfLastNonDigit + 1);
+            let strLastPart = courseNum.substring(indexOfLastNonDigit + 1, courseNum.length);
+            finalStr = strFirstPart + strToAdd + strLastPart;
+        } else {
+            /* dash(es) found but no digits afterwards */
+            let strToAdd = "";
+            for (let i = 0; i < numZeroesToAdd; i++)
+                strToAdd += "0";
+            let strFirstPart = courseNum.substring(0, indexOfLastDash + 1);
+            finalStr = strFirstPart + strToAdd;
+        }
+    } else {
+        finalStr = courseNum;
+    }
+    return finalStr;
 }
