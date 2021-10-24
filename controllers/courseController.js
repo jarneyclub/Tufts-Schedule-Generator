@@ -64,7 +64,6 @@ exports.getTermCourses = async (req, res) => {
 
         if ( reqCourseInput === "" ) {
             /* only attribute is provided */
-
             let cursorAttributes = 
                 dbCourses.find({"attributes": {"$all": [reqAttr]}}).sort({"course_num": 1});
 
@@ -82,6 +81,12 @@ exports.getTermCourses = async (req, res) => {
                 };
                 documents.push(docToInsert);
             });
+            // send response
+            res.json({
+                courses: documents,
+                time_taken: (Date.now() - start).toString() + "ms"
+            });
+
         }
         else if ( reqAttr === "" ) {
             /* only reqCourseInput is provided */
@@ -126,7 +131,6 @@ exports.getTermCourses = async (req, res) => {
             // map term course id to a course document from the course title cursor
             await cursorCourseTitle.forEach((doc) => {
                 // parse database document
-                console.log("doc: ", doc);
                 let docToInsert = {
                     "term_course_id": doc["term_course_id"],
                     "course_num"    : doc["course_num"],
