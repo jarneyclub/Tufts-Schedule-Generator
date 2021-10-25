@@ -18,6 +18,7 @@ function PlanCard(props) {
     handleCardOrigin,
     tabExpress,
     onClick,
+    customStyle
   } = props;
 
   const dragOver = (e) => {
@@ -53,6 +54,7 @@ function PlanCard(props) {
       onDragOver={dragOver}
       onDrop={drop}
       id={cardDetail?.plan_term_id}
+      style={{customStyle}}
     >
       <div className={pStyle.cardTitle}>{cardDetail?.term}</div>
       <div className={pStyle.courseContainer}>
