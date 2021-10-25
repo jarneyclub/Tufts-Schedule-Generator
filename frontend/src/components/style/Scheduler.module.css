@@ -447,18 +447,18 @@ body {
 
 
 @media only screen and (max-width: 1040px){
-  /* .leftColumnWrapper {
-    flex: 1 1 39%;
+  .leftColumnWrapper {
+    flex: 1 1 34.99%;
   }
 
   .rightColumnWrapper {
-    flex: 7 1 59%;
-  } */
+    flex: 7 1 64.99%;
+  }
 
-  .tabBar {
+  /* .tabBar {
     font-size: 1.5vw;
   }
-  
+   */
   
   
 }
