@@ -54,7 +54,7 @@ function PlanCard(props) {
       onDragOver={dragOver}
       onDrop={drop}
       id={cardDetail?.plan_term_id}
-      style={origin === "dp2" &&  {maxWidth: "33%", minWidth:"300px"}}
+      style={origin === "dp2" ?  {maxWidth: "33%", minWidth:"300px"} : {}}
     >
       <div className={pStyle.cardTitle}>{cardDetail?.term}</div>
       <div className={pStyle.courseContainer}>
