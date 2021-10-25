@@ -20,7 +20,7 @@ function PlanCard(props) {
     onClick,
     customStyle
   } = props;
-
+  console.log("customStyle", customStyle)
   const dragOver = (e) => {
     e.preventDefault();
   };
