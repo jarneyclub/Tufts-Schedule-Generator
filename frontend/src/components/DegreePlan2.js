@@ -675,7 +675,7 @@ function DegreePlan2(props) {
                   handleCardOrigin={handleCardOrigin}
                   cardOrigin={cardOrigin}
                   onClick={handleShowCourseInfo}
-                  customStyle={{minWidth: "300px", maxWidth: "33%"}}
+                  origin={"dp2"}
                 />
               ))}
             </div>
