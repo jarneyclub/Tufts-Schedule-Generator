@@ -54,6 +54,7 @@ const chosenClassesToApiDetails = (global) => {
             location: location,
             instructors: instructors,
             term_section_id: sectionId,
+            term_course_id: courseId,
             time_start: time_start_military,
             time_end: time_end_military
         }
