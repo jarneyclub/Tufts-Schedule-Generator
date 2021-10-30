@@ -18,8 +18,9 @@ function PlanCard(props) {
     handleCardOrigin,
     tabExpress,
     onClick,
+    origin
   } = props;
-
+  
   const dragOver = (e) => {
     e.preventDefault();
   };
@@ -53,6 +54,7 @@ function PlanCard(props) {
       onDragOver={dragOver}
       onDrop={drop}
       id={cardDetail?.plan_term_id}
+      style={origin === "dp2" ?  {maxWidth: "33%", minWidth:"300px"} : {}}
     >
       <div className={pStyle.cardTitle}>{cardDetail?.term}</div>
       <div className={pStyle.courseContainer}>

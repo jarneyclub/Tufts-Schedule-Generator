@@ -73,7 +73,7 @@ function Calendar(props) {
           >
             <ArrowLeftIcon fontSize="large" />
           </IconButton>
-          <div>{weekdays[daySelection]}</div>
+          <div>{weekdays[daySelection].substr(0,3).toUpperCase()}</div>
           <IconButton
             onClick={() => {
               onDayChange(1);
@@ -123,7 +123,7 @@ function Calendar(props) {
             addEntireDay={handleAddEntireDay}
             removeEntireDay={handleRemoveEntireDay}
             singleDay={true}
-            classesDay={classes[weekdays[daySelection]]}
+            classesDay={classes && classes[weekdays[daySelection]]}
             onEventClick={onEventClick}
             shrink={shrink}
           />

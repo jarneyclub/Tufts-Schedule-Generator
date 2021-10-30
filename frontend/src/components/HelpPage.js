@@ -21,7 +21,7 @@ import { withStyles } from "@material-ui/core/styles";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import SendIcon from "@mui/icons-material/Send";
 import { Button, TextField, Input } from "@material-ui/core";
-import * as Yup from "yup";
+import SnackBarAlert from "./reusable/SnackBarAlert";
 import hStyle from "./style/HelpPage.module.css";
 import feedbackJumbo from "./res/feedback.png";
 
@@ -49,10 +49,15 @@ const contactFormDefault = {
   email: "",
   message: "",
 };
+
 function HelpPage() {
   const [contactForm, setContactForm] = useState(contactFormDefault);
-
-  const handleSubmit = () => {};
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertSeverity, setAlertSeverity] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
+  const handleSubmit = () => {
+    fetchSendResponses();
+  };
 
   const handleContactForm = (field, e) => {
     setContactForm((prev) => ({
@@ -60,6 +65,31 @@ function HelpPage() {
       [field]: e.target.value,
     }));
   };
+
+  const handleCloseAlert = () => {
+    setShowAlert(false);
+  }
+
+  const fetchSendResponses = async  () => {
+    console.log("Response submitted")
+    const requestOption = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(contactForm),
+    };
+
+    await fetch("https://jarney.club/api/responses", requestOption)
+      .then((response) => response.json())
+      .then((result) => {
+        setAlertMessage("Thank you for your feedback!")
+        setAlertSeverity("success") ;
+        setShowAlert(true);
+      })
+      .catch((error) =>{
+
+      })
+  }
+
   return (
     <div className={hStyle.bodyContainer}>
       <div className={hStyle.horizontalContainer}>
@@ -90,7 +120,7 @@ function HelpPage() {
       <div className={hStyle.horizontalContainer}>
         <h2>Contact us!</h2>
         <div className={hStyle.titleRow}>
-          <form id="contactForm" className={hStyle.contactForm}>
+          <div id="contactForm" className={hStyle.contactForm}>
             <TextField
               type="text"
               name="Name"
@@ -129,11 +159,12 @@ function HelpPage() {
               type="submit"
               className={hStyle.button}
               startIcon={<SendIcon />}
-              onClick={handleSubmit}
+              onClick={fetchSendResponses}
             >
               Share with us
             </Button>
-          </form>
+          </div>
+          <br/>
           <img
             src={feedbackJumbo}
             alt="feedbackJumbo"
@@ -141,6 +172,14 @@ function HelpPage() {
           />
         </div>
       </div>
+      {showAlert && (
+        <SnackBarAlert
+          severity={alertSeverity}
+          onCloseAlert={handleCloseAlert}
+          showAlert={showAlert}
+          message={alertMessage}
+        />
+      )}
     </div>
   );
 }

@@ -425,9 +425,11 @@
 .overlayCalendarContainer {
   background-color: #ffffff;
 
-  width: 80%;
+  width: 100%;
   overflow-y: scroll;
   height: 75vh;
+  padding-bottom: 10vh;
+
 }
 
 /* font */
@@ -446,13 +448,28 @@ body {
 
 @media only screen and (max-width: 1040px){
   .leftColumnWrapper {
-    flex: 1 1 39%;
+    flex: 1 1 34.99%;
   }
 
   .rightColumnWrapper {
-    flex: 7 1 59%;
+    flex: 7 1 64.99%;
   }
+
+  /* .tabBar {
+    font-size: 1.5vw;
+  }
+   */
   
   
-  
+}
+@media only screen and (max-width: 669.99px){
+  .overlayTitle {
+    font-size: 20px !important;
+  } 
+  .overlayTitleContainer {
+    font-size: 15px !important;
+  }
+  .overlayCalendarContainer {
+    padding-bottom: 30vh;  
+  } 
 }

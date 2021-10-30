@@ -675,6 +675,7 @@ function DegreePlan2(props) {
                   handleCardOrigin={handleCardOrigin}
                   cardOrigin={cardOrigin}
                   onClick={handleShowCourseInfo}
+                  origin={"dp2"}
                 />
               ))}
             </div>
