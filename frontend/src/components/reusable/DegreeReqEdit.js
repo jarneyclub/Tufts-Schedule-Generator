@@ -53,7 +53,6 @@ const drDefault = {
   ],
 };
 
-const schoolDefaults = [" A&S", " ENG"];
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
@@ -64,7 +63,7 @@ const schoolDefaults = [" A&S", " ENG"];
 function DegreeReqEdit(props) {
   const { onClose, fetchCreate, fetchSave, isCreateMM, reqDetail } = props;
   const [detail, setDetail] = useState(isCreateMM ? drDefault : reqDetail);
-  const [schoolOptions, setSchoolOptions] = useState(schoolDefaults);
+  const [schoolOptions, setSchoolOptions] = useState([]);
   const [selectedSchoolIdx, setSelectedSchoolIdx] = useState(0);
 
   console.log("DegreeReqEdit, isCreateMM: ", isCreateMM);
@@ -202,7 +201,17 @@ function DegreeReqEdit(props) {
 
   useEffect(() => {
     fetchSchoolOptions();
+    console.log("detail: ", detail);
+    console.log("detail.school", detail?.school);
   }, []);
+
+  useEffect(() => {
+    const idx = schoolOptions.indexOf(detail?.school);
+    console.log("school idx", idx);
+    if (idx !== -1) {
+      setSelectedSchoolIdx(idx);
+    }
+  }, [schoolOptions])
   return (
     <div className={dStyle.drContainer}>
       <div className={dStyle.headerContainer}>
