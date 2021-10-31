@@ -183,7 +183,7 @@ function DegreePlan2(props) {
     setTransferCourseDetail(detail);
     if (touch) {
       console.log("show deetail: ", detail);
-      setAlertMessage("You have selected ".concat(detail.course_title).concat(". Tap on a plan card to add or move the course." ));
+      setAlertMessage("You have selected ".concat(detail.course_title).concat(". If you are on a mobile device, tap on a plan card to add or move the course." ));
       setAlertSeverity("info");
       setShowAlert(true);
     }

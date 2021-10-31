@@ -30,6 +30,7 @@ function PlanCard(props) {
    *  purpose: when course is dropped onto a planCard
    */
   const drop = (e) => {
+    e.preventDefault();
     if (
       dropItem(cardDetail.plan_term_id, transferCourseDetail) &&
       cardOrigin !== cardDetail.plan_term_id
@@ -52,9 +53,11 @@ function PlanCard(props) {
     <div
       className={pStyle.cardContainer}
       onDragOver={dragOver}
+      
       // onTouchMove={dragOver}
       onDrop={drop}
       onTouchEnd={drop}
+      onMouseUp={drop}
       id={cardDetail?.plan_term_id}
       style={origin === "dp2" ?  {maxWidth: "33%", minWidth:"300px"} : {}}
     >
