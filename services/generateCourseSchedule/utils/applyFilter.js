@@ -86,7 +86,7 @@ const createArrSectionTypes = (global) => {
 
                         // reinit withinUserPref flag 
                         // (if at any point in this loop this flag is true, loop will break)
-                        withinUserPreference = false; 
+                        withinUserPreference = true; 
 
                         let aClass = classes[l];
 
@@ -115,7 +115,6 @@ const createArrSectionTypes = (global) => {
 
                                 if (withinBounds(timeStartFilter, timeEndFilter, classStartTime, classEndTime) == true) {
                                     /* Class is within user time preference */
-                                    withinUserPreference = true;
                                     break;
                                 }
                             } /* (End of) loop over a single day's time preferences */
@@ -133,9 +132,6 @@ const createArrSectionTypes = (global) => {
                                 filtrationRecord.numOfSecsIgnored++; 
                                 filtrationRecord.numOfSecsIgnoredByignoreTU++;
                                 break;
-                            }
-                            else {
-                                withinUserPreference = true;
                             }
                         }
 
