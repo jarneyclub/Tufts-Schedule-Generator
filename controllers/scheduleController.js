@@ -89,11 +89,16 @@ exports.updateSchedule = async (req, res) => {
                     new Section(courseNum, courseTitle, sectionNum, sectionType, mapClassObj, sectionStatus, sectionId, currTermCourseId);
                 
                 // append section object to mapSecTypeToSectionMap
-                if (mapSecTypeToSectionMap[sectionType] === undefined)
+                if (mapSecTypeToSectionMap[sectionType] === undefined) {
                     mapSecTypeToSectionMap[sectionType] = {'0': currSectionObj};
+                    console.log("(updateSchedule) mapSecTypeToSectionMap: ", mapSecTypeToSectionMap);
+                }
                 else {
+                    indexMapSecTypeToSectionMap = Object.keys(mapSecTypeToSectionMap[sectionType]).length;
+                    console.log("(updateSchedule) indexMapSecTypeToSectionMap: ", indexMapSecTypeToSectionMap);
                     mapSecTypeToSectionMap[sectionType]
-                        [Object.keys(mapSecTypeToSectionMap[sectionType]).length] = currSectionObj;
+                        [indexMapSecTypeToSectionMap] = currSectionObj;
+                    console.log("(updateSchedule) mapSecTypeToSectionMap: ", mapSecTypeToSectionMap);
                 }
             } // (End of) iteration through sections
             const reducer = (accumulator, currentValue) => accumulator + currentValue;
