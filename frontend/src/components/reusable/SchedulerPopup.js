@@ -176,7 +176,7 @@ function RemoveSchedule(props) {
     onClose,
     scheduleName,
     scheduleID,
-    refreshPlans,
+    refreshSchedules,
     onShowAlert,
     setAlertMessage,
     setAlertSeverity,
@@ -194,6 +194,10 @@ function RemoveSchedule(props) {
   const fetchDelete = async () => {
     await fetch("https://jarney.club/api/schedule", {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
       body: JSON.stringify({sched_id: scheduleID})
     })
       .then((response) => response.json())
@@ -201,7 +205,7 @@ function RemoveSchedule(props) {
         console.log("result from Degree plan Delete", result);
 
         if (!result.error) {
-          refreshPlans();
+          refreshSchedules();
           setAlertMessage("Schedule deleted!");
           setAlertSeverity("success");
           onShowAlert();
