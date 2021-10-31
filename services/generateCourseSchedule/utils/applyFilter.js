@@ -210,6 +210,7 @@ const createArrSectionTypes = (global) => {
 
                 let sectionTypeObj = {};
                 let indexSection = 0;
+                console.log("(createArrSectionTypes) secsToInsert: ", secsToInsert);
                 for ( let i in secsToInsert ) {
                     
                     let sec = secsToInsert[i]; // Section object
