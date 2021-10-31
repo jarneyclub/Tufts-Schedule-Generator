@@ -179,8 +179,11 @@ function DegreePlan2(props) {
   const handleCloseAlert = () => {
     setShowAlert(false);
   };
-  const handleTransferCourseDetail = (detail) => {
+  const handleTransferCourseDetail = (detail, touch) => {
     setTransferCourseDetail(detail);
+    if (touch) {
+      console.log("show deetail: ", detail);
+    }
   };
 
   const handleSelectedPlanNameToID = () => {
@@ -463,9 +466,7 @@ function DegreePlan2(props) {
         }
       });
     });
-    // setUnitsCount(totalCount);
-    // setCompletedUnitsCount(completedCount);
-    // setCurrentUnitsCount(currentCount);
+ 
     handleUnitsCount("total", totalCount);
     handleUnitsCount("completed", completedCount);
     handleUnitsCount("current", currentCount);

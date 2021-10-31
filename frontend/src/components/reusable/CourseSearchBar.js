@@ -43,8 +43,8 @@ function CourseSearchBar(props) {
   } = props;
   const { course_num, course_title, units_esti } = courseDetail;
 
-  const handleDragStart = (e) => {
-    onTransferCourse(courseDetail);
+  const handleDragStart = (touch) => {
+    onTransferCourse && onTransferCourse(courseDetail, touch);
     if (origin !== "courseList") {
       handleCardOrigin(origin);
     }
@@ -60,10 +60,6 @@ function CourseSearchBar(props) {
   };
 
   const handleOnClick = () => {
-    // console.log("origin: ", origin)
-    // if (origin === "schedulerTab" || origin === "") {
-    //   onClick(courseDetail);
-    // }
     console.log("courseDEtail:", courseDetail);
     onClick(courseDetail);
   };
@@ -72,7 +68,7 @@ function CourseSearchBar(props) {
     <div
       className={cStyle.barContainer}
       draggable={draggable}
-      onTouchStart={handleDragStart}
+      onTouchStart={() => handleDragStart(true)}
       onDragStart={handleDragStart}
       id={course_num?.concat(course_title)}
       onDoubleClick={handleDoubleClick}
