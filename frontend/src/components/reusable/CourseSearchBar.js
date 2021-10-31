@@ -43,7 +43,8 @@ function CourseSearchBar(props) {
   } = props;
   const { course_num, course_title, units_esti } = courseDetail;
 
-  const handleDragStart = (touch) => {
+  const handleDragStart = (e, touch) => {
+    e.preventDefault();
     onTransferCourse && onTransferCourse(courseDetail, touch);
     if (origin !== "courseList") {
       handleCardOrigin(origin);
@@ -68,8 +69,9 @@ function CourseSearchBar(props) {
     <div
       className={cStyle.barContainer}
       draggable={draggable}
-      onTouchStart={() => handleDragStart(true)}
-      onDragStart={handleDragStart}
+      onTouchStart={(e) => handleDragStart(e, true)}
+      onDragStart={(e) => handleDragStart(e, false)}
+      onMouseDown={(e) => handleDragStart(e, true)}
       id={course_num?.concat(course_title)}
       onDoubleClick={handleDoubleClick}
       onClick={handleOnClick}
