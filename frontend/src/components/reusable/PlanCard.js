@@ -22,7 +22,7 @@ function PlanCard(props) {
   } = props;
   
   const dragOver = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
   };
 
   /*
