@@ -249,6 +249,10 @@ function DegreePlan2(props) {
    */
   const dropItem = (planTerm, courseDetail) => {
     console.log("drop course: ", courseDetail, " to: ", planTerm);
+
+    if (Object.entries(courseDetail).length === 0 && courseDetail.constructor === Object) {
+      return true;
+    }
     /*  Check if course has been added  */
     for (let card of cardOptions) {
       if (
