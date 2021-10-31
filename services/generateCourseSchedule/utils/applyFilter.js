@@ -134,6 +134,7 @@ const createArrSectionTypes = (global) => {
                             let dayOfWeek = aClass.getDayOfWeek();
 
                             let timePreferencesOnDay = timePref[dayOfWeek];
+                            console.log("(applyFilter) dayOfWeek: ", dayOfWeek);
                             console.log("(applyFilter) timePreferencesOnDay: ", timePreferencesOnDay);
                             for (let i = 0; i < timePreferencesOnDay.length; i++) {
                                 let timeStartFilter = timePreferencesOnDay[i].time_earliest;
