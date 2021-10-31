@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import eStyle from "./reusableStyles/EventScreenshot.module.css";
 
 const columnTitles = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "TimeUnspecified"]
-const customStyleDefault = {backgroundColor : "#ffffff", color:"#000000"};
+
 const palette = [
   {backgroundColor:"#ffffff", color: "#a0c3d1", borderLeft: "5px solid #a0c3d1"},
   {backgroundColor:"#ffffff", color: "#7048d5", borderLeft: "5px solid #7048d5"}, 
@@ -25,7 +25,7 @@ const palette = [
 ]
 function Class(props) {
   const { classDetail, tu, customStyle } = props;
-  const { name, details, location, instructors, time_start, time_end, term_section_id} = classDetail;
+  const { name, details, location, instructors, time_start, time_end, term_section_id, term_course_id} = classDetail;
   const detail = details.split(',');
   const loc = location.split(',');
 
@@ -57,15 +57,15 @@ function EventScreenshot(props) {
     let paletteIdx = 0;
     columnTitles.forEach((title) => {
       classDetails[title].forEach(detail  => {
-        if(!sectionIDCSS.hasOwnProperty(detail.term_section_id)) {
-          console.log("detail id:" , detail.term_section_id)
+        if(!sectionIDCSS.hasOwnProperty(detail.term_course_id)) {
+          console.log("detail id:" , detail.term_course_id)
           // setSectionIDCSS((prev) => ({
           //   ...prev,
           //   [detail.term_section_id]: palette[paletteIdx],
           // }))
           sectionIDCSS = {
             ...sectionIDCSS, 
-            [detail.term_section_id]: palette[paletteIdx]
+            [detail.term_course_id]: palette[paletteIdx]
           }
           console.log("sectionIDCSS", sectionIDCSS);
           (paletteIdx <= (palette.length - 1)) ? (paletteIdx++) : (paletteIdx = 0);
@@ -94,7 +94,7 @@ function EventScreenshot(props) {
             <div className={eStyle.titleContainer}>{title !== "TimeUnspecified" ? title : "Unspecified"}</div>
             {
               classDetails[title]?.map((details) => (
-                <Class classDetail={details} tu={title === "TimeUnspecified"} customStyle={classCSS[details.term_section_id]}/>
+                <Class classDetail={details} tu={title === "TimeUnspecified"} customStyle={classCSS[details.term_course_id]}/>
               ))
             }
           </div>
