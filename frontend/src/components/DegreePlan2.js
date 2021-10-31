@@ -133,10 +133,7 @@ function DegreePlan2(props) {
   const [alertSeverity, setAlertSeverity] = useState();
 
   const [currentTerm, setCurrentTerm] = useState("Fall");
-  // const [unitsCount, setUnitsCount] = useState(0);
-  // const [completedUnitsCount, setCompletedUnitsCount] = useState(0);
-  // const [currentUnitsCount, setCurrentUnitsCount] = useState(0);
-  // const [futureUnitsCount, setFutureUnitsCount] = useState(0);
+
   const [unitsCount, setUnitsCount] = useState({
     total: 0,
     completed: 0,
@@ -273,8 +270,9 @@ function DegreePlan2(props) {
             }
           : card
       )
+      
     );
-
+    setTransferCourseDetail({});
     return true;
   };
 
