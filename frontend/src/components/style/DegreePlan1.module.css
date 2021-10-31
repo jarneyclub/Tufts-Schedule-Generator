@@ -101,7 +101,7 @@ input {
   /* background-color: rgba(239, 235, 249, 0.9);; */
   /* border-top: 1px solid #5a32bf; */
   width: 100%;
-  max-height: 300px;
+  max-height: 150px;
 
   overflow-y: scroll;
 }
