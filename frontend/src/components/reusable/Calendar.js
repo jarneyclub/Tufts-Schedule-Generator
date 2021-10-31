@@ -26,6 +26,7 @@ const time = [
   "6PM",
   "7PM",
   "8PM",
+  '9PM',
 ];
 
 const weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
