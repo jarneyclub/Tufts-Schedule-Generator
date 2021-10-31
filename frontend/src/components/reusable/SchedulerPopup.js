@@ -29,6 +29,7 @@ import CourseSearchBar from "../reusable/CourseSearchBar";
 import SnackBarAlert from "../reusable/SnackBarAlert";
 import DegreeReqDisplay from "../reusable/DegreeReqDisplay";
 import JarUserLogin from "../reusable/JarUserLogin";
+import { json } from "body-parser";
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
@@ -36,10 +37,17 @@ import JarUserLogin from "../reusable/JarUserLogin";
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function EditScheduleName(props) {
-  const { onClose, refreshPlans, planName, planID } = props;
+  const {
+    scheduleID,
+    scheduleName,
+    onClose,
+    refreshSchedules,
+    onShowAlert,
+    setAlertMessage,
+    setAlertSeverity,
+  } = props;
 
-  
-  const [editName, setEditName] = useState(planName);
+  const [editName, setEditName] = useState(scheduleName);
 
   const handleClose = () => {
     onClose();
@@ -50,25 +58,41 @@ function EditScheduleName(props) {
   const handleSaveEdit = () => {
     /* do something API?? pass in the selectedCards arr */
     patchEditName();
-    refreshPlans();
-    /* Then Close */
-    onClose();
   };
 
   const patchEditName = async () => {
     const requestOption = {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+      body: JSON.stringify({
+        sched_id: scheduleID,
+        new_name: editName,
+      }),
     };
-    const url = "https://jarney.club/api/schedule"
-      .concat(planID)
-      .concat("/plan_name/")
-      .concat(editName);
     console.log("requestOption for fetchCreatePrivateReqs", requestOption);
-    await fetch(url, requestOption)
+    await fetch("https://jarney.club/api/schedule/name", requestOption)
       .then((response) => response.json())
-      .then((result) => console.log("result from editPlanName: ", result))
-      .catch((error) => console.log("error from editPlanName: ", error));
+      .then((result) => {
+        console.log("result from editScheduleName: ", result);
+
+        if (!result.error) {
+          setAlertMessage("Schedule name changed!");
+          setAlertSeverity("success");
+          onShowAlert();
+          refreshSchedules();
+          onClose();
+        } else {
+          setAlertMessage(result.error);
+          setAlertSeverity("warning");
+          onShowAlert(true);
+        }
+      })
+      .catch((error) => {
+        console.log("error from editPlanName: ", error);
+      });
   };
 
   return (
@@ -77,7 +101,9 @@ function EditScheduleName(props) {
         <IconButton onClick={handleClose} className={pStyle.closeButton}>
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>EDIT PLAN NAME</div>
+        <div className={pStyle.headerBody}>
+          EDIT PLAN NAME&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
 
         <div />
       </div>
@@ -100,7 +126,7 @@ function EditScheduleName(props) {
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function AddSchedule(props) {
-  const { onClose, onCreateSchedule, scheduleOptions} = props;
+  const { onClose, onCreateSchedule, scheduleOptions } = props;
 
   const [scheduleName, setScheduleName] = useState("");
 
@@ -110,27 +136,11 @@ function AddSchedule(props) {
   const handleNameChange = (e) => {
     setScheduleName(e.target.value);
   };
-  const handleCheckDuplicate = () => {
-    scheduleOptions?.map((opt) => {
-      if (opt.sched_name === scheduleName) 
-        return true;
-  })
-
-    return false
-  }
 
   const handleAdd = () => {
     /* do something API?? pass in the selectedCards arr */
-    if (!false) {
-      onCreateSchedule(scheduleName);
-      /* Then Close */
-      onClose();
-    }
-    else {
-      // give warning 
 
-    }
-    
+    onCreateSchedule(scheduleName);
   };
 
   return (
@@ -139,13 +149,14 @@ function AddSchedule(props) {
         <IconButton onClick={handleClose} className={pStyle.closeButton}>
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>ADD SCHEDULE</div>
+        <div className={pStyle.headerBody}>
+          ADD SCHEDULE&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
         <div />
       </div>
       <div className={pStyle.formContainer}>
         <div className={pStyle.inputBarContainer}>
           <TextField value={scheduleName} onChange={handleNameChange} />
-
         </div>
         <Button className={pStyle.submitButton} onClick={handleAdd}>
           ADD
@@ -161,7 +172,15 @@ function AddSchedule(props) {
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function RemoveSchedule(props) {
-  const { onClose, planName, planID, refreshPlans } = props;
+  const {
+    onClose,
+    scheduleName,
+    scheduleID,
+    refreshSchedules,
+    onShowAlert,
+    setAlertMessage,
+    setAlertSeverity,
+  } = props;
 
   const handleClose = () => {
     onClose();
@@ -173,14 +192,29 @@ function RemoveSchedule(props) {
   };
 
   const fetchDelete = async () => {
-    await fetch("https://jarney.club/api/degreeplan/".concat(planID), {
+    await fetch("https://jarney.club/api/schedule", {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+      body: JSON.stringify({sched_id: scheduleID})
     })
       .then((response) => response.json())
       .then((result) => {
         console.log("result from Degree plan Delete", result);
-        refreshPlans();
-        onClose();
+
+        if (!result.error) {
+          refreshSchedules();
+          setAlertMessage("Schedule deleted!");
+          setAlertSeverity("success");
+          onShowAlert();
+          onClose();
+        } else {
+          setAlertMessage(result.error);
+          setAlertSeverity("warning");
+          onShowAlert(true);
+        }
       })
       .catch((error) => console.log("error from Degree Plan Delete", error));
   };
@@ -196,7 +230,7 @@ function RemoveSchedule(props) {
       </div>
       <div className={pStyle.formContainer}>
         <div className={pStyle.inputBarContainer}>
-          Are you sure you want to remove {planName}?
+          Are you sure you want to remove {scheduleName}?
         </div>
         <Button className={pStyle.cancelButton} onClick={handleClose}>
           CANCEL
@@ -210,4 +244,4 @@ function RemoveSchedule(props) {
   );
 }
 
-export {  EditScheduleName, AddSchedule, RemoveSchedule };
+export { EditScheduleName, AddSchedule, RemoveSchedule };

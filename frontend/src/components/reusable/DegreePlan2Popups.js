@@ -35,45 +35,48 @@ import JarUserLogin from "../reusable/JarUserLogin";
  *                          Add PlanCard Popup                               *
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+// const yearOptions = []
+const termOptions = ["Fall", "Spring", "Summer", "Annual"];
 function AddSemester(props) {
-  const { onClose, planID, planName, refreshPlans } = props;
+  const {
+    onClose,
+    planID,
+    planName,
+    refreshPlans,
+    onShowAlert,
+    setAlertMessage,
+    setAlertSeverity,
+  } = props;
 
   /* Year Dropdown */
   const [yearOptions, setYearOptions] = useState([
     2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026,
   ]); // will be replaced by API?!
   const [selectedYear, setSelectedYear] = useState(yearOptions[0]);
-
+  const [selectedYearIdx, setSelectedYearIdx] = useState(0);
   /* Term Dropdown */
-  const [termOptions, setTermOptions] = useState([
-    "Fall",
-    "Spring",
-    "Summer",
-    "Annual",
-  ]); // possible semesters
+
   const [selectedTerm, setSelectedTerm] = useState(termOptions[0]);
+  const [selectedTermIdx, setSelectedTermIdx] = useState(0);
 
   const handleTermChange = (e) => {
     setSelectedTerm(e.target.value);
+    setSelectedTermIdx(e.target.selectedIndex);
   };
 
   const handleYearChange = (e) => {
+    setSelectedYearIdx(e.target.selectedIndex);
     setSelectedYear(e.target.value);
-  };
-
-  const handleClose = () => {
-    onClose();
   };
 
   const handleAdd = () => {
     /* do something API??  */
     fetchAdd();
-    /* Then Close */
-    
   };
 
   const fetchAdd = async () => {
-    const yearTerm = selectedYear + " " + selectedTerm;
+    const yearTerm =
+      yearOptions[selectedYearIdx] + " " + termOptions[selectedTermIdx];
     console.log("yearTerm: ", yearTerm);
     console.log("planID: ", planID);
     const value = { plan_id: planID, term: yearTerm };
@@ -86,10 +89,18 @@ function AddSemester(props) {
     await fetch("https://jarney.club/api/degreeplan/term", requestOption)
       .then((response) => response.json())
       .then((result) => {
-        refreshPlans();
-        console.log("result from fetchAdd", result);        
-        onClose();
-
+        if (!result.error) {
+          refreshPlans();
+          console.log("result from fetchAdd", result);
+          setAlertMessage("Term added!");
+          setAlertSeverity("success");
+          onShowAlert();
+          onClose();
+        } else {
+          setAlertMessage(result.error);
+          setAlertSeverity("warning");
+          onShowAlert(true);
+        }
       })
       .catch((error) => console.log("error from fetchAdd", error));
   };
@@ -98,12 +109,14 @@ function AddSemester(props) {
       <div className={pStyle.headerContainer}>
         <IconButton
           type="button"
-          onClick={handleClose}
+          onClick={onClose}
           className={pStyle.closeButton}
         >
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>Add Card to {planName}</div>
+        <div className={pStyle.headerBody}>
+          Add Card to {planName}&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
         <div />
       </div>
       <div className={pStyle.formContainer}>
@@ -134,13 +147,22 @@ function AddSemester(props) {
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function RemoveSemester(props) {
-  const { onClose, cardOptions, planName, planID, refreshPlans } = props;
+  const {
+    onClose,
+    cardOptions,
+    planName,
+    planID,
+    refreshPlans,
+    onShowAlert,
+    setAlertMessage,
+    setAlertSeverity,
+  } = props;
   console.log("cardoptions from removeSemester: ", cardOptions);
   /*  Stores the cards to be deleted  */
   const [selectedCards, setSelectedCards] = useState([]);
 
   const handleCardChange = (e) => {
-    const val = e.target.value;
+    const val = e.target.id;
     const pos = selectedCards.indexOf(val);
     if (pos === -1) {
       /* was not in selectedCards array, aka was not selected, now select */
@@ -155,27 +177,41 @@ function RemoveSemester(props) {
     }
   };
 
-
-
   const handleClose = () => {
     onClose();
   };
 
   const handleRemove = () => {
     /* do something API?? pass in the selectedCards arr */
-   
+
     fetchDeleteTerms();
-    
   };
 
   const fetchDeleteTerms = async () => {
-    await fetch("https://jarney.club/api/degreeplan/term/")
-      .then((response) => response.json()) 
+    const requestOption = {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        plan_term_ids: selectedCards,
+        plan_id: planID,
+      }),
+    };
+    await fetch("https://jarney.club/api/degreeplan/terms", requestOption)
+      .then((response) => response.json())
       .then((result) => {
-        console.log("result from Degree Plan Term remove", result);
-        refreshPlans();
-        onClose();
-      })
+        if (!result.error) {
+          console.log("result from Degree Plan Terms remove", result);
+          refreshPlans();
+          setAlertMessage("Term(s) removed!");
+          setAlertSeverity("success");
+          onShowAlert();
+          onClose();
+        } else {
+          setAlertMessage(result.error);
+          setAlertSeverity("warning");
+          onShowAlert(true);
+        }
+      });
   };
 
   return (
@@ -184,7 +220,9 @@ function RemoveSemester(props) {
         <IconButton onClick={handleClose} className={pStyle.closeButton}>
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>Remove Cards from {planName}</div>
+        <div className={pStyle.headerBody}>
+          Remove Cards from {planName}&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
         <div />
       </div>
       <div className={pStyle.formContainer}>
@@ -193,12 +231,16 @@ function RemoveSemester(props) {
             <input
               type="button"
               value={card.term}
+              id={card.plan_term_id}
               key={card}
               className={pStyle.inputBar}
               onClick={(e) => handleCardChange(e)}
             />
           ))}
         </div>
+        <Button className={pStyle.cancelButton} onClick={handleClose}>
+          CANCEL
+        </Button>
 
         <Button className={pStyle.submitButton} onClick={handleRemove}>
           REMOVE
@@ -214,9 +256,16 @@ function RemoveSemester(props) {
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function EditPlanName(props) {
-  const { onClose, refreshPlans, planName, planID } = props;
+  const {
+    onClose,
+    refreshPlans,
+    planName,
+    planID,
+    onShowAlert,
+    setAlertMessage,
+    setAlertSeverity,
+  } = props;
 
-  
   const [editName, setEditName] = useState(planName);
 
   const handleClose = () => {
@@ -228,9 +277,8 @@ function EditPlanName(props) {
   const handleSaveEdit = () => {
     /* do something API?? pass in the selectedCards arr */
     patchEditName();
-    refreshPlans();
+
     /* Then Close */
-    onClose();
   };
 
   const patchEditName = async () => {
@@ -238,14 +286,28 @@ function EditPlanName(props) {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
     };
-    const url = "https://jarney.club/api/degreereq/private/"
+    const url = "https://jarney.club/api/degreeplan/"
       .concat(planID)
       .concat("/plan_name/")
       .concat(editName);
     console.log("requestOption for fetchCreatePrivateReqs", requestOption);
     await fetch(url, requestOption)
       .then((response) => response.json())
-      .then((result) => console.log("result from editPlanName: ", result))
+      .then((result) => {
+        console.log("result from editPlanName: ", result);
+
+        if (!result.error) {
+          refreshPlans();
+          setAlertMessage("Plan name changed successfully!");
+          setAlertSeverity("success");
+          onShowAlert();
+          onClose();
+        } else {
+          setAlertMessage(result.error);
+          setAlertSeverity("warning");
+          onShowAlert(true);
+        }
+      })
       .catch((error) => console.log("error from editPlanName: ", error));
   };
 
@@ -255,7 +317,9 @@ function EditPlanName(props) {
         <IconButton onClick={handleClose} className={pStyle.closeButton}>
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>EDIT PLAN NAME</div>
+        <div className={pStyle.headerBody}>
+          EDIT PLAN NAME&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
 
         <div />
       </div>
@@ -303,13 +367,14 @@ function AddPlan(props) {
         <IconButton onClick={handleClose} className={pStyle.closeButton}>
           <CancelIcon />
         </IconButton>
-        <div className={pStyle.headerBody}>ADD PLAN</div>
+        <div className={pStyle.headerBody}>
+          ADD PLAN&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
         <div />
       </div>
       <div className={pStyle.formContainer}>
         <div className={pStyle.inputBarContainer}>
           <TextField value={planName} onChange={handleNameChange} />
-
         </div>
         <Button className={pStyle.submitButton} onClick={handleAdd}>
           ADD
@@ -325,7 +390,15 @@ function AddPlan(props) {
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function RemovePlan(props) {
-  const { onClose, planName, planID, refreshPlans } = props;
+  const {
+    onClose,
+    planName,
+    planID,
+    refreshPlans,
+    onShowAlert,
+    setAlertMessage,
+    setAlertSeverity,
+  } = props;
 
   const handleClose = () => {
     onClose();
@@ -337,14 +410,29 @@ function RemovePlan(props) {
   };
 
   const fetchDelete = async () => {
-    await fetch("https://jarney.club/api/degreeplan/".concat(planID), {
+    const requestOption = {
       method: "DELETE",
-    })
+      headers: { accept: "*/*" },
+    };
+    await fetch(
+      "https://jarney.club/api/degreeplan?plan_id=".concat(planID),
+      requestOption
+    )
       .then((response) => response.json())
       .then((result) => {
         console.log("result from Degree plan Delete", result);
-        refreshPlans();
-        onClose();
+
+        if (!result.error) {
+          refreshPlans();
+          setAlertMessage("Plan removed!");
+          setAlertSeverity("success");
+          onShowAlert();
+          onClose();
+        } else {
+          setAlertMessage(result.error);
+          setAlertSeverity("warning");
+          onShowAlert(true);
+        }
       })
       .catch((error) => console.log("error from Degree Plan Delete", error));
   };

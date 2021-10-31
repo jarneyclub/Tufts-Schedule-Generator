@@ -58,18 +58,13 @@ exports.updateSchedule = async (req, res) => {
                 let currSection      = arrSections[j];
                 courseNum            = currSection.course_num;
                 courseTitle          = currSection.course_title;
-                /* TODO: debug courseTitle is undefined*/
-                console.log("(scheduleCntrl) currSection: ", currSection);
-                console.log("(scheduleCntrl) currSection.course_title: ", currSection.course_title);
-                console.log("(scheduleCntrl) currSection['course_title']: ", currSection['course_title']);
-                console.log("(scheduleCntrl) courseTitle: ", courseTitle);
                 let sectionId        = currSection._id;
                 let sectionUnits     = currSection.units;
                 let sectionNum       = currSection.section_num;
                 let sectionStatus    = mapStatusFormat[currSection.status];
                 let sectionType      = currSection.section_type;
                 let sectionInstrMode = currSection.instr_mode;
-                
+                console.log("(updateSchedule) sectionNum: ", sectionNum);
                 // log units of this section type
                 mapSecTypeToUnits[sectionType] = sectionUnits;
 
@@ -86,19 +81,24 @@ exports.updateSchedule = async (req, res) => {
                     let currClassObj = 
                         new Class(courseNum, courseTitle, sectionNum, sectionType, 
                                     classDayOfWeek, classStartTime, classEndTime, 
-                                    classRoom, classCampus, classInstructor);
+                                    classRoom, classCampus, classInstructor, sectionId, currTermCourseId);
                     mapClassObj[mapClassObjIndex] = currClassObj;
                     mapClassObjIndex++;
                 } // (End of) iteration through classes
                 let currSectionObj = 
-                    new Section(courseNum, courseTitle, sectionNum, sectionType, mapClassObj, sectionStatus, sectionId);
+                    new Section(courseNum, courseTitle, sectionNum, sectionType, mapClassObj, sectionStatus, sectionId, currTermCourseId);
                 
                 // append section object to mapSecTypeToSectionMap
-                if (mapSecTypeToSectionMap[sectionType] === undefined)
+                if (mapSecTypeToSectionMap[sectionType] === undefined) {
                     mapSecTypeToSectionMap[sectionType] = {'0': currSectionObj};
+                    console.log("(updateSchedule) mapSecTypeToSectionMap: ", mapSecTypeToSectionMap);
+                }
                 else {
+                    indexMapSecTypeToSectionMap = Object.keys(mapSecTypeToSectionMap[sectionType]).length;
+                    console.log("(updateSchedule) indexMapSecTypeToSectionMap: ", indexMapSecTypeToSectionMap);
                     mapSecTypeToSectionMap[sectionType]
-                        [Object.keys(mapSecTypeToSectionMap[sectionType]).length] = currSectionObj;
+                        [indexMapSecTypeToSectionMap] = currSectionObj;
+                    console.log("(updateSchedule) mapSecTypeToSectionMap: ", mapSecTypeToSectionMap);
                 }
             } // (End of) iteration through sections
             const reducer = (accumulator, currentValue) => accumulator + currentValue;
@@ -120,6 +120,7 @@ exports.updateSchedule = async (req, res) => {
                     courseInfo.units_esti = arrCourses[i].getUnits();
                     arrCoursesInfoToReturn.push(courseInfo);
                 }
+                /* update schedule on database */
                 let createdSchedule = 
                     await scheduleHandler.updateSchedule(sched_id, filter, arrCoursesInfoToReturn, weeklySchedule);
                 let response = {
@@ -129,6 +130,7 @@ exports.updateSchedule = async (req, res) => {
                 res.json(response);
             },
             (error) => {
+                console.log("(scheduleController/updateSchedule) ERROR: ", error);
                 let response = {
                     error: error,
                     time_taken: (Date.now() - start).toString() + "ms"
@@ -149,10 +151,46 @@ exports.updateSchedule = async (req, res) => {
  * @param {*} res
  */
 exports.getSchedules = async (req, res) => {
-    let userId = req.query.userId
-    let schedules = await scheduleHandler.getSchedulesOfUser(userId);
-    res.json({schedules: schedules});
+    try {
+        let userId = req.userid;
+        let schedules = await scheduleHandler.getSchedulesOfUser(userId);
+        res.json({schedules: schedules});
+    }
+    catch (err) {
+        errorHandler(err, "getSchedules", res);
+    }
 }
+
+/**
+ * PATCH /schedule/name
+ * @param {*} req
+ * @param {*} res
+ */
+exports.changeScheduleName = async (req, res) => {
+    try {
+        let {sched_id, new_name} = req.body;
+        let newSchedule = await scheduleHandler.changeScheduleName(sched_id, new_name);
+        res.json({schedule: newSchedule});
+    }
+    catch (err) {
+        errorHandler(err, "changeScheduleName", res);
+    }
+
+}
+
+exports.deleteSchedule = async (req, res) => {
+    try {
+        let {sched_id} = req.body;
+        console.log("(deleteSchedule) req.body: ", req.body);
+        await scheduleHandler.deleteSchedule(sched_id);
+        res.json({"res": "Schedule deleted"});
+    }
+    catch (err) {
+        errorHandler(err, "deleteSchedule", res);
+    }
+}
+
+
 
 const errorHandler = (err, endpoint, res) => {
     console.error("(degreeReqController/errorhandler) err: ", err);

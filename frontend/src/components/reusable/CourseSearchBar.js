@@ -39,11 +39,13 @@ function CourseSearchBar(props) {
     draggable,
     onDoubleClick,
     customStyle,
+    onClick,
   } = props;
   const { course_num, course_title, units_esti } = courseDetail;
 
-  const handleDragStart = (e) => {
-    onTransferCourse(courseDetail);
+  const handleDragStart = (e, touch) => {
+    e.preventDefault();
+    onTransferCourse && onTransferCourse(courseDetail, touch);
     if (origin !== "courseList") {
       handleCardOrigin(origin);
     }
@@ -58,13 +60,21 @@ function CourseSearchBar(props) {
     }
   };
 
+  const handleOnClick = () => {
+    console.log("courseDEtail:", courseDetail);
+    onClick(courseDetail);
+  };
+
   return (
     <div
       className={cStyle.barContainer}
       draggable={draggable}
-      onDragStart={handleDragStart}
-      id={course_num.concat(course_title)}
+      onTouchStart={(e) => handleDragStart(e, true)}
+      onDragStart={(e) => handleDragStart(e, false)}
+      onMouseDown={(e) => handleDragStart(e, false)}
+      id={course_num?.concat(course_title)}
       onDoubleClick={handleDoubleClick}
+      onClick={handleOnClick}
       style={customStyle}
     >
       {(origin === "schedulerCourseList" ||
@@ -82,13 +92,18 @@ function CourseSearchBar(props) {
         </div>
       )}
       {(origin === "schedulerTab" ||
-        !(origin === "courseList" || origin === "schedulerCourseList")) && (
+        !(
+          origin === "courseList" ||
+          origin === "schedulerCourseList" ||
+          origin === "degreePlanExpress"
+        )) && (
         <div className={cStyle.actionButton}>
           <IconButton onClick={handleDoubleClick}>
             <RemoveIcon style={{ fill: "#ffffff" }} />
           </IconButton>
         </div>
       )}
+      {origin === "degreePlanExpress" && <div>&nbsp;</div>}
     </div>
   );
 }

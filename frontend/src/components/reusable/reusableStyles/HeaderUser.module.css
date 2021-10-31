@@ -11,7 +11,7 @@
   flex-direction: row;
   justify-content: space-between;
   /* align-items: center; */
-  background-color: rgba(	241, 237, 250	, 0.9);
+  background-color: rgba(241, 237, 250, 0.9);
   padding-left: 5vw;
   padding-right: 5vw;
 
@@ -49,7 +49,7 @@
 }
 
 .verticalBar {
-  border-left: #ffffff 1px solid;
+  border-left: #000000 1px solid;
   height: 40px;
   text-decoration: none;
 }
@@ -111,7 +111,7 @@
 }
 
 .button {
-  color: #000000;
+  color: #000000 !important;
   text-transform: unset !important;
   border: none;
 
@@ -148,19 +148,30 @@
   border-bottom-left-radius: 10px;
   /* box-sizing: content-box; */
   overflow-y: visible;
-  transform: translate(-95%, 81px);
+  transform: translate(-5vw, 81px);
   color: #ffffff;
+  box-shadow: 0 4px 8px 0 rgba(90, 50, 191, 0.2),
+    0 6px 20px 0 rgba(90, 50, 191, 0.19);
+  
 }
 
 .shrinkNavOption {
   color: #000000;
   font-size: 25px;
   font-weight: lighter;
-
+  font-family: neuzeit-grotesk, sans-serif;
+  font-style: normal;
+  font-weight: 300;
   padding-top: 1%;
   padding-bottom: 1%;
   width: 100%;
   text-align: center;
+  background-color: linear-gradient(
+      rgba(160, 195, 209, 0.5),
+      rgba(160, 195, 209, 0.5)
+    ),
+    linear-gradient(white, white);
+ 
 }
 
 .shrinkNavOption:hover {
@@ -177,8 +188,10 @@
   padding-top: 1%;
   padding-bottom: 1%;
   background-color: #7048d5;
-  /* border-left: 10px #fc4e4e solid;
-  border-right: 10px #fc4e4e solid; */
+  font-weight: lighter;
+  font-family: neuzeit-grotesk, sans-serif;
+  font-style: normal;
+  font-weight: 300;
 
   width: 100%;
   text-align: center;
@@ -187,6 +200,6 @@
 .activeShrinkNavOption:hover {
   /* width: 100%; */
   color: #ffffff;
-  font-weight: normal;
+  
   background-color: #7048d5;
 }

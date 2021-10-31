@@ -40,9 +40,8 @@ exports.authenticateCredentialsWithPassport = async (req, res, next) => {
  * Sign and set JWT to cookie and respond to request with basic user data
  * @param {*} res
  * @param {*} userid
- * @param {*} password
  */
-exports.signAccessTokenAndSendAsCookie = async (res, userid, password) => {
+exports.signAccessTokenAndSendAsCookie = async (res, userid) => {
     let dbUsers = mongoose.connection.collection("users"); // get MongoDB collection
     let result = await dbUsers.findOne({
         userid: userid
@@ -51,7 +50,7 @@ exports.signAccessTokenAndSendAsCookie = async (res, userid, password) => {
     if (result === null)
         resHandler.respondWithCustomError("104", "403", "Registration Error", "Email is not registered. Please register first.", res);
         
-    let token = jwt.sign({ userid: userid, password: password, role: result.role}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
+    let token = jwt.sign({ userid: userid, role: result.role}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
     // res.json({"token": token});
     res.cookie("access_token", token, {
         maxAge: 24 * 60 * 60 * 1000,
@@ -72,7 +71,7 @@ exports.signAccessTokenAndSendAsCookie = async (res, userid, password) => {
  * @param {*} res
  */
 exports.signAccessTokenAndAttachCookie = async (req, res, next) => {
-    let token = jwt.sign({ userid: req.userid, password: req.password, role: req.role}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
+    let token = jwt.sign({ userid: req.userid, role: req.role}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
     res.cookie("access_token", token, {
         maxAge: 24 * 60 * 60 * 1000,
         httpOnly: true,
@@ -81,6 +80,21 @@ exports.signAccessTokenAndAttachCookie = async (req, res, next) => {
     req.token = token;
     next();
 }
+
+/**
+ * Set token to expire after a second
+ * @param {*} res
+ */
+ exports.setToExpireToken = async (req, res) => {
+    let token = jwt.sign({}, process.env.TOKEN_SECRET, { expiresIn: '1s'});
+    // res.json({"token": token});
+    res.cookie("access_token", token, {
+        maxAge: 1000,
+        httpOnly: true,
+        secure: true
+    }).status(200).send();
+}
+
 
 /**
  * Authenticates token from the request. Calls database 
@@ -92,9 +106,9 @@ exports.signAccessTokenAndAttachCookie = async (req, res, next) => {
  * @param {*} next
  */
 exports.authenticateToken = async (req, res, next) => {
-    console.log("req.body", req.body);
+    // console.log("(authenticateToken) req.body", req.body);
     try {
-        console.log("req.cookies", req.cookies);
+        // console.log("(authenticateToken) req.cookies", req.cookies);
     }
     catch (e) {
         console.log("ERROR IN REQ.COOKIES");
@@ -108,7 +122,7 @@ exports.authenticateToken = async (req, res, next) => {
 
     if (token) {
         jwt.verify(token, process.env.TOKEN_SECRET, async (err, userdata) => {
-            console.log("(authenticateToken) userdata: ", userdata);
+            // console.log("(authenticateToken) userdata: ", userdata);
             if (err)
                 resHandler.respondWithCustomError("305", "401", "Authentication Error", "Token is invalid", res);
             let dbUsers = mongoose.connection.collection("users"); // get MongoDB collection
@@ -119,13 +133,13 @@ exports.authenticateToken = async (req, res, next) => {
             if (result === null)
                 resHandler.respondWithCustomError("307", "401",
                         "Authentication Error", "Token is invalid. Wrong user.", res);
-            
-            req.userid = userdata.userid;
-            req.password = userdata.password;
-            req.role = userdata.role;
-            req.firstname = result.first_name;
-            req.lastname = result.last_name;
-            next();
+            else {
+                req.userid = userdata.userid;
+                req.role = userdata.role;
+                req.firstname = result.first_name;
+                req.lastname = result.last_name;
+                next();
+            }
         });
     } else {
         resHandler.respondWithCustomError("306", "401",

@@ -27,13 +27,42 @@
   font-size: 25px;
 }
 .progressBar {
-  border: #5a32bf 1px solid;
+  /* border: #5a32bf 2px solid; */
   border-radius: 15px;
+  box-shadow: 0 4px 8px 0 rgba(90, 50, 191, 0.2),
+    0 6px 20px 0 rgba(90, 50, 191, 0.19);
   width: 75%;
   height: 30px;
-
+  width: 90%;
   margin-left: 1vw;
   margin-right: 1vw;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.progressBarCompleted {
+  background-color: #a0c3d1;
+  color: #a0c3d1;
+  height: 100%;
+  border-bottom-left-radius: 15px;
+  border-top-left-radius: 15px;
+  transition: width 1s ease-in-out;
+}
+.progressBarCurrent {
+  background-color: #FC6D6D;
+  color: #f0e4aa;
+  height: 100%;
+
+  transition: width 1s ease-in-out;
+}
+.progressBarFuture {
+  background-color: #ffffff;
+  color: #fc4e4e;
+  height: 100%;
+  border-bottom-right-radius: 15px;
+  border-top-right-radius: 15px;
+  transition: width 1s ease-in-out;
 }
 
 /* * * * * * * * * * * HORIZONTAL WRAPPER * * * * * * * * * * */
@@ -52,6 +81,7 @@
   display: flex;
   flex-direction: column;
   flex: 1 0 25%;
+  width: 25vw;
   align-items: center;
 
   padding-right: 1vw;
@@ -148,8 +178,8 @@ input {
 
   width: 100%;
   margin-top: 10px;
-  box-shadow: 0 4px 8px 0 rgba(90, 50, 191, 0.2),
-    0 6px 20px 0 rgba(90, 50, 191, 0.19);
+  /* box-shadow: 0 4px 8px 0 rgba(90, 50, 191, 0.2),
+    0 6px 20px 0 rgba(90, 50, 191, 0.19); */
   /* background-color: #efebf9; */
   /* border-top-left-radius: 12px;
   border-top-right-radius: 12px; */
@@ -178,8 +208,13 @@ input {
 }
 
 .degreeReqDetailContainer {
+  /* display: flex; */
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
   height: 300px;
   padding: 10px 1vw;
+  overflow-y: scroll;
   background-color: rgba(239, 235, 249, 0.9);
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
@@ -191,7 +226,7 @@ input {
   display: flex;
   flex-direction: column;
   flex: 3 0 75%;
-
+  width: 75vw;
   /* border: #5a32bf solid 1px; */
 
   border-radius: 12px;
@@ -248,7 +283,7 @@ input {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: flex-start;
 
   /* background-color: #5a32bf; */
   height: 600px;
@@ -282,4 +317,17 @@ input {
   color: #ffffff;
   height: 50px;
   border: none;
+}
+
+@media only screen and (max-width: 1334px) {
+  .leftContainer {
+    width: 100vw;
+  }
+  .rightContainer {
+    width: 100vw;
+  }
+
+  .planCardsContainer {
+    justify-content: center;
+  }
 }

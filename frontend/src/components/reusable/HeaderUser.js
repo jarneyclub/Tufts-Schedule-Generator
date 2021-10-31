@@ -46,11 +46,22 @@ function HeaderUser(props) {
     if (logged) {
       /*  Sign Out */
       switchLogged();
+      fetchLogout();
     } else {
-      /*  Log in */
-      handleLoginPopup();
+      setLoginPopup(true);
     }
   };
+
+  const fetchLogout = async() => {
+    await fetch("https://jarney.club/api/auth/logout", {method: "POST"})
+      .then((response) => response.json())
+      .then((result) => {
+        
+      })
+      .error ((error) => {
+        
+      })
+  }
 
   return (
     <div className={hStyle.headerContainer} id="headerContainer">
@@ -98,27 +109,31 @@ function HeaderUser(props) {
 
         {!shrink && (
           <div className={hStyle.navbarContainer} ref={navbarRef}>
+            {!((!logRequired && loginPopup) || signupPopup) && (
+              <div>
+                <Button
+                  onClick={handleLoginSignupPopup}
+                  className={hStyle.button}
+                  style={{ padding: "5px" }}
+                >
+                  {logged ? "Sign out" : "Log in"}
+                </Button>
+              </div>
+            )}
             <div>
-              <Button
-                onClick={handleLoginSignupPopup}
-                className={hStyle.button}
-                style={{ padding: "5px" }}
-              >
-                {logged ? "Sign out" : "Log in"}
-              </Button>
-            </div>
-            <div>
-              <IconButton
-                className={hStyle.button}
-                style={{ padding: "5px", color: "#5a32bf", textDecoration: "none" }}
-                aria-label="help"
-              >
-                <Link
-                  to="/HelpPage"
-                  style={{textDecoration: "none"}}>
-                <HelpIcon />
-                </Link>
-              </IconButton>
+              <NavLink to="/HelpPage">
+                <IconButton
+                  className={hStyle.button}
+                  style={{
+                    padding: "5px",
+                    color: "#5a32bf",
+                    textDecoration: "none",
+                  }}
+                  aria-label="help"
+                >
+                  <HelpIcon />
+                </IconButton>
+              </NavLink>
             </div>
           </div>
         )}
@@ -142,45 +157,64 @@ function HeaderUser(props) {
             !barMenu && setShrinkExpandable(false);
             setBarMenu(false);
           }}
+          // className={hStyle.shrinkContainer}
         >
-          <div className={hStyle.shrinkContainer}>
-            {shrinkExpandable && (
-              <div className={hStyle.expandableContainer}>
-                <NavLink
-                  to="/DegreePlan1"
-                  activeClassName={hStyle.activeShrinkNavOption}
-                  className={hStyle.shrinkNavOption}
-                  onClick={() => setShrinkExpandable((prev) => !prev)}
-                  style={{ textDecoration: "none" }}
-                >
-                  Degree Plan Editor
-                </NavLink>
-                <NavLink
-                  to="/DegreePlan2"
-                  activeClassName={hStyle.activeShrinkNavOption}
-                  className={hStyle.shrinkNavOption}
-                  onClick={() => setShrinkExpandable((prev) => !prev)}
-                  style={{ textDecoration: "none" }}
-                >
-                  Degree Plan
-                </NavLink>
+          {shrinkExpandable ? (
+            <div className={hStyle.expandableContainer}>
+              <NavLink
+                to="/Home"
+                activeClassName={hStyle.activeShrinkNavOption}
+                className={hStyle.shrinkNavOption}
+                onClick={() => setShrinkExpandable((prev) => !prev)}
+                style={{ textDecoration: "none" }}
+              >
+                Home
+              </NavLink>
+              <NavLink
+                to="/DegreePlan1"
+                activeClassName={hStyle.activeShrinkNavOption}
+                className={hStyle.shrinkNavOption}
+                onClick={() => setShrinkExpandable((prev) => !prev)}
+                style={{ textDecoration: "none" }}
+              >
+                Degree requirement
+              </NavLink>
+              <NavLink
+                to="/DegreePlan2"
+                activeClassName={hStyle.activeShrinkNavOption}
+                className={hStyle.shrinkNavOption}
+                onClick={() => setShrinkExpandable((prev) => !prev)}
+                style={{ textDecoration: "none" }}
+              >
+                Degree plan
+              </NavLink>
 
-                <NavLink
-                  to="/Scheduler"
-                  activeClassName={hStyle.activeShrinkNavOption}
-                  className={hStyle.shrinkNavOption}
-                  onClick={() => setShrinkExpandable((prev) => !prev)}
-                  style={{ textDecoration: "none" }}
-                >
-                  Scheduler
-                </NavLink>
-              </div>
-            )}
-          </div>
+              <NavLink
+                to="/Scheduler"
+                activeClassName={hStyle.activeShrinkNavOption}
+                className={hStyle.shrinkNavOption}
+                onClick={() => setShrinkExpandable((prev) => !prev)}
+                style={{ textDecoration: "none" }}
+              >
+                Scheduler
+              </NavLink>
+              <NavLink
+                to="/HelpPage"
+                activeClassName={hStyle.activeShrinkNavOption}
+                className={hStyle.shrinkNavOption}
+                onClick={() => setShrinkExpandable((prev) => !prev)}
+                style={{ textDecoration: "none" }}
+              >
+                Help
+              </NavLink>
+            </div>
+          ) : (
+            <div />
+          )}
         </ClickAwayListener>
       )}
 
-      {(!logRequired && loginPopup || signupPopup) && (
+      {((!logRequired && loginPopup) || signupPopup) && (
         <Popup onClose={handleLoginPopup}>
           <JarUserLogin
             loginState={loginPopup}
@@ -193,6 +227,7 @@ function HeaderUser(props) {
               handleLoginPopup();
               handleSignupPopup();
             }}
+            switchLogged={switchLogged}
           />
         </Popup>
       )}

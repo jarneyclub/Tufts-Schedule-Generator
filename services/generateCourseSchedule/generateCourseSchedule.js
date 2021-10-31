@@ -30,6 +30,7 @@ const generateCourseSchedule = (arrayCourses, filter) => {
 
         let global = {
             "arrayCourses": arrayCourses,
+            "filterPreprocessed": undefined,
             "filter": filter,
             "arrSecTypes": undefined,
             "possibleDigits": undefined,

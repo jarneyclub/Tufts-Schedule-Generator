@@ -53,7 +53,6 @@ const drDefault = {
   ],
 };
 
-const schoolDefaults = [" A&S", " ENG"];
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
@@ -64,7 +63,9 @@ const schoolDefaults = [" A&S", " ENG"];
 function DegreeReqEdit(props) {
   const { onClose, fetchCreate, fetchSave, isCreateMM, reqDetail } = props;
   const [detail, setDetail] = useState(isCreateMM ? drDefault : reqDetail);
-  const [schoolOptions, setSchoolOptions] = useState(schoolDefaults);
+  const [schoolOptions, setSchoolOptions] = useState([]);
+  const [selectedSchoolIdx, setSelectedSchoolIdx] = useState(0);
+
   console.log("DegreeReqEdit, isCreateMM: ", isCreateMM);
   console.log("DegreeReqEdit reqDetail: ", reqDetail);
   const handleClose = () => {
@@ -79,10 +80,18 @@ function DegreeReqEdit(props) {
 
   const handleGeneralChange = (e) => {
     console.log("e:", e);
-    setDetail((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    if (e.target.name === "school") {
+      setSelectedSchoolIdx(e.target.selectedIndex);
+      setDetail((prev) => ({
+        ...prev,
+        [e.target.name]: schoolOptions[e.target.value],
+      }));
+    } else {
+      setDetail((prev) => ({
+        ...prev,
+        [e.target.name]: e.target.value,
+      }));
+    }
   };
 
   /*  Controlled input for note  */
@@ -192,7 +201,17 @@ function DegreeReqEdit(props) {
 
   useEffect(() => {
     fetchSchoolOptions();
+    console.log("detail: ", detail);
+    console.log("detail.school", detail?.school);
   }, []);
+
+  useEffect(() => {
+    const idx = schoolOptions.indexOf(detail?.school);
+    console.log("school idx", idx);
+    if (idx !== -1) {
+      setSelectedSchoolIdx(idx);
+    }
+  }, [schoolOptions])
   return (
     <div className={dStyle.drContainer}>
       <div className={dStyle.headerContainer}>
@@ -204,7 +223,7 @@ function DegreeReqEdit(props) {
           <CancelIcon />
         </IconButton>
         <div className={pStyle.headerBody}>
-          === {detail?.program_name} ===&nbsp;&nbsp;
+          {detail?.program_name} &nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         <span />
       </div>
@@ -224,6 +243,7 @@ function DegreeReqEdit(props) {
             options={schoolOptions}
             selectedOption={detail?.school}
             onOptionChange={handleGeneralChange}
+            selectedIdx={selectedSchoolIdx}
             name="school"
             labelId="school_dropdown"
             labelName="School"

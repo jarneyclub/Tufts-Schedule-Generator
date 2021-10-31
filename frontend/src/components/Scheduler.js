@@ -8,6 +8,7 @@
  */
 
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
 import {
   InputAdornment,
   TextField,
@@ -17,130 +18,143 @@ import {
   CircularProgress,
   FormGroup,
   FormLabel,
-  IconButton
+  IconButton,
 } from "@material-ui/core";
 import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import SearchIcon from "@material-ui/icons/Search";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
+import LinkedCameraIcon from '@mui/icons-material/LinkedCamera';
 import PurpleSwitch from "./reusable/PurpleSwitch";
 import sStyle from "./style/Scheduler.module.css";
 import Dropdown from "./reusable/Dropdown";
-
+import { ClickAwayListener } from "@mui/material";
 import Calendar from "./reusable/Calendar";
 import CourseSearchBar from "./reusable/CourseSearchBar";
 import TimePrefSelector from "./reusable/TimePrefSelector";
 import SnackBarAlert from "./reusable/SnackBarAlert";
 import JarUserLogin from "./reusable/JarUserLogin";
+import Event from "./reusable/Event";
+import EventScreenshot from "./reusable/EventScreenshot";
 import Popup from "./reusable/Popup";
-import {AddSchedule, RemoveSchedule, EditScheduleName} from "./reusable/SchedulerPopup"
+import {
+  AddSchedule,
+  RemoveSchedule,
+  EditScheduleName,
+} from "./reusable/SchedulerPopup";
+import {
+  DegreeReqExpress,
+  DegreePlanExpress,
+  CourseInfoExpress,
+} from "./reusable/TabSwitch";
 
 const timeDefault = [
-{
-  time_earliest: "08:00",
-  time_latest: "08:30",
-},
-{
-  time_earliest: "08:30",
-  time_latest: "09:00",
-},
-{
-  time_earliest: "09:00",
-  time_latest: "09:30",
-},
-{
-  time_earliest: "09:30",
-  time_latest: "10:00",
-},
-{
-  time_earliest: "10:00",
-  time_latest: "10:30",
-},
-{
-  time_earliest: "10:30",
-  time_latest: "11:00",
-},
-{
-  time_earliest: "11:00",
-  time_latest: "11:30",
-},
-{
-  time_earliest: "11:30",
-  time_latest: "12:00",
-},
-{
-  time_earliest: "12:00",
-  time_latest: "12:30",
-},
-{
-  time_earliest: "12:30",
-  time_latest: "13:00",
-},
-{
-  time_earliest: "13:00",
-  time_latest: "13:30",
-},
-{
-  time_earliest: "13:30",
-  time_latest: "14:00",
-},
-{
-  time_earliest: "14:00",
-  time_latest: "14:30",
-},
-{
-  time_earliest: "14:30",
-  time_latest: "15:00",
-},
-{
-  time_earliest: "15:00",
-  time_latest: "15:30",
-},
-{
-  time_earliest: "15:30",
-  time_latest: "16:00",
-},
-{
-  time_earliest: "16:00",
-  time_latest: "16:30",
-},
-{
-  time_earliest: "16:30",
-  time_latest: "17:00",
-},
-{
-  time_earliest: "17:00",
-  time_latest: "17:30",
-},
-{
-  time_earliest: "17:30",
-  time_latest: "18:00",
-},
-{
-  time_earliest: "18:00",
-  time_latest: "18:30",
-},
-{
-  time_earliest: "18:30",
-  time_latest: "19:00",
-},
-{
-  time_earliest: "19:00",
-  time_latest: "19:30",
-},
-{
-  time_earliest: "19:30",
-  time_latest: "20:00",
-},
-{
-  time_earliest: "20:00",
-  time_latest: "20:30",
-},
-{
-  time_earliest: "20:30",
-  time_latest: "21:00",
-}]
+  {
+    time_earliest: "08:00",
+    time_latest: "08:30",
+  },
+  {
+    time_earliest: "08:30",
+    time_latest: "09:00",
+  },
+  {
+    time_earliest: "09:00",
+    time_latest: "09:30",
+  },
+  {
+    time_earliest: "09:30",
+    time_latest: "10:00",
+  },
+  {
+    time_earliest: "10:00",
+    time_latest: "10:30",
+  },
+  {
+    time_earliest: "10:30",
+    time_latest: "11:00",
+  },
+  {
+    time_earliest: "11:00",
+    time_latest: "11:30",
+  },
+  {
+    time_earliest: "11:30",
+    time_latest: "12:00",
+  },
+  {
+    time_earliest: "12:00",
+    time_latest: "12:30",
+  },
+  {
+    time_earliest: "12:30",
+    time_latest: "13:00",
+  },
+  {
+    time_earliest: "13:00",
+    time_latest: "13:30",
+  },
+  {
+    time_earliest: "13:30",
+    time_latest: "14:00",
+  },
+  {
+    time_earliest: "14:00",
+    time_latest: "14:30",
+  },
+  {
+    time_earliest: "14:30",
+    time_latest: "15:00",
+  },
+  {
+    time_earliest: "15:00",
+    time_latest: "15:30",
+  },
+  {
+    time_earliest: "15:30",
+    time_latest: "16:00",
+  },
+  {
+    time_earliest: "16:00",
+    time_latest: "16:30",
+  },
+  {
+    time_earliest: "16:30",
+    time_latest: "17:00",
+  },
+  {
+    time_earliest: "17:00",
+    time_latest: "17:30",
+  },
+  {
+    time_earliest: "17:30",
+    time_latest: "18:00",
+  },
+  {
+    time_earliest: "18:00",
+    time_latest: "18:30",
+  },
+  {
+    time_earliest: "18:30",
+    time_latest: "19:00",
+  },
+  {
+    time_earliest: "19:00",
+    time_latest: "19:30",
+  },
+  {
+    time_earliest: "19:30",
+    time_latest: "20:00",
+  },
+  {
+    time_earliest: "20:00",
+    time_latest: "20:30",
+  },
+  {
+    time_earliest: "20:30",
+    time_latest: "21:00",
+  },
+];
 
 const timePrefDefault = {
   Monday: timeDefault,
@@ -158,6 +172,14 @@ const boolStateDefault = {
   timePrefState: false,
 };
 
+const popupDefault = {
+  editScheduleName: false,
+  removeSchedule: false,
+  addSchedule: false,
+  showCourseInfo: false,
+  eventScreenshot: false,
+};
+
 function Scheduler(props) {
   const {
     shrink,
@@ -167,24 +189,24 @@ function Scheduler(props) {
     signupPopup,
     handleLoginPopup,
     handleSignupPopup,
-    handleLogRequired
+    handleLogRequired,
   } = props;
 
   /* schedule Dropdown */
   const [scheduleOptions, setScheduleOptions] = useState([]);
   const [selectedSchedule, setSelectedSchedule] = useState("");
   const [selectedScheduleID, setSelectedScheduleID] = useState("");
+  const [selectedScheduleIdx, setSelectedScheduleIdx] = useState(0);
   /* filter Dropdown */
   const [attributes, setAttributes] = useState([]);
   const [selectedAttribute, setSelectedAttribute] = useState("");
-
+  const [selectedAttributeIdx, setSelectedAttributeIdx] = useState(0);
   const [coursePreference, setCoursePreference] = useState(boolStateDefault);
 
-  const [selectedCourses, setSelectedCourses] = useState(
-    []
-  ); /*  The courses selected to generate schedule  */
-  
-  const [classes, setClasses] = useState({})
+  /*  The courses selected to generate schedule  */
+  const [selectedCourses, setSelectedCourses] = useState([]);
+
+  const [classes, setClasses] = useState({});
 
   const [degreeReqTab, setDegreeReqTab] = useState(1);
   const [searchCourseResult, setSearchCourseResult] = useState([]); // the list of courses returned by GET request
@@ -193,33 +215,37 @@ function Scheduler(props) {
   const [timePrefState, setTimePrefState] = useState(false); // state of time pref overlay
   const [timePref, setTimePref] = useState(timePrefDefault); // time pref json that will be passed into post req
 
-  const [popup, setPopup] = useState({
-    editScheduleName: false,
-    removeSchedule: false,
-    addSchedule: false,
-  })
+  const [popup, setPopup] = useState(popupDefault);
+
+  const [courseInfo, setCourseInfo] = useState({});
+  const [unitsCount, setUnitsCount] = useState(0);
+
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState();
   const [alertSeverity, setAlertSeverity] = useState();
 
   /*  Control for schedule plan dropdown change  */
   const handleScheduleChange = (e) => {
-    setSelectedSchedule(e.target.value);
-    const ind = scheduleOptions.findIndex(sched => sched.sched_name === e.target.value.substr(3));
-    setSelectedScheduleID(scheduleOptions[ind].sched_id)
+    setSelectedSchedule(scheduleOptions[e.target.selectedIndex].sched_name);
+
+    setSelectedScheduleIdx(e.target.selectedIndex);
+    setSelectedScheduleID(scheduleOptions[e.target.selectedIndex].sched_id);
+    setSelectedCourses(scheduleOptions[e.target.selectedIndex].courses);
+    setClasses(scheduleOptions[e.target.selectedIndex]?.classes);
   };
 
   /*  Control for search filter dropdown change  */
   const handleFilterChange = (e) => {
-    setSelectedAttribute(e.target.value);
+    setSelectedAttributeIdx(e.target.selectedIndex);
+    setSelectedAttribute(attributes[e.target.selectedIndex]);
   };
 
   const handlePopup = (field, bit) => {
     setPopup((prev) => ({
       ...prev,
-      [field]: bit
-    }))
-  }
+      [field]: bit,
+    }));
+  };
 
   const handleAddTimePref = (dayName, timeValue) => {
     console.log("start time: ", timeValue);
@@ -261,19 +287,24 @@ function Scheduler(props) {
     }));
   };
 
+  const handleRemoveTimePrefAllDay = (dayName) => {
+    setTimePref((prev) => ({
+      ...prev,
+      [dayName]: [],
+    }));
+  };
+
   const handleAddAllDayTimePref = (dayName) => {
     setTimePref((prev) => ({
       ...prev,
-      [dayName]: timeDefault
-    }))
-  }
+      [dayName]: timeDefault,
+    }));
+  };
 
-  const handleRemoveAllDayTimePref = (dayName) => {
-    setTimePref((prev) => ({
-      ...prev,
-      [dayName]: {},
-    }))
-  }
+  const handleShowCourseInfo = (info) => {
+    setCourseInfo(info);
+    handlePopup("showCourseInfo", true);
+  };
 
   const handleSearchChange = (e) => {
     setCourseSearchValue(e.target.value);
@@ -332,13 +363,30 @@ function Scheduler(props) {
         console.log("result from fetchSavedSchedule", result);
         if (result.schedules.length === 0) {
           fetchCreateSchedule("Schedule #1");
-        }
-        else {
+        } else {
           setScheduleOptions(result.schedules);
-          setSelectedSchedule(result.schedules[0].sched_name);
-          setSelectedScheduleID(result.schedules[0].sched_id);
+          setSelectedSchedule(result.schedules[selectedScheduleIdx].sched_name);
+          setSelectedScheduleID(result.schedules[selectedScheduleIdx].sched_id);
+          setSelectedCourses(result.schedules[selectedScheduleIdx]?.courses);
+          setClasses(result.schedules[selectedScheduleIdx]?.classes);
+          console.log("classes", classes);
+          console.log(
+            "res classes:",
+            result.schedules[selectedScheduleIdx]?.classes
+          );
+          setTimePref(result.schedules[selectedScheduleIdx]?.filter?.time);
+          setCoursePreference((prev) => ({
+            ...prev,
+            waitlist:
+              !(result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreWL),
+            closed:
+              !(result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreClosed),
+            online:
+              !(result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreM),
+            time_unspecified:
+              !(result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreTU),
+          }));
         }
-      
       })
       .catch((error) => console.log("error from fetchSavedSchedules", error));
   };
@@ -365,41 +413,89 @@ function Scheduler(props) {
         term_course_ids: selectedCourses.map((course) => course.term_course_id),
         filter: {
           misc: {
-            ignoreTU: coursePreference.time_unspecified,
-            ignoreM: coursePreference.online,
-            ignoreClosed: coursePreference.closed,
-            ignoreWL: coursePreference.waitlist,
+            ignoreTU: !(coursePreference.time_unspecified),
+            ignoreM: !(coursePreference.online),
+            ignoreClosed: !(coursePreference.closed),
+            ignoreWL: !(coursePreference.waitlist),
           },
           time: timePref,
         },
       }),
     };
-    await fetch("https://jarney.club/api/schedule", requestOption)
-      .then((response) => response.json())
-      .then((result) => {
-        console.log("generate schedule result: ", result)
-        setClasses(result.data.classes);
 
-      })
-      .catch((error) => console.log("generate schedule error: ", error));
+    const checkCourses = selectedCourses.length > 0;
+    if (!checkCourses) {
+      setAlertMessage("You need at least 1 course to render schedule.");
+      setAlertSeverity("warning");
+      setShowAlert(true);
+    }
+    checkCourses &&
+      (await fetch("https://jarney.club/api/schedule", requestOption)
+        .then((response) => response.json())
+        .then((result) => {
+          console.log("generate schedule result: ", result);
+          if (!result.error) {
+            setClasses(result.data.classes);
+            setAlertMessage("Render success!");
+            setAlertSeverity("success");
+            setShowAlert(true); 
+          } else {
+            setAlertMessage(result.error);
+            setAlertSeverity("warning");
+            setShowAlert(true);
+          }
+        })
+        .catch((error) => {
+          console.log("generate schedule error: ", error);
+        }));
   };
 
-  const fetchCreateSchedule = async(newName) => {
+  const fetchCreateSchedule = async (newName) => {
     const requestOption = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({sched_name: newName})
+      body: JSON.stringify({ sched_name: newName }),
     };
     await fetch("https://jarney.club/api/schedule", requestOption)
       .then((response) => response.json())
       .then((result) => {
-        console.log("create schedule result: ", result)
+        console.log("create schedule result: ", result);
         // refresh
-        fetchSavedSchedules();
+        if (!result.error) {
+          fetchSavedSchedules();
+          setAlertMessage("Create success!");
+          setAlertSeverity("success");
+          setShowAlert(true);
+          handlePopup("addSchedule", false);
+        } else {
+          setAlertMessage(result.error);
+          setAlertSeverity("warning");
+          setShowAlert(true);
+        }
       })
-      .catch((error) => console.log("generate schedule error: ", error)); 
-  }
+      .catch((error) => console.log("generate schedule error: ", error));
+  };
 
+  const fetchData = async () => {
+    setLoadMessage(true);
+    await fetch(
+      "https://jarney.club/api/courses/term?cnum="
+        .concat(courseSearchValue)
+        .concat("&attr=")
+        .concat(selectedAttribute)
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setSearchCourseResult([]);
+        setSearchCourseResult(result.courses);
+        setLoadMessage(false);
+        console.log("show results: ", result);
+      })
+      .catch((error) => {
+        setSearchCourseResult([]);
+        console.log("error from Scheduler course search", error);
+      });
+  };
 
   useEffect(() => {
     fetchAttributes();
@@ -408,31 +504,30 @@ function Scheduler(props) {
   }, []);
 
   useEffect(() => {
-    async function fetchData() {
-      setLoadMessage(true);
-      await fetch(
-        "https://jarney.club/api/courses/term?cnum="
-          .concat(courseSearchValue)
-          .concat("&attr=")
-          .concat(selectedAttribute)
-      )
-        .then((response) => response.json())
-        .then((result) => {
-          setSearchCourseResult([]);
-          setSearchCourseResult(result.courses);
-          setLoadMessage(false);
-          console.log("show results: ", result);
-        })
-        .catch((error) => {
-          setSearchCourseResult([]);
-          console.log("error from Scheduler course search", error);
-        });
-    }
+    fetchAttributes();
+    fetchSavedSchedules();
+  }, [logged]);
+
+  useEffect(() => {
     fetchData();
+    handlePopup("showCourseInfo", false);
   }, [courseSearchValue, selectedAttribute]);
+
+  useEffect(() => {
+    let tempCount = 0;
+    selectedCourses.forEach((course) => {
+      console.log("coursees check", course);
+      tempCount += course?.units_esti;
+    });
+    setUnitsCount(tempCount);
+    handlePopup("showCourseInfo", false);
+  }, [selectedCourses]);
 
   return (
     <div>
+      <Helmet>
+        <title>JARney | Scheduler</title>
+      </Helmet>
       <div className={sStyle.horizontalWrapper}>
         <div className={sStyle.leftColumnWrapper}>
           {/* CourseContainer 
@@ -466,6 +561,7 @@ function Scheduler(props) {
                   classes={sStyle.dropdown}
                   options={attributes}
                   selectedOption={selectedAttribute}
+                  selectedIdx={selectedAttributeIdx}
                   onOptionChange={handleFilterChange}
                   labelId="filter"
                   labelName="Filter"
@@ -487,6 +583,7 @@ function Scheduler(props) {
                       border: "none",
                       justifyContent: "space-between",
                     }}
+                    onClick={handleShowCourseInfo}
                   />
                 ))}
             </div>
@@ -543,7 +640,7 @@ function Scheduler(props) {
                   onClick={() => setTimePrefState(true)}
                   startIcon={<QueryBuilderIcon />}
                 >
-                  Edit Time Preference
+                  Edit time preference
                 </Button>
               </FormControl>
             </div>
@@ -553,9 +650,24 @@ function Scheduler(props) {
               className={sStyle.renderButton}
               onClick={fetchGenerateSchedule}
             >
-              Render Schedule
+              Render schedule
             </Button>
           </div>
+          <div className={sStyle.infoContainer}>
+            <div style={{ color: "rgba(0, 0, 0, 0.54)" }}>Quick summary</div>
+            <div className={sStyle.unitsContainer}>
+              <div className={sStyle.infoTitle}>SHUs scheduled:&nbsp;</div>
+              <div classname={sStyle.infoDetail}>{unitsCount}</div>
+            </div>
+         
+          </div>
+          {popup.showCourseInfo && (
+            <CourseInfoExpress
+              courseInfo={courseInfo}
+              onClose={() => handlePopup("showCourseInfo", false)}
+            />
+          )}
+
           <div className={sStyle.tabsContainer}>
             <div className={sStyle.tabBarsContainer}>
               <div
@@ -608,6 +720,7 @@ function Scheduler(props) {
                     key={course.course_num.concat(course.course_title)}
                     draggable={false}
                     onDoubleClick={handleDoubleClickSelected}
+                    onClick={handleShowCourseInfo}
                     origin={"schedulerTab"}
                     customStyle={{
                       border: "none",
@@ -615,48 +728,82 @@ function Scheduler(props) {
                     }}
                   />
                 ))}
+              {degreeReqTab === 2 && <DegreeReqExpress />}
+              {degreeReqTab === 3 && <DegreePlanExpress />}
             </div>
           </div>
+
+         
         </div>
 
         <div className={sStyle.rightColumnWrapper}>
           <div className={sStyle.scheduleTitleContainer}>
-
             <Dropdown
               options={scheduleOptions}
               selectedOption={selectedSchedule}
+              selectedIdx={selectedScheduleIdx}
               onOptionChange={handleScheduleChange}
               customStyle={{ fontSize: "20px" }}
               isObject={true}
               objectField={"sched_name"}
             />
             &nbsp;
-              <IconButton
-                className={sStyle.editPlanButton}
-                onClick={() => handlePopup("editPlanName", true)}
-              >
-                <ModeEditIcon fontSize="medium" />
-              </IconButton>
-              &nbsp;
-              <IconButton
-                className={sStyle.editPlanButton}
-                onClick={() => handlePopup("addPlan", true)}
-              >
-                <AddBoxIcon fontSize="medium" />
-              </IconButton>
-              &nbsp;
-              <IconButton
-                className={sStyle.editPlanButton}
-                onClick={() => handlePopup("removePlan", true)}
-              >
-                <IndeterminateCheckBoxIcon fontSize="medium" />
-              </IconButton>
+            <IconButton
+              className={sStyle.editPlanButton}
+              onClick={() => handlePopup("editScheduleName", true)}
+            >
+              <ModeEditIcon fontSize="medium" />
+            </IconButton>
+            &nbsp;
+            <IconButton
+              className={sStyle.editPlanButton}
+              onClick={() => handlePopup("addSchedule", true)}
+            >
+              <AddBoxIcon fontSize="medium" />
+            </IconButton>
+            &nbsp;
+            <IconButton
+              className={sStyle.editPlanButton}
+              onClick={() => handlePopup("removeSchedule", true)}
+            >
+              <IndeterminateCheckBoxIcon fontSize="medium" />
+            </IconButton>
+            &nbsp;
+            <IconButton
+              className={sStyle.editPlanButton}
+              onClick={() => handlePopup("eventScreenshot", true)}
+            >
+              <LinkedCameraIcon fontSize="medium" />
+            </IconButton>
             <div />
           </div>
 
           <div className={sStyle.calendarContainer}>
-            <Calendar timePrefState={timePrefState} shrink={shrink} classes={classes}/>
+            <Calendar
+              timePrefState={timePrefState}
+              shrink={shrink}
+              classes={classes}
+              onEventClick={handleShowCourseInfo}
+            />
           </div>
+
+          {classes?.TimeUnspecified && (
+            <div className={sStyle.infoContainer}>
+              <div style={{ color: "rgba(0, 0, 0, 0.54)" }}>
+                Time Unspecified
+              </div>
+              <div className={sStyle.tuContainer}>
+                {classes?.TimeUnspecified?.map((course) => (
+                  <Button
+                    className={sStyle.tuButton}
+                    onClick={() => handleShowCourseInfo(course)}
+                  >
+                    {course.details}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
       {/* popups */}
@@ -673,7 +820,12 @@ function Scheduler(props) {
         <Popup onClose={() => handlePopup("removeSchedule", false)}>
           <RemoveSchedule
             onClose={() => handlePopup("removeSchedule", false)}
-            scheduleID={selectedScheduleID}
+            refreshSchedules={fetchSavedSchedules} 
+            scheduleID={scheduleOptions[selectedScheduleIdx].sched_id}
+            scheduleName={scheduleOptions[selectedScheduleIdx].sched_name}
+            onShowAlert={() => setShowAlert(true)}
+            setAlertMessage={setAlertMessage}
+            setAlertSeverity={setAlertSeverity}
           />
         </Popup>
       )}
@@ -681,19 +833,37 @@ function Scheduler(props) {
         <Popup onClose={() => handlePopup("editScheduleName", false)}>
           <EditScheduleName
             onClose={() => handlePopup("editScheduleName", false)}
-            
+            onShowAlert={() => setShowAlert(true)}
+            refreshSchedules={fetchSavedSchedules}
+            setAlertMessage={setAlertMessage}
+            setAlertSeverity={setAlertSeverity}
+            scheduleID={scheduleOptions[selectedScheduleIdx].sched_id}
+            scheduleName={scheduleOptions[selectedScheduleIdx].sched_name}
           />
         </Popup>
+      )}
+      {popup.eventScreenshot && (
+        <Popup onClose={() => handlePopup("eventScreenshot", false)}>
+        <EventScreenshot
+          onClose={() => handlePopup("eventScreenshot", false)}
+          onShowAlert={() => setShowAlert(true)}
+          setAlertMessage={setAlertMessage}
+          setAlertSeverity={setAlertSeverity}
+          scheduleID={scheduleOptions[selectedScheduleIdx].sched_id}
+          scheduleName={scheduleOptions[selectedScheduleIdx].sched_name}
+          classDetails={classes}
+        />
+      </Popup>
       )}
       {timePrefState && (
         <TimePrefSelector
           onAddTimePref={handleAddTimePref}
           onRemoveTimePref={handleRemoveTimePref}
-          onRemoveEntireDay = {handleRemoveAllDayTimePref}
-          onAddEntireDay = {handleAddAllDayTimePref}
+          onRemoveEntireDay={handleRemoveTimePrefAllDay}
+          onAddEntireDay={handleAddAllDayTimePref}
           timePrefState={timePrefState}
           timePref={timePref}
-          onClose={()=> setTimePrefState(false)}
+          onClose={() => setTimePrefState(false)}
           shrink={shrink}
         />
       )}

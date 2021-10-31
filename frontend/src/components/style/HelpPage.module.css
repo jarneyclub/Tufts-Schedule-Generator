@@ -1,50 +1,57 @@
 .bodyContainer {
-    background: linear-gradient(-45deg, #f1edfa, #f1edfa, #ccbeee, #f1edfa );
-    /* background-size: 400% 400%; */
-    animation: gradient 15s ease infinite;
+  /* background: linear-gradient(-45deg, #f1edfa, #f1edfa, #ccbeee, #f1edfa); */
+  /* background-size: 400% 400%; */
+  animation: gradient 15s ease infinite;
+  margin-top: 100px;
 }
 
-.formContainer {
-    display: flex;
+.titleRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .horizontalContainer {
-    padding-left: 2vw;
-    padding-right: 2vw;
-    padding-top: 20vh;
-}
-
-.image{
-    width: 40%;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  /* padding-top: 20vh; */
 }
 
 .imgContainer {
-    width: 30%;
+  /* width: 30%; */
+  height: 300px;
 }
 
 Accordion {
-    font-size: 100px;
+  font-size: 100px;
 }
 
 .contactForm {
-    display: flex; 
-    flex-direction: column;
-    width: 60%;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  min-width: 50vw;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
-.contactForm input {
-    margin: 1em;
+.button {
+  background-color: #fc4e4e;
+  color: #ffffff;
+  text-transform: unset !important;
+  /* border: 1px #5a32bf; */
+  border-radius: 50px;
+  box-shadow: 5px 5px #a0c3d1;
+  min-height: 50px;
+  padding: 0 2vw;
+  text-align: center;
+  font-size: 15px;
+  line-height: 22px;
+  text-decoration: none;
+  margin-top: 10px;
+  width: 100%;
 }
-
-.contactForm textarea {
-    margin: 1em;
-    border-radius: 5px;
-    border-color: #5a32bf;
-    width: 80%;
-}
-
-.contactForm input[name="submit"]{
-    color:#ffffff;
-    background-color: #5a32bf;
+.button:hover {
+  color: #fc4e4e;
 }

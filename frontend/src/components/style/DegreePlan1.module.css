@@ -1,9 +1,7 @@
-
-
 /* * * * Note * * * * 
     that the h3 and h5 size affects the width of left and right col */
 h5 {
-  color: #808080;
+  color: #000000;
   padding-left: 3vw;
   padding-right: 3vw;
   text-align: center;
@@ -38,7 +36,7 @@ input {
   /* flex: 1 0 0; */
   align-content: center;
   /* flex-grow: 1; */
-  width: 50vw;
+  width: 48vw;
   justify-content: flex-start;
   padding-left: 5vw;
   padding-right: 5vw;
@@ -103,44 +101,68 @@ input {
   /* background-color: rgba(239, 235, 249, 0.9);; */
   /* border-top: 1px solid #5a32bf; */
   width: 100%;
-  max-height: 200px;
+  max-height: 300px;
 
   overflow-y: scroll;
 }
 
 .publicReqButton {
-  background-color: #efebf9;
+  background-color: rgba(160, 195, 209, 0.1);
   color: #5a32bf;
   width: 80%;
+  margin-bottom: 10px;
 }
 
 .publicReqButton:hover {
   background-color: #efebf9;
-  color: #fc4e4e; 
+  color: #fc4e4e;
 }
 
 .myListWrapper {
   display: flex;
   flex-direction: column;
-  background-color: rgba(239, 235, 249, 0.9);
+  /* background-color: rgba(239, 235, 249, 0.9); */
   /* background-color: #efebf9; */
   box-shadow: 0 4px 8px 0 rgba(90, 50, 191, 0.2),
     0 6px 20px 0 rgba(90, 50, 191, 0.19);
   border-radius: 12px;
-
+  width: 100%;
   box-sizing: border-box;
   margin-top: 10px;
   align-items: center;
   padding-bottom: 10px;
   padding-top: 10px;
 }
+.dropdownListWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+.editPlanButton {
+  height: 25px;
+  width: 25px;
 
+  top: 0;
+  bottom: 0;
+
+  color: #7048d5;
+}
 .newMajorMinorButton {
   font-size: 10px;
-  color: #7048d5;
+  color: #ffffff;
+  background-color: #fc6d6d;
   cursor: pointer;
-  border-bottom: #5a32bf solid 1px;
-  border-radius: none;
+  border: #fc6d6d solid 1px;
+  border-radius: 12px;
+  margin-top: 10px;
+  text-transform: unset !important;
+}
+
+.newMajorMinorButton:hover {
+  background-color: #fc4e4e;
+  border: #fc4e4e solid 1px;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -148,8 +170,8 @@ input {
 .DegreeReqWrapper {
   display: flex;
   flex-direction: column;
-  /* flex-grow: 2; */
-  width: 50vw;
+  align-items: center;
+  width: 48vw;
 
   padding-left: 5vw;
   padding-right: 5vw;
@@ -173,7 +195,7 @@ input {
 
   box-sizing: content-box;
   margin-top: 1vh;
-
+  width: 100%;
   padding-bottom: 10px;
 }
 
@@ -199,13 +221,14 @@ input {
   height: 350px;
   width: 100%;
   padding: 10px 1vw;
+  overflow-y: scroll;
 }
 
 .editButton {
   border-radius: 12px;
-  border: #7048d5 solid 1px;
+  border: #fc4e4e solid 1px;
   box-sizing: border-box;
-
+  text-transform: unset !important;
   margin-top: 15px;
   height: 35px;
 
@@ -213,35 +236,35 @@ input {
   padding-right: 1vw;
   text-align: center;
   font-size: 13px;
-  color: #7048d5;
-
+  color: #fc4e4e;
+  width: 80%;
   background-color: #efebf9;
 }
 .editButton:hover {
-  background-color: #7048d5;
-  border: #7048d5 solid 1px;
+  background-color: #fc6d6d;
+  border: #fc6d6d solid 1px;
   color: #ffffff;
 }
 
 .saveButton {
   border-radius: 12px;
-  border: #FC6D6D solid 1px;
+  border: #fc6d6d solid 1px;
   box-sizing: border-box;
-
+  text-transform: unset !important;
   margin-top: 15px;
   height: 35px;
-  width: 80%;
+  width: 100%;
   padding-left: 1vw;
   padding-right: 1vw;
   text-align: center;
   font-size: 13px;
   color: #ffffff;
 
-  background-color: #FC6D6D;
+  background-color: #fc6d6d;
 }
 .saveButton:hover {
-  background-color: #FC4E4E;
-  border: #FC4E4E solid 1px;
+  background-color: #fc4e4e;
+  border: #fc4e4e solid 1px;
   color: #ffffff;
 }
 .nextPageButton {
@@ -261,12 +284,23 @@ body {
 }
 
 /* Helps to wrap the left and right when screen is too small */
-@media only screen and (max-width: 630) {
-  .DegreeReqWrapper {
 
+@media only screen and (max-width: 700px) {
+  .DegreeReqWrapper {
     width: 100vw;
+    border-left: none;
   }
   .DegreeSearchWrapper {
     width: 100vw;
   }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.example::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE and Edge */
+.example {
+  -ms-overflow-style: none;
 }

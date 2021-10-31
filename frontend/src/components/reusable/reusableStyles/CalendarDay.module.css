@@ -1,8 +1,23 @@
 .dayContainer {
   flex-grow: 10;
-  position:relative
+  position: relative;
 }
 
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.addAllButton {
+  text-transform: unset !important;
+  width: 50%;
+  color: #a1c97d;
+}
+.removeAllButton {
+  text-transform: unset !important;
+  width: 50%;
+}
 .timeSlotTitle {
   height: 40px;
   min-width: 80px;
@@ -10,12 +25,11 @@
   /* position: fixed; */
 }
 
-
-
 .timeSlot {
   height: 80px;
   border: 1px solid #c4c4c4;
   position: relative;
+  z-index: -5;
 }
 .timeSlotOverlay {
   height: 40px;
@@ -23,4 +37,3 @@
 
   /* background-color: aqua; */
 }
-

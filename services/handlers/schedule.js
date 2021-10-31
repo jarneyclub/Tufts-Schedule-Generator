@@ -13,7 +13,7 @@ exports.createSchedule   = async (userId, scheduleName, filter, term, courses, c
         sched_name: scheduleName,
         user_id: userId,
         filter: filter,
-        classes: classes,
+        events: classes,
         courses: courses,
         term: term
     });
@@ -32,14 +32,14 @@ exports.createSchedule   = async (userId, scheduleName, filter, term, courses, c
 
 exports.updateSchedule = async (id, filter, courses, classes) => {
     // TODO no schedule with given id was found
-
+    console.log("(schedule/updateSchedule) filter: ", filter);
     // update schedule 
     let newSchedule = await Schedule.findOneAndUpdate({
         _id: mongoose.Types.ObjectId(id)
     }, {
         filter     : filter,
         courses    : courses,
-        classes    : classes
+        events     : classes
     }, {
         new: true,
         upsert: false
@@ -50,22 +50,33 @@ exports.updateSchedule = async (id, filter, courses, classes) => {
         sched_name : newSchedule.sched_name,
         user_id    : newSchedule.user_id,
         filter     : newSchedule.filter,
-        classes     : classes,
+        classes    : newSchedule.events,
         courses    : newSchedule.courses,
         term       : newSchedule.term
     }
 }
 
-exports.updateScheduleName = async (id, name) => {
+exports.changeScheduleName = async (id, newName) => {
+    // TODO no schedule with given id was found
     // update schedule 
     let newSchedule = await Schedule.findOneAndUpdate({
         _id: mongoose.Types.ObjectId(id)
     }, {
-        sched_name    : name
+        sched_name    : newName
     }, {
         new: true,
         upsert: false
     });
+
+    return {
+        sched_id   : newSchedule._id.valueOf(),
+        sched_name : newSchedule.sched_name,
+        user_id    : newSchedule.user_id,
+        filter     : newSchedule.filter,
+        classes    : newSchedule.events,
+        courses    : newSchedule.courses,
+        term       : newSchedule.term
+    }
 }
 
 exports.getSchedulesOfUser = async (userId) => {
@@ -83,11 +94,18 @@ exports.getSchedulesOfUser = async (userId) => {
             filter     : doc.filter,
             term       : doc.term,
             courses    : doc.courses,
-            classes    : doc.classes
+            classes    : doc.events
         };
         documents.push(docParsed);
     });
 
     return documents
 
+}
+
+exports.deleteSchedule = async (id) => {
+    let scheduleCollection = mongoose.connection.collection("schedules"); // get MongoDB collection
+    console.log("(deleteSchedule) id: ", id);
+    await scheduleCollection.deleteOne({_id: mongoose.Types.ObjectId(id)});
+    return true;
 }

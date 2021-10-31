@@ -1,6 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
+  padding-top: 10px;
 }
 
 .dayControlContainer {
@@ -17,14 +18,13 @@
   min-height: 100%;
   justify-content: space-around;
   padding-right: 6vw;
-  /* overflow: scroll; */
-  /* background-color: rgba(239, 235, 249, 0.9);
-  border-radius: 12px; */
+
 }
 
 .timeSlotContainer {
   flex-grow: 1;
   margin: 0 1vw;
+  transform: translateY(25px);
 }
 
 .timeSlotTitle {

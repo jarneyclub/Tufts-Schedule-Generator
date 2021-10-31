@@ -114,7 +114,7 @@
 .preferenceContainer {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   min-height: 170px;
   /* border: #5a32bf 1px solid; */
@@ -131,6 +131,34 @@
   /* padding-left: 1vw;
   padding-right: 1vw; */
   margin: 10px 0;
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-height: 300px;
+  margin: 10px 0;
+  padding: 10px 1vw;
+  background-color: rgba(239, 235, 249, 0.9);
+  border-radius: 12px;
+  width: 100%;
+}
+.tuContainer {
+  display: flex;
+  flex-direction: row;
+
+  width: 100%;
+}
+
+.unitsContainer {
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+}
+
+.infoTitle {
+  color: #fc4e4e;
 }
 
 .leftCheckboxContainer {
@@ -158,6 +186,7 @@
 .timePrefButton {
   border-radius: 12px;
   border: #7048d5 solid 1px;
+  text-transform: unset !important;
 
   box-sizing: border-box;
 
@@ -180,6 +209,7 @@
 .saveTimePrefButton {
   border-radius: 12px;
   border: #ffffff solid 1px;
+  text-transform: unset !important;
 
   box-sizing: border-box;
 
@@ -203,7 +233,7 @@
 .renderButton {
   border-radius: 12px;
   border: #fc6d6d solid 1px;
-
+  text-transform: unset !important;
   box-sizing: border-box;
 
   height: 35px;
@@ -226,6 +256,22 @@
   border: #fc4e4e solid 1px;
 }
 
+.tuButton {
+  padding: 0 1vw;
+  color: #a0c3d1;
+  background: linear-gradient(
+      rgba(160, 195, 209, 0.1),
+      rgba(160, 195, 209, 0.1)
+    ),
+    linear-gradient(white, white);
+  border: 1px solid #a0c3d1;
+  border-left: 8px solid #a0c3d1;
+  text-transform: unset !important;
+  margin: 1vw;
+  min-width: 30%;
+  min-height: 70%;
+  overflow-y: scroll;
+}
 /* * * 3rd * * */
 .tabsContainer {
   display: flex;
@@ -301,6 +347,9 @@
   /* box-shadow: 0 4px 8px 0 rgba(90,50,191, 0.2), 0 6px 20px 0 rgba(90,50,191, 0.19); */
   border-top: none;
   box-sizing: content-box;
+  display: flex;
+  flex-direction: column;
+  align-items:center;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -314,9 +363,8 @@
 
   /* border: #42312B solid 1px; */
   margin-bottom: 20px;
-  height: 80vh;
+  height: 90vh;
 }
-
 
 .scheduleTitleContainer {
   display: flex;
@@ -349,7 +397,7 @@
 .timePrefOverlay {
   display: flex;
   flex-direction: column;
-
+  z-index: 30;
   align-items: center;
 
   top: 80px; /* gives the overlay effect */
@@ -377,9 +425,11 @@
 .overlayCalendarContainer {
   background-color: #ffffff;
 
-  width: 80%;
+  width: 100%;
   overflow-y: scroll;
   height: 75vh;
+  padding-bottom: 10vh;
+
 }
 
 /* font */
@@ -393,4 +443,33 @@ body {
 
 .dropdown {
   padding-left: 24px;
+}
+
+
+@media only screen and (max-width: 1040px){
+  .leftColumnWrapper {
+    flex: 1 1 34.99%;
+  }
+
+  .rightColumnWrapper {
+    flex: 7 1 64.99%;
+  }
+
+  /* .tabBar {
+    font-size: 1.5vw;
+  }
+   */
+  
+  
+}
+@media only screen and (max-width: 669.99px){
+  .overlayTitle {
+    font-size: 20px !important;
+  } 
+  .overlayTitleContainer {
+    font-size: 15px !important;
+  }
+  .overlayCalendarContainer {
+    padding-bottom: 30vh;  
+  } 
 }

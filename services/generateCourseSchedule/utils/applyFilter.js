@@ -25,9 +25,9 @@ const createArrSectionTypes = (global) => {
         let start = Date.now(); // start timer
 
         let arrayCourses = global.arrayCourses;
-        let filter = global.filter;
+        let filter = global.filterPreprocessed;
         let timePref = filter.time;
-
+        // console.log("(applyFilter/createArrSectionTypes) filter.misc: ", filter.misc);
         // default miscellaneous filters
         let ignoreTU = false;
         let ignoreM = false;
@@ -35,11 +35,13 @@ const createArrSectionTypes = (global) => {
         let ignoreWL = true;
         // apply user filters if provided (reverse the booleans)
         if (filter.misc !== undefined) {
-            ignoreTU = !filter.misc.ignoreTU;
-            ignoreM = !filter.misc.ignoreM;
-            ignoreClosed = !filter.misc.ignoreClosed;
-            ignoreWL = !filter.misc.ignoreWL;
+            ignoreTU = filter.misc.ignoreTU;
+            ignoreM = filter.misc.ignoreM;
+            ignoreClosed = filter.misc.ignoreClosed;
+            ignoreWL = filter.misc.ignoreWL;
         }
+        console.log("(applyFilter/createArrSectionTypes) filter.misc: ", filter.misc);
+
 
         // record of filtered section information (for verbose error messages)
         let filtrationRecord = {
@@ -62,7 +64,7 @@ const createArrSectionTypes = (global) => {
 
             for (let j in sectionsInSecTypes) {
                 let sections = sectionsInSecTypes[j];
-
+                console.log("createArrSectionTypes) sections:", sections);
                 let secsToInsert = [];
                 filtrationRecord.numOfSecsInSecType = Object.keys(sections).length;
                 filtrationRecord.numOfSecsIgnored = 0;
@@ -84,7 +86,7 @@ const createArrSectionTypes = (global) => {
 
                         // reinit withinUserPref flag 
                         // (if at any point in this loop this flag is true, loop will break)
-                        withinUserPreference = false; 
+                        withinUserPreference = true; 
 
                         let aClass = classes[l];
 
@@ -113,7 +115,6 @@ const createArrSectionTypes = (global) => {
 
                                 if (withinBounds(timeStartFilter, timeEndFilter, classStartTime, classEndTime) == true) {
                                     /* Class is within user time preference */
-                                    withinUserPreference = true;
                                     break;
                                 }
                             } /* (End of) loop over a single day's time preferences */
@@ -121,7 +122,7 @@ const createArrSectionTypes = (global) => {
                         else {
                             /* Class time is unspecified */
 
-                            if (ignoreTU !== undefined && ignoreTU === true) {  
+                            if (ignoreTU !== undefined && ignoreTU === true) {
                                 /* Cannot insert this Section (TU filter) */
 
                                 console.log("(applyFilter) Time was not specified. Ignoring...");
@@ -131,9 +132,6 @@ const createArrSectionTypes = (global) => {
                                 filtrationRecord.numOfSecsIgnored++; 
                                 filtrationRecord.numOfSecsIgnoredByignoreTU++;
                                 break;
-                            }
-                            else {
-                                withinUserPreference = true;
                             }
                         }
 
@@ -208,6 +206,7 @@ const createArrSectionTypes = (global) => {
 
                 let sectionTypeObj = {};
                 let indexSection = 0;
+                console.log("(createArrSectionTypes) secsToInsert: ", secsToInsert);
                 for ( let i in secsToInsert ) {
                     
                     let sec = secsToInsert[i]; // Section object

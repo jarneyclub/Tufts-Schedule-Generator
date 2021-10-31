@@ -46,7 +46,7 @@ function DegreeReqCourse(props) {
       />
 
       <TextField
-        placeholder="Course ID"
+        placeholder="Course"
         fullWidth
         autoFocus
         name="course_num"
@@ -54,7 +54,7 @@ function DegreeReqCourse(props) {
         onChange={handleCourseChange}
       />
       <TextField
-        placeholder="CourseNote"
+        placeholder="Course Description"
         fullWidth
         autoFocus
         multiline

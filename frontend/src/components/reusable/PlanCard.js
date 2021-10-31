@@ -16,8 +16,11 @@ function PlanCard(props) {
     onTransferCourse,
     cardOrigin,
     handleCardOrigin,
+    tabExpress,
+    onClick,
+    origin
   } = props;
-
+  
   const dragOver = (e) => {
     e.preventDefault();
   };
@@ -27,6 +30,7 @@ function PlanCard(props) {
    *  purpose: when course is dropped onto a planCard
    */
   const drop = (e) => {
+    e.preventDefault();
     if (
       dropItem(cardDetail.plan_term_id, transferCourseDetail) &&
       cardOrigin !== cardDetail.plan_term_id
@@ -49,26 +53,49 @@ function PlanCard(props) {
     <div
       className={pStyle.cardContainer}
       onDragOver={dragOver}
+      
+      // onTouchMove={dragOver}
       onDrop={drop}
-      id={cardDetail.plan_term_id}
+      onTouchEnd={drop}
+      onMouseUp={drop}
+      id={cardDetail?.plan_term_id}
+      style={origin === "dp2" ?  {maxWidth: "33%", minWidth:"300px"} : {}}
     >
-      <div className={pStyle.cardTitle}>{cardDetail.term}</div>
+      <div className={pStyle.cardTitle}>{cardDetail?.term}</div>
       <div className={pStyle.courseContainer}>
-        {cardDetail.courses?.map((course) => (
-          <CourseSearchBar
-            draggable={true}
-            courseDetail={course}
-            key={course.gen_course_id}
-            onTransferCourse={onTransferCourse}
-            origin={cardDetail.plan_term_id}
-            handleCardOrigin={handleCardOrigin}
-            onDoubleClick={handleDoubleClick}
-            customStyle={{
-              border: "none",
-              justifyContent: "space-between",
-            }}
-          />
-        ))}
+        {tabExpress
+          ? cardDetail?.courses?.map((course) => (
+              <CourseSearchBar
+                draggable={false}
+                courseDetail={course}
+                key={course.gen_course_id}
+                onTransferCourse={onTransferCourse}
+                origin={cardOrigin}
+                handleCardOrigin={handleCardOrigin}
+                onDoubleClick={handleDoubleClick}
+                customStyle={{
+                  border: "none",
+                  justifyContent: "space-between",
+                }}
+                onClick={onClick}
+              />
+            ))
+          : cardDetail.courses?.map((course) => (
+              <CourseSearchBar
+                draggable={true}
+                courseDetail={course}
+                key={course.gen_course_id}
+                onTransferCourse={onTransferCourse}
+                origin={cardDetail.plan_term_id}
+                handleCardOrigin={handleCardOrigin}
+                onDoubleClick={handleDoubleClick}
+                customStyle={{
+                  border: "none",
+                  justifyContent: "space-between",
+                }}
+                onClick={onClick}
+              />
+            ))}
       </div>
     </div>
   );

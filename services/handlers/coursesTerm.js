@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const sectionsCol = mongoose.model('Section');
+const sectionModel = mongoose.model('Section');
 
 /**
  * Gets all sections associated with a course. Changes 
@@ -9,10 +9,11 @@ const sectionsCol = mongoose.model('Section');
 exports.getSectionsForSingleCourse = async (termCourseIdInput) => {
     try {
         // term_course_id is a string
-        let cursor = await sectionsCol.find({term_course_id: termCourseIdInput});
+        let dbSections = mongoose.connection.collection("sections"); // get MongoDB collection
+        let cursor = await dbSections.find({term_course_id: termCourseIdInput});
         let documents = [];
         await cursor.forEach(async (doc) => {
-            doc["_id"] = doc["_id"].valueOf();
+            doc._id = doc["_id"].valueOf();
             documents.push(doc);
         });
         return documents;
@@ -26,7 +27,7 @@ exports.getSectionsForMultipleCourses = async (arrayTermCourseId) => {
     try {
         let courseToSections = {};
         for (let termCourseId of arrayTermCourseId) {
-            let cursor = await sectionsCol.find({term_course_id: {$in: arrayTermCourseId}});
+            let cursor = await sectionModel.find({term_course_id: {$in: arrayTermCourseId}});
             let documents = [];
             await cursor.forEach(async (doc) => {
                 doc["_id"] = doc["_id"].valueOf();

@@ -5,7 +5,6 @@ const timeUtils = require('./timeUtils.js');
 const preprocessFilter = (global) => {
     return new Promise((resolve, reject) => {
         console.log("(preprocessFilter) preprocessing filter now ");
-        let filter = global.filter;
 
         let dayToInteger = {
             Monday: 1,
@@ -16,40 +15,37 @@ const preprocessFilter = (global) => {
             Saturday: 6,
             Sunday: 7
         }
-        let newFilter = {
+        global.filterPreprocessed = {
             time: {},
-            misc: filter.misc
+            misc: global.filter.misc
         }
-        console.log("(preprocessFilter) timePref before convert to int: ", filter.time);
+        
+        // console.log("(preprocessFilter) timePref before convert to int: ", global.filter.time);
         /* Convert military time in filter to integers representing minutes */
-        for (let dayString in filter.time) {
+        for (let dayString in global.filter.time) {
             let dayInt = dayToInteger[dayString];
-            newFilter.time[dayInt] = filter.time[dayString];
-
-            let arrayTimes = newFilter.time[dayInt];
-            for (let i = 0; i < arrayTimes.length; i++) {
-                let strTimeEarliest = filter.time[dayString][i].time_earliest;
-                let strTimeLatest = filter.time[dayString][i].time_latest;
-
-                let intTimeForEarliest = timeUtils.militaryTimeToInteger(strTimeEarliest);
-                let intTimeForLatest = timeUtils.militaryTimeToInteger(strTimeLatest);
-                newFilter.time[dayInt][i].time_earliest = intTimeForEarliest;
-                newFilter.time[dayInt][i].time_latest = intTimeForLatest;
+            // global.filterPreprocessed.time[dayInt] = filter.time[dayInt]
+            global.filterPreprocessed.time[dayInt] = [];
+            // let arrayTimes = global.filter.time[dayInt];
+            for (let i = 0; i < global.filter.time[dayString].length; i++) {
+                let strTimeEarliest = global.filter.time[dayString][i].time_earliest;
+                let strTimeLatest = global.filter.time[dayString][i].time_latest;
+                global.filterPreprocessed.time[dayInt].push({
+                    time_earliest: timeUtils.militaryTimeToInteger(strTimeEarliest),
+                    time_latest: timeUtils.militaryTimeToInteger(strTimeLatest)
+                });
             }
         }
         
-        global.filter = newFilter;
-        filter = global.filter
         /*    Combine adjacent time intervals in the time preferences section of filter.
              e.g. 10:00-11:00, 11:00-12:00 should be 10:00-12:00                     
         */
-        let preferencesTime = filter.time;
-        // console.log("(preprocessFilter) filter after: ", filter);
-        console.log("(preprocessFilter) timePref before: ", preferencesTime);
-        for (let day in preferencesTime) {
+        // console.log("(preprocessFilter) global.filterPreprocessed.time after conversion: ", global.filterPreprocessed.time);
+        // console.log("(preprocessFilter) timePref before: ", global.filterPreprocessed.time);
+        for (let day in global.filterPreprocessed.time) {
 
             /* iterate through the days of the week in time preferences */
-            let dayPreferences = preferencesTime[day];
+            let dayPreferences = global.filterPreprocessed.time[day];
 
             let numIntervals = dayPreferences.length;
 
@@ -94,10 +90,11 @@ const preprocessFilter = (global) => {
             }
 
             // update the time filter's day of preferences
-            preferencesTime[day] = dayPreferences;
+            global.filterPreprocessed.time[day] = dayPreferences;
 
         }
-        console.log("(preprocessFilter) timePref after: ", preferencesTime);
+        // console.log("(preprocessFilter) global.filterPreprocessed after: ", global.filterPreprocessed.time);
+        // console.log("(preprocessFilter) global.filter after: ", global.filter);
 
         resolve(global);
     });

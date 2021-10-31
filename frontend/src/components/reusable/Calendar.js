@@ -26,6 +26,7 @@ const time = [
   "6PM",
   "7PM",
   "8PM",
+  '9PM',
 ];
 
 const weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
@@ -40,6 +41,8 @@ function Calendar(props) {
     handleRemoveEntireDay,
     shrink,
     classes,
+    onEventClick,
+
   } = props;
   const [daySelection, setDaySelection] = useState(0);
 
@@ -71,7 +74,7 @@ function Calendar(props) {
           >
             <ArrowLeftIcon fontSize="large" />
           </IconButton>
-          <div>{weekdays[daySelection]}</div>
+          <div>{weekdays[daySelection].substr(0,3).toUpperCase()}</div>
           <IconButton
             onClick={() => {
               onDayChange(1);
@@ -82,9 +85,9 @@ function Calendar(props) {
         </div>
       )}
 
-      <div className={cStyle.calendarContainer}>
+      <div className={cStyle.calendarContainer} >
         {/* Time indicator */}
-        <div className={cStyle.timeSlotContainer}>
+        <div className={cStyle.timeSlotContainer} style={timePrefState ? {} : {transform:"translateY(-1px)"}}>
           <div className={cStyle.timeSlotTitle} />
           {time.map((timeSlot) => (
             <div className={cStyle.timeSlot} key={timeSlot}>
@@ -106,6 +109,8 @@ function Calendar(props) {
               removeEntireDay={handleRemoveEntireDay}
               singleDay={false}
               classesDay={classes && classes[dayName]}
+              onEventClick={onEventClick}
+              
             />
           ))
         ) : (
@@ -119,7 +124,9 @@ function Calendar(props) {
             addEntireDay={handleAddEntireDay}
             removeEntireDay={handleRemoveEntireDay}
             singleDay={true}
-            classesDay={classes[weekdays[daySelection]]}
+            classesDay={classes && classes[weekdays[daySelection]]}
+            onEventClick={onEventClick}
+            shrink={shrink}
           />
         )}
       </div>

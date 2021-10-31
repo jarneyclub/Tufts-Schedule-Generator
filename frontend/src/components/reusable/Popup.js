@@ -8,7 +8,7 @@
  */
 
 import { useState } from "react";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import { ClickAwayListener } from "@mui/material";
 import pStyle from "./reusableStyles/Popup.module.css";
 
 /* scripts */
