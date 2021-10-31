@@ -64,7 +64,7 @@ const createArrSectionTypes = (global) => {
 
             for (let j in sectionsInSecTypes) {
                 let sections = sectionsInSecTypes[j];
-
+                console.log("createArrSectionTypes) sections:", sections);
                 let secsToInsert = [];
                 filtrationRecord.numOfSecsInSecType = Object.keys(sections).length;
                 filtrationRecord.numOfSecsIgnored = 0;
