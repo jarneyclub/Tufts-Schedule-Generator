@@ -183,7 +183,7 @@ exports.deleteSchedule = async (req, res) => {
         let {sched_id} = req.body;
         console.log("(deleteSchedule)");
         await scheduleHandler.deleteSchedule(sched_id);
-        res.json({});
+        res.json({"res": "Schedule deleted"});
     }
     catch (err) {
         errorHandler(err, "deleteSchedule", res);
