@@ -64,7 +64,7 @@ exports.updateSchedule = async (req, res) => {
                 let sectionStatus    = mapStatusFormat[currSection.status];
                 let sectionType      = currSection.section_type;
                 let sectionInstrMode = currSection.instr_mode;
-                
+                console.log("(updateSchedule) sectionNum: ", sectionNum);
                 // log units of this section type
                 mapSecTypeToUnits[sectionType] = sectionUnits;
 
