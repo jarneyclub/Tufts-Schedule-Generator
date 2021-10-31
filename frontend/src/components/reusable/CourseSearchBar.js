@@ -72,6 +72,7 @@ function CourseSearchBar(props) {
     <div
       className={cStyle.barContainer}
       draggable={draggable}
+      onTouchStart={handleDragStart}
       onDragStart={handleDragStart}
       id={course_num?.concat(course_title)}
       onDoubleClick={handleDoubleClick}
