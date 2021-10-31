@@ -52,7 +52,7 @@ function PlanCard(props) {
     <div
       className={pStyle.cardContainer}
       onDragOver={dragOver}
-      onTouchMove={dragOver}
+      // onTouchMove={dragOver}
       onDrop={drop}
       onTouchEnd={drop}
       id={cardDetail?.plan_term_id}
