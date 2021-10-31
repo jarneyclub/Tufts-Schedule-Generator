@@ -14,13 +14,13 @@ import eStyle from "./reusableStyles/EventScreenshot.module.css";
 const columnTitles = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "TimeUnspecified"]
 
 const palette = [
-  {backgroundColor:"#BECADA", color: "#000000", borderLeft: "5px solid #000000"},
-  {backgroundColor:"#C8DCE4", color: "#000000", borderLeft: "5px solid #000000"}, 
-  {backgroundColor:"#E2B6B6", color: "#000000", borderLeft: "5px solid #000000"}, 
-  {backgroundColor:"#D2C6CE", color: "#000000", borderLeft: "5px solid #000000"}, 
-  {backgroundColor:"#F0E5A8", color: "#000000", borderLeft: "5px solid #000000"}, 
-  {backgroundColor:"#CBE1B7", color: "#000000", borderLeft: "5px solid #000000"}, 
-  {backgroundColor:"#ECD0AC", color: "#000000", borderLeft: "5px solid #000000"}, 
+  {backgroundColor:"#BECADA", color: "#000000", borderLeft: "5px solid #849AB8"},
+  {backgroundColor:"#C8DCE4", color: "#000000", borderLeft: "5px solid #91BACA"}, 
+  {backgroundColor:"#E2B6B6", color: "#000000", borderLeft: "5px solid #CF8A8A"}, 
+  {backgroundColor:"#D2C6CE", color: "#000000", borderLeft: "5px solid #AA92A1"}, 
+  {backgroundColor:"#F0E5A8", color: "#000000", borderLeft: "5px solid #EAD986"}, 
+  {backgroundColor:"#CBE1B7", color: "#000000", borderLeft: "5px solid #A1C97D"}, 
+  {backgroundColor:"#ECD0AC", color: "#000000", borderLeft: "5px solid #DCAB6A"}, 
 
 ]
 function Class(props) {
