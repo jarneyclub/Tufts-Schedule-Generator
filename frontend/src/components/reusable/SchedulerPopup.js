@@ -174,7 +174,7 @@ function AddSchedule(props) {
 function RemoveSchedule(props) {
   const {
     onClose,
-    planName,
+    scheduleName,
     scheduleID,
     refreshPlans,
     onShowAlert,
@@ -192,8 +192,9 @@ function RemoveSchedule(props) {
   };
 
   const fetchDelete = async () => {
-    await fetch("https://jarney.club/api/degreeplan/".concat(scheduleID), {
+    await fetch("https://jarney.club/api/schedule/".concat(scheduleID), {
       method: "DELETE",
+      body: JSON.stringify({sched_id: scheduleID})
     })
       .then((response) => response.json())
       .then((result) => {
@@ -225,7 +226,7 @@ function RemoveSchedule(props) {
       </div>
       <div className={pStyle.formContainer}>
         <div className={pStyle.inputBarContainer}>
-          Are you sure you want to remove {planName}?
+          Are you sure you want to remove {scheduleName}?
         </div>
         <Button className={pStyle.cancelButton} onClick={handleClose}>
           CANCEL
