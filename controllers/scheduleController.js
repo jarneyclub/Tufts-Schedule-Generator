@@ -58,13 +58,14 @@ exports.updateSchedule = async (req, res) => {
                 let currSection      = arrSections[j];
                 courseNum            = currSection.course_num;
                 courseTitle          = currSection.course_title;
-                let sectionId        = currSection.section_id;
+                let sectionId        = currSection.term_section_id;
                 let sectionUnits     = currSection.units;
                 let sectionNum       = currSection.section_num;
                 let sectionStatus    = mapStatusFormat[currSection.status];
                 let sectionType      = currSection.section_type;
                 let sectionInstrMode = currSection.instr_mode;
                 console.log("(updateSchedule) sectionNum: ", sectionNum);
+                console.log("(updateSchedule) sectionId: ", sectionId);
                 // log units of this section type
                 mapSecTypeToUnits[sectionType] = sectionUnits;
 
