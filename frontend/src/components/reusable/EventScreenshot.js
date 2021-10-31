@@ -92,6 +92,7 @@ function EventScreenshot(props) {
         columnTitles.map((title) => (
           <div className={eStyle.eventsContainer}>
             <div className={eStyle.titleContainer}>{title !== "TimeUnspecified" ? title : "Unspecified"}</div>
+            <br/>
             {
               classDetails[title]?.map((details) => (
                 <Class classDetail={details} tu={title === "TimeUnspecified"} customStyle={classCSS[details.term_course_id]}/>
