@@ -166,7 +166,7 @@ function Home(props) {
           efficient schedule for your semester!
           <br />
           <br />
-          <Link to="/DegreePlan1" style={{ textDecoration: "none" }}>
+          <Link to="/Scheduler" style={{ textDecoration: "none" }}>
             <Button
               type="submit"
               className={hStyle.button}
