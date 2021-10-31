@@ -202,6 +202,8 @@ function DegreeReqEdit(props) {
 
   useEffect(() => {
     fetchSchoolOptions();
+    console.log("detail: ", detail);
+    console.log("detail.school", detail?.school);
   }, []);
   return (
     <div className={dStyle.drContainer}>
