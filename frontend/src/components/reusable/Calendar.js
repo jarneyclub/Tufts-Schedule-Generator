@@ -84,9 +84,9 @@ function Calendar(props) {
         </div>
       )}
 
-      <div className={cStyle.calendarContainer} style={timePrefState ? {} : {transform:"translateY(-1px)"}}>
+      <div className={cStyle.calendarContainer} >
         {/* Time indicator */}
-        <div className={cStyle.timeSlotContainer}>
+        <div className={cStyle.timeSlotContainer} style={timePrefState ? {} : {transform:"translateY(-1px)"}}>
           <div className={cStyle.timeSlotTitle} />
           {time.map((timeSlot) => (
             <div className={cStyle.timeSlot} key={timeSlot}>
