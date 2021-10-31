@@ -42,7 +42,6 @@ const createArrSectionTypes = (global) => {
         }
         console.log("(applyFilter/createArrSectionTypes) filter.misc: ", filter.misc);
 
-
         // record of filtered section information (for verbose error messages)
         let filtrationRecord = {
             numOfSecsInSecType: undefined,
@@ -135,6 +134,7 @@ const createArrSectionTypes = (global) => {
                             let dayOfWeek = aClass.getDayOfWeek();
 
                             let timePreferencesOnDay = timePref[dayOfWeek];
+                            console.log("(applyFilter) timePreferencesOnDay: ", timePreferencesOnDay);
                             for (let i = 0; i < timePreferencesOnDay.length; i++) {
                                 let timeStartFilter = timePreferencesOnDay[i].time_earliest;
                                 let timeEndFilter = timePreferencesOnDay[i].time_latest;
