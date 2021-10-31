@@ -24,7 +24,7 @@
 .timeSlotContainer {
   flex-grow: 1;
   margin: 0 1vw;
-  transform: translateY(25px);
+  transform: translateY(60px);
 }
 
 .timeSlotTitle {
