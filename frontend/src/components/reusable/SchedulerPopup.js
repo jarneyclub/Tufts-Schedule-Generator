@@ -194,6 +194,7 @@ function RemoveSchedule(props) {
   const fetchDelete = async () => {
     await fetch("https://jarney.club/api/schedule/".concat(scheduleID), {
       method: "DELETE",
+      body: JSON.stringify({sched_id: scheduleID})
     })
       .then((response) => response.json())
       .then((result) => {
