@@ -39,6 +39,7 @@ const chosenClassesToApiDetails = (global) => {
         let sectionName = singleClass.getSectionName();
         let sectionId = singleClass.getSectionID();
         let courseId = singleClass.getCourseID();
+        let courseDatabaseId = singleClass.getCourseDatabaseId();
         let courseName = singleClass.getCourseName();
         let room = singleClass.getLocation();
         let city = singleClass.getCity();
@@ -54,6 +55,7 @@ const chosenClassesToApiDetails = (global) => {
             location: location,
             instructors: instructors,
             term_section_id: sectionId,
+            term_course_id: courseDatabaseId,
             time_start: time_start_military,
             time_end: time_end_military
         }
