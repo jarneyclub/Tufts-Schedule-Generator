@@ -174,7 +174,7 @@ function AddSchedule(props) {
 function RemoveSchedule(props) {
   const {
     onClose,
-    planName,
+    scheduleName,
     scheduleID,
     refreshPlans,
     onShowAlert,
@@ -225,7 +225,7 @@ function RemoveSchedule(props) {
       </div>
       <div className={pStyle.formContainer}>
         <div className={pStyle.inputBarContainer}>
-          Are you sure you want to remove {planName}?
+          Are you sure you want to remove {scheduleName}?
         </div>
         <Button className={pStyle.cancelButton} onClick={handleClose}>
           CANCEL
