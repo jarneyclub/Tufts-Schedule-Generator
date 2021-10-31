@@ -194,6 +194,10 @@ function RemoveSchedule(props) {
   const fetchDelete = async () => {
     await fetch("https://jarney.club/api/schedule", {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
       body: JSON.stringify({sched_id: scheduleID})
     })
       .then((response) => response.json())
