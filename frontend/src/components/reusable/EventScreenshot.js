@@ -84,7 +84,7 @@ function EventScreenshot(props) {
 
   return (
     <div className={eStyle.screenshotContainer}>
-      <Button onClick={onClose} className={eStyle.button}>Return to scheduler</Button>
+      <Button onClick={onClose} className={eStyle.button}>Return to Schedule</Button>
       <br/>
       <br/>
       <div className={eStyle.rowContainer}>
