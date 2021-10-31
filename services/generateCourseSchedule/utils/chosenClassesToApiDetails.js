@@ -44,6 +44,7 @@ const chosenClassesToApiDetails = (global) => {
         let room = singleClass.getLocation();
         let city = singleClass.getCity();
         let instructors = singleClass.getInstructors();
+        console.log("(chosenClassesToApiDet):", "sectionId: ", sectionId);
         console.log("(chosenClassesToApiDet):", "instructors: ", instructors);
         let location = room + "," + city;
         let eventName = sectionName;
