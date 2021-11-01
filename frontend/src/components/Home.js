@@ -101,7 +101,7 @@ function Home(props) {
           Look for an existing degree requirement and add it to your list!
           <br />
           <br />
-          <Link to="/DegreePlan1" style={{ textDecoration: "none" }}>
+          <Link to="/DegreeRequirement" style={{ textDecoration: "none" }}>
             <Button
               type="submit"
               className={hStyle.button}
@@ -132,7 +132,7 @@ function Home(props) {
           journey using our degree planner!
           <br />
           <br />
-          <Link to="/DegreePlan2" style={{ textDecoration: "none" }}>
+          <Link to="/DegreePlan" style={{ textDecoration: "none" }}>
             <Button
               type="submit"
               className={hStyle.button}

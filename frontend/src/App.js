@@ -117,7 +117,7 @@ export default function App() {
           />
 
           <Switch>
-            <Route path="/DegreePlan1">
+            <Route path="/DegreeRequirement">
               <DegreePlan1
                 shrink={shrink}
                 logged={logged}
@@ -129,7 +129,7 @@ export default function App() {
                 handleLogRequired={handleLogRequired}
               />
             </Route>
-            <Route path="/DegreePlan2">
+            <Route path="/DegreePlan">
               <DegreePlan2
                 shrink={shrink}
                 logged={logged}

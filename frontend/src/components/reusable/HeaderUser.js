@@ -77,7 +77,7 @@ function HeaderUser(props) {
               <div className={hStyle.navbarContainer}>
                 <div className={hStyle.verticalBar} />
                 <NavLink
-                  to="/DegreePlan1"
+                  to="/DegreeRequirement"
                   activeClassName={hStyle.activeNavOption}
                   className={hStyle.navOption}
                   style={{ textDecoration: "none" }}
@@ -86,7 +86,7 @@ function HeaderUser(props) {
                 </NavLink>
 
                 <NavLink
-                  to="/DegreePlan2"
+                  to="/DegreePlan"
                   activeClassName={hStyle.activeNavOption}
                   className={hStyle.navOption}
                   style={{ textDecoration: "none" }}
@@ -171,7 +171,7 @@ function HeaderUser(props) {
                 Home
               </NavLink>
               <NavLink
-                to="/DegreePlan1"
+                to="/DegreeRequirement"
                 activeClassName={hStyle.activeShrinkNavOption}
                 className={hStyle.shrinkNavOption}
                 onClick={() => setShrinkExpandable((prev) => !prev)}
@@ -180,7 +180,7 @@ function HeaderUser(props) {
                 Degree requirement
               </NavLink>
               <NavLink
-                to="/DegreePlan2"
+                to="/DegreePlan"
                 activeClassName={hStyle.activeShrinkNavOption}
                 className={hStyle.shrinkNavOption}
                 onClick={() => setShrinkExpandable((prev) => !prev)}
