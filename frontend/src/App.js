@@ -142,7 +142,7 @@ export default function App() {
               />
             </Route>
 
-            <Route path="/Scheduler">
+            <Route path="/Schedule">
               <Scheduler
                 shrink={shrink}
                 logged={logged}

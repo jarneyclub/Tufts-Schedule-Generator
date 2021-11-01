@@ -72,7 +72,7 @@ function Home(props) {
           <br />
           <br />
           <div className={hStyle.buttonContainer}>
-            <Link to="/Scheduler" style={{ textDecoration: "none" }}>
+            <Link to="/Schedule" style={{ textDecoration: "none" }}>
               <Button
                 type="submit"
                 className={hStyle.button}
@@ -166,7 +166,7 @@ function Home(props) {
           efficient schedule for your semester!
           <br />
           <br />
-          <Link to="/Scheduler" style={{ textDecoration: "none" }}>
+          <Link to="/Schedule" style={{ textDecoration: "none" }}>
             <Button
               type="submit"
               className={hStyle.button}
