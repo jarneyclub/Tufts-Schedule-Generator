@@ -95,7 +95,7 @@ function HeaderUser(props) {
                 </NavLink>
 
                 <NavLink
-                  to="/Scheduler"
+                  to="/Schedule"
                   activeClassName={hStyle.activeNavOption}
                   className={hStyle.navOption}
                   style={{ textDecoration: "none" }}
@@ -190,7 +190,7 @@ function HeaderUser(props) {
               </NavLink>
 
               <NavLink
-                to="/Scheduler"
+                to="/Schedule"
                 activeClassName={hStyle.activeShrinkNavOption}
                 className={hStyle.shrinkNavOption}
                 onClick={() => setShrinkExpandable((prev) => !prev)}
