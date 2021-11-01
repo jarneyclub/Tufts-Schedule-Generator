@@ -42,7 +42,6 @@ const createArrSectionTypes = (global) => {
         }
         console.log("(applyFilter/createArrSectionTypes) filter.misc: ", filter.misc);
 
-
         // record of filtered section information (for verbose error messages)
         let filtrationRecord = {
             numOfSecsInSecType: undefined,
@@ -53,7 +52,7 @@ const createArrSectionTypes = (global) => {
             numOfSecsIgnoredByignoreWL: undefined,
             numOfSecsIgnoredByTime: undefined,
         }
-
+        
         let mapSectionTypes = [];
         for (i in arrayCourses) {
             let course = arrayCourses[i];
@@ -79,29 +78,55 @@ const createArrSectionTypes = (global) => {
                     let sec = sections[k];
                     let classes = sec.getClasses();
                     
-                    let withinUserPreference = false;
+                    let sectionPassedAllFilters = true;
 
+                    /*      APPLY VIRTUAL CLASS PREFERENCE ON CURRENT SECTION      */
+
+                    let sectionIsVirtual = (sec.getSectionName().indexOf("M") == 0);
+                    if (ignoreM !== undefined && ignoreM === true) {
+
+                        if (sectionIsVirtual === true) {
+                            /* Cannot insert this Section (Msection filter) */
+
+                            console.log("(applyFilter) M section. Ignoring...")
+
+                            // update records
+                            filtrationRecord.numOfSecsIgnored++;
+                            filtrationRecord.numOfSecsIgnoredByignoreM++;
+
+                            sectionPassedAllFilters = false;
+                        }
+                    }
+                    /*      APPLY SECTION (CLOSED) PREFERENCE ON CURRENT SECTION      */
+
+                    if (ignoreClosed === true)
+                        if (sec.getSectionStatus() === "closed") {
+                            
+                            sectionPassedAllFilters = false;
+                            console.log("(applyFilter) closed section...ignoring")
+                            // update records
+                            filtrationRecord.numOfSecsIgnored++;
+                            filtrationRecord.numOfSecsIgnoredByignoreClosed++;
+                        }
+
+                    /*      APPLY SECTION (WAITLIST) PREFERENCE ON CURRENT SECTION      */
+                    if (ignoreWL === true)
+                        if (sec.getSectionStatus() === "waitlist") {
+                            sectionPassedAllFilters = false;
+                            console.log("(applyFilter) waitlist section...ignoring..")
+                            // update records
+                            filtrationRecord.numOfSecsIgnored++;
+                            filtrationRecord.numOfSecsIgnoredByignoreWL++;
+                        }
                     // iterate through Classes
                     for (let l in classes) {
+                        let aClass = classes[l]; // current class
 
-                        // reinit withinUserPref flag 
-                        // (if at any point in this loop this flag is true, loop will break)
-                        withinUserPreference = true; 
-
-                        let aClass = classes[l];
-
-                        // flags about the Section
-                        let timeIsUnspecified = false;
-                        let isMSection = false;
-
+                        /*      APPLY TIME PREFERENCE (INCLUDING TIME UNSPECIFIED) ON CURRENT CLASS      */
+                        let classIsWithinTimePreference = false;
                         let classStartTime = aClass.getStartTime();
                         let classEndTime = aClass.getEndTime();
-                        let secName = aClass.getSectionName();
-                        
-                        // Check if class time is unspecified
-                        if (classStartTime == -1 || classEndTime == -1)
-                            timeIsUnspecified = true;
-
+                        let timeIsUnspecified = (classStartTime == -1 || classEndTime == -1);
                         if ( timeIsUnspecified === false ) {
                             /* Class time is specified */
 
@@ -109,97 +134,55 @@ const createArrSectionTypes = (global) => {
                             let dayOfWeek = aClass.getDayOfWeek();
 
                             let timePreferencesOnDay = timePref[dayOfWeek];
+                            console.log("(applyFilter) dayOfWeek: ", dayOfWeek);
+                            console.log("(applyFilter) timePreferencesOnDay: ", timePreferencesOnDay);
                             for (let i = 0; i < timePreferencesOnDay.length; i++) {
                                 let timeStartFilter = timePreferencesOnDay[i].time_earliest;
                                 let timeEndFilter = timePreferencesOnDay[i].time_latest;
-
+                                console.log("(applyFilter) timeStartFilter: ", timeStartFilter);
+                                console.log("(applyFilter) timeEndFilter: ", timeEndFilter);
+                                console.log("(applyFilter) classStartTime: ", classStartTime);
+                                console.log("(applyFilter) classEndTime: ", classEndTime);
                                 if (withinBounds(timeStartFilter, timeEndFilter, classStartTime, classEndTime) == true) {
                                     /* Class is within user time preference */
+                                    classIsWithinTimePreference = true;
                                     break;
                                 }
                             } /* (End of) loop over a single day's time preferences */
-                        }
-                        else {
+                        } else {
                             /* Class time is unspecified */
-
                             if (ignoreTU !== undefined && ignoreTU === true) {
                                 /* Cannot insert this Section (TU filter) */
 
                                 console.log("(applyFilter) Time was not specified. Ignoring...");
-                                withinUserPreference = false;
+                                classIsWithinTimePreference = false;
                                 
                                 // update records
-                                filtrationRecord.numOfSecsIgnored++; 
+                                filtrationRecord.numOfSecsIgnored++;
                                 filtrationRecord.numOfSecsIgnoredByignoreTU++;
-                                break;
+                            } else {
+                                /* CAN insert this Section */
+                                classIsWithinTimePreference = true;
                             }
                         }
 
-                        if (withinUserPreference === false) {
-                            /* Time was specified, but current Class did not match user time preferences */
-                            // console.log("(applyFilter) Time is not within bounds. ")
-                            // update records
-                            filtrationRecord.numOfSecsIgnored++;
-                            filtrationRecord.numOfSecsIgnoredByTime++;
+                        if (classIsWithinTimePreference === false) {
+                            console.log("(applyFilter) Class did not pass time preferences. Ignoring...");
+                            sectionPassedAllFilters = false;
                             break;
                         }
-                        else  {
-                            // console.log("(applyFilter) Time IS within bounds. ")
-                        }
-
-                        // apply ignore MSection filter
-                        if (secName.indexOf("M") == 0) {
-                            /* Section of this Class is an "M" section*/
-                            console.log("(applyFilter) M secName: ", secName);
-                            isMSection = true;
-                        }
-                        
-                        if (ignoreM !== undefined && ignoreM === true) {
-
-                            if (isMSection === true) {
-                                /* Cannot insert this Section (Msection filter) */
-
-                                console.log("(applyFilter) M section. Ignoring...")
-
-                                // update records
-                                filtrationRecord.numOfSecsIgnored++;
-                                filtrationRecord.numOfSecsIgnoredByignoreM++;
-
-                                withinUserPreference = false;
-                                break;
-                            }
-                        }
-
-                        if (!withinUserPreference)
-                            console.log("(applyFilter) impossible withinUserPreference === false")
-
+                    
                     } /* (End of) loop over Classes */
-
-                    // apply ignoreClosed and ignoreWL filters
-                    let secStatus = sec.getSectionStatus();
-                    
-                    if (ignoreClosed === true)
-                        if (secStatus === "closed") {
-                            
-                            withinUserPreference = false;
-                            console.log("(applyFilter) closed section...ignoring")
-                            // update records
-                            filtrationRecord.numOfSecsIgnored++;
-                            filtrationRecord.numOfSecsIgnoredByignoreClosed++;
-                        }
-                    
-                    if (ignoreWL === true)
-                        if (secStatus === "waitlist") {
-                            withinUserPreference = false;
-                            console.log("(applyFilter) waitlist section...ignoring..")
-                            // update records
-                            filtrationRecord.numOfSecsIgnored++;
-                            filtrationRecord.numOfSecsIgnoredByignoreWL++;
-                        }
                     
                     // insert if all filters applied without issue
-                    if ( withinUserPreference === true ) {
+                    if ( sectionPassedAllFilters === true ) {
+                        console.log("(applyFilter) Section did pass filters. Adding...");
                         secsToInsert.push(sec);
+                    } else {
+                        /* section did NOT pass all filters, ignore section */
+                        console.log("(applyFilter) Section did not pass filters. Ignoring..");
+                        filtrationRecord.numOfSecsIgnored++;
+                        filtrationRecord.numOfSecsIgnoredByTime++;   
                     }
 
                 } /* (End of) loop over Sections */
@@ -208,7 +191,6 @@ const createArrSectionTypes = (global) => {
                 let indexSection = 0;
                 console.log("(createArrSectionTypes) secsToInsert: ", secsToInsert);
                 for ( let i in secsToInsert ) {
-                    
                     let sec = secsToInsert[i]; // Section object
                     sectionTypeObj[indexSection.toString()] = sec;
                     indexSection++;
