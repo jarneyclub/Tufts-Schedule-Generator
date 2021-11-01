@@ -273,6 +273,8 @@ function DegreePlan1(props) {
     <div className={dp1Style.horizontalWrapper}>
       <Helmet>
         <title>JARney | Degree Requirement</title>
+        <meta name="description" content="Tufts majors and minors requirements, all in one page! Look for an existing degree requirement and add it to your list." />
+
       </Helmet>
       {/* * * * * * * Includes Degree Req Selector * * * * * * */}
       {/* Includes 1) Existing degree req search list, 2) My List.

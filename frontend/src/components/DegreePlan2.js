@@ -480,6 +480,7 @@ function DegreePlan2(props) {
     <div style={{ marginTop: "80px" }}>
       <Helmet>
         <title>JARney | Degree Plan</title>
+        <meta name="description" content="Need to plan out your Tufts degree? Fall, Spring, Summer, or Annual. We have the complete list of courses!" />
       </Helmet>
       <div className={dp2Style.contentContainer}>
         {/* * * * * Contains * * * * * 

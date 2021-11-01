@@ -526,7 +526,8 @@ function Scheduler(props) {
   return (
     <div>
       <Helmet>
-        <title>JARney | Scheduler</title>
+        <title>JARney | Schedule</title>
+        <meta name="description" content="Tufts SIS no more! Your semester schedule is one click away!" />
       </Helmet>
       <div className={sStyle.horizontalWrapper}>
         <div className={sStyle.leftColumnWrapper}>
