@@ -77,7 +77,7 @@ function treeClasses(inputFilter) {
 
         // console.log("INSERTION NODE INFO: ");
         // console.log("inserting section id", inputName);
-        // console.log("inserting course id", inputObject.getCourseID());
+        // console.log("inserting course id", inputObject.getCourseNum());
         // console.log("inputLeftValue: ", inputLeftValue);
         // console.log("inputRightValue: ", inputRightValue);
 
