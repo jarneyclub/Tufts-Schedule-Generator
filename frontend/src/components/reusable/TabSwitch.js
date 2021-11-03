@@ -146,13 +146,22 @@ const CourseInfoExpress = (props) => {
     time_start,
     time_end,
     term_section_id,
-    instructor,
+    instructors,
     course_num,
     course_title,
     units_esti,
     description,
+    attributes,
   } = courseInfo;
 
+  const [attributeDetails, setAttributeDetails] = useState("");
+  useEffect(() => {
+    attributes.forEach((att) => {
+      setAttributeDetails((prev) => prev.concat(", ").concat(att));
+    })
+  }, [])
+
+  
   return (
     <ClickAwayListener onClickAway={onClose}>
       <div className={tStyle.courseInfoContainer}>
@@ -203,10 +212,17 @@ const CourseInfoExpress = (props) => {
           </div>
         )}
 
-        {instructor && (
+        {instructors && (
           <div className={tStyle.infoContainer}>
             <div className={tStyle.infoTitle}>Instructor:&nbsp;</div>
-            <div classname={tStyle.infoDetail}>{instructor}</div>
+            <div classname={tStyle.infoDetail}>{instructors}</div>
+          </div>
+        )}
+
+        {attributes && (
+          <div className={tStyle.infoContainer}>
+            <div className={tStyle.infoTitle}>Attributes:&nbsp;</div>
+            <div classname={tStyle.infoDetail}>{attributeDetails}</div>
           </div>
         )}
 
