@@ -30,7 +30,7 @@ function HeaderUser(props) {
 
   const navbarRef = useRef();
 
-  console.log("pathName: ", window.location.pathname);
+
 
   const handleLoginPopup = () => {
     setLoginPopup((prev) => !prev);

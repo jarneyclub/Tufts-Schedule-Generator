@@ -19,7 +19,6 @@ function Event(props) {
   const detail = details.split(',');
   const loc  = location.split(',');
 
-  console.log("eventDetails: ", eventDetails);
   const calculateHeight = () => {
     const start = time_start.split(":");
     const end = time_end.split(":");

@@ -77,21 +77,19 @@ function AddSemester(props) {
   const fetchAdd = async () => {
     const yearTerm =
       yearOptions[selectedYearIdx] + " " + termOptions[selectedTermIdx];
-    console.log("yearTerm: ", yearTerm);
-    console.log("planID: ", planID);
+
     const value = { plan_id: planID, term: yearTerm };
     const requestOption = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(value),
     };
-    console.log("requestOption for fetchCreatePrivateReqs", requestOption);
+
     await fetch("https://jarney.club/api/degreeplan/term", requestOption)
       .then((response) => response.json())
       .then((result) => {
         if (!result.error) {
           refreshPlans();
-          console.log("result from fetchAdd", result);
           setAlertMessage("Term added!");
           setAlertSeverity("success");
           onShowAlert();
@@ -157,7 +155,6 @@ function RemoveSemester(props) {
     setAlertMessage,
     setAlertSeverity,
   } = props;
-  console.log("cardoptions from removeSemester: ", cardOptions);
   /*  Stores the cards to be deleted  */
   const [selectedCards, setSelectedCards] = useState([]);
 
@@ -200,7 +197,6 @@ function RemoveSemester(props) {
       .then((response) => response.json())
       .then((result) => {
         if (!result.error) {
-          console.log("result from Degree Plan Terms remove", result);
           refreshPlans();
           setAlertMessage("Term(s) removed!");
           setAlertSeverity("success");
@@ -290,11 +286,9 @@ function EditPlanName(props) {
       .concat(planID)
       .concat("/plan_name/")
       .concat(editName);
-    console.log("requestOption for fetchCreatePrivateReqs", requestOption);
     await fetch(url, requestOption)
       .then((response) => response.json())
       .then((result) => {
-        console.log("result from editPlanName: ", result);
 
         if (!result.error) {
           refreshPlans();
@@ -420,7 +414,6 @@ function RemovePlan(props) {
     )
       .then((response) => response.json())
       .then((result) => {
-        console.log("result from Degree plan Delete", result);
 
         if (!result.error) {
           refreshPlans();
