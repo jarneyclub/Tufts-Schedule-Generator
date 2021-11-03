@@ -87,6 +87,7 @@ exports.signAccessTokenAndAttachCookie = async (req, res, next) => {
  */
  exports.setToExpireToken = async (req, res) => {
     let token = jwt.sign({}, process.env.TOKEN_SECRET, { expiresIn: '1s'});
+    console.log("(setToExpireToken)");
     // res.json({"token": token});
     res.cookie("access_token", token, {
         maxAge: 1000,
