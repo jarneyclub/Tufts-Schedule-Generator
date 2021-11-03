@@ -80,7 +80,7 @@ function CourseSearchBar(props) {
       {(origin === "schedulerCourseList" ||
         origin === "schedulerTab" ||
         origin !== "courseList") && <div>&nbsp;</div>}
-      <div>
+      <div style={{ wordBreak: "break-word" }}>
         【{course_num}】<br />
         {course_title}
       </div>

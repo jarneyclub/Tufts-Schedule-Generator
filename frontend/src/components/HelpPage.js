@@ -77,6 +77,8 @@ function HelpPage() {
         setAlertMessage("Thank you for your feedback!")
         setAlertSeverity("success") ;
         setShowAlert(true);
+        setContactForm(contactFormDefault);
+        console.log("showalert" , showAlert);
       })
       .catch((error) =>{
 
@@ -90,21 +92,34 @@ function HelpPage() {
 
         <Accordion>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            How do I make my own degree?
+          Q: What's the difference between degree requirements and degree plans?
           </AccordionSummary>
-          <AccordionDetails>test</AccordionDetails>
+          <AccordionDetails>A: Degree requirements are the courses/requirements
+            you must take to fulfil a specific degree. Degree plans are a space
+            for you to organize which classes you're going to take and when you're 
+            going to take them. In degree plans, you can also keep track of your 
+            progress towards completing your degree requirements.
+          </AccordionDetails>
         </Accordion>
         <Accordion>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            Accordion 2
+          Q: What's the difference between 'Public degree requirements' and 'My degree requirements'?
           </AccordionSummary>
-          <AccordionDetails>test</AccordionDetails>
+          <AccordionDetails>A: 'Public degree requirements' are accessible 
+            to everyone and cannot be edited directly. 'My degree requirements'
+             are your personal set of degree requirements and can be edited according
+             to your academic journey.
+          </AccordionDetails>
         </Accordion>
         <Accordion>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            Accordion 3
+          Q: What happens if a class is not available during my time preferences, but I 
+          try to render a schedule anyway?
           </AccordionSummary>
-          <AccordionDetails>test</AccordionDetails>
+          <AccordionDetails>A: We'll tell you! Unfortunately, we can't change class
+            times, but we can tell you when there are conflicts between your time preferences
+             and class times.
+          </AccordionDetails>
         </Accordion>
         <p></p>
       </div>
