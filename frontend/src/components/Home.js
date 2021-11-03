@@ -150,7 +150,6 @@ function Home(props) {
         className={hStyle.verticalContainer}
         style={{ backgroundColor: "#efebf9" }}
       >
- 
         <img
           src={SchedulerGraphic}
           alt="Scheduler Graphic"
@@ -180,8 +179,6 @@ function Home(props) {
       </div>
 
       {/* </div> */}
-
-
 
       {/* <div
         className={hStyle.footerContainer}

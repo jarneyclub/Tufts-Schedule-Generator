@@ -71,7 +71,7 @@ function CalendarDay(props) {
     singleDay,
     classesDay,
     onEventClick,
-    shrink
+    shrink,
   } = props;
   const [dragState, setDragState] = useState(false);
   const [entireDayOn, setEntireDayOn] = useState();
@@ -85,7 +85,6 @@ function CalendarDay(props) {
       addTimePref(dayName, e.target.id);
     } else {
       /*  Remove highlight, remove time pref from array  */
-      console.log("calendarfbk  highlighted");
       e.target.style.backgroundColor = "";
       removeTimePref(dayName, e.target.id);
     }
@@ -127,7 +126,7 @@ function CalendarDay(props) {
       removeEntireDay(dayName);
     }
   };
- 
+
   useEffect(() => {
     timePrefDay && setEntireDayOn(timePrefDay?.length === 26);
   }, []);
@@ -137,7 +136,9 @@ function CalendarDay(props) {
       {/* {
         !singleDay ? <div className={cStyle.timeSlotTitle}>{dayName}</div> : <div>&nbsp;</div>
       } */}
-      <div className={cStyle.timeSlotTitle}>{!singleDay ? dayName.substr(0,3).toUpperCase() : " "}</div>
+      <div className={cStyle.timeSlotTitle}>
+        {!singleDay ? dayName.substr(0, 3).toUpperCase() : " "}
+      </div>
 
       {timePrefState && (
         <div className={cStyle.buttonContainer}>
@@ -185,7 +186,13 @@ function CalendarDay(props) {
           {classesDay?.map((event) => <div>{event.details}</div>)}
       </div> */}
       {classesDay?.map((event) => {
-        return <Event shrink={shrink} eventDetails={event} onEventClick={onEventClick}></Event>;
+        return (
+          <Event
+            shrink={shrink}
+            eventDetails={event}
+            onEventClick={onEventClick}
+          ></Event>
+        );
       })}
     </div>
   );

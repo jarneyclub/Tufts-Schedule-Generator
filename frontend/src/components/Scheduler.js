@@ -25,7 +25,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
-import LinkedCameraIcon from '@mui/icons-material/LinkedCamera';
+import LinkedCameraIcon from "@mui/icons-material/LinkedCamera";
 import PurpleSwitch from "./reusable/PurpleSwitch";
 import sStyle from "./style/Scheduler.module.css";
 import Dropdown from "./reusable/Dropdown";
@@ -248,7 +248,6 @@ function Scheduler(props) {
   };
 
   const handleAddTimePref = (dayName, timeValue) => {
-    console.log("start time: ", timeValue);
     const latest = timeValue.split(":");
     let latestTime;
     /*  Computes the latest time value from start time */
@@ -269,11 +268,9 @@ function Scheduler(props) {
         },
       ],
     }));
-    console.log(timePref, dayName);
   };
 
   const handleCoursePrefChange = (field) => {
-    console.log("coursePref waitlist", coursePreference[field]);
     setCoursePreference((prev) => ({
       ...prev,
       [field]: !prev[field],
@@ -321,7 +318,6 @@ function Scheduler(props) {
   const checkCourseAdded = (courseID) => {
     for (let course of selectedCourses) {
       if (course.term_course_id === courseID) {
-        console.log("false: course:", course, " courseID:", courseID);
         return false;
       }
     }
@@ -333,10 +329,8 @@ function Scheduler(props) {
    *  purpose: for courseSearchBar, adds course to selectedCourseList
    */
   const handleDoubleClickCourseList = (courseDetail) => {
-    console.log("course to be added: ", courseDetail);
     if (checkCourseAdded(courseDetail.term_course_id)) {
       setSelectedCourses((prev) => [...prev, courseDetail]);
-      console.log("course added: ", selectedCourses);
     } else {
       setAlertMessage("Course was already added!");
       setAlertSeverity("error");
@@ -361,7 +355,6 @@ function Scheduler(props) {
     await fetch("https://jarney.club/api/schedules")
       .then((response) => response.json())
       .then((result) => {
-        console.log("result from fetchSavedSchedule", result);
         if (result.schedules.length === 0) {
           fetchCreateSchedule("Schedule #1");
         } else {
@@ -370,26 +363,23 @@ function Scheduler(props) {
           setSelectedScheduleID(result.schedules[selectedScheduleIdx].sched_id);
           setSelectedCourses(result.schedules[selectedScheduleIdx]?.courses);
           setClasses(result.schedules[selectedScheduleIdx]?.classes);
-          console.log("classes", classes);
-          console.log(
-            "res classes:",
-            result.schedules[selectedScheduleIdx]?.classes
-          );
+
           setTimePref(result.schedules[selectedScheduleIdx]?.filter?.time);
           setCoursePreference((prev) => ({
             ...prev,
             waitlist:
-              !(result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreWL),
+              !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreWL,
             closed:
-              !(result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreClosed),
+              !result.schedules[selectedScheduleIdx]?.filter?.misc
+                ?.ignoreClosed,
             online:
-              !(result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreM),
+              !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreM,
             time_unspecified:
-              !(result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreTU),
+              !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreTU,
           }));
         }
       })
-      .catch((error) => console.log("error from fetchSavedSchedules", error));
+      .catch((error) => {});
   };
 
   const fetchAttributes = async () => {
@@ -399,9 +389,7 @@ function Scheduler(props) {
         (result) => {
           setAttributes(result.attributes);
         },
-        (error) => {
-          console.log("error from Scheduler attribute ", error);
-        }
+        (error) => {}
       );
   };
 
@@ -414,10 +402,10 @@ function Scheduler(props) {
         term_course_ids: selectedCourses.map((course) => course.term_course_id),
         filter: {
           misc: {
-            ignoreTU: !(coursePreference.time_unspecified),
-            ignoreM: !(coursePreference.online),
-            ignoreClosed: !(coursePreference.closed),
-            ignoreWL: !(coursePreference.waitlist),
+            ignoreTU: !coursePreference.time_unspecified,
+            ignoreM: !coursePreference.online,
+            ignoreClosed: !coursePreference.closed,
+            ignoreWL: !coursePreference.waitlist,
           },
           time: timePref,
         },
@@ -434,21 +422,18 @@ function Scheduler(props) {
       (await fetch("https://jarney.club/api/schedule", requestOption)
         .then((response) => response.json())
         .then((result) => {
-          console.log("generate schedule result: ", result);
           if (!result.error) {
             setClasses(result.data.classes);
             setAlertMessage("Render success!");
             setAlertSeverity("success");
-            setShowAlert(true); 
+            setShowAlert(true);
           } else {
             setAlertMessage(result.error);
             setAlertSeverity("warning");
             setShowAlert(true);
           }
         })
-        .catch((error) => {
-          console.log("generate schedule error: ", error);
-        }));
+        .catch((error) => {}));
   };
 
   const fetchCreateSchedule = async (newName) => {
@@ -460,7 +445,6 @@ function Scheduler(props) {
     await fetch("https://jarney.club/api/schedule", requestOption)
       .then((response) => response.json())
       .then((result) => {
-        console.log("create schedule result: ", result);
         // refresh
         if (!result.error) {
           fetchSavedSchedules();
@@ -474,7 +458,7 @@ function Scheduler(props) {
           setShowAlert(true);
         }
       })
-      .catch((error) => console.log("generate schedule error: ", error));
+      .catch((error) => {});
   };
 
   const fetchData = async () => {
@@ -490,11 +474,9 @@ function Scheduler(props) {
         setSearchCourseResult([]);
         setSearchCourseResult(result.courses);
         setLoadMessage(false);
-        console.log("show results: ", result);
       })
       .catch((error) => {
         setSearchCourseResult([]);
-        console.log("error from Scheduler course search", error);
       });
   };
 
@@ -517,7 +499,6 @@ function Scheduler(props) {
   useEffect(() => {
     let tempCount = 0;
     selectedCourses.forEach((course) => {
-      console.log("coursees check", course);
       tempCount += course?.units_esti;
     });
     setUnitsCount(tempCount);
@@ -528,7 +509,10 @@ function Scheduler(props) {
     <div>
       <Helmet>
         <title>JARney | Schedule</title>
-        <meta name="description" content="Tufts SIS no more! Your semester schedule is one click away!" />
+        <meta
+          name="description"
+          content="Tufts SIS no more! Your semester schedule is one click away!"
+        />
       </Helmet>
       <div className={sStyle.horizontalWrapper}>
         <div className={sStyle.leftColumnWrapper}>
@@ -661,7 +645,6 @@ function Scheduler(props) {
               <div className={sStyle.infoTitle}>SHUs scheduled:&nbsp;</div>
               <div classname={sStyle.infoDetail}>{unitsCount}</div>
             </div>
-         
           </div>
           {popup.showCourseInfo && (
             <CourseInfoExpress
@@ -734,8 +717,6 @@ function Scheduler(props) {
               {degreeReqTab === 3 && <DegreePlanExpress />}
             </div>
           </div>
-
-         
         </div>
 
         <div className={sStyle.rightColumnWrapper}>
@@ -795,7 +776,9 @@ function Scheduler(props) {
                 Time Unspecified
               </div>
               <div className={sStyle.tuContainer}>
-                {scheduleOptions[selectedScheduleIdx]?.classes?.TimeUnspecified?.map((course) => (
+                {scheduleOptions[
+                  selectedScheduleIdx
+                ]?.classes?.TimeUnspecified?.map((course) => (
                   <Button
                     className={sStyle.tuButton}
                     onClick={() => handleShowCourseInfo(course)}
@@ -822,7 +805,7 @@ function Scheduler(props) {
         <Popup onClose={() => handlePopup("removeSchedule", false)}>
           <RemoveSchedule
             onClose={() => handlePopup("removeSchedule", false)}
-            refreshSchedules={fetchSavedSchedules} 
+            refreshSchedules={fetchSavedSchedules}
             scheduleID={scheduleOptions[selectedScheduleIdx]?.sched_id}
             scheduleName={scheduleOptions[selectedScheduleIdx]?.sched_name}
             onShowAlert={() => setShowAlert(true)}
@@ -846,16 +829,16 @@ function Scheduler(props) {
       )}
       {popup.eventScreenshot && (
         <Popup onClose={() => handlePopup("eventScreenshot", false)}>
-        <EventScreenshot
-          onClose={() => handlePopup("eventScreenshot", false)}
-          onShowAlert={() => setShowAlert(true)}
-          setAlertMessage={setAlertMessage}
-          setAlertSeverity={setAlertSeverity}
-          scheduleID={scheduleOptions[selectedScheduleIdx].sched_id}
-          scheduleName={scheduleOptions[selectedScheduleIdx].sched_name}
-          classDetails={classes}
-        />
-      </Popup>
+          <EventScreenshot
+            onClose={() => handlePopup("eventScreenshot", false)}
+            onShowAlert={() => setShowAlert(true)}
+            setAlertMessage={setAlertMessage}
+            setAlertSeverity={setAlertSeverity}
+            scheduleID={scheduleOptions[selectedScheduleIdx].sched_id}
+            scheduleName={scheduleOptions[selectedScheduleIdx].sched_name}
+            classDetails={classes}
+          />
+        </Popup>
       )}
       {timePrefState && (
         <TimePrefSelector

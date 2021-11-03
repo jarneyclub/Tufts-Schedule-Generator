@@ -49,7 +49,6 @@ import dStyle from "./reusableStyles/DegreeReqDisplay.module.css";
 
 function DegreeReqDisplay(props) {
   const { reqDetail } = props;
-  console.log("reqDetail from DegreeReqDisplay: ", reqDetail);
 
   return (
     <div className={dStyle.displayContainer}>
@@ -72,14 +71,20 @@ function DegreeReqDisplay(props) {
       <br />
       {reqDetail?.parts?.map((req) => (
         <div>
-          <div style={{ color: "#FC4E4E", wordBreak: "break-word" }}>{req?.part_name}</div>
+          <div style={{ color: "#FC4E4E", wordBreak: "break-word" }}>
+            {req?.part_name}
+          </div>
           <div style={{ wordBreak: "break-word" }}>{req?.part_desc}</div>
           {req?.part_reqs?.map((course) => (
             <div>
               {course?.course_num && (
-                <div style={{ wordBreak: "break-word" }}>&nbsp;▪&nbsp;{course?.course_num}</div>
+                <div style={{ wordBreak: "break-word" }}>
+                  &nbsp;▪&nbsp;{course?.course_num}
+                </div>
               )}
-              <div style={{ wordBreak: "break-word" }}>{course?.course_note}</div>
+              <div style={{ wordBreak: "break-word" }}>
+                {course?.course_note}
+              </div>
             </div>
           ))}
         </div>

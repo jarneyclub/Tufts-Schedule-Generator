@@ -100,7 +100,7 @@ function AddSemester(props) {
           onShowAlert(true);
         }
       })
-      .catch((error) => console.log("error from fetchAdd", error));
+      .catch((error) => {});
   };
   return (
     <div className={pStyle.loginContainer}>
@@ -289,7 +289,6 @@ function EditPlanName(props) {
     await fetch(url, requestOption)
       .then((response) => response.json())
       .then((result) => {
-
         if (!result.error) {
           refreshPlans();
           setAlertMessage("Plan name changed successfully!");
@@ -302,7 +301,7 @@ function EditPlanName(props) {
           onShowAlert(true);
         }
       })
-      .catch((error) => console.log("error from editPlanName: ", error));
+      .catch((error) => {});
   };
 
   return (
@@ -414,7 +413,6 @@ function RemovePlan(props) {
     )
       .then((response) => response.json())
       .then((result) => {
-
         if (!result.error) {
           refreshPlans();
           setAlertMessage("Plan removed!");
@@ -427,7 +425,7 @@ function RemovePlan(props) {
           onShowAlert(true);
         }
       })
-      .catch((error) => console.log("error from Degree Plan Delete", error));
+      .catch((error) => {});
   };
 
   return (

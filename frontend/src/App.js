@@ -73,21 +73,16 @@ export default function App() {
         throw new Error("Quick Login Failed. User needs to Login");
       })
       .then((result) => setLogged(result.data))
-      .catch((error) => console.log("error from quick login: ", error));
+      .catch((error) => {});
   };
 
   useEffect(() => {
-    console.log("before fetchQuickLogin");
     fetchQuickLogin();
 
     const checkResize = () => {
       if (window.innerWidth < 670) {
-        console.log("HeaderUser width smaller: ", window.innerWidth);
-
         setShrink(true);
       } else {
-        console.log("HeaderUser width larger: ", window.innerWidth);
-
         setShrink(false);
       }
     };
