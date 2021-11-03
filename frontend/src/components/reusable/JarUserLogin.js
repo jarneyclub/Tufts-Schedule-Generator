@@ -88,6 +88,7 @@ const JarUserLogin = React.forwardRef((props, ref) => {
           if (response.ok) {
             return response.json();
           }
+          console.log("response",response)
           throw new Error("Failed to Signup.");
         })
         .then((result) => {
