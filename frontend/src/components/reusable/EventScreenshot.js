@@ -51,25 +51,18 @@ function EventScreenshot(props) {
   // const [paletteIdx, setPaletteIdx] = useState(0);
   const [classCSS, setClassCSS] =  useState({});
   let sectionIDCSS = {};
-  console.log("eventScreenshot:", classDetails);
   
   const setClassPalette = () => {
     let paletteIdx = 0;
     columnTitles.forEach((title) => {
       classDetails[title].forEach(detail  => {
         if(!sectionIDCSS.hasOwnProperty(detail.term_course_id)) {
-          console.log("detail id:" , detail.term_course_id)
-          // setSectionIDCSS((prev) => ({
-          //   ...prev,
-          //   [detail.term_section_id]: palette[paletteIdx],
-          // }))
+ 
           sectionIDCSS = {
             ...sectionIDCSS, 
             [detail.term_course_id]: palette[paletteIdx]
           }
-          console.log("sectionIDCSS", sectionIDCSS);
           (paletteIdx <= (palette.length - 1)) ? (paletteIdx++) : (paletteIdx = 0);
-          console.log("paletteIdx: ", paletteIdx);
         }
       })
     })

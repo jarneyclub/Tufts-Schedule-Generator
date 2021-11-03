@@ -60,7 +60,6 @@ function Calendar(props) {
     }
   };
 
-  console.log("classes: ", classes);
 
   return (
     <div className={cStyle.container}>

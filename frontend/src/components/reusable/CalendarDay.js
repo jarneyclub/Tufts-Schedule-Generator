@@ -76,11 +76,7 @@ function CalendarDay(props) {
   const [dragState, setDragState] = useState(false);
   const [entireDayOn, setEntireDayOn] = useState();
   // eslint-disable-next-line no-unused-vars
-  // timePrefState && setEntireDayOn(timePrefDay?.length === 26);
 
-  console.log("TimePrefDay ", timePrefDay, " ", timePrefState);
-  //  timePrefState && console.log(timePrefDay.length
-  //     );
   /*  To check if a time slot is highlighted during time pref selection  */
   const onHighlight = (e) => {
     /*  Add highlight, add time pref to array  */
@@ -131,18 +127,7 @@ function CalendarDay(props) {
       removeEntireDay(dayName);
     }
   };
-  console.log("classes in ", dayName, classesDay);
-  // useEffect(() => {
-  //   if (timePrefState && entireDayOn) {
-  //     overlayTime.foreach((timeName) => {
-  //       addTimePref(dayName, timeName);
-  //     })
-  //   }
-  //   else if (timePrefState) {
-  //     removeEntireDay(dayName);
-  //   }
-  // }, [entireDayOn])
-
+ 
   useEffect(() => {
     timePrefDay && setEntireDayOn(timePrefDay?.length === 26);
   }, []);

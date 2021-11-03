@@ -5,13 +5,6 @@
  * has a feedback form.
  */
 
-// import {
-//   Accordion,
-//   AccordionSummary,
-//   AccordionDetails,
-//   Typography,
-// } from "@material-ui/core";
-// import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import { useState } from "react";
 import MuiAccordion from "@material-ui/core/Accordion";

@@ -72,7 +72,6 @@ function EditScheduleName(props) {
         new_name: editName,
       }),
     };
-    console.log("requestOption for fetchCreatePrivateReqs", requestOption);
     await fetch("https://jarney.club/api/schedule/name", requestOption)
       .then((response) => response.json())
       .then((result) => {
@@ -202,21 +201,19 @@ function RemoveSchedule(props) {
     })
       .then((response) => response.json())
       .then((result) => {
-        console.log("result from Degree plan Delete", result);
-
         if (!result.error) {
-          refreshSchedules();
           setAlertMessage("Schedule deleted!");
           setAlertSeverity("success");
           onShowAlert();
           onClose();
+          refreshSchedules();
         } else {
           setAlertMessage(result.error);
           setAlertSeverity("warning");
           onShowAlert(true);
         }
       })
-      .catch((error) => console.log("error from Degree Plan Delete", error));
+      .catch((error) => {});
   };
 
   return (

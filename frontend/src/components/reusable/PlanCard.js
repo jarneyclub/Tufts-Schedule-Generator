@@ -45,7 +45,6 @@ function PlanCard(props) {
    *
    */
   const handleDoubleClick = (courseDetail) => {
-    console.log("transferCourseDetail: ", transferCourseDetail);
     onRemoveCourse(cardDetail.plan_term_id, courseDetail);
   };
 
@@ -54,7 +53,6 @@ function PlanCard(props) {
       className={pStyle.cardContainer}
       onDragOver={dragOver}
       
-      // onTouchMove={dragOver}
       onDrop={drop}
       onTouchEnd={drop}
       onMouseUp={drop}

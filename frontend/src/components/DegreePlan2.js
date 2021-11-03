@@ -157,13 +157,9 @@ function DegreePlan2(props) {
   };
   const handleSemesterPlanChange = (e) => {
     setSelectedPlanName(e.target.value);
-    console.log("semesterPlanChange e:", e);
     setSelectedPlanIdx(e.target.selectedIndex);
     setSelectedPlanID(handleSelectedPlanNameToID(e.target.value));
 
-    // const ind = semesterPlanOptions.findIndex(
-    //   (plan) => plan.plan_name === e.target.value.substr(3)
-    // );
     setCardOptions(semesterPlanOptions[e.target.selectedIndex].terms);
   };
 
@@ -182,7 +178,6 @@ function DegreePlan2(props) {
   const handleTransferCourseDetail = (detail, touch) => {
     setTransferCourseDetail(detail);
     if (touch) {
-      console.log("show deetail: ", detail);
       setAlertMessage("You have selected ".concat(detail.course_title).concat(". If you are on a mobile device, tap on a plan card to add or move the course." ));
       setAlertSeverity("info");
       setShowAlert(true);
@@ -191,17 +186,8 @@ function DegreePlan2(props) {
 
   const handleSelectedPlanNameToID = () => {
     for (let i = 0; i < semesterPlanOptions.length; i++) {
-      console.log("selectedPlanName:", selectedPlanName);
-      console.log(
-        "semesterPlanOptions.planName:",
-        semesterPlanOptions[i].plan_name
-      );
-      console.log(
-        "true false? ",
-        semesterPlanOptions[i].plan_name === selectedPlanName
-      );
+      
       if (semesterPlanOptions[i].plan_name === selectedPlanName) {
-        console.log("should return here ");
         return semesterPlanOptions[i].plan_term_id;
       }
     }
@@ -223,7 +209,6 @@ function DegreePlan2(props) {
           },
           (error) => {
             setSearchCourseResult([]);
-            console.log("error from DegreePlan2 course search", error);
           }
         );
     }
@@ -254,7 +239,6 @@ function DegreePlan2(props) {
    *
    */
   const dropItem = (planTerm, courseDetail) => {
-    console.log("drop course: ", courseDetail, " to: ", planTerm);
 
     if (Object.entries(courseDetail).length === 0 && courseDetail.constructor === Object) {
       return true;
@@ -265,7 +249,6 @@ function DegreePlan2(props) {
         card.plan_term_id === planTerm &&
         checkCourseExist(card.courses, courseDetail)
       ) {
-        console.log("False");
         return false;
       }
     }
@@ -295,7 +278,6 @@ function DegreePlan2(props) {
   };
 
   const handleShowCourseInfo = (info) => {
-    console.log("from handleshowcourseinfo", info);
     setCourseInfo(info);
     handlePopup("showCourseInfo", true);
   };
@@ -306,7 +288,6 @@ function DegreePlan2(props) {
    *
    */
   const handleRemoveCourse = (planTerm, courseDetail) => {
-    console.log("Remove course: ", courseDetail, " from: ", planTerm);
     setCardOptions((prev) =>
       prev?.map((card) =>
         card.plan_term_id === planTerm
@@ -342,7 +323,6 @@ function DegreePlan2(props) {
         }
       })
       .then((result) => {
-        console.log("data: ", result);
         fetchPlans();
         setLoadMessage(false);
         setAlertMessage("Plan added!");
@@ -354,7 +334,6 @@ function DegreePlan2(props) {
         setAlertMessage(error);
         setAlertSeverity("error");
         setShowAlert(true);
-        console.log("error from login: ", error);
       });
   };
 
@@ -369,17 +348,13 @@ function DegreePlan2(props) {
   const fetchPlans = async () => {
     await fetch("https://jarney.club/api/degreeplans")
       .then((response) => {
-        console.log("response:", response);
         return response.json();
       })
       .then((result) => {
-        console.log("result of semester plan: ", result);
-        console.log("plans: ", result.plans);
         /*  Creates a new plan for new users */
         if (result.plans.length === 0) {
           createNewPlan("Plan #1");
         } else {
-          console.log("prev semesterPlanOptions: ", semesterPlanOptions);
           setSemesterPlanOptions(result.plans);
           setCardOptions(result.plans[0].terms);
           setSelectedPlanName(result.plans[0].plan_name);
@@ -387,7 +362,6 @@ function DegreePlan2(props) {
         }
       })
       .catch((error) => {
-        console.log("error from Degreeplan semesterPlanOptions ", error);
       });
   };
 
@@ -400,35 +374,28 @@ function DegreePlan2(props) {
 
     await fetch("https://jarney.club/api/degreeplan/term", requestOption)
       .then((response) => {
-        console.log("response:", response);
         return response.json();
       })
       .then((result) => {
-        console.log("result of save term: ", result);
         /*  Creates a new plan for new users */
       })
       .catch((error) => {
-        console.log("error from Degreeplan saveTerm ", error);
       });
   };
 
   const fetchPrivateReqs = async () => {
     await fetch("https://jarney.club/api/degreereqs/private")
       .then((response) => {
-        console.log("get request response:", response);
         return response.json();
       })
       .then((result) => {
-        console.log("get request result of semester plan: ", result);
 
         if (result.reqs.length === 0) {
-          console.log("no private reqs");
         } else {
           setDegreeReqOptions(result.reqs);
         }
       })
       .catch((error) => {
-        console.log("error from Degreeplan fetchPrivateReqs ", error);
       });
   };
 
@@ -445,7 +412,6 @@ function DegreePlan2(props) {
   }, [logged]);
 
   useEffect(() => {
-    console.log("cardOptions: ", cardOptions);
     cardOptions?.map((card) => fetchSaveTerm(card));
     let totalCount = 0;
     let completedCount = 0;
@@ -487,17 +453,7 @@ function DegreePlan2(props) {
                     Progress Bar
                 */}
         <div className={dp2Style.progressBarContainer}>
-          {/* <div className={dp2Style.progressBarTitle}>Progress </div> */}
-          {/* {!shrink ? (
-            <div className={dp2Style.progressBar} > 
-              <div className={dp2Style.progressBarCompleted} style={{width: ((unitsCount.completed / unitsCount.total * 100) + "%")}}/>
-              <div className={dp2Style.progressBarCurrent} style={{width: ((unitsCount.current / unitsCount.total * 100) + "%")}}/>
-              <div className={dp2Style.progressBarFuture} style={{width: ((unitsCount.future / unitsCount.total * 100) + "%")}}/>
-
-            </div>
-          ) : (
-            <div className={dp2Style.progressBarTitle}>&nbsp;☃&nbsp;</div>
-          )} */}
+       
           <div className={dp2Style.progressBar}>
             <div
               className={dp2Style.progressBarCompleted}

@@ -33,17 +33,12 @@ function Dropdown(props) {
     objectField,
   } = props;
 
-  // useEffect(() => {
-  //   console.log("Dropdown.js useEffect called");
-  //   console.log("options, selectedOption: ", options, " ", selectedOption);
-  // }, []);
 
   const handleChange = (e) => {
     console.log("e", e);
     onOptionChange(e);
   };
 
-  // console.log("check from dropdown: ", options);
 
   return (
     // checks if mouse clicked outside of frame
