@@ -170,6 +170,7 @@ function DegreePlan1(props) {
   };
 
   const fetchPrivateReqs = async (showLast) => {
+    setSelectedDegreeReqIdx(0);
     await fetch("https://jarney.club/api/degreereqs/private")
       .then((response) => {
         return response.json();
@@ -390,8 +391,8 @@ function DegreePlan1(props) {
         <Popup onClose={() => handlePopup("removePrivateReq", false)}>
           <RemovePrivReq
             onClose={() => handlePopup("removePrivateReq", false)}
-            privateReqName={degreeReqOptions[selectedDegreeReqIdx].program_name}
-            privateReqID={degreeReqOptions[selectedDegreeReqIdx].priv_dr_id}
+            privateReqName={degreeReqOptions[selectedDegreeReqIdx]?.program_name}
+            privateReqID={degreeReqOptions[selectedDegreeReqIdx]?.priv_dr_id}
             refreshPrivateReq={fetchPrivateReqs}
             onShowAlert={() => setShowAlert(true)}
             setAlertMessage={setAlertMessage}
