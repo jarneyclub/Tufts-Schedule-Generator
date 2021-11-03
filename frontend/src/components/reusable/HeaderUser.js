@@ -54,7 +54,6 @@ function HeaderUser(props) {
     await fetch("https://jarney.club/api/auth/logout", { method: "POST" })
       .then((response) => response.json())
       .then((result) => {
-        console.log("user logged out");
       })
       .error((error) => {});
   };
