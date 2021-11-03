@@ -49,12 +49,16 @@ exports.validateRegisterLocal = async (req, res, next) => {
     let pwsMatch = (password === password_confirmation);
     if (!pwsMatch)
         resHandler.respondWithCustomError("101", "400", "Registration Error", "Password did not match with confirmation", res);
-    // validate result
-    const errors = validationResult(req);
-    if (!errors.isEmpty())
-        return res.status(400).json({ errors: errors.array() });
-    console.log("(userController/validateRegisterLocal) field validation passed");
-    next(); // pass to registration into DB
+    else {
+        // validate result
+        const errors = validationResult(req);
+        if (!errors.isEmpty())
+            return res.status(400).json({ errors: errors.array() });
+        else {
+            console.log("(userController/validateRegisterLocal) field validation passed");
+            next(); // pass to registration into DB
+        }
+    }
 }
 
 exports.registerLocal = async (req, res, next) => {
@@ -68,10 +72,14 @@ exports.registerLocal = async (req, res, next) => {
         if (err) {
             if (err.message.indexOf("already registered") > -1)
                 resHandler.respondWithCustomError("102", "409", "Registration Error", "The email is already in use", res);
+            else
+            resHandler.respondWithCustomError("105", "409", "Registration Error", "Something is wrong. Registration Failed.", res);
+        } else {
+            console.log("(userController/registerLocal) registered user into database");
+            console.log("(userController/registerLocal) user: ", user);
+            next(); // pass to authController.login()
         }
-        console.log("(userController/registerLocal) registered user into database");
-        console.log("(userController/registerLocal) user: ", user);
-        next(); // pass to authController.login()
+
     });
 }
 
