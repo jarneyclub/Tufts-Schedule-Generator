@@ -716,7 +716,7 @@ function Scheduler(props) {
 
             <div className={sStyle.tabDetailContainer}>
               {degreeReqTab === 1 &&
-                scheduleOptions[selectedScheduleIdx]?.courses?.map((course) => (
+                selectedCourses?.map((course) => (
                   <CourseSearchBar
                     courseDetail={course}
                     key={course.course_num.concat(course.course_title)}
