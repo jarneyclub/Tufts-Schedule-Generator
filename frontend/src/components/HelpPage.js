@@ -171,6 +171,7 @@ function HelpPage() {
             >
               Share with us
             </Button>
+            <br/>
           </div>
           <br/>
           <img
