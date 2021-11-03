@@ -96,6 +96,7 @@ const JarUserLogin = React.forwardRef((props, ref) => {
             setAlertSeverity("warning");
             setShowAlert(true);
           } else {
+            console.log("checkpoint")
             setLoadMessage(false);
             switchLogged && switchLogged();
             onClose();
