@@ -90,6 +90,7 @@ const JarUserLogin = React.forwardRef((props, ref) => {
           return response.json();
         })
         .then((result) => {
+          console.log("results", result)
           if (result.errors.length !== 0) {
             setLoadMessage(false);
             setAlertMessage(result.errors[0].detail);
