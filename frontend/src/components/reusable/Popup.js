@@ -19,7 +19,6 @@ function Popup(props) {
 
   const handleClickAway = () => {
     onClose();
-    console.log("should close overlay");
   };
 
   return (

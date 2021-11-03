@@ -64,7 +64,6 @@ const JarUserLogin = React.forwardRef((props, ref) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
     };
-    console.log("requestOption clicked ", requestOption);
 
     if (loginState) {
       await fetch("https://jarney.club/api/auth/login", requestOption)
@@ -75,19 +74,13 @@ const JarUserLogin = React.forwardRef((props, ref) => {
           throw new Error("Failed to login.");
         })
         .then((result) => {
-          console.log("data: ", result.data);
           setLoadMessage(false);
           switchLogged && switchLogged();
           onClose();
         })
         .catch((error) => {
           setLoadMessage(false);
-          // console.log(error.data);
           handleAlert("error", "Error: Failed to Login");
-          // console.log("error login")
-
-          // add an error message popup of some sort
-          console.log("error from login: ", error);
         });
     } else {
       await fetch("https://jarney.club/api/auth/register", requestOption)
@@ -98,19 +91,13 @@ const JarUserLogin = React.forwardRef((props, ref) => {
           throw new Error("Failed to Signup.");
         })
         .then((result) => {
-          console.log("data: ", result.data);
           setLoadMessage(false);
           switchLogged && switchLogged();
           onClose();
         })
         .catch((error) => {
           setLoadMessage(false);
-          // console.log(error.data);
           handleAlert("error", "Error: Failed to Signup");
-          // console.log("error login")
-
-          // add an error message popup of some sort
-          console.log("error from login: ", error);
         });
     }
   };

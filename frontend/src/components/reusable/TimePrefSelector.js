@@ -45,8 +45,8 @@ function TimePrefSelector(props) {
           shrink={shrink}
         />
       </div>
-      <br/>
-      <br/>
+      <br />
+      <br />
     </div>
   );
 }

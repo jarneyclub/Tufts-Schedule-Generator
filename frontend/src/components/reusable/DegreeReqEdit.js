@@ -53,7 +53,6 @@ const drDefault = {
   ],
 };
 
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
  *                     EXPORTED MAIN FUNCTIONAL COMPONENT                    *
@@ -66,8 +65,6 @@ function DegreeReqEdit(props) {
   const [schoolOptions, setSchoolOptions] = useState([]);
   const [selectedSchoolIdx, setSelectedSchoolIdx] = useState(0);
 
-  console.log("DegreeReqEdit, isCreateMM: ", isCreateMM);
-  console.log("DegreeReqEdit reqDetail: ", reqDetail);
   const handleClose = () => {
     onClose();
   };
@@ -79,7 +76,6 @@ function DegreeReqEdit(props) {
   };
 
   const handleGeneralChange = (e) => {
-    console.log("e:", e);
     if (e.target.name === "school") {
       setSelectedSchoolIdx(e.target.selectedIndex);
       setDetail((prev) => ({
@@ -173,7 +169,6 @@ function DegreeReqEdit(props) {
   };
 
   const handleRemoveCourse = (courseID, partID) => {
-    console.log("partID courseID: ", partID, courseID);
     setDetail((prev) => ({
       ...prev,
       parts: prev.parts.map((part) =>
@@ -193,25 +188,21 @@ function DegreeReqEdit(props) {
     await fetch("https://jarney.club/api/courses/programs")
       .then((response) => response.json())
       .then((result) => {
-        console.log("result from schoolOptions", result);
         setSchoolOptions(result.names);
       })
-      .catch((error) => console.log("error from schoolOptions", error));
+      .catch((error) => {});
   };
 
   useEffect(() => {
     fetchSchoolOptions();
-    console.log("detail: ", detail);
-    console.log("detail.school", detail?.school);
   }, []);
 
   useEffect(() => {
     const idx = schoolOptions.indexOf(detail?.school);
-    console.log("school idx", idx);
     if (idx !== -1) {
       setSelectedSchoolIdx(idx);
     }
-  }, [schoolOptions])
+  }, [schoolOptions]);
   return (
     <div className={dStyle.drContainer}>
       <div className={dStyle.headerContainer}>

@@ -75,8 +75,6 @@ function EditScheduleName(props) {
     await fetch("https://jarney.club/api/schedule/name", requestOption)
       .then((response) => response.json())
       .then((result) => {
-        console.log("result from editScheduleName: ", result);
-
         if (!result.error) {
           setAlertMessage("Schedule name changed!");
           setAlertSeverity("success");
@@ -89,9 +87,7 @@ function EditScheduleName(props) {
           onShowAlert(true);
         }
       })
-      .catch((error) => {
-        console.log("error from editPlanName: ", error);
-      });
+      .catch((error) => {});
   };
 
   return (
@@ -197,7 +193,7 @@ function RemoveSchedule(props) {
         "Content-Type": "application/json",
         accept: "application/json",
       },
-      body: JSON.stringify({sched_id: scheduleID})
+      body: JSON.stringify({ sched_id: scheduleID }),
     })
       .then((response) => response.json())
       .then((result) => {

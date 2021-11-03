@@ -46,8 +46,6 @@ function SignupForm(props) {
       }}
       validationSchema={validationSchema}
       onSubmit={(values) => {
-        console.log("hey submitted");
-        console.log("values: ", values);
         onSubmit(values);
       }}
     >
