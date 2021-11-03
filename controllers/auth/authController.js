@@ -93,7 +93,7 @@ exports.signAccessTokenAndAttachCookie = async (req, res, next) => {
         maxAge: 1000,
         httpOnly: true,
         secure: true
-    }).status(200).send();
+    }).status(200).json({});
 }
 
 
