@@ -43,8 +43,8 @@ function HeaderUser(props) {
   const handleLoginSignupPopup = () => {
     if (logged) {
       /*  Sign Out */
-      switchLogged();
       fetchLogout();
+      switchLogged();
     } else {
       setLoginPopup(true);
     }
@@ -53,7 +53,9 @@ function HeaderUser(props) {
   const fetchLogout = async () => {
     await fetch("https://jarney.club/api/auth/logout", { method: "POST" })
       .then((response) => response.json())
-      .then((result) => {})
+      .then((result) => {
+        console.log("user logged out");
+      })
       .error((error) => {});
   };
 
