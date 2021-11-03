@@ -716,7 +716,7 @@ function Scheduler(props) {
 
             <div className={sStyle.tabDetailContainer}>
               {degreeReqTab === 1 &&
-                scheduleOptions[selectedScheduleIdx].courses?.map((course) => (
+                scheduleOptions[selectedScheduleIdx]?.courses?.map((course) => (
                   <CourseSearchBar
                     courseDetail={course}
                     key={course.course_num.concat(course.course_title)}
@@ -789,13 +789,13 @@ function Scheduler(props) {
             />
           </div>
 
-          {scheduleOptions[selectedScheduleIdx].classes?.TimeUnspecified && (
+          {scheduleOptions[selectedScheduleIdx]?.classes?.TimeUnspecified && (
             <div className={sStyle.infoContainer}>
               <div style={{ color: "rgba(0, 0, 0, 0.54)" }}>
                 Time Unspecified
               </div>
               <div className={sStyle.tuContainer}>
-                {scheduleOptions[selectedScheduleIdx].classes?.TimeUnspecified?.map((course) => (
+                {scheduleOptions[selectedScheduleIdx]?.classes?.TimeUnspecified?.map((course) => (
                   <Button
                     className={sStyle.tuButton}
                     onClick={() => handleShowCourseInfo(course)}
