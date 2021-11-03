@@ -77,6 +77,8 @@ const JarUserLogin = React.forwardRef((props, ref) => {
           setLoadMessage(false);
           switchLogged && switchLogged();
           onClose();
+
+          
         })
         .catch((error) => {
           setLoadMessage(false);
@@ -85,9 +87,7 @@ const JarUserLogin = React.forwardRef((props, ref) => {
     } else {
       await fetch("https://jarney.club/api/auth/register", requestOption)
         .then((response) => {
-         
           return response.json();
-
         })
         .then((result) => {
           if (result.errors.length === 0) {
@@ -95,6 +95,7 @@ const JarUserLogin = React.forwardRef((props, ref) => {
             switchLogged && switchLogged();
             onClose();
           } else {
+            setLoadMessage(false);
             setAlertMessage(result.errors[0].detail);
             setAlertSeverity("warning");
             setShowAlert(true);
