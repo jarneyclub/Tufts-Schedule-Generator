@@ -183,7 +183,7 @@ function Home(props) {
 
 
 
-      <div
+      {/* <div
         className={hStyle.footerContainer}
         style={{ backgroundColor: "#a0c3d1" }}
       >
@@ -211,7 +211,7 @@ function Home(props) {
             </Button>
           </a>
         </div>
-      </div>
+      </div> */}
 
       {(loginPopup || signupPopup) && (
         <Popup onClose={handleLoginPopup}>
