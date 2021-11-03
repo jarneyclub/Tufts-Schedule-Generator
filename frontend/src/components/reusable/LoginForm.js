@@ -34,7 +34,6 @@ function LoginForm(props) {
       }}
       validationSchema={validationSchema}
       onSubmit={(values) => {
-        console.log("values: ", values);
         onSubmit(values);
       }}
     >

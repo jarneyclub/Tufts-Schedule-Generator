@@ -30,8 +30,6 @@ function HeaderUser(props) {
 
   const navbarRef = useRef();
 
-
-
   const handleLoginPopup = () => {
     setLoginPopup((prev) => !prev);
     switchLogged();
@@ -52,16 +50,12 @@ function HeaderUser(props) {
     }
   };
 
-  const fetchLogout = async() => {
-    await fetch("https://jarney.club/api/auth/logout", {method: "POST"})
+  const fetchLogout = async () => {
+    await fetch("https://jarney.club/api/auth/logout", { method: "POST" })
       .then((response) => response.json())
-      .then((result) => {
-        
-      })
-      .error ((error) => {
-        
-      })
-  }
+      .then((result) => {})
+      .error((error) => {});
+  };
 
   return (
     <div className={hStyle.headerContainer} id="headerContainer">

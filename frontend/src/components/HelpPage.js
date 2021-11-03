@@ -5,7 +5,6 @@
  * has a feedback form.
  */
 
-
 import { useState } from "react";
 import MuiAccordion from "@material-ui/core/Accordion";
 import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
@@ -61,10 +60,9 @@ function HelpPage() {
 
   const handleCloseAlert = () => {
     setShowAlert(false);
-  }
+  };
 
-  const fetchSendResponses = async  () => {
-    console.log("Response submitted")
+  const fetchSendResponses = async () => {
     const requestOption = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -74,51 +72,53 @@ function HelpPage() {
     await fetch("https://jarney.club/api/responses", requestOption)
       .then((response) => response.json())
       .then((result) => {
-        setAlertMessage("Thank you for your feedback!")
-        setAlertSeverity("success") ;
+        setAlertMessage("Thank you for your feedback!");
+        setAlertSeverity("success");
         setShowAlert(true);
         setContactForm(contactFormDefault);
-        console.log("showalert" , showAlert);
       })
-      .catch((error) =>{
-
-      })
-  }
+      .catch((error) => {});
+  };
 
   return (
     <div className={hStyle.bodyContainer}>
       <div className={hStyle.horizontalContainer}>
         <h2>Frequently Asked Questions</h2>
-        <br/>
+        <br />
         <Accordion>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          Q: What's the difference between degree requirements and degree plans?
+            Q: What's the difference between degree requirements and degree
+            plans?
           </AccordionSummary>
-          <AccordionDetails>A: Degree requirements are the courses/requirements
-            you must take to fulfil a specific degree. Degree plans are a space
-            for you to organize which classes you're going to take and when you're 
-            going to take them. In degree plans, you can also keep track of your 
-            progress towards completing your degree requirements.
+          <AccordionDetails>
+            A: Degree requirements are the courses/requirements you must take to
+            fulfil a specific degree. Degree plans are a space for you to
+            organize which classes you're going to take and when you're going to
+            take them. In degree plans, you can also keep track of your progress
+            towards completing your degree requirements.
           </AccordionDetails>
         </Accordion>
         <Accordion>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          Q: What's the difference between 'Public degree requirements' and 'My degree requirements'?
+            Q: What's the difference between 'Public degree requirements' and
+            'My degree requirements'?
           </AccordionSummary>
-          <AccordionDetails>A: 'Public degree requirements' are accessible 
-            to everyone and cannot be edited directly. 'My degree requirements'
-             are your personal set of degree requirements and can be edited according
-             to your academic journey.
+          <AccordionDetails>
+            A: 'Public degree requirements' are accessible to everyone and
+            cannot be edited directly. 'My degree requirements' are your
+            personal set of degree requirements and can be edited according to
+            your academic journey.
           </AccordionDetails>
         </Accordion>
         <Accordion>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          Q: What happens if a class is not available during my time preferences, but I 
-          try to render a schedule anyway?
+            Q: What happens if a class is not available during my time
+            preferences, but I try to render a schedule anyway?
           </AccordionSummary>
-          <AccordionDetails>A: We'll tell you! Unfortunately, we can't change class
-            times, but we can tell you when there are conflicts between your time preferences
-             and class times.
+          <AccordionDetails>
+            A: We'll tell you! Unfortunately, we can't change class times, but
+            we can tell you when there are conflicts between your time
+            preferences and class times.
           </AccordionDetails>
         </Accordion>
         <p></p>
@@ -127,7 +127,7 @@ function HelpPage() {
       <br />
       <div className={hStyle.horizontalContainer}>
         <h2>Contact us!</h2>
-        <br/>
+        <br />
         <div className={hStyle.titleRow}>
           <div id="contactForm" className={hStyle.contactForm}>
             <TextField
@@ -172,9 +172,9 @@ function HelpPage() {
             >
               Share with us
             </Button>
-            <br/>
+            <br />
           </div>
-          <br/>
+          <br />
           <img
             src={feedbackJumbo}
             alt="feedbackJumbo"

@@ -178,7 +178,13 @@ function DegreePlan2(props) {
   const handleTransferCourseDetail = (detail, touch) => {
     setTransferCourseDetail(detail);
     if (touch) {
-      setAlertMessage("You have selected ".concat(detail.course_title).concat(". If you are on a mobile device, tap on a plan card to add or move the course." ));
+      setAlertMessage(
+        "You have selected "
+          .concat(detail.course_title)
+          .concat(
+            ". If you are on a mobile device, tap on a plan card to add or move the course."
+          )
+      );
       setAlertSeverity("info");
       setShowAlert(true);
     }
@@ -186,7 +192,6 @@ function DegreePlan2(props) {
 
   const handleSelectedPlanNameToID = () => {
     for (let i = 0; i < semesterPlanOptions.length; i++) {
-      
       if (semesterPlanOptions[i].plan_name === selectedPlanName) {
         return semesterPlanOptions[i].plan_term_id;
       }
@@ -239,8 +244,10 @@ function DegreePlan2(props) {
    *
    */
   const dropItem = (planTerm, courseDetail) => {
-
-    if (Object.entries(courseDetail).length === 0 && courseDetail.constructor === Object) {
+    if (
+      Object.entries(courseDetail).length === 0 &&
+      courseDetail.constructor === Object
+    ) {
       return true;
     }
     /*  Check if course has been added  */
@@ -263,7 +270,6 @@ function DegreePlan2(props) {
             }
           : card
       )
-      
     );
     setTransferCourseDetail({});
     return true;
@@ -361,8 +367,7 @@ function DegreePlan2(props) {
           setSelectedPlanID(result.plans[0].plan_id);
         }
       })
-      .catch((error) => {
-      });
+      .catch((error) => {});
   };
 
   const fetchSaveTerm = async (planTermDetails) => {
@@ -379,8 +384,7 @@ function DegreePlan2(props) {
       .then((result) => {
         /*  Creates a new plan for new users */
       })
-      .catch((error) => {
-      });
+      .catch((error) => {});
   };
 
   const fetchPrivateReqs = async () => {
@@ -389,14 +393,12 @@ function DegreePlan2(props) {
         return response.json();
       })
       .then((result) => {
-
         if (result.reqs.length === 0) {
         } else {
           setDegreeReqOptions(result.reqs);
         }
       })
-      .catch((error) => {
-      });
+      .catch((error) => {});
   };
 
   /*  Initial fetching for plans when page first loads */
@@ -435,7 +437,7 @@ function DegreePlan2(props) {
         }
       });
     });
- 
+
     handleUnitsCount("total", totalCount);
     handleUnitsCount("completed", completedCount);
     handleUnitsCount("current", currentCount);
@@ -446,47 +448,58 @@ function DegreePlan2(props) {
     <div style={{ marginTop: "80px" }}>
       <Helmet>
         <title>JARney | Degree Plan</title>
-        <meta name="description" content="Need to plan out your Tufts degree? Fall, Spring, Summer, or Annual. We have the complete list of courses!" />
+        <meta
+          name="description"
+          content="Need to plan out your Tufts degree? Fall, Spring, Summer, or Annual. We have the complete list of courses!"
+        />
       </Helmet>
       <div className={dp2Style.contentContainer}>
         {/* * * * * Contains * * * * * 
                     Progress Bar
                 */}
         <div className={dp2Style.progressBarContainer}>
-       
           <div className={dp2Style.progressBar}>
             <div
               className={dp2Style.progressBarCompleted}
               style={{
-                width: (unitsCount.total !== 0 ? (unitsCount.completed / unitsCount.total) * 100 + "%" : "0%"),
+                width:
+                  unitsCount.total !== 0
+                    ? (unitsCount.completed / unitsCount.total) * 100 + "%"
+                    : "0%",
               }}
             ></div>
             <div
               className={dp2Style.progressBarCurrent}
               style={{
-                width: (unitsCount.total !== 0 ? (unitsCount.current / unitsCount.total) * 100 + "%" : "0%"),
-                borderBottomLeftRadius: ((unitsCount.completed === 0) && "15px"),
-                borderTopLeftRadius: ((unitsCount.completed === 0) && "15px"),
-                borderBottomRightRadius: ((unitsCount.future === 0) && "15px"),
-                borderTopRightRadius: ((unitsCount.future === 0) && "15px"), 
+                width:
+                  unitsCount.total !== 0
+                    ? (unitsCount.current / unitsCount.total) * 100 + "%"
+                    : "0%",
+                borderBottomLeftRadius: unitsCount.completed === 0 && "15px",
+                borderTopLeftRadius: unitsCount.completed === 0 && "15px",
+                borderBottomRightRadius: unitsCount.future === 0 && "15px",
+                borderTopRightRadius: unitsCount.future === 0 && "15px",
               }}
             ></div>
             <div
               className={dp2Style.progressBarFuture}
               style={{
-                width: (unitsCount.total !== 0 ? (unitsCount.future / unitsCount.total) * 100 + "%" : "0%"),
+                width:
+                  unitsCount.total !== 0
+                    ? (unitsCount.future / unitsCount.total) * 100 + "%"
+                    : "0%",
               }}
             />
           </div>
 
           <div className={dp2Style.progressBarTitle}>
-            {unitsCount.total !== 0 ? 
-            parseInt(
-              ((unitsCount.current + unitsCount.completed) / unitsCount.total) *
-                100
-            ) + "%"
-            : "0%"
-          }
+            {unitsCount.total !== 0
+              ? parseInt(
+                  ((unitsCount.current + unitsCount.completed) /
+                    unitsCount.total) *
+                    100
+                ) + "%"
+              : "0%"}
           </div>
         </div>
 

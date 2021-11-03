@@ -26,7 +26,7 @@ const time = [
   "6PM",
   "7PM",
   "8PM",
-  '9PM',
+  "9PM",
 ];
 
 const weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
@@ -42,7 +42,6 @@ function Calendar(props) {
     shrink,
     classes,
     onEventClick,
-
   } = props;
   const [daySelection, setDaySelection] = useState(0);
 
@@ -60,7 +59,6 @@ function Calendar(props) {
     }
   };
 
-
   return (
     <div className={cStyle.container}>
       {/*   This is the control of days for Single Day View  */}
@@ -73,7 +71,7 @@ function Calendar(props) {
           >
             <ArrowLeftIcon fontSize="large" />
           </IconButton>
-          <div>{weekdays[daySelection].substr(0,3).toUpperCase()}</div>
+          <div>{weekdays[daySelection].substr(0, 3).toUpperCase()}</div>
           <IconButton
             onClick={() => {
               onDayChange(1);
@@ -84,9 +82,12 @@ function Calendar(props) {
         </div>
       )}
 
-      <div className={cStyle.calendarContainer} >
+      <div className={cStyle.calendarContainer}>
         {/* Time indicator */}
-        <div className={cStyle.timeSlotContainer} style={timePrefState ? {} : {transform:"translateY(40px)"}}>
+        <div
+          className={cStyle.timeSlotContainer}
+          style={timePrefState ? {} : { transform: "translateY(40px)" }}
+        >
           <div className={cStyle.timeSlotTitle} />
           {time.map((timeSlot) => (
             <div className={cStyle.timeSlot} key={timeSlot}>
@@ -109,7 +110,6 @@ function Calendar(props) {
               singleDay={false}
               classesDay={classes && classes[dayName]}
               onEventClick={onEventClick}
-              
             />
           ))
         ) : (

@@ -34,21 +34,15 @@ function DegreeReqExpress() {
   const fetchPrivateReqs = async () => {
     await fetch("https://jarney.club/api/degreereqs/private")
       .then((response) => {
-        console.log("get request response:", response);
         return response.json();
       })
       .then((result) => {
-        console.log("get request result of semester plan: ", result);
-
         if (result.reqs.length === 0) {
-          console.log("no private reqs");
         } else {
           setDegreeReqOptions(result.reqs);
         }
       })
-      .catch((error) => {
-        console.log("error from Degreeplan fetchPrivateReqs ", error);
-      });
+      .catch((error) => {});
   };
 
   useEffect(() => {
@@ -96,21 +90,15 @@ function DegreePlanExpress() {
   const fetchPlans = async () => {
     await fetch("https://jarney.club/api/degreeplans")
       .then((response) => {
-        console.log("get request response:", response);
         return response.json();
       })
       .then((result) => {
-        console.log("get request result of semester plan: ", result);
-
         if (result.plans.length === 0) {
-          console.log("no private reqs");
         } else {
           setDegreePlanOptions(result.plans);
         }
       })
-      .catch((error) => {
-        console.log("error from Degreeplan fetchPlans ", error);
-      });
+      .catch((error) => {});
   };
 
   useEffect(() => {
@@ -177,8 +165,6 @@ const CourseInfoExpress = (props) => {
             </div>
           </div>
         )}
-
-  
 
         {units_esti && (
           <div className={tStyle.infoContainer}>

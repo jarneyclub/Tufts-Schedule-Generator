@@ -144,6 +144,7 @@
 }
 .cancelButton:hover {
   background-color: #fc6d6d;
+  color: #ffffff;
 }
 @media only screen and (max-width: 744px) {
   .formContainer {

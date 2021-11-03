@@ -139,17 +139,13 @@ function DegreePlan1(props) {
       "https://jarney.club/api/degreereqs/public?pname=".concat(listSearchValue)
     )
       .then((response) => {
-        console.log("get request response:", response);
         return response.json();
       })
       .then((result) => {
         setPublicReqOptions([]);
-        console.log("get public req result: ", result);
         setPublicReqOptions(result.reqs);
       })
-      .catch((error) => {
-        console.log("error from Degreeplan fetchPublicReqs ", error);
-      });
+      .catch((error) => {});
   };
 
   const fetchPublicToPrivate = async () => {
@@ -166,33 +162,26 @@ function DegreePlan1(props) {
     )
       .then((response) => response.json())
       .then((result) => {
-        console.log("result from fetchPublicToPrivate", result);
         setShowPublicDegreeReq(false);
         fetchPrivateReqs(true);
         setSelectedDegreeReqIdx();
       })
-      .catch((error) => console.log("error from fetchPublicToPrivate", error));
+      .catch((error) => {});
   };
 
   const fetchPrivateReqs = async (showLast) => {
     await fetch("https://jarney.club/api/degreereqs/private")
       .then((response) => {
-        console.log("get request response:", response);
         return response.json();
       })
       .then((result) => {
-        console.log("get request result of semester plan: ", result);
-
         if (result.reqs.length === 0) {
-          console.log("no private reqs");
           fetchCreatePrivateReqs(degreeReqDefault);
         } else {
           setDegreeReqOptions(result.reqs);
         }
       })
-      .catch((error) => {
-        console.log("error from Degreeplan fetchPrivateReqs ", error);
-      });
+      .catch((error) => {});
   };
 
   const fetchCreatePrivateReqs = async (values) => {
@@ -201,17 +190,13 @@ function DegreePlan1(props) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
     };
-    console.log("requestOption for fetchCreatePrivateReqs", requestOption);
     await fetch("https://jarney.club/api/degreereq/private", requestOption)
       .then((response) => response.json())
       .then((result) => {
-        console.log("result from fetchCreatePrivateReqs", result);
         setEditDRPopup(false);
         fetchPrivateReqs();
       })
-      .catch((error) =>
-        console.log("error from fetchCreatePrivateReqs", error)
-      );
+      .catch((error) => {});
   };
 
   const fetchSavePrivateReqs = async (values) => {
@@ -220,17 +205,13 @@ function DegreePlan1(props) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
     };
-    console.log("requestOption for fetchCreatePrivateReqs", requestOption);
     await fetch("https://jarney.club/api/degreereq/private", requestOption)
       .then((response) => response.json())
       .then((result) => {
-        console.log("result from fetchCreatePrivateReqs", result);
         setEditDRPopup(false);
         fetchPrivateReqs();
       })
-      .catch((error) =>
-        console.log("error from fetchCreatePrivateReqs", error)
-      );
+      .catch((error) => {});
   };
 
   useEffect(() => {
@@ -246,13 +227,9 @@ function DegreePlan1(props) {
 
   useEffect(() => {
     setDegreeReqDetail(degreeReqOptions[selectedDegreeReqIdx]);
-    console.log("degreeReqOptions: ", degreeReqOptions);
-    console.log("selected Degree Req Detail: ", selectedDegreeReqDetail);
   }, [selectedDegreeReqIdx]);
 
   useEffect(() => {
-    console.log("degreeReqOptions: ", degreeReqOptions);
-    console.log("degreeReqOptions len: ", degreeReqOptions.length);
     if (showLastPrivateReq) {
       setSelectedDegreeReqIdx(degreeReqOptions.length - 1);
     }
@@ -273,8 +250,10 @@ function DegreePlan1(props) {
     <div className={dp1Style.horizontalWrapper}>
       <Helmet>
         <title>JARney | Degree Requirement</title>
-        <meta name="description" content="Tufts majors and minors requirements, all in one page! Look for an existing degree requirement and add it to your list." />
-
+        <meta
+          name="description"
+          content="Tufts majors and minors requirements, all in one page! Look for an existing degree requirement and add it to your list."
+        />
       </Helmet>
       {/* * * * * * * Includes Degree Req Selector * * * * * * */}
       {/* Includes 1) Existing degree req search list, 2) My List.
