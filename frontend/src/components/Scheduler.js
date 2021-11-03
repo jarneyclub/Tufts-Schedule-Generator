@@ -202,7 +202,7 @@ function Scheduler(props) {
   const [selectedAttribute, setSelectedAttribute] = useState("");
   const [selectedAttributeIdx, setSelectedAttributeIdx] = useState(0);
   const [coursePreference, setCoursePreference] = useState(boolStateDefault);
-
+  
   /*  The courses selected to generate schedule  */
   const [selectedCourses, setSelectedCourses] = useState([]);
 
@@ -773,15 +773,13 @@ function Scheduler(props) {
             />
           </div>
 
-          {scheduleOptions[selectedScheduleIdx]?.classes?.TimeUnspecified && (
+          {classes?.TimeUnspecified && (
             <div className={sStyle.infoContainer}>
               <div style={{ color: "rgba(0, 0, 0, 0.54)" }}>
                 Time Unspecified
               </div>
               <div className={sStyle.tuContainer}>
-                {scheduleOptions[
-                  selectedScheduleIdx
-                ]?.classes?.TimeUnspecified?.map((course) => (
+                {classes?.TimeUnspecified?.map((course) => (
                   <Button
                     className={sStyle.tuButton}
                     onClick={() => handleShowCourseInfo(course)}
