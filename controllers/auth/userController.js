@@ -59,7 +59,7 @@ exports.validateRegisterLocal = async (req, res, next) => {
 
 exports.registerLocal = async (req, res, next) => {
 
-    const user = new User ({ userid: req.body.userid, first_name: req.body.first_name, last_name: req.body.last_name, guest: false });
+    const user = new User ({ userid: req.body.userid, first_name: req.body.first_name, last_name: req.body.last_name, role: "user" });
     console.log("(userController/registerLocal) userid: ", req.body.userid)
     console.log("(userController/registerLocal) password: ", req.body.password)
     console.log("(userController/registerLocal) user: ", user)
