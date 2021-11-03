@@ -357,6 +357,7 @@ function Scheduler(props) {
   };
 
   const fetchSavedSchedules = async () => {
+    setSelectedScheduleIdx(0);
     await fetch("https://jarney.club/api/schedules")
       .then((response) => response.json())
       .then((result) => {
