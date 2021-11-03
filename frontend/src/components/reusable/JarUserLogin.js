@@ -77,6 +77,8 @@ const JarUserLogin = React.forwardRef((props, ref) => {
           setLoadMessage(false);
           switchLogged && switchLogged();
           onClose();
+
+
         })
         .catch((error) => {
           setLoadMessage(false);
@@ -85,22 +87,23 @@ const JarUserLogin = React.forwardRef((props, ref) => {
     } else {
       await fetch("https://jarney.club/api/auth/register", requestOption)
         .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-          throw new Error("Failed to Signup.");
+          return response.json();
         })
         .then((result) => {
-          setLoadMessage(false);
-          switchLogged && switchLogged();
-          onClose();
-          console.log("result from reg", result);
+          if (result.errors.length === 0) {
+            console.log("success")
+            setLoadMessage(false);
+            switchLogged && switchLogged();
+            onClose();
+          } else {
+            setLoadMessage(false);
+            setAlertMessage(result.errors[0].detail);
+            setAlertSeverity("warning");
+            setShowAlert(true);
+          }
+          
         })
-        .catch((error) => {
-          setLoadMessage(false);
-          console.log("error from reg", error);
-          handleAlert("error", error.detail);
-        });
+        .catch((error) => {});
     }
   };
 
