@@ -89,7 +89,7 @@ function HelpPage() {
     <div className={hStyle.bodyContainer}>
       <div className={hStyle.horizontalContainer}>
         <h2>Frequently Asked Questions</h2>
-
+        <br/>
         <Accordion>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           Q: What's the difference between degree requirements and degree plans?
