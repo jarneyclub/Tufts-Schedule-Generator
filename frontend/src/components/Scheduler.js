@@ -487,8 +487,11 @@ function Scheduler(props) {
   }, []);
 
   useEffect(() => {
-    fetchAttributes();
-    fetchSavedSchedules();
+    if (logged) {
+      fetchAttributes();
+      fetchSavedSchedules();
+    }
+    
   }, [logged]);
 
   useEffect(() => {
