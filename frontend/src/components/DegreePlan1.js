@@ -164,7 +164,7 @@ function DegreePlan1(props) {
       .then((result) => {
         setShowPublicDegreeReq(false);
         fetchPrivateReqs(true);
-        setSelectedDegreeReqIdx();
+        setSelectedDegreeReqIdx(0);
       })
       .catch((error) => {});
   };
