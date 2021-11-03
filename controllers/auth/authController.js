@@ -118,20 +118,22 @@ exports.authenticateToken = async (req, res, next) => {
                 // console.log("(authenticateToken) userdata: ", userdata);
                 if (err)
                     resHandler.respondWithCustomError("305", "401", "Authentication Error", "Token is invalid", res);
-                let dbUsers = mongoose.connection.collection("users"); // get MongoDB collection
-                let result = await dbUsers.findOne({
-                    userid: userdata.userid
-                });
-                
-                if (result === null)
-                    resHandler.respondWithCustomError("307", "401",
-                            "Authentication Error", "Token is invalid. Wrong user.", res);
                 else {
-                    req.userid = userdata.userid;
-                    req.role = userdata.role;
-                    req.firstname = result.first_name;
-                    req.lastname = result.last_name;
-                    next();
+                    let dbUsers = mongoose.connection.collection("users"); // get MongoDB collection
+                    let result = await dbUsers.findOne({
+                        userid: userdata.userid
+                    });
+                    
+                    if (result === null)
+                        resHandler.respondWithCustomError("307", "401",
+                                "Authentication Error", "Token is invalid. Wrong user.", res);
+                    else {
+                        req.userid = userdata.userid;
+                        req.role = userdata.role;
+                        req.firstname = result.first_name;
+                        req.lastname = result.last_name;
+                        next();
+                    }
                 }
             });
         } else {
