@@ -16,7 +16,7 @@ exports.makeEmptySchedule = async (req, res) => {
     const {sched_name} = req.body;
     var start = Date.now(); // begin timing API endpoint
     let createdSchedule =
-        await scheduleHandler.createSchedule(req.userid, sched_name, undefined, "placeholder term", undefined, undefined);
+        await scheduleHandler.createSchedule(req.userid, sched_name, undefined, "2222", undefined, undefined);
     let response = {
         data: createdSchedule,
         time_taken: (Date.now() - start).toString() + "ms"
