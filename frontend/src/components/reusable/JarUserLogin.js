@@ -94,6 +94,7 @@ const JarUserLogin = React.forwardRef((props, ref) => {
           setLoadMessage(false);
           switchLogged && switchLogged();
           onClose();
+          console.log("result from reg", result);
         })
         .catch((error) => {
           setLoadMessage(false);
