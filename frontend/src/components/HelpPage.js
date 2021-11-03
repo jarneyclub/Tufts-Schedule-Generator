@@ -127,6 +127,7 @@ function HelpPage() {
       <br />
       <div className={hStyle.horizontalContainer}>
         <h2>Contact us!</h2>
+        <br/>
         <div className={hStyle.titleRow}>
           <div id="contactForm" className={hStyle.contactForm}>
             <TextField
