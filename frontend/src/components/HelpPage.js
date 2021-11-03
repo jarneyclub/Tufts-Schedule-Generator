@@ -77,6 +77,8 @@ function HelpPage() {
         setAlertMessage("Thank you for your feedback!")
         setAlertSeverity("success") ;
         setShowAlert(true);
+        setContactForm(contactFormDefault);
+        console.log("showalert" , showAlert);
       })
       .catch((error) =>{
 
