@@ -118,6 +118,8 @@ exports.getTermCourses = async (req, res) => {
                     "units_esti"    : doc["units_esti"],
                     "attributes"    : doc["attributes"],
                     "closed"        : doc["closed"],
+                    "is_virtual"    : doc["is_virtual"],
+                    "desc_long"    : doc["desc_long"],
                     "last_term"     : doc["last_term"]
                 };
                 documents.push(docToInsert);
@@ -151,6 +153,8 @@ exports.getTermCourses = async (req, res) => {
                     "units_esti"    : doc["units_esti"],
                     "attributes"    : doc["attributes"],
                     "closed"        : doc["closed"],
+                    "is_virtual"    : doc["is_virtual"],
+                    "desc_long"    : doc["desc_long"],
                     "last_term"     : doc["last_term"]
                 };
                 termCourseIdMap[doc["term_course_id"]] = docToInsert;
@@ -165,6 +169,8 @@ exports.getTermCourses = async (req, res) => {
                     "units_esti"    : doc["units_esti"],
                     "attributes"    : doc["attributes"],
                     "closed"        : doc["closed"],
+                    "is_virtual"    : doc["is_virtual"],
+                    "desc_long"    : doc["desc_long"],
                     "last_term"     : doc["last_term"]
                 };
                 termCourseIdMap[doc["term_course_id"]] = docToInsert;
@@ -179,6 +185,8 @@ exports.getTermCourses = async (req, res) => {
                     "units_esti"    : doc["units_esti"],
                     "attributes"    : doc["attributes"],
                     "closed"        : doc["closed"],
+                    "is_virtual"    : doc["is_virtual"],
+                    "desc_long"    : doc["desc_long"],
                     "last_term"     : doc["last_term"]
                 };
                 termCourseIdMap[doc["term_course_id"]] = docToInsert;
@@ -249,6 +257,8 @@ exports.getTermCourses = async (req, res) => {
                     "units_esti"    : doc["units_esti"],
                     "attributes"    : doc["attributes"],
                     "closed"        : doc["closed"],
+                    "is_virtual"    : doc["is_virtual"],
+                    "desc_long"    : doc["desc_long"],
                     "last_term"     : doc["last_term"]
                 };
                 termCourseIdMap[doc["term_course_id"]] = docToInsert;
@@ -263,6 +273,8 @@ exports.getTermCourses = async (req, res) => {
                     "units_esti"    : doc["units_esti"],
                     "attributes"    : doc["attributes"],
                     "closed"        : doc["closed"],
+                    "is_virtual"    : doc["is_virtual"],
+                    "desc_long"    : doc["desc_long"],
                     "last_term"     : doc["last_term"]
                 };
                 termCourseIdMap[doc["term_course_id"]] = docToInsert;
@@ -277,6 +289,8 @@ exports.getTermCourses = async (req, res) => {
                     "units_esti"    : doc["units_esti"],
                     "attributes"    : doc["attributes"],
                     "closed"        : doc["closed"],
+                    "is_virtual"    : doc["is_virtual"],
+                    "desc_long"    : doc["desc_long"],
                     "last_term"     : doc["last_term"]
                 };
                 termCourseIdMap[doc["term_course_id"]] = docToInsert;
@@ -307,7 +321,6 @@ exports.getTermCourses = async (req, res) => {
             });
         }
     }
-    
 }
 
 exports.getAttributes = async (req, res) => {
