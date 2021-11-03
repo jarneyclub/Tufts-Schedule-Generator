@@ -14,7 +14,7 @@ exports.saveCustomerResponse = async (req, res) => {
         
         newResponse.save();
     
-        res.status(200).send();
+        res.status(200).json({});
     }
     catch (e) {
         errorHandler(e, "saveCustomerResponse");
