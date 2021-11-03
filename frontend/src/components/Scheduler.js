@@ -357,6 +357,7 @@ function Scheduler(props) {
   };
 
   const fetchSavedSchedules = async () => {
+    setSelectedScheduleIdx(0);
     await fetch("https://jarney.club/api/schedules")
       .then((response) => response.json())
       .then((result) => {
@@ -822,8 +823,8 @@ function Scheduler(props) {
           <RemoveSchedule
             onClose={() => handlePopup("removeSchedule", false)}
             refreshSchedules={fetchSavedSchedules} 
-            scheduleID={scheduleOptions[selectedScheduleIdx].sched_id}
-            scheduleName={scheduleOptions[selectedScheduleIdx].sched_name}
+            scheduleID={scheduleOptions[selectedScheduleIdx]?.sched_id}
+            scheduleName={scheduleOptions[selectedScheduleIdx]?.sched_name}
             onShowAlert={() => setShowAlert(true)}
             setAlertMessage={setAlertMessage}
             setAlertSeverity={setAlertSeverity}
