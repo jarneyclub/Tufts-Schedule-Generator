@@ -87,12 +87,13 @@ exports.signAccessTokenAndAttachCookie = async (req, res, next) => {
  */
  exports.setToExpireToken = async (req, res) => {
     let token = jwt.sign({}, process.env.TOKEN_SECRET, { expiresIn: '1s'});
+    console.log("(setToExpireToken)");
     // res.json({"token": token});
     res.cookie("access_token", token, {
         maxAge: 1000,
         httpOnly: true,
         secure: true
-    }).status(200).send();
+    }).status(200).json({});
 }
 
 
@@ -107,42 +108,38 @@ exports.signAccessTokenAndAttachCookie = async (req, res, next) => {
  */
 exports.authenticateToken = async (req, res, next) => {
     // console.log("(authenticateToken) req.body", req.body);
-    try {
-        // console.log("(authenticateToken) req.cookies", req.cookies);
-    }
-    catch (e) {
-        console.log("ERROR IN REQ.COOKIES");
-        console.error("e: ", e);
-    }
     const token = req.cookies.access_token;
     
     if (token == null)
         resHandler.respondWithCustomError("306", "401",
             "Authentication Error", "Token was not provided", res);
-
-    if (token) {
-        jwt.verify(token, process.env.TOKEN_SECRET, async (err, userdata) => {
-            // console.log("(authenticateToken) userdata: ", userdata);
-            if (err)
-                resHandler.respondWithCustomError("305", "401", "Authentication Error", "Token is invalid", res);
-            let dbUsers = mongoose.connection.collection("users"); // get MongoDB collection
-            let result = await dbUsers.findOne({
-                userid: userdata.userid
+    else {
+        if (token) {
+            jwt.verify(token, process.env.TOKEN_SECRET, async (err, userdata) => {
+                // console.log("(authenticateToken) userdata: ", userdata);
+                if (err)
+                    resHandler.respondWithCustomError("305", "401", "Authentication Error", "Token is invalid", res);
+                else {
+                    let dbUsers = mongoose.connection.collection("users"); // get MongoDB collection
+                    let result = await dbUsers.findOne({
+                        userid: userdata.userid
+                    });
+                    
+                    if (result === null)
+                        resHandler.respondWithCustomError("307", "401",
+                                "Authentication Error", "Token is invalid. Wrong user.", res);
+                    else {
+                        req.userid = userdata.userid;
+                        req.role = userdata.role;
+                        req.firstname = result.first_name;
+                        req.lastname = result.last_name;
+                        next();
+                    }
+                }
             });
-            
-            if (result === null)
-                resHandler.respondWithCustomError("307", "401",
-                        "Authentication Error", "Token is invalid. Wrong user.", res);
-            else {
-                req.userid = userdata.userid;
-                req.role = userdata.role;
-                req.firstname = result.first_name;
-                req.lastname = result.last_name;
-                next();
-            }
-        });
-    } else {
-        resHandler.respondWithCustomError("306", "401",
-            "Authentication Error", "Token was not provided", res);
+        } else {
+            resHandler.respondWithCustomError("306", "401",
+                "Authentication Error", "Token was not provided", res);
+        }
     }
 }
