@@ -1,5 +1,6 @@
 // load database api
 const degreeReqAPI = require('../services/handlers/degreeReq.js');
+const activityHandler = require('../services/handlers/activity.js');
 const resHandler = require("./utils/resHandler.js");
 const mongoose = require('mongoose');
 
@@ -22,6 +23,11 @@ exports.createDegreeReqPublic = async (req, res) => {
     // insert to database
     degreeReqAPI.createDegreeReqPublic(schema)
     .then(result => {
+        // save activity if user is not developer
+        if (req.role !== "developer") {
+            activityHandler.saveNormalActivity(req.userid, "createDegreeReqPublic");
+        }
+
         res.status(200);
         res.json({
             pub_dr_id: result,
@@ -29,7 +35,7 @@ exports.createDegreeReqPublic = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(err, "createDegreeReqPublic", res);
+        errorHandler(err, "createDegreeReqPublic", res, req.userid, req.role);
     });
 }
 
@@ -45,6 +51,11 @@ exports.getDegreeReqsPublic = async (req, res) => {
     // Get list of degree requirements from database
     degreeReqAPI.getDegreeReqsPublic(programNameSubstring)
     .then(documents => {
+        // save activity if user is not developer
+        if (req.role !== "developer") {
+            activityHandler.saveNormalActivity(req.userid, "getDegreeReqsPublic");
+        }
+
         res.status(200);
         res.json({
             reqs: documents,
@@ -52,7 +63,7 @@ exports.getDegreeReqsPublic = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(err, "createDegreeReqPublic", res);
+        errorHandler(err, "createDegreeReqPublic", res, req.userid, req.role);
     });
 }
 
@@ -67,14 +78,18 @@ exports.deleteDegreeReqPublic = async (req, res) => {
     // get from database
     degreeReqAPI.deleteDegreeReqPublic(req.params.pub_dr_id)
     .then(result => {
+        // save activity if user is not developer
+        if (req.role !== "developer") {
+            activityHandler.saveNormalActivity(req.userid, "deleteDegreeReqPublic");
+        }
+
         res.status(200);
         res.json({
             time_taken: ((Date.now() - start).toString() + "ms")
         });
     })
     .catch(err => {
-        errorHandler(err, "deleteDegreeReqPublic", res);
-        // errorHandler(res, err, start);
+        errorHandler(err, "deleteDegreeReqPublic", res, req.userid, req.role);
     });
 }
 
@@ -92,6 +107,11 @@ exports.copyDegreeReqPublicToPrivate = async (req, res) => {
     // insert to database
     degreeReqAPI.copyDegreeReqPublicToPrivate(pubDrId, userId)
     .then(result => {
+        // save activity if user is not developer
+        if (req.role !== "developer") {
+            activityHandler.saveNormalActivity(req.userid, "copyDegreeReqPublicToPrivate");
+        }
+
         res.status(200);
         res.json({
             req: result,
@@ -99,7 +119,7 @@ exports.copyDegreeReqPublicToPrivate = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(err, "copyDegreeReqPublicToPrivate", res);
+        errorHandler(err, "copyDegreeReqPublicToPrivate", res, req.userid, req.role);
     });
 }
 
@@ -119,6 +139,11 @@ exports.createDegreeReqPrivate = async (req, res) => {
     // get from database
     degreeReqAPI.createDegreeReqPrivate(req.userid, schema)
     .then(result => {
+        // save activity if user is not developer
+        if (req.role !== "developer") {
+            activityHandler.saveNormalActivity(req.userid, "createDegreeReqPrivate");
+        }
+
         res.status(200);
         res.json({
             req: result,
@@ -126,7 +151,7 @@ exports.createDegreeReqPrivate = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(err, "createDegreeReqPrivate", res);
+        errorHandler(err, "createDegreeReqPrivate", res, req.userid, req.role);
     });
 }
 
@@ -145,6 +170,11 @@ exports.getDegreeReqsPrivate = async (req, res) => {
     // get from database
     degreeReqAPI.getDegreeReqsPrivate(query)
     .then(result => {
+        // save activity if user is not developer
+        if (req.role !== "developer") {
+            activityHandler.saveNormalActivity(req.userid, "getDegreeReqsPrivate");
+        }
+
         res.status(200);
         res.json({
             reqs: result,
@@ -152,7 +182,7 @@ exports.getDegreeReqsPrivate = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(err, "getDegreeReqsPrivate", res);
+        errorHandler(err, "getDegreeReqsPrivate", res, req.userid, req.role);
     });
 }
 
@@ -172,6 +202,11 @@ exports.getDegreeReqPrivate = async (req, res) => {
     // get from database
     degreeReqAPI.getDegreeReqPrivate(query)
     .then(result => {
+        // save activity if user is not developer
+        if (req.role !== "developer") {
+            activityHandler.saveNormalActivity(req.userid, "getDegreeReqsPrivate");
+        }
+
         res.status(200);
         res.json({
             req: result,
@@ -179,7 +214,7 @@ exports.getDegreeReqPrivate = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(err, "getDegreeReqPrivate", res);
+        errorHandler(err, "getDegreeReqPrivate", res, req.userid, req.role);
     });
 }
 
@@ -202,6 +237,11 @@ exports.saveDegreeReqPrivate = async (req, res) => {
     // update in database
     degreeReqAPI.saveDegreeReqPrivate(req.body.priv_dr_id, query)
     .then(result => {
+        // save activity if user is not developer
+        if (req.role !== "developer") {
+            activityHandler.saveNormalActivity(req.userid, "saveDegreeReqPrivate");
+        }
+
         res.status(200);
         res.json({
             priv_dr_id: result,
@@ -209,7 +249,7 @@ exports.saveDegreeReqPrivate = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(err, "saveDegreeReqPrivate", res);
+        errorHandler(err, "saveDegreeReqPrivate", res, req.userid, req.role);
     });
 }
 
@@ -229,13 +269,18 @@ exports.deleteDegreeReqPrivate = async (req, res) => {
     // delete from database
     degreeReqAPI.deleteDegreeReqPrivate(query)
     .then(result => {
+        // save activity if user is not developer
+        if (req.role !== "developer") {
+            activityHandler.saveNormalActivity(req.userid, "deleteDegreeReqPrivate");
+        }
+
         res.status(200);
         res.json({
             time_taken: ((Date.now() - start).toString() + "ms")
         });
     })
     .catch(err => {
-        errorHandler(err, "deleteDegreeReqPrivate", res);
+        errorHandler(err, "deleteDegreeReqPrivate", res, req.userid, req.role);
     });
 }
 
@@ -258,6 +303,11 @@ exports.deleteDegreeReqPrivate = async (req, res) => {
         // insert to database
         degreeReqAPI.copyDegreeReqPrivateToPublic(privDrId)
         .then(result => {
+            // save activity if user is not developer
+            if (req.role !== "developer") {
+                activityHandler.saveNormalActivity(req.userid, "copyDegreeReqPrivateToPublic");
+            }
+
             res.status(200);
             res.json({
                 req: result,
@@ -265,19 +315,32 @@ exports.deleteDegreeReqPrivate = async (req, res) => {
             });
         })
         .catch(err => {
-            errorHandler(err, "copyDegreeReqPrivateToPublic", res);
+            errorHandler(err, "copyDegreeReqPrivateToPublic", res, req.userid, req.role);
         });
     }
 }
 
-const errorHandler = (err, endpoint, res) => {
+const errorHandler = (err, endpoint, res, userid, userrole) => {
     console.error("(degreeReqController/errorhandler) err: ", err);
     if (err.detail !== undefined && err.title != undefined) {
         /* this is internally formatted error */
+
+        // save error if user is not developer
+        if (userrole !== "developer") {
+            let errString = `id: ${err.id} | title: ${err.title} | detail: ${err.detail}`;
+            activityHandler.saveErrorActivity(userid, endpoint, err.status, errString);
+        }
+
         resHandler.respondWithCustomError(err.id, err.status, err.title, err.detail, res);
     }
     else {
         console.error("(degreeReqController/" + endpoint, err);
+        // save error if user is not developer
+        if (userrole !== "developer") {
+            let errString = `id: 000 | title: Internal Server Error | detail: ${err}`;
+            activityHandler.saveErrorActivity(userid, endpoint, "500", errString);
+        }
+        
         resHandler.respondWithCustomError("000", "500", "Internal Server Error", err, res);
     }
 }
