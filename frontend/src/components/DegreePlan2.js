@@ -334,6 +334,7 @@ function DegreePlan2(props) {
         }
       })
       .then((result) => {
+        setSelectedPlanIdx(semesterPlanOptions.length - 1)
         fetchPlans();
         setLoadMessage(false);
         setAlertMessage("Plan added!");
@@ -679,6 +680,7 @@ function DegreePlan2(props) {
             onShowAlert={() => setShowAlert(true)}
             setAlertMessage={setAlertMessage}
             setAlertSeverity={setAlertSeverity}
+
           />
         </Popup>
       )}
@@ -694,6 +696,7 @@ function DegreePlan2(props) {
             onShowAlert={() => setShowAlert(true)}
             setAlertMessage={setAlertMessage}
             setAlertSeverity={setAlertSeverity}
+
           />
         </Popup>
       )}
@@ -733,6 +736,7 @@ function DegreePlan2(props) {
             setAlertMessage={setAlertMessage}
             setAlertSeverity={setAlertSeverity}
             onSetIdxLast = {() => handleSetSelectedPlanIdx(semesterPlanOptions?.length - 1)}
+
           />
         </Popup>
       )}
