@@ -71,18 +71,18 @@ function DegreeReqDisplay(props) {
       <br />
       {reqDetail?.parts?.map((req) => (
         <div>
-          <div style={{ color: "#FC4E4E", wordBreak: "break-word" }}>
+          <div style={{ color: "#FC4E4E", wordBreak: "break-word", whiteSpace: "pre-wrap"}}>
             {req?.part_name}
           </div>
-          <div style={{ wordBreak: "break-word" }}>{req?.part_desc}</div>
+          <div style={{ wordBreak: "break-word", whiteSpace: "pre-wrap" }}>{req?.part_desc}</div>
           {req?.part_reqs?.map((course) => (
             <div>
               {course?.course_num && (
-                <div style={{ wordBreak: "break-word" }}>
+                <div style={{ wordBreak: "break-word", whiteSpace: "pre-wrap" }}>
                   &nbsp;▪&nbsp;{course?.course_num}
                 </div>
               )}
-              <div style={{ wordBreak: "break-word" }}>
+              <div style={{ wordBreak: "break-word" , whiteSpace: "pre-wrap"}}>
                 {course?.course_note}
               </div>
             </div>
