@@ -21,7 +21,7 @@ const createNewDegreePlan = async (schema) => {
         let newPlan = new Plan(schema);
         await newPlan.save(); // insert
         // insert numNewTerms amount of new terms into this plan
-        let numNewTerms = 12;
+        let numNewTerms = 15;
         let insertedPlanTerms = []; // append inserted PlanTerm's to this array
         let currTerm = 2218; 
         for (let i = 0; i < numNewTerms; i++) {
