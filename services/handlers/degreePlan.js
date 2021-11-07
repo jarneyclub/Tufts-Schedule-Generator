@@ -25,20 +25,23 @@ const createNewDegreePlan = async (schema) => {
         let insertedPlanTerms = []; // append inserted PlanTerm's to this array
         let currTerm = 2218; 
         for (let i = 0; i < numNewTerms; i++) {
-            let newPlanTerm = new PlanTerm({
-                term: currTerm,
-                plan_id: newPlan._id,
-                courses: []
-            });
-            await newPlanTerm.save(); // insert
-            // select information to return
-            insertedPlanTerms.push({
-                plan_term_id: newPlanTerm._id.valueOf(),
-                term: newPlanTerm.term,
-                courses: newPlanTerm.courses
-            });
-            // iterate to next term in sequence
-            currTerm = await getNextTerm(currTerm);
+            if (currTerm % 10 != 4) {
+                /* currTerm is NOT an annual term, so add */
+                let newPlanTerm = new PlanTerm({
+                    term: currTerm,
+                    plan_id: newPlan._id,
+                    courses: []
+                });
+                await newPlanTerm.save(); // insert
+                // select information to return
+                insertedPlanTerms.push({
+                    plan_term_id: newPlanTerm._id.valueOf(),
+                    term: newPlanTerm.term,
+                    courses: newPlanTerm.courses
+                });
+                // iterate to next term in sequence
+                currTerm = await getNextTerm(currTerm);
+            }
         }
         // sort insertedPlanTerms
         const customPriorityComparator = (a, b) => a.term - b.term;
