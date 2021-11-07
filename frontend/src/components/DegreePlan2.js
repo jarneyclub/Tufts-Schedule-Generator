@@ -335,7 +335,7 @@ function DegreePlan2(props) {
         }
       })
       .then((result) => {
-        setSelectedPlanIdx(semesterPlanOptions.length - 1)
+        setSelectedPlanIdx(semesterPlanOptions.length )
         fetchPlans();
         setLoadMessage(false);
         setAlertMessage("Plan added!");
