@@ -321,7 +321,7 @@ exports.deleteDegreeReqPrivate = async (req, res) => {
 }
 
 const errorHandler = (err, endpoint, res, userid, userrole) => {
-    console.error("(degreeReqController/errorhandler) err: ", err);
+    console.error("(degreeReqController/errorhandler) err: ", err + "at endpoint (" + endpoint + ")");
     if (err.detail !== undefined && err.title != undefined) {
         /* this is internally formatted error */
 
@@ -340,7 +340,7 @@ const errorHandler = (err, endpoint, res, userid, userrole) => {
             let errString = `id: 000 | title: Internal Server Error | detail: ${err}`;
             activityHandler.saveErrorActivity(userid, endpoint, "500", errString);
         }
-        
+
         resHandler.respondWithCustomError("000", "500", "Internal Server Error", err, res);
     }
 }
