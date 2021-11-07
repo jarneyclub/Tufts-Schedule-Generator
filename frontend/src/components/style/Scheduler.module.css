@@ -14,6 +14,20 @@
   margin-top: 80px;
 }
 
+.noSchedulewrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 25px;
+  padding-left: 2vw;
+  padding-right: 2vw;
+
+  margin-top: 80px;
+  color: #5A32BF;
+}
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /* * * * * * LEFT Column * * * * * */
 .leftColumnWrapper {
