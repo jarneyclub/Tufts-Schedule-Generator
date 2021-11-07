@@ -366,14 +366,14 @@ function DegreePlan2(props) {
       })
       .then((result) => {
         /*  Creates a new plan for new users */
-        if (result.plans.length === 0) {
-          createNewPlan("Plan #1");
-        } else {
+        // if (result.plans.length === 0) {
+        //   createNewPlan("Plan #1");
+        // } else {
           setSemesterPlanOptions(result.plans);
           setCardOptions(result.plans[selectedPlanIdx].terms);
           setSelectedPlanName(result.plans[selectedPlanIdx].plan_name);
           setSelectedPlanID(result.plans[selectedPlanIdx].plan_id);
-        }
+        // }
       })
       .catch((error) => {});
   };
@@ -533,12 +533,16 @@ function DegreePlan2(props) {
                 customStyle={{ fontSize: "20px" }}
               />
               &nbsp;
-              <IconButton
-                className={dp2Style.editPlanButton}
-                onClick={() => handlePopup("editPlanName", true)}
-              >
-                <ModeEditIcon fontSize="medium" />
-              </IconButton>
+              {
+                semesterPlanOptions &&
+                 <IconButton
+                  className={dp2Style.editPlanButton}
+                  onClick={() => handlePopup("editPlanName", true)}
+                >
+                  <ModeEditIcon fontSize="medium" />
+                </IconButton>
+              }
+             
               &nbsp;
               <IconButton
                 className={dp2Style.editPlanButton}
@@ -547,12 +551,16 @@ function DegreePlan2(props) {
                 <AddBoxIcon fontSize="medium" />
               </IconButton>
               &nbsp;
-              <IconButton
-                className={dp2Style.editPlanButton}
-                onClick={() => handlePopup("removePlan", true)}
-              >
-                <IndeterminateCheckBoxIcon fontSize="medium" />
-              </IconButton>
+              {
+                semesterPlanOptions && 
+                 <IconButton
+                  className={dp2Style.editPlanButton}
+                  onClick={() => handlePopup("removePlan", true)}
+                >
+                  <IndeterminateCheckBoxIcon fontSize="medium" />
+                </IconButton>
+              }
+             
             </div>
             <div className={dp2Style.existListWrapper}>
               <TextField
@@ -632,39 +640,49 @@ function DegreePlan2(props) {
               <div className={dp2Style.semesterPlanTitle}>
                 {semesterPlanOptions[selectedPlanIdx]?.plan_name}
               </div>
-              <div className={dp2Style.editSemesterButtonContainer}>
-                <IconButton
-                  className={dp2Style.editSemesterButton}
-                  onClick={() => handlePopup("addSemester", true)}
-                >
-                  <AddBoxIcon fontSize="medium" />
-                </IconButton>
-                &nbsp;
-                <IconButton
-                  className={dp2Style.editSemesterButton}
-                  onClick={() => handlePopup("removeSemester", true)}
-                >
-                  <IndeterminateCheckBoxIcon fontSize="medium" />
-                </IconButton>
-              </div>
+              {
+                semesterPlanOptions && 
+                <div className={dp2Style.editSemesterButtonContainer}>
+                  <IconButton
+                    className={dp2Style.editSemesterButton}
+                    onClick={() => handlePopup("addSemester", true)}
+                  >
+                    <AddBoxIcon fontSize="medium" />
+                  </IconButton>
+                  &nbsp;
+                  <IconButton
+                    className={dp2Style.editSemesterButton}
+                    onClick={() => handlePopup("removeSemester", true)}
+                  >
+                    <IndeterminateCheckBoxIcon fontSize="medium" />
+                  </IconButton>
+                </div>
+              }
+              
             </div>
 
             {/* PlanCards Container */}
             <div className={dp2Style.planCardsContainer}>
-              {semesterPlanOptions[selectedPlanIdx]?.terms?.map((card) => (
-                <PlanCard
-                  cardDetail={card}
-                  key={card.plan_term_id}
-                  dropItem={dropItem}
-                  transferCourseDetail={transferCourseDetail}
-                  onTransferCourse={handleTransferCourseDetail}
-                  onRemoveCourse={handleRemoveCourse}
-                  handleCardOrigin={handleCardOrigin}
-                  cardOrigin={cardOrigin}
-                  onClick={handleShowCourseInfo}
-                  origin={"dp2"}
-                />
-              ))}
+              {
+                semesterPlanOptions ? 
+                  semesterPlanOptions[selectedPlanIdx]?.terms?.map((card) => (
+                  <PlanCard
+                    cardDetail={card}
+                    key={card.plan_term_id}
+                    dropItem={dropItem}
+                    transferCourseDetail={transferCourseDetail}
+                    onTransferCourse={handleTransferCourseDetail}
+                    onRemoveCourse={handleRemoveCourse}
+                    handleCardOrigin={handleCardOrigin}
+                    cardOrigin={cardOrigin}
+                    onClick={handleShowCourseInfo}
+                    origin={"dp2"}
+                  />
+                ))
+                :
+                <div>No Plan has been created.</div>
+              }
+
             </div>
           </div>
         </div>
