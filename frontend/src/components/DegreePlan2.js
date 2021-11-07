@@ -638,7 +638,7 @@ function DegreePlan2(props) {
             <div className={dp2Style.semesterPlanTitleContainer}>
               <div />
               <div className={dp2Style.semesterPlanTitle}>
-                {semesterPlanOptions[selectedPlanIdx]?.plan_name}
+                {semesterPlanOptions.length !== 0 ? semesterPlanOptions[selectedPlanIdx]?.plan_name : "You don't have a degree plan. Make one!"}
               </div>
               {
                 semesterPlanOptions.length !== 0 && 
@@ -664,7 +664,7 @@ function DegreePlan2(props) {
             {/* PlanCards Container */}
             <div className={dp2Style.planCardsContainer}>
               {
-                semesterPlanOptions.length !== 0 ? 
+                semesterPlanOptions.length !== 0 &&
                   semesterPlanOptions[selectedPlanIdx]?.terms?.map((card) => (
                   <PlanCard
                     cardDetail={card}
@@ -679,8 +679,7 @@ function DegreePlan2(props) {
                     origin={"dp2"}
                   />
                 ))
-                :
-                <div>No Plan has been created.</div>
+                
               }
 
             </div>
