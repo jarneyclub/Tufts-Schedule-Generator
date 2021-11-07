@@ -362,17 +362,20 @@ function DegreePlan1(props) {
 
           {/* button that displays an overlay to edit current
                             displayed degree requirement */}
-
-          <Button
-            className={dp1Style.editButton}
-            onClick={() => {
-              setNewMMPopup(false);
-              setEditDRPopup(true);
-            }}
-            startIcon={<EditIcon />}
-          >
-            Edit
-          </Button>
+          {
+            degreeReqOptions[selectedDegreeReqIdx] && 
+              <Button
+              className={dp1Style.editButton}
+              onClick={() => {
+                setNewMMPopup(false);
+                setEditDRPopup(true);
+              }}
+              startIcon={<EditIcon />}
+            >
+              Edit
+            </Button>
+          }
+          
 
           {editDRPopup && (
             <Popup onClose={() => setEditDRPopup(false)}>
