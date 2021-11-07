@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const resHandler = require("../utils/resHandler.js");
 const passport = require('passport');
-const activityHandler = require('../services/handlers/activity.js');
+const activityHandler = require('../../services/handlers/activity.js');
 
 /**
  * Authenticate user credentials, set req.userid and req.password, and 

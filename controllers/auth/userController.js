@@ -5,7 +5,7 @@ const passport = require('passport');
 const { body, validationResult } = require('express-validator');
 const resHandler = require("../utils/resHandler.js");
 const authController = require("./authController.js");
-const activityHandler = require('../services/handlers/activity.js');
+const activityHandler = require('../../services/handlers/activity.js');
 
 
 /**
