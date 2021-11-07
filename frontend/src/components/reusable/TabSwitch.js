@@ -157,7 +157,7 @@ const CourseInfoExpress = (props) => {
   const [attributeDetails, setAttributeDetails] = useState("");
   useEffect(() => {
     attributes?.forEach((att) => {
-      setAttributeDetails((prev) => prev.concat(", ").concat(att));
+      setAttributeDetails((prev) => prev.concat(att).concat(", "));
     })
   }, [])
 
