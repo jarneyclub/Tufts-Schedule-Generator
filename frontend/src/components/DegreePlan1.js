@@ -343,12 +343,16 @@ function DegreePlan1(props) {
               <AddBoxIcon fontSize="medium" />
             </IconButton>
             &nbsp;
-            <IconButton
-              className={dp1Style.editPlanButton}
-              onClick={() => handlePopup("removePrivateReq", true)}
-            >
-              <IndeterminateCheckBoxIcon fontSize="medium" />
-            </IconButton>
+            {
+             degreeReqOptions[selectedDegreeReqIdx] && 
+              <IconButton
+                className={dp1Style.editPlanButton}
+                onClick={() => handlePopup("removePrivateReq", true)}
+              >
+                <IndeterminateCheckBoxIcon fontSize="medium" />
+              </IconButton>
+            }
+            
           </div>
         </div>
         <div className={dp1Style.DegreeReqListWrapper}>
