@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 // TODO: PUT 00 or - if it doesnt exist in the query
 // TODO: when no coursenum input, return empty array
 
+
 exports.getGeneralCourses = async (req, res) => {
     var start = Date.now(); // begin timing API endpoint
     let reqCourseNum = req.query.cnum.toUpperCase(); // get query string
