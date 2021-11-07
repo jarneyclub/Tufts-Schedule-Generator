@@ -20,9 +20,11 @@
   flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   font-size: 25px;
   padding-left: 2vw;
   padding-right: 2vw;
+  height: 100vh;
 
   margin-top: 80px;
   color: #5A32BF;
