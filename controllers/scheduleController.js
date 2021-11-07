@@ -26,7 +26,7 @@ exports.makeEmptySchedule = async (req, res) => {
         }
 
         // save activity if user is not developer
-        if (userrole !== "developer") {
+        if (req.role !== "developer") {
             activityHandler.saveNormalActivity(req.userid, "makeEmptySchedule");
         }
         
@@ -142,7 +142,7 @@ exports.updateSchedule = async (req, res) => {
                     await scheduleHandler.updateSchedule(sched_id, filter, arrCoursesInfoToReturn, weeklySchedule);
 
                 // save activity if user is not developer
-                if (userrole !== "developer") {
+                if (req.role !== "developer") {
                     activityHandler.saveNormalActivity(req.userid, "generateSchedule");
                 }
                 
@@ -180,7 +180,7 @@ exports.getSchedules = async (req, res) => {
         let schedules = await scheduleHandler.getSchedulesOfUser(userId);
 
         // save activity if user is not developer
-        if (userrole !== "developer") {
+        if (req.role !== "developer") {
             activityHandler.saveNormalActivity(req.userid, "getSchedules");
         }
 
@@ -202,7 +202,7 @@ exports.changeScheduleName = async (req, res) => {
         let newSchedule = await scheduleHandler.changeScheduleName(sched_id, new_name);
 
         // save activity if user is not developer
-        if (userrole !== "developer") {
+        if (req.role !== "developer") {
             activityHandler.saveNormalActivity(req.userid, "changeScheduleName");
         }
         
@@ -221,7 +221,7 @@ exports.deleteSchedule = async (req, res) => {
         await scheduleHandler.deleteSchedule(sched_id);
 
         // save activity if user is not developer
-        if (userrole !== "developer") {
+        if (req.role !== "developer") {
             activityHandler.saveNormalActivity(req.userid, "deleteSchedule");
         }
 
