@@ -176,11 +176,11 @@ function DegreePlan1(props) {
         return response.json();
       })
       .then((result) => {
-        if (result.reqs.length === 0) {
-          fetchCreatePrivateReqs(degreeReqDefault);
-        } else {
+        // if (result.reqs.length === 0) {
+        //   fetchCreatePrivateReqs(degreeReqDefault);
+        // } else {
           setDegreeReqOptions(result.reqs);
-        }
+        // }
       })
       .catch((error) => {});
   };
