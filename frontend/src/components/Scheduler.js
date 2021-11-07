@@ -462,7 +462,6 @@ function Scheduler(props) {
 
   const fetchData = async () => {
     setLoadMessage(true);
-    setSearchCourseResult([]);
     await fetch(
       "https://jarney.club/api/courses/term?cnum="
         .concat(courseSearchValue)
@@ -471,6 +470,8 @@ function Scheduler(props) {
     )
       .then((response) => response.json())
       .then((result) => {
+            setSearchCourseResult([]);
+
         setSearchCourseResult(result.courses);
         setLoadMessage(false);
       })
