@@ -25,8 +25,8 @@ const createNewDegreePlan = async (schema) => {
         let insertedPlanTerms = []; // append inserted PlanTerm's to this array
         let currTerm = 2218; 
         for (let i = 0; i < numNewTerms; i++) {
-            if (currTerm % 10 != 4) {
-                /* currTerm is NOT an annual term, so add */
+            if (currTerm % 10 != 4 && currTerm % 10 != 5) {
+                /* currTerm is NOT an annual term and NOT a summer term, so add */
                 let newPlanTerm = new PlanTerm({
                     term: currTerm,
                     plan_id: newPlan._id,
