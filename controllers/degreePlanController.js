@@ -1,5 +1,6 @@
 // load database api
 const degreePlanAPI = require('../services/handlers/degreePlan.js');
+const activityHandler = require('../services/handlers/activity.js');
 const resHandler = require("./utils/resHandler.js");
 // const errorHandler = require('../services/handlers/errorHandler');
 /**
@@ -261,7 +262,7 @@ exports.deleteTerm = async (req, res) => {
         if (req.role !== "developer") {
             activityHandler.saveNormalActivity(req.userid, "deleteTerm");
         }
-        
+
         res.status(200);
         res.json({
             plan_term_id: result,
