@@ -16,8 +16,6 @@ const Class = require('../models/internal/objects/classes/Class.js');
 exports.makeEmptySchedule = async (req, res) => {
     try {
         const {sched_name} = req.body;
-        // save activity
-        activityHandler.saveActivity(req.userid, "makeEmptySchedule");
 
         var start = Date.now(); // begin timing API endpoint
         let createdSchedule =
@@ -26,9 +24,16 @@ exports.makeEmptySchedule = async (req, res) => {
             data: createdSchedule,
             time_taken: (Date.now() - start).toString() + "ms"
         }
+
+        // save activity if user is not developer
+        if (userrole !== "developer") {
+            activityHandler.saveNormalActivity(req.userid, "makeEmptySchedule");
+        }
+        
+        // send response
         res.json(response);
     } catch (err) {
-        errorHandler(err, "makeEmptySchedule", res);
+        errorHandler(err, "makeEmptySchedule", res, req.userid, req.role);
     }
 }
 
@@ -40,6 +45,9 @@ exports.makeEmptySchedule = async (req, res) => {
 exports.updateSchedule = async (req, res) => {
     try {
         const {sched_id, term_course_ids, filter} = req.body;
+        // save activity if not developer
+            if (req.role !== "developer") 
+                activityHandler.saveActivity(req.userid, "makeEmptySchedule");
         // validate types
         if (typeof sched_id !== "string") 
             throw {id: "602", status: "400", title: "Schedule Error", detail : "Schedule ID is not a string"};
@@ -132,6 +140,13 @@ exports.updateSchedule = async (req, res) => {
                 /* update schedule on database */
                 let createdSchedule = 
                     await scheduleHandler.updateSchedule(sched_id, filter, arrCoursesInfoToReturn, weeklySchedule);
+
+                // save activity if user is not developer
+                if (userrole !== "developer") {
+                    activityHandler.saveNormalActivity(req.userid, "generateSchedule");
+                }
+                
+                // send response
                 let response = {
                     data: createdSchedule,
                     time_taken: (Date.now() - start).toString() + "ms"
@@ -150,7 +165,7 @@ exports.updateSchedule = async (req, res) => {
         )
     }
     catch(err) {
-        errorHandler(err, "generateSchedule", res);
+        errorHandler(err, "generateSchedule", res, req.userid, req.role);
     }
 }
 
@@ -163,10 +178,16 @@ exports.getSchedules = async (req, res) => {
     try {
         let userId = req.userid;
         let schedules = await scheduleHandler.getSchedulesOfUser(userId);
+
+        // save activity if user is not developer
+        if (userrole !== "developer") {
+            activityHandler.saveNormalActivity(req.userid, "getSchedules");
+        }
+
         res.json({schedules: schedules});
     }
     catch (err) {
-        errorHandler(err, "getSchedules", res);
+        errorHandler(err, "getSchedules", res, req.userid, req.role);
     }
 }
 
@@ -179,10 +200,16 @@ exports.changeScheduleName = async (req, res) => {
     try {
         let {sched_id, new_name} = req.body;
         let newSchedule = await scheduleHandler.changeScheduleName(sched_id, new_name);
+
+        // save activity if user is not developer
+        if (userrole !== "developer") {
+            activityHandler.saveNormalActivity(req.userid, "changeScheduleName");
+        }
+        
         res.json({schedule: newSchedule});
     }
     catch (err) {
-        errorHandler(err, "changeScheduleName", res);
+        errorHandler(err, "changeScheduleName", res, req.userid, req.role);
     }
 
 }
@@ -192,23 +219,43 @@ exports.deleteSchedule = async (req, res) => {
         let {sched_id} = req.body;
         console.log("(deleteSchedule) req.body: ", req.body);
         await scheduleHandler.deleteSchedule(sched_id);
+
+        // save activity if user is not developer
+        if (userrole !== "developer") {
+            activityHandler.saveNormalActivity(req.userid, "deleteSchedule");
+        }
+
         res.json({"res": "Schedule deleted"});
     }
     catch (err) {
-        errorHandler(err, "deleteSchedule", res);
+        errorHandler(err, "deleteSchedule", res, req.userid, req.role);
     }
 }
 
 
 
-const errorHandler = (err, endpoint, res) => {
+const errorHandler = (err, endpoint, res, userid, userrole) => {
     console.error("(degreeReqController/errorhandler) err: ", err);
     if (err.detail !== undefined && err.title != undefined) {
         /* this is internally formatted error */
+
+        // save error if user is not developer
+        if (userrole !== "developer") {
+            let errString = `id: ${err.id} | title: ${err.title} | detail: ${err.detail}`;
+            activityHandler.saveErrorActivity(userid, endpoint, err.status, errString);
+        }
+        
+        // send error response
         resHandler.respondWithCustomError(err.id, err.status, err.title, err.detail, res);
     }
     else {
         console.error("(degreeReqController/" + endpoint, err);
+        // save error if user is not developer
+        if (userrole !== "developer") {
+            let errString = `id: 000 | title: Internal Server Error | detail: ${err}`;
+            activityHandler.saveErrorActivity(userid, endpoint, "500", errString);
+        }
+
         resHandler.respondWithCustomError("000", "500", "Internal Server Error", err, res);
     }
 }

@@ -3,12 +3,13 @@ const Schema = mongoose.Schema;
 mongoose.Promise = global.Promise;
 const mongodbErrorHandler = require('mongoose-mongodb-errors');
 
-const activity_Schema = new Schema({
+const normalactivity_Schema = new Schema({
     userid: String,
     feature: String,
+    isError: Boolean,
     date: Date
 });
 
-activity_Schema.plugin(mongodbErrorHandler);
+normalactivity_Schema.plugin(mongodbErrorHandler);
 
-module.exports = mongoose.model('Activity', activity_Schema);
+module.exports = mongoose.model('NormalActivity', normalactivity_Schema);

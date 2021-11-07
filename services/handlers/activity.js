@@ -1,17 +1,39 @@
 const mongoose = require('mongoose');
-const Activity = mongoose.model('Activity');
+const NormalActivity = mongoose.model('NormalActivity');
+const ErrorActivity = mongoose.model('ErrorActivity');
 
-exports.saveActivity = async (userid, feature) => {
+exports.saveErrorActivity = async (userid, feature, statusCode, errorString) => {
     try {
-        let newActivity = new Activity({
+        
+        let newErrorActivity = new ErrorActivity({
             userid: userid,
             feature: feature,
+            isError: true,
+            status: statusCode,
+            error: errorString,
+            date: Date.now()
+        });
+        
+        newErrorActivity.save();
+    }
+    catch (e) {
+        errorHandler(e, "saveErrorActivity");
+    }
+}
+
+exports.saveNormalActivity = async (userid, feature) => {
+    try {
+        
+        let newNormalActivity = new NormalActivity({
+            userid: userid,
+            feature: feature,
+            isError: false,
             date: Date.now()   
         });
         
-        newActivity.save();
+        newNormalActivity.save();
     }
     catch (e) {
-        errorHandler(e, "saveActivity");
+        errorHandler(e, "saveNormalActivity");
     }
 }
