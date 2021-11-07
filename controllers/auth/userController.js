@@ -5,6 +5,7 @@ const passport = require('passport');
 const { body, validationResult } = require('express-validator');
 const resHandler = require("../utils/resHandler.js");
 const authController = require("./authController.js");
+const activityHandler = require('../services/handlers/activity.js');
 
 
 /**
@@ -30,7 +31,7 @@ exports.login = async (req, res) => {
  */
 exports.sendLoginResponse = async (req, res) => {
     console.log("(usrCntrl/sendLoginResponse) req.userid: ", req.userid);
-
+    
     res.json({"data": {"first_name": req.firstname, "last_name": req.lastname, "userid": req.userid}});
 };
 
@@ -56,6 +57,12 @@ exports.validateRegisterLocal = async (req, res, next) => {
             return res.status(400).json({ errors: errors.array() });
         else {
             console.log("(userController/validateRegisterLocal) field validation passed");
+
+            // save activity if user is not developer
+            if (req.role !== "developer") {
+                activityHandler.saveNormalActivity(req.userid, "Manual Register");
+            }
+
             next(); // pass to registration into DB
         }
     }

@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const resHandler = require("../utils/resHandler.js");
 const passport = require('passport');
+const activityHandler = require('../services/handlers/activity.js');
 
 /**
  * Authenticate user credentials, set req.userid and req.password, and 
@@ -30,6 +31,12 @@ exports.authenticateCredentialsWithPassport = async (req, res, next) => {
             req.lastname = user.last_name;
             req.userid = req.body.userid;
             req.password = req.body.password;
+            
+            // save activity if user is not developer
+            if (req.role !== "developer") {
+                activityHandler.saveNormalActivity(req.userid, "Manual Login");
+            }
+    
             next();
         }
     })(req, res, next);
@@ -87,8 +94,11 @@ exports.signAccessTokenAndAttachCookie = async (req, res, next) => {
  */
  exports.setToExpireToken = async (req, res) => {
     let token = jwt.sign({}, process.env.TOKEN_SECRET, { expiresIn: '1s'});
-    console.log("(setToExpireToken)");
-    // res.json({"token": token});
+
+    // save activity if user is not developer
+    if (req.role !== "developer") {
+        activityHandler.saveNormalActivity(req.userid, "Manual Logout");
+    }
     res.cookie("access_token", token, {
         maxAge: 1000,
         httpOnly: true,
