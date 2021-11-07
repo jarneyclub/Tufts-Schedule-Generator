@@ -176,11 +176,11 @@ function DegreePlan1(props) {
         return response.json();
       })
       .then((result) => {
-        if (result.reqs.length === 0) {
-          fetchCreatePrivateReqs(degreeReqDefault);
-        } else {
+        // if (result.reqs.length === 0) {
+        //   fetchCreatePrivateReqs(degreeReqDefault);
+        // } else {
           setDegreeReqOptions(result.reqs);
-        }
+        // }
       })
       .catch((error) => {});
   };
@@ -343,12 +343,16 @@ function DegreePlan1(props) {
               <AddBoxIcon fontSize="medium" />
             </IconButton>
             &nbsp;
-            <IconButton
-              className={dp1Style.editPlanButton}
-              onClick={() => handlePopup("removePrivateReq", true)}
-            >
-              <IndeterminateCheckBoxIcon fontSize="medium" />
-            </IconButton>
+            {
+             degreeReqOptions[selectedDegreeReqIdx] && 
+              <IconButton
+                className={dp1Style.editPlanButton}
+                onClick={() => handlePopup("removePrivateReq", true)}
+              >
+                <IndeterminateCheckBoxIcon fontSize="medium" />
+              </IconButton>
+            }
+            
           </div>
         </div>
         <div className={dp1Style.DegreeReqListWrapper}>
@@ -362,17 +366,20 @@ function DegreePlan1(props) {
 
           {/* button that displays an overlay to edit current
                             displayed degree requirement */}
-
-          <Button
-            className={dp1Style.editButton}
-            onClick={() => {
-              setNewMMPopup(false);
-              setEditDRPopup(true);
-            }}
-            startIcon={<EditIcon />}
-          >
-            Edit
-          </Button>
+          {
+            degreeReqOptions[selectedDegreeReqIdx] && 
+              <Button
+              className={dp1Style.editButton}
+              onClick={() => {
+                setNewMMPopup(false);
+                setEditDRPopup(true);
+              }}
+              startIcon={<EditIcon />}
+            >
+              Edit
+            </Button>
+          }
+          
 
           {editDRPopup && (
             <Popup onClose={() => setEditDRPopup(false)}>
