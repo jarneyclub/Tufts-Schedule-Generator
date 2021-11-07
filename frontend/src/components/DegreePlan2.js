@@ -651,7 +651,7 @@ function DegreePlan2(props) {
 
             {/* PlanCards Container */}
             <div className={dp2Style.planCardsContainer}>
-              {semesterPlanOptions[selectedPlanIdx].terms?.map((card) => (
+              {semesterPlanOptions[selectedPlanIdx]?.terms?.map((card) => (
                 <PlanCard
                   cardDetail={card}
                   key={card.plan_term_id}
