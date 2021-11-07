@@ -798,7 +798,7 @@ function Scheduler(props) {
           <div>Create your schedule on now!</div>
           <IconButton                 className={sStyle.editPlanButton}
  onClick={() => handlePopup("addSchedule", true)}>
-            <AddShoppingCartIcon fontSize="large" />
+            <AddShoppingCartIcon fontSize="80vw" />
           </IconButton>
         </div>
 
