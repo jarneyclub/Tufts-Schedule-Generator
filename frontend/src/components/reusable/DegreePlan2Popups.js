@@ -446,7 +446,6 @@ function RemovePlan(props) {
         <Button className={pStyle.cancelButton} onClick={handleClose}>
           CANCEL
         </Button>
-        <br />
         <Button className={pStyle.submitButton} onClick={handleRemove}>
           REMOVE
         </Button>

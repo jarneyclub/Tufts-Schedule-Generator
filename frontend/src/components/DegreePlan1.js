@@ -328,7 +328,7 @@ function DegreePlan1(props) {
               options={degreeReqOptions}
               isObject={true}
               objectField={"program_name"}
-              selectedOption={degreeReqOptions[selectedDegreeReqIdx]}
+              selectedOption={degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx]}
               selectedIdx={selectedDegreeReqIdx}
               onOptionChange={handleDegreeReqChange}
             />
@@ -344,7 +344,7 @@ function DegreePlan1(props) {
             </IconButton>
             &nbsp;
             {
-             degreeReqOptions[selectedDegreeReqIdx] && 
+             degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx] && 
               <IconButton
                 className={dp1Style.editPlanButton}
                 onClick={() => handlePopup("removePrivateReq", true)}
@@ -367,7 +367,7 @@ function DegreePlan1(props) {
           {/* button that displays an overlay to edit current
                             displayed degree requirement */}
           {
-            degreeReqOptions[selectedDegreeReqIdx] && 
+            degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx] && 
               <Button
               className={dp1Style.editButton}
               onClick={() => {
