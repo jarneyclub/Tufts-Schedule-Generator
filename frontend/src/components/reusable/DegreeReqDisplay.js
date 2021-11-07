@@ -56,7 +56,7 @@ function DegreeReqDisplay(props) {
         {
         reqDetail ? reqDetail?.program_name
         : 
-        "You currently don't have any degree requirement added. ", <br/>, "Start your own with + above, or add one from the public degree requirements!"}
+        "No degree requirement added."}
       </div>
 
      
