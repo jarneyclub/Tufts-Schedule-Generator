@@ -1,6 +1,7 @@
 // const generate = require('../services/generateCourseScheduleV2/generateCourseSchedule.js');
 const coursesTermHandler = require('../services/handlers/coursesTerm.js');
 const scheduleHandler = require('../services/handlers/schedule.js');
+const activityHandler = require('../services/handlers/activity.js');
 const CourseSchedule = require('../services/generateCourseSchedule/generateCourseSchedule.js');
 const resHandler = require("./utils/resHandler.js");
 const Section = require('../models/internal/objects/classes/Section.js');
@@ -13,15 +14,22 @@ const Class = require('../models/internal/objects/classes/Class.js');
  * @param {*} res
  */
 exports.makeEmptySchedule = async (req, res) => {
-    const {sched_name} = req.body;
-    var start = Date.now(); // begin timing API endpoint
-    let createdSchedule =
-        await scheduleHandler.createSchedule(req.userid, sched_name, undefined, "2222", undefined, undefined);
-    let response = {
-        data: createdSchedule,
-        time_taken: (Date.now() - start).toString() + "ms"
+    try {
+        const {sched_name} = req.body;
+        // save activity
+        scheduleHandler.saveActivity(req.userid, "makeEmptySchedule");
+
+        var start = Date.now(); // begin timing API endpoint
+        let createdSchedule =
+            await scheduleHandler.createSchedule(req.userid, sched_name, undefined, "2222", undefined, undefined);
+        let response = {
+            data: createdSchedule,
+            time_taken: (Date.now() - start).toString() + "ms"
+        }
+        res.json(response);
+    } catch (err) {
+        errorHandler(err, "makeEmptySchedule", res);
     }
-    res.json(response);
 }
 
 /**
