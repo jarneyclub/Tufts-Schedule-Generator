@@ -39,9 +39,9 @@ const createNewDegreePlan = async (schema) => {
                     term: newPlanTerm.term,
                     courses: newPlanTerm.courses
                 });
-                // iterate to next term in sequence
-                currTerm = await getNextTerm(currTerm);
             }
+            // iterate to next term in sequence
+            currTerm = await getNextTerm(currTerm);
         }
         // sort insertedPlanTerms
         const customPriorityComparator = (a, b) => a.term - b.term;
