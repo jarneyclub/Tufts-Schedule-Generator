@@ -335,7 +335,7 @@ function EditPlanName(props) {
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function AddPlan(props) {
-  const { onClose, createNewPlan } = props;
+  const { onClose, createNewPlan, onSetIdxLast } = props;
 
   const [planName, setPlanName] = useState("");
 
