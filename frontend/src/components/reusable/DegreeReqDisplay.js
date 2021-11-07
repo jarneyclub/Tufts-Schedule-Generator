@@ -53,15 +53,21 @@ function DegreeReqDisplay(props) {
   return (
     <div className={dStyle.displayContainer}>
       <div style={{ textAlign: "center", color: "#5A32BF" }}>
-        {reqDetail?.program_name}
+        {
+        reqDetail ? reqDetail?.program_name
+        : 
+        "You currently don't have any degree requirement. Add one from the public degree requirement or create your own!"}
       </div>
-      {reqDetail?.school && (
+
+     
+
+      { reqDetail && reqDetail?.school && (
         <div>
           <div style={{ color: "#FC4E4E" }}>School:&nbsp;</div>
           <div>{reqDetail?.school}</div>
         </div>
       )}
-      {reqDetail?.degree && (
+      { reqDetail &&reqDetail?.degree && (
         <div>
           <div style={{ color: "#FC4E4E" }}>Degree:&nbsp;</div>
           <div>{reqDetail?.degree}</div>
@@ -69,7 +75,7 @@ function DegreeReqDisplay(props) {
       )}
 
       <br />
-      {reqDetail?.parts?.map((req) => (
+      { reqDetail && reqDetail?.parts?.map((req) => (
         <div>
           <div style={{ color: "#FC4E4E", wordBreak: "break-word", whiteSpace: "pre-wrap"}}>
             {req?.part_name}
@@ -89,6 +95,9 @@ function DegreeReqDisplay(props) {
           ))}
         </div>
       ))}
+
+
+
     </div>
   );
 }
