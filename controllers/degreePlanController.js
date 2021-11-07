@@ -18,6 +18,12 @@ exports.createDegreePlan = async (req, res) => {
     // insert to database
     degreePlanAPI.createNewDegreePlan(query)
     .then(result => {
+        
+        // save activity if user is not developer
+        if (req.role !== "developer") {
+            activityHandler.saveNormalActivity(req.userid, "createDegreePlan");
+        }
+
         res.status(200);
         res.json({
             plan: result,
@@ -25,7 +31,7 @@ exports.createDegreePlan = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(err, "createDegreePlan", res);
+        errorHandler(err, "createDegreePlan", res, req.userid, req.role);
     });
 }
 
@@ -46,14 +52,20 @@ exports.getDegreePlan = async (req, res) => {
     // get from database
     degreePlanAPI.getDegreePlan(query)
     .then(result => {
-            res.status(200);
-            res.json({
-                plan: result,
-                time_taken: ((Date.now() - start).toString() + "ms")
-            });
+
+        // save activity if user is not developer
+        if (req.role !== "developer") {
+            activityHandler.saveNormalActivity(req.userid, "getDegreePlan");
+        }
+
+        res.status(200);
+        res.json({
+            plan: result,
+            time_taken: ((Date.now() - start).toString() + "ms")
+        });
     })
     .catch(err => {
-        errorHandler(err, "getDegreePlan", res);
+        errorHandler(err, "getDegreePlan", res, req.userid, req.role);
     })
 }
 
@@ -69,14 +81,19 @@ exports.updateDegreePlanName = async (req, res) => {
     // get from database
     degreePlanAPI.updateDegreePlanName(query)
     .then(result => {
-            res.status(200);
-            res.json({
-                plan_id: result,
-                time_taken: ((Date.now() - start).toString() + "ms")
-            });
+        // save activity if user is not developer
+        if (req.role !== "developer") {
+            activityHandler.saveNormalActivity(req.userid, "updateDegreePlanName");
+        }
+
+        res.status(200);
+        res.json({
+            plan_id: result,
+            time_taken: ((Date.now() - start).toString() + "ms")
+        });
     })
     .catch(err => {
-        errorHandler(err, "updateDegreePlanName", res);
+        errorHandler(err, "updateDegreePlanName", res, req.userid, req.role);
     })
 }
 
@@ -93,13 +110,18 @@ exports.deleteDegreePlan = async (req, res) => {
     // delete degree plan and referenced plan terms
     degreePlanAPI.deleteDegreePlan(query)
     .then(result => {
+        // save activity if user is not developer
+        if (req.role !== "developer") {
+            activityHandler.saveNormalActivity(req.userid, "deleteDegreePlan");
+        }
+
         res.status(200);
         res.json({
             time_taken: ((Date.now() - start).toString() + "ms")
         });
     })
     .catch(err => {
-        errorHandler(err, "deleteDegreePlan", res);
+        errorHandler(err, "deleteDegreePlan", res, req.userid, req.role);
     })    
 }
 
@@ -120,6 +142,11 @@ exports.deleteDegreeTermMultiple = async (req, res) => {
     }
     degreePlanAPI.deleteDegreeTermMultiple(query)
     .then(result => {
+        // save activity if user is not developer
+        if (req.role !== "developer") {
+            activityHandler.saveNormalActivity(req.userid, "deleteDegreeTermMultiple");
+        }
+
         res.status(200);
         res.json({
             plan: result,
@@ -127,7 +154,7 @@ exports.deleteDegreeTermMultiple = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(err, "deleteDegreePlan", res);
+        errorHandler(err, "deleteDegreePlan", res, req.userid, req.role);
     })
 }
 
@@ -144,6 +171,11 @@ exports.getDegreePlans = async (req, res) => {
     }
     let result = await degreePlanAPI.getDegreePlans(query)
     .then(result => {
+        // save activity if user is not developer
+        if (req.role !== "developer") {
+            activityHandler.saveNormalActivity(req.userid, "getDegreePlans");
+        }
+
         res.status(200);
         res.json({
             plans: result,
@@ -151,7 +183,7 @@ exports.getDegreePlans = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(err, "getDegreePlans", res);
+        errorHandler(err, "getDegreePlans", res, req.userid, req.role);
     })
 }
 
@@ -166,6 +198,11 @@ exports.createTerm = async (req, res) => {
     const {plan_id, term} = req.body;
     degreePlanAPI.createTerm(plan_id, term, [])
     .then(result => {
+        // save activity if user is not developer
+        if (req.role !== "developer") {
+            activityHandler.saveNormalActivity(req.userid, "createTerm");
+        }
+
         res.status(200);
         res.json({
             plan_term_id: result,
@@ -173,7 +210,7 @@ exports.createTerm = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(err, "createTerm", res);
+        errorHandler(err, "createTerm", res, req.userid, req.role);
     })
 }
 
@@ -190,6 +227,11 @@ exports.saveTerm = async (req, res) => {
     };
     degreePlanAPI.saveTerm(plan_term_id, setParams)
     .then(result => {
+        // save activity if user is not developer
+        if (req.role !== "developer") {
+            activityHandler.saveNormalActivity(req.userid, "saveTerm");
+        }
+
         res.status(200);
         res.json({
             plan_term_id: result,
@@ -197,7 +239,7 @@ exports.saveTerm = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(err, "saveTerm", res);
+        errorHandler(err, "saveTerm", res, req.userid, req.role);
     })
 }
 
@@ -215,6 +257,11 @@ exports.deleteTerm = async (req, res) => {
     }
     degreePlanAPI.deleteTerm(query)
     .then(result => {
+        // save activity if user is not developer
+        if (req.role !== "developer") {
+            activityHandler.saveNormalActivity(req.userid, "deleteTerm");
+        }
+        
         res.status(200);
         res.json({
             plan_term_id: result,
@@ -222,19 +269,31 @@ exports.deleteTerm = async (req, res) => {
         });
     })
     .catch(err => {
-        errorHandler(err, "deleteTerm", res);
+        errorHandler(err, "deleteTerm", res, req.userid, req.role);
     })
 }
 
 
-const errorHandler = (err, endpoint, res) => {
+const errorHandler = (err, endpoint, res, userid, userrole) => {
     console.error("(dPController/errorhandler) err: ", err);
     if (err.detail !== undefined && err.title != undefined) {
         /* this is internally formatted error */
+
+        // save error if user is not developer
+        if (userrole !== "developer") {
+            let errString = `id: ${err.id} | title: ${err.title} | detail: ${err.detail}`;
+            activityHandler.saveErrorActivity(userid, endpoint, err.status, errString);
+        }
+
         resHandler.respondWithCustomError(err.id, err.status, err.title, err.detail, res);
     }
     else {
         console.error("(degreePlanController/" + endpoint, err);
+        // save error if user is not developer
+        if (userrole !== "developer") {
+            let errString = `id: 000 | title: Internal Server Error | detail: ${err}`;
+            activityHandler.saveErrorActivity(userid, endpoint, "500", errString);
+        }
         resHandler.respondWithCustomError("000", "500", "Internal Server Error", err, res);
     }
 }
