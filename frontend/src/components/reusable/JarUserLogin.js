@@ -77,8 +77,6 @@ const JarUserLogin = React.forwardRef((props, ref) => {
           setLoadMessage(false);
           switchLogged && switchLogged();
           onClose();
-
-
         })
         .catch((error) => {
           setLoadMessage(false);
@@ -90,7 +88,7 @@ const JarUserLogin = React.forwardRef((props, ref) => {
           return response.json();
         })
         .then((result) => {
-          console.log("results", result)
+          console.log("results", result);
           if (result.errors) {
             setLoadMessage(false);
             setAlertMessage(result.errors[0].detail);
@@ -101,7 +99,6 @@ const JarUserLogin = React.forwardRef((props, ref) => {
             switchLogged && switchLogged();
             onClose();
           }
-          
         })
         .catch((error) => {});
     }

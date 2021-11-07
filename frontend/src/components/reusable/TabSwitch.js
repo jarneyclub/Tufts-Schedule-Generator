@@ -158,10 +158,9 @@ const CourseInfoExpress = (props) => {
   useEffect(() => {
     attributes?.forEach((att) => {
       setAttributeDetails((prev) => prev.concat(att).concat(", "));
-    })
-  }, [])
+    });
+  }, []);
 
-  
   return (
     <ClickAwayListener onClickAway={onClose}>
       <div className={tStyle.courseInfoContainer}>
