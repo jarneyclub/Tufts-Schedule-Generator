@@ -17,7 +17,7 @@ exports.makeEmptySchedule = async (req, res) => {
     try {
         const {sched_name} = req.body;
         // save activity
-        scheduleHandler.saveActivity(req.userid, "makeEmptySchedule");
+        activityHandler.saveActivity(req.userid, "makeEmptySchedule");
 
         var start = Date.now(); // begin timing API endpoint
         let createdSchedule =
