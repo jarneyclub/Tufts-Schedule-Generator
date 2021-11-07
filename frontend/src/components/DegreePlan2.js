@@ -291,8 +291,7 @@ function DegreePlan2(props) {
   const handleSetSelectedPlanIdx = (idx) => {
     console.log("idx", idx);
     setSelectedPlanIdx(idx);
-  }
-
+  };
 
   /*
    *  handleRemoveCourse()
@@ -335,7 +334,7 @@ function DegreePlan2(props) {
         }
       })
       .then((result) => {
-        setSelectedPlanIdx(semesterPlanOptions.length )
+        setSelectedPlanIdx(semesterPlanOptions.length);
         fetchPlans();
         setLoadMessage(false);
         setAlertMessage("Plan added!");
@@ -369,10 +368,10 @@ function DegreePlan2(props) {
         // if (result.plans.length === 0) {
         //   createNewPlan("Plan #1");
         // } else {
-          setSemesterPlanOptions(result.plans);
-          setCardOptions(result.plans[selectedPlanIdx].terms);
-          setSelectedPlanName(result.plans[selectedPlanIdx].plan_name);
-          setSelectedPlanID(result.plans[selectedPlanIdx].plan_id);
+        setSemesterPlanOptions(result.plans);
+        setCardOptions(result.plans[selectedPlanIdx].terms);
+        setSelectedPlanName(result.plans[selectedPlanIdx].plan_name);
+        setSelectedPlanID(result.plans[selectedPlanIdx].plan_id);
         // }
       })
       .catch((error) => {});
@@ -421,7 +420,6 @@ function DegreePlan2(props) {
       fetchPlans();
       fetchPrivateReqs();
     }
-    
   }, [logged]);
 
   useEffect(() => {
@@ -533,16 +531,14 @@ function DegreePlan2(props) {
                 customStyle={{ fontSize: "20px" }}
               />
               &nbsp;
-              {
-                semesterPlanOptions.length !== 0 &&
-                 <IconButton
+              {semesterPlanOptions.length !== 0 && (
+                <IconButton
                   className={dp2Style.editPlanButton}
                   onClick={() => handlePopup("editPlanName", true)}
                 >
                   <ModeEditIcon fontSize="medium" />
                 </IconButton>
-              }
-             
+              )}
               &nbsp;
               <IconButton
                 className={dp2Style.editPlanButton}
@@ -551,16 +547,14 @@ function DegreePlan2(props) {
                 <AddBoxIcon fontSize="medium" />
               </IconButton>
               &nbsp;
-              {
-                semesterPlanOptions.length !== 0 && 
-                 <IconButton
+              {semesterPlanOptions.length !== 0 && (
+                <IconButton
                   className={dp2Style.editPlanButton}
                   onClick={() => handlePopup("removePlan", true)}
                 >
                   <IndeterminateCheckBoxIcon fontSize="medium" />
                 </IconButton>
-              }
-             
+              )}
             </div>
             <div className={dp2Style.existListWrapper}>
               <TextField
@@ -638,10 +632,11 @@ function DegreePlan2(props) {
             <div className={dp2Style.semesterPlanTitleContainer}>
               <div />
               <div className={dp2Style.semesterPlanTitle}>
-                {semesterPlanOptions.length !== 0 ? semesterPlanOptions[selectedPlanIdx]?.plan_name : "You don't have a degree plan. Make one!"}
+                {semesterPlanOptions.length !== 0
+                  ? semesterPlanOptions[selectedPlanIdx]?.plan_name
+                  : "You don't have a degree plan. Make one!"}
               </div>
-              {
-                semesterPlanOptions.length !== 0 ?
+              {semesterPlanOptions.length !== 0 ? (
                 <div className={dp2Style.editSemesterButtonContainer}>
                   <IconButton
                     className={dp2Style.editSemesterButton}
@@ -657,17 +652,15 @@ function DegreePlan2(props) {
                     <IndeterminateCheckBoxIcon fontSize="medium" />
                   </IconButton>
                 </div>
-                :
-                <div/>
-              }
-              
+              ) : (
+                <div />
+              )}
             </div>
 
             {/* PlanCards Container */}
             <div className={dp2Style.planCardsContainer}>
-              {
-                semesterPlanOptions.length !== 0 &&
-                  semesterPlanOptions[selectedPlanIdx]?.terms?.map((card) => (
+              {semesterPlanOptions.length !== 0 &&
+                semesterPlanOptions[selectedPlanIdx]?.terms?.map((card) => (
                   <PlanCard
                     cardDetail={card}
                     key={card.plan_term_id}
@@ -680,10 +673,7 @@ function DegreePlan2(props) {
                     onClick={handleShowCourseInfo}
                     origin={"dp2"}
                   />
-                ))
-                
-              }
-
+                ))}
             </div>
           </div>
         </div>
@@ -700,7 +690,6 @@ function DegreePlan2(props) {
             onShowAlert={() => setShowAlert(true)}
             setAlertMessage={setAlertMessage}
             setAlertSeverity={setAlertSeverity}
-
           />
         </Popup>
       )}
@@ -716,7 +705,6 @@ function DegreePlan2(props) {
             onShowAlert={() => setShowAlert(true)}
             setAlertMessage={setAlertMessage}
             setAlertSeverity={setAlertSeverity}
-
           />
         </Popup>
       )}
@@ -755,8 +743,9 @@ function DegreePlan2(props) {
             onShowAlert={() => setShowAlert(true)}
             setAlertMessage={setAlertMessage}
             setAlertSeverity={setAlertSeverity}
-            onSetIdxLast = {() => handleSetSelectedPlanIdx(semesterPlanOptions?.length - 2)}
-
+            onSetIdxLast={() =>
+              handleSetSelectedPlanIdx(semesterPlanOptions?.length - 2)
+            }
           />
         </Popup>
       )}

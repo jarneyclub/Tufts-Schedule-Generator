@@ -50,12 +50,10 @@ function HeaderUser(props) {
     }
   };
 
- 
   const fetchLogout = async () => {
     await fetch("https://jarney.club/api/auth/logout", { method: "POST" })
       .then((response) => response.json())
-      .then((result) => {
-      })
+      .then((result) => {})
       .error((error) => {});
   };
 
