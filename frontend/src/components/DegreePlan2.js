@@ -641,7 +641,7 @@ function DegreePlan2(props) {
                 {semesterPlanOptions.length !== 0 ? semesterPlanOptions[selectedPlanIdx]?.plan_name : "You don't have a degree plan. Make one!"}
               </div>
               {
-                semesterPlanOptions.length !== 0 && 
+                semesterPlanOptions.length !== 0 ?
                 <div className={dp2Style.editSemesterButtonContainer}>
                   <IconButton
                     className={dp2Style.editSemesterButton}
@@ -657,6 +657,8 @@ function DegreePlan2(props) {
                     <IndeterminateCheckBoxIcon fontSize="medium" />
                   </IconButton>
                 </div>
+                :
+                <div/>
               }
               
             </div>
