@@ -328,7 +328,7 @@ function DegreePlan1(props) {
               options={degreeReqOptions}
               isObject={true}
               objectField={"program_name"}
-              selectedOption={degreeReqOptions[selectedDegreeReqIdx]}
+              selectedOption={degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx]}
               selectedIdx={selectedDegreeReqIdx}
               onOptionChange={handleDegreeReqChange}
             />
