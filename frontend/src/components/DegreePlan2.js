@@ -288,6 +288,11 @@ function DegreePlan2(props) {
     handlePopup("showCourseInfo", true);
   };
 
+  const handleSetSelectedPlanIdx = (idx) => {
+    setSelectedPlanIdx(idx);
+  }
+
+
   /*
    *  handleRemoveCourse()
    *  purpose: removes course from planCard
@@ -352,7 +357,7 @@ function DegreePlan2(props) {
    *
    */
   const fetchPlans = async () => {
-    setSelectedPlanIdx(0);
+    // setSelectedPlanIdx(0);
     await fetch("https://jarney.club/api/degreeplans")
       .then((response) => {
         return response.json();
@@ -363,9 +368,9 @@ function DegreePlan2(props) {
           createNewPlan("Plan #1");
         } else {
           setSemesterPlanOptions(result.plans);
-          setCardOptions(result.plans[0].terms);
-          setSelectedPlanName(result.plans[0].plan_name);
-          setSelectedPlanID(result.plans[0].plan_id);
+          setCardOptions(result.plans[selectedPlanIdx].terms);
+          setSelectedPlanName(result.plans[selectedPlanIdx].plan_name);
+          setSelectedPlanID(result.plans[selectedPlanIdx].plan_id);
         }
       })
       .catch((error) => {});
@@ -727,6 +732,7 @@ function DegreePlan2(props) {
             onShowAlert={() => setShowAlert(true)}
             setAlertMessage={setAlertMessage}
             setAlertSeverity={setAlertSeverity}
+            onSetIdxLast = {() => handleSetSelectedPlanIdx(semesterPlanOptions?.length - 1)}
           />
         </Popup>
       )}
