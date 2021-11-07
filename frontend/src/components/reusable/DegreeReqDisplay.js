@@ -52,11 +52,11 @@ function DegreeReqDisplay(props) {
 
   return (
     <div className={dStyle.displayContainer}>
-      <div style={{ textAlign: "center", color: "#5A32BF" }}>
+      <div style={reqDetail ? { textAlign: "center", color: "#5A32BF" } :  { textAlign: "center", color: "#FC4E4E" }}>
         {
         reqDetail ? reqDetail?.program_name
         : 
-        "You currently don't have any degree requirement. Add one from the public degree requirement or create your own!"}
+        "You currently don't have any degree requirement added. ", <br/>, "Start your own with + above, or add one from the public degree requirements!"}
       </div>
 
      
