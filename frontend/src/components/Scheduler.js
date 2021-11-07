@@ -794,9 +794,14 @@ function Scheduler(props) {
           </div>
         </div>
       ) : (
-        <IconButton onClick={() => handlePopup("addSchedule", true)}>
-          <AddShoppingCartIcon fontSize="large" />
-        </IconButton>
+        <div className={sStyle.horizontalWrapper}>
+          <div>Create your schedule on JARney!</div>
+          <IconButton onClick={() => handlePopup("addSchedule", true)}>
+            <AddShoppingCartIcon fontSize="large" />
+          </IconButton>
+        </div>
+
+        
       )}
 
       {/* popups */}
