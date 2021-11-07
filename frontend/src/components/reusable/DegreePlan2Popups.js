@@ -391,6 +391,7 @@ function RemovePlan(props) {
     onShowAlert,
     setAlertMessage,
     setAlertSeverity,
+    onSetIdxLast
   } = props;
 
   const handleClose = () => {
@@ -414,6 +415,7 @@ function RemovePlan(props) {
       .then((response) => response.json())
       .then((result) => {
         if (!result.error) {
+          onSetIdxLast();
           refreshPlans();
           setAlertMessage("Plan removed!");
           setAlertSeverity("success");
