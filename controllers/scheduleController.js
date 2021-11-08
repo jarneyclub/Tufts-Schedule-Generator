@@ -47,7 +47,7 @@ exports.updateSchedule = async (req, res) => {
         const {sched_id, term_course_ids, filter} = req.body;
         // save activity if not developer
             if (req.role !== "developer") 
-                activityHandler.saveActivity(req.userid, "makeEmptySchedule");
+                activityHandler.saveNormalActivity(req.userid, "makeEmptySchedule");
         // validate types
         if (typeof sched_id !== "string") 
             throw {id: "602", status: "400", title: "Schedule Error", detail : "Schedule ID is not a string"};
