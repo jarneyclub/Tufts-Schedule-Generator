@@ -179,7 +179,7 @@ function DegreePlan1(props) {
         // if (result.reqs.length === 0) {
         //   fetchCreatePrivateReqs(degreeReqDefault);
         // } else {
-          setDegreeReqOptions(result.reqs);
+        setDegreeReqOptions(result.reqs);
         // }
       })
       .catch((error) => {});
@@ -224,7 +224,7 @@ function DegreePlan1(props) {
   useEffect(() => {
     if (logged) {
       fetchPrivateReqs();
-    fetchPublicReqs();
+      fetchPublicReqs();
     }
   }, [logged]);
 
@@ -328,7 +328,9 @@ function DegreePlan1(props) {
               options={degreeReqOptions}
               isObject={true}
               objectField={"program_name"}
-              selectedOption={degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx]}
+              selectedOption={
+                degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx]
+              }
               selectedIdx={selectedDegreeReqIdx}
               onOptionChange={handleDegreeReqChange}
             />
@@ -343,16 +345,14 @@ function DegreePlan1(props) {
               <AddBoxIcon fontSize="medium" />
             </IconButton>
             &nbsp;
-            {
-             degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx] && 
+            {degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx] && (
               <IconButton
                 className={dp1Style.editPlanButton}
                 onClick={() => handlePopup("removePrivateReq", true)}
               >
                 <IndeterminateCheckBoxIcon fontSize="medium" />
               </IconButton>
-            }
-            
+            )}
           </div>
         </div>
         <div className={dp1Style.DegreeReqListWrapper}>
@@ -360,15 +360,16 @@ function DegreePlan1(props) {
                             display the info of the selected degree plan */}
           <div className={dp1Style.degreeReqListExpandable}>
             <DegreeReqDisplay
-              reqDetail={degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx]}
+              reqDetail={
+                degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx]
+              }
             />
           </div>
 
           {/* button that displays an overlay to edit current
                             displayed degree requirement */}
-          {
-            degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx] && 
-              <Button
+          {degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx] && (
+            <Button
               className={dp1Style.editButton}
               onClick={() => {
                 setNewMMPopup(false);
@@ -378,8 +379,7 @@ function DegreePlan1(props) {
             >
               Edit
             </Button>
-          }
-          
+          )}
 
           {editDRPopup && (
             <Popup onClose={() => setEditDRPopup(false)}>
@@ -398,7 +398,9 @@ function DegreePlan1(props) {
         <Popup onClose={() => handlePopup("removePrivateReq", false)}>
           <RemovePrivReq
             onClose={() => handlePopup("removePrivateReq", false)}
-            privateReqName={degreeReqOptions[selectedDegreeReqIdx]?.program_name}
+            privateReqName={
+              degreeReqOptions[selectedDegreeReqIdx]?.program_name
+            }
             privateReqID={degreeReqOptions[selectedDegreeReqIdx]?.priv_dr_id}
             refreshPrivateReq={fetchPrivateReqs}
             onShowAlert={() => setShowAlert(true)}

@@ -52,22 +52,23 @@ function DegreeReqDisplay(props) {
 
   return (
     <div className={dStyle.displayContainer}>
-      <div style={reqDetail ? { textAlign: "center", color: "#5A32BF" } :  { textAlign: "center", color: "#FC4E4E" }}>
-        {
-        reqDetail ? reqDetail?.program_name
-        : 
-        "No degree requirement added."}
+      <div
+        style={
+          reqDetail
+            ? { textAlign: "center", color: "#5A32BF" }
+            : { textAlign: "center", color: "#FC4E4E" }
+        }
+      >
+        {reqDetail ? reqDetail?.program_name : "No degree requirement added."}
       </div>
 
-     
-
-      { reqDetail && reqDetail?.school && (
+      {reqDetail && reqDetail?.school && (
         <div>
           <div style={{ color: "#FC4E4E" }}>School:&nbsp;</div>
           <div>{reqDetail?.school}</div>
         </div>
       )}
-      { reqDetail &&reqDetail?.degree && (
+      {reqDetail && reqDetail?.degree && (
         <div>
           <div style={{ color: "#FC4E4E" }}>Degree:&nbsp;</div>
           <div>{reqDetail?.degree}</div>
@@ -75,29 +76,39 @@ function DegreeReqDisplay(props) {
       )}
 
       <br />
-      { reqDetail && reqDetail?.parts?.map((req) => (
-        <div>
-          <div style={{ color: "#FC4E4E", wordBreak: "break-word", whiteSpace: "pre-wrap"}}>
-            {req?.part_name}
-          </div>
-          <div style={{ wordBreak: "break-word", whiteSpace: "pre-wrap" }}>{req?.part_desc}</div>
-          {req?.part_reqs?.map((course) => (
-            <div>
-              {course?.course_num && (
-                <div style={{ wordBreak: "break-word", whiteSpace: "pre-wrap" }}>
-                  &nbsp;▪&nbsp;{course?.course_num}
-                </div>
-              )}
-              <div style={{ wordBreak: "break-word" , whiteSpace: "pre-wrap"}}>
-                {course?.course_note}
-              </div>
+      {reqDetail &&
+        reqDetail?.parts?.map((req) => (
+          <div>
+            <div
+              style={{
+                color: "#FC4E4E",
+                wordBreak: "break-word",
+                whiteSpace: "pre-wrap",
+              }}
+            >
+              {req?.part_name}
             </div>
-          ))}
-        </div>
-      ))}
-
-
-
+            <div style={{ wordBreak: "break-word", whiteSpace: "pre-wrap" }}>
+              {req?.part_desc}
+            </div>
+            {req?.part_reqs?.map((course) => (
+              <div>
+                {course?.course_num && (
+                  <div
+                    style={{ wordBreak: "break-word", whiteSpace: "pre-wrap" }}
+                  >
+                    &nbsp;▪&nbsp;{course?.course_num}
+                  </div>
+                )}
+                <div
+                  style={{ wordBreak: "break-word", whiteSpace: "pre-wrap" }}
+                >
+                  {course?.course_note}
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
     </div>
   );
 }

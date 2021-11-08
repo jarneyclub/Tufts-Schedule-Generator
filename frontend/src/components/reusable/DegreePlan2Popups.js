@@ -391,7 +391,7 @@ function RemovePlan(props) {
     onShowAlert,
     setAlertMessage,
     setAlertSeverity,
-    onSetIdxLast
+    onSetIdxLast,
   } = props;
 
   const handleClose = () => {

@@ -23,6 +23,7 @@ import {
 import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import SearchIcon from "@material-ui/icons/Search";
 import AddBoxIcon from "@material-ui/icons/AddBox";
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
 import LinkedCameraIcon from "@mui/icons-material/LinkedCamera";
@@ -202,7 +203,7 @@ function Scheduler(props) {
   const [selectedAttribute, setSelectedAttribute] = useState("");
   const [selectedAttributeIdx, setSelectedAttributeIdx] = useState(0);
   const [coursePreference, setCoursePreference] = useState(boolStateDefault);
-  
+
   /*  The courses selected to generate schedule  */
   const [selectedCourses, setSelectedCourses] = useState([]);
 
@@ -355,29 +356,27 @@ function Scheduler(props) {
     await fetch("https://jarney.club/api/schedules")
       .then((response) => response.json())
       .then((result) => {
-        if (result.schedules.length === 0) {
-          fetchCreateSchedule("Schedule #1");
-        } else {
-          setScheduleOptions(result.schedules);
-          setSelectedSchedule(result.schedules[selectedScheduleIdx].sched_name);
-          setSelectedScheduleID(result.schedules[selectedScheduleIdx].sched_id);
-          setSelectedCourses(result.schedules[selectedScheduleIdx]?.courses);
-          setClasses(result.schedules[selectedScheduleIdx]?.classes);
+        // if (result.schedules.length === 0) {
+        //   fetchCreateSchedule("Schedule #1");
+        // } else {
+        setScheduleOptions(result.schedules);
+        setSelectedSchedule(result.schedules[selectedScheduleIdx].sched_name);
+        setSelectedScheduleID(result.schedules[selectedScheduleIdx].sched_id);
+        setSelectedCourses(result.schedules[selectedScheduleIdx]?.courses);
+        setClasses(result.schedules[selectedScheduleIdx]?.classes);
 
-          setTimePref(result.schedules[selectedScheduleIdx]?.filter?.time);
-          setCoursePreference((prev) => ({
-            ...prev,
-            waitlist:
-              !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreWL,
-            closed:
-              !result.schedules[selectedScheduleIdx]?.filter?.misc
-                ?.ignoreClosed,
-            online:
-              !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreM,
-            time_unspecified:
-              !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreTU,
-          }));
-        }
+        setTimePref(result.schedules[selectedScheduleIdx]?.filter?.time);
+        setCoursePreference((prev) => ({
+          ...prev,
+          waitlist:
+            !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreWL,
+          closed:
+            !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreClosed,
+          online: !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreM,
+          time_unspecified:
+            !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreTU,
+        }));
+        // }
       })
       .catch((error) => {});
   };
@@ -463,7 +462,6 @@ function Scheduler(props) {
 
   const fetchData = async () => {
     setLoadMessage(true);
-    setSearchCourseResult([]);
     await fetch(
       "https://jarney.club/api/courses/term?cnum="
         .concat(courseSearchValue)
@@ -472,7 +470,8 @@ function Scheduler(props) {
     )
       .then((response) => response.json())
       .then((result) => {
-        
+            setSearchCourseResult([]);
+
         setSearchCourseResult(result.courses);
         setLoadMessage(false);
       })
@@ -492,7 +491,6 @@ function Scheduler(props) {
       fetchAttributes();
       fetchSavedSchedules();
     }
-    
   }, [logged]);
 
   useEffect(() => {
@@ -518,281 +516,296 @@ function Scheduler(props) {
           content="Tufts SIS no more! Your semester schedule is one click away!"
         />
       </Helmet>
-      <div className={sStyle.horizontalWrapper}>
-        <div className={sStyle.leftColumnWrapper}>
-          {/* CourseContainer 
+      {scheduleOptions.length !== 0 ? (
+        <div className={sStyle.horizontalWrapper}>
+          <div className={sStyle.leftColumnWrapper}>
+            {/* CourseContainer 
                         Contains: 
                         1. searhCourse
                         2. courseList
                         3. preferenceContainer 
                     */}
-          <div className={sStyle.courseContainer}>
-            <div className={sStyle.searchCourseContainer}>
-              <TextField
-                // label="Search Course"
-                placeholder="Search Course"
-                onChange={handleSearchChange}
-                value={courseSearchValue}
-                type="text"
-                variant="outlined"
-                size="small"
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon />
-                    </InputAdornment>
-                  ),
-                }}
-                className={sStyle.inputSearch}
-              />
-              <div className={sStyle.filterContainer}>
-                <Dropdown
-                  classes={sStyle.dropdown}
-                  options={attributes}
-                  selectedOption={selectedAttribute}
-                  selectedIdx={selectedAttributeIdx}
-                  onOptionChange={handleFilterChange}
-                  labelId="filter"
-                  labelName="Filter"
+            <div className={sStyle.courseContainer}>
+              <div className={sStyle.searchCourseContainer}>
+                <TextField
+                  // label="Search Course"
+                  placeholder="Search Course"
+                  onChange={handleSearchChange}
+                  value={courseSearchValue}
+                  type="text"
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                  className={sStyle.inputSearch}
                 />
-              </div>
-            </div>
-
-            <div className={sStyle.courseListContainer}>
-              {loadMessage && courseSearchValue !== "" && <CircularProgress />}
-              {!loadMessage &&
-                searchCourseResult?.map((course) => (
-                  <CourseSearchBar
-                    courseDetail={course}
-                    key={course.course_num.concat(course.course_title)}
-                    draggable={false}
-                    onDoubleClick={handleDoubleClickCourseList}
-                    origin={"schedulerCourseList"}
-                    customStyle={{
-                      border: "none",
-                      justifyContent: "space-between",
-                    }}
-                    onClick={handleShowCourseInfo}
+                <div className={sStyle.filterContainer}>
+                  <Dropdown
+                    classes={sStyle.dropdown}
+                    options={attributes}
+                    selectedOption={selectedAttribute}
+                    selectedIdx={selectedAttributeIdx}
+                    onOptionChange={handleFilterChange}
+                    labelId="filter"
+                    labelName="Filter"
                   />
-                ))}
-            </div>
-
-            <div className={sStyle.preferenceContainer}>
-              <FormControl className={sStyle.leftCheckboxContainer}>
-                <FormLabel>Generate Schedule With:</FormLabel>
-                <FormGroup row={true}>
-                  <FormControlLabel
-                    control={
-                      <PurpleSwitch
-                        checked={coursePreference.waitlist}
-                        name="waitlist"
-                        onChange={() => handleCoursePrefChange("waitlist")}
-                      />
-                    }
-                    label="Waitlist"
-                  />
-                  <FormControlLabel
-                    control={
-                      <PurpleSwitch
-                        checked={coursePreference.closed}
-                        name="closed"
-                        onChange={() => handleCoursePrefChange("closed")}
-                      />
-                    }
-                    label="Closed"
-                  />
-                  <FormControlLabel
-                    control={
-                      <PurpleSwitch
-                        checked={coursePreference.online}
-                        name="online"
-                        onChange={() => handleCoursePrefChange("online")}
-                      />
-                    }
-                    label="Online"
-                  />
-                  <FormControlLabel
-                    control={
-                      <PurpleSwitch
-                        checked={coursePreference.time_unspecified}
-                        name="time_unspecified"
-                        onChange={() =>
-                          handleCoursePrefChange("time_unspecified")
-                        }
-                      />
-                    }
-                    label="Time Unspecified"
-                  />
-                </FormGroup>
-                <Button
-                  className={sStyle.timePrefButton}
-                  onClick={() => setTimePrefState(true)}
-                  startIcon={<QueryBuilderIcon />}
-                >
-                  Edit time preference
-                </Button>
-              </FormControl>
-            </div>
-          </div>
-          <div className={sStyle.rightButtonContainer}>
-            <Button
-              className={sStyle.renderButton}
-              onClick={fetchGenerateSchedule}
-            >
-              Render schedule
-            </Button>
-          </div>
-          <div className={sStyle.infoContainer}>
-            <div style={{ color: "rgba(0, 0, 0, 0.54)" }}>Quick summary</div>
-            <div className={sStyle.unitsContainer}>
-              <div className={sStyle.infoTitle}>SHUs scheduled:&nbsp;</div>
-              <div classname={sStyle.infoDetail}>{unitsCount}</div>
-            </div>
-          </div>
-          {popup.showCourseInfo && (
-            <CourseInfoExpress
-              courseInfo={courseInfo}
-              onClose={() => handlePopup("showCourseInfo", false)}
-            />
-          )}
-
-          <div className={sStyle.tabsContainer}>
-            <div className={sStyle.tabBarsContainer}>
-              <div
-                role="button"
-                tabIndex={0}
-                className={
-                  degreeReqTab === 1 ? sStyle.tabBarHighlight : sStyle.tabBar
-                }
-                onClick={() => {
-                  setDegreeReqTab(1);
-                }}
-              >
-                <div>
-                  Selected <br /> Courses
                 </div>
               </div>
-              <div
-                role="button"
-                tabIndex={0}
-                className={
-                  degreeReqTab === 2 ? sStyle.tabBarHighlight : sStyle.tabBar
-                }
-                onClick={() => {
-                  setDegreeReqTab(2);
-                }}
-              >
-                <div>
-                  Degree <br /> Requirements
-                </div>
+
+              <div className={sStyle.courseListContainer}>
+                {loadMessage && courseSearchValue !== "" && (
+                  <CircularProgress />
+                )}
+                {!loadMessage &&
+                  searchCourseResult?.map((course) => (
+                    <CourseSearchBar
+                      courseDetail={course}
+                      key={course.course_num.concat(course.course_title)}
+                      draggable={false}
+                      onDoubleClick={handleDoubleClickCourseList}
+                      origin={"schedulerCourseList"}
+                      customStyle={{
+                        border: "none",
+                        justifyContent: "space-between",
+                      }}
+                      onClick={handleShowCourseInfo}
+                    />
+                  ))}
               </div>
-              <div
-                role="button"
-                tabIndex={0}
-                className={
-                  degreeReqTab === 3 ? sStyle.tabBarHighlight : sStyle.tabBar
-                }
-                onClick={() => {
-                  setDegreeReqTab(3);
-                }}
-              >
-                <div>Degree Plan</div>
-              </div>
-            </div>
 
-            <div className={sStyle.tabDetailContainer}>
-              {degreeReqTab === 1 &&
-                selectedCourses?.map((course) => (
-                  <CourseSearchBar
-                    courseDetail={course}
-                    key={course.course_num.concat(course.course_title)}
-                    draggable={false}
-                    onDoubleClick={handleDoubleClickSelected}
-                    onClick={handleShowCourseInfo}
-                    origin={"schedulerTab"}
-                    customStyle={{
-                      border: "none",
-                      justifyContent: "space-between",
-                    }}
-                  />
-                ))}
-              {degreeReqTab === 2 && <DegreeReqExpress />}
-              {degreeReqTab === 3 && <DegreePlanExpress />}
-            </div>
-          </div>
-        </div>
-
-        <div className={sStyle.rightColumnWrapper}>
-          <div className={sStyle.scheduleTitleContainer}>
-            <Dropdown
-              options={scheduleOptions}
-              selectedOption={selectedSchedule}
-              selectedIdx={selectedScheduleIdx}
-              onOptionChange={handleScheduleChange}
-              customStyle={{ fontSize: "20px" }}
-              isObject={true}
-              objectField={"sched_name"}
-            />
-            &nbsp;
-            <IconButton
-              className={sStyle.editPlanButton}
-              onClick={() => handlePopup("editScheduleName", true)}
-            >
-              <ModeEditIcon fontSize="medium" />
-            </IconButton>
-            &nbsp;
-            <IconButton
-              className={sStyle.editPlanButton}
-              onClick={() => handlePopup("addSchedule", true)}
-            >
-              <AddBoxIcon fontSize="medium" />
-            </IconButton>
-            &nbsp;
-            <IconButton
-              className={sStyle.editPlanButton}
-              onClick={() => handlePopup("removeSchedule", true)}
-            >
-              <IndeterminateCheckBoxIcon fontSize="medium" />
-            </IconButton>
-            &nbsp;
-            <IconButton
-              className={sStyle.editPlanButton}
-              onClick={() => handlePopup("eventScreenshot", true)}
-            >
-              <LinkedCameraIcon fontSize="medium" />
-            </IconButton>
-            <div />
-          </div>
-
-          <div className={sStyle.calendarContainer}>
-            <Calendar
-              timePrefState={timePrefState}
-              shrink={shrink}
-              classes={classes}
-              onEventClick={handleShowCourseInfo}
-            />
-          </div>
-
-          {classes?.TimeUnspecified && (
-            <div className={sStyle.infoContainer}>
-              <div style={{ color: "rgba(0, 0, 0, 0.54)" }}>
-                Time Unspecified
-              </div>
-              <div className={sStyle.tuContainer}>
-                {classes?.TimeUnspecified?.map((course) => (
+              <div className={sStyle.preferenceContainer}>
+                <FormControl className={sStyle.leftCheckboxContainer}>
+                  <FormLabel>Generate Schedule With:</FormLabel>
+                  <FormGroup row={true}>
+                    <FormControlLabel
+                      control={
+                        <PurpleSwitch
+                          checked={coursePreference.waitlist}
+                          name="waitlist"
+                          onChange={() => handleCoursePrefChange("waitlist")}
+                        />
+                      }
+                      label="Waitlist"
+                    />
+                    <FormControlLabel
+                      control={
+                        <PurpleSwitch
+                          checked={coursePreference.closed}
+                          name="closed"
+                          onChange={() => handleCoursePrefChange("closed")}
+                        />
+                      }
+                      label="Closed"
+                    />
+                    <FormControlLabel
+                      control={
+                        <PurpleSwitch
+                          checked={coursePreference.online}
+                          name="online"
+                          onChange={() => handleCoursePrefChange("online")}
+                        />
+                      }
+                      label="Online"
+                    />
+                    <FormControlLabel
+                      control={
+                        <PurpleSwitch
+                          checked={coursePreference.time_unspecified}
+                          name="time_unspecified"
+                          onChange={() =>
+                            handleCoursePrefChange("time_unspecified")
+                          }
+                        />
+                      }
+                      label="Time Unspecified"
+                    />
+                  </FormGroup>
                   <Button
-                    className={sStyle.tuButton}
-                    onClick={() => handleShowCourseInfo(course)}
+                    className={sStyle.timePrefButton}
+                    onClick={() => setTimePrefState(true)}
+                    startIcon={<QueryBuilderIcon />}
                   >
-                    {course.details}
+                    Edit time preference
                   </Button>
-                ))}
+                </FormControl>
               </div>
             </div>
-          )}
+            <div className={sStyle.rightButtonContainer}>
+              <Button
+                className={sStyle.renderButton}
+                onClick={fetchGenerateSchedule}
+              >
+                Render schedule
+              </Button>
+            </div>
+            <div className={sStyle.infoContainer}>
+              <div style={{ color: "rgba(0, 0, 0, 0.54)" }}>Quick summary</div>
+              <div className={sStyle.unitsContainer}>
+                <div className={sStyle.infoTitle}>SHUs scheduled:&nbsp;</div>
+                <div classname={sStyle.infoDetail}>{unitsCount}</div>
+              </div>
+            </div>
+            {popup.showCourseInfo && (
+              <CourseInfoExpress
+                courseInfo={courseInfo}
+                onClose={() => handlePopup("showCourseInfo", false)}
+              />
+            )}
+
+            <div className={sStyle.tabsContainer}>
+              <div className={sStyle.tabBarsContainer}>
+                <div
+                  role="button"
+                  tabIndex={0}
+                  className={
+                    degreeReqTab === 1 ? sStyle.tabBarHighlight : sStyle.tabBar
+                  }
+                  onClick={() => {
+                    setDegreeReqTab(1);
+                  }}
+                >
+                  <div>
+                    Selected <br /> Courses
+                  </div>
+                </div>
+                <div
+                  role="button"
+                  tabIndex={0}
+                  className={
+                    degreeReqTab === 2 ? sStyle.tabBarHighlight : sStyle.tabBar
+                  }
+                  onClick={() => {
+                    setDegreeReqTab(2);
+                  }}
+                >
+                  <div>
+                    Degree <br /> Requirements
+                  </div>
+                </div>
+                <div
+                  role="button"
+                  tabIndex={0}
+                  className={
+                    degreeReqTab === 3 ? sStyle.tabBarHighlight : sStyle.tabBar
+                  }
+                  onClick={() => {
+                    setDegreeReqTab(3);
+                  }}
+                >
+                  <div>Degree Plan</div>
+                </div>
+              </div>
+
+              <div className={sStyle.tabDetailContainer}>
+                {degreeReqTab === 1 &&
+                  selectedCourses?.map((course) => (
+                    <CourseSearchBar
+                      courseDetail={course}
+                      key={course.course_num.concat(course.course_title)}
+                      draggable={false}
+                      onDoubleClick={handleDoubleClickSelected}
+                      onClick={handleShowCourseInfo}
+                      origin={"schedulerTab"}
+                      customStyle={{
+                        border: "none",
+                        justifyContent: "space-between",
+                      }}
+                    />
+                  ))}
+                {degreeReqTab === 2 && <DegreeReqExpress />}
+                {degreeReqTab === 3 && <DegreePlanExpress />}
+              </div>
+            </div>
+          </div>
+
+          <div className={sStyle.rightColumnWrapper}>
+            <div className={sStyle.scheduleTitleContainer}>
+              <Dropdown
+                options={scheduleOptions}
+                selectedOption={selectedSchedule}
+                selectedIdx={selectedScheduleIdx}
+                onOptionChange={handleScheduleChange}
+                customStyle={{ fontSize: "20px" }}
+                isObject={true}
+                objectField={"sched_name"}
+              />
+              &nbsp;
+              <IconButton
+                className={sStyle.editPlanButton}
+                onClick={() => handlePopup("editScheduleName", true)}
+              >
+                <ModeEditIcon fontSize="medium" />
+              </IconButton>
+              &nbsp;
+              <IconButton
+                className={sStyle.editPlanButton}
+                onClick={() => handlePopup("addSchedule", true)}
+              >
+                <AddBoxIcon fontSize="medium" />
+              </IconButton>
+              &nbsp;
+              <IconButton
+                className={sStyle.editPlanButton}
+                onClick={() => handlePopup("removeSchedule", true)}
+              >
+                <IndeterminateCheckBoxIcon fontSize="medium" />
+              </IconButton>
+              &nbsp;
+              <IconButton
+                className={sStyle.editPlanButton}
+                onClick={() => handlePopup("eventScreenshot", true)}
+              >
+                <LinkedCameraIcon fontSize="medium" />
+              </IconButton>
+              <div />
+            </div>
+
+            <div className={sStyle.calendarContainer}>
+              <Calendar
+                timePrefState={timePrefState}
+                shrink={shrink}
+                classes={classes}
+                onEventClick={handleShowCourseInfo}
+              />
+            </div>
+
+            {classes?.TimeUnspecified && (
+              <div className={sStyle.infoContainer}>
+                <div style={{ color: "rgba(0, 0, 0, 0.54)" }}>
+                  Time Unspecified
+                </div>
+                <div className={sStyle.tuContainer}>
+                  {classes?.TimeUnspecified?.map((course) => (
+                    <Button
+                      className={sStyle.tuButton}
+                      onClick={() => handleShowCourseInfo(course)}
+                    >
+                      {course.details}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className={sStyle.noSchedulewrapper}>
+          <div>Create your schedule now!</div>
+          <IconButton                 className={sStyle.editPlanButton}
+ onClick={() => handlePopup("addSchedule", true)}>
+            <AddShoppingCartIcon fontSize="80vw" />
+          </IconButton>
+        </div>
+
+        
+      )}
+
       {/* popups */}
       {popup.addSchedule && (
         <Popup onClose={() => handlePopup("addSchedule", false)}>
