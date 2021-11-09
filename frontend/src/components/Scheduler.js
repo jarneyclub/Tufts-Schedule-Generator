@@ -470,8 +470,7 @@ function Scheduler(props) {
     )
       .then((response) => response.json())
       .then((result) => {
-            setSearchCourseResult([]);
-
+        setSearchCourseResult([]);
         setSearchCourseResult(result.courses);
         setLoadMessage(false);
       })
@@ -516,7 +515,7 @@ function Scheduler(props) {
           content="Tufts SIS no more! Your semester schedule is one click away!"
         />
       </Helmet>
-      {scheduleOptions.length !== 0 ? (
+      {scheduleOptions?.length !== 0 ? (
         <div className={sStyle.horizontalWrapper}>
           <div className={sStyle.leftColumnWrapper}>
             {/* CourseContainer 
