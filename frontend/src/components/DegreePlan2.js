@@ -632,11 +632,11 @@ function DegreePlan2(props) {
             <div className={dp2Style.semesterPlanTitleContainer}>
               <div />
               <div className={dp2Style.semesterPlanTitle}>
-                {semesterPlanOptions?.length !== 0
+                {semesterPlanOptions && semesterPlanOptions?.length !== 0
                   ? semesterPlanOptions[selectedPlanIdx]?.plan_name
                   : "You don't have a degree plan. Make one!"}
               </div>
-              {semesterPlanOptions?.length !== 0 ? (
+              {semesterPlanOptions && semesterPlanOptions?.length !== 0 ? (
                 <div className={dp2Style.editSemesterButtonContainer}>
                   <IconButton
                     className={dp2Style.editSemesterButton}
