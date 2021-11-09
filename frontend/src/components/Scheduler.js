@@ -515,7 +515,7 @@ function Scheduler(props) {
           content="Tufts SIS no more! Your semester schedule is one click away!"
         />
       </Helmet>
-      {scheduleOptions?.length !== 0 ? (
+      {scheduleOptions && scheduleOptions?.length !== 0 ? (
         <div className={sStyle.horizontalWrapper}>
           <div className={sStyle.leftColumnWrapper}>
             {/* CourseContainer 
