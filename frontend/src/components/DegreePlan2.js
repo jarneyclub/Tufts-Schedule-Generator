@@ -451,7 +451,7 @@ function DegreePlan2(props) {
     handleUnitsCount("completed", completedCount);
     handleUnitsCount("current", currentCount);
     handleUnitsCount("future", totalCount - completedCount - currentCount);
-    fetchPlans();
+
   }, [cardOptions]);
 
   return (
