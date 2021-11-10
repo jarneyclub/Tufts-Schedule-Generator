@@ -348,10 +348,17 @@ function AddPlan(props) {
 
   const handleAdd = () => {
     /* do something API?? pass in the selectedCards arr */
-    createNewPlan(planName);
 
-    /* Then Close */
-    onClose();
+    if(planName !== "") {
+      createNewPlan(planName);
+
+      /* Then Close */
+      onClose();
+    } 
+    else {
+      console.log("bad!")
+    }
+    
   };
 
   return (
@@ -416,10 +423,10 @@ function RemovePlan(props) {
       .then((result) => {
         if (!result.error) {
           onSetIdxLast();
-          refreshPlans();
           setAlertMessage("Plan removed!");
           setAlertSeverity("success");
           onShowAlert();
+          refreshPlans();
           onClose();
         } else {
           setAlertMessage(result.error);
