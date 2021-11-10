@@ -455,6 +455,10 @@ function DegreePlan2(props) {
     // setSemesterPlanOptions(tempPlanOptions)
   }, [cardOptions]);
 
+
+  useEffect(() => {
+    fetchPlans();
+  }, [selectedPlanIdx])
   return (
     <div style={{ marginTop: "80px" }}>
       <Helmet>
