@@ -453,6 +453,10 @@ function DegreePlan2(props) {
     handleUnitsCount("future", totalCount - completedCount - currentCount);
     // semesterPlanOptions[selectedPlanIdx]?.terms
     console.log("semesterPlanOptions", semesterPlanOptions);
+    let tempPlanOptions  = [...semesterPlanOptions]
+    tempPlanOptions[selectedPlanIdx].terms = cardOptions
+    console.log("cardOptions", cardOptions)
+    setSemesterPlanOptions(tempPlanOptions)
   }, [cardOptions]);
 
   return (
