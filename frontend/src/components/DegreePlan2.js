@@ -289,7 +289,6 @@ function DegreePlan2(props) {
   };
 
   const handleSetSelectedPlanIdx = (idx) => {
-    console.log("idx", idx);
     setSelectedPlanIdx(idx);
   };
 
@@ -364,7 +363,6 @@ function DegreePlan2(props) {
         return response.json();
       })
       .then((result) => {
-        console.log("idx before:", selectedPlanIdx);
         setSemesterPlanOptions(result.plans);
         setCardOptions(result.plans[selectedPlanIdx].terms);
         setSelectedPlanName(result.plans[selectedPlanIdx].plan_name);
@@ -447,12 +445,7 @@ function DegreePlan2(props) {
     handleUnitsCount("completed", completedCount);
     handleUnitsCount("current", currentCount);
     handleUnitsCount("future", totalCount - completedCount - currentCount);
-    // semesterPlanOptions[selectedPlanIdx]?.terms
-    console.log("semesterPlanOptions", semesterPlanOptions);
-    // let tempPlanOptions  = [...semesterPlanOptions]
-    // tempPlanOptions[selectedPlanIdx]?.terms = cardOptions
-    console.log("cardOptions", cardOptions)
-    // setSemesterPlanOptions(tempPlanOptions)
+   
   }, [cardOptions]);
 
 
