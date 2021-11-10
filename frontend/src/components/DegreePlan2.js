@@ -364,15 +364,11 @@ function DegreePlan2(props) {
         return response.json();
       })
       .then((result) => {
-        /*  Creates a new plan for new users */
-        // if (result.plans.length === 0) {
-        //   createNewPlan("Plan #1");
-        // } else {
+        console.log("idx before:", selectedPlanIdx);
         setSemesterPlanOptions(result.plans);
         setCardOptions(result.plans[selectedPlanIdx].terms);
         setSelectedPlanName(result.plans[selectedPlanIdx].plan_name);
         setSelectedPlanID(result.plans[selectedPlanIdx].plan_id);
-        // }
       })
       .catch((error) => {});
   };
