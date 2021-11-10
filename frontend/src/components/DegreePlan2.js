@@ -453,10 +453,10 @@ function DegreePlan2(props) {
     handleUnitsCount("future", totalCount - completedCount - currentCount);
     // semesterPlanOptions[selectedPlanIdx]?.terms
     console.log("semesterPlanOptions", semesterPlanOptions);
-    let tempPlanOptions  = [...semesterPlanOptions]
-    tempPlanOptions[selectedPlanIdx].terms = cardOptions
+    // let tempPlanOptions  = [...semesterPlanOptions]
+    // tempPlanOptions[selectedPlanIdx]?.terms = cardOptions
     console.log("cardOptions", cardOptions)
-    setSemesterPlanOptions(tempPlanOptions)
+    // setSemesterPlanOptions(tempPlanOptions)
   }, [cardOptions]);
 
   return (
@@ -665,8 +665,8 @@ function DegreePlan2(props) {
 
             {/* PlanCards Container */}
             <div className={dp2Style.planCardsContainer}>
-              {semesterPlanOptions && semesterPlanOptions?.length !== 0 &&
-                semesterPlanOptions[selectedPlanIdx]?.terms?.map((card) => (
+              {cardOptions && 
+                cardOptions?.map((card) => (
                   <PlanCard
                     cardDetail={card}
                     key={card.plan_term_id}
