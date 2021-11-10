@@ -335,7 +335,9 @@ function EditPlanName(props) {
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function AddPlan(props) {
-  const { onClose, createNewPlan, onSetIdxLast } = props;
+  const { onClose, createNewPlan, onSetIdxLast, onShowAlert,
+    setAlertMessage,
+    setAlertSeverity, } = props;
 
   const [planName, setPlanName] = useState("");
 
@@ -351,12 +353,13 @@ function AddPlan(props) {
 
     if(planName !== "") {
       createNewPlan(planName);
-
-      /* Then Close */
       onClose();
     } 
     else {
       console.log("bad!")
+      setAlertMessage("Plan name cannot be blank!");
+      setAlertSeverity("warning");
+      onShowAlert();
     }
     
   };
@@ -426,7 +429,6 @@ function RemovePlan(props) {
           setAlertMessage("Plan removed!");
           setAlertSeverity("success");
           onShowAlert();
-          refreshPlans();
           onClose();
         } else {
           setAlertMessage(result.error);

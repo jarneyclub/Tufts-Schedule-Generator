@@ -750,7 +750,7 @@ function DegreePlan2(props) {
             setAlertMessage={setAlertMessage}
             setAlertSeverity={setAlertSeverity}
             onSetIdxLast={() =>
-              handleSetSelectedPlanIdx(semesterPlanOptions?.length - 2)
+            handleSetSelectedPlanIdx(semesterPlanOptions?.length - 2)
             }
           />
         </Popup>
