@@ -451,7 +451,8 @@ function DegreePlan2(props) {
     handleUnitsCount("completed", completedCount);
     handleUnitsCount("current", currentCount);
     handleUnitsCount("future", totalCount - completedCount - currentCount);
-
+    // semesterPlanOptions[selectedPlanIdx]?.terms
+    console.log("semesterPlanOptions", semesterPlanOptions);
   }, [cardOptions]);
 
   return (
