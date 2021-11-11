@@ -102,9 +102,10 @@ function EventScreenshot(props) {
           sectionIDCSS = {
             ...sectionIDCSS,
             [detail.term_course_id]: palette[paletteIdx],
-          }(paletteIdx <= palette.length - 1)
+          };
+          (paletteIdx <= palette.length - 1)
             ? paletteIdx++
-            : (paletteIdx = 0)
+            : (paletteIdx = 0);
         }
       });
     });
