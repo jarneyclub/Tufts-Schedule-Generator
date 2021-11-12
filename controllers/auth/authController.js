@@ -16,11 +16,14 @@ const activityHandler = require('../../services/handlers/activity.js');
  */
 exports.authenticateCredentialsWithPassport = async (req, res, next) => {
     passport.authenticate('local', function (err, user, info) {
-        if (err)
+        if (err) {
+            activityHandler.saveErrorActivity(req.body.userid, "login", "400", err.message);
             return resHandler.respondWithCustomError("101", "400", "Login Error", err.message, res);
+        }
         if (!user) {
             console.error("(authenticateCredentialsWithPassport) user: ", user);
             console.error("(authenticateCredentialsWithPassport) info: ", info);
+            activityHandler.saveErrorActivity(req.body.userid, "login", "400", "Authentication failed with info: " + info);
             return resHandler.respondWithCustomError("101", "400", "Login Error", "Authentication failed", res);
         }
         else {
@@ -54,8 +57,10 @@ exports.signAccessTokenAndSendAsCookie = async (res, userid) => {
         userid: userid
     });
     console.log("(authController/login) dbUsers.fineOne(..): ", result);
-    if (result === null)
+    if (result === null) {
+        activityHandler.saveErrorActivity(req.body.userid, "Registration", "403", "Email is not registered");
         resHandler.respondWithCustomError("104", "403", "Registration Error", "Email is not registered. Please register first.", res);
+    }
         
     let token = jwt.sign({ userid: userid, role: result.role}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
     // res.json({"token": token});
@@ -120,24 +125,34 @@ exports.authenticateToken = async (req, res, next) => {
     // console.log("(authenticateToken) req.body", req.body);
     const token = req.cookies.access_token;
     
-    if (token == null)
+    if (token == null) {
+        activityHandler.saveErrorActivity("UNKNOWN USER", 
+            "Token Authentication", "401", "Token was not provided");
         resHandler.respondWithCustomError("306", "401",
             "Authentication Error", "Token was not provided", res);
+    }
     else {
         if (token) {
             jwt.verify(token, process.env.TOKEN_SECRET, async (err, userdata) => {
                 // console.log("(authenticateToken) userdata: ", userdata);
-                if (err)
-                    resHandler.respondWithCustomError("305", "401", "Authentication Error", "Token is invalid", res);
+                if (err) {
+                    activityHandler.saveErrorActivity(userdata.userid, 
+                        "Token Authentication", "401", "Token is invalid" + err);
+                    resHandler.respondWithCustomError("305", "401", 
+                        "Authentication Error", "Token is invalid", res);
+                }
                 else {
                     let dbUsers = mongoose.connection.collection("users"); // get MongoDB collection
                     let result = await dbUsers.findOne({
                         userid: userdata.userid
                     });
                     
-                    if (result === null)
+                    if (result === null) {
+                        activityHandler.saveErrorActivity(userdata.userid, 
+                            "Token Authentication", "401", "Token is invalid.");
                         resHandler.respondWithCustomError("307", "401",
-                                "Authentication Error", "Token is invalid. Wrong user.", res);
+                            "Authentication Error", "Token is invalid. Wrong user.", res);
+                    }
                     else {
                         req.userid = userdata.userid;
                         req.role = userdata.role;
@@ -148,6 +163,8 @@ exports.authenticateToken = async (req, res, next) => {
                 }
             });
         } else {
+            activityHandler.saveErrorActivity("UNKNOWN USER", 
+                "Token Authentication", "401", "Token was not provided.");
             resHandler.respondWithCustomError("306", "401",
                 "Authentication Error", "Token was not provided", res);
         }
