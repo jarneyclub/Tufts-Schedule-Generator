@@ -154,7 +154,7 @@ exports.authenticateToken = async (req, res, next) => {
                         let useridFromData = userdata.userid;
                         if (userdata.userid === undefined)
                             useridFromData = "UNKNOWN USER";
-                        activityHandler.saveErrorActivity(useridFromData,, 
+                        activityHandler.saveErrorActivity(useridFromData,
                             "Token Authentication", "401", "Token is invalid.");
                         resHandler.respondWithCustomError("307", "401",
                             "Authentication Error", "Token is invalid. Wrong user.", res);
