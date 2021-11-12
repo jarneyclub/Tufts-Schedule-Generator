@@ -32,7 +32,7 @@ exports.authenticateCredentialsWithPassport = async (req, res, next) => {
             req.role = user.role;
             req.firstname = user.first_name;
             req.lastname = user.last_name;
-            req.userid = req.body.userid;
+            req.userid = req.body.userid.toLowerCase();
             req.password = req.body.password;
             
             // save activity if user is not developer
@@ -54,7 +54,7 @@ exports.authenticateCredentialsWithPassport = async (req, res, next) => {
 exports.signAccessTokenAndSendAsCookie = async (res, userid) => {
     let dbUsers = mongoose.connection.collection("users"); // get MongoDB collection
     let result = await dbUsers.findOne({
-        userid: userid
+        userid: userid.toLowerCase()
     });
     console.log("(authController/login) dbUsers.fineOne(..): ", result);
     if (result === null) {
@@ -144,7 +144,7 @@ exports.authenticateToken = async (req, res, next) => {
                 else {
                     let dbUsers = mongoose.connection.collection("users"); // get MongoDB collection
                     let result = await dbUsers.findOne({
-                        userid: userdata.userid
+                        userid: userdata.userid.toLowerCase()
                     });
                     
                     if (result === null) {
@@ -154,7 +154,7 @@ exports.authenticateToken = async (req, res, next) => {
                             "Authentication Error", "Token is invalid. Wrong user.", res);
                     }
                     else {
-                        req.userid = userdata.userid;
+                        req.userid = userdata.userid.toLowerCase();
                         req.role = userdata.role;
                         req.firstname = result.first_name;
                         req.lastname = result.last_name;
