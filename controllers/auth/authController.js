@@ -136,7 +136,10 @@ exports.authenticateToken = async (req, res, next) => {
             jwt.verify(token, process.env.TOKEN_SECRET, async (err, userdata) => {
                 // console.log("(authenticateToken) userdata: ", userdata);
                 if (err) {
-                    activityHandler.saveErrorActivity(userdata.userid, 
+                    let useridFromData = userdata.userid;
+                    if (userdata.userid === undefined)
+                        useridFromData = "UNKNOWN USER";
+                    activityHandler.saveErrorActivity(useridFromData, 
                         "Token Authentication", "401", "Token is invalid" + err);
                     resHandler.respondWithCustomError("305", "401", 
                         "Authentication Error", "Token is invalid", res);
@@ -148,7 +151,10 @@ exports.authenticateToken = async (req, res, next) => {
                     });
                     
                     if (result === null) {
-                        activityHandler.saveErrorActivity(userdata.userid, 
+                        let useridFromData = userdata.userid;
+                        if (userdata.userid === undefined)
+                            useridFromData = "UNKNOWN USER";
+                        activityHandler.saveErrorActivity(useridFromData,, 
                             "Token Authentication", "401", "Token is invalid.");
                         resHandler.respondWithCustomError("307", "401",
                             "Authentication Error", "Token is invalid. Wrong user.", res);
