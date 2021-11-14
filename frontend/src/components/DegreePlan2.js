@@ -683,7 +683,7 @@ function DegreePlan2(props) {
       </div>
         :
         (
-          loaded && 
+  
           <div className={dp2Style.noSchedulewrapper}>
             <div>Create your plan now!</div>
             <IconButton
