@@ -193,6 +193,8 @@ function Scheduler(props) {
     handleLogRequired,
   } = props;
 
+
+  const [loaded, setLoaded] = useState(false);
   /* schedule Dropdown */
   const [scheduleOptions, setScheduleOptions] = useState([]);
   const [selectedSchedule, setSelectedSchedule] = useState("");
@@ -376,7 +378,7 @@ function Scheduler(props) {
           time_unspecified:
             !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreTU,
         }));
-        // }
+        setLoaded(true);
       })
       .catch((error) => {});
   };
@@ -794,6 +796,7 @@ function Scheduler(props) {
           </div>
         </div>
       ) : (
+        loaded && 
         <div className={sStyle.noSchedulewrapper}>
           <div>Create your schedule now!</div>
           <IconButton                 className={sStyle.editPlanButton}
