@@ -796,7 +796,7 @@ function Scheduler(props) {
           </div>
         </div>
       ) : (
-        loaded && 
+        
         <div className={sStyle.noSchedulewrapper}>
           <div>Create your schedule now!</div>
           <IconButton                 
