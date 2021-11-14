@@ -19,6 +19,7 @@ import {
 import SearchIcon from "@material-ui/icons/Search";
 import EditIcon from "@mui/icons-material/Edit";
 import AddBoxIcon from "@material-ui/icons/AddBox";
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
 import CancelIcon from "@material-ui/icons/Cancel";
 import dp1Style from "./style/DegreePlan1.module.css";
@@ -384,7 +385,31 @@ function DegreePlan1(props) {
             </Button>
           )}
 
-          {editDRPopup && (
+          
+        </div>
+      </div>
+        :
+         <div className={dp1Style.noDegreeReqWrapper}>
+         <div className={dp1Style.degreeReqListExpandable}> 
+          <h5>Add a requirement from Public degree requirements</h5>
+            <h5>or create one now!</h5>
+            <IconButton
+                className={dp1Style.editPlanButton}
+                onClick={() => {
+                  setNewMMPopup(true);
+                  setEditDRPopup(true);
+                }}
+              >
+                <AddOutlinedIcon fontSize="large" />
+              </IconButton>
+         </div>
+          
+          
+        </div>
+
+      }
+      
+      {editDRPopup && (
             <Popup onClose={() => setEditDRPopup(false)}>
               <DegreeReqEdit
                 onClose={() => setEditDRPopup(false)}
@@ -395,27 +420,6 @@ function DegreePlan1(props) {
               />
             </Popup>
           )}
-        </div>
-      </div>
-        :
-         <div className={dp1Style.noDegreeReqWrapper}>
-          <div>Add a requirement from Public degree requirements</div>
-          <div>or create one now!</div>
-          <IconButton
-              className={dp1Style.editPlanButton}
-              onClick={() => {
-                setNewMMPopup(true);
-                setEditDRPopup(true);
-              }}
-            >
-              <AddBoxIcon fontSize="large" />
-            </IconButton>
-          
-        </div>
-
-      }
-      
-
 
       {popup.removePrivateReq && (
         <Popup onClose={() => handlePopup("removePrivateReq", false)}>

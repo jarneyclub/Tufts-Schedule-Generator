@@ -184,6 +184,7 @@ input {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 48vw;
   color: #5A32BF;
   padding-left: 5vw;
