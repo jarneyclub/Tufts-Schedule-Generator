@@ -776,7 +776,7 @@ function Scheduler(props) {
               />
             </div>
 
-            {classes?.TimeUnspecified && (
+            {classes?.TimeUnspecified && classes.TimeUnspecified?.length !== 0 (
               <div className={sStyle.infoContainer}>
                 <div style={{ color: "rgba(0, 0, 0, 0.54)" }}>
                   Time Unspecified
