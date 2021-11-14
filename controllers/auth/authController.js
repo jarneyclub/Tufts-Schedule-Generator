@@ -13,7 +13,7 @@ const activityHandler = require('../../services/handlers/activity.js');
  * @param {*} req
  * @param {*} res
  * @param {*} next
- */
+ */ 
 exports.authenticateCredentialsWithPassport = async (req, res, next) => {
     passport.authenticate('local', function (err, user, info) {
         if (err) {
