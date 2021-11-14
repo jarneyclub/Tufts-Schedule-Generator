@@ -776,7 +776,7 @@ function Scheduler(props) {
               />
             </div>
 
-            {classes?.TimeUnspecified !== 0 && (
+            {classes && classes.TimeUnspecified.length !== 0 && (
               <div className={sStyle.infoContainer}>
                 <div style={{ color: "rgba(0, 0, 0, 0.54)" }}>
                   Time Unspecified
@@ -799,7 +799,8 @@ function Scheduler(props) {
         loaded && 
         <div className={sStyle.noSchedulewrapper}>
           <div>Create your schedule now!</div>
-          <IconButton                 className={sStyle.editPlanButton}
+          <IconButton                 
+          className={sStyle.editPlanButton}
  onClick={() => handlePopup("addSchedule", true)}>
             <AddShoppingCartIcon fontSize="80vw" />
           </IconButton>
