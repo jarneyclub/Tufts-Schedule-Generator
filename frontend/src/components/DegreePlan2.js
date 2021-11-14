@@ -102,8 +102,9 @@ function DegreePlan2(props) {
     handleSignupPopup,
     handleLogRequired,
   } = props;
-  const [semesterPlanOptions, setSemesterPlanOptions] = useState([]); // sets the array of options for semester plans
+  const [loaded, setLoaded] = useState(false);
 
+  const [semesterPlanOptions, setSemesterPlanOptions] = useState([]); // sets the array of options for semester plans
   const [courseSearchValue, setCourseSearchValue] = useState("");
 
   /*  Stores the card options. Should be updated by API in UseEffect  */
@@ -367,6 +368,7 @@ function DegreePlan2(props) {
         setCardOptions(result.plans[selectedPlanIdx].terms);
         setSelectedPlanName(result.plans[selectedPlanIdx].plan_name);
         setSelectedPlanID(result.plans[selectedPlanIdx].plan_id);
+        setLoaded(true);
       })
       .catch((error) => {});
   };
@@ -680,16 +682,21 @@ function DegreePlan2(props) {
         </div>
       </div>
         :
-        <div className={dp2Style.noSchedulewrapper}>
-          <div>Create your plan now!</div>
-          <IconButton
-                className={dp2Style.editPlanButton}
-                onClick={() => handlePopup("addPlan", true)}
-              >
-                <AddBoxIcon fontSize="large" />
-              </IconButton>
-          
+        (
+          loaded && 
+          <div className={dp2Style.noSchedulewrapper}>
+            <div>Create your plan now!</div>
+            <IconButton
+                  className={dp2Style.editPlanButton}
+                  onClick={() => handlePopup("addPlan", true)}
+                >
+                  <AddBoxIcon fontSize="large" />
+                </IconButton>
+            
         </div>
+        )
+      
+        
 
       }
       

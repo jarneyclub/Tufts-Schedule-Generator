@@ -79,7 +79,8 @@ function DegreePlan1(props) {
     handleSignupPopup,
     handleLogRequired,
   } = props;
-
+  
+  const [loaded, setLoaded] = useState(false);
   const [degreeReqOptions, setDegreeReqOptions] = useState(
     []
   ); /*  ALL the private degree reqs to current user  */
@@ -177,11 +178,8 @@ function DegreePlan1(props) {
         return response.json();
       })
       .then((result) => {
-        // if (result.reqs.length === 0) {
-        //   fetchCreatePrivateReqs(degreeReqDefault);
-        // } else {
         setDegreeReqOptions(result.reqs);
-        // }
+        setLoaded(true);
       })
       .catch((error) => {});
   };
@@ -388,8 +386,9 @@ function DegreePlan1(props) {
           
         </div>
       </div>
-        :
-         <div className={dp1Style.noDegreeReqWrapper}>
+        : (
+          loaded && 
+          <div className={dp1Style.noDegreeReqWrapper}>
           <h5>Add a requirement from Public degree requirements</h5>
             <h5>or create one now!</h5>
             <IconButton
@@ -404,6 +403,8 @@ function DegreePlan1(props) {
           
           
         </div>
+        )
+         
 
       }
       
