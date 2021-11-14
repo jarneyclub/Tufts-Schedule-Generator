@@ -314,7 +314,10 @@ function DegreePlan1(props) {
       </div>
 
       {/* * * * * * Includes the Degree Requirement Table * * * * * */}
-      <div className={dp1Style.DegreeReqWrapper}>
+     
+      {
+        degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx] ? 
+          <div className={dp1Style.DegreeReqWrapper}>
         <div className={dp1Style.myListWrapper}>
           <h5>My degree requirements</h5>
 
@@ -394,6 +397,26 @@ function DegreePlan1(props) {
           )}
         </div>
       </div>
+        :
+         <div className={dp1Style.noDegreeReqWrapper}>
+          <div>Add a requirement from Public degree requirements</div>
+          <div>or create one now!</div>
+          <IconButton
+              className={dp1Style.editPlanButton}
+              onClick={() => {
+                setNewMMPopup(true);
+                setEditDRPopup(true);
+              }}
+            >
+              <AddBoxIcon fontSize="large" />
+            </IconButton>
+          
+        </div>
+
+      }
+      
+
+
       {popup.removePrivateReq && (
         <Popup onClose={() => handlePopup("removePrivateReq", false)}>
           <RemovePrivReq
