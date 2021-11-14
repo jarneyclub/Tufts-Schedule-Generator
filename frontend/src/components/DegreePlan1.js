@@ -390,7 +390,6 @@ function DegreePlan1(props) {
       </div>
         :
          <div className={dp1Style.noDegreeReqWrapper}>
-         <div className={dp1Style.degreeReqListExpandable}> 
           <h5>Add a requirement from Public degree requirements</h5>
             <h5>or create one now!</h5>
             <IconButton
@@ -402,7 +401,6 @@ function DegreePlan1(props) {
               >
                 <AddOutlinedIcon fontSize="large" />
               </IconButton>
-         </div>
           
           
         </div>
