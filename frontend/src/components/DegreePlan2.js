@@ -683,11 +683,11 @@ function DegreePlan2(props) {
         <div className={dp2Style.noSchedulewrapper}>
           <div>Create your plan now!</div>
           <IconButton
-                  className={dp2Style.editPlanButton}
-                  onClick={() => handlePopup("editPlanName", true)}
-                >
-                  <ModeEditIcon fontSize="large" />
-                </IconButton>
+                className={dp2Style.editPlanButton}
+                onClick={() => handlePopup("addPlan", true)}
+              >
+                <AddBoxIcon fontSize="large" />
+              </IconButton>
           
         </div>
 
