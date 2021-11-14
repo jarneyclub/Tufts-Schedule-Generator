@@ -461,7 +461,9 @@ function DegreePlan2(props) {
           content="Need to plan out your Tufts degree? Fall, Spring, Summer, or Annual. We have the complete list of courses!"
         />
       </Helmet>
-      <div className={dp2Style.contentContainer}>
+      {
+        semesterPlanOptions && semesterPlanOptions?.length !== 0 ? 
+          <div className={dp2Style.contentContainer}>
         {/* * * * * Contains * * * * * 
                     Progress Bar
                 */}
@@ -677,6 +679,20 @@ function DegreePlan2(props) {
           </div>
         </div>
       </div>
+        :
+        <div className={dp2Style.noSchedulewrapper}>
+          <div>Create your plan now!</div>
+          <IconButton
+                  className={dp2Style.editPlanButton}
+                  onClick={() => handlePopup("editPlanName", true)}
+                >
+                  <ModeEditIcon fontSize="large" />
+                </IconButton>
+          
+        </div>
+
+      }
+      
 
       {/* popups */}
       {popup.addSemester && (
