@@ -466,7 +466,7 @@ function DegreePlan2(props) {
         />
       </Helmet>
       {
-        semesterPlanOptions && semesterPlanOptions?.length !== 0 ? 
+        loaded && semesterPlanOptions && semesterPlanOptions?.length !== 0 ? 
           <div className={dp2Style.contentContainer}>
         {/* * * * * Contains * * * * * 
                     Progress Bar
@@ -684,7 +684,7 @@ function DegreePlan2(props) {
         </div>
       </div>
         :
-        loaded ?
+        loaded &&
           <div className={dp2Style.noSchedulewrapper}>
             <div>Create your plan now!</div>
             <IconButton
@@ -695,8 +695,7 @@ function DegreePlan2(props) {
                 </IconButton>
             
         </div>
-        :
-        <div/>
+        
       
         
 
