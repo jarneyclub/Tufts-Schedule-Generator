@@ -804,7 +804,8 @@ function Scheduler(props) {
  onClick={() => handlePopup("addSchedule", true)}>
             <AddShoppingCartIcon fontSize="80vw" />
           </IconButton>
-          <div> Test text </div>
+          Testing
+          Testing Testing
         </div>
 
         
