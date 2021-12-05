@@ -335,9 +335,14 @@ function EditPlanName(props) {
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function AddPlan(props) {
-  const { onClose, createNewPlan, onSetIdxLast, onShowAlert,
+  const {
+    onClose,
+    createNewPlan,
+    onSetIdxLast,
+    onShowAlert,
     setAlertMessage,
-    setAlertSeverity, } = props;
+    setAlertSeverity,
+  } = props;
 
   const [planName, setPlanName] = useState("");
 
@@ -351,17 +356,15 @@ function AddPlan(props) {
   const handleAdd = () => {
     /* do something API?? pass in the selectedCards arr */
 
-    if(planName !== "") {
+    if (planName !== "") {
       createNewPlan(planName);
       onClose();
-    } 
-    else {
-      console.log("bad!")
+    } else {
+      console.log("bad!");
       setAlertMessage("Plan name cannot be blank!");
       setAlertSeverity("warning");
       onShowAlert();
     }
-    
   };
 
   return (
