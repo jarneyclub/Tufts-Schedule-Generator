@@ -23,7 +23,7 @@ import {
 import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import SearchIcon from "@material-ui/icons/Search";
 import AddBoxIcon from "@material-ui/icons/AddBox";
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
 import LinkedCameraIcon from "@mui/icons-material/LinkedCamera";
@@ -192,7 +192,6 @@ function Scheduler(props) {
     handleSignupPopup,
     handleLogRequired,
   } = props;
-
 
   const [loaded, setLoaded] = useState(false);
   /* schedule Dropdown */
@@ -776,38 +775,37 @@ function Scheduler(props) {
               />
             </div>
 
-            {classes.hasOwnProperty("TimeUnspecified") && classes.TimeUnspecified.length !== 0 && (
-              <div className={sStyle.infoContainer}>
-                <div style={{ color: "rgba(0, 0, 0, 0.54)" }}>
-                  Time Unspecified
+            {classes.hasOwnProperty("TimeUnspecified") &&
+              classes.TimeUnspecified.length !== 0 && (
+                <div className={sStyle.infoContainer}>
+                  <div style={{ color: "rgba(0, 0, 0, 0.54)" }}>
+                    Time Unspecified
+                  </div>
+                  <div className={sStyle.tuContainer}>
+                    {classes?.TimeUnspecified?.map((course) => (
+                      <Button
+                        className={sStyle.tuButton}
+                        onClick={() => handleShowCourseInfo(course)}
+                      >
+                        {course.details}
+                      </Button>
+                    ))}
+                  </div>
                 </div>
-                <div className={sStyle.tuContainer}>
-                  {classes?.TimeUnspecified?.map((course) => (
-                    <Button
-                      className={sStyle.tuButton}
-                      onClick={() => handleShowCourseInfo(course)}
-                    >
-                      {course.details}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-            )}
+              )}
           </div>
         </div>
       ) : (
-        
         <div className={sStyle.noSchedulewrapper}>
           <div>Create your schedule now!</div>
-          <IconButton                 
-          className={sStyle.editPlanButton}
- onClick={() => handlePopup("addSchedule", true)}>
+          <IconButton
+            className={sStyle.editPlanButton}
+            onClick={() => handlePopup("addSchedule", true)}
+          >
             <AddShoppingCartIcon fontSize="80vw" />
           </IconButton>
           <div> Test text </div>
         </div>
-
-        
       )}
 
       {/* popups */}

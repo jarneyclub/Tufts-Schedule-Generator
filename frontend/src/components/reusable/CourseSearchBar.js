@@ -71,14 +71,16 @@ function CourseSearchBar(props) {
       onDragStart={(e) => handleDragStart(e, false)}
       // onMouseDown={(e) => handleDragStart(e, false)}
       id={course_num?.concat(course_title)}
-      
       style={customStyle}
     >
       {(origin === "schedulerCourseList" ||
         origin === "schedulerTab" ||
         origin !== "courseList") && <div>&nbsp;</div>}
-      <div style={{ wordBreak: "break-word" }} onDoubleClick={handleDoubleClick}
-      onClick={handleOnClick}>
+      <div
+        style={{ wordBreak: "break-word" }}
+        onDoubleClick={handleDoubleClick}
+        onClick={handleOnClick}
+      >
         【{course_num}】<br />
         {course_title}
       </div>

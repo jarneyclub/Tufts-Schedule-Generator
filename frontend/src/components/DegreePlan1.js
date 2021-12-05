@@ -19,7 +19,7 @@ import {
 import SearchIcon from "@material-ui/icons/Search";
 import EditIcon from "@mui/icons-material/Edit";
 import AddBoxIcon from "@material-ui/icons/AddBox";
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
 import CancelIcon from "@material-ui/icons/Cancel";
 import dp1Style from "./style/DegreePlan1.module.css";
@@ -79,7 +79,7 @@ function DegreePlan1(props) {
     handleSignupPopup,
     handleLogRequired,
   } = props;
-  
+
   const [loaded, setLoaded] = useState(false);
   const [degreeReqOptions, setDegreeReqOptions] = useState(
     []
@@ -313,30 +313,81 @@ function DegreePlan1(props) {
       </div>
 
       {/* * * * * * Includes the Degree Requirement Table * * * * * */}
-     
-      {
-        degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx] ? 
-          <div className={dp1Style.DegreeReqWrapper}>
-        <div className={dp1Style.myListWrapper}>
-          <h5>My degree requirements</h5>
 
-          {/* options will be an array returned by API
+      {degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx] ? (
+        <div className={dp1Style.DegreeReqWrapper}>
+          <div className={dp1Style.myListWrapper}>
+            <h5>My degree requirements</h5>
+
+            {/* options will be an array returned by API
                             options - degree req of current user */}
-          <div
-            className={dp1Style.dropdownListWrapper}
-            style={{ width: "90%" }}
-          >
-            <Dropdown
-              options={degreeReqOptions}
-              isObject={true}
-              objectField={"program_name"}
-              selectedOption={
-                degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx]
-              }
-              selectedIdx={selectedDegreeReqIdx}
-              onOptionChange={handleDegreeReqChange}
-            />
-            &nbsp;
+            <div
+              className={dp1Style.dropdownListWrapper}
+              style={{ width: "90%" }}
+            >
+              <Dropdown
+                options={degreeReqOptions}
+                isObject={true}
+                objectField={"program_name"}
+                selectedOption={
+                  degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx]
+                }
+                selectedIdx={selectedDegreeReqIdx}
+                onOptionChange={handleDegreeReqChange}
+              />
+              &nbsp;
+              <IconButton
+                className={dp1Style.editPlanButton}
+                onClick={() => {
+                  setNewMMPopup(true);
+                  setEditDRPopup(true);
+                }}
+              >
+                <AddBoxIcon fontSize="medium" />
+              </IconButton>
+              &nbsp;
+              {degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx] && (
+                <IconButton
+                  className={dp1Style.editPlanButton}
+                  onClick={() => handlePopup("removePrivateReq", true)}
+                >
+                  <IndeterminateCheckBoxIcon fontSize="medium" />
+                </IconButton>
+              )}
+            </div>
+          </div>
+          <div className={dp1Style.DegreeReqListWrapper}>
+            {/* info returned from API call
+                            display the info of the selected degree plan */}
+            <div className={dp1Style.degreeReqListExpandable}>
+              <DegreeReqDisplay
+                reqDetail={
+                  degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx]
+                }
+              />
+            </div>
+
+            {/* button that displays an overlay to edit current
+                            displayed degree requirement */}
+            {degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx] && (
+              <Button
+                className={dp1Style.editButton}
+                onClick={() => {
+                  setNewMMPopup(false);
+                  setEditDRPopup(true);
+                }}
+                startIcon={<EditIcon />}
+              >
+                Edit
+              </Button>
+            )}
+          </div>
+        </div>
+      ) : (
+        loaded && (
+          <div className={dp1Style.noDegreeReqWrapper}>
+            <h5>Add a requirement from Public degree requirements</h5>
+            <h5>or create one now!</h5>
             <IconButton
               className={dp1Style.editPlanButton}
               onClick={() => {
@@ -344,81 +395,23 @@ function DegreePlan1(props) {
                 setEditDRPopup(true);
               }}
             >
-              <AddBoxIcon fontSize="medium" />
+              <AddOutlinedIcon fontSize="large" />
             </IconButton>
-            &nbsp;
-            {degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx] && (
-              <IconButton
-                className={dp1Style.editPlanButton}
-                onClick={() => handlePopup("removePrivateReq", true)}
-              >
-                <IndeterminateCheckBoxIcon fontSize="medium" />
-              </IconButton>
-            )}
           </div>
-        </div>
-        <div className={dp1Style.DegreeReqListWrapper}>
-          {/* info returned from API call
-                            display the info of the selected degree plan */}
-          <div className={dp1Style.degreeReqListExpandable}>
-            <DegreeReqDisplay
-              reqDetail={
-                degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx]
-              }
-            />
-          </div>
-
-          {/* button that displays an overlay to edit current
-                            displayed degree requirement */}
-          {degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx] && (
-            <Button
-              className={dp1Style.editButton}
-              onClick={() => {
-                setNewMMPopup(false);
-                setEditDRPopup(true);
-              }}
-              startIcon={<EditIcon />}
-            >
-              Edit
-            </Button>
-          )}
-
-          
-        </div>
-      </div>
-        : (
-          loaded && 
-          <div className={dp1Style.noDegreeReqWrapper}>
-          <h5>Add a requirement from Public degree requirements</h5>
-            <h5>or create one now!</h5>
-            <IconButton
-                className={dp1Style.editPlanButton}
-                onClick={() => {
-                  setNewMMPopup(true);
-                  setEditDRPopup(true);
-                }}
-              >
-                <AddOutlinedIcon fontSize="large" />
-              </IconButton>
-          
-          
-        </div>
         )
-         
+      )}
 
-      }
-      
       {editDRPopup && (
-            <Popup onClose={() => setEditDRPopup(false)}>
-              <DegreeReqEdit
-                onClose={() => setEditDRPopup(false)}
-                isCreateMM={newMMPopup}
-                fetchCreate={fetchCreatePrivateReqs}
-                fetchSave={fetchSavePrivateReqs}
-                reqDetail={degreeReqOptions[selectedDegreeReqIdx]}
-              />
-            </Popup>
-          )}
+        <Popup onClose={() => setEditDRPopup(false)}>
+          <DegreeReqEdit
+            onClose={() => setEditDRPopup(false)}
+            isCreateMM={newMMPopup}
+            fetchCreate={fetchCreatePrivateReqs}
+            fetchSave={fetchSavePrivateReqs}
+            reqDetail={degreeReqOptions[selectedDegreeReqIdx]}
+          />
+        </Popup>
+      )}
 
       {popup.removePrivateReq && (
         <Popup onClose={() => handlePopup("removePrivateReq", false)}>
