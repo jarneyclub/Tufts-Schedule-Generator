@@ -68,7 +68,7 @@ function Home(props) {
             degree plan, to your semesterly schedule!{" "}
           </h2>
           <br />
-          Created by Tufts students, for Tufts students.
+          Created by Tufts students, for Tufts students. HAHAHAHAHAHAHAHA
           <br />
           <br />
           <div className={hStyle.buttonContainer}>
