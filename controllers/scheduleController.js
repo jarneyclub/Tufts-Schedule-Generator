@@ -236,6 +236,7 @@ exports.deleteSchedule = async (req, res) => {
 
 const errorHandler = (err, endpoint, res, userid, userrole) => {
     console.error("(scheduleController/errorhandler) err: ", err);
+    console.error(err);
     if (err.detail !== undefined && err.title != undefined) {
         /* this is internally formatted error */
 
