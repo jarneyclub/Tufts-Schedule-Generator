@@ -5,12 +5,13 @@ const mongodbErrorHandler = require('mongoose-mongodb-errors');
 
 const apiError_Schema = new Schema({
     type: String,
+    userid: String,
+    feature: String,
+    date: Date,
     status: String,
     errid: String,
-    feature: String,
-    userid: String,
-    details: String,
-    date: Date
+    errtitle: String,
+    errdetails: String
 });
 
 apiError_Schema.plugin(mongodbErrorHandler);

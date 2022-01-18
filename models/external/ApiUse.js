@@ -5,6 +5,7 @@ const mongodbErrorHandler = require('mongoose-mongodb-errors');
 
 const apiUse_Schema = new Schema({
     type: String,
+    userid: String,
     feature: String,
     date: Date
 });
