@@ -4,7 +4,8 @@ mongoose.Promise = global.Promise;
 const mongodbErrorHandler = require('mongoose-mongodb-errors');
 
 const frontendUse_Schema = new Schema({
-    type: String
+    type: String,
+    date: Date
 });
 
 frontendUse_Schema.plugin(mongodbErrorHandler);
