@@ -1,0 +1,6 @@
+#!/bin/sh
+
+echo "d" >> TEST_FILE
+git add .
+git commit -m "test commit"
+git push

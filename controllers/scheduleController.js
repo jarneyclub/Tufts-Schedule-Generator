@@ -235,7 +235,8 @@ exports.deleteSchedule = async (req, res) => {
 
 
 const errorHandler = (err, endpoint, res, userid, userrole) => {
-    console.error("(degreeReqController/errorhandler) err: ", err);
+    console.error("(scheduleController/errorhandler) err: ", err);
+    console.error(err);
     if (err.detail !== undefined && err.title != undefined) {
         /* this is internally formatted error */
 
@@ -249,7 +250,7 @@ const errorHandler = (err, endpoint, res, userid, userrole) => {
         resHandler.respondWithCustomError(err.id, err.status, err.title, err.detail, res);
     }
     else {
-        console.error("(degreeReqController/" + endpoint, err);
+        console.error("(scheduleController/" + endpoint, err);
         // save error if user is not developer
         if (userrole !== "developer") {
             let errString = `id: 000 | title: Internal Server Error | detail: ${err}`;
