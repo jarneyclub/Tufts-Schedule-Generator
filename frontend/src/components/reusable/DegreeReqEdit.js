@@ -9,7 +9,7 @@
  *      - All the Parts to this current Degree Requirement (DegreeReqPart)
  *
  */
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import {
   Button,
   IconButton,
@@ -17,13 +17,13 @@ import {
   InputAdornment,
   FormControl,
   InputLabel,
-} from "@material-ui/core";
-import CancelIcon from "@material-ui/icons/Cancel";
-import AddIcon from "@material-ui/icons/Add";
-import pStyle from "./reusableStyles/Popup.module.css";
-import Dropdown from "./Dropdown";
-import DegreeReqPart from "./DegreeReqPart";
-import dStyle from "./reusableStyles/DegreeReq.module.css";
+} from '@material-ui/core';
+import CancelIcon from '@material-ui/icons/Cancel';
+import AddIcon from '@material-ui/icons/Add';
+import pStyle from './reusableStyles/Popup.module.css';
+import Dropdown from './Dropdown';
+import DegreeReqPart from './DegreeReqPart';
+import dStyle from './reusableStyles/DegreeReq.module.css';
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
@@ -32,21 +32,21 @@ import dStyle from "./reusableStyles/DegreeReq.module.css";
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 const drDefault = {
-  program_name: "",
-  school: "",
-  degree: "",
+  program_name: '',
+  school: '',
+  degree: '',
   part_id_tracker: 1,
   parts: [
     {
       part_id: 0,
-      part_name: "",
-      part_desc: "",
+      part_name: '',
+      part_desc: '',
       part_req_id_tracker: 1,
       part_reqs: [
         {
           part_req_id: 0,
-          course_num: "",
-          course_note: "",
+          course_num: '',
+          course_note: '',
         },
       ],
     },
@@ -76,7 +76,7 @@ function DegreeReqEdit(props) {
   };
 
   const handleGeneralChange = (e) => {
-    if (e.target.name === "school") {
+    if (e.target.name === 'school') {
       setSelectedSchoolIdx(e.target.selectedIndex);
       setDetail((prev) => ({
         ...prev,
@@ -185,7 +185,7 @@ function DegreeReqEdit(props) {
   };
 
   const fetchSchoolOptions = async () => {
-    await fetch("https://jarney.club/api/courses/programs")
+    await fetch('https://qa.jarney.club/api/courses/programs')
       .then((response) => response.json())
       .then((result) => {
         setSchoolOptions(result.names);
