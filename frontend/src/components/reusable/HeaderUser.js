@@ -7,15 +7,15 @@
  *
  */
 
-import { useState, useEffect, useRef } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { Button, IconButton, ClickAwayListener } from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import HelpIcon from "@material-ui/icons/Help";
-import hStyle from "./reusableStyles/HeaderUser.module.css";
-import logo from "../res/JARney.png";
-import Popup from "./Popup";
-import JarUserLogin from "./JarUserLogin";
+import { useState, useEffect, useRef } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { Button, IconButton, ClickAwayListener } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import HelpIcon from '@material-ui/icons/Help';
+import hStyle from './reusableStyles/HeaderUser.module.css';
+import logo from '../res/JARney.png';
+import Popup from './Popup';
+import JarUserLogin from './JarUserLogin';
 
 /* scripts */
 
@@ -51,7 +51,7 @@ function HeaderUser(props) {
   };
 
   const fetchLogout = async () => {
-    await fetch("https://jarney.club/api/auth/logout", { method: "POST" })
+    await fetch('https://qa.jarney.club/api/auth/logout', { method: 'POST' })
       .then((response) => response.json())
       .then((result) => {})
       .error((error) => {});
@@ -62,7 +62,7 @@ function HeaderUser(props) {
       {/* Logo */}
       <div className={hStyle.splitContainer}>
         <div className={hStyle.logoContainer}>
-          <Link to="/Home" style={{ textDecoration: "none" }}>
+          <Link to="/Home" style={{ textDecoration: 'none' }}>
             <img src={logo} height="50px" href="/Home" alt="Return to Home" />
           </Link>
           {
@@ -74,7 +74,7 @@ function HeaderUser(props) {
                   to="/DegreeRequirement"
                   activeClassName={hStyle.activeNavOption}
                   className={hStyle.navOption}
-                  style={{ textDecoration: "none" }}
+                  style={{ textDecoration: 'none' }}
                 >
                   Degree Requirement
                 </NavLink>
@@ -83,7 +83,7 @@ function HeaderUser(props) {
                   to="/DegreePlan"
                   activeClassName={hStyle.activeNavOption}
                   className={hStyle.navOption}
-                  style={{ textDecoration: "none" }}
+                  style={{ textDecoration: 'none' }}
                 >
                   Degree Plan
                 </NavLink>
@@ -92,7 +92,7 @@ function HeaderUser(props) {
                   to="/Schedule"
                   activeClassName={hStyle.activeNavOption}
                   className={hStyle.navOption}
-                  style={{ textDecoration: "none" }}
+                  style={{ textDecoration: 'none' }}
                 >
                   Schedule
                 </NavLink>
@@ -108,9 +108,9 @@ function HeaderUser(props) {
                 <Button
                   onClick={handleLoginSignupPopup}
                   className={hStyle.button}
-                  style={{ padding: "5px" }}
+                  style={{ padding: '5px' }}
                 >
-                  {logged ? "Sign out" : "Log in"}
+                  {logged ? 'Sign out' : 'Log in'}
                 </Button>
               </div>
             )}
@@ -119,9 +119,9 @@ function HeaderUser(props) {
                 <IconButton
                   className={hStyle.button}
                   style={{
-                    padding: "5px",
-                    color: "#5a32bf",
-                    textDecoration: "none",
+                    padding: '5px',
+                    color: '#5a32bf',
+                    textDecoration: 'none',
                   }}
                   aria-label="help"
                 >
@@ -160,7 +160,7 @@ function HeaderUser(props) {
                 activeClassName={hStyle.activeShrinkNavOption}
                 className={hStyle.shrinkNavOption}
                 onClick={() => setShrinkExpandable((prev) => !prev)}
-                style={{ textDecoration: "none" }}
+                style={{ textDecoration: 'none' }}
               >
                 Home
               </NavLink>
@@ -169,7 +169,7 @@ function HeaderUser(props) {
                 activeClassName={hStyle.activeShrinkNavOption}
                 className={hStyle.shrinkNavOption}
                 onClick={() => setShrinkExpandable((prev) => !prev)}
-                style={{ textDecoration: "none" }}
+                style={{ textDecoration: 'none' }}
               >
                 Degree requirement
               </NavLink>
@@ -178,7 +178,7 @@ function HeaderUser(props) {
                 activeClassName={hStyle.activeShrinkNavOption}
                 className={hStyle.shrinkNavOption}
                 onClick={() => setShrinkExpandable((prev) => !prev)}
-                style={{ textDecoration: "none" }}
+                style={{ textDecoration: 'none' }}
               >
                 Degree plan
               </NavLink>
@@ -188,7 +188,7 @@ function HeaderUser(props) {
                 activeClassName={hStyle.activeShrinkNavOption}
                 className={hStyle.shrinkNavOption}
                 onClick={() => setShrinkExpandable((prev) => !prev)}
-                style={{ textDecoration: "none" }}
+                style={{ textDecoration: 'none' }}
               >
                 Schedule
               </NavLink>
@@ -197,7 +197,7 @@ function HeaderUser(props) {
                 activeClassName={hStyle.activeShrinkNavOption}
                 className={hStyle.shrinkNavOption}
                 onClick={() => setShrinkExpandable((prev) => !prev)}
-                style={{ textDecoration: "none" }}
+                style={{ textDecoration: 'none' }}
               >
                 Help
               </NavLink>

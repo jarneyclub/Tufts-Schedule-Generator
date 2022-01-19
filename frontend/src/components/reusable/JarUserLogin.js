@@ -8,15 +8,15 @@
  *
  */
 
-import React, { useEffect, useState } from "react";
-import CancelIcon from "@material-ui/icons/Cancel";
-import { IconButton, Button, CircularProgress } from "@material-ui/core";
-import LoginForm from "./LoginForm";
-import SignupForm from "./SignupForm";
-import SnackBarAlert from "./SnackBarAlert";
-import "./reusableStyles/LoginForm.module.css";
-import jStyle from "./reusableStyles/JarUserLogin.module.css";
-import { string } from "prop-types";
+import React, { useEffect, useState } from 'react';
+import CancelIcon from '@material-ui/icons/Cancel';
+import { IconButton, Button, CircularProgress } from '@material-ui/core';
+import LoginForm from './LoginForm';
+import SignupForm from './SignupForm';
+import SnackBarAlert from './SnackBarAlert';
+import './reusableStyles/LoginForm.module.css';
+import jStyle from './reusableStyles/JarUserLogin.module.css';
+import { string } from 'prop-types';
 
 /* scripts */
 
@@ -60,18 +60,18 @@ const JarUserLogin = React.forwardRef((props, ref) => {
     setLoadMessage(true);
 
     const requestOption = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(values),
     };
 
     if (loginState) {
-      await fetch("https://jarney.club/api/auth/login", requestOption)
+      await fetch('https://qa.jarney.club/api/auth/login', requestOption)
         .then((response) => {
           if (response.ok) {
             return response.json();
           }
-          throw new Error("Failed to login.");
+          throw new Error('Failed to login.');
         })
         .then((result) => {
           setLoadMessage(false);
@@ -80,19 +80,19 @@ const JarUserLogin = React.forwardRef((props, ref) => {
         })
         .catch((error) => {
           setLoadMessage(false);
-          handleAlert("error", "Error: Failed to Login");
+          handleAlert('error', 'Error: Failed to Login');
         });
     } else {
-      await fetch("https://jarney.club/api/auth/register", requestOption)
+      await fetch('https://qa.jarney.club/api/auth/register', requestOption)
         .then((response) => {
           return response.json();
         })
         .then((result) => {
-          console.log("results", result);
+          console.log('results', result);
           if (result.errors) {
             setLoadMessage(false);
             setAlertMessage(result.errors[0].detail);
-            setAlertSeverity("warning");
+            setAlertSeverity('warning');
             setShowAlert(true);
           } else {
             setLoadMessage(false);
@@ -114,7 +114,7 @@ const JarUserLogin = React.forwardRef((props, ref) => {
         )}
 
         <div className={jStyle.headerBody}>
-          {loginState ? "Open my JAR" : "Get my JAR"}&nbsp;&nbsp;&nbsp;&nbsp;
+          {loginState ? 'Open my JAR' : 'Get my JAR'}&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         {!forcedPopup && <div />}
       </div>
@@ -135,8 +135,8 @@ const JarUserLogin = React.forwardRef((props, ref) => {
       {!loadMessage && (
         <Button onClick={handleSwitch} className={jStyle.linkButton}>
           {loginState
-            ? "--- Create my JAR Account ---"
-            : "--- Log in to my JAR Account---"}
+            ? '--- Create my JAR Account ---'
+            : '--- Log in to my JAR Account---'}
         </Button>
       )}
       <SnackBarAlert
