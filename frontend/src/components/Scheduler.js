@@ -193,6 +193,8 @@ function Scheduler(props) {
     handleLogRequired,
   } = props;
 
+
+  const [loaded, setLoaded] = useState(false);
   /* schedule Dropdown */
   const [scheduleOptions, setScheduleOptions] = useState([]);
   const [selectedSchedule, setSelectedSchedule] = useState("");
@@ -376,7 +378,7 @@ function Scheduler(props) {
           time_unspecified:
             !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreTU,
         }));
-        // }
+        setLoaded(true);
       })
       .catch((error) => {});
   };
@@ -774,7 +776,7 @@ function Scheduler(props) {
               />
             </div>
 
-            {classes?.TimeUnspecified && (
+            {classes.hasOwnProperty("TimeUnspecified") && classes.TimeUnspecified.length !== 0 && (
               <div className={sStyle.infoContainer}>
                 <div style={{ color: "rgba(0, 0, 0, 0.54)" }}>
                   Time Unspecified
@@ -794,9 +796,11 @@ function Scheduler(props) {
           </div>
         </div>
       ) : (
+        
         <div className={sStyle.noSchedulewrapper}>
           <div>Create your schedule now!</div>
-          <IconButton                 className={sStyle.editPlanButton}
+          <IconButton                 
+          className={sStyle.editPlanButton}
  onClick={() => handlePopup("addSchedule", true)}>
             <AddShoppingCartIcon fontSize="80vw" />
           </IconButton>

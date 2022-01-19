@@ -180,7 +180,20 @@ input {
 
   border-left: #5a32bf 1px solid;
 }
+.noDegreeReqWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 48vw;
+  color: #5A32BF;
+  padding-left: 5vw;
+  padding-right: 5vw;
 
+  margin-top: 20px;
+
+  border-left: #5a32bf 1px solid;
+}
 /* Within the DegreeReqWrapper, includes the list */
 .DegreeReqListWrapper {
   display: flex;

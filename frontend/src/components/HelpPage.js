@@ -5,21 +5,26 @@
  * has a feedback form.
  */
 
-import { useState } from "react";
-import MuiAccordion from "@material-ui/core/Accordion";
-import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
-import MuiAccordionDetails from "@material-ui/core/AccordionDetails";
-import { withStyles } from "@material-ui/core/styles";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import SendIcon from "@mui/icons-material/Send";
-import { Button, TextField, Input } from "@material-ui/core";
-import SnackBarAlert from "./reusable/SnackBarAlert";
-import hStyle from "./style/HelpPage.module.css";
-import feedbackJumbo from "./res/feedback.png";
+import { useState } from 'react';
+import MuiAccordion from '@material-ui/core/Accordion';
+import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
+import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
+import { withStyles } from '@material-ui/core/styles';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import SendIcon from '@mui/icons-material/Send';
+import { Button, TextField, Input } from '@material-ui/core';
+import SnackBarAlert from './reusable/SnackBarAlert';
+import hStyle from './style/HelpPage.module.css';
+import feedbackJumbo from './res/feedback.png';
+import { style } from '@mui/system';
+import './style/HelpPageActiveClass.css';
 
 const Accordion = withStyles({
   root: {
     backgroundColor: (0, 0, 0, 0.5),
+    '&:hover': {
+      backgroundColor: '#D9D9D9',
+    },
   },
   expanded: {},
 })(MuiAccordion);
@@ -37,16 +42,16 @@ const AccordionDetails = withStyles({
 })(MuiAccordionDetails);
 
 const contactFormDefault = {
-  name: "",
-  email: "",
-  message: "",
+  name: '',
+  email: '',
+  message: '',
 };
 
 function HelpPage() {
   const [contactForm, setContactForm] = useState(contactFormDefault);
   const [showAlert, setShowAlert] = useState(false);
-  const [alertSeverity, setAlertSeverity] = useState("");
-  const [alertMessage, setAlertMessage] = useState("");
+  const [alertSeverity, setAlertSeverity] = useState('');
+  const [alertMessage, setAlertMessage] = useState('');
   const handleSubmit = () => {
     fetchSendResponses();
   };
@@ -64,16 +69,16 @@ function HelpPage() {
 
   const fetchSendResponses = async () => {
     const requestOption = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(contactForm),
     };
 
-    await fetch("https://jarney.club/api/responses", requestOption)
+    await fetch('https://jarney.club/api/responses', requestOption)
       .then((response) => response.json())
       .then((result) => {
-        setAlertMessage("Thank you for your feedback!");
-        setAlertSeverity("success");
+        setAlertMessage('Thank you for your feedback!');
+        setAlertSeverity('success');
         setShowAlert(true);
         setContactForm(contactFormDefault);
       })
@@ -83,16 +88,17 @@ function HelpPage() {
   return (
     <div className={hStyle.bodyContainer}>
       <div className={hStyle.horizontalContainer}>
-        <h2>Frequently Asked Questions</h2>
+        <div className={hStyle.contactTitle}>Frequently Asked Questions</div>
         <br />
         <Accordion>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             Q: What's the difference between degree requirements and degree
             plans?
           </AccordionSummary>
+
           <AccordionDetails>
             A: Degree requirements are the courses/requirements you must take to
-            fulfil a specific degree. Degree plans are a space for you to
+            fulfill a specific degree. Degree plans are a space for you to
             organize which classes you're going to take and when you're going to
             take them. In degree plans, you can also keep track of your progress
             towards completing your degree requirements.
@@ -103,6 +109,7 @@ function HelpPage() {
             Q: What's the difference between 'Public degree requirements' and
             'My degree requirements'?
           </AccordionSummary>
+
           <AccordionDetails>
             A: 'Public degree requirements' are accessible to everyone and
             cannot be edited directly. 'My degree requirements' are your
@@ -115,6 +122,7 @@ function HelpPage() {
             Q: What happens if a class is not available during my time
             preferences, but I try to render a schedule anyway?
           </AccordionSummary>
+
           <AccordionDetails>
             A: We'll tell you! Unfortunately, we can't change class times, but
             we can tell you when there are conflicts between your time
@@ -126,8 +134,15 @@ function HelpPage() {
       <br />
       <br />
       <div className={hStyle.horizontalContainer}>
-        <h2>Contact us!</h2>
-        <br />
+        <div className={hStyle.titleContainer}>
+          <div className={hStyle.contactTitle}>Contact us!</div>
+          <img
+            src={feedbackJumbo}
+            alt="feedbackJumbo"
+            className={hStyle.imgContainer}
+          />
+          <br />
+        </div>
         <div className={hStyle.titleRow}>
           <div id="contactForm" className={hStyle.contactForm}>
             <TextField
@@ -138,7 +153,7 @@ function HelpPage() {
               fullWidth
               variant="filled"
               value={contactForm.name}
-              onChange={(value) => handleContactForm("name", value)}
+              onChange={(value) => handleContactForm('name', value)}
             />
 
             <TextField
@@ -149,7 +164,7 @@ function HelpPage() {
               fullWidth
               variant="filled"
               value={contactForm.email}
-              onChange={(value) => handleContactForm("email", value)}
+              onChange={(value) => handleContactForm('email', value)}
             />
 
             <br />
@@ -162,7 +177,7 @@ function HelpPage() {
               multiline
               rows={4}
               value={contactForm.message}
-              onChange={(value) => handleContactForm("message", value)}
+              onChange={(value) => handleContactForm('message', value)}
             />
             <Button
               type="submit"
@@ -175,11 +190,11 @@ function HelpPage() {
             <br />
           </div>
           <br />
-          <img
+          {/* <img
             src={feedbackJumbo}
             alt="feedbackJumbo"
             className={hStyle.imgContainer}
-          />
+          /> */}
         </div>
       </div>
       {showAlert && (

@@ -1,21 +1,20 @@
 Python2.7
 # Web scrape course catalog
 
+
 1) (When using virtual environment) Go to ./server/routes/fs
 ```Unix
-source scrape/bin/activate
+source scrapes/bin/activate
 ```
-2) Go to ./scrape
+2) Go to ./scrapes
 3) python
 ```python
-import webscraperlib
-catalogscraper = webscraperlib.webscraper(wait = 40 ) # estimated time in seconds needed for DOM content to fully load
-master_list = catalogscraper.scrape_web()
-catalogscraper.generate_documents(master_list) # upload to database 
-catalogscraper.write_json(master_list) # write data.txt with course catalog in JSON format
-# and then go to https://tufts-schedule-api.herokuapp.com/api/courses/db/search-table to update search index
-```
+import db_schedule
+db_schedule = db_schedule.db_schedule(do_update = True)
+db_schedule....
 
+
+```
 # NOTES
 > Ignored edge cases
 1. Sometimes: there are multiple "courses" associated to a course ID.
