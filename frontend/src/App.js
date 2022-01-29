@@ -11,8 +11,8 @@ import { MuiThemeProvider, createTheme } from '@material-ui/core';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Home from './components/Home'; // routest to diff pages
 
-import DegreePlan1 from './components/DegreePlan1';
-import DegreePlan2 from './components/DegreePlan2';
+import DegreeRequirement from './components/DegreeRequirement';
+import DegreePlan from './components/DegreePlan';
 
 import Scheduler from './components/Scheduler';
 import HelpPage from './components/HelpPage';
@@ -113,7 +113,7 @@ export default function App() {
 
           <Switch>
             <Route path="/DegreeRequirement">
-              <DegreePlan1
+              <DegreeRequirement
                 shrink={shrink}
                 logged={logged}
                 switchLogged={switchLogged}
@@ -125,7 +125,7 @@ export default function App() {
               />
             </Route>
             <Route path="/DegreePlan">
-              <DegreePlan2
+              <DegreePlan
                 shrink={shrink}
                 logged={logged}
                 switchLogged={switchLogged}

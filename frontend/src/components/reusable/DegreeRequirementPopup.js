@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* * * *  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * DegreePlan1Popup.js
+ * DegreeRequirementPopup.js
  *
  *
  */

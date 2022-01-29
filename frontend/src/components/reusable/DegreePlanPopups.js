@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* * * *  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * DegreePlan2Popups.js
+ * DegreePlanPopups.js
  *
  *
  */
@@ -22,13 +22,13 @@ import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 
 import pStyle from '../reusable/reusableStyles/Popup.module.css';
-import Popup from '../reusable/Popup';
-import PlanCard from '../reusable/PlanCard';
-import Dropdown from '../reusable/Dropdown';
-import CourseSearchBar from '../reusable/CourseSearchBar';
-import SnackBarAlert from '../reusable/SnackBarAlert';
-import DegreeReqDisplay from '../reusable/DegreeReqDisplay';
-import JarUserLogin from '../reusable/JarUserLogin';
+import Popup from './Popup';
+import PlanCard from './PlanCard';
+import Dropdown from './Dropdown';
+import CourseSearchBar from './CourseSearchBar';
+import SnackBarAlert from './SnackBarAlert';
+import DegreeReqDisplay from './DegreeReqDisplay';
+import JarUserLogin from './JarUserLogin';
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
