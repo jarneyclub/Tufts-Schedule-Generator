@@ -40,8 +40,9 @@ const termOptions = ['Fall', 'Spring', 'Summer', 'Annual'];
 function AddSemester(props) {
   const {
     onClose,
-    planID,
     planName,
+    planID,
+    cardOptions,
     refreshPlans,
     onShowAlert,
     setAlertMessage,
@@ -69,9 +70,32 @@ function AddSemester(props) {
     setSelectedYear(e.target.value);
   };
 
+  const validateAdd = () => {
+    cardOptions.forEach((card) => {
+      const time = card?.term.split(' ');
+      if (
+        time[0] === yearOptions[selectedYearIdx] &&
+        time[1] === termOptions[selectedTermIdx]
+      ) {
+        console.log('This term already exists!');
+        return false;
+      }
+    });
+
+    return true;
+  };
+
   const handleAdd = () => {
     /* do something API??  */
-    fetchAdd();
+    const pass = validateAdd();
+
+    if (pass) {
+      fetchAdd();
+    } else {
+      setAlertMessage('term already exists!');
+      setAlertSeverity('warning');
+      onShowAlert(true);
+    }
   };
 
   const fetchAdd = async () => {

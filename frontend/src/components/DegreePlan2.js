@@ -702,6 +702,8 @@ function DegreePlan2(props) {
             onClose={() => handlePopup('addSemester', false)}
             planName={semesterPlanOptions[selectedPlanIdx]?.plan_name}
             planID={semesterPlanOptions[selectedPlanIdx]?.plan_id}
+            //pass down selectedPlanIdx
+            planIdx={selectedPlanIdx}
             refreshPlans={fetchPlans}
             onShowAlert={() => setShowAlert(true)}
             setAlertMessage={setAlertMessage}
