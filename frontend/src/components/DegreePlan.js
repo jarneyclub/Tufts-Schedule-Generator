@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* * * *  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * DegreePlan2.js
+ * DegreePlan.js
  *
  *
  */
@@ -21,7 +21,7 @@ import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox'
 import CancelIcon from '@material-ui/icons/Cancel';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import dp2Style from './style/DegreePlan2.module.css';
+import dpStyle from './style/DegreePlan.module.css';
 import pStyle from './reusable/reusableStyles/Popup.module.css';
 import Popup from './reusable/Popup';
 import PlanCard from './reusable/PlanCard';
@@ -37,7 +37,7 @@ import {
   EditPlanName,
   AddPlan,
   RemovePlan,
-} from './reusable/DegreePlan2Popups';
+} from './reusable/DegreePlanPopups';
 import { DegreeReqExpress } from './reusable/TabSwitch';
 import sStyle from './style/Scheduler.module.css';
 
@@ -88,10 +88,10 @@ const currentYear = new Date().getFullYear();
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
- *                        DegreePlan2 Page Main Function                     *
+ *                        DegreePlan Page Main Function                     *
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-function DegreePlan2(props) {
+function DegreePlan(props) {
   const {
     shrink,
     logged,
@@ -463,14 +463,14 @@ function DegreePlan2(props) {
         />
       </Helmet>
       {loaded && semesterPlanOptions && semesterPlanOptions?.length !== 0 ? (
-        <div className={dp2Style.contentContainer}>
+        <div className={dpStyle.contentContainer}>
           {/* * * * * Contains * * * * * 
                     Progress Bar
                 */}
-          <div className={dp2Style.progressBarContainer}>
-            <div className={dp2Style.progressBar}>
+          <div className={dpStyle.progressBarContainer}>
+            <div className={dpStyle.progressBar}>
               <div
-                className={dp2Style.progressBarCompleted}
+                className={dpStyle.progressBarCompleted}
                 style={{
                   width:
                     unitsCount.total !== 0
@@ -479,7 +479,7 @@ function DegreePlan2(props) {
                 }}
               ></div>
               <div
-                className={dp2Style.progressBarCurrent}
+                className={dpStyle.progressBarCurrent}
                 style={{
                   width:
                     unitsCount.total !== 0
@@ -492,7 +492,7 @@ function DegreePlan2(props) {
                 }}
               ></div>
               <div
-                className={dp2Style.progressBarFuture}
+                className={dpStyle.progressBarFuture}
                 style={{
                   width:
                     unitsCount.total !== 0
@@ -502,7 +502,7 @@ function DegreePlan2(props) {
               />
             </div>
 
-            <div className={dp2Style.progressBarTitle}>
+            <div className={dpStyle.progressBarTitle}>
               {unitsCount.total !== 0
                 ? parseInt(
                     ((unitsCount.current + unitsCount.completed) /
@@ -513,15 +513,15 @@ function DegreePlan2(props) {
             </div>
           </div>
 
-          <div className={dp2Style.horizontalWrapper}>
+          <div className={dpStyle.horizontalWrapper}>
             {/* * * * Contains: * * * * 
                         1. Semester Plan selected
                         2. Course search Container
                         3. Degree Req Container 
                     */}
-            <div className={dp2Style.leftContainer}>
+            <div className={dpStyle.leftContainer}>
               {/* SEARCH CONTAINER for Courses */}
-              <div className={dp2Style.planSelectorContainer}>
+              <div className={dpStyle.planSelectorContainer}>
                 <Dropdown
                   options={semesterPlanOptions}
                   isObject={true}
@@ -534,7 +534,7 @@ function DegreePlan2(props) {
                 &nbsp;
                 {semesterPlanOptions && semesterPlanOptions?.length !== 0 && (
                   <IconButton
-                    className={dp2Style.editPlanButton}
+                    className={dpStyle.editPlanButton}
                     onClick={() => handlePopup('editPlanName', true)}
                   >
                     <ModeEditIcon fontSize="medium" />
@@ -542,7 +542,7 @@ function DegreePlan2(props) {
                 )}
                 &nbsp;
                 <IconButton
-                  className={dp2Style.editPlanButton}
+                  className={dpStyle.editPlanButton}
                   onClick={() => handlePopup('addPlan', true)}
                 >
                   <AddBoxIcon fontSize="medium" />
@@ -550,14 +550,14 @@ function DegreePlan2(props) {
                 &nbsp;
                 {semesterPlanOptions && semesterPlanOptions?.length !== 0 && (
                   <IconButton
-                    className={dp2Style.editPlanButton}
+                    className={dpStyle.editPlanButton}
                     onClick={() => handlePopup('removePlan', true)}
                   >
                     <IndeterminateCheckBoxIcon fontSize="medium" />
                   </IconButton>
                 )}
               </div>
-              <div className={dp2Style.existListWrapper}>
+              <div className={dpStyle.existListWrapper}>
                 <TextField
                   // label="Search Course"
                   placeholder="Search Course"
@@ -574,10 +574,10 @@ function DegreePlan2(props) {
                       </InputAdornment>
                     ),
                   }}
-                  className={dp2Style.inputSearch}
+                  className={dpStyle.inputSearch}
                 />
 
-                <div className={dp2Style.searchListContainer}>
+                <div className={dpStyle.searchListContainer}>
                   {loadMessage && courseSearchValue !== '' && (
                     <CircularProgress />
                   )}
@@ -630,26 +630,26 @@ function DegreePlan2(props) {
             {/* * * * Contains: * * * *
                         Degree Plan Grids 
                     */}
-            <div className={dp2Style.rightContainer}>
+            <div className={dpStyle.rightContainer}>
               {/* TITLE Container */}
-              <div className={dp2Style.semesterPlanTitleContainer}>
+              <div className={dpStyle.semesterPlanTitleContainer}>
                 <div />
-                <div className={dp2Style.semesterPlanTitle}>
+                <div className={dpStyle.semesterPlanTitle}>
                   {semesterPlanOptions && semesterPlanOptions?.length !== 0
                     ? semesterPlanOptions[selectedPlanIdx]?.plan_name
                     : "You don't have a degree plan. Make one!"}
                 </div>
                 {semesterPlanOptions && semesterPlanOptions?.length !== 0 ? (
-                  <div className={dp2Style.editSemesterButtonContainer}>
+                  <div className={dpStyle.editSemesterButtonContainer}>
                     <IconButton
-                      className={dp2Style.editSemesterButton}
+                      className={dpStyle.editSemesterButton}
                       onClick={() => handlePopup('addSemester', true)}
                     >
                       <AddBoxIcon fontSize="medium" />
                     </IconButton>
                     &nbsp;
                     <IconButton
-                      className={dp2Style.editSemesterButton}
+                      className={dpStyle.editSemesterButton}
                       onClick={() => handlePopup('removeSemester', true)}
                     >
                       <IndeterminateCheckBoxIcon fontSize="medium" />
@@ -661,7 +661,7 @@ function DegreePlan2(props) {
               </div>
 
               {/* PlanCards Container */}
-              <div className={dp2Style.planCardsContainer}>
+              <div className={dpStyle.planCardsContainer}>
                 {cardOptions &&
                   cardOptions?.map((card) => (
                     <PlanCard
@@ -683,10 +683,10 @@ function DegreePlan2(props) {
         </div>
       ) : (
         loaded && (
-          <div className={dp2Style.noSchedulewrapper}>
+          <div className={dpStyle.noSchedulewrapper}>
             <div>Create your plan now!</div>
             <IconButton
-              className={dp2Style.editPlanButton}
+              className={dpStyle.editPlanButton}
               onClick={() => handlePopup('addPlan', true)}
             >
               <AddBoxIcon fontSize="large" />
@@ -703,7 +703,7 @@ function DegreePlan2(props) {
             planName={semesterPlanOptions[selectedPlanIdx]?.plan_name}
             planID={semesterPlanOptions[selectedPlanIdx]?.plan_id}
             //pass down selectedPlanIdx
-            planIdx={selectedPlanIdx}
+            cardOptions={cardOptions}
             refreshPlans={fetchPlans}
             onShowAlert={() => setShowAlert(true)}
             setAlertMessage={setAlertMessage}
@@ -797,4 +797,4 @@ function DegreePlan2(props) {
   );
 }
 
-export default DegreePlan2;
+export default DegreePlan;

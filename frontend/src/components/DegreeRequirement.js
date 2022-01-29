@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* * * *  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * DegreePlan1.js
+ * DegreeRequirement.js
  *
  *
  */
@@ -22,7 +22,7 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
 import CancelIcon from '@material-ui/icons/Cancel';
-import dp1Style from './style/DegreePlan1.module.css';
+import degreeReqStyle from './style/DegreeRequirement.module.css';
 import pStyle from './reusable/reusableStyles/Popup.module.css';
 import Popup from './reusable/Popup';
 import SnackBarAlert from './reusable/SnackBarAlert';
@@ -31,7 +31,7 @@ import DegreeReqEdit from './reusable/DegreeReqEdit';
 import dStyle from './reusable/reusableStyles/Dropdown.module.css';
 import DegreeReqDisplay from './reusable/DegreeReqDisplay';
 import JarUserLogin from './reusable/JarUserLogin';
-import { RemovePrivReq } from './reusable/DegreePlan1Popup';
+import { RemovePrivReq } from './reusable/DegreeRequirementPopup';
 
 /* scripts */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -68,7 +68,7 @@ const degreeReqDefault = {
  *                  EXPORTED MAIN FUNCTIONAL COMPONENT                       *
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-function DegreePlan1(props) {
+function DegreeRequirement(props) {
   const {
     shrink,
     logged,
@@ -253,7 +253,7 @@ function DegreePlan1(props) {
     // {/* Encapsulates both 1) the search side, and 2) the degree req
     //           side.
     //           This flexbox has flex-direction: row */}
-    <div className={dp1Style.horizontalWrapper}>
+    <div className={degreeReqStyle.horizontalWrapper}>
       <Helmet>
         <title>JARney | Degree Requirement</title>
         <meta
@@ -264,9 +264,9 @@ function DegreePlan1(props) {
       {/* * * * * * * Includes Degree Req Selector * * * * * * */}
       {/* Includes 1) Existing degree req search list, 2) My List.
                     This flexbox has flex-direction: column */}
-      <div className={dp1Style.DegreeSearchWrapper}>
+      <div className={degreeReqStyle.DegreeSearchWrapper}>
         {/* SEARCH CONTAINER for an Existing Degree Requirement */}
-        <div className={dp1Style.myListWrapper}>
+        <div className={degreeReqStyle.myListWrapper}>
           <h5 style={{ textAlign: 'center' }}>Public degree requirements</h5>
           <TextField
             // label="Search Course"
@@ -284,14 +284,14 @@ function DegreePlan1(props) {
                 </InputAdornment>
               ),
             }}
-            className={dp1Style.inputSearch}
+            className={degreeReqStyle.inputSearch}
           />
         </div>
-        <div className={dp1Style.existListWrapper}>
-          <div className={dp1Style.searchListContainer}>
+        <div className={degreeReqStyle.existListWrapper}>
+          <div className={degreeReqStyle.searchListContainer}>
             {publicReqOptions?.map((option) => (
               <Button
-                className={dp1Style.publicReqButton}
+                className={degreeReqStyle.publicReqButton}
                 onClick={() => handlePublicDegreeDisplay(option)}
               >
                 {option.program_name}
@@ -299,15 +299,15 @@ function DegreePlan1(props) {
             ))}
           </div>
           {showPublicDegreeReq && (
-            <div className={dp1Style.DegreeReqListWrapper}>
-              <div className={dp1Style.degreeReqListExpandable}>
+            <div className={degreeReqStyle.DegreeReqListWrapper}>
+              <div className={degreeReqStyle.degreeReqListExpandable}>
                 <DegreeReqDisplay reqDetail={publicDegreeReqDetail} />
               </div>
             </div>
           )}
           {showPublicDegreeReq && (
             <Button
-              className={dp1Style.saveButton}
+              className={degreeReqStyle.saveButton}
               onClick={() => fetchPublicToPrivate()}
             >
               Add to my list
@@ -319,14 +319,14 @@ function DegreePlan1(props) {
       {/* * * * * * Includes the Degree Requirement Table * * * * * */}
 
       {degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx] ? (
-        <div className={dp1Style.DegreeReqWrapper}>
-          <div className={dp1Style.myListWrapper}>
+        <div className={degreeReqStyle.DegreeReqWrapper}>
+          <div className={degreeReqStyle.myListWrapper}>
             <h5>My degree requirements</h5>
 
             {/* options will be an array returned by API
                             options - degree req of current user */}
             <div
-              className={dp1Style.dropdownListWrapper}
+              className={degreeReqStyle.dropdownListWrapper}
               style={{ width: '90%' }}
             >
               <Dropdown
@@ -341,7 +341,7 @@ function DegreePlan1(props) {
               />
               &nbsp;
               <IconButton
-                className={dp1Style.editPlanButton}
+                className={degreeReqStyle.editPlanButton}
                 onClick={() => {
                   setNewMMPopup(true);
                   setEditDRPopup(true);
@@ -352,7 +352,7 @@ function DegreePlan1(props) {
               &nbsp;
               {degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx] && (
                 <IconButton
-                  className={dp1Style.editPlanButton}
+                  className={degreeReqStyle.editPlanButton}
                   onClick={() => handlePopup('removePrivateReq', true)}
                 >
                   <IndeterminateCheckBoxIcon fontSize="medium" />
@@ -360,10 +360,10 @@ function DegreePlan1(props) {
               )}
             </div>
           </div>
-          <div className={dp1Style.DegreeReqListWrapper}>
+          <div className={degreeReqStyle.DegreeReqListWrapper}>
             {/* info returned from API call
                             display the info of the selected degree plan */}
-            <div className={dp1Style.degreeReqListExpandable}>
+            <div className={degreeReqStyle.degreeReqListExpandable}>
               <DegreeReqDisplay
                 reqDetail={
                   degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx]
@@ -375,7 +375,7 @@ function DegreePlan1(props) {
                             displayed degree requirement */}
             {degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx] && (
               <Button
-                className={dp1Style.editButton}
+                className={degreeReqStyle.editButton}
                 onClick={() => {
                   setNewMMPopup(false);
                   setEditDRPopup(true);
@@ -389,11 +389,11 @@ function DegreePlan1(props) {
         </div>
       ) : (
         loaded && (
-          <div className={dp1Style.noDegreeReqWrapper}>
+          <div className={degreeReqStyle.noDegreeReqWrapper}>
             <h5>Add a requirement from Public degree requirements</h5>
             <h5>or create one now!</h5>
             <IconButton
-              className={dp1Style.editPlanButton}
+              className={degreeReqStyle.editPlanButton}
               onClick={() => {
                 setNewMMPopup(true);
                 setEditDRPopup(true);
@@ -462,4 +462,4 @@ function DegreePlan1(props) {
   );
 }
 
-export default DegreePlan1;
+export default DegreeRequirement;

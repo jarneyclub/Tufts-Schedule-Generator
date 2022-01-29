@@ -12,7 +12,7 @@ import React from 'react';
 
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import dp2Style from '../style/DegreePlan2.module.css';
+import dpStyle from '../style/DegreePlan.module.css';
 import tStyle from './reusableStyles/TabSwitch.module.css';
 import DegreeReqDisplay from '../reusable/DegreeReqDisplay';
 import PlanCard from './PlanCard';
@@ -53,8 +53,8 @@ function DegreeReqExpress() {
     /* Degree Requirment Container */
   }
   return (
-    <div className={dp2Style.degreeReqContainer}>
-      <div className={dp2Style.degreeReqTitleContainer}>
+    <div className={dpStyle.degreeReqContainer}>
+      <div className={dpStyle.degreeReqTitleContainer}>
         <IconButton onClick={() => handleSwitchReq(-1)}>
           <ArrowLeftIcon fontSize="large" />
         </IconButton>
@@ -63,7 +63,7 @@ function DegreeReqExpress() {
           <ArrowRightIcon fontSize="large" />
         </IconButton>
       </div>
-      <div className={dp2Style.degreeReqDetailContainer}>
+      <div className={dpStyle.degreeReqDetailContainer}>
         <DegreeReqDisplay reqDetail={degreeReqOptions[selectedDegreeReq]} />
       </div>
     </div>
@@ -109,8 +109,8 @@ function DegreePlanExpress() {
     /* Degree Requirment Container */
   }
   return (
-    <div className={dp2Style.degreeReqContainer}>
-      <div className={dp2Style.degreeReqTitleContainer}>
+    <div className={dpStyle.degreeReqContainer}>
+      <div className={dpStyle.degreeReqTitleContainer}>
         <IconButton onClick={() => handleSwitchReq(-1)}>
           <ArrowLeftIcon fontSize="large" />
         </IconButton>
@@ -121,7 +121,7 @@ function DegreePlanExpress() {
           <ArrowRightIcon fontSize="large" />
         </IconButton>
       </div>
-      <div className={dp2Style.degreeReqDetailContainer}>
+      <div className={dpStyle.degreeReqDetailContainer}>
         {degreePlanOptions &&
           degreePlanOptions[selectedDegreePlan]?.terms?.map((card) => (
             <PlanCard
