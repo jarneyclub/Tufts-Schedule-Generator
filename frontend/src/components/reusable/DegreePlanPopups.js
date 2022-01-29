@@ -82,7 +82,7 @@ function AddSemester(props) {
       }
     });
 
-    return true;
+    return false;
   };
 
   const handleAdd = () => {
