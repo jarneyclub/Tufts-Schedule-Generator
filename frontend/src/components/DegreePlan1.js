@@ -160,6 +160,7 @@ function DegreePlan1(props) {
 
     await fetch(
       'https://qa.jarney.club/api/degreereq/public/copy/'.concat(
+        //check if there are repeated terms
         publicDegreeReqDetail.pub_dr_id
       ),
       requestOption
@@ -181,6 +182,7 @@ function DegreePlan1(props) {
       })
       .then((result) => {
         setDegreeReqOptions(result.reqs);
+
         setLoaded(true);
       })
       .catch((error) => {});
