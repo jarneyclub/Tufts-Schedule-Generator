@@ -73,6 +73,11 @@ function AddSemester(props) {
   const validateAdd = () => {
     cardOptions.forEach((card) => {
       const time = card?.term.split(' ');
+      console.log(time[0] + '' + time[1]);
+      console.log(
+        yearOptions[selectedYearIdx] + '' + termOptions[selectedTermIdx]
+      );
+
       if (
         time[0] === yearOptions[selectedYearIdx] &&
         time[1] === termOptions[selectedTermIdx]
@@ -82,7 +87,7 @@ function AddSemester(props) {
       }
     });
 
-    return false;
+    return true;
   };
 
   const handleAdd = () => {
