@@ -92,6 +92,7 @@ function AddSemester(props) {
 
   const handleAdd = () => {
     /* do something API??  */
+    console.log('checkpoint!');
     const pass = validateAdd();
 
     if (pass) {
@@ -161,7 +162,7 @@ function AddSemester(props) {
         </div>
 
         <Button value="ADD" className={pStyle.submitButton} onClick={handleAdd}>
-          ADD
+          ADD 1
         </Button>
       </div>
     </div>
