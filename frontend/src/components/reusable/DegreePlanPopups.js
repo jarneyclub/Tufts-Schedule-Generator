@@ -98,6 +98,7 @@ function AddSemester(props) {
     const pass = validateAdd();
 
     if (pass) {
+      console.log('fetchAdd now...');
       fetchAdd();
     } else {
       setAlertMessage('term already exists!');
