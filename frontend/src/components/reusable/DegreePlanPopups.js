@@ -93,7 +93,7 @@ function AddSemester(props) {
 
   const handleAdd = () => {
     /* do something API??  */
-    console.log('checkpoint!');
+    console.log('checkpoint1');
     const pass = validateAdd();
 
     if (pass) {
