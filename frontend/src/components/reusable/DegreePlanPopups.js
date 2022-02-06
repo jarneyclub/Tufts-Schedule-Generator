@@ -71,6 +71,7 @@ function AddSemester(props) {
   };
 
   const validateAdd = () => {
+    var res = true;
     cardOptions.forEach((card) => {
       const time = card?.term.split(' ');
       console.log('time:', time[0] + '' + time[1]);
@@ -85,20 +86,20 @@ function AddSemester(props) {
         time[1] === '' + termOptions[selectedTermIdx]
       ) {
         console.log('This term already exists!');
-        return false;
+        res = false;
       }
     });
 
-    return true;
+    return res;
   };
 
   const handleAdd = () => {
     /* do something API??  */
     console.log('checkpoint1');
-    const pass = validateAdd();
-    console.log('the value of pass is: ' + pass);
+    // const pass = validateAdd();
+    // console.log('the value of pass is: ' + validateAdd());
 
-    if (pass === true) {
+    if (validateAdd() === true) {
       console.log('fetchAdd now...');
       fetchAdd();
     } else {
