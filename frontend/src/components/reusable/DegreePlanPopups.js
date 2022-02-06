@@ -96,8 +96,9 @@ function AddSemester(props) {
     /* do something API??  */
     console.log('checkpoint1');
     const pass = validateAdd();
+    console.log('the value of pass is: ' + pass);
 
-    if (pass) {
+    if (pass === true) {
       console.log('fetchAdd now...');
       fetchAdd();
     } else {
