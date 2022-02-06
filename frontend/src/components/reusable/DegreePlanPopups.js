@@ -161,7 +161,7 @@ function AddSemester(props) {
           />
         </div>
 
-        <Button value="ADD" className={pStyle.submitButton} onClick={handleAdd}>
+        <Button className={pStyle.submitButton} onClick={handleAdd}>
           ADD 1
         </Button>
       </div>
