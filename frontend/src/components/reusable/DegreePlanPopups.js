@@ -74,18 +74,13 @@ function AddSemester(props) {
     var res = true;
     cardOptions.forEach((card) => {
       const time = card?.term.split(' ');
-      console.log('time:', time[0] + '' + time[1]);
-      console.log(
-        'yearOptions: ',
-        yearOptions[selectedYearIdx] + '' + termOptions[selectedTermIdx]
-      );
-      console.log('true? ', time[0] === '' + yearOptions[selectedYearIdx]);
+
+      // console.log('true? ', time[0] === '' + yearOptions[selectedYearIdx]);
 
       if (
         time[0] === '' + yearOptions[selectedYearIdx] &&
         time[1] === '' + termOptions[selectedTermIdx]
       ) {
-        console.log('This term already exists!');
         res = false;
       }
     });
@@ -95,12 +90,8 @@ function AddSemester(props) {
 
   const handleAdd = () => {
     /* do something API??  */
-    console.log('checkpoint1');
-    // const pass = validateAdd();
-    // console.log('the value of pass is: ' + validateAdd());
 
     if (validateAdd() === true) {
-      console.log('fetchAdd now...');
       fetchAdd();
     } else {
       setAlertMessage('term already exists!');
