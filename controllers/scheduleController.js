@@ -1,7 +1,7 @@
 // const generate = require('../services/generateCourseScheduleV2/generateCourseSchedule.js');
 const coursesTermHandler = require('../services/handlers/coursesTerm.js');
 const scheduleHandler = require('../services/handlers/schedule.js');
-const activityHandler = require('../services/handlers/activity.js');
+const analyticsHandler = require('../services/handlers/analytics.js');
 const CourseSchedule = require('../services/generateCourseSchedule/generateCourseSchedule.js');
 const resHandler = require("./utils/resHandler.js");
 const Section = require('../models/internal/objects/classes/Section.js');
@@ -27,7 +27,7 @@ exports.makeEmptySchedule = async (req, res) => {
 
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "makeEmptySchedule");
+            analyticsHandler.saveApiUse(req.userid, "makeEmptySchedule");
         }
         
         // send response
@@ -47,7 +47,7 @@ exports.updateSchedule = async (req, res) => {
         const {sched_id, term_course_ids, filter} = req.body;
         // save activity if not developer
             if (req.role !== "developer") 
-                activityHandler.saveNormalActivity(req.userid, "updateSchedule");
+                analyticsHandler.saveApiUse(req.userid, "updateSchedule");
         // validate types
         if (typeof sched_id !== "string") 
             throw {id: "602", status: "400", title: "Schedule Error", detail : "Schedule ID is not a string"};
@@ -143,7 +143,7 @@ exports.updateSchedule = async (req, res) => {
 
                 // save activity if user is not developer
                 if (req.role !== "developer") {
-                    activityHandler.saveNormalActivity(req.userid, "updateSchedule");
+                    analyticsHandler.saveApiUse(req.userid, "updateSchedule");
                 }
                 
                 // send response
@@ -181,7 +181,7 @@ exports.getSchedules = async (req, res) => {
 
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "getSchedules");
+            analyticsHandler.saveApiUse(req.userid, "getSchedules");
         }
 
         res.json({schedules: schedules});
@@ -203,7 +203,7 @@ exports.changeScheduleName = async (req, res) => {
 
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "changeScheduleName");
+            analyticsHandler.saveApiUse(req.userid, "changeScheduleName");
         }
         
         res.json({schedule: newSchedule});
@@ -222,7 +222,7 @@ exports.deleteSchedule = async (req, res) => {
 
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "deleteSchedule");
+            analyticsHandler.saveApiUse(req.userid, "deleteSchedule");
         }
 
         res.json({"res": "Schedule deleted"});
@@ -239,24 +239,15 @@ const errorHandler = (err, endpoint, res, userid, userrole) => {
     console.error(err);
     if (err.detail !== undefined && err.title != undefined) {
         /* this is internally formatted error */
-
         // save error if user is not developer
-        if (userrole !== "developer") {
-            let errString = `id: ${err.id} | title: ${err.title} | detail: ${err.detail}`;
-            activityHandler.saveErrorActivity(userid, endpoint, err.status, errString);
-        }
-        
-        // send error response
-        resHandler.respondWithCustomError(err.id, err.status, err.title, err.detail, res);
+        const saveError = userrole !== "developer";
+        resHandler.respondWithCustomError(userid, endpoint, err.id, err.status, err.title, err.detail, err.detail, saveError, res);
+
     }
     else {
         console.error("(scheduleController/" + endpoint, err);
         // save error if user is not developer
-        if (userrole !== "developer") {
-            let errString = `id: 000 | title: Internal Server Error | detail: ${err}`;
-            activityHandler.saveErrorActivity(userid, endpoint, "500", errString);
-        }
-
-        resHandler.respondWithCustomError("000", "500", "Internal Server Error", err, res);
+        const saveError = userrole !== "developer";
+        resHandler.respondWithCustomError(userid, endpoint, "000", "500", "Internal Server Error", err.toString(), err.toString(), saveError, res);
     }
 }

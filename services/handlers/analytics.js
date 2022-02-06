@@ -4,7 +4,7 @@ const ApiUse = mongoose.model('ApiUse');
 const FrontendUse = mongoose.model('FrontendUse');
 
 
-exports.saveApiError = async (userid, feature, statusCode, errid, errtitle, errdetails) => {
+exports.saveApiError = async (userid, feature, errid, statusCode, errtitle, errdetails) => {
     try {
         let newApiError = new ApiError({
             type: "api_error",
