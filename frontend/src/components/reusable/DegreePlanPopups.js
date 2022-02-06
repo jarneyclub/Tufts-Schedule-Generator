@@ -78,7 +78,7 @@ function AddSemester(props) {
         'yearOptions: ',
         yearOptions[selectedYearIdx] + '' + termOptions[selectedTermIdx]
       );
-      console.log('true? ', time[0] === yearOptions[selectedYearIdx]);
+      console.log('true? ', time[0] === '' + yearOptions[selectedYearIdx]);
 
       if (
         time[0] === yearOptions[selectedYearIdx] &&
