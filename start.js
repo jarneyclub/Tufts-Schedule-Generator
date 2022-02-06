@@ -27,6 +27,7 @@ require('./models/external/ErrorActivity');
 require('./models/external/NormalActivity');
 require('./models/external/ApiError');
 require('./models/external/ApiUse');
+require('./models/external/FrontendUse');
 // start app
 const app = require('./app');
 app.set('port', process.env.DEV_PORT || 7777);
