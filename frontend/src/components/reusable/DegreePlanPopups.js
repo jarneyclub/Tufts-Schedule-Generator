@@ -81,8 +81,8 @@ function AddSemester(props) {
       console.log('true? ', time[0] === '' + yearOptions[selectedYearIdx]);
 
       if (
-        time[0] === yearOptions[selectedYearIdx] &&
-        time[1] === termOptions[selectedTermIdx]
+        time[0] === '' + yearOptions[selectedYearIdx] &&
+        time[1] === '' + termOptions[selectedTermIdx]
       ) {
         console.log('This term already exists!');
         return false;
