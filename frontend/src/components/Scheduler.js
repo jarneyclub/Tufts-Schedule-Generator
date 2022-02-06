@@ -526,59 +526,7 @@ function Scheduler(props) {
                         3. preferenceContainer 
                     */}
             <div className={sStyle.courseContainer}>
-              <div className={sStyle.searchCourseContainer}>
-                <TextField
-                  // label="Search Course"
-                  placeholder="Search Course"
-                  onChange={handleSearchChange}
-                  value={courseSearchValue}
-                  type="text"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                  className={sStyle.inputSearch}
-                />
-                <div className={sStyle.filterContainer}>
-                  <Dropdown
-                    classes={sStyle.dropdown}
-                    options={attributes}
-                    selectedOption={selectedAttribute}
-                    selectedIdx={selectedAttributeIdx}
-                    onOptionChange={handleFilterChange}
-                    labelId="filter"
-                    labelName="Filter"
-                  />
-                </div>
-              </div>
-
-              <div className={sStyle.courseListContainer}>
-                {loadMessage && courseSearchValue !== '' && (
-                  <CircularProgress />
-                )}
-                {!loadMessage &&
-                  searchCourseResult?.map((course) => (
-                    <CourseSearchBar
-                      courseDetail={course}
-                      key={course.course_num.concat(course.course_title)}
-                      draggable={false}
-                      onDoubleClick={handleDoubleClickCourseList}
-                      origin={'schedulerCourseList'}
-                      customStyle={{
-                        border: 'none',
-                        justifyContent: 'space-between',
-                      }}
-                      onClick={handleShowCourseInfo}
-                    />
-                  ))}
-              </div>
-
+              {/*time preference */}
               <div className={sStyle.preferenceContainer}>
                 <FormControl className={sStyle.leftCheckboxContainer}>
                   <FormLabel>Generate Schedule With:</FormLabel>
@@ -635,6 +583,62 @@ function Scheduler(props) {
                   </Button>
                 </FormControl>
               </div>
+              {/*time preference */}
+
+              {/*search bar and filter*/}
+              <div className={sStyle.searchCourseContainer}>
+                <TextField
+                  // label="Search Course"
+                  placeholder="Search Course"
+                  onChange={handleSearchChange}
+                  value={courseSearchValue}
+                  type="text"
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                  className={sStyle.inputSearch}
+                />
+                <div className={sStyle.filterContainer}>
+                  <Dropdown
+                    classes={sStyle.dropdown}
+                    options={attributes}
+                    selectedOption={selectedAttribute}
+                    selectedIdx={selectedAttributeIdx}
+                    onOptionChange={handleFilterChange}
+                    labelId="filter"
+                    labelName="Filter"
+                  />
+                </div>
+              </div>
+
+              <div className={sStyle.courseListContainer}>
+                {loadMessage && courseSearchValue !== '' && (
+                  <CircularProgress />
+                )}
+                {!loadMessage &&
+                  searchCourseResult?.map((course) => (
+                    <CourseSearchBar
+                      courseDetail={course}
+                      key={course.course_num.concat(course.course_title)}
+                      draggable={false}
+                      onDoubleClick={handleDoubleClickCourseList}
+                      origin={'schedulerCourseList'}
+                      customStyle={{
+                        border: 'none',
+                        justifyContent: 'space-between',
+                      }}
+                      onClick={handleShowCourseInfo}
+                    />
+                  ))}
+              </div>
+              {/*search bar and filter*/}
             </div>
             <div className={sStyle.rightButtonContainer}>
               <Button
