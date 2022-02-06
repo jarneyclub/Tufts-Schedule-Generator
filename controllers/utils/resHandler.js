@@ -41,7 +41,7 @@ exports.respondWithCustomError = (userid, feature, errid, status, err_title, err
                 {
                     id: errid,
                     status: status,
-                    title: title,
+                    title: err_title,
                     detail: err_desc
                 }
             ]
