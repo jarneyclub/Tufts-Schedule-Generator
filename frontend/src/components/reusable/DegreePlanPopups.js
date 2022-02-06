@@ -73,8 +73,9 @@ function AddSemester(props) {
   const validateAdd = () => {
     cardOptions.forEach((card) => {
       const time = card?.term.split(' ');
-      console.log(time[0] + '' + time[1]);
+      console.log('time:', time[0] + '' + time[1]);
       console.log(
+        'yearOptions: ',
         yearOptions[selectedYearIdx] + '' + termOptions[selectedTermIdx]
       );
 
