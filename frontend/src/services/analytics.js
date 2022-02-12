@@ -11,3 +11,5 @@ const saveFrontendUse = (feature, data) => {
       .then(response => {})
       .catch(error => {});
 };
+
+export default saveFrontendUse;
