@@ -39,13 +39,14 @@ exports.saveApiUse = async (userid, feature) => {
 
 exports.saveFrontendUse = async (feature, data) => {
     try {
-        let newFrontendUse = new ApiUse({
+        let newFrontendUse = new FrontendUse({
             type: "frontend_use",
             feature: feature,
             data: data,
             date: Date.now()
         });
-        newFrontendUse.save();
+        await newFrontendUse.save();
+        return newFrontendUse._id.valueOf();
     }
     catch (e) {
         errorHandler(e, "saveFrontendUse");

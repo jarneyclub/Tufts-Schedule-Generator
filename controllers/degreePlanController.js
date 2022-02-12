@@ -1,7 +1,7 @@
 // load database api
 const degreePlanAPI = require('../services/handlers/degreePlan.js');
 const analyticsHandler = require('../services/handlers/analytics.js');
-const resHandler = require("./utils/resHandler.js");
+const errorHandler = require("./utils/controllerErrorHandler.js").getErrorHandler("degreePlanController");
 // const errorHandler = require('../services/handlers/errorHandler');
 
 /**
@@ -273,21 +273,4 @@ exports.deleteTerm = async (req, res) => {
     .catch(err => {
         errorHandler(err, "deleteTerm", res, req.userid, req.role);
     })
-}
-
-
-const errorHandler = (err, endpoint, res, userid, userrole) => {
-    console.error("(dPController/errorhandler) err: ", err);
-    if (err.detail !== undefined && err.title != undefined) {
-        /* this is internally formatted error */
-        // save error if user is not developer
-        const saveError = userrole !== "developer";
-        resHandler.respondWithCustomError(userid, endpoint, err.id, err.status, err.title, err.detail, err.detail, saveError, res);
-    }
-    else {
-        console.error("(degreePlanController/" + endpoint, err);
-        // save error if user is not developer
-        const saveError = userrole !== "developer";
-        resHandler.respondWithCustomError(userid, endpoint, "000", "500", "Internal Server Error", err.toString(), err.toString(), saveError, res);
-    }
 }

@@ -1,7 +1,7 @@
 // load database api
 const degreeReqAPI = require('../services/handlers/degreeReq.js');
 const analyticsHandler = require('../services/handlers/analytics.js');
-const resHandler = require("./utils/resHandler.js");
+const errorHandler = require("./utils/controllerErrorHandler.js").getErrorHandler("degreeReqController");
 const mongoose = require('mongoose');
 
 /**
@@ -320,18 +320,4 @@ exports.deleteDegreeReqPrivate = async (req, res) => {
     }
 }
 
-const errorHandler = (err, endpoint, res, userid, userrole) => {
-    console.error("(degreeReqController/errorhandler) err: ", err + "at endpoint (" + endpoint + ")");
-    if (err.detail !== undefined && err.title != undefined) {
-        /* this is internally formatted error */
-        // save error if user is not developer
-        const saveError = userrole !== "developer";
-        resHandler.respondWithCustomError(userid, endpoint, err.id, err.status, err.title, err.detail, err.detail, saveError, res);
-    }
-    else {
-        console.error("(degreeReqController/" + endpoint, err);
-        // save error if user is not developer
-        const saveError = userrole !== "developer";
-        resHandler.respondWithCustomError(userid, endpoint, "000", "500", "Internal Server Error", err.toString(), err.toString(), saveError, res);
-    }
-}
+

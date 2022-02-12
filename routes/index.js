@@ -188,6 +188,16 @@ router.post('/responses',
 
 ////////////////////////////////////////
 //                                    //
+//            Analytics               //
+//                                    //
+////////////////////////////////////////
+router.post('/analytics',
+            authController.authenticateToken,
+            authController.signAccessTokenAndAttachCookie,
+            analyticsController.saveFrontendUse);
+
+////////////////////////////////////////
+//                                    //
 //          Jeremy's change           //
 //                                    //
 ////////////////////////////////////////

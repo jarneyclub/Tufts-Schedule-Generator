@@ -3,7 +3,7 @@ const coursesTermHandler = require('../services/handlers/coursesTerm.js');
 const scheduleHandler = require('../services/handlers/schedule.js');
 const analyticsHandler = require('../services/handlers/analytics.js');
 const CourseSchedule = require('../services/generateCourseSchedule/generateCourseSchedule.js');
-const resHandler = require("./utils/resHandler.js");
+const errorHandler = require("./utils/controllerErrorHandler.js").getErrorHandler("scheduleController");
 const Section = require('../models/internal/objects/classes/Section.js');
 const Course = require('../models/internal/objects/classes/Course.js');
 const Class = require('../models/internal/objects/classes/Class.js');
@@ -232,22 +232,3 @@ exports.deleteSchedule = async (req, res) => {
     }
 }
 
-
-
-const errorHandler = (err, endpoint, res, userid, userrole) => {
-    console.error("(scheduleController/errorhandler) err: ", err);
-    console.error(err);
-    if (err.detail !== undefined && err.title != undefined) {
-        /* this is internally formatted error */
-        // save error if user is not developer
-        const saveError = userrole !== "developer";
-        resHandler.respondWithCustomError(userid, endpoint, err.id, err.status, err.title, err.detail, err.detail, saveError, res);
-
-    }
-    else {
-        console.error("(scheduleController/" + endpoint, err);
-        // save error if user is not developer
-        const saveError = userrole !== "developer";
-        resHandler.respondWithCustomError(userid, endpoint, "000", "500", "Internal Server Error", err.toString(), err.toString(), saveError, res);
-    }
-}
