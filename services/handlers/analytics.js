@@ -37,10 +37,12 @@ exports.saveApiUse = async (userid, feature) => {
     }
 }
 
-exports.saveFrontendUse = async () => {
+exports.saveFrontendUse = async (feature, data) => {
     try {
         let newFrontendUse = new ApiUse({
             type: "frontend_use",
+            feature: feature,
+            data: data,
             date: Date.now()
         });
         newFrontendUse.save();
