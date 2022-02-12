@@ -13,6 +13,7 @@ const responsesController = require('../controllers/responsesController.js')
 // const listController = require('../controllers/courses/listController.js');
 const userController = require('../controllers/auth/userController.js');
 const authController = require('../controllers/auth/authController.js');
+const analyticsController = require('../controllers/analyticsController.js');
 
 ////////////////////////////////////////
 //                                    //
