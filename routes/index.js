@@ -213,9 +213,12 @@ router.get('/jeremy', function (req, res) {
 *
 */
 router.get('/pamela', function(req, res){
+    let info = makedatabaserequest(field);
     res.json({
-        'message': 'pamela\'s endpoint'
-    });
+        'message': 'pamela\'s endpoint',
+        'info': info    });
+    
+    
 }
 );
 
