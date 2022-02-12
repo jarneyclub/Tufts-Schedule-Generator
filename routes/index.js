@@ -207,4 +207,15 @@ router.get('/jeremy/:field', function (req, res) {
 }
 );
 
+
+/* 
+* called when someone makes a GET req to https://jarney.club/api/pamela
+*
+*/
+router.get('/pamela', function(req, res){
+    res.json({
+        'message': 'pamela\'s endpoint'
+    });
+});
+
 module.exports = router;
