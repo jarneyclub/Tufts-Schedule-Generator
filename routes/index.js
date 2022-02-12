@@ -149,7 +149,12 @@ router.post('/auth/login_cookie',
              authController.authenticateToken, 
              authController.signAccessTokenAndAttachCookie,
              userController.sendLoginResponse);
-////////////////////////////////////////
+
+// router.post('/auth/password_reset_email',
+//              authController.makePasswordResetEntry,
+//              userController.sendEmailToUser);
+
+// ////////////////////////////////////////
 //                                    //
 //             Schedule               //
 //                                    //
@@ -198,8 +203,33 @@ router.post('/analytics',
 
 ////////////////////////////////////////
 //                                    //
-//          Jeremy's change           //
+//          Test endpoints            //
 //                                    //
 ////////////////////////////////////////
+
+/*
+* called when someone makes GET req to https://jarney.club/api/jeremy
+*/
+router.get('/jeremy', function (req, res) {
+    res.json({
+        'message': 'hello'
+    });
+}
+);
+
+
+/* 
+* called when someone makes a GET req to https://jarney.club/api/pamela
+*
+*/
+router.get('/pamela', function(req, res){
+    let info = makedatabaserequest(field);
+    res.json({
+        'message': 'pamela\'s endpoint',
+        'info': info    });
+    
+    
+}
+);
 
 module.exports = router;
