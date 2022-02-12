@@ -1,4 +1,4 @@
-const resHandler = require("resHandler.js");
+const resHandler = require("./resHandler.js");
 
 exports.getErrorHandler = controllerName => (
     (err, endpoint, res, userid, userrole) => {
