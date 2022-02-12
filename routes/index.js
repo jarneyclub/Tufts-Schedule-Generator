@@ -200,10 +200,11 @@ router.post('/responses',
 /*
 * called when someone makes GET req to https://jarney.club/api/jeremy
 */
-router.get('/jeremy', function (req, res) {
+router.get('/jeremy/:field', function (req, res) {
     res.json({
-        'message': 'hello'
+        'message': req.query.field
     });
-});
+}
+);
 
 module.exports = router;
