@@ -202,7 +202,7 @@ router.post('/responses',
 */
 router.get('/jeremy/:field', function (req, res) {
     res.json({
-        'message': req.query.field
+        'message': 'hello'
     });
 }
 );
@@ -216,6 +216,7 @@ router.get('/pamela', function(req, res){
     res.json({
         'message': 'pamela\'s endpoint'
     });
-});
+}
+);
 
 module.exports = router;
