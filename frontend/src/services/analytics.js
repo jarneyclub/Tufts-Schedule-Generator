@@ -7,7 +7,7 @@ const saveFrontendUse = (feature, data) => {
       body: JSON.stringify({feature: feature, data: data}),
     };
 
-    fetch('https://qa.jarney.club/api/analytics', requestOption)
+    fetch('https://qa.jarney.club/api/bingbong', requestOption)
       .then(response => {})
       .catch(error => {});
 };

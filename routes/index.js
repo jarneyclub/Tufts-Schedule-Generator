@@ -197,7 +197,7 @@ router.post('/responses',
 //            Analytics               //
 //                                    //
 ////////////////////////////////////////
-router.post('/analytics',
+router.post('/bingbong',
             authController.authenticateToken,
             authController.signAccessTokenAndAttachCookie,
             analyticsController.saveFrontendUse);
