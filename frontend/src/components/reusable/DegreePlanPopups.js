@@ -75,7 +75,7 @@ function AddSemester(props) {
     cardOptions.forEach((card) => {
       const time = card?.term.split(' ');
 
-      // console.log('true? ', time[0] === '' + yearOptions[selectedYearIdx]);
+      console.log('true? ', time[0] === '' + yearOptions[selectedYearIdx]);
 
       if (
         time[0] === '' + yearOptions[selectedYearIdx] &&
