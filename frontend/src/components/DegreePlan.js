@@ -40,6 +40,7 @@ import {
 } from './reusable/DegreePlanPopups';
 import { DegreeReqExpress } from './reusable/TabSwitch';
 import sStyle from './style/Scheduler.module.css';
+import saveFrontendUse from '../services/analytics';
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
@@ -379,6 +380,9 @@ function DegreePlan(props) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(planTermDetails),
     };
+
+    // Testing analytics, temporary:
+    saveFrontendUse('test feature', {foo: 'bar', hey: 9});
 
     await fetch('https://qa.jarney.club/api/degreeplan/term', requestOption)
       .then((response) => {
