@@ -839,6 +839,11 @@ paths:
                 properties:
                   schedule:
                     $ref: "#/components/schemas/Schedule"
+  ####################
+  #                  #
+  #     RESPONSES    #
+  #                  #
+  ####################
   /responses:
     post:
       tags:
@@ -862,6 +867,32 @@ paths:
           description: Update was successful
         400:
           description: Input could not be validated
+
+  ####################
+  #                  #
+  #     ANALYTICS    #
+  #                  #
+  ####################
+  /bingbong:
+    post:
+      tags:
+        - Analytics
+      summary: Save a log of a frontend feature use to the server database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                feature:
+                  type: string
+                data:
+                  type: object
+      responses:
+        200:
+          description: Update was successful
+
 
 components:
   schemas:
