@@ -53,6 +53,6 @@ const scheduleV2_Schema = new Schema({
     term: String
 });
 
-schedule_Schema.plugin(mongodbErrorHandler);
+schedule_SchemaV2.plugin(mongodbErrorHandler);
 
-module.exports = mongoose.model('ScheduleV2', schedule_Schema);
+module.exports = mongoose.model('ScheduleV2', scheduleV2_Schema);
