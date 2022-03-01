@@ -382,7 +382,7 @@ function DegreePlan(props) {
     };
 
     // Testing analytics, temporary:
-    saveFrontendUse('test feature', {foo: 'bar', hey: 9});
+    // saveFrontendUse('test feature', {foo: 'bar', hey: 9});
 
     await fetch('https://qa.jarney.club/api/degreeplan/term', requestOption)
       .then((response) => {

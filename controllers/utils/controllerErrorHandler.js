@@ -1,5 +1,8 @@
 const resHandler = require("./resHandler.js");
 
+/* Function that returns an error handler function for the controllers.
+ * See the controllers e.g. degreePlanController.js to see how it is used.
+ */
 exports.getErrorHandler = controllerName => (
     (err, endpoint, res, userid, userrole) => {
         console.error(`(${controllerName}/${endpoint}) err: `, err);
