@@ -806,6 +806,7 @@ function Scheduler(props) {
         </div>
       ) : (
         <div className={sStyle.noSchedulewrapper}>
+          <div>Shopping cart is removed</div>
           {/* <div>Create your schedule now!</div>
           <IconButton
             className={sStyle.editPlanButton}
