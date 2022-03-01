@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schedule = mongoose.model('Schedule');
 
+/*Pam changes here*/
 exports.createSchedule   = async (userId, scheduleName, filter, term, courses, classes) => {   
     try {
         if (filter == undefined) {
@@ -143,7 +144,7 @@ exports.createSchedule   = async (userId, scheduleName, filter, term, courses, c
             sched_name: scheduleName,
             user_id: userId,
             filter: filter,
-            events: classes,
+            events: classes, /*Pam change here for if classes are defined */
             courses: courses,
             term: term
         });
@@ -162,7 +163,8 @@ exports.createSchedule   = async (userId, scheduleName, filter, term, courses, c
         errorHandler(e, "createSchedule");
     }
 }
-
+/*Pam changes here
+If updateSchedule takes in a new parameter, new schema item*/
 exports.updateSchedule = async (id, filter, courses, classes) => {
     try {
         // TODO no schedule with given id was found
@@ -173,7 +175,7 @@ exports.updateSchedule = async (id, filter, courses, classes) => {
         }, {
             filter     : filter,
             courses    : courses,
-            events     : classes
+            events     : classes /*Pam change here*/
         }, {
             new: true,
             upsert: false
