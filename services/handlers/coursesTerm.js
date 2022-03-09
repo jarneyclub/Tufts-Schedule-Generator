@@ -88,7 +88,7 @@ const getSectionsForSingleCourse = async (termCourseIdInput) => {
  * @param {*} mapSecTypeToUnits e.g.{'Lecture': 3, 'Laboratory': 2}
  * @return {number}
  */
-const getTotalUnits = async (mapSecTypeToUnits) => {
+const getTotalUnits = (mapSecTypeToUnits) => {
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
     return Object.values(mapSecTypeToUnits).reduce(reducer);
 }
