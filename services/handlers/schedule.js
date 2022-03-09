@@ -173,7 +173,9 @@ If updateSchedule takes in a new parameter, new schema item*/
 exports.updateSchedule = async (id, filter, courses, classes) => {
     try {
         // TODO no schedule with given id was found
-        console.log("(schedule/updateSchedule) filter: ", filter);
+        // console.log("(schedule/updateSchedule) filter: ", filter);
+        console.log("(schedule/updateSchedule) courses: ", courses);
+        console.log("(schedule/updateSchedule) classes: ", classes);
         // update schedule 
         let newSchedule = await Schedule.findOneAndUpdate({
             _id: mongoose.Types.ObjectId(id)
