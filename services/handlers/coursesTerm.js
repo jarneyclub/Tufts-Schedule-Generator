@@ -16,11 +16,15 @@ const getCourseObject = async (termCourseId) => {
     let arrSections = await getSectionsForSingleCourse(termCourseId);
     let mapSecTypeToSectionMap = {}; // e.g.{'Lecture': {0: Section...}}
     let mapSecTypeToUnits = {}; // e.g.{'Lecture': 5}
+    let courseNum = undefined;
+    let courseTitle = undefined;
     for (let j = 0; j < arrSections.length; j++) {
         // parse section information
         let currSection = arrSections[j];
-        console.log("(getCourse) currSection.section_num: ", currSection.section_num);
-        console.log("(getCourse) currSection.term_section_id: ", currSection.term_section_id);
+        console.log("(getCourseObject) currSection.section_num: ", currSection.section_num);
+        console.log("(getCourseObject) currSection.term_section_id: ", currSection.term_section_id);
+        courseNum = currSection.course_num;
+        courseTitle = currSection.course_title;
         // log units of this section type
         mapSecTypeToUnits[currSection.section_type] = currSection.units;
 
@@ -52,7 +56,7 @@ const getCourseObject = async (termCourseId) => {
         }
     } // (End of) iteration through sections
     let courseObject = 
-        new Course(currSection.course_num, currSection.course_title, Object.keys(mapSecTypeToSectionMap), 
+        new Course(courseNum, courseTitle, Object.keys(mapSecTypeToSectionMap), 
                     mapSecTypeToSectionMap, getTotalUnits(mapSecTypeToUnits), termCourseId);
     return courseObject;
 }
@@ -69,7 +73,6 @@ const getSectionsForSingleCourse = async (termCourseIdInput) => {
         let cursor = await dbSections.find({term_course_id: termCourseIdInput});
         let documents = [];
         await cursor.forEach(async (doc) => {
-            
             doc._id = doc["_id"].valueOf(); //Pam CHANGE THIS
             documents.push(doc);
         });
