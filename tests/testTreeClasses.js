@@ -849,26 +849,26 @@ const testTreeGetObjects = () => {
 const testTree = () => {
     console.log("### Testing TREE 2 ###");
     let testResults = [];
-    // testResults.push(testInsertion());
-    // testResults.push(testLeftInsertion());
-    // testResults.push(testRightInsertion());
-    // testResults.push(testBSTInvariant());
-    // testResults.push(testLeftRotation());
-    // testResults.push(testRightLeftRotation());
-    // testResults.push(testLeftRightRotation());
-    // testResults.push(testLeftRotationRoot());
-    // testResults.push(testRightRotation());
-    // testResults.push(testRightRotationRoot());
-    // testResults.push(testNoIntersectionQueryLeft());
+    testResults.push(testInsertion());
+    testResults.push(testLeftInsertion());
+    testResults.push(testRightInsertion());
+    testResults.push(testBSTInvariant());
+    testResults.push(testLeftRotation());
+    testResults.push(testRightLeftRotation());
+    testResults.push(testLeftRightRotation());
+    testResults.push(testLeftRotationRoot());
+    testResults.push(testRightRotation());
+    testResults.push(testRightRotationRoot());
+    testResults.push(testNoIntersectionQueryLeft());
     // testResults.push(testNoIntersectionQueryRight());
-    // testResults.push(testIntersectionQueryLeft());
-    // testResults.push(testIntersectionQueryRight());
-    // testResults.push(testIntersectionQueryExactSame());
-    // testResults.push(testIntersectionQueryExactSameLeft());
-    // testResults.push(testIntersectionQueryOverlapInside());
-    // testResults.push(testIntersectionAnomalyOne());
-    testResults.push(testIntersectionAnomalyTwo());
-    // testResults.push(testTreeGetObjects());
+    testResults.push(testIntersectionQueryLeft());
+    testResults.push(testIntersectionQueryRight());
+    testResults.push(testIntersectionQueryExactSame());
+    testResults.push(testIntersectionQueryExactSameLeft());
+    testResults.push(testIntersectionQueryOverlapInside());
+    testResults.push(testIntersectionAnomalyOne());
+    // testResults.push(testIntersectionAnomalyTwo());
+    testResults.push(testTreeGetObjects());
 
     let testsPass = true;
     for (let index in testResults) {

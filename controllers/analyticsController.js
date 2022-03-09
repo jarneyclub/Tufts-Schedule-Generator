@@ -1,6 +1,13 @@
+/*
+* Name: analyticsController.js
+* API endpoints implementation for frontend usage analytics operations.
+* 
+* 
+*/
+
+
 const analyticsHandler = require('../services/handlers/analytics.js');
 const errorHandler = require("./utils/controllerErrorHandler.js").getErrorHandler("analyticsController");
-
 
 exports.saveFrontendUse = async (req, res) => {
     const start = Date.now();

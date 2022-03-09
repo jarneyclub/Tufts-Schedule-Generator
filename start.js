@@ -1,8 +1,11 @@
+/*
+* Name: start.js
+* Initialization required for the functioning of the server must be 
+* done in this file.
+* 
+* 
+*/
 const mongoose = require('mongoose');
-const http = require('http');
-const https = require('https');
-const fs = require('fs'); 
-const path = require("path");
 
 // import environmental variables
 require('dotenv').config({path: '.env'});

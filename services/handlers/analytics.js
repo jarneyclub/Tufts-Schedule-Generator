@@ -1,3 +1,8 @@
+/*
+* Name: analytics.js
+* Functions for saving usage information into the database
+*/
+
 const mongoose = require('mongoose');
 const ApiError = mongoose.model('ApiError');
 const ApiUse = mongoose.model('ApiUse');

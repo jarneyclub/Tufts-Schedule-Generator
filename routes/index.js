@@ -1,8 +1,15 @@
+/*
+* index.js
+* This file contains the highest level routes and middleware 
+* for the application.
+* 
+* 
+*/
+
 const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
 /* Controllers */
-const courseScheduleController = require('../controllers/courses/courseScheduleController.js');
 // const searchIndexController = require('../controllers/courses/searchIndexController.js');
 // const docsController = require('../controllers/courses/docsController.js');
 const courseController = require('../controllers/courseController.js');

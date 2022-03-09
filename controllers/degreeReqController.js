@@ -1,3 +1,10 @@
+/*
+* Name: degreeReqController.js
+* API endpoints implementation for schedule related operations
+* 
+* 
+*/
+
 // load database api
 const degreeReqAPI = require('../services/handlers/degreeReq.js');
 const analyticsHandler = require('../services/handlers/analytics.js');

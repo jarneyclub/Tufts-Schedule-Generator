@@ -1,3 +1,8 @@
+/*
+* Name: schedule.js
+* Functions for getting/putting database information about schedules
+*/
+
 const mongoose = require('mongoose');
 const Schedule = mongoose.model('Schedule');
 
