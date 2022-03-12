@@ -73,7 +73,7 @@ const getSectionsForSingleCourse = async (termCourseIdInput) => {
         let cursor = await dbSections.find({term_course_id: termCourseIdInput});
         let documents = [];
         await cursor.forEach(async (doc) => {
-            doc._id = doc["_id"].valueOf(); //Pam CHANGE THIS
+            doc._id = doc["_id"].valueOf(); //documents array stores ids
             documents.push(doc);
         });
         return documents;

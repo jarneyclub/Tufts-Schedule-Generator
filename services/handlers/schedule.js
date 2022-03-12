@@ -228,7 +228,7 @@ exports.changeScheduleName = async (id, newName) => {
         errorHandler(e, "changeScheduleName");
     }
 }
-
+/*Gets schedule of user from database with section database ids instead of sections arrays*/
 exports.getSchedulesOfUser = async (userId) => {
     try {
         let scheduleCollection = mongoose.connection.collection("schedules"); // get MongoDB collection
@@ -237,6 +237,7 @@ exports.getSchedulesOfUser = async (userId) => {
         });
         // convert cursor to array
         let documents = [];
+        /*Each doc is a schedule document*/
         await cursor.forEach((doc) => {
             // parse degree requirement
             let docParsed = {
@@ -245,6 +246,8 @@ exports.getSchedulesOfUser = async (userId) => {
                 filter     : doc.filter,
                 term       : doc.term,
                 courses    : doc.courses,
+                //change here...
+                //for each DOW array, populate 'sections'
                 classes    : doc.events
             };
             documents.push(docParsed);

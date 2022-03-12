@@ -7,6 +7,7 @@
 const coursesTermHandler = require('../services/handlers/coursesTerm.js');
 const scheduleHandler = require('../services/handlers/schedule.js');
 const analyticsHandler = require('../services/handlers/analytics.js');
+const sectionIdParser = require('../services/generateCourseSchedule/parseSectionIdsInSchedule.js');
 const CourseSchedule = require('../services/generateCourseSchedule/generateCourseSchedule.js');
 const errorHandler = require("./utils/controllerErrorHandler.js").getErrorHandler("scheduleController");
 
@@ -117,8 +118,12 @@ exports.updateSchedule = async (req, res) => {
 exports.getSchedules = async (req, res) => {
     try {
         let userId = req.userid;
+        /*Array of schedule documents where each DOW event is a Section Id*/
         let schedules = await scheduleHandler.getSchedulesOfUser(userId);
-
+        
+        /*Array of schedule documents where each DOW event has proper attributes*/
+        //let refined_schedules = await sectionIdParser.parseSectionIdsInSchedule(schedules);
+            
         // save activity if user is not developer
         if (req.role !== "developer") {
             analyticsHandler.saveApiUse(req.userid, "getSchedules");

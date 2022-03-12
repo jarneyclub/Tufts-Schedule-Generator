@@ -1,15 +1,8 @@
-/*
-* index.js
-* This file contains the highest level routes and middleware 
-* for the application.
-* 
-* 
-*/
-
 const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
 /* Controllers */
+const courseScheduleController = require('../controllers/courses/courseScheduleController.js');
 // const searchIndexController = require('../controllers/courses/searchIndexController.js');
 // const docsController = require('../controllers/courses/docsController.js');
 const courseController = require('../controllers/courseController.js');
@@ -230,13 +223,11 @@ router.get('/jeremy', function (req, res) {
 * called when someone makes a GET req to https://jarney.club/api/pamela
 *
 */
-router.get('/pamela', function(req, res){
+router.get('/pamela', function(req, res) {
     let info = makedatabaserequest(field);
     res.json({
-        'message': 'pamela\'s endpoint',
+        'message': 'pamela\'s endpoint test1',
         'info': info    });
-    
-    
 }
 );
 
