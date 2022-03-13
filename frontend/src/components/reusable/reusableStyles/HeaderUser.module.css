@@ -86,7 +86,7 @@
   border-top: #5a32bf 5px solid;
 }
 
-.activeNavOption {
+/* .activeNavOption {
   padding-left: 10px;
   padding-right: 10px;
 
@@ -100,7 +100,7 @@
   border-top: #5a32bf 5px solid;
 
   white-space: nowrap;
-}
+} */
 
 .activeNavOption:hover {
   color: #5a32bf;
