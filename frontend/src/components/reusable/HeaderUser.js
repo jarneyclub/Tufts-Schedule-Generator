@@ -14,6 +14,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import HelpIcon from '@material-ui/icons/Help';
 import hStyle from './reusableStyles/HeaderUser.module.css';
 import logo from '../res/JARney.png';
+import newLogo from '../res/favicon.png';
 import Popup from './Popup';
 import JarUserLogin from './JarUserLogin';
 
@@ -63,7 +64,12 @@ function HeaderUser(props) {
       <div className={hStyle.splitContainer}>
         <div className={hStyle.logoContainer}>
           <Link to="/Home" style={{ textDecoration: 'none' }}>
-            <img src={logo} height="50px" href="/Home" alt="Return to Home" />
+            <img
+              src={newLogo}
+              height="50px"
+              href="/Home"
+              alt="Return to Home"
+            />
           </Link>
           {
             /*  Logged in JAR User jarUser = true */
