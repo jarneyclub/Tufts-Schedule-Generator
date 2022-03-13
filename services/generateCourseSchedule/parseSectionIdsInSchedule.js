@@ -51,7 +51,7 @@ const ScheduleV2 = mongoose.model('ScheduleV2');
 exports.parseSectionIdsInSchedule = async(schedules) => {
     try {
         
-        for (int i = 0; i < schedules.length; i++) {
+        for (let i = 0; i < schedules.length; i++) {
             schedules[i].populate('events');
         }
         
