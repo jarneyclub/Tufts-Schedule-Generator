@@ -14,7 +14,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import HelpIcon from '@material-ui/icons/Help';
 import hStyle from './reusableStyles/HeaderUser.module.css';
 import logo from '../res/JARney.png';
-import newLogo from '../res/favicon.png';
+import newLogo from '../res/jarney_word.png';
 import Popup from './Popup';
 import JarUserLogin from './JarUserLogin';
 
@@ -66,7 +66,7 @@ function HeaderUser(props) {
           <Link to="/Home" style={{ textDecoration: 'none' }}>
             <img
               src={newLogo}
-              height="50px"
+              height="40px"
               href="/Home"
               alt="Return to Home"
             />
@@ -130,7 +130,7 @@ function HeaderUser(props) {
                 <Button
                   onClick={handleLoginSignupPopup}
                   className={hStyle.button}
-                  style={{ padding: '5px' }}
+                  style={{ padding: '5px'}}
                 >
                   {logged ? 'Sign out' : 'Log in'}
                 </Button>
