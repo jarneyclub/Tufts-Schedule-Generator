@@ -7,8 +7,8 @@
  *
  */
 
-import { useState, useEffect } from "react";
-import { Helmet } from "react-helmet";
+import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import {
   InputAdornment,
   TextField,
@@ -19,141 +19,141 @@ import {
   FormGroup,
   FormLabel,
   IconButton,
-} from "@material-ui/core";
-import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
-import SearchIcon from "@material-ui/icons/Search";
-import AddBoxIcon from "@material-ui/icons/AddBox";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
-import LinkedCameraIcon from "@mui/icons-material/LinkedCamera";
-import PurpleSwitch from "./reusable/PurpleSwitch";
-import sStyle from "./style/Scheduler.module.css";
-import Dropdown from "./reusable/Dropdown";
-import { ClickAwayListener } from "@mui/material";
-import Calendar from "./reusable/Calendar";
-import CourseSearchBar from "./reusable/CourseSearchBar";
-import TimePrefSelector from "./reusable/TimePrefSelector";
-import SnackBarAlert from "./reusable/SnackBarAlert";
-import JarUserLogin from "./reusable/JarUserLogin";
-import Event from "./reusable/Event";
-import EventScreenshot from "./reusable/EventScreenshot";
-import Popup from "./reusable/Popup";
+} from '@material-ui/core';
+import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
+import SearchIcon from '@material-ui/icons/Search';
+import AddBoxIcon from '@material-ui/icons/AddBox';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
+import LinkedCameraIcon from '@mui/icons-material/LinkedCamera';
+import PurpleSwitch from './reusable/PurpleSwitch';
+import sStyle from './style/Scheduler.module.css';
+import Dropdown from './reusable/Dropdown';
+import { ClickAwayListener } from '@mui/material';
+import Calendar from './reusable/Calendar';
+import CourseSearchBar from './reusable/CourseSearchBar';
+import TimePrefSelector from './reusable/TimePrefSelector';
+import SnackBarAlert from './reusable/SnackBarAlert';
+import JarUserLogin from './reusable/JarUserLogin';
+import Event from './reusable/Event';
+import EventScreenshot from './reusable/EventScreenshot';
+import Popup from './reusable/Popup';
 import {
   AddSchedule,
   RemoveSchedule,
   EditScheduleName,
-} from "./reusable/SchedulerPopup";
+} from './reusable/SchedulerPopup';
 import {
   DegreeReqExpress,
   DegreePlanExpress,
   CourseInfoExpress,
-} from "./reusable/TabSwitch";
+} from './reusable/TabSwitch';
 
 const timeDefault = [
   {
-    time_earliest: "08:00",
-    time_latest: "08:30",
+    time_earliest: '08:00',
+    time_latest: '08:30',
   },
   {
-    time_earliest: "08:30",
-    time_latest: "09:00",
+    time_earliest: '08:30',
+    time_latest: '09:00',
   },
   {
-    time_earliest: "09:00",
-    time_latest: "09:30",
+    time_earliest: '09:00',
+    time_latest: '09:30',
   },
   {
-    time_earliest: "09:30",
-    time_latest: "10:00",
+    time_earliest: '09:30',
+    time_latest: '10:00',
   },
   {
-    time_earliest: "10:00",
-    time_latest: "10:30",
+    time_earliest: '10:00',
+    time_latest: '10:30',
   },
   {
-    time_earliest: "10:30",
-    time_latest: "11:00",
+    time_earliest: '10:30',
+    time_latest: '11:00',
   },
   {
-    time_earliest: "11:00",
-    time_latest: "11:30",
+    time_earliest: '11:00',
+    time_latest: '11:30',
   },
   {
-    time_earliest: "11:30",
-    time_latest: "12:00",
+    time_earliest: '11:30',
+    time_latest: '12:00',
   },
   {
-    time_earliest: "12:00",
-    time_latest: "12:30",
+    time_earliest: '12:00',
+    time_latest: '12:30',
   },
   {
-    time_earliest: "12:30",
-    time_latest: "13:00",
+    time_earliest: '12:30',
+    time_latest: '13:00',
   },
   {
-    time_earliest: "13:00",
-    time_latest: "13:30",
+    time_earliest: '13:00',
+    time_latest: '13:30',
   },
   {
-    time_earliest: "13:30",
-    time_latest: "14:00",
+    time_earliest: '13:30',
+    time_latest: '14:00',
   },
   {
-    time_earliest: "14:00",
-    time_latest: "14:30",
+    time_earliest: '14:00',
+    time_latest: '14:30',
   },
   {
-    time_earliest: "14:30",
-    time_latest: "15:00",
+    time_earliest: '14:30',
+    time_latest: '15:00',
   },
   {
-    time_earliest: "15:00",
-    time_latest: "15:30",
+    time_earliest: '15:00',
+    time_latest: '15:30',
   },
   {
-    time_earliest: "15:30",
-    time_latest: "16:00",
+    time_earliest: '15:30',
+    time_latest: '16:00',
   },
   {
-    time_earliest: "16:00",
-    time_latest: "16:30",
+    time_earliest: '16:00',
+    time_latest: '16:30',
   },
   {
-    time_earliest: "16:30",
-    time_latest: "17:00",
+    time_earliest: '16:30',
+    time_latest: '17:00',
   },
   {
-    time_earliest: "17:00",
-    time_latest: "17:30",
+    time_earliest: '17:00',
+    time_latest: '17:30',
   },
   {
-    time_earliest: "17:30",
-    time_latest: "18:00",
+    time_earliest: '17:30',
+    time_latest: '18:00',
   },
   {
-    time_earliest: "18:00",
-    time_latest: "18:30",
+    time_earliest: '18:00',
+    time_latest: '18:30',
   },
   {
-    time_earliest: "18:30",
-    time_latest: "19:00",
+    time_earliest: '18:30',
+    time_latest: '19:00',
   },
   {
-    time_earliest: "19:00",
-    time_latest: "19:30",
+    time_earliest: '19:00',
+    time_latest: '19:30',
   },
   {
-    time_earliest: "19:30",
-    time_latest: "20:00",
+    time_earliest: '19:30',
+    time_latest: '20:00',
   },
   {
-    time_earliest: "20:00",
-    time_latest: "20:30",
+    time_earliest: '20:00',
+    time_latest: '20:30',
   },
   {
-    time_earliest: "20:30",
-    time_latest: "21:00",
+    time_earliest: '20:30',
+    time_latest: '21:00',
   },
 ];
 
@@ -195,13 +195,14 @@ function Scheduler(props) {
 
   const [loaded, setLoaded] = useState(false);
   /* schedule Dropdown */
+  const [scheduleExist, setScheduleExist] = useState(false);
   const [scheduleOptions, setScheduleOptions] = useState([]);
-  const [selectedSchedule, setSelectedSchedule] = useState("");
-  const [selectedScheduleID, setSelectedScheduleID] = useState("");
+  const [selectedSchedule, setSelectedSchedule] = useState('');
+  const [selectedScheduleID, setSelectedScheduleID] = useState('');
   const [selectedScheduleIdx, setSelectedScheduleIdx] = useState(0);
   /* filter Dropdown */
   const [attributes, setAttributes] = useState([]);
-  const [selectedAttribute, setSelectedAttribute] = useState("");
+  const [selectedAttribute, setSelectedAttribute] = useState('');
   const [selectedAttributeIdx, setSelectedAttributeIdx] = useState(0);
   const [coursePreference, setCoursePreference] = useState(boolStateDefault);
 
@@ -212,7 +213,7 @@ function Scheduler(props) {
 
   const [degreeReqTab, setDegreeReqTab] = useState(1);
   const [searchCourseResult, setSearchCourseResult] = useState([]); // the list of courses returned by GET request
-  const [courseSearchValue, setCourseSearchValue] = useState(""); // the course search value that will be given to GET request ^^
+  const [courseSearchValue, setCourseSearchValue] = useState(''); // the course search value that will be given to GET request ^^
   const [loadMessage, setLoadMessage] = useState(true);
   const [timePrefState, setTimePrefState] = useState(false); // state of time pref overlay
   const [timePref, setTimePref] = useState(timePrefDefault); // time pref json that will be passed into post req
@@ -250,10 +251,10 @@ function Scheduler(props) {
   };
 
   const handleAddTimePref = (dayName, timeValue) => {
-    const latest = timeValue.split(":");
+    const latest = timeValue.split(':');
     let latestTime;
     /*  Computes the latest time value from start time */
-    if (latest[1] === "00") {
+    if (latest[1] === '00') {
       latestTime = `${latest[0]}:30`;
     } else if (parseInt(latest[0], 10) < 9) {
       latestTime = `0${(parseInt(latest[0], 10) + 1).toString()}:00`;
@@ -302,7 +303,7 @@ function Scheduler(props) {
 
   const handleShowCourseInfo = (info) => {
     setCourseInfo(info);
-    handlePopup("showCourseInfo", true);
+    handlePopup('showCourseInfo', true);
   };
 
   const handleSearchChange = (e) => {
@@ -334,8 +335,8 @@ function Scheduler(props) {
     if (checkCourseAdded(courseDetail.term_course_id)) {
       setSelectedCourses((prev) => [...prev, courseDetail]);
     } else {
-      setAlertMessage("Course was already added!");
-      setAlertSeverity("error");
+      setAlertMessage('Course was already added!');
+      setAlertSeverity('error');
       setShowAlert(true);
     }
   };
@@ -354,9 +355,12 @@ function Scheduler(props) {
 
   const fetchSavedSchedules = async () => {
     setSelectedScheduleIdx(0);
-    await fetch("https://jarney.club/api/schedules")
+    await fetch('https://qa.jarney.club/api/schedules')
       .then((response) => response.json())
       .then((result) => {
+        setScheduleExist(true);
+        console.log('scheduleExist is set to true');
+
         // if (result.schedules.length === 0) {
         //   fetchCreateSchedule("Schedule #1");
         // } else {
@@ -383,7 +387,7 @@ function Scheduler(props) {
   };
 
   const fetchAttributes = async () => {
-    await fetch("https://jarney.club/api/courses/attributes")
+    await fetch('https://qa.jarney.club/api/courses/attributes')
       .then((response) => response.json())
       .then(
         (result) => {
@@ -395,8 +399,8 @@ function Scheduler(props) {
 
   const fetchGenerateSchedule = async () => {
     const requestOption = {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         sched_id: selectedScheduleID,
         term_course_ids: selectedCourses.map((course) => course.term_course_id),
@@ -414,22 +418,22 @@ function Scheduler(props) {
 
     const checkCourses = selectedCourses.length > 0;
     if (!checkCourses) {
-      setAlertMessage("You need at least 1 course to render schedule.");
-      setAlertSeverity("warning");
+      setAlertMessage('You need at least 1 course to render schedule.');
+      setAlertSeverity('warning');
       setShowAlert(true);
     }
     checkCourses &&
-      (await fetch("https://jarney.club/api/schedule", requestOption)
+      (await fetch('https://qa.jarney.club/api/schedule', requestOption)
         .then((response) => response.json())
         .then((result) => {
           if (!result.error) {
             setClasses(result.data.classes);
-            setAlertMessage("Render success!");
-            setAlertSeverity("success");
+            setAlertMessage('Render success!');
+            setAlertSeverity('success');
             setShowAlert(true);
           } else {
             setAlertMessage(result.error);
-            setAlertSeverity("warning");
+            setAlertSeverity('warning');
             setShowAlert(true);
           }
         })
@@ -438,23 +442,23 @@ function Scheduler(props) {
 
   const fetchCreateSchedule = async (newName) => {
     const requestOption = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ sched_name: newName }),
     };
-    await fetch("https://jarney.club/api/schedule", requestOption)
+    await fetch('https://qa.jarney.club/api/schedule', requestOption)
       .then((response) => response.json())
       .then((result) => {
         // refresh
         if (!result.error) {
           fetchSavedSchedules();
-          setAlertMessage("Create success!");
-          setAlertSeverity("success");
+          setAlertMessage('Create success!');
+          setAlertSeverity('success');
           setShowAlert(true);
-          handlePopup("addSchedule", false);
+          handlePopup('addSchedule', false);
         } else {
           setAlertMessage(result.error);
-          setAlertSeverity("warning");
+          setAlertSeverity('warning');
           setShowAlert(true);
         }
       })
@@ -464,9 +468,9 @@ function Scheduler(props) {
   const fetchData = async () => {
     setLoadMessage(true);
     await fetch(
-      "https://jarney.club/api/courses/term?cnum="
+      'https://qa.jarney.club/api/courses/term?cnum='
         .concat(courseSearchValue)
-        .concat("&attr=")
+        .concat('&attr=')
         .concat(selectedAttribute)
     )
       .then((response) => response.json())
@@ -495,7 +499,7 @@ function Scheduler(props) {
 
   useEffect(() => {
     fetchData();
-    handlePopup("showCourseInfo", false);
+    handlePopup('showCourseInfo', false);
   }, [courseSearchValue, selectedAttribute]);
 
   useEffect(() => {
@@ -504,7 +508,7 @@ function Scheduler(props) {
       tempCount += course?.units_esti;
     });
     setUnitsCount(tempCount);
-    handlePopup("showCourseInfo", false);
+    handlePopup('showCourseInfo', false);
   }, [selectedCourses]);
 
   return (
@@ -516,7 +520,8 @@ function Scheduler(props) {
           content="Tufts SIS no more! Your semester schedule is one click away!"
         />
       </Helmet>
-      {scheduleOptions && scheduleOptions?.length !== 0 ? (
+      {/*scheduleOptions && scheduleOptions?.length !== 0*/}
+      {scheduleExist === true ? (
         <div className={sStyle.horizontalWrapper}>
           <div className={sStyle.leftColumnWrapper}>
             {/* CourseContainer 
@@ -526,6 +531,66 @@ function Scheduler(props) {
                         3. preferenceContainer 
                     */}
             <div className={sStyle.courseContainer}>
+              {/*time preference */}
+              <div className={sStyle.preferenceContainer}>
+                <FormControl className={sStyle.leftCheckboxContainer}>
+                  <FormLabel>Generate Schedule With:</FormLabel>
+                  <FormGroup row={true}>
+                    <FormControlLabel
+                      control={
+                        <PurpleSwitch
+                          checked={coursePreference.waitlist}
+                          name="waitlist"
+                          onChange={() => handleCoursePrefChange('waitlist')}
+                        />
+                      }
+                      label="Waitlist"
+                    />
+                    <FormControlLabel
+                      control={
+                        <PurpleSwitch
+                          checked={coursePreference.closed}
+                          name="closed"
+                          onChange={() => handleCoursePrefChange('closed')}
+                        />
+                      }
+                      label="Closed"
+                    />
+                    <FormControlLabel
+                      control={
+                        <PurpleSwitch
+                          checked={coursePreference.online}
+                          name="online"
+                          onChange={() => handleCoursePrefChange('online')}
+                        />
+                      }
+                      label="Online"
+                    />
+                    <FormControlLabel
+                      control={
+                        <PurpleSwitch
+                          checked={coursePreference.time_unspecified}
+                          name="time_unspecified"
+                          onChange={() =>
+                            handleCoursePrefChange('time_unspecified')
+                          }
+                        />
+                      }
+                      label="Time Unspecified"
+                    />
+                  </FormGroup>
+                  <Button
+                    className={sStyle.timePrefButton}
+                    onClick={() => setTimePrefState(true)}
+                    startIcon={<QueryBuilderIcon />}
+                  >
+                    Edit time preference
+                  </Button>
+                </FormControl>
+              </div>
+              {/*time preference */}
+
+              {/*search bar and filter*/}
               <div className={sStyle.searchCourseContainer}>
                 <TextField
                   // label="Search Course"
@@ -559,7 +624,7 @@ function Scheduler(props) {
               </div>
 
               <div className={sStyle.courseListContainer}>
-                {loadMessage && courseSearchValue !== "" && (
+                {loadMessage && courseSearchValue !== '' && (
                   <CircularProgress />
                 )}
                 {!loadMessage &&
@@ -569,72 +634,16 @@ function Scheduler(props) {
                       key={course.course_num.concat(course.course_title)}
                       draggable={false}
                       onDoubleClick={handleDoubleClickCourseList}
-                      origin={"schedulerCourseList"}
+                      origin={'schedulerCourseList'}
                       customStyle={{
-                        border: "none",
-                        justifyContent: "space-between",
+                        border: 'none',
+                        justifyContent: 'space-between',
                       }}
                       onClick={handleShowCourseInfo}
                     />
                   ))}
               </div>
-
-              <div className={sStyle.preferenceContainer}>
-                <FormControl className={sStyle.leftCheckboxContainer}>
-                  <FormLabel>Generate Schedule With:</FormLabel>
-                  <FormGroup row={true}>
-                    <FormControlLabel
-                      control={
-                        <PurpleSwitch
-                          checked={coursePreference.waitlist}
-                          name="waitlist"
-                          onChange={() => handleCoursePrefChange("waitlist")}
-                        />
-                      }
-                      label="Waitlist"
-                    />
-                    <FormControlLabel
-                      control={
-                        <PurpleSwitch
-                          checked={coursePreference.closed}
-                          name="closed"
-                          onChange={() => handleCoursePrefChange("closed")}
-                        />
-                      }
-                      label="Closed"
-                    />
-                    <FormControlLabel
-                      control={
-                        <PurpleSwitch
-                          checked={coursePreference.online}
-                          name="online"
-                          onChange={() => handleCoursePrefChange("online")}
-                        />
-                      }
-                      label="Online"
-                    />
-                    <FormControlLabel
-                      control={
-                        <PurpleSwitch
-                          checked={coursePreference.time_unspecified}
-                          name="time_unspecified"
-                          onChange={() =>
-                            handleCoursePrefChange("time_unspecified")
-                          }
-                        />
-                      }
-                      label="Time Unspecified"
-                    />
-                  </FormGroup>
-                  <Button
-                    className={sStyle.timePrefButton}
-                    onClick={() => setTimePrefState(true)}
-                    startIcon={<QueryBuilderIcon />}
-                  >
-                    Edit time preference
-                  </Button>
-                </FormControl>
-              </div>
+              {/*search bar and filter*/}
             </div>
             <div className={sStyle.rightButtonContainer}>
               <Button
@@ -645,7 +654,7 @@ function Scheduler(props) {
               </Button>
             </div>
             <div className={sStyle.infoContainer}>
-              <div style={{ color: "rgba(0, 0, 0, 0.54)" }}>Quick summary</div>
+              <div style={{ color: 'rgba(0, 0, 0, 0.54)' }}>Quick summary</div>
               <div className={sStyle.unitsContainer}>
                 <div className={sStyle.infoTitle}>SHUs scheduled:&nbsp;</div>
                 <div classname={sStyle.infoDetail}>{unitsCount}</div>
@@ -654,7 +663,7 @@ function Scheduler(props) {
             {popup.showCourseInfo && (
               <CourseInfoExpress
                 courseInfo={courseInfo}
-                onClose={() => handlePopup("showCourseInfo", false)}
+                onClose={() => handlePopup('showCourseInfo', false)}
               />
             )}
 
@@ -711,10 +720,10 @@ function Scheduler(props) {
                       draggable={false}
                       onDoubleClick={handleDoubleClickSelected}
                       onClick={handleShowCourseInfo}
-                      origin={"schedulerTab"}
+                      origin={'schedulerTab'}
                       customStyle={{
-                        border: "none",
-                        justifyContent: "space-between",
+                        border: 'none',
+                        justifyContent: 'space-between',
                       }}
                     />
                   ))}
@@ -731,35 +740,35 @@ function Scheduler(props) {
                 selectedOption={selectedSchedule}
                 selectedIdx={selectedScheduleIdx}
                 onOptionChange={handleScheduleChange}
-                customStyle={{ fontSize: "20px" }}
+                customStyle={{ fontSize: '20px' }}
                 isObject={true}
-                objectField={"sched_name"}
+                objectField={'sched_name'}
               />
               &nbsp;
               <IconButton
                 className={sStyle.editPlanButton}
-                onClick={() => handlePopup("editScheduleName", true)}
+                onClick={() => handlePopup('editScheduleName', true)}
               >
                 <ModeEditIcon fontSize="medium" />
               </IconButton>
               &nbsp;
               <IconButton
                 className={sStyle.editPlanButton}
-                onClick={() => handlePopup("addSchedule", true)}
+                onClick={() => handlePopup('addSchedule', true)}
               >
                 <AddBoxIcon fontSize="medium" />
               </IconButton>
               &nbsp;
               <IconButton
                 className={sStyle.editPlanButton}
-                onClick={() => handlePopup("removeSchedule", true)}
+                onClick={() => handlePopup('removeSchedule', true)}
               >
                 <IndeterminateCheckBoxIcon fontSize="medium" />
               </IconButton>
               &nbsp;
               <IconButton
                 className={sStyle.editPlanButton}
-                onClick={() => handlePopup("eventScreenshot", true)}
+                onClick={() => handlePopup('eventScreenshot', true)}
               >
                 <LinkedCameraIcon fontSize="medium" />
               </IconButton>
@@ -775,10 +784,10 @@ function Scheduler(props) {
               />
             </div>
 
-            {classes.hasOwnProperty("TimeUnspecified") &&
+            {classes.hasOwnProperty('TimeUnspecified') &&
               classes.TimeUnspecified.length !== 0 && (
                 <div className={sStyle.infoContainer}>
-                  <div style={{ color: "rgba(0, 0, 0, 0.54)" }}>
+                  <div style={{ color: 'rgba(0, 0, 0, 0.54)' }}>
                     Time Unspecified
                   </div>
                   <div className={sStyle.tuContainer}>
@@ -797,30 +806,31 @@ function Scheduler(props) {
         </div>
       ) : (
         <div className={sStyle.noSchedulewrapper}>
-          <div>Create your schedule now!</div>
+          <div>Shopping cart is removed!</div>
+          {/* <div>Create your schedule now!</div>
           <IconButton
             className={sStyle.editPlanButton}
-            onClick={() => handlePopup("addSchedule", true)}
+            onClick={() => handlePopup('addSchedule', true)}
           >
             <AddShoppingCartIcon fontSize="80vw" />
-          </IconButton>
+          </IconButton> */}
         </div>
       )}
 
       {/* popups */}
       {popup.addSchedule && (
-        <Popup onClose={() => handlePopup("addSchedule", false)}>
+        <Popup onClose={() => handlePopup('addSchedule', false)}>
           <AddSchedule
-            onClose={() => handlePopup("addSchedule", false)}
+            onClose={() => handlePopup('addSchedule', false)}
             onCreateSchedule={fetchCreateSchedule}
             scheduleOptions={scheduleOptions}
           />
         </Popup>
       )}
       {popup.removeSchedule && (
-        <Popup onClose={() => handlePopup("removeSchedule", false)}>
+        <Popup onClose={() => handlePopup('removeSchedule', false)}>
           <RemoveSchedule
-            onClose={() => handlePopup("removeSchedule", false)}
+            onClose={() => handlePopup('removeSchedule', false)}
             refreshSchedules={fetchSavedSchedules}
             scheduleID={scheduleOptions[selectedScheduleIdx]?.sched_id}
             scheduleName={scheduleOptions[selectedScheduleIdx]?.sched_name}
@@ -831,9 +841,9 @@ function Scheduler(props) {
         </Popup>
       )}
       {popup.editScheduleName && (
-        <Popup onClose={() => handlePopup("editScheduleName", false)}>
+        <Popup onClose={() => handlePopup('editScheduleName', false)}>
           <EditScheduleName
-            onClose={() => handlePopup("editScheduleName", false)}
+            onClose={() => handlePopup('editScheduleName', false)}
             onShowAlert={() => setShowAlert(true)}
             refreshSchedules={fetchSavedSchedules}
             setAlertMessage={setAlertMessage}
@@ -844,9 +854,9 @@ function Scheduler(props) {
         </Popup>
       )}
       {popup.eventScreenshot && (
-        <Popup onClose={() => handlePopup("eventScreenshot", false)}>
+        <Popup onClose={() => handlePopup('eventScreenshot', false)}>
           <EventScreenshot
-            onClose={() => handlePopup("eventScreenshot", false)}
+            onClose={() => handlePopup('eventScreenshot', false)}
             onShowAlert={() => setShowAlert(true)}
             setAlertMessage={setAlertMessage}
             setAlertSeverity={setAlertSeverity}

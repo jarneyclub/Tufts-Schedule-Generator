@@ -1,37 +1,37 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* * * *  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * DegreePlan1.js
+ * DegreeRequirement.js
  *
  *
  */
 
-import { useEffect, useState } from "react";
-import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
-import DateRangeIcon from "@material-ui/icons/DateRange";
+import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
+import { Link } from 'react-router-dom';
+import DateRangeIcon from '@material-ui/icons/DateRange';
 import {
   Button,
   IconButton,
   TextField,
   InputAdornment,
-} from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
-import EditIcon from "@mui/icons-material/Edit";
-import AddBoxIcon from "@material-ui/icons/AddBox";
-import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
-import CancelIcon from "@material-ui/icons/Cancel";
-import dp1Style from "./style/DegreePlan1.module.css";
-import pStyle from "./reusable/reusableStyles/Popup.module.css";
-import Popup from "./reusable/Popup";
-import SnackBarAlert from "./reusable/SnackBarAlert";
-import Dropdown from "./reusable/Dropdown";
-import DegreeReqEdit from "./reusable/DegreeReqEdit";
-import dStyle from "./reusable/reusableStyles/Dropdown.module.css";
-import DegreeReqDisplay from "./reusable/DegreeReqDisplay";
-import JarUserLogin from "./reusable/JarUserLogin";
-import { RemovePrivReq } from "./reusable/DegreePlan1Popup";
+} from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
+import EditIcon from '@mui/icons-material/Edit';
+import AddBoxIcon from '@material-ui/icons/AddBox';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
+import CancelIcon from '@material-ui/icons/Cancel';
+import degreeReqStyle from './style/DegreeRequirement.module.css';
+import pStyle from './reusable/reusableStyles/Popup.module.css';
+import Popup from './reusable/Popup';
+import SnackBarAlert from './reusable/SnackBarAlert';
+import Dropdown from './reusable/Dropdown';
+import DegreeReqEdit from './reusable/DegreeReqEdit';
+import dStyle from './reusable/reusableStyles/Dropdown.module.css';
+import DegreeReqDisplay from './reusable/DegreeReqDisplay';
+import JarUserLogin from './reusable/JarUserLogin';
+import { RemovePrivReq } from './reusable/DegreeRequirementPopup';
 
 /* scripts */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -41,21 +41,21 @@ import { RemovePrivReq } from "./reusable/DegreePlan1Popup";
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 const degreeReqDefault = {
-  program_name: "Requirement #1",
-  school: " ",
-  degree: " ",
+  program_name: 'Requirement #1',
+  school: ' ',
+  degree: ' ',
   part_id_tracker: 1,
   parts: [
     {
       part_id: 0,
-      part_name: " ",
-      part_desc: " ",
+      part_name: ' ',
+      part_desc: ' ',
       part_req_id_tracker: 1,
       part_reqs: [
         {
           part_req_id: 0,
-          course_num: " ",
-          course_note: " ",
+          course_num: ' ',
+          course_note: ' ',
           completed: false,
         },
       ],
@@ -68,7 +68,7 @@ const degreeReqDefault = {
  *                  EXPORTED MAIN FUNCTIONAL COMPONENT                       *
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-function DegreePlan1(props) {
+function DegreeRequirement(props) {
   const {
     shrink,
     logged,
@@ -88,7 +88,7 @@ function DegreePlan1(props) {
 
   const [selectedDegreeReqIdx, setSelectedDegreeReqIdx] = useState(0);
   const [selectedDegreeReq, setDegreeReq] =
-    useState(""); /*  Holds the current private Degree Requirement Displayed */
+    useState(''); /*  Holds the current private Degree Requirement Displayed */
   const [showLastPrivateReq, setShowLastPrivateReq] = useState(false);
   const [selectedDegreeReqDetail, setDegreeReqDetail] = useState();
 
@@ -99,7 +99,7 @@ function DegreePlan1(props) {
   const [editDRPopup, setEditDRPopup] =
     useState(false); /*  Degree Requirement Edit Popup */
 
-  const [listSearchValue, setListSearchValue] = useState("");
+  const [listSearchValue, setListSearchValue] = useState('');
   const [newMMPopup, setNewMMPopup] =
     useState(false); /* Add new Major / Minor Popup */
   const [popup, setPopup] = useState({
@@ -138,7 +138,9 @@ function DegreePlan1(props) {
 
   const fetchPublicReqs = async () => {
     await fetch(
-      "https://jarney.club/api/degreereqs/public?pname=".concat(listSearchValue)
+      'https://qa.jarney.club/api/degreereqs/public?pname='.concat(
+        listSearchValue
+      )
     )
       .then((response) => {
         return response.json();
@@ -152,12 +154,13 @@ function DegreePlan1(props) {
 
   const fetchPublicToPrivate = async () => {
     const requestOption = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
     };
 
     await fetch(
-      "https://jarney.club/api/degreereq/public/copy/".concat(
+      'https://qa.jarney.club/api/degreereq/public/copy/'.concat(
+        //check if there are repeated terms
         publicDegreeReqDetail.pub_dr_id
       ),
       requestOption
@@ -173,12 +176,13 @@ function DegreePlan1(props) {
 
   const fetchPrivateReqs = async (showLast) => {
     setSelectedDegreeReqIdx(0);
-    await fetch("https://jarney.club/api/degreereqs/private")
+    await fetch('https://qa.jarney.club/api/degreereqs/private')
       .then((response) => {
         return response.json();
       })
       .then((result) => {
         setDegreeReqOptions(result.reqs);
+
         setLoaded(true);
       })
       .catch((error) => {});
@@ -186,11 +190,11 @@ function DegreePlan1(props) {
 
   const fetchCreatePrivateReqs = async (values) => {
     const requestOption = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(values),
     };
-    await fetch("https://jarney.club/api/degreereq/private", requestOption)
+    await fetch('https://qa.jarney.club/api/degreereq/private', requestOption)
       .then((response) => response.json())
       .then((result) => {
         setEditDRPopup(false);
@@ -201,11 +205,11 @@ function DegreePlan1(props) {
 
   const fetchSavePrivateReqs = async (values) => {
     const requestOption = {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(values),
     };
-    await fetch("https://jarney.club/api/degreereq/private", requestOption)
+    await fetch('https://qa.jarney.club/api/degreereq/private', requestOption)
       .then((response) => response.json())
       .then((result) => {
         setEditDRPopup(false);
@@ -249,7 +253,7 @@ function DegreePlan1(props) {
     // {/* Encapsulates both 1) the search side, and 2) the degree req
     //           side.
     //           This flexbox has flex-direction: row */}
-    <div className={dp1Style.horizontalWrapper}>
+    <div className={degreeReqStyle.horizontalWrapper}>
       <Helmet>
         <title>JARney | Degree Requirement</title>
         <meta
@@ -260,10 +264,10 @@ function DegreePlan1(props) {
       {/* * * * * * * Includes Degree Req Selector * * * * * * */}
       {/* Includes 1) Existing degree req search list, 2) My List.
                     This flexbox has flex-direction: column */}
-      <div className={dp1Style.DegreeSearchWrapper}>
+      <div className={degreeReqStyle.DegreeSearchWrapper}>
         {/* SEARCH CONTAINER for an Existing Degree Requirement */}
-        <div className={dp1Style.myListWrapper}>
-          <h5 style={{ textAlign: "center" }}>Public degree requirements</h5>
+        <div className={degreeReqStyle.myListWrapper}>
+          <h5 style={{ textAlign: 'center' }}>Public degree requirements</h5>
           <TextField
             // label="Search Course"
             placeholder="Look for other programs..."
@@ -280,14 +284,14 @@ function DegreePlan1(props) {
                 </InputAdornment>
               ),
             }}
-            className={dp1Style.inputSearch}
+            className={degreeReqStyle.inputSearch}
           />
         </div>
-        <div className={dp1Style.existListWrapper}>
-          <div className={dp1Style.searchListContainer}>
+        <div className={degreeReqStyle.existListWrapper}>
+          <div className={degreeReqStyle.searchListContainer}>
             {publicReqOptions?.map((option) => (
               <Button
-                className={dp1Style.publicReqButton}
+                className={degreeReqStyle.publicReqButton}
                 onClick={() => handlePublicDegreeDisplay(option)}
               >
                 {option.program_name}
@@ -295,15 +299,15 @@ function DegreePlan1(props) {
             ))}
           </div>
           {showPublicDegreeReq && (
-            <div className={dp1Style.DegreeReqListWrapper}>
-              <div className={dp1Style.degreeReqListExpandable}>
+            <div className={degreeReqStyle.DegreeReqListWrapper}>
+              <div className={degreeReqStyle.degreeReqListExpandable}>
                 <DegreeReqDisplay reqDetail={publicDegreeReqDetail} />
               </div>
             </div>
           )}
           {showPublicDegreeReq && (
             <Button
-              className={dp1Style.saveButton}
+              className={degreeReqStyle.saveButton}
               onClick={() => fetchPublicToPrivate()}
             >
               Add to my list
@@ -315,20 +319,20 @@ function DegreePlan1(props) {
       {/* * * * * * Includes the Degree Requirement Table * * * * * */}
 
       {degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx] ? (
-        <div className={dp1Style.DegreeReqWrapper}>
-          <div className={dp1Style.myListWrapper}>
+        <div className={degreeReqStyle.DegreeReqWrapper}>
+          <div className={degreeReqStyle.myListWrapper}>
             <h5>My degree requirements</h5>
 
             {/* options will be an array returned by API
                             options - degree req of current user */}
             <div
-              className={dp1Style.dropdownListWrapper}
-              style={{ width: "90%" }}
+              className={degreeReqStyle.dropdownListWrapper}
+              style={{ width: '90%' }}
             >
               <Dropdown
                 options={degreeReqOptions}
                 isObject={true}
-                objectField={"program_name"}
+                objectField={'program_name'}
                 selectedOption={
                   degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx]
                 }
@@ -337,7 +341,7 @@ function DegreePlan1(props) {
               />
               &nbsp;
               <IconButton
-                className={dp1Style.editPlanButton}
+                className={degreeReqStyle.editPlanButton}
                 onClick={() => {
                   setNewMMPopup(true);
                   setEditDRPopup(true);
@@ -348,18 +352,18 @@ function DegreePlan1(props) {
               &nbsp;
               {degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx] && (
                 <IconButton
-                  className={dp1Style.editPlanButton}
-                  onClick={() => handlePopup("removePrivateReq", true)}
+                  className={degreeReqStyle.editPlanButton}
+                  onClick={() => handlePopup('removePrivateReq', true)}
                 >
                   <IndeterminateCheckBoxIcon fontSize="medium" />
                 </IconButton>
               )}
             </div>
           </div>
-          <div className={dp1Style.DegreeReqListWrapper}>
+          <div className={degreeReqStyle.DegreeReqListWrapper}>
             {/* info returned from API call
                             display the info of the selected degree plan */}
-            <div className={dp1Style.degreeReqListExpandable}>
+            <div className={degreeReqStyle.degreeReqListExpandable}>
               <DegreeReqDisplay
                 reqDetail={
                   degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx]
@@ -371,7 +375,7 @@ function DegreePlan1(props) {
                             displayed degree requirement */}
             {degreeReqOptions && degreeReqOptions[selectedDegreeReqIdx] && (
               <Button
-                className={dp1Style.editButton}
+                className={degreeReqStyle.editButton}
                 onClick={() => {
                   setNewMMPopup(false);
                   setEditDRPopup(true);
@@ -385,11 +389,11 @@ function DegreePlan1(props) {
         </div>
       ) : (
         loaded && (
-          <div className={dp1Style.noDegreeReqWrapper}>
+          <div className={degreeReqStyle.noDegreeReqWrapper}>
             <h5>Add a requirement from Public degree requirements</h5>
             <h5>or create one now!</h5>
             <IconButton
-              className={dp1Style.editPlanButton}
+              className={degreeReqStyle.editPlanButton}
               onClick={() => {
                 setNewMMPopup(true);
                 setEditDRPopup(true);
@@ -414,9 +418,9 @@ function DegreePlan1(props) {
       )}
 
       {popup.removePrivateReq && (
-        <Popup onClose={() => handlePopup("removePrivateReq", false)}>
+        <Popup onClose={() => handlePopup('removePrivateReq', false)}>
           <RemovePrivReq
-            onClose={() => handlePopup("removePrivateReq", false)}
+            onClose={() => handlePopup('removePrivateReq', false)}
             privateReqName={
               degreeReqOptions[selectedDegreeReqIdx]?.program_name
             }
@@ -458,4 +462,4 @@ function DegreePlan1(props) {
   );
 }
 
-export default DegreePlan1;
+export default DegreeRequirement;

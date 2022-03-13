@@ -1,7 +1,14 @@
+/*
+* Name: degreeReqController.js
+* API endpoints implementation for schedule related operations
+* 
+* 
+*/
+
 // load database api
 const degreeReqAPI = require('../services/handlers/degreeReq.js');
-const activityHandler = require('../services/handlers/activity.js');
-const resHandler = require("./utils/resHandler.js");
+const analyticsHandler = require('../services/handlers/analytics.js');
+const errorHandler = require("./utils/controllerErrorHandler.js").getErrorHandler("degreeReqController");
 const mongoose = require('mongoose');
 
 /**
@@ -25,7 +32,7 @@ exports.createDegreeReqPublic = async (req, res) => {
     .then(result => {
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "createDegreeReqPublic");
+            analyticsHandler.saveApiUse(req.userid, "createDegreeReqPublic");
         }
 
         res.status(200);
@@ -53,7 +60,7 @@ exports.getDegreeReqsPublic = async (req, res) => {
     .then(documents => {
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "getDegreeReqsPublic");
+            analyticsHandler.saveApiUse(req.userid, "getDegreeReqsPublic");
         }
 
         res.status(200);
@@ -80,7 +87,7 @@ exports.deleteDegreeReqPublic = async (req, res) => {
     .then(result => {
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "deleteDegreeReqPublic");
+            analyticsHandler.saveApiUse(req.userid, "deleteDegreeReqPublic");
         }
 
         res.status(200);
@@ -109,7 +116,7 @@ exports.copyDegreeReqPublicToPrivate = async (req, res) => {
     .then(result => {
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "copyDegreeReqPublicToPrivate");
+            analyticsHandler.saveApiUse(req.userid, "copyDegreeReqPublicToPrivate");
         }
 
         res.status(200);
@@ -141,7 +148,7 @@ exports.createDegreeReqPrivate = async (req, res) => {
     .then(result => {
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "createDegreeReqPrivate");
+            analyticsHandler.saveApiUse(req.userid, "createDegreeReqPrivate");
         }
 
         res.status(200);
@@ -172,7 +179,7 @@ exports.getDegreeReqsPrivate = async (req, res) => {
     .then(result => {
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "getDegreeReqsPrivate");
+            analyticsHandler.saveApiUse(req.userid, "getDegreeReqsPrivate");
         }
 
         res.status(200);
@@ -204,7 +211,7 @@ exports.getDegreeReqPrivate = async (req, res) => {
     .then(result => {
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "getDegreeReqsPrivate");
+            analyticsHandler.saveApiUse(req.userid, "getDegreeReqsPrivate");
         }
 
         res.status(200);
@@ -239,7 +246,7 @@ exports.saveDegreeReqPrivate = async (req, res) => {
     .then(result => {
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "saveDegreeReqPrivate");
+            analyticsHandler.saveApiUse(req.userid, "saveDegreeReqPrivate");
         }
 
         res.status(200);
@@ -271,7 +278,7 @@ exports.deleteDegreeReqPrivate = async (req, res) => {
     .then(result => {
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "deleteDegreeReqPrivate");
+            analyticsHandler.saveApiUse(req.userid, "deleteDegreeReqPrivate");
         }
 
         res.status(200);
@@ -305,7 +312,7 @@ exports.deleteDegreeReqPrivate = async (req, res) => {
         .then(result => {
             // save activity if user is not developer
             if (req.role !== "developer") {
-                activityHandler.saveNormalActivity(req.userid, "copyDegreeReqPrivateToPublic");
+                analyticsHandler.saveApiUse(req.userid, "copyDegreeReqPrivateToPublic");
             }
 
             res.status(200);
@@ -320,28 +327,4 @@ exports.deleteDegreeReqPrivate = async (req, res) => {
     }
 }
 
-const errorHandler = (err, endpoint, res, userid, userrole) => {
-    console.error("(degreeReqController/errorhandler) err: ", err + "at endpoint (" + endpoint + ")");
-    if (err.detail !== undefined && err.title != undefined) {
-        /* this is internally formatted error */
-
-        // save error if user is not developer
-        if (userrole !== "developer") {
-            let errString = `id: ${err.id} | title: ${err.title} | detail: ${err.detail}`;
-            activityHandler.saveErrorActivity(userid, endpoint, err.status, errString);
-        }
-
-        resHandler.respondWithCustomError(err.id, err.status, err.title, err.detail, res);
-    }
-    else {
-        console.error("(degreeReqController/" + endpoint, err);
-        // save error if user is not developer
-        if (userrole !== "developer") {
-            let errString = `id: 000 | title: Internal Server Error | detail: ${err}`;
-            activityHandler.saveErrorActivity(userid, endpoint, "500", errString);
-        }
-
-        resHandler.respondWithCustomError("000", "500", "Internal Server Error", err, res);
-    }
-}
 

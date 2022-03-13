@@ -1,15 +1,18 @@
+/*
+* Name: scheduleController.js
+* API endpoints implementation for schedule related operations
+*/
+
 // const generate = require('../services/generateCourseScheduleV2/generateCourseSchedule.js');
 const coursesTermHandler = require('../services/handlers/coursesTerm.js');
 const scheduleHandler = require('../services/handlers/schedule.js');
-const activityHandler = require('../services/handlers/activity.js');
+const analyticsHandler = require('../services/handlers/analytics.js');
+const sectionIdParser = require('../services/generateCourseSchedule/parseSectionIdsInSchedule.js');
 const CourseSchedule = require('../services/generateCourseSchedule/generateCourseSchedule.js');
-const resHandler = require("./utils/resHandler.js");
-const Section = require('../models/internal/objects/classes/Section.js');
-const Course = require('../models/internal/objects/classes/Course.js');
-const Class = require('../models/internal/objects/classes/Class.js');
+const errorHandler = require("./utils/controllerErrorHandler.js").getErrorHandler("scheduleController");
+
 /**
  * POST /schedule
- * 
  * @param {*} req
  * @param {*} res
  */
@@ -27,7 +30,7 @@ exports.makeEmptySchedule = async (req, res) => {
 
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "makeEmptySchedule");
+            analyticsHandler.saveApiUse(req.userid, "makeEmptySchedule");
         }
         
         // send response
@@ -47,83 +50,21 @@ exports.updateSchedule = async (req, res) => {
         const {sched_id, term_course_ids, filter} = req.body;
         // save activity if not developer
             if (req.role !== "developer") 
-                activityHandler.saveNormalActivity(req.userid, "updateSchedule");
+                analyticsHandler.saveApiUse(req.userid, "updateSchedule");
         // validate types
         if (typeof sched_id !== "string") 
             throw {id: "602", status: "400", title: "Schedule Error", detail : "Schedule ID is not a string"};
 
         var start = Date.now(); // begin timing API endpoint
         let startDB = Date.now(); // start timer
-        // get Section documents from database
+        
+        // Get information of courses that the user requested
         let arrCourses = []; // array with Course objects
         for (let i = 0; i < term_course_ids.length; i++) {
-            let currTermCourseId = term_course_ids[i];
-            let arrSections = 
-                await coursesTermHandler.getSectionsForSingleCourse(currTermCourseId);
-            let mapSecTypeToSectionMap = {}; // e.g.{'Lecture': {0: Section...}}
-            let mapSecTypeToUnits = {}; // e.g.{'Lecture': 5}
-            let courseNum;
-            let courseTitle;
-            for (let j = 0; j < arrSections.length; j++) {
-                // mapping of raw section status to more readable format
-                let mapStatusFormat = {
-                    "O": "open",
-                    "C": "closed",
-                    "W": "waitlist" };
-                // parse section information
-                let currSection      = arrSections[j];
-                courseNum            = currSection.course_num;
-                courseTitle          = currSection.course_title;
-                let sectionId        = currSection.term_section_id;
-                let sectionUnits     = currSection.units;
-                let sectionNum       = currSection.section_num;
-                let sectionStatus    = mapStatusFormat[currSection.status];
-                let sectionType      = currSection.section_type;
-                let sectionInstrMode = currSection.instr_mode;
-                console.log("(updateSchedule) sectionNum: ", sectionNum);
-                console.log("(updateSchedule) sectionId: ", sectionId);
-                // log units of this section type
-                mapSecTypeToUnits[sectionType] = sectionUnits;
+            let courseObject = await coursesTermHandler.getCourseObject(term_course_ids[i]);
+            arrCourses.push(courseObject);
+        }
 
-                let mapClassObj = {}; // map of index to Class objects of this section
-                let mapClassObjIndex = 0;
-                for (let k = 0; k < currSection.classes.length; k++) {
-                    let currClass = currSection.classes[k];
-                    let classInstructor = currClass.instructor;
-                    let classRoom = currClass.room;
-                    let classCampus = currClass.campus;
-                    let classStartTime = currClass.start_time;
-                    let classEndTime = currClass.end_time;
-                    let classDayOfWeek = currClass.day_of_week;
-                    let currClassObj = 
-                        new Class(courseNum, courseTitle, sectionNum, sectionType, 
-                                    classDayOfWeek, classStartTime, classEndTime, 
-                                    classRoom, classCampus, classInstructor, sectionId, currTermCourseId);
-                    mapClassObj[mapClassObjIndex] = currClassObj;
-                    mapClassObjIndex++;
-                } // (End of) iteration through classes
-                let currSectionObj = 
-                    new Section(courseNum, courseTitle, sectionNum, sectionType, mapClassObj, sectionStatus, sectionId, currTermCourseId);
-                
-                // append section object to mapSecTypeToSectionMap
-                if (mapSecTypeToSectionMap[sectionType] === undefined) {
-                    mapSecTypeToSectionMap[sectionType] = {'0': currSectionObj};
-                    console.log("(updateSchedule) mapSecTypeToSectionMap: ", mapSecTypeToSectionMap);
-                }
-                else {
-                    indexMapSecTypeToSectionMap = Object.keys(mapSecTypeToSectionMap[sectionType]).length;
-                    console.log("(updateSchedule) indexMapSecTypeToSectionMap: ", indexMapSecTypeToSectionMap);
-                    mapSecTypeToSectionMap[sectionType]
-                        [indexMapSecTypeToSectionMap] = currSectionObj;
-                    console.log("(updateSchedule) mapSecTypeToSectionMap: ", mapSecTypeToSectionMap);
-                }
-            } // (End of) iteration through sections
-            const reducer = (accumulator, currentValue) => accumulator + currentValue;
-            let currCourseObj = 
-                new Course(courseNum, courseTitle, Object.keys(mapSecTypeToSectionMap), 
-                            mapSecTypeToSectionMap, Object.values(mapSecTypeToUnits).reduce(reducer), currTermCourseId);
-            arrCourses.push(currCourseObj);
-        } // (End of) iteration through courses
         console.log("(scheduleCntrl/generateAndChangeSchedule): ", "Processing sections from the database took ", (Date.now()- startDB).toString() + "ms");
         CourseSchedule.generateCourseSchedule(arrCourses, filter)
         .then(
@@ -143,7 +84,7 @@ exports.updateSchedule = async (req, res) => {
 
                 // save activity if user is not developer
                 if (req.role !== "developer") {
-                    activityHandler.saveNormalActivity(req.userid, "updateSchedule");
+                    analyticsHandler.saveApiUse(req.userid, "updateSchedule");
                 }
                 
                 // send response
@@ -177,11 +118,15 @@ exports.updateSchedule = async (req, res) => {
 exports.getSchedules = async (req, res) => {
     try {
         let userId = req.userid;
+        /*Array of schedule documents where each DOW event is a Section Id*/
         let schedules = await scheduleHandler.getSchedulesOfUser(userId);
-
+        
+        /*Array of schedule documents where each DOW event has proper attributes*/
+        //let refined_schedules = await sectionIdParser.parseSectionIdsInSchedule(schedules);
+            
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "getSchedules");
+            analyticsHandler.saveApiUse(req.userid, "getSchedules");
         }
 
         res.json({schedules: schedules});
@@ -203,7 +148,7 @@ exports.changeScheduleName = async (req, res) => {
 
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "changeScheduleName");
+            analyticsHandler.saveApiUse(req.userid, "changeScheduleName");
         }
         
         res.json({schedule: newSchedule});
@@ -222,7 +167,7 @@ exports.deleteSchedule = async (req, res) => {
 
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "deleteSchedule");
+            analyticsHandler.saveApiUse(req.userid, "deleteSchedule");
         }
 
         res.json({"res": "Schedule deleted"});
@@ -232,30 +177,3 @@ exports.deleteSchedule = async (req, res) => {
     }
 }
 
-
-
-const errorHandler = (err, endpoint, res, userid, userrole) => {
-    console.error("(degreeReqController/errorhandler) err: ", err);
-    if (err.detail !== undefined && err.title != undefined) {
-        /* this is internally formatted error */
-
-        // save error if user is not developer
-        if (userrole !== "developer") {
-            let errString = `id: ${err.id} | title: ${err.title} | detail: ${err.detail}`;
-            activityHandler.saveErrorActivity(userid, endpoint, err.status, errString);
-        }
-        
-        // send error response
-        resHandler.respondWithCustomError(err.id, err.status, err.title, err.detail, res);
-    }
-    else {
-        console.error("(degreeReqController/" + endpoint, err);
-        // save error if user is not developer
-        if (userrole !== "developer") {
-            let errString = `id: 000 | title: Internal Server Error | detail: ${err}`;
-            activityHandler.saveErrorActivity(userid, endpoint, "500", errString);
-        }
-
-        resHandler.respondWithCustomError("000", "500", "Internal Server Error", err, res);
-    }
-}

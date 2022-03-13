@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import {
   Button,
   InputAdornment,
@@ -6,16 +6,16 @@ import {
   IconButton,
   CircularProgress,
   ClickAwayListener,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
-import React from "react";
+import React from 'react';
 
-import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
-import ArrowRightIcon from "@material-ui/icons/ArrowRight";
-import dp2Style from "../style/DegreePlan2.module.css";
-import tStyle from "./reusableStyles/TabSwitch.module.css";
-import DegreeReqDisplay from "../reusable/DegreeReqDisplay";
-import PlanCard from "./PlanCard";
+import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import dpStyle from '../style/DegreePlan.module.css';
+import tStyle from './reusableStyles/TabSwitch.module.css';
+import DegreeReqDisplay from '../reusable/DegreeReqDisplay';
+import PlanCard from './PlanCard';
 
 function DegreeReqExpress() {
   const [degreeReqOptions, setDegreeReqOptions] = useState([]);
@@ -32,7 +32,7 @@ function DegreeReqExpress() {
   };
 
   const fetchPrivateReqs = async () => {
-    await fetch("https://jarney.club/api/degreereqs/private")
+    await fetch('https://qa.jarney.club/api/degreereqs/private')
       .then((response) => {
         return response.json();
       })
@@ -53,17 +53,17 @@ function DegreeReqExpress() {
     /* Degree Requirment Container */
   }
   return (
-    <div className={dp2Style.degreeReqContainer}>
-      <div className={dp2Style.degreeReqTitleContainer}>
+    <div className={dpStyle.degreeReqContainer}>
+      <div className={dpStyle.degreeReqTitleContainer}>
         <IconButton onClick={() => handleSwitchReq(-1)}>
           <ArrowLeftIcon fontSize="large" />
         </IconButton>
-        <div style={{ color: "#ffffff" }}>✓</div>
+        <div style={{ color: '#ffffff' }}>✓</div>
         <IconButton color="action" onClick={() => handleSwitchReq(1)}>
           <ArrowRightIcon fontSize="large" />
         </IconButton>
       </div>
-      <div className={dp2Style.degreeReqDetailContainer}>
+      <div className={dpStyle.degreeReqDetailContainer}>
         <DegreeReqDisplay reqDetail={degreeReqOptions[selectedDegreeReq]} />
       </div>
     </div>
@@ -88,7 +88,7 @@ function DegreePlanExpress() {
   };
 
   const fetchPlans = async () => {
-    await fetch("https://jarney.club/api/degreeplans")
+    await fetch('https://qa.jarney.club/api/degreeplans')
       .then((response) => {
         return response.json();
       })
@@ -109,26 +109,26 @@ function DegreePlanExpress() {
     /* Degree Requirment Container */
   }
   return (
-    <div className={dp2Style.degreeReqContainer}>
-      <div className={dp2Style.degreeReqTitleContainer}>
+    <div className={dpStyle.degreeReqContainer}>
+      <div className={dpStyle.degreeReqTitleContainer}>
         <IconButton onClick={() => handleSwitchReq(-1)}>
           <ArrowLeftIcon fontSize="large" />
         </IconButton>
-        <div style={{ color: "#ffffff" }}>
+        <div style={{ color: '#ffffff' }}>
           {degreePlanOptions[selectedDegreePlan]?.plan_name}
         </div>
         <IconButton color="action" onClick={() => handleSwitchReq(1)}>
           <ArrowRightIcon fontSize="large" />
         </IconButton>
       </div>
-      <div className={dp2Style.degreeReqDetailContainer}>
+      <div className={dpStyle.degreeReqDetailContainer}>
         {degreePlanOptions &&
           degreePlanOptions[selectedDegreePlan]?.terms?.map((card) => (
             <PlanCard
               key={card.plan_term_id}
               cardDetail={card}
               tabExpress={true}
-              cardOrigin={"degreePlanExpress"}
+              cardOrigin={'degreePlanExpress'}
             />
           ))}
       </div>
@@ -154,17 +154,17 @@ const CourseInfoExpress = (props) => {
     attributes,
   } = courseInfo;
 
-  const [attributeDetails, setAttributeDetails] = useState("");
+  const [attributeDetails, setAttributeDetails] = useState('');
   useEffect(() => {
     attributes?.forEach((att) => {
-      setAttributeDetails((prev) => prev.concat(att).concat(", "));
+      setAttributeDetails((prev) => prev.concat(att).concat(', '));
     });
   }, []);
 
   return (
     <ClickAwayListener onClickAway={onClose}>
       <div className={tStyle.courseInfoContainer}>
-        <div style={{ color: "#919da1" }}>More about this course... </div>
+        <div style={{ color: '#919da1' }}>More about this course... </div>
         {course_num && (
           <div className={tStyle.infoContainer}>
             <div className={tStyle.infoTitle}>Course title:&nbsp;</div>

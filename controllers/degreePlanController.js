@@ -1,8 +1,16 @@
+/*
+* Name: degreePlanController.js
+* API endpoints implementation for degree plan related operations
+* 
+* 
+*/
+
 // load database api
 const degreePlanAPI = require('../services/handlers/degreePlan.js');
-const activityHandler = require('../services/handlers/activity.js');
-const resHandler = require("./utils/resHandler.js");
+const analyticsHandler = require('../services/handlers/analytics.js');
+const errorHandler = require("./utils/controllerErrorHandler.js").getErrorHandler("degreePlanController");
 // const errorHandler = require('../services/handlers/errorHandler');
+
 /**
  * Create a new degree plan
  * @param {any} req 
@@ -22,7 +30,7 @@ exports.createDegreePlan = async (req, res) => {
         
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "createDegreePlan");
+            analyticsHandler.saveApiUse(req.userid, "createDegreePlan");
         }
 
         res.status(200);
@@ -56,7 +64,7 @@ exports.getDegreePlan = async (req, res) => {
 
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "getDegreePlan");
+            analyticsHandler.saveApiUse(req.userid, "getDegreePlan");
         }
 
         res.status(200);
@@ -84,7 +92,7 @@ exports.updateDegreePlanName = async (req, res) => {
     .then(result => {
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "updateDegreePlanName");
+            analyticsHandler.saveApiUse(req.userid, "updateDegreePlanName");
         }
 
         res.status(200);
@@ -113,7 +121,7 @@ exports.deleteDegreePlan = async (req, res) => {
     .then(result => {
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "deleteDegreePlan");
+            analyticsHandler.saveApiUse(req.userid, "deleteDegreePlan");
         }
 
         res.status(200);
@@ -145,7 +153,7 @@ exports.deleteDegreeTermMultiple = async (req, res) => {
     .then(result => {
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "deleteDegreeTermMultiple");
+            analyticsHandler.saveApiUse(req.userid, "deleteDegreeTermMultiple");
         }
 
         res.status(200);
@@ -174,7 +182,7 @@ exports.getDegreePlans = async (req, res) => {
     .then(result => {
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "getDegreePlans");
+            analyticsHandler.saveApiUse(req.userid, "getDegreePlans");
         }
 
         res.status(200);
@@ -201,7 +209,7 @@ exports.createTerm = async (req, res) => {
     .then(result => {
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "createTerm");
+            analyticsHandler.saveApiUse(req.userid, "createTerm");
         }
 
         res.status(200);
@@ -230,7 +238,7 @@ exports.saveTerm = async (req, res) => {
     .then(result => {
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "saveTerm");
+            analyticsHandler.saveApiUse(req.userid, "saveTerm");
         }
 
         res.status(200);
@@ -260,7 +268,7 @@ exports.deleteTerm = async (req, res) => {
     .then(result => {
         // save activity if user is not developer
         if (req.role !== "developer") {
-            activityHandler.saveNormalActivity(req.userid, "deleteTerm");
+            analyticsHandler.saveApiUse(req.userid, "deleteTerm");
         }
 
         res.status(200);
@@ -272,29 +280,4 @@ exports.deleteTerm = async (req, res) => {
     .catch(err => {
         errorHandler(err, "deleteTerm", res, req.userid, req.role);
     })
-}
-
-
-const errorHandler = (err, endpoint, res, userid, userrole) => {
-    console.error("(dPController/errorhandler) err: ", err);
-    if (err.detail !== undefined && err.title != undefined) {
-        /* this is internally formatted error */
-
-        // save error if user is not developer
-        if (userrole !== "developer") {
-            let errString = `id: ${err.id} | title: ${err.title} | detail: ${err.detail}`;
-            activityHandler.saveErrorActivity(userid, endpoint, err.status, errString);
-        }
-
-        resHandler.respondWithCustomError(err.id, err.status, err.title, err.detail, res);
-    }
-    else {
-        console.error("(degreePlanController/" + endpoint, err);
-        // save error if user is not developer
-        if (userrole !== "developer") {
-            let errString = `id: 000 | title: Internal Server Error | detail: ${err}`;
-            activityHandler.saveErrorActivity(userid, endpoint, "500", errString);
-        }
-        resHandler.respondWithCustomError("000", "500", "Internal Server Error", err, res);
-    }
 }

@@ -1,8 +1,11 @@
+/*
+* Name: start.js
+* Initialization required for the functioning of the server must be 
+* done in this file.
+* 
+* 
+*/
 const mongoose = require('mongoose');
-const http = require('http');
-const https = require('https');
-const fs = require('fs'); 
-const path = require("path");
 
 // import environmental variables
 require('dotenv').config({path: '.env'});
@@ -25,25 +28,12 @@ require('./models/external/Section');
 require('./models/external/Response');
 require('./models/external/ErrorActivity');
 require('./models/external/NormalActivity');
+require('./models/external/ApiError');
+require('./models/external/ApiUse');
+require('./models/external/FrontendUse');
 // start app
 const app = require('./app');
-app.set('port', process.env.PORT || 7777);
+app.set('port', process.env.DEV_PORT || 7777);
 const server = app.listen(app.get('port'), () => {
     console.log(`Express running → PORT ${server.address().port}`);
 });
-// console.log(process.env.SSL_PKEY.replace(/\\n/gm, '\n'))
-// console.log(process.env.CSR.replace(/\\n/gm, '\n'))
-// const httpServer = http.createServer(app);
-// const httpsServer = https.createServer({
-    // key: process.env.SSL_PKEY.replace(/\\n/gm, '\n'),
-    // cert: process.env.CERT.replace(/\\n/gm, '\n'),
-// }, app);
-// 
-// httpServer.listen(80, () => {
-    // console.log('HTTP Server running on port 80');
-// });
-// 
-// httpsServer.listen(443, () => {
-    // console.log('HTTPS Server running on port 443');
-// });
-// 

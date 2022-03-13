@@ -5,31 +5,31 @@
  *
  */
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import {
   Button,
   InputAdornment,
   TextField,
   IconButton,
   CircularProgress,
-} from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
-import AddBoxIcon from "@material-ui/icons/AddBox";
-import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
-import CancelIcon from "@material-ui/icons/Cancel";
-import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
-import ArrowRightIcon from "@material-ui/icons/ArrowRight";
+} from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
+import AddBoxIcon from '@material-ui/icons/AddBox';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
+import CancelIcon from '@material-ui/icons/Cancel';
+import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 
-import pStyle from "../reusable/reusableStyles/Popup.module.css";
-import Popup from "../reusable/Popup";
-import PlanCard from "../reusable/PlanCard";
-import Dropdown from "../reusable/Dropdown";
-import CourseSearchBar from "../reusable/CourseSearchBar";
-import SnackBarAlert from "../reusable/SnackBarAlert";
-import DegreeReqDisplay from "../reusable/DegreeReqDisplay";
-import JarUserLogin from "../reusable/JarUserLogin";
-import { json } from "body-parser";
+import pStyle from '../reusable/reusableStyles/Popup.module.css';
+import Popup from '../reusable/Popup';
+import PlanCard from '../reusable/PlanCard';
+import Dropdown from '../reusable/Dropdown';
+import CourseSearchBar from '../reusable/CourseSearchBar';
+import SnackBarAlert from '../reusable/SnackBarAlert';
+import DegreeReqDisplay from '../reusable/DegreeReqDisplay';
+import JarUserLogin from '../reusable/JarUserLogin';
+import { json } from 'body-parser';
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
@@ -62,28 +62,28 @@ function EditScheduleName(props) {
 
   const patchEditName = async () => {
     const requestOption = {
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
-        "Content-Type": "application/json",
-        accept: "application/json",
+        'Content-Type': 'application/json',
+        accept: 'application/json',
       },
       body: JSON.stringify({
         sched_id: scheduleID,
         new_name: editName,
       }),
     };
-    await fetch("https://jarney.club/api/schedule/name", requestOption)
+    await fetch('https://qa.jarney.club/api/schedule/name', requestOption)
       .then((response) => response.json())
       .then((result) => {
         if (!result.error) {
-          setAlertMessage("Schedule name changed!");
-          setAlertSeverity("success");
+          setAlertMessage('Schedule name changed!');
+          setAlertSeverity('success');
           onShowAlert();
           refreshSchedules();
           onClose();
         } else {
           setAlertMessage(result.error);
-          setAlertSeverity("warning");
+          setAlertSeverity('warning');
           onShowAlert(true);
         }
       })
@@ -123,7 +123,7 @@ function EditScheduleName(props) {
 function AddSchedule(props) {
   const { onClose, onCreateSchedule, scheduleOptions } = props;
 
-  const [scheduleName, setScheduleName] = useState("");
+  const [scheduleName, setScheduleName] = useState('');
 
   const handleClose = () => {
     onClose();
@@ -187,25 +187,25 @@ function RemoveSchedule(props) {
   };
 
   const fetchDelete = async () => {
-    await fetch("https://jarney.club/api/schedule", {
-      method: "DELETE",
+    await fetch('https://qa.jarney.club/api/schedule', {
+      method: 'DELETE',
       headers: {
-        "Content-Type": "application/json",
-        accept: "application/json",
+        'Content-Type': 'application/json',
+        accept: 'application/json',
       },
       body: JSON.stringify({ sched_id: scheduleID }),
     })
       .then((response) => response.json())
       .then((result) => {
         if (!result.error) {
-          setAlertMessage("Schedule deleted!");
-          setAlertSeverity("success");
+          setAlertMessage('Schedule deleted!');
+          setAlertSeverity('success');
           onShowAlert();
           onClose();
           refreshSchedules();
         } else {
           setAlertMessage(result.error);
-          setAlertSeverity("warning");
+          setAlertSeverity('warning');
           onShowAlert(true);
         }
       })

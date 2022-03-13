@@ -1,8 +1,15 @@
+/*
+* Name: authController.js
+* API endpoints implementation for lower level authentication operations.
+* 
+* 
+*/
+
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const resHandler = require("../utils/resHandler.js");
 const passport = require('passport');
-const activityHandler = require('../../services/handlers/activity.js');
+const analyticsHandler = require('../../services/handlers/analytics.js');
 
 /**
  * Authenticate user credentials, set req.userid and req.password, and 
@@ -17,14 +24,14 @@ const activityHandler = require('../../services/handlers/activity.js');
 exports.authenticateCredentialsWithPassport = async (req, res, next) => {
     passport.authenticate('local', function (err, user, info) {
         if (err) {
-            activityHandler.saveErrorActivity(req.body.userid, "login", "400", err.message);
-            return resHandler.respondWithCustomError("101", "400", "Login Error", err.message, res);
+            resHandler.respondWithCustomError(req.body.userid, "login", "103", "400", "Login Error", err.message, err.message, true, res);
+            return;
         }
         if (!user) {
             console.error("(authenticateCredentialsWithPassport) user: ", user);
             console.error("(authenticateCredentialsWithPassport) info: ", info);
-            activityHandler.saveErrorActivity(req.body.userid, "login", "400", "Authentication failed with info: " + info);
-            return resHandler.respondWithCustomError("101", "400", "Login Error", "Authentication failed", res);
+            resHandler.respondWithCustomError(req.body.userid, "login", "103", "400", "Login Error", "Authentication failed", "Authentication failed with info: " + info, true, res);
+            return;
         }
         else {
             console.log("(authenticateCredentialsWithPassport) user: ", user);
@@ -37,7 +44,7 @@ exports.authenticateCredentialsWithPassport = async (req, res, next) => {
             
             // save activity if user is not developer
             if (req.role !== "developer") {
-                activityHandler.saveNormalActivity(req.userid, "Manual Login");
+                analyticsHandler.saveApiUse(req.userid, "Manual Login");
             }
     
             next();
@@ -58,10 +65,9 @@ exports.signAccessTokenAndSendAsCookie = async (res, userid) => {
     });
     console.log("(authController/login) dbUsers.fineOne(..): ", result);
     if (result === null) {
-        activityHandler.saveErrorActivity(req.body.userid, "Registration", "403", "Email is not registered");
-        resHandler.respondWithCustomError("104", "403", "Registration Error", "Email is not registered. Please register first.", res);
+        resHandler.respondWithCustomError(req.body.userid, "Registration", "104", "403", "Registration Error", "Email is not registered. Please register first.", "Email is not registered", true, res);
     }
-        
+
     let token = jwt.sign({ userid: userid, role: result.role}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
     // res.json({"token": token});
     res.cookie("access_token", token, {
@@ -102,7 +108,7 @@ exports.signAccessTokenAndAttachCookie = async (req, res, next) => {
 
     // save activity if user is not developer
     if (req.role !== "developer") {
-        activityHandler.saveNormalActivity(req.userid, "Manual Logout");
+        analyticsHandler.saveApiUse(req.userid, "Manual Logout");
     }
     res.cookie("access_token", token, {
         maxAge: 1000,
@@ -126,10 +132,8 @@ exports.authenticateToken = async (req, res, next) => {
     const token = req.cookies.access_token;
     
     if (token == null) {
-        activityHandler.saveErrorActivity("UNKNOWN USER", 
-            "Token Authentication", "401", "Token was not provided");
-        resHandler.respondWithCustomError("306", "401",
-            "Authentication Error", "Token was not provided", res);
+        resHandler.respondWithCustomError("UNKNOWN USER", "Token Authentication", "306", "401", 
+            "Authentication Error", "Token was not provided", "Token was not provided", true, res);
     }
     else {
         if (token) {
@@ -138,11 +142,8 @@ exports.authenticateToken = async (req, res, next) => {
                 if (err) {
                     let useridFromData = userdata.userid;
                     if (userdata.userid === undefined)
-                        useridFromData = "UNKNOWN USER";
-                    activityHandler.saveErrorActivity(useridFromData, 
-                        "Token Authentication", "401", "Token is invalid" + err);
-                    resHandler.respondWithCustomError("305", "401", 
-                        "Authentication Error", "Token is invalid", res);
+                        useridFromData = "UNKNOWN USER";                    
+                    resHandler.respondWithCustomError(useridFromData, "Token Authentication", "305", "401", "Authentication Error", "Token is invalid", "Token is invalid " + err, true, res);
                 }
                 else {
                     let dbUsers = mongoose.connection.collection("users"); // get MongoDB collection
@@ -154,10 +155,7 @@ exports.authenticateToken = async (req, res, next) => {
                         let useridFromData = userdata.userid;
                         if (userdata.userid === undefined)
                             useridFromData = "UNKNOWN USER";
-                        activityHandler.saveErrorActivity(useridFromData,
-                            "Token Authentication", "401", "Token is invalid.");
-                        resHandler.respondWithCustomError("307", "401",
-                            "Authentication Error", "Token is invalid. Wrong user.", res);
+                        resHandler.respondWithCustomError(useridFromData, "Token Authentication", "307", "401", "Authentication Error", "Token is invalid. Wrong user.", "Token is invalid. Wrong user.", true, res);
                     }
                     else {
                         req.userid = userdata.userid.toLowerCase();
@@ -169,10 +167,7 @@ exports.authenticateToken = async (req, res, next) => {
                 }
             });
         } else {
-            activityHandler.saveErrorActivity("UNKNOWN USER", 
-                "Token Authentication", "401", "Token was not provided.");
-            resHandler.respondWithCustomError("306", "401",
-                "Authentication Error", "Token was not provided", res);
+            resHandler.respondWithCustomError("UNKNOWN USER", "Token Authentication", "306", "401", "Authentication Error", "Token was not provided", "Token was not provided", true, res);
         }
     }
 }
