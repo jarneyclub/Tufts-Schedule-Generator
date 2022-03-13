@@ -24,6 +24,7 @@ require('./models/external/PlanTerm');
 require('./models/external/DegreeReqPrivate');
 require('./models/external/DegreeReqPublic');
 require('./models/external/Schedule');
+require('./models/external/Schedule_V2');
 require('./models/external/Section');
 require('./models/external/Response');
 require('./models/external/ErrorActivity');
