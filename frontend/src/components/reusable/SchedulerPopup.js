@@ -72,7 +72,7 @@ function EditScheduleName(props) {
         new_name: editName,
       }),
     };
-    await fetch('https://qa.jarney.club/api/schedule/name', requestOption)
+    await fetch('https://jarney.club/api/schedule/name', requestOption)
       .then((response) => response.json())
       .then((result) => {
         if (!result.error) {
@@ -187,7 +187,7 @@ function RemoveSchedule(props) {
   };
 
   const fetchDelete = async () => {
-    await fetch('https://qa.jarney.club/api/schedule', {
+    await fetch('https://jarney.club/api/schedule', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

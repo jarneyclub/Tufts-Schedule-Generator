@@ -111,7 +111,7 @@ function AddSemester(props) {
       body: JSON.stringify(value),
     };
 
-    await fetch('https://qa.jarney.club/api/degreeplan/term', requestOption)
+    await fetch('https://jarney.club/api/degreeplan/term', requestOption)
       .then((response) => response.json())
       .then((result) => {
         if (!result.error) {
@@ -219,7 +219,7 @@ function RemoveSemester(props) {
         plan_id: planID,
       }),
     };
-    await fetch('https://qa.jarney.club/api/degreeplan/terms', requestOption)
+    await fetch('https://jarney.club/api/degreeplan/terms', requestOption)
       .then((response) => response.json())
       .then((result) => {
         if (!result.error) {
@@ -308,7 +308,7 @@ function EditPlanName(props) {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
     };
-    const url = 'https://qa.jarney.club/api/degreeplan/'
+    const url = 'https://jarney.club/api/degreeplan/'
       .concat(planID)
       .concat('/plan_name/')
       .concat(editName);
@@ -448,7 +448,7 @@ function RemovePlan(props) {
       headers: { accept: '*/*' },
     };
     await fetch(
-      'https://qa.jarney.club/api/degreeplan?plan_id='.concat(planID),
+      'https://jarney.club/api/degreeplan?plan_id='.concat(planID),
       requestOption
     )
       .then((response) => response.json())

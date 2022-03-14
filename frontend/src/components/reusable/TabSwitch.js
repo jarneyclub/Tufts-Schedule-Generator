@@ -32,7 +32,7 @@ function DegreeReqExpress() {
   };
 
   const fetchPrivateReqs = async () => {
-    await fetch('https://qa.jarney.club/api/degreereqs/private')
+    await fetch('https://jarney.club/api/degreereqs/private')
       .then((response) => {
         return response.json();
       })
@@ -88,7 +88,7 @@ function DegreePlanExpress() {
   };
 
   const fetchPlans = async () => {
-    await fetch('https://qa.jarney.club/api/degreeplans')
+    await fetch('https://jarney.club/api/degreeplans')
       .then((response) => {
         return response.json();
       })

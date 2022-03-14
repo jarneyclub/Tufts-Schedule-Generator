@@ -355,7 +355,7 @@ function Scheduler(props) {
 
   const fetchSavedSchedules = async () => {
     setSelectedScheduleIdx(0);
-    await fetch('https://qa.jarney.club/api/schedules')
+    await fetch('https://jarney.club/api/schedules')
       .then((response) => response.json())
       .then((result) => {
         setScheduleExist(true);
@@ -387,7 +387,7 @@ function Scheduler(props) {
   };
 
   const fetchAttributes = async () => {
-    await fetch('https://qa.jarney.club/api/courses/attributes')
+    await fetch('https://jarney.club/api/courses/attributes')
       .then((response) => response.json())
       .then(
         (result) => {
@@ -423,7 +423,7 @@ function Scheduler(props) {
       setShowAlert(true);
     }
     checkCourses &&
-      (await fetch('https://qa.jarney.club/api/schedule', requestOption)
+      (await fetch('https://jarney.club/api/schedule', requestOption)
         .then((response) => response.json())
         .then((result) => {
           if (!result.error) {
@@ -446,7 +446,7 @@ function Scheduler(props) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ sched_name: newName }),
     };
-    await fetch('https://qa.jarney.club/api/schedule', requestOption)
+    await fetch('https://jarney.club/api/schedule', requestOption)
       .then((response) => response.json())
       .then((result) => {
         // refresh
@@ -468,7 +468,7 @@ function Scheduler(props) {
   const fetchData = async () => {
     setLoadMessage(true);
     await fetch(
-      'https://qa.jarney.club/api/courses/term?cnum='
+      'https://jarney.club/api/courses/term?cnum='
         .concat(courseSearchValue)
         .concat('&attr=')
         .concat(selectedAttribute)
