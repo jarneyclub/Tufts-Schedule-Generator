@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "./static/css/main.c959909c.css",
+    "main.js": "./static/js/main.9fbc9806.js",
+    "static/media/favicon_2.png": "./static/media/favicon_2.864c93e1efb88812fdf4.png",
+    "static/media/homepage_final.gif": "./static/media/homepage_final.8e74a25ae9bc35061570.gif",
+    "static/media/feedback.png": "./static/media/feedback.795628bfdeb0955db68b.png",
+    "static/media/Eina03-Regular.ttf": "./static/media/Eina03-Regular.5a3070b96ecb253115f0.ttf",
+    "static/media/Eina03-SemiBold.ttf": "./static/media/Eina03-SemiBold.3ad782c774b4c1cccfba.ttf",
+    "static/media/Icon_Scheduler.png": "./static/media/Icon_Scheduler.75a76c379970de90f347.png",
+    "static/media/JARney.png": "./static/media/JARney.ea751889d47e57b25328.png",
+    "static/media/Icon_DegreePlanner.png": "./static/media/Icon_DegreePlanner.bfb9c5e6ab916b938367.png",
+    "static/media/jarney_word.png": "./static/media/jarney_word.a79d9ad41b6d4ba72a97.png",
+    "index.html": "./index.html",
+    "main.c959909c.css.map": "./static/css/main.c959909c.css.map",
+    "main.9fbc9806.js.map": "./static/js/main.9fbc9806.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c959909c.css",
+    "static/js/main.9fbc9806.js"
+  ]
+}
