@@ -104,6 +104,8 @@ function DegreePlan(props) {
     handleLogRequired,
   } = props;
   const [loaded, setLoaded] = useState(false);
+  //set plan exists
+  const [planExist, setPlanExist] = useState(false);
 
   const [semesterPlanOptions, setSemesterPlanOptions] = useState([]); // sets the array of options for semester plans
   const [courseSearchValue, setCourseSearchValue] = useState('');
@@ -365,7 +367,14 @@ function DegreePlan(props) {
         return response.json();
       })
       .then((result) => {
+        console.log('plan options is:' + result.plans);
         setSemesterPlanOptions(result.plans);
+
+        if (semesterPlanOptions.length === 0) {
+          console.log('degree plan does not exist!');
+        } else {
+          console.log('plan exists');
+        }
         setCardOptions(result.plans[selectedPlanIdx].terms);
         setSelectedPlanName(result.plans[selectedPlanIdx].plan_name);
         setSelectedPlanID(result.plans[selectedPlanIdx].plan_id);

@@ -206,7 +206,6 @@ function RemoveSemester(props) {
 
   const handleRemove = () => {
     /* do something API?? pass in the selectedCards arr */
-
     fetchDeleteTerms();
   };
 

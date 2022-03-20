@@ -13,7 +13,6 @@ import { Button, IconButton, ClickAwayListener } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import HelpIcon from '@material-ui/icons/Help';
 import hStyle from './reusableStyles/HeaderUser.module.css';
-import logo from '../res/JARney.png';
 import newLogo from '../res/jarney_word.png';
 import Popup from './Popup';
 import JarUserLogin from './JarUserLogin';
@@ -118,7 +117,7 @@ function HeaderUser(props) {
                     color: '#5a32bf',
                     textDecoration: 'none',
                   }}
-                  aria-label="help"
+                  aria-label="help" 
                 >
                   <HelpIcon />
                 </IconButton>
