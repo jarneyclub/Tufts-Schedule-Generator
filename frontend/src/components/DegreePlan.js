@@ -374,7 +374,7 @@ function DegreePlan(props) {
           console.log('degree plan does not exist!');
         } else {
           console.log('plan exists');
-        }
+        };
         setCardOptions(result.plans[selectedPlanIdx].terms);
         setSelectedPlanName(result.plans[selectedPlanIdx].plan_name);
         setSelectedPlanID(result.plans[selectedPlanIdx].plan_id);
