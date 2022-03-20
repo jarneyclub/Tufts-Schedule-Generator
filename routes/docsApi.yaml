@@ -1,3 +1,10 @@
+# Name: docsApi.yaml
+# Swagger documentation for API endpoints. This documentation is the agreed
+# interface for API endpoints exposed to the frontend. All production endpoints
+# must be documented in this file.
+# 
+# 
+# 
 paths:
   ####################
   #                  #

@@ -1,6 +1,46 @@
 const { Heap } = require('heap-js');
 const timeUtils = require('./timeUtils.js');
 
+/**
+ * Convert time preferences that is in military time
+ * to number of minutes since midnight. 
+ * e.g. 10:00 should be converted to 600
+ * @param {object} objDaysOfWeekInMilitary object formatted like below
+ * {
+ *     Monday: [{time_earliest: 08:00, time_latest: 08:30}, ...],
+ *    Tuesday: [{time_earliest: 10:00, time_latest: 11:30}, ...],
+ *   ...
+ * }
+ * @return {object} object of converted time preferences
+ */
+const convertTimeFromMilitaryToMinutes = (objDaysOfWeekInMilitary) => {
+    let dayToInteger = {
+        "Monday": 1,
+        "Tuesday": 2,
+        "Wednesday": 3,
+        "Thursday": 4,
+        "Friday": 5,
+        "Saturday": 6,
+        "Sunday": 7
+    };
+    // Iterate over each day of the week in the object and convert
+    // the time preferences to minutes since midnight
+    let convertedTime = {};
+    for (let dayString in objDaysOfWeekInMilitary) {
+        convertedTime[dayToInteger[dayString]] = [];
+        for (let i = 0; i < objDaysOfWeekInMilitary[dayString].length; i++) {
+            // Convert time to minutes since midnight
+            let strTimeEarliest = objDaysOfWeekInMilitary[dayString][i].time_earliest;
+            let strTimeLatest = objDaysOfWeekInMilitary[dayString][i].time_latest;
+            convertedTime[dayToInteger[dayString]].push({
+                time_earliest: timeUtils.militaryTimeToInteger(strTimeEarliest),
+                time_latest: timeUtils.militaryTimeToInteger(strTimeLatest)
+            });
+        }
+    }
+    return convertedTime;
+}
+
 
 const preprocessFilter = (global) => {
     return new Promise((resolve, reject) => {
@@ -16,26 +56,11 @@ const preprocessFilter = (global) => {
             Sunday: 7
         }
         global.filterPreprocessed = {
-            time: {},
+            time: convertTimeFromMilitaryToMinutes(global.filter.time),
             misc: global.filter.misc
         }
         
         // console.log("(preprocessFilter) timePref before convert to int: ", global.filter.time);
-        /* Convert military time in filter to integers representing minutes */
-        for (let dayString in global.filter.time) {
-            let dayInt = dayToInteger[dayString];
-            // global.filterPreprocessed.time[dayInt] = filter.time[dayInt]
-            global.filterPreprocessed.time[dayInt] = [];
-            // let arrayTimes = global.filter.time[dayInt];
-            for (let i = 0; i < global.filter.time[dayString].length; i++) {
-                let strTimeEarliest = global.filter.time[dayString][i].time_earliest;
-                let strTimeLatest = global.filter.time[dayString][i].time_latest;
-                global.filterPreprocessed.time[dayInt].push({
-                    time_earliest: timeUtils.militaryTimeToInteger(strTimeEarliest),
-                    time_latest: timeUtils.militaryTimeToInteger(strTimeLatest)
-                });
-            }
-        }
         
         /*    Combine adjacent time intervals in the time preferences section of filter.
              e.g. 10:00-11:00, 11:00-12:00 should be 10:00-12:00                     

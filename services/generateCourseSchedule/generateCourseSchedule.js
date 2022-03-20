@@ -1,3 +1,11 @@
+/*
+* Name: generateCourseSchedule.js
+* High level logic for automattically generating course schedules with user 
+* preferences.
+* 
+* 
+*/
+
 /* utils */
 const getPossibleDigits = require('./utils/getPossibleDigits.js');
 const generatePermutations = require('./utils/generatePermutations.js');
@@ -5,7 +13,7 @@ const preprocessFilter = require('./utils/preprocessFilter.js');
 const applyFilter = require('./utils/applyFilter.js');
 const getIdealSchedules = require('./utils/getIdealSchedules.js');
 const chosenClassesToApiDetails = require('./utils/chosenClassesToApiDetails.js');
-
+//formats response to send back to users^
 /**
  * 1) Get permutations
  * 2) Map permutations to mapping of sectiontypes and its sections
@@ -39,7 +47,7 @@ const generateCourseSchedule = (arrayCourses, filter) => {
             "resultClasses": undefined,
             "resultClassesIndex": undefined
         };
-        // Uses filter
+        // Organize the filter (user preferences) into 
         preprocessFilter(global)
         .then(
             (global) => applyFilter.createArrSectionTypes(global)

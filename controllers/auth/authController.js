@@ -1,3 +1,10 @@
+/*
+* Name: authController.js
+* API endpoints implementation for lower level authentication operations.
+* 
+* 
+*/
+
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const resHandler = require("../utils/resHandler.js");

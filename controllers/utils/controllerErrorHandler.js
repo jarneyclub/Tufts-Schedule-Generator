@@ -1,3 +1,10 @@
+/*
+* Name: controllerErrorHandler.js
+* Error handler for the controllers. 
+* 
+* 
+*/
+
 const resHandler = require("./resHandler.js");
 
 /* Function that returns an error handler function for the controllers.

@@ -1,3 +1,10 @@
+/*
+* Name: app.js
+* Entry point of the API. Handle routing for api, docs, and frontend.
+* 
+* 
+*/
+
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
@@ -7,7 +14,7 @@ const swaggerUi = require('swagger-ui-express');
 const path = require('path');
 const app = express();
 
-require('./services/handlers/passport.js');
+require('./services/passport.js');
 
 const swaggerDefinition = {
   openapi: '3.0.0',
@@ -21,7 +28,7 @@ const swaggerDefinition = {
         description: "Production server"
     }
   ]
-};  
+};
 
 const options = {
   swaggerDefinition,
