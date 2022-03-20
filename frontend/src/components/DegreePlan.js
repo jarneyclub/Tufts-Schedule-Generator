@@ -705,9 +705,9 @@ function DegreePlan(props) {
                 <IconButton
                   className={dpStyle.editPlanButton}
                   onClick={() => handlePopup('addPlan', true)}
-                />
+                >
                   <AddBoxIcon fontSize="large" />
-                {/* </IconButton> */}
+                </IconButton>
               </div>
             )}
           </div>
