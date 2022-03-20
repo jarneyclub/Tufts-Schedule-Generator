@@ -370,7 +370,7 @@ function DegreePlan(props) {
         console.log('plan options is:' + result.plans);
         setSemesterPlanOptions(result.plans);
 
-        if (semesterPlanOptions.length === 0) {
+        if (semesterPlanOptions?.length === 0) {
           console.log('degree plan does not exist!');
         } else {
           console.log('plan exists');
