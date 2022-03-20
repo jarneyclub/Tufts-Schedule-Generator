@@ -697,15 +697,15 @@ function DegreePlan(props) {
       ) : (
         loaded && (
           <div className={dpStyle.noSchedulewrapper}>
-            {semesterPlanOptions?.length === 0} ? (<div />) : (
-            <div>Create your plan now!</div>
+            {/* {semesterPlanOptions?.length === 0 ? (<div />) : ( */}
+            {/* <div>Create your plan now!</div>
             <IconButton
               className={dpStyle.editPlanButton}
               onClick={() => handlePopup('addPlan', true)}
             >
               <AddBoxIcon fontSize="large" />
             </IconButton>
-            )
+            ) */}
           </div>
         )
       )}
