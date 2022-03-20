@@ -1,3 +1,10 @@
+/*
+* Name: degreePlanController.js
+* API endpoints implementation for degree plan related operations
+* 
+* 
+*/
+
 // load database api
 const degreePlanAPI = require('../services/handlers/degreePlan.js');
 const analyticsHandler = require('../services/handlers/analytics.js');

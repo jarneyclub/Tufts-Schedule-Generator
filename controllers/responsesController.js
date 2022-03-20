@@ -1,3 +1,11 @@
+/*
+* Name: responsesController.js
+* API endpoints implementation for customer inquiry related operations
+* 
+* 
+*/
+
+
 const mongoose = require('mongoose');
 const Response = mongoose.model('Response');
 

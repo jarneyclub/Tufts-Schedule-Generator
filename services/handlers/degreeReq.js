@@ -1,3 +1,8 @@
+/*
+* Name: degreeReq.js
+* Functions for getting/putting database information about degree requirements
+*/
+
 const mongoose = require('mongoose');
 const DegreeReqPrivate = mongoose.model('DegreeReqPrivate');
 const DegreeReqPublic = mongoose.model('DegreeReqPublic');

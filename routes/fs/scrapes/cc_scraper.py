@@ -20,6 +20,7 @@ class cc_scraper ():
         self.cred_url = "https://sis.uit.tufts.edu/psp/paprd/?cmd=start"
         self.api_url = "https://siscs.uit.tufts.edu/psc/csprd/EMPLOYEE/HRMS/s/WEBLIB_CLS_SRCH.ISCRIPT1.FieldFormula.IScript_getSearchresultsAll3?callback=&term=" + self.str_year + "&career=ALL&subject=&crs_number=&attribute=&keyword=&instructor=&searchby=crs_number&_="
         self.attr_url = "https://siscs.uit.tufts.edu/psc/csprd/EMPLOYEE/HRMS/s/WEBLIB_CLS_SRCH.ISCRIPT1.FieldFormula.IScript_getAttributes?callback=&career=ALL&term=" + self.str_year + "&_=1622156074208"
+        self.program_url = "https://siscs.uit.tufts.edu/psc/csprd/EMPLOYEE/HRMS/s/WEBLIB_CLS_SRCH.ISCRIPT1.FieldFormula.IScript_getCareers?callback=&_=1631462934336"
     def get_cookies(self):
         headers = {
             'Host': 'siscs.uit.tufts.edu',
@@ -42,6 +43,16 @@ class cc_scraper ():
     def get_attributes(self, session):
         session, res = self.api_session(session, self.attr_url, self.headers)
         return session, json.loads(res.text)
+
+    def get_programs (self, session):
+        session, res = self.api_session(session, self.program_url, self.headers)
+        json_parsed = json.loads(res.text)
+        program_names = []
+        for i in range (0, len(json_parsed)):
+            # append all program descriptions except All Schools
+            if json_parsed[i]["desc"] != "All Schools":
+                program_names.append(json_parsed[i]["desc"])
+        return session, program_names
 
     def insert_user_agent (self, headers):
         browsers = {

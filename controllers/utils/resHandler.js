@@ -1,8 +1,15 @@
+/*
+* Name: resHandler.js
+* Handler for responses from the controllers to the end users. Helps with 
+* formatting the response in JSON:API v1.0 standard. View https://jsonapi.org/
+* 
+* 
+*/
+
 const analyticsHandler = require('../../services/handlers/analytics.js');
 
 /**
- * Creates a single resource object in JSON:API v1.0 standard
- * View https://jsonapi.org/
+ * Creates a single resource object
  *
  * @param {*} attrs
  * @param {*} type
@@ -18,9 +25,8 @@ exports.makeIntoSingleResourceObject = (attrs, type, id) => {
 }
 
 /**
- * Sends an error as a response in JSON:API v1.0 standard
+ * Sends an error as a response.
  * Optionally saves the error in analytics to the database.
- * View https://jsonapi.org/
  * @param {String} userid affected user's user id
  * @param {String} feature feature/endpoint in which this error occurred
  * @param {String} errid unique backend error id

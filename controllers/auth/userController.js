@@ -1,3 +1,10 @@
+/*
+* Name: userController.js
+* API endpoints implementation for user operations.
+* 
+* 
+*/
+
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 // const Guest = mongoose.model('Guest');

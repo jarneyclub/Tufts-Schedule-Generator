@@ -1,3 +1,8 @@
+/*
+* Name: degreePlan.js
+* Functions for getting/putting database information about degree plans
+*/
+
 const mongoose = require('mongoose');
 require('../../models/external/Plan.js');
 require('../../models/external/PlanTerm.js');

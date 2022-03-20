@@ -1,8 +1,11 @@
+/*
+* Name: start.js
+* Initialization required for the functioning of the server must be 
+* done in this file.
+* 
+* 
+*/
 const mongoose = require('mongoose');
-const http = require('http');
-const https = require('https');
-const fs = require('fs'); 
-const path = require("path");
 
 // import environmental variables
 require('dotenv').config({path: '.env'});
@@ -21,6 +24,7 @@ require('./models/external/PlanTerm');
 require('./models/external/DegreeReqPrivate');
 require('./models/external/DegreeReqPublic');
 require('./models/external/Schedule');
+require('./models/external/Schedule_V2');
 require('./models/external/Section');
 require('./models/external/Response');
 require('./models/external/ErrorActivity');
@@ -30,7 +34,7 @@ require('./models/external/ApiUse');
 require('./models/external/FrontendUse');
 // start app
 const app = require('./app');
-app.set('port', process.env.DEV_PORT || 7777);
+app.set('port', process.env.PORT || 7777);
 const server = app.listen(app.get('port'), () => {
     console.log(`Express running → PORT ${server.address().port}`);
 });
