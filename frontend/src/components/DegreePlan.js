@@ -293,6 +293,7 @@ function DegreePlan(props) {
   };
 
   const handleSetSelectedPlanIdx = (idx) => {
+    console.log('handleSetSelectedPlanIdx called : ', idx);
     setSelectedPlanIdx(idx);
   };
 
@@ -337,7 +338,7 @@ function DegreePlan(props) {
         }
       })
       .then((result) => {
-        setSelectedPlanIdx(semesterPlanOptions.length);
+        setSelectedPlanIdx(semesterPlanOptions?.length);
         fetchPlans();
         setLoadMessage(false);
         setAlertMessage('Plan added!');
@@ -362,6 +363,7 @@ function DegreePlan(props) {
    */
   const fetchPlans = async () => {
     // setSelectedPlanIdx(0);
+
     await fetch('https://qa.jarney.club/api/degreeplans')
       .then((response) => {
         return response.json();
