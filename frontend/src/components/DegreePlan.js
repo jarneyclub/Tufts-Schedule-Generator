@@ -700,11 +700,13 @@ function DegreePlan(props) {
         </div>
       ) : (
         loaded && (
-          <div className={dpStyle.noSchedulewrapper}>
+          <div>
             {semesterPlanOptions?.length !== 0 ? (
+              <div className={dpStyle.noSchedulewrapper}>
               <div>plan EXISTS!</div>
+              </div>
             ) : (
-              <div>
+              <div className={dpStyle.noSchedulewrapper}>
                 <div>Create your plan now!</div>
                 <IconButton
                   className={dpStyle.editPlanButton}
