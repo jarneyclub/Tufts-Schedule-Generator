@@ -374,10 +374,14 @@ function DegreePlan(props) {
         setSemesterPlanOptions(result.plans);
 
         if (result.plans && result.plans?.length === 0) {
+          setPlanExist(false);
           console.log('degree plan does not exist!');
         } else {
+          setPlanExist(true);
           console.log('plan exists');
         }
+        console.log('PlanExist is:', planExist);
+
         setCardOptions(result.plans[selectedPlanIdx].terms);
         setSelectedPlanName(result.plans[selectedPlanIdx].plan_name);
         setSelectedPlanID(result.plans[selectedPlanIdx].plan_id);

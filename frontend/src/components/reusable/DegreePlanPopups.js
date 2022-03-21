@@ -32,7 +32,7 @@ import JarUserLogin from './JarUserLogin';
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
- *                          Add PlanCard Popup //Semester                              *
+ *                          Add PlanCard(semester) Popup                              *
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 // const yearOptions = []
@@ -167,7 +167,7 @@ function AddSemester(props) {
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
- *                            Remove PlanCard Popup                          *
+ *                            Remove PlanCard(semester) Popup                          *
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function RemoveSemester(props) {
