@@ -32,7 +32,7 @@ import JarUserLogin from './JarUserLogin';
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
- *                          Add PlanCard Popup                               *
+ *                          Add PlanCard Popup //Semester                              *
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 // const yearOptions = []
@@ -452,7 +452,9 @@ function RemovePlan(props) {
     )
       .then((response) => response.json())
       .then((result) => {
+
         if (!result.error) {
+          console.log("fetch Delete called");
           onSetIdxLast();
           setAlertMessage('Plan removed!');
           setAlertSeverity('success');
