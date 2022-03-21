@@ -701,14 +701,14 @@ function DegreePlan(props) {
       ) : (
         loaded && (
           <div>
-            {console.log('number of plan options: ', semesterPlanOptions?.length)}
+            
             {semesterPlanOptions?.length !== 0 ? (
               <div className={dpStyle.noSchedulewrapper}>
-              <div>plan EXISTS!</div>
+                <div>plan EXISTS! {semesterPlanOptions?.length}</div>
               </div>
             ) : (
               <div className={dpStyle.noSchedulewrapper}>
-                <div>Create your plan now!</div>
+                <div>Create your plan now! number of plan options: {semesterPlanOptions?.length}</div>
                 <IconButton
                   className={dpStyle.editPlanButton}
                   onClick={() => handlePopup('addPlan', true)}
