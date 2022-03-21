@@ -370,16 +370,17 @@ function DegreePlan(props) {
         return response.json();
       })
       .then((result) => {
-        console.log('plan options is:' + result.plans);
+        
         setSemesterPlanOptions(result.plans);
+        console.log('the number of plan is:', result.plans?.length);
 
         if (result.plans && result.plans?.length === 0) {
-          setPlanExist(false);
-          console.log('degree plan does not exist!');
+          setPlanExist(false);  
         } else {
           setPlanExist(true);
           console.log('plan exists');
         }
+        
         console.log('PlanExist is:', planExist);
 
         setCardOptions(result.plans[selectedPlanIdx].terms);
