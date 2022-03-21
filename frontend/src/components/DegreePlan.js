@@ -466,6 +466,7 @@ function DegreePlan(props) {
   }, [cardOptions]);
 
   useEffect(() => {
+    console.log("selectedPlanIdx changed useEffect called");
     fetchPlans();
   }, [selectedPlanIdx]);
   return (
