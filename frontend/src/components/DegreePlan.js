@@ -374,11 +374,11 @@ function DegreePlan(props) {
         setSemesterPlanOptions(result.plans);
         console.log('the number of plan is:', result.plans?.length);
 
-        if (result.plans && result.plans?.length === 0) {
-          setPlanExist(false);  
-        } else {
+        if (result.plans && result.plans?.length !== 0) {
           setPlanExist(true);
           console.log('plan exists');
+        } else {
+          setPlanExist(false);  
         }
         
         console.log('PlanExist is:', planExist);
@@ -441,6 +441,11 @@ function DegreePlan(props) {
   }, [logged]);
 
   useEffect(() => {
+    console.log('selectedPlanIdx changed useEffect called');
+    fetchPlans();
+  }, [selectedPlanIdx]);
+
+  useEffect(() => {
     cardOptions?.map((card) => fetchSaveTerm(card));
     let totalCount = 0;
     let completedCount = 0;
@@ -471,10 +476,7 @@ function DegreePlan(props) {
     handleUnitsCount('future', totalCount - completedCount - currentCount);
   }, [cardOptions]);
 
-  useEffect(() => {
-    console.log('selectedPlanIdx changed useEffect called');
-    fetchPlans();
-  }, [selectedPlanIdx]);
+  
   return (
     <div style={{ marginTop: '80px' }}>
       <Helmet>
@@ -706,14 +708,14 @@ function DegreePlan(props) {
       ) : (
         loaded && (
           <div>
-            
-            {semesterPlanOptions?.length !== 0 ? (
+            {/* semesterPlanOptions?.length !== 0 */}
+            { planExist === true? (
               <div className={dpStyle.noSchedulewrapper}>
                 <div>plan EXISTS! {semesterPlanOptions?.length}</div>
               </div>
             ) : (
               <div className={dpStyle.noSchedulewrapper}>
-                <div>Create your plan now! number of plan options: {semesterPlanOptions?.length}</div>
+                <div>Create your plan now!</div>
                 <IconButton
                   className={dpStyle.editPlanButton}
                   onClick={() => handlePopup('addPlan', true)}
