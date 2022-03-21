@@ -701,6 +701,7 @@ function DegreePlan(props) {
       ) : (
         loaded && (
           <div>
+            {console.log('number of plan options: ', semesterPlanOptions?.length)}
             {semesterPlanOptions?.length !== 0 ? (
               <div className={dpStyle.noSchedulewrapper}>
               <div>plan EXISTS!</div>
