@@ -293,7 +293,8 @@ function DegreePlan(props) {
   };
 
   const handleSetSelectedPlanIdx = (idx) => {
-    console.log('handleSetSelectedPlanIdx called : ', idx);
+    console.log('idx before change: ', selectedPlanIdx);
+    console.log('idx change to: ', idx);
     setSelectedPlanIdx(idx);
   };
 
@@ -466,7 +467,7 @@ function DegreePlan(props) {
   }, [cardOptions]);
 
   useEffect(() => {
-    console.log("selectedPlanIdx changed useEffect called");
+    console.log('selectedPlanIdx changed useEffect called');
     fetchPlans();
   }, [selectedPlanIdx]);
   return (
