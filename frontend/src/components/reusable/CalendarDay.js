@@ -2,13 +2,14 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
 /* * * *  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Calendar.js
- *
- *
+ * CalendarDay.js
+ * Responsible to generate the columns making up the calendar and put the
+ * corresponding classes onto the columns
  */
 
 import { useEffect, useState } from "react";
 import cStyle from "./reusableStyles/CalendarDay.module.css";
+import sStyle from './style/Scheduler.module.css';
 import Event from "./Event.js";
 import { Button, IconButton } from "@material-ui/core";
 
@@ -133,67 +134,83 @@ function CalendarDay(props) {
 
   return (
     <div className={cStyle.dayContainer}>
-      {/* {
-        !singleDay ? <div className={cStyle.timeSlotTitle}>{dayName}</div> : <div>&nbsp;</div>
-      } */}
       <div className={cStyle.timeSlotTitle}>
-        {!singleDay ? dayName.substr(0, 3).toUpperCase() : " "}
+        {dayName === "Time Unstated"
+          ? "Time Unstated"
+          : dayName.substr(0, 3).toUpperCase()}
       </div>
 
-      {timePrefState && (
-        <div className={cStyle.buttonContainer}>
-          <IconButton
-            className={cStyle.removeAllButton}
-            onClick={handleRemoveAll}
-          >
-            <CheckBoxOutlineBlankIcon />
-          </IconButton>
-          <IconButton className={cStyle.addAllButton} onClick={handleAddAll}>
-            <CheckBoxIcon />
-          </IconButton>
+      {/* Generate the time slots or just one column if it is for time unstated */}
+      {dayName === "Time Unstated" ? (
+        <div className={cStyle.unStatedTimeColumn} />
+      ) : (
+        <div>
+          {timePrefState && (
+            <div className={cStyle.buttonContainer}>
+              <IconButton
+                className={cStyle.removeAllButton}
+                onClick={handleRemoveAll}
+              >
+                <CheckBoxOutlineBlankIcon />
+              </IconButton>
+              <IconButton
+                className={cStyle.addAllButton}
+                onClick={handleAddAll}
+              >
+                <CheckBoxIcon />
+              </IconButton>
+            </div>
+          )}
+          <div className={cStyle.timeContainer}>
+            {timePrefState
+              ? /* Time Pref Selection View */
+                overlayTime.map((timeName) => (
+                  <div
+                    role="button"
+                    tabIndex={0}
+                    className={cStyle.timeSlotOverlay}
+                    key={timeName}
+                    id={timeName}
+                    style={backgroundColorCheck(timeName)}
+                    onMouseDown={() => setDragState((prev) => !prev)}
+                    onMouseOver={(e) => dragState && onHighlight(e)}
+                    onMouseUp={() => setDragState((prev) => !prev)}
+                    onDragStart={() => setDragState((prev) => !prev)}
+                    onDragEnter={(e) => dragState && onHighlight(e)}
+                    onDragEnd={() => setDragState((prev) => !prev)}
+                    onTouchStart={() => setDragState((prev) => !prev)}
+                    onTouchMove={(e) => dragState && onHighlight(e)}
+                    onTouchEnd={() => setDragState((prev) => !prev)}
+                    onClick={onHighlight}
+                  />
+                ))
+              : /* Normal Calendar View */
+
+                time.map((timeName) => (
+                  <div className={cStyle.timeSlot} key={timeName} />
+                ))}
+          </div>
         </div>
       )}
-      <div className={cStyle.timeContainer}>
-        {timePrefState
-          ? /* Time Pref Selection View */
-            overlayTime.map((timeName) => (
-              <div
-                role="button"
-                tabIndex={0}
-                className={cStyle.timeSlotOverlay}
-                key={timeName}
-                id={timeName}
-                style={backgroundColorCheck(timeName)}
-                onMouseDown={() => setDragState((prev) => !prev)}
-                onMouseOver={(e) => dragState && onHighlight(e)}
-                onMouseUp={() => setDragState((prev) => !prev)}
-                onDragStart={() => setDragState((prev) => !prev)}
-                onDragEnter={(e) => dragState && onHighlight(e)}
-                onDragEnd={() => setDragState((prev) => !prev)}
-                onTouchStart={() => setDragState((prev) => !prev)}
-                onTouchMove={(e) => dragState && onHighlight(e)}
-                onTouchEnd={() => setDragState((prev) => !prev)}
-                onClick={onHighlight}
-              />
-            ))
-          : /* Normal Calendar View */
 
-            time.map((timeName) => (
-              <div className={cStyle.timeSlot} key={timeName} />
-            ))}
-      </div>
-      {/* <div className={cStyle.eventsContainer}>
-          {classesDay?.map((event) => <div>{event.details}</div>)}
-      </div> */}
-      {classesDay?.map((event) => {
-        return (
-          <Event
-            shrink={shrink}
-            eventDetails={event}
-            onEventClick={onEventClick}
-          ></Event>
-        );
-      })}
+      {/* Put the classes on depending on the day */}
+      {dayName === "Time Unstated"
+        ? classesDay?.TimeUnspecified?.map((course) => {
+            return (
+              <Button className={sStyle.tuButton} onEventClick={onEventClick}>
+                {course.details}
+              </Button>
+            );
+          })
+        : classesDay?.map((event) => {
+            return (
+              <Event
+                shrink={shrink}
+                eventDetails={event}
+                onEventClick={onEventClick}
+              ></Event>
+            );
+          })}
     </div>
   );
 }

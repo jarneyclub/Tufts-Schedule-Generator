@@ -79,8 +79,7 @@ function CourseSearchBar(props) {
         origin !== "courseList") && <div>&nbsp;</div>}
       <div style={{ wordBreak: "break-word" }} onDoubleClick={handleDoubleClick}
       onClick={handleOnClick}>
-        【{course_num}】<br />
-        {course_title}
+        【{course_num}】{course_title}
       </div>
       {origin === "schedulerCourseList" && (
         <div className={cStyle.actionButton}>
