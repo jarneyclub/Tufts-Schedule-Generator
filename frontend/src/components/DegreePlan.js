@@ -386,7 +386,7 @@ function DegreePlan(props) {
         setCardOptions(result.plans[selectedPlanIdx].terms);
         setSelectedPlanName(result.plans[selectedPlanIdx].plan_name);
         setSelectedPlanID(result.plans[selectedPlanIdx].plan_id);
-        setLoaded(true);
+        // setLoaded(true);
       })
       .catch((error) => {});
   };
@@ -436,7 +436,6 @@ function DegreePlan(props) {
     if (logged) {
       fetchPlans();
       fetchPrivateReqs();
-      setLoaded(true);
     }
   }, [logged]);
 
@@ -484,6 +483,9 @@ function DegreePlan(props) {
     else {
       setPlanExist(false);
      
+    }
+    if (logged) {
+      setLoaded(true);
     }
     console.log('PlanExist is:', planExist);
   }, [semesterPlanOptions])
