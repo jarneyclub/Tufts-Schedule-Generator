@@ -514,8 +514,8 @@ function DegreePlan(props) {
 
       {
         loaded ? 
-        // semesterPlanOptions && semesterPlanOptions?.length !== 0
-          ( planExist === true ?
+        // 
+          ( semesterPlanOptions && semesterPlanOptions?.length !== 0 ?
           <div className={dpStyle.contentContainer}>
             {/* * * * * Contains * * * * * 
                       Progress Bar
@@ -735,9 +735,9 @@ function DegreePlan(props) {
             </div>
           </div>
             :
-            (loaded && planExist === false ?  
+            (loaded && planExist === true ?  
               (<div className={dpStyle.noSchedulewrapper}>
-                <div>page is not loaded! {semesterPlanOptions?.length}</div>
+                <div>blank page {semesterPlanOptions?.length}</div>
               </div>
               ):(<div className={dpStyle.noSchedulewrapper}>
                 <div>Create your plan now!</div>
