@@ -382,6 +382,8 @@ function AddPlan(props) {
     /* do something API?? pass in the selectedCards arr */
 
     if (planName !== '') {
+      //Winnie edited: reset idx last
+      onSetIdxLast();
       createNewPlan(planName);
       onClose();
     } else {
