@@ -487,6 +487,8 @@ function DegreePlan(props) {
     if (logged) {
       setLoaded(true);
     }
+    setLoaded(true);
+    console.log('Loaded is set to true again');
     console.log('PlanExist is:', planExist);
   }, [semesterPlanOptions])
 
@@ -512,7 +514,8 @@ function DegreePlan(props) {
 
       {
         loaded ? 
-          (semesterPlanOptions && semesterPlanOptions?.length !== 0 ?
+        // semesterPlanOptions && semesterPlanOptions?.length !== 0
+          ( planExist === true ?
           <div className={dpStyle.contentContainer}>
             {/* * * * * Contains * * * * * 
                       Progress Bar
@@ -732,22 +735,26 @@ function DegreePlan(props) {
             </div>
           </div>
             :
-            <div className={dpStyle.noSchedulewrapper}>
-                <div>plan EXISTS! {semesterPlanOptions?.length}</div>
+            (loaded && planExist === false ?  
+              (<div className={dpStyle.noSchedulewrapper}>
+                <div>page is not loaded! {semesterPlanOptions?.length}</div>
               </div>
-            )
+              ):(<div className={dpStyle.noSchedulewrapper}>
+                <div>Create your plan now!</div>
+                <IconButton
+                  className={dpStyle.editPlanButton}
+                  onClick={() => handlePopup('addPlan', true)}
+                > 
+                <AddBoxIcon fontSize="large" />
+                </IconButton>
+              </div>)   
+            
+          ))
         :
-              
 
-<div className={dpStyle.noSchedulewrapper}>
-<div>Create your plan now!</div>
-<IconButton
-  className={dpStyle.editPlanButton}
-  onClick={() => handlePopup('addPlan', true)}
->
-  <AddBoxIcon fontSize="large" />
-</IconButton>
-</div>
+              <div className={dpStyle.noSchedulewrapper}>
+                <div>page is not loaded! {semesterPlanOptions?.length}</div>
+              </div>
       }
       
 
