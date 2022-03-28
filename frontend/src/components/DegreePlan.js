@@ -374,7 +374,7 @@ function DegreePlan(props) {
         setSemesterPlanOptions(result.plans);
         console.log('the number of plan is:', result.plans?.length);
 
-        if (result.plans && result.plans?.length !== 0) {
+        if (semesterPlanOptions && semesterPlanOptions?.length !== 0) {
           setPlanExist(true);
           console.log('plan exists');
         } else {
@@ -781,6 +781,10 @@ function DegreePlan(props) {
             onShowAlert={() => setShowAlert(true)}
             setAlertMessage={setAlertMessage}
             setAlertSeverity={setAlertSeverity}
+            //Winnie edited
+            // onSetIdxLast={() =>
+            //   handleSetSelectedPlanIdx(semesterPlanOptions?.length - 2)
+            // }
           />
         </Popup>
       )}
