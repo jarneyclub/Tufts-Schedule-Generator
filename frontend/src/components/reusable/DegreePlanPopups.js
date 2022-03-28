@@ -383,7 +383,7 @@ function AddPlan(props) {
 
     if (planName !== '') {
       //Winnie edited: reset idx last
-      onSetIdxLast();
+      // onSetIdxLast();
       createNewPlan(planName);
       onClose();
     } else {
