@@ -806,7 +806,7 @@ function DegreePlan(props) {
         <Popup onClose={() => handlePopup('addPlan', false)}>
           <AddPlan
             onClose={() => handlePopup('addPlan', false)}
-            refreshPlans={fetchPlans}
+            //refreshPlans={fetchPlans}
             createNewPlan={createNewPlan}
             onShowAlert={() => setShowAlert(true)}
             setAlertMessage={setAlertMessage}

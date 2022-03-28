@@ -363,7 +363,7 @@ function AddPlan(props) {
   const {
     onClose,
     createNewPlan,
-    onSetIdxLast,
+    //onSetIdxLast,
     onShowAlert,
     setAlertMessage,
     setAlertSeverity,
