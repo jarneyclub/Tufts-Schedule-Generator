@@ -733,19 +733,21 @@ function DegreePlan(props) {
           </div>
             :
             <div className={dpStyle.noSchedulewrapper}>
-                <div>Create your plan now!</div>
-                <IconButton
-                  className={dpStyle.editPlanButton}
-                  onClick={() => handlePopup('addPlan', true)}
-                >
-                  <AddBoxIcon fontSize="large" />
-                </IconButton>
+                <div>plan EXISTS! {semesterPlanOptions?.length}</div>
               </div>
             )
         :
-              <div className={dpStyle.noSchedulewrapper}>
-                <div>plan EXISTS! {semesterPlanOptions?.length}</div>
-              </div>
+              
+
+<div className={dpStyle.noSchedulewrapper}>
+<div>Create your plan now!</div>
+<IconButton
+  className={dpStyle.editPlanButton}
+  onClick={() => handlePopup('addPlan', true)}
+>
+  <AddBoxIcon fontSize="large" />
+</IconButton>
+</div>
       }
       
 
