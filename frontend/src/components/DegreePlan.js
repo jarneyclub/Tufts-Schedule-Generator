@@ -374,12 +374,12 @@ function DegreePlan(props) {
         setSemesterPlanOptions(result.plans);
         console.log('the number of plan is:', result.plans?.length);
 
-        if (semesterPlanOptions && semesterPlanOptions?.length !== 0) {
-          setPlanExist(true);
-          console.log('plan exists');
-        } else {
-          setPlanExist(false);  
-        }
+        // if (semesterPlanOptions && semesterPlanOptions?.length !== 0) {
+        //   setPlanExist(true);
+        //   console.log('plan exists');
+        // } else {
+        //   setPlanExist(false);  
+        // }
         
         console.log('PlanExist is:', planExist);
 
@@ -475,6 +475,15 @@ function DegreePlan(props) {
     handleUnitsCount('current', currentCount);
     handleUnitsCount('future', totalCount - completedCount - currentCount);
   }, [cardOptions]);
+
+  useEffect(() => {
+    if (semesterPlanOptions && semesterPlanOptions.length !== 0) {
+      setPlanExist(true);
+    }
+    else {
+      setPlanExist(false);
+    }
+  }, [semesterPlanOptions])
 
   
   return (
