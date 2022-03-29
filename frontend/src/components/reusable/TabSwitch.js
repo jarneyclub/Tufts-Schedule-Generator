@@ -168,7 +168,7 @@ const CourseInfoExpress = (props) => {
       {units_esti && (
         <div className={tStyle.infoContainer}>
           <div className={tStyle.infoTitle}>SHUs:&nbsp;</div>
-          <div classname={tStyle.infoDetail}>{units_esti}</div>
+          <div className={tStyle.infoDetail}>{units_esti}</div>
         </div>
       )}
 
