@@ -763,7 +763,7 @@ function Scheduler(props) {
               {/* The two drop downs for Degree Plan and Degree Requirements */}
               <div className={sStyle.DegreeInfoContainer}>
                 <div
-                  className="degreeBtn"
+                  className={sStyle.degreeBtn}
                   onClick={() => handleDegreeInfo("DegreePlan")}
                 >
                   {" "}
@@ -778,7 +778,7 @@ function Scheduler(props) {
                 )}
                 &nbsp;
                 <div
-                  className="degreeBtn"
+                  className={sStyle.degreeBtn}
                   onClick={() => handleDegreeInfo("DegreeReq")}
                 >
                   Degree Requirement
