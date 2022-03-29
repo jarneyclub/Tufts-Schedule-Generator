@@ -29,7 +29,14 @@ const time = [
   "9PM",
 ];
 
-const weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+const weekdays = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Time Unstated",
+];
 
 function Calendar(props) {
   const {

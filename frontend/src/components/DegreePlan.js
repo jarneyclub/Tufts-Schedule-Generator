@@ -17,6 +17,7 @@ import {
 import SearchIcon from '@material-ui/icons/Search';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import Backdrop from "@mui/material/Backdrop";
 import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
 import CancelIcon from '@material-ui/icons/Cancel';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
@@ -130,6 +131,7 @@ function DegreePlan(props) {
 
   const [degreeReqOptions, setDegreeReqOptions] = useState([]);
   const [selectedDegreeReq, setSelectedDegreeReq] = useState(0);
+  const [open, setOpen] = useState(false);
 
   const [loadMessage, setLoadMessage] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
@@ -289,7 +291,13 @@ function DegreePlan(props) {
 
   const handleShowCourseInfo = (info) => {
     setCourseInfo(info);
+    setOpen(!open);
     handlePopup('showCourseInfo', true);
+  };
+
+  const handlePopupClose = (field) => {
+    handlePopup(field);
+    setOpen(false);
   };
 
   const handleSetSelectedPlanIdx = (idx) => {
@@ -494,7 +502,7 @@ function DegreePlan(props) {
 
   
   return (
-    <div style={{ marginTop: '80px' }}>
+    <div style={{ marginTop: "80px" }}>
       <Helmet>
         <title>JARney | Degree Plan</title>
         <meta
@@ -502,6 +510,7 @@ function DegreePlan(props) {
           content="Need to plan out your Tufts degree? Fall, Spring, Summer, or Annual. We have the complete list of courses!"
         />
       </Helmet>
+
       {/* if (loaded) {
         if (semesterPlanOptions.length !== 0) {
           display everything;
@@ -551,8 +560,10 @@ function DegreePlan(props) {
                       unitsCount.total !== 0
                         ? (unitsCount.future / unitsCount.total) * 100 + '%'
                         : '0%',
+
                   }}
                 />
+
               </div>
   
               <div className={dpStyle.progressBarTitle}>
@@ -564,6 +575,7 @@ function DegreePlan(props) {
                     ) + '%'
                   : '0%'}
               </div>
+
             </div>
   
             <div className={dpStyle.horizontalWrapper}>
@@ -587,8 +599,10 @@ function DegreePlan(props) {
                   &nbsp;
                   {semesterPlanOptions && semesterPlanOptions?.length !== 0 && (
                     <IconButton
+
                       className={dpStyle.editPlanButton}
                       onClick={() => handlePopup('editPlanName', true)}
+
                     >
                       <ModeEditIcon fontSize="medium" />
                     </IconButton>
@@ -603,8 +617,10 @@ function DegreePlan(props) {
                   &nbsp;
                   {semesterPlanOptions && semesterPlanOptions?.length !== 0 && (
                     <IconButton
+
                       className={dpStyle.editPlanButton}
                       onClick={() => handlePopup('removePlan', true)}
+
                     >
                       <IndeterminateCheckBoxIcon fontSize="medium" />
                     </IconButton>
@@ -679,6 +695,7 @@ function DegreePlan(props) {
                 {/* Degree Requirment Container */}
                 <DegreeReqExpress />
               </div>
+
   
               {/* * * * Contains: * * * *
                           Degree Plan Grids 
@@ -758,11 +775,22 @@ function DegreePlan(props) {
       }
       
 
+
       {/* popups */}
+      {popup.showCourseInfo && (
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+          onClick={() => handlePopupClose("showCourseInfo")}
+        >
+          <CourseInfoExpress courseInfo={courseInfo} />
+        </Backdrop>
+      )}
+
       {popup.addSemester && (
-        <Popup onClose={() => handlePopup('addSemester', false)}>
+        <Popup onClose={() => handlePopup("addSemester", false)}>
           <AddSemester
-            onClose={() => handlePopup('addSemester', false)}
+            onClose={() => handlePopup("addSemester", false)}
             planName={semesterPlanOptions[selectedPlanIdx]?.plan_name}
             planID={semesterPlanOptions[selectedPlanIdx]?.plan_id}
             //pass down selectedPlanIdx
@@ -775,9 +803,9 @@ function DegreePlan(props) {
         </Popup>
       )}
       {popup.removeSemester && (
-        <Popup onClose={() => handlePopup('removeSemester', false)}>
+        <Popup onClose={() => handlePopup("removeSemester", false)}>
           <RemoveSemester
-            onClose={() => handlePopup('removeSemester', false)}
+            onClose={() => handlePopup("removeSemester", false)}
             cardOptions={cardOptions}
             handleRemoveCards={handleRemoveCards}
             planName={semesterPlanOptions[selectedPlanIdx]?.plan_name}
@@ -790,9 +818,9 @@ function DegreePlan(props) {
         </Popup>
       )}
       {popup.editPlanName && (
-        <Popup onClose={() => handlePopup('editPlanName', false)}>
+        <Popup onClose={() => handlePopup("editPlanName", false)}>
           <EditPlanName
-            onClose={() => handlePopup('editPlanName', false)}
+            onClose={() => handlePopup("editPlanName", false)}
             planName={semesterPlanOptions[selectedPlanIdx]?.plan_name}
             planID={semesterPlanOptions[selectedPlanIdx]?.plan_id}
             refreshPlans={fetchPlans}
@@ -803,7 +831,7 @@ function DegreePlan(props) {
         </Popup>
       )}
       {popup.addPlan && (
-        <Popup onClose={() => handlePopup('addPlan', false)}>
+        <Popup onClose={() => handlePopup("addPlan", false)}>
           <AddPlan
             onClose={() => handlePopup('addPlan', false)}
             //refreshPlans={fetchPlans}
@@ -819,9 +847,9 @@ function DegreePlan(props) {
         </Popup>
       )}
       {popup.removePlan && (
-        <Popup onClose={() => handlePopup('removePlan', false)}>
+        <Popup onClose={() => handlePopup("removePlan", false)}>
           <RemovePlan
-            onClose={() => handlePopup('removePlan', false)}
+            onClose={() => handlePopup("removePlan", false)}
             planName={semesterPlanOptions[selectedPlanIdx]?.plan_name}
             planID={semesterPlanOptions[selectedPlanIdx]?.plan_id}
             refreshPlans={fetchPlans}

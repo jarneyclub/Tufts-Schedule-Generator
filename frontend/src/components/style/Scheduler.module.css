@@ -35,12 +35,13 @@
 .leftColumnWrapper {
   display: flex;
   flex-direction: column;
-  flex: 1 1 30%;
+  flex: 1 1 20%;
   align-items: center;
-
+  
   padding-right: 1vw;
 
   margin-bottom: 20px;
+  width: 20%;
 }
 
 /* * 1st * */
@@ -160,17 +161,12 @@
   border-radius: 12px;
   width: 100%;
 }
+
 .tuContainer {
   display: flex;
   flex-direction: row;
 
   width: 100%;
-}
-
-.unitsContainer {
-  display: flex;
-  flex-direction: row;
-  align-content: flex-start;
 }
 
 .infoTitle {
@@ -214,7 +210,7 @@
   color: #7048d5;
   line-height: 14px;
 
-  /* background-color: #efebf9; */
+  background-color: #efebf9;
 }
 
 .timePrefButton:hover {
@@ -222,6 +218,7 @@
   background-color: #7048d5;
   border: #7048d5 solid 1px;
 }
+
 .saveTimePrefButton {
   border-radius: 12px;
   border: #ffffff solid 1px;
@@ -298,59 +295,19 @@
   margin-top: 10px;
 }
 
-.tabBarsContainer {
-  display: flex;
-  flex-direction: row;
-  /* justify-content: center; */
-  /* align-items: flex-end;
-    align-content: center; */
-  width: 100%;
-}
-
 .tabBar {
-  /* flex-grow: 1; */
-
   display: flex;
   justify-content: center;
-
+  flex-direction: row;
   font-size: 14px;
-  font-weight: lighter;
-  color: #808080;
-  background-color: #f5f5f5;
+  color: #2F2E31;
+  background-color: #D3CBF0;
   text-align: center;
   align-items: center;
-  border: #ffffff solid 1px;
-  border-radius: 0px 5px 0px 0px;
   box-sizing: content-box;
-
-  width: 33.3%;
-  height: 50px;
-
-  cursor: pointer;
-}
-
-.tabBar:hover {
-  color: #ffffff;
-  border: #ffffff solid 1px;
-  background-color: #dcdcdc;
-}
-
-.tabBarHighlight {
-  /* flex-grow: 1; */
-
-  display: flex;
-  justify-content: center;
-
-  font-size: 14px;
-  color: #fc4e4e;
-  background-color: #efebf9;
-  text-align: center;
-  align-items: center;
-  border-bottom: #fc4e4e solid 2px;
-  border-radius: 0px 5px 0px 0px;
-  box-sizing: content-box;
-
-  width: 33.4%;
+  border-top-left-radius: 11px;
+  border-top-right-radius: 11px;
+  width: 100%;
   height: 50px;
 }
 
@@ -368,6 +325,25 @@
   align-items: center;
 }
 
+.shuDisplay{
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-content: flex-start;
+
+  font-size: 14px;
+  color: #2F2E31;
+  background-color: #efebf9;
+  text-align: center;
+  align-items: center;
+  box-sizing: content-box;
+  border-bottom-left-radius: 11px;
+  border-bottom-right-radius: 11px;
+
+  width: 100%;
+  height: 50px;
+}
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /* * * * * * Right Column * * * * * */
 .rightColumnWrapper {
@@ -375,11 +351,12 @@
   flex-direction: column;
   /* justify-content: center; */
   align-items: center;
-  flex: 7 1 70%;
+  /* flex: 7 1 70%; */
+  flex: 7 1 20%;
 
   /* border: #42312B solid 1px; */
-  margin-bottom: 20px;
   height: 90vh;
+  width: 75%;
 }
 
 .scheduleTitleContainer {
@@ -395,6 +372,61 @@
   margin-bottom: 10px;
 }
 
+.titleContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  width: 40%;
+  text-align: center;
+  font-size: 25px;
+  color: #000000;
+  margin-left: 5vw;
+}
+
+.DegreeInfoContainer {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  flex-wrap: nowrap;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #000000;
+  margin-left: 5vw;
+}
+
+.degreePlanContainer {
+  width: 150%;
+  height: 1000%;
+  min-height: 250px;
+  background-color: #efebf9;
+  position: absolute;
+  left: -110%;
+  top: 100%;
+  z-index: 100;
+  box-sizing: content-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.degreeReqContainer {
+  width: 150%;
+  height: 1000%;
+  min-height: 250px;
+  background-color: #efebf9;
+  position: absolute;
+  left: -50%;
+  top: 100%;
+  z-index: 100;
+  box-sizing: content-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .editPlanButton {
   height: 25px;
   width: 25px;
@@ -404,6 +436,7 @@
 
   color: #7048d5;
 }
+
 .calendarContainer {
   width: 100%;
   height: 100%;
@@ -462,11 +495,11 @@ body {
 
 @media only screen and (max-width: 1040px) {
   .leftColumnWrapper {
-    flex: 1 1 34.99%;
+    flex: 1 1 25%;
   }
 
   .rightColumnWrapper {
-    flex: 7 1 64.99%;
+    flex: 7 1 75%;
   }
 
   /* .tabBar {
@@ -474,6 +507,7 @@ body {
   }
    */
 }
+
 @media only screen and (max-width: 669.99px) {
   .overlayTitle {
     font-size: 20px !important;

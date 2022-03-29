@@ -23,6 +23,7 @@ import {
 import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
 import SearchIcon from '@material-ui/icons/Search';
 import AddBoxIcon from '@material-ui/icons/AddBox';
+import Backdrop from "@mui/material/Backdrop";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
@@ -219,6 +220,7 @@ function Scheduler(props) {
   const [timePref, setTimePref] = useState(timePrefDefault); // time pref json that will be passed into post req
 
   const [popup, setPopup] = useState(popupDefault);
+  const [open, setOpen] = useState(false);
 
   const [courseInfo, setCourseInfo] = useState({});
   const [unitsCount, setUnitsCount] = useState(0);
@@ -226,6 +228,8 @@ function Scheduler(props) {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState();
   const [alertSeverity, setAlertSeverity] = useState();
+  const [dropdownDegreePlan, setDropdownDegreePlan] = useState(false);
+  const [dropdownDegreeReq, setDropdownDegreeReq] = useState(false);
 
   /*  Control for schedule plan dropdown change  */
   const handleScheduleChange = (e) => {
@@ -235,6 +239,25 @@ function Scheduler(props) {
     setSelectedScheduleID(scheduleOptions[e.target.selectedIndex].sched_id);
     setSelectedCourses(scheduleOptions[e.target.selectedIndex].courses);
     setClasses(scheduleOptions[e.target.selectedIndex]?.classes);
+  };
+
+  /* Control the dropdown for Degree Plan and Degree Requirement */
+  const handleDegreeInfo = (field) => {
+    if (field === "DegreePlan") {
+      setDropdownDegreePlan(!dropdownDegreePlan);
+
+      if (dropdownDegreeReq === true) {
+        setDropdownDegreeReq(!dropdownDegreeReq);
+      }
+    }
+
+    if (field === "DegreeReq") {
+      setDropdownDegreeReq(!dropdownDegreeReq);
+
+      if (dropdownDegreePlan === true) {
+        setDropdownDegreePlan(!dropdownDegreePlan);
+      }
+    }
   };
 
   /*  Control for search filter dropdown change  */
@@ -303,7 +326,13 @@ function Scheduler(props) {
 
   const handleShowCourseInfo = (info) => {
     setCourseInfo(info);
+    setOpen(!open);
     handlePopup('showCourseInfo', true);
+  };
+
+  const handlePopupClose = (field) => {
+    handlePopup(field);
+    setOpen(false);
   };
 
   const handleSearchChange = (e) => {
@@ -541,7 +570,7 @@ function Scheduler(props) {
                         <PurpleSwitch
                           checked={coursePreference.waitlist}
                           name="waitlist"
-                          onChange={() => handleCoursePrefChange('waitlist')}
+                          onChange={() => handleCoursePrefChange("waitlist")}
                         />
                       }
                       label="Waitlist"
@@ -551,7 +580,7 @@ function Scheduler(props) {
                         <PurpleSwitch
                           checked={coursePreference.closed}
                           name="closed"
-                          onChange={() => handleCoursePrefChange('closed')}
+                          onChange={() => handleCoursePrefChange("closed")}
                         />
                       }
                       label="Closed"
@@ -561,7 +590,7 @@ function Scheduler(props) {
                         <PurpleSwitch
                           checked={coursePreference.online}
                           name="online"
-                          onChange={() => handleCoursePrefChange('online')}
+                          onChange={() => handleCoursePrefChange("online")}
                         />
                       }
                       label="Online"
@@ -572,7 +601,7 @@ function Scheduler(props) {
                           checked={coursePreference.time_unspecified}
                           name="time_unspecified"
                           onChange={() =>
-                            handleCoursePrefChange('time_unspecified')
+                            handleCoursePrefChange("time_unspecified")
                           }
                         />
                       }
@@ -624,7 +653,7 @@ function Scheduler(props) {
               </div>
 
               <div className={sStyle.courseListContainer}>
-                {loadMessage && courseSearchValue !== '' && (
+                {loadMessage && courseSearchValue !== "" && (
                   <CircularProgress />
                 )}
                 {!loadMessage &&
@@ -634,10 +663,11 @@ function Scheduler(props) {
                       key={course.course_num.concat(course.course_title)}
                       draggable={false}
                       onDoubleClick={handleDoubleClickCourseList}
-                      origin={'schedulerCourseList'}
+                      origin={"schedulerCourseList"}
                       customStyle={{
-                        border: 'none',
-                        justifyContent: 'space-between',
+                        border: "none",
+                        justifyContent: "space-between",
+                        backgroundColor: "#8875D4",
                       }}
                       onClick={handleShowCourseInfo}
                     />
@@ -645,6 +675,8 @@ function Scheduler(props) {
               </div>
               {/*search bar and filter*/}
             </div>
+
+            {/* The Render button */}
             <div className={sStyle.rightButtonContainer}>
               <Button
                 className={sStyle.renderButton}
@@ -653,126 +685,112 @@ function Scheduler(props) {
                 Render schedule
               </Button>
             </div>
-            <div className={sStyle.infoContainer}>
-              <div style={{ color: 'rgba(0, 0, 0, 0.54)' }}>Quick summary</div>
-              <div className={sStyle.unitsContainer}>
-                <div className={sStyle.infoTitle}>SHUs scheduled:&nbsp;</div>
-                <div classname={sStyle.infoDetail}>{unitsCount}</div>
-              </div>
+          </div>
+
+          {/* Contains selected courses and total SHUs selected */}
+          <div className={sStyle.tabsContainer}>
+            <div className={sStyle.tabBar}>
+              <div>Selected Courses</div>
             </div>
-            {popup.showCourseInfo && (
-              <CourseInfoExpress
-                courseInfo={courseInfo}
-                onClose={() => handlePopup('showCourseInfo', false)}
-              />
-            )}
 
-            <div className={sStyle.tabsContainer}>
-              <div className={sStyle.tabBarsContainer}>
-                <div
-                  role="button"
-                  tabIndex={0}
-                  className={
-                    degreeReqTab === 1 ? sStyle.tabBarHighlight : sStyle.tabBar
-                  }
-                  onClick={() => {
-                    setDegreeReqTab(1);
+            <div className={sStyle.tabDetailContainer}>
+              {selectedCourses?.map((course) => (
+                <CourseSearchBar
+                  courseDetail={course}
+                  key={course.course_num.concat(course.course_title)}
+                  draggable={false}
+                  onDoubleClick={handleDoubleClickSelected}
+                  onClick={handleShowCourseInfo}
+                  origin={"schedulerTab"}
+                  customStyle={{
+                    border: "none",
+                    justifyContent: "space-between",
+                    backgroundColor: "#8875D4",
                   }}
-                >
-                  <div>
-                    Selected <br /> Courses
-                  </div>
-                </div>
-                <div
-                  role="button"
-                  tabIndex={0}
-                  className={
-                    degreeReqTab === 2 ? sStyle.tabBarHighlight : sStyle.tabBar
-                  }
-                  onClick={() => {
-                    setDegreeReqTab(2);
-                  }}
-                >
-                  <div>
-                    Degree <br /> Requirements
-                  </div>
-                </div>
-                <div
-                  role="button"
-                  tabIndex={0}
-                  className={
-                    degreeReqTab === 3 ? sStyle.tabBarHighlight : sStyle.tabBar
-                  }
-                  onClick={() => {
-                    setDegreeReqTab(3);
-                  }}
-                >
-                  <div>Degree Plan</div>
-                </div>
-              </div>
-
-              <div className={sStyle.tabDetailContainer}>
-                {degreeReqTab === 1 &&
-                  selectedCourses?.map((course) => (
-                    <CourseSearchBar
-                      courseDetail={course}
-                      key={course.course_num.concat(course.course_title)}
-                      draggable={false}
-                      onDoubleClick={handleDoubleClickSelected}
-                      onClick={handleShowCourseInfo}
-                      origin={'schedulerTab'}
-                      customStyle={{
-                        border: 'none',
-                        justifyContent: 'space-between',
-                      }}
-                    />
-                  ))}
-                {degreeReqTab === 2 && <DegreeReqExpress />}
-                {degreeReqTab === 3 && <DegreePlanExpress />}
-              </div>
+                />
+              ))}
+            </div>
+            <div className={sStyle.shuDisplay}>
+              <div>SHUs scheduled:&nbsp;</div>
+              <div>{unitsCount}</div>
             </div>
           </div>
 
           <div className={sStyle.rightColumnWrapper}>
+            {/* Contains title, title editing buttons, and degree plan and degree
+            requirement display */}
             <div className={sStyle.scheduleTitleContainer}>
-              <Dropdown
-                options={scheduleOptions}
-                selectedOption={selectedSchedule}
-                selectedIdx={selectedScheduleIdx}
-                onOptionChange={handleScheduleChange}
-                customStyle={{ fontSize: '20px' }}
-                isObject={true}
-                objectField={'sched_name'}
-              />
-              &nbsp;
-              <IconButton
-                className={sStyle.editPlanButton}
-                onClick={() => handlePopup('editScheduleName', true)}
-              >
-                <ModeEditIcon fontSize="medium" />
-              </IconButton>
-              &nbsp;
-              <IconButton
-                className={sStyle.editPlanButton}
-                onClick={() => handlePopup('addSchedule', true)}
-              >
-                <AddBoxIcon fontSize="medium" />
-              </IconButton>
-              &nbsp;
-              <IconButton
-                className={sStyle.editPlanButton}
-                onClick={() => handlePopup('removeSchedule', true)}
-              >
-                <IndeterminateCheckBoxIcon fontSize="medium" />
-              </IconButton>
-              &nbsp;
-              <IconButton
-                className={sStyle.editPlanButton}
-                onClick={() => handlePopup('eventScreenshot', true)}
-              >
-                <LinkedCameraIcon fontSize="medium" />
-              </IconButton>
-              <div />
+              <div className={sStyle.titleContainer}>
+                <Dropdown
+                  options={scheduleOptions}
+                  selectedOption={selectedSchedule}
+                  selectedIdx={selectedScheduleIdx}
+                  onOptionChange={handleScheduleChange}
+                  customStyle={{ fontSize: "20px" }}
+                  isObject={true}
+                  objectField={"sched_name"}
+                />
+                &nbsp;
+                <IconButton
+                  className={sStyle.editPlanButton}
+                  onClick={() => handlePopup("editScheduleName", true)}
+                >
+                  <ModeEditIcon fontSize="medium" />
+                </IconButton>
+                &nbsp;
+                <IconButton
+                  className={sStyle.editPlanButton}
+                  onClick={() => handlePopup("addSchedule", true)}
+                >
+                  <AddBoxIcon fontSize="medium" />
+                </IconButton>
+                &nbsp;
+                <IconButton
+                  className={sStyle.editPlanButton}
+                  onClick={() => handlePopup("removeSchedule", true)}
+                >
+                  <IndeterminateCheckBoxIcon fontSize="medium" />
+                </IconButton>
+                &nbsp;
+                <IconButton
+                  className={sStyle.editPlanButton}
+                  onClick={() => handlePopup("eventScreenshot", true)}
+                >
+                  <LinkedCameraIcon fontSize="medium" />
+                </IconButton>
+              </div>
+
+              {/* The two drop downs for Degree Plan and Degree Requirements */}
+              <div className={sStyle.DegreeInfoContainer}>
+                <div
+                  className="degreeBtn"
+                  onClick={() => handleDegreeInfo("DegreePlan")}
+                >
+                  {" "}
+                  Degree Plan{" "}
+                </div>
+                {dropdownDegreePlan ? (
+                  <div className={sStyle.DegreePlanContainer}>
+                    <DegreePlanExpress />
+                  </div>
+                ) : (
+                  ""
+                )}
+                &nbsp;
+                <div
+                  className="degreeBtn"
+                  onClick={() => handleDegreeInfo("DegreeReq")}
+                >
+                  Degree Requirement
+                </div>
+                {dropdownDegreeReq ? (
+                  <div className={sStyle.degreeReqContainer}>
+                    <DegreeReqExpress />
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
 
             <div className={sStyle.calendarContainer}>
@@ -783,25 +801,6 @@ function Scheduler(props) {
                 onEventClick={handleShowCourseInfo}
               />
             </div>
-
-            {classes.hasOwnProperty('TimeUnspecified') &&
-              classes.TimeUnspecified.length !== 0 && (
-                <div className={sStyle.infoContainer}>
-                  <div style={{ color: 'rgba(0, 0, 0, 0.54)' }}>
-                    Time Unspecified
-                  </div>
-                  <div className={sStyle.tuContainer}>
-                    {classes?.TimeUnspecified?.map((course) => (
-                      <Button
-                        className={sStyle.tuButton}
-                        onClick={() => handleShowCourseInfo(course)}
-                      >
-                        {course.details}
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-              )}
           </div>
         </div>
       ) : (
@@ -810,7 +809,7 @@ function Scheduler(props) {
           <div>Create your schedule now!</div>
           <IconButton
             className={sStyle.editPlanButton}
-            onClick={() => handlePopup('addSchedule', true)}
+            onClick={() => handlePopup("addSchedule", true)}
           >
             <AddShoppingCartIcon fontSize="80vw" />
           </IconButton>
@@ -818,19 +817,30 @@ function Scheduler(props) {
       )}
 
       {/* popups */}
+      {popup.showCourseInfo && (
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+          onClick={() => handlePopupClose("showCourseInfo")}
+        >
+          <CourseInfoExpress courseInfo={courseInfo} />
+        </Backdrop>
+      )}
+
       {popup.addSchedule && (
-        <Popup onClose={() => handlePopup('addSchedule', false)}>
+        <Popup onClose={() => handlePopup("addSchedule", false)}>
           <AddSchedule
-            onClose={() => handlePopup('addSchedule', false)}
+            onClose={() => handlePopup("addSchedule", false)}
             onCreateSchedule={fetchCreateSchedule}
             scheduleOptions={scheduleOptions}
           />
         </Popup>
       )}
+
       {popup.removeSchedule && (
-        <Popup onClose={() => handlePopup('removeSchedule', false)}>
+        <Popup onClose={() => handlePopup("removeSchedule", false)}>
           <RemoveSchedule
-            onClose={() => handlePopup('removeSchedule', false)}
+            onClose={() => handlePopup("removeSchedule", false)}
             refreshSchedules={fetchSavedSchedules}
             scheduleID={scheduleOptions[selectedScheduleIdx]?.sched_id}
             scheduleName={scheduleOptions[selectedScheduleIdx]?.sched_name}
@@ -840,10 +850,11 @@ function Scheduler(props) {
           />
         </Popup>
       )}
+
       {popup.editScheduleName && (
-        <Popup onClose={() => handlePopup('editScheduleName', false)}>
+        <Popup onClose={() => handlePopup("editScheduleName", false)}>
           <EditScheduleName
-            onClose={() => handlePopup('editScheduleName', false)}
+            onClose={() => handlePopup("editScheduleName", false)}
             onShowAlert={() => setShowAlert(true)}
             refreshSchedules={fetchSavedSchedules}
             setAlertMessage={setAlertMessage}
@@ -853,10 +864,11 @@ function Scheduler(props) {
           />
         </Popup>
       )}
+
       {popup.eventScreenshot && (
-        <Popup onClose={() => handlePopup('eventScreenshot', false)}>
+        <Popup onClose={() => handlePopup("eventScreenshot", false)}>
           <EventScreenshot
-            onClose={() => handlePopup('eventScreenshot', false)}
+            onClose={() => handlePopup("eventScreenshot", false)}
             onShowAlert={() => setShowAlert(true)}
             setAlertMessage={setAlertMessage}
             setAlertSeverity={setAlertSeverity}
@@ -866,6 +878,7 @@ function Scheduler(props) {
           />
         </Popup>
       )}
+
       {timePrefState && (
         <TimePrefSelector
           onAddTimePref={handleAddTimePref}
