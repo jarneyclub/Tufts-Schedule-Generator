@@ -212,7 +212,7 @@ router.post('/bingbong',
 */
 router.get('/jeremy', function (req, res) {
     res.json({
-        'message': 'hi'
+        'message': 'hello again'
     });
 }
 );
