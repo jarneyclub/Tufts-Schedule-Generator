@@ -36,7 +36,7 @@
 
 .unStatedTimeColumn {
   flex-direction: column;
-  height: 1064px;
+  height: 1040px;
   border: 1px solid #70757a;
   position: relative;
   z-index: -5;
