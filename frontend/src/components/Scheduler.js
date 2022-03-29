@@ -685,34 +685,33 @@ function Scheduler(props) {
                 Render schedule
               </Button>
             </div>
-          </div>
+            {/* Contains selected courses and total SHUs selected */}
+            <div className={sStyle.tabsContainer}>
+              <div className={sStyle.tabBar}>
+                <div>Selected Courses</div>
+              </div>
 
-          {/* Contains selected courses and total SHUs selected */}
-          <div className={sStyle.tabsContainer}>
-            <div className={sStyle.tabBar}>
-              <div>Selected Courses</div>
-            </div>
-
-            <div className={sStyle.tabDetailContainer}>
-              {selectedCourses?.map((course) => (
-                <CourseSearchBar
-                  courseDetail={course}
-                  key={course.course_num.concat(course.course_title)}
-                  draggable={false}
-                  onDoubleClick={handleDoubleClickSelected}
-                  onClick={handleShowCourseInfo}
-                  origin={"schedulerTab"}
-                  customStyle={{
-                    border: "none",
-                    justifyContent: "space-between",
-                    backgroundColor: "#8875D4",
-                  }}
-                />
-              ))}
-            </div>
-            <div className={sStyle.shuDisplay}>
-              <div>SHUs scheduled:&nbsp;</div>
-              <div>{unitsCount}</div>
+              <div className={sStyle.tabDetailContainer}>
+                {selectedCourses?.map((course) => (
+                  <CourseSearchBar
+                    courseDetail={course}
+                    key={course.course_num.concat(course.course_title)}
+                    draggable={false}
+                    onDoubleClick={handleDoubleClickSelected}
+                    onClick={handleShowCourseInfo}
+                    origin={"schedulerTab"}
+                    customStyle={{
+                      border: "none",
+                      justifyContent: "space-between",
+                      backgroundColor: "#8875D4",
+                    }}
+                  />
+                ))}
+              </div>
+              <div className={sStyle.shuDisplay}>
+                <div>SHUs scheduled:&nbsp;</div>
+                <div>{unitsCount}</div>
+              </div>
             </div>
           </div>
 
@@ -771,7 +770,7 @@ function Scheduler(props) {
                 </div>
                 {dropdownDegreePlan ? (
                   <div className={sStyle.degreePlanContainer}>
-                    <DegreePlanExpress/>
+                    <DegreePlanExpress />
                   </div>
                 ) : (
                   ""
@@ -785,7 +784,7 @@ function Scheduler(props) {
                 </div>
                 {dropdownDegreeReq ? (
                   <div className={sStyle.degreeReqContainer}>
-                    <DegreeReqExpress/>
+                    <DegreeReqExpress />
                   </div>
                 ) : (
                   ""
