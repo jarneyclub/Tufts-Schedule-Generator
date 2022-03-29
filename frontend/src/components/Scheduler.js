@@ -770,7 +770,7 @@ function Scheduler(props) {
                   Degree Plan{" "}
                 </div>
                 {dropdownDegreePlan ? (
-                  <div className={sStyle.DegreePlanContainer}>
+                  <div className={sStyle.degreePlanContainer}>
                     <DegreePlanExpress/>
                   </div>
                 ) : (

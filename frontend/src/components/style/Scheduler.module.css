@@ -383,7 +383,7 @@
   position: relative;
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
+  justify-content: flex-end;
   flex-wrap: nowrap;
   text-align: center;
   width: 60%;
