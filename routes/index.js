@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
 /* Controllers */
-const courseScheduleController = require('../controllers/courses/courseScheduleController.js');
 // const searchIndexController = require('../controllers/courses/searchIndexController.js');
 // const docsController = require('../controllers/courses/docsController.js');
 const courseController = require('../controllers/courseController.js');
@@ -13,6 +12,7 @@ const responsesController = require('../controllers/responsesController.js')
 // const listController = require('../controllers/courses/listController.js');
 const userController = require('../controllers/auth/userController.js');
 const authController = require('../controllers/auth/authController.js');
+const analyticsController = require('../controllers/analyticsController.js');
 
 ////////////////////////////////////////
 //                                    //
@@ -149,7 +149,12 @@ router.post('/auth/login_cookie',
              authController.authenticateToken, 
              authController.signAccessTokenAndAttachCookie,
              userController.sendLoginResponse);
-////////////////////////////////////////
+
+// router.post('/auth/password_reset_email',
+//              authController.makePasswordResetEntry,
+//              userController.sendEmailToUser);
+
+// ////////////////////////////////////////
 //                                    //
 //             Schedule               //
 //                                    //
@@ -188,8 +193,41 @@ router.post('/responses',
 
 ////////////////////////////////////////
 //                                    //
-//          Jeremy's change           //
+//            Analytics               //
 //                                    //
 ////////////////////////////////////////
+router.post('/bingbong',
+            authController.authenticateToken,
+            authController.signAccessTokenAndAttachCookie,
+            analyticsController.saveFrontendUse);
+
+////////////////////////////////////////
+//                                    //
+//          Test endpoints            //
+//                                    //
+////////////////////////////////////////
+
+/*
+* called when someone makes GET req to https://jarney.club/api/jeremy
+*/
+router.get('/jeremy', function (req, res) {
+    res.json({
+        'message': 'hi'
+    });
+}
+);
+
+
+/* 
+* called when someone makes a GET req to https://jarney.club/api/pamela
+*
+*/
+router.get('/pamela', function(req, res) {
+    let info = makedatabaserequest(field);
+    res.json({
+        'message': 'pamela\'s endpoint test1',
+        'info': info    });
+}
+);
 
 module.exports = router;

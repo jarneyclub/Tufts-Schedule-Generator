@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 from pymongo import TEXT
+import json
 from cc_scraper  import cc_scraper
 from rmp_scraper import rmp_scraper
 from random import randint
@@ -11,12 +12,13 @@ import datetime
 # spring, annual, summer, fall
 # 2     , 4     , 5     , 8
 class db_schedule ():
-    
-    def __init__(self, year = "2021", season = "fall"):
+
+    def __init__(self, year = "2022", season = "spring", do_update = False):
         self.db = self.init_db()
         self.cc_scraper = cc_scraper(year, season)
         # self.rmp_scraper = rmp_scraper(1040)
         self.cc_session = self.cc_scraper.get_cookies()
+        self.do_update = do_update
         term_to_int = {
             "FALL": "8",
             "fall": "8",
@@ -27,36 +29,65 @@ class db_schedule ():
             "annual": "4"
         }
         self.curr_term = year[0:1] + year[2:4] + term_to_int[season]
+    
+    def make_developer_private_degreq_to_public(self, userid):
+        private_deg_reqs = self.db.degree_reqs_private.find({'user_id': userid})
+        self.db.degree_reqs_public.drop()
+        numReqsCopied = 0
+        for record in private_deg_reqs:
+            self.db["degree_reqs_public"].insert_one(record)
+            numReqsCopied += 1
+        print("Copied " + str(numReqsCopied) + " degree requirements from private to public.")
+    
+    def backup_database (self, backup_name):
+        dburl = "mongodb+srv://backend:hGIGzx2cBFDSRmP1@cluster0.2mmvf.mongodb.net/" + backup_name + "?retryWrites=true&w=majority"
+        client = MongoClient(dburl)
+        backup_db = client[backup_name]
+        collection_names = self.db.list_collection_names()
+        for i in range (0, len(collection_names)):
+            collection_name = collection_names[i]
+            collection = self.db[collection_name]
+            backup_collection = backup_db[collection_name]
+            records = collection.find()
+            for record in records:
+                backup_collection.insert_one(record)
 
-    def update_courses_sections (self):
-        print("Initializing courses and sections in database...")
-        courses, sections = self.init_course_catalog()
-        print("Finished...")
-        sleep(randint(15,30))
-        print("Beginning periodic section capacity updates...")
-        for i in range(0, len(sections)):
-            sec_id = sections[i]["section_id"]
-            print("section_id: " + sec_id)
-            self.update_capacity(sec_id)
-            sleep(randint(1,2))
-        
-
-    def update_db(self):
+    def run_semesterly_database_update (self):
+        '''
+        If self.do_update is False, get course catalog of current semester from
+        Tufts SISCS API but don't update the database.
+        If self.do_update is True, get information of current seemster from
+        Tufts SISCS API and
+        1. REPLACE term sections and term courses with 
+        selected semester's courses and classes 
+        2. APPEND selected semester's courses onto general courses
+        collection in the database. 
+        3. REPLACE attributes in the database with selected semester's 
+        attributes
+        '''
         print("Getting course catalog from Tufts...")
         self.cc_session, course_cat = self.cc_scraper.get_course_catalog(self.cc_session)
         print("Getting attributes from Tufts...")
         self.cc_session, attributes_info = self.cc_scraper.get_attributes(self.cc_session)
         courses, sections = self.parse_cc(course_cat)
-        print("Updating courses_general collection...")
-        self.update_courses_general(courses)
-        print("Updating courses collection...")
-        self.update_courses_term(courses)
-        print("Updating sections collection...")
-        self.update_sections_term(sections)
-        print("Updating attributes collection")
-        attributes = self.parse_attributes(attributes_info)
-        self.update_attributes(attributes)
-    
+        map_termCourseIdIsVirtual = {}
+        if self.do_update == True:
+            print("Updating courses_general collection...")
+            self.update_courses_general(courses)
+            print("Updating sections collection...")
+            self.update_sections_term(sections, map_termCourseIdIsVirtual)
+            print("Updating courses collection...")
+            self.update_courses_term(courses, map_termCourseIdIsVirtual)
+            print("Updating attributes collection")
+            attributes = self.parse_attributes(attributes_info)
+            self.update_attributes(attributes)
+        else:
+            print("Skipping database update...")
+            print("---------- courses ------------")
+            print(json.dumps(courses, indent=4, sort_keys=True))
+            print("---------- sections ------------")
+            print(json.dumps(sections, indent=4, sort_keys=True))
+        
     def update_attributes (self, attributes_info):
         self.db.attributes.insert_many(attributes_info)
     
@@ -72,24 +103,33 @@ class db_schedule ():
                 "$set": { 
                     "course_num": curr_course_info["course_num"],
                     "course_title": curr_course_info["course_title"],
+                    "description": curr_course_info["desc_long"],
                     "units_esti": curr_course_info["units_esti"],
                     "last_term": int(self.curr_term)
                     }
             },
             upsert = True)
     
-    def update_courses_term (self, courses_info):
+    def update_courses_term (self, courses_info, map_termCourseIdIsVirtual):
         docs_to_insert = []
         for i in range (0, len(courses_info)):
             curr_course = courses_info[i]
             doc = {}
             doc["term_course_id"] = curr_course["course_id"]
             doc["course_num"] = curr_course["course_num"]
-            doc["course_title"] = curr_course["course_title"]
             doc["units_esti"] = curr_course["units_esti"]
             doc["attributes"] = curr_course["attributes"]
             doc["closed"] = curr_course["closed"]
+            doc["description"] = curr_course["desc_long"]
             doc["last_term"] = int(self.curr_term)
+            # determine whether course is completely virtual or not and update course title accordingly
+            virtualSectionExists = map_termCourseIdIsVirtual[curr_course["course_id"]]["virtual_classes_exist"]
+            normalSectionExists = map_termCourseIdIsVirtual[curr_course["course_id"]]["normal_classes_exist"]
+            doc["is_only_virtual"] = (virtualSectionExists == True) and (normalSectionExists == False)
+            if doc["is_only_virtual"] == False:
+                doc["course_title"] = curr_course["course_title"]
+            else:
+                doc["course_title"] = curr_course["course_title"] + " (Virtual)"
             docs_to_insert.append(doc)
         self.db.courses.drop()
         self.db["courses"].insert_many(docs_to_insert)
@@ -97,7 +137,7 @@ class db_schedule ():
         self.db.courses.create_index([("attributes", 1)])
         self.db.courses.create_index([("closed", 1)])
     
-    def update_sections_term (self, sections_info):
+    def update_sections_term (self, sections_info, map_termCourseIdIsVirtual):
         docs_to_insert = []
         for i in range (0, len(sections_info)):
             curr_section = sections_info[i]
@@ -116,42 +156,42 @@ class db_schedule ():
             doc["capacities"]      = curr_section["capacities"]
             doc["classes"]         = curr_section["classes"]
             doc["term"]            = self.curr_term
+            section_is_virtual = (doc["section_num"][0] == "M")
+            doc["is_virtual"] = section_is_virtual
+
+            # update course virtual/normal class info
+            # initialize info if it doesnt exist
+            if self.key_exists_in_dict(curr_section["course_id"], map_termCourseIdIsVirtual) == False:
+                map_termCourseIdIsVirtual[curr_section["course_id"]] = {
+                    "virtual_classes_exist" : False,
+                    "normal_classes_exist" : False
+                }
+            # update info
+            if section_is_virtual == True:
+                map_termCourseIdIsVirtual[curr_section["course_id"]]["virtual_classes_exist"] = True
+            else:
+                map_termCourseIdIsVirtual[curr_section["course_id"]]["normal_classes_exist"] = True
+
             docs_to_insert.append(doc)
         self.db.sections.drop()
         self.db["sections"].insert_many(docs_to_insert)
         self.db.sections.create_index([("term_course_id", TEXT), ("term_section_id", TEXT), ("status", TEXT)])
         self.db.sections.create_index([("attributes", 1)])
-
+    
+    def update_program_names (self):
+        self.cc_session, program_names = self.cc_scraper.get_programs(self.cc_session)
+        docs_to_insert = []
+        for i in range (0, len(program_names)):
+            docs_to_insert.append({ 
+                "name": program_names[i]})
+        self.db.program_names.drop()
+        self.db["program_names"].insert_many(docs_to_insert)
+            
     def init_db(self):
-        dburl = "mongodb+srv://backend:WBxtm0WV0lnUJIxA@cluster0.2mmvf.mongodb.net/courses?retryWrites=true&w=majority"
+        dburl = "mongodb+srv://backend:hGIGzx2cBFDSRmP1@cluster0.2mmvf.mongodb.net/schedule?retryWrites=true&w=majority"
         client = MongoClient(dburl)
         db = client.schedule
         return db
-
-    def update_capacity(self, secnum):
-        self.cc_session, cap_info = self.cc_scraper.get_section_capacity(self.cc_session, secnum)
-        document = self.parse_sec_cap(cap_info)
-        for i in range (0, len(document)):
-            cap = document[i]
-            if cap["cap_type"] != "Enrollment" and cap["cap_type"] != "Wait List":
-                print("## unidentified cap_type ##")
-                print(cap["cap_type"])
-                print(secnum)
-        self.db.sections2208.update(
-            {"section_id": secnum},
-            {
-                "$set": {
-                    "capacities": document
-                }
-            })
-
-    def init_professors(self):
-        prof_list = self.rmp_scraper.getProfessorList()
-        documents = self.parse_prof_list(prof_list)
-        # remove all documents from collection
-        self.db.professors.drop()
-        # create collection and insert docs
-        self.db["professors"].insert_many(documents)
     
     #### Helper Functions ####
     def get_previous_term(self, curr_term, num_terms_to_go_back):
@@ -194,24 +234,6 @@ class db_schedule ():
         return int_season_to_string_dict[curr_season]
 
     #### PARSING ####
-    def parse_sec_cap(self, cap_info):
-        capacities = cap_info["reserved_cap"]
-        return capacities
-
-    def parse_prof_list(self, prof_list):
-        results = prof_list
-        profs_info = []
-        for pind in range (0, len(results)):
-            prof_info = results[pind]
-            prof_info_db = {}
-            prof_info_db["dept"] = prof_info["tDept"]
-            prof_info_db["firstname"] = prof_info["tFname"]
-            prof_info_db["middlename"] = prof_info["tMiddlename"]
-            prof_info_db["lastname"] = prof_info["tLname"]
-            prof_info_db["num_ratings"] = prof_info["tNumRatings"]
-            prof_info_db["avg_rating"] = prof_info["overall_rating"]
-            profs_info.append(prof_info_db)
-        return profs_info
 
     def parse_attributes (self, attributes_info):
         attributes_db = []
@@ -324,110 +346,9 @@ class db_schedule ():
                 if sec_info["status"] != "O" and sec_info["status"] != "W":
                     return True
         return False
-
-    ### OLD ###
-    '''
-        def update_sections (self, sections_info):
-        # delete sections that are from database
-        old_term = self.get_previous_term(self.curr_term, 4)
-        print("Removing sections from " + old_term + "...")
-        
-        old_time = datetime.datetime.now()
-        self.db["sections"].remove({"curr_term":old_term})
-        new_time = datetime.datetime.now()
-        seconds = (new_time - old_time).total_seconds()
-        print("Removing old sections took " + str(seconds) + " seconds")
-        
-        old_time = datetime.datetime.now()
-        # insert or update curr_term's sections
-        for i in range (0, len(sections_info)):
-            curr_section = sections_info[i]
-            curr_sid = curr_section["section_id"]
-            section_db = self.db["sections"].find_one({"section_id": curr_sid})
-            if section_db == None:
-                # no section currently exists in databse with given section_id
-                curr_section["curr_term"] = self.curr_term
-                self.db["sections"].insert_one(curr_section)
-            else:
-                # section exists
-                self.db["sections"].update(
-                    {"section_id":curr_sid}, 
-                    {"$set": {"status" : curr_section["status"]}}) # update status
-        new_time = datetime.datetime.now()
-        seconds = (new_time - old_time).total_seconds()
-        print("Updating Sections collection took " + str(seconds) + " seconds")
-
-    def update_courses (self, courses_info):
-        old_time = datetime.datetime.now()
-        for i in range(0, len(courses_info)):
-            curr_course = courses_info[i]
-            curr_cid = curr_course["course_id"]
-            course_db = self.db["courses"].find_one({"course_id": curr_cid})
-            if course_db == None:
-                # no course currently exists in database with given course_id
-                course_db = {}
-                course_db["course_id"]    = curr_cid
-                course_db["course_title"] = curr_course["course_title"]
-                course_db["course_num"]   = curr_course["course_num"]
-                course_db["desc_long"]    = curr_course["desc_long"]
-                course_db["units_esti"]   = curr_course["units_esti"]
-                course_db["curr_term"]    = self.curr_term
-                course_db["closed"]       = self.all_sections_closed(curr_course["sections_temp"])
-                
-                # season 
-                course_db["annual"]       = False
-                course_db["fall"]         = False
-                course_db["spring"]       = False
-                course_db["summer"]       = False
-                course_db[self.get_curr_season()] = True
-
-                course_db["attributes"]   = curr_course["attributes"]
-                self.db["courses"].insert_one(course_db)
-            else:
-                # there exists a course
-                course_db["curr_term"]    = self.curr_term
-                course_db["closed"]       = self.all_sections_closed(curr_course.pop("sections_temp", None))
-                course_db[self.get_curr_season()] = True
-                course_db["desc_long"]    = curr_course["desc_long"]
-                course_db["course_title"] = curr_course["course_title"]
-                course_db["course_num"]   = curr_course["course_num"]
-                course_db["attributes"]   = curr_course["attributes"]
-                course_db["units_esti"]   = curr_course["units_esti"]
-                update_param = {"$set": {
-                    "desc_long"        : course_db["desc_long"],
-                    "course_title"     : course_db["course_title"],
-                    "course_num"       : course_db["course_num"],
-                    "attributes"       : course_db["attributes"],
-                    "units_esti"       : course_db["units_esti"],
-                    self.get_curr_season() : course_db[self.get_curr_season()]}}
-                self.db["courses"].update({"course_id" : curr_cid}, update_param)
-        new_time = datetime.datetime.now()
-        seconds = (new_time - old_time).total_seconds()
-        print("Main updates on Courses collection took " + str(seconds) + " seconds")
-        old_time = datetime.datetime.now()
-        courses_db = self.db.courses.find({self.get_curr_season() : True})
-        for x in courses_db:
-            curr_course_db = x
-            curr_cid = curr_course_db["course_id"]
-            if curr_course_db[self.get_curr_season()] == True:
-                # this course was offered at this time of year before
-                if curr_course_db["curr_term"] != self.curr_term:
-                    # this course was not offered this term
-                    
-                    # update that this course is not offered in season like current
-                    self.db["courses"].update({"course_id": curr_cid}, {"$set": {
-                        self.get_curr_season() : False}})
-        new_time = datetime.datetime.now()
-        seconds = (new_time - old_time).total_seconds()
-        print("curr_season updates on Courses collection took " + str(seconds) + " seconds")
-        
-    def init_course_catalog(self):
-        self.cc_session, course_cat = self.cc_scraper.get_course_catalog(self.cc_session)
-        courses, sections = self.parse_cc(course_cat)
-        # init courses
-        self.db.courses2208.drop()
-        self.db["courses2208"].insert_many(courses)
-        # init sections
-        self.db.sections2208.drop()
-        self.db["sections2208"].insert_many(sections)
-        return courses, sections'''
+    def key_exists_in_dict(self, aKey, aDict):
+        try:
+            if aDict[aKey] != None:
+                return True
+        except:
+            return False

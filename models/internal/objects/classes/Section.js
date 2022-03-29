@@ -9,7 +9,7 @@
  * @param {string} inputSectionStatus 'closed', 'waitlist', 'open'
  * @returns 
  */
-function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectionType, inputClasses, inputSectionStatus, inputSectionDatabaseId, inputCourseDatabaseId) {
+function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectionType, inputUnits, inputClasses, inputSectionStatus, inputSectionDatabaseId, inputCourseDatabaseId) {
     
     //////////////////////////////////////////
     //                                      //
@@ -25,6 +25,7 @@ function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectio
     const sectionDatabaseId = inputSectionDatabaseId;
     const courseDatabaseId = inputCourseDatabaseId;
     const classes = inputClasses;
+    const units = inputUnits;
 
     //////////////////////////////////////////
     //                                      //
@@ -86,6 +87,10 @@ function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectio
         return courseDatabaseId;
     }
 
+    function getUnits () {
+        return units;
+    }
+
     return {
         getCourseID,
         getSectionName,
@@ -94,7 +99,8 @@ function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectio
         getClasses,
         getSectionStatus,
         getSectionDatabaseId,
-        getCourseDatabaseId
+        getCourseDatabaseId,
+        getUnits
     }
 }
 

@@ -1,3 +1,10 @@
+/*
+* Name: userController.js
+* API endpoints implementation for user operations.
+* 
+* 
+*/
+
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 // const Guest = mongoose.model('Guest');
@@ -5,7 +12,7 @@ const passport = require('passport');
 const { body, validationResult } = require('express-validator');
 const resHandler = require("../utils/resHandler.js");
 const authController = require("./authController.js");
-const activityHandler = require('../../services/handlers/activity.js');
+const analyticsHandler = require('../../services/handlers/analytics.js');
 
 
 /**
@@ -49,7 +56,7 @@ exports.validateRegisterLocal = async (req, res, next) => {
     // check if email addresses match
     let pwsMatch = (password === password_confirmation);
     if (!pwsMatch)
-        resHandler.respondWithCustomError("101", "400", "Registration Error", "Password did not match with confirmation", res);
+        resHandler.respondWithCustomError("UNKNOWN USER", "validate user input", "101", "400", "Registration Error", "Password did not match with confirmation", "Password did not match with confirmation", false, res);
     else {
         // validate result
         const errors = validationResult(req);
@@ -60,7 +67,7 @@ exports.validateRegisterLocal = async (req, res, next) => {
 
             // save activity if user is not developer
             if (req.role !== "developer") {
-                activityHandler.saveNormalActivity(req.userid, "Manual Register");
+                analyticsHandler.saveApiUse(req.userid, "Manual Register");
             }
 
             next(); // pass to registration into DB
@@ -78,9 +85,9 @@ exports.registerLocal = async (req, res, next) => {
     User.register(user, req.body.password, (err, user) => {
         if (err) {
             if (err.message.indexOf("already registered") > -1)
-                resHandler.respondWithCustomError("102", "409", "Registration Error", "The email is already in use", res);
+                resHandler.respondWithCustomError(req.body.userid, "register", "102", "409", "Registration Error", "The email is already in use", false, res);
             else
-            resHandler.respondWithCustomError("105", "409", "Registration Error", "Something is wrong. Registration Failed.", res);
+                resHandler.respondWithCustomError(req.body.userid, "register", "105", "409", "Registration Error", "Something is wrong. Registration Failed.", false, res);
         } else {
             console.log("(userController/registerLocal) registered user into database");
             console.log("(userController/registerLocal) user: ", user);

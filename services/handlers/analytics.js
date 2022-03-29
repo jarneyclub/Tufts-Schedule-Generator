@@ -1,10 +1,15 @@
+/*
+* Name: analytics.js
+* Functions for saving usage information into the database
+*/
+
 const mongoose = require('mongoose');
 const ApiError = mongoose.model('ApiError');
 const ApiUse = mongoose.model('ApiUse');
 const FrontendUse = mongoose.model('FrontendUse');
 
 
-exports.saveApiError = async (userid, feature, statusCode, errid, errtitle, errdetails) => {
+exports.saveApiError = async (userid, feature, errid, statusCode, errtitle, errdetails) => {
     try {
         let newApiError = new ApiError({
             type: "api_error",
@@ -37,13 +42,16 @@ exports.saveApiUse = async (userid, feature) => {
     }
 }
 
-exports.saveFrontendUse = async () => {
+exports.saveFrontendUse = async (feature, data) => {
     try {
-        let newFrontendUse = new ApiUse({
+        let newFrontendUse = new FrontendUse({
             type: "frontend_use",
+            feature: feature,
+            data: data,
             date: Date.now()
         });
-        newFrontendUse.save();
+        await newFrontendUse.save();
+        return newFrontendUse._id.valueOf();
     }
     catch (e) {
         errorHandler(e, "saveFrontendUse");

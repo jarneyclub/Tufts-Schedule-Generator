@@ -1,3 +1,10 @@
+# Name: docsApi.yaml
+# Swagger documentation for API endpoints. This documentation is the agreed
+# interface for API endpoints exposed to the frontend. All production endpoints
+# must be documented in this file.
+# 
+# 
+# 
 paths:
   ####################
   #                  #
@@ -839,6 +846,11 @@ paths:
                 properties:
                   schedule:
                     $ref: "#/components/schemas/Schedule"
+  ####################
+  #                  #
+  #     RESPONSES    #
+  #                  #
+  ####################
   /responses:
     post:
       tags:
@@ -862,6 +874,32 @@ paths:
           description: Update was successful
         400:
           description: Input could not be validated
+
+  ####################
+  #                  #
+  #     ANALYTICS    #
+  #                  #
+  ####################
+  /bingbong:
+    post:
+      tags:
+        - Analytics
+      summary: Save a log of a frontend feature use to the server database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                feature:
+                  type: string
+                data:
+                  type: object
+      responses:
+        200:
+          description: Update was successful
+
 
 components:
   schemas:

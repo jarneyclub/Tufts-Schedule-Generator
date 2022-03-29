@@ -1,6 +1,12 @@
+/*
+* Name: schedule.js
+* Functions for getting/putting database information about schedules
+*/
+
 const mongoose = require('mongoose');
 const Schedule = mongoose.model('Schedule');
 
+/*Pam changes here*/
 exports.createSchedule   = async (userId, scheduleName, filter, term, courses, classes) => {   
     try {
         if (filter == undefined) {
@@ -143,7 +149,7 @@ exports.createSchedule   = async (userId, scheduleName, filter, term, courses, c
             sched_name: scheduleName,
             user_id: userId,
             filter: filter,
-            events: classes,
+            events: classes, /*Pam change here for if classes are defined */
             courses: courses,
             term: term
         });
@@ -162,18 +168,21 @@ exports.createSchedule   = async (userId, scheduleName, filter, term, courses, c
         errorHandler(e, "createSchedule");
     }
 }
-
+/*Pam changes here
+If updateSchedule takes in a new parameter, new schema item*/
 exports.updateSchedule = async (id, filter, courses, classes) => {
     try {
         // TODO no schedule with given id was found
-        console.log("(schedule/updateSchedule) filter: ", filter);
+        // console.log("(schedule/updateSchedule) filter: ", filter);
+        console.log("(schedule/updateSchedule) courses: ", courses);
+        console.log("(schedule/updateSchedule) classes: ", classes);
         // update schedule 
         let newSchedule = await Schedule.findOneAndUpdate({
             _id: mongoose.Types.ObjectId(id)
         }, {
             filter     : filter,
             courses    : courses,
-            events     : classes
+            events     : classes /*Pam change here*/
         }, {
             new: true,
             upsert: false
@@ -219,7 +228,7 @@ exports.changeScheduleName = async (id, newName) => {
         errorHandler(e, "changeScheduleName");
     }
 }
-
+/*Gets schedule of user from database with section database ids instead of sections arrays*/
 exports.getSchedulesOfUser = async (userId) => {
     try {
         let scheduleCollection = mongoose.connection.collection("schedules"); // get MongoDB collection
@@ -228,6 +237,7 @@ exports.getSchedulesOfUser = async (userId) => {
         });
         // convert cursor to array
         let documents = [];
+        /*Each doc is a schedule document*/
         await cursor.forEach((doc) => {
             // parse degree requirement
             let docParsed = {
@@ -236,6 +246,8 @@ exports.getSchedulesOfUser = async (userId) => {
                 filter     : doc.filter,
                 term       : doc.term,
                 courses    : doc.courses,
+                //change here...
+                //for each DOW array, populate 'sections'
                 classes    : doc.events
             };
             documents.push(docParsed);

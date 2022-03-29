@@ -196,6 +196,7 @@ function Scheduler(props) {
 
   const [loaded, setLoaded] = useState(false);
   /* schedule Dropdown */
+  const [scheduleExist, setScheduleExist] = useState(false);
   const [scheduleOptions, setScheduleOptions] = useState([]);
   const [selectedSchedule, setSelectedSchedule] = useState('');
   const [selectedScheduleID, setSelectedScheduleID] = useState('');
@@ -386,6 +387,9 @@ function Scheduler(props) {
     await fetch('https://qa.jarney.club/api/schedules')
       .then((response) => response.json())
       .then((result) => {
+        setScheduleExist(true);
+        console.log('scheduleExist is set to true');
+
         // if (result.schedules.length === 0) {
         //   fetchCreateSchedule("Schedule #1");
         // } else {
@@ -545,7 +549,8 @@ function Scheduler(props) {
           content="Tufts SIS no more! Your semester schedule is one click away!"
         />
       </Helmet>
-      {scheduleOptions && scheduleOptions?.length !== 0 ? (
+      {/*scheduleOptions && scheduleOptions?.length !== 0*/}
+      {scheduleExist === true ? (
         <div className={sStyle.horizontalWrapper}>
           <div className={sStyle.leftColumnWrapper}>
             {/* CourseContainer 
@@ -800,6 +805,7 @@ function Scheduler(props) {
         </div>
       ) : (
         <div className={sStyle.noSchedulewrapper}>
+          {/* <div>Shopping cart is removed!</div> */}
           <div>Create your schedule now!</div>
           <IconButton
             className={sStyle.editPlanButton}

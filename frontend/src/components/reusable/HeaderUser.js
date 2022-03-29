@@ -13,7 +13,7 @@ import { Button, IconButton, ClickAwayListener } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import HelpIcon from '@material-ui/icons/Help';
 import hStyle from './reusableStyles/HeaderUser.module.css';
-import logo from '../res/JARney.png';
+import newLogo from '../res/jarney_word.png';
 import Popup from './Popup';
 import JarUserLogin from './JarUserLogin';
 
@@ -63,7 +63,12 @@ function HeaderUser(props) {
       <div className={hStyle.splitContainer}>
         <div className={hStyle.logoContainer}>
           <Link to="/Home" style={{ textDecoration: 'none' }}>
-            <img src={logo} height="50px" href="/Home" alt="Return to Home" />
+            <img
+              src={newLogo}
+              height="40px"
+              href="/Home"
+              alt="Return to Home"
+            />
           </Link>
           {
             /*  Logged in JAR User jarUser = true */
@@ -112,7 +117,7 @@ function HeaderUser(props) {
                     color: '#5a32bf',
                     textDecoration: 'none',
                   }}
-                  aria-label="help"
+                  aria-label="help" 
                 >
                   <HelpIcon />
                 </IconButton>
@@ -124,7 +129,7 @@ function HeaderUser(props) {
                 <Button
                   onClick={handleLoginSignupPopup}
                   className={hStyle.button}
-                  style={{ padding: '5px' }}
+                  style={{ padding: '5px'}}
                 >
                   {logged ? 'Sign out' : 'Log in'}
                 </Button>
