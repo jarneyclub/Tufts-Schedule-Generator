@@ -74,7 +74,7 @@ function HelpPage() {
       body: JSON.stringify(contactForm),
     };
 
-    await fetch('https://qa.jarney.club/api/responses', requestOption)
+    await fetch('https://jarney.club/api/responses', requestOption)
       .then((response) => response.json())
       .then((result) => {
         setAlertMessage('Thank you for your feedback!');

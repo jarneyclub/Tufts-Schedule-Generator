@@ -138,7 +138,7 @@ function DegreeRequirement(props) {
 
   const fetchPublicReqs = async () => {
     await fetch(
-      'https://qa.jarney.club/api/degreereqs/public?pname='.concat(
+      'https://jarney.club/api/degreereqs/public?pname='.concat(
         listSearchValue
       )
     )
@@ -159,7 +159,7 @@ function DegreeRequirement(props) {
     };
 
     await fetch(
-      'https://qa.jarney.club/api/degreereq/public/copy/'.concat(
+      'https://jarney.club/api/degreereq/public/copy/'.concat(
         //check if there are repeated terms
         publicDegreeReqDetail.pub_dr_id
       ),
@@ -176,7 +176,7 @@ function DegreeRequirement(props) {
 
   const fetchPrivateReqs = async (showLast) => {
     setSelectedDegreeReqIdx(0);
-    await fetch('https://qa.jarney.club/api/degreereqs/private')
+    await fetch('https://jarney.club/api/degreereqs/private')
       .then((response) => {
         return response.json();
       })
@@ -194,7 +194,7 @@ function DegreeRequirement(props) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(values),
     };
-    await fetch('https://qa.jarney.club/api/degreereq/private', requestOption)
+    await fetch('https://jarney.club/api/degreereq/private', requestOption)
       .then((response) => response.json())
       .then((result) => {
         setEditDRPopup(false);
@@ -209,7 +209,7 @@ function DegreeRequirement(props) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(values),
     };
-    await fetch('https://qa.jarney.club/api/degreereq/private', requestOption)
+    await fetch('https://jarney.club/api/degreereq/private', requestOption)
       .then((response) => response.json())
       .then((result) => {
         setEditDRPopup(false);
