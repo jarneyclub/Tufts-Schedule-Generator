@@ -193,13 +193,6 @@ input {
   border-radius: 12px;
 
   width: 100%;
-  margin-top: 10px;
-  /* box-shadow: 0 4px 8px 0 rgba(90, 50, 191, 0.2),
-    0 6px 20px 0 rgba(90, 50, 191, 0.19); */
-  /* background-color: #efebf9; */
-  /* border-top-left-radius: 12px;
-  border-top-right-radius: 12px; */
-  /* border: 1px #efebf9 solid; */
 }
 
 .degreeReqTitleContainer {
@@ -212,8 +205,6 @@ input {
   padding-right: 1vw;
 
   background-color: #7048d5;
-  border-top-left-radius: 11px;
-  border-top-right-radius: 11px;
   color: #ffffff;
 
   height: 35px;

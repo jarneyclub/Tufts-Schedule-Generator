@@ -17,6 +17,7 @@ import {
 import SearchIcon from '@material-ui/icons/Search';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import Backdrop from "@mui/material/Backdrop";
 import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
 import CancelIcon from '@material-ui/icons/Cancel';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
@@ -104,6 +105,8 @@ function DegreePlan(props) {
     handleLogRequired,
   } = props;
   const [loaded, setLoaded] = useState(false);
+  //set plan exists
+  const [planExist, setPlanExist] = useState(false);
 
   const [semesterPlanOptions, setSemesterPlanOptions] = useState([]); // sets the array of options for semester plans
   const [courseSearchValue, setCourseSearchValue] = useState('');
@@ -128,6 +131,7 @@ function DegreePlan(props) {
 
   const [degreeReqOptions, setDegreeReqOptions] = useState([]);
   const [selectedDegreeReq, setSelectedDegreeReq] = useState(0);
+  const [open, setOpen] = useState(false);
 
   const [loadMessage, setLoadMessage] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
@@ -287,10 +291,18 @@ function DegreePlan(props) {
 
   const handleShowCourseInfo = (info) => {
     setCourseInfo(info);
+    setOpen(!open);
     handlePopup('showCourseInfo', true);
   };
 
+  const handlePopupClose = (field) => {
+    handlePopup(field);
+    setOpen(false);
+  };
+
   const handleSetSelectedPlanIdx = (idx) => {
+    console.log('idx before change: ', selectedPlanIdx);
+    console.log('idx change to: ', idx);
     setSelectedPlanIdx(idx);
   };
 
@@ -335,7 +347,7 @@ function DegreePlan(props) {
         }
       })
       .then((result) => {
-        setSelectedPlanIdx(semesterPlanOptions.length);
+        setSelectedPlanIdx(semesterPlanOptions?.length);
         fetchPlans();
         setLoadMessage(false);
         setAlertMessage('Plan added!');
@@ -360,16 +372,30 @@ function DegreePlan(props) {
    */
   const fetchPlans = async () => {
     // setSelectedPlanIdx(0);
-    await fetch('https://jarney.club/api/degreeplans')
+
+    await fetch('https://qa.jarney.club/api/degreeplans')
+
       .then((response) => {
         return response.json();
       })
       .then((result) => {
+        
         setSemesterPlanOptions(result.plans);
+        console.log('the number of plan is:', result.plans?.length);
+
+        // if (semesterPlanOptions && semesterPlanOptions?.length !== 0) {
+        //   setPlanExist(true);
+        //   console.log('plan exists');
+        // } else {
+        //   setPlanExist(false);  
+        // }
+        
+        
+
         setCardOptions(result.plans[selectedPlanIdx].terms);
         setSelectedPlanName(result.plans[selectedPlanIdx].plan_name);
         setSelectedPlanID(result.plans[selectedPlanIdx].plan_id);
-        setLoaded(true);
+        // setLoaded(true);
       })
       .catch((error) => {});
   };
@@ -419,9 +445,13 @@ function DegreePlan(props) {
     if (logged) {
       fetchPlans();
       fetchPrivateReqs();
-      setLoaded(true);
     }
   }, [logged]);
+
+  useEffect(() => {
+    console.log('selectedPlanIdx changed useEffect called');
+    fetchPlans();
+  }, [selectedPlanIdx]);
 
   useEffect(() => {
     cardOptions?.map((card) => fetchSaveTerm(card));
@@ -455,10 +485,25 @@ function DegreePlan(props) {
   }, [cardOptions]);
 
   useEffect(() => {
-    fetchPlans();
-  }, [selectedPlanIdx]);
+    if (semesterPlanOptions && semesterPlanOptions.length !== 0) {
+      setPlanExist(true);
+     
+    }
+    else {
+      setPlanExist(false);
+     
+    }
+    if (logged) {
+      setLoaded(true);
+    }
+    setLoaded(true);
+    console.log('Loaded is set to true again');
+    console.log('PlanExist is:', planExist);
+  }, [semesterPlanOptions])
+
+  
   return (
-    <div style={{ marginTop: '80px' }}>
+    <div style={{ marginTop: "80px" }}>
       <Helmet>
         <title>JARney | Degree Plan</title>
         <meta
@@ -466,244 +511,287 @@ function DegreePlan(props) {
           content="Need to plan out your Tufts degree? Fall, Spring, Summer, or Annual. We have the complete list of courses!"
         />
       </Helmet>
-      {loaded && semesterPlanOptions && semesterPlanOptions?.length !== 0 ? (
-        <div className={dpStyle.contentContainer}>
-          {/* * * * * Contains * * * * * 
-                    Progress Bar
-                */}
-          <div className={dpStyle.progressBarContainer}>
-            <div className={dpStyle.progressBar}>
-              <div
-                className={dpStyle.progressBarCompleted}
-                style={{
-                  width:
-                    unitsCount.total !== 0
-                      ? (unitsCount.completed / unitsCount.total) * 100 + '%'
-                      : '0%',
-                }}
-              ></div>
-              <div
-                className={dpStyle.progressBarCurrent}
-                style={{
-                  width:
-                    unitsCount.total !== 0
-                      ? (unitsCount.current / unitsCount.total) * 100 + '%'
-                      : '0%',
-                  borderBottomLeftRadius: unitsCount.completed === 0 && '15px',
-                  borderTopLeftRadius: unitsCount.completed === 0 && '15px',
-                  borderBottomRightRadius: unitsCount.future === 0 && '15px',
-                  borderTopRightRadius: unitsCount.future === 0 && '15px',
-                }}
-              ></div>
-              <div
-                className={dpStyle.progressBarFuture}
-                style={{
-                  width:
-                    unitsCount.total !== 0
-                      ? (unitsCount.future / unitsCount.total) * 100 + '%'
-                      : '0%',
-                }}
-              />
-            </div>
 
-            <div className={dpStyle.progressBarTitle}>
-              {unitsCount.total !== 0
-                ? parseInt(
-                    ((unitsCount.current + unitsCount.completed) /
-                      unitsCount.total) *
-                      100
-                  ) + '%'
-                : '0%'}
-            </div>
-          </div>
+      {/* if (loaded) {
+        if (semesterPlanOptions.length !== 0) {
+          display everything;
+        } else {
+          create a new plan!
+        }
+      } else {
+        display a blank page;
+      } */}
 
-          <div className={dpStyle.horizontalWrapper}>
-            {/* * * * Contains: * * * * 
-                        1. Semester Plan selected
-                        2. Course search Container
-                        3. Degree Req Container 
-                    */}
-            <div className={dpStyle.leftContainer}>
-              {/* SEARCH CONTAINER for Courses */}
-              <div className={dpStyle.planSelectorContainer}>
-                <Dropdown
-                  options={semesterPlanOptions}
-                  isObject={true}
-                  objectField={'plan_name'}
-                  selectedOption={selectedPlanName}
-                  selectedIdx={selectedPlanIdx}
-                  onOptionChange={handleSemesterPlanChange}
-                  customStyle={{ fontSize: '20px' }}
-                />
-                &nbsp;
-                {semesterPlanOptions && semesterPlanOptions?.length !== 0 && (
-                  <IconButton
-                    className={dpStyle.editPlanButton}
-                    onClick={() => handlePopup('editPlanName', true)}
-                  >
-                    <ModeEditIcon fontSize="medium" />
-                  </IconButton>
-                )}
-                &nbsp;
-                <IconButton
-                  className={dpStyle.editPlanButton}
-                  onClick={() => handlePopup('addPlan', true)}
-                >
-                  <AddBoxIcon fontSize="medium" />
-                </IconButton>
-                &nbsp;
-                {semesterPlanOptions && semesterPlanOptions?.length !== 0 && (
-                  <IconButton
-                    className={dpStyle.editPlanButton}
-                    onClick={() => handlePopup('removePlan', true)}
-                  >
-                    <IndeterminateCheckBoxIcon fontSize="medium" />
-                  </IconButton>
-                )}
-              </div>
-              <div className={dpStyle.existListWrapper}>
-                <TextField
-                  // label="Search Course"
-                  placeholder="Search Course"
-                  onChange={handleSearchChange}
-                  value={courseSearchValue}
-                  type="text"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon />
-                      </InputAdornment>
-                    ),
+      {
+        loaded ? 
+        // 
+          ( semesterPlanOptions && semesterPlanOptions?.length !== 0 ?
+          <div className={dpStyle.contentContainer}>
+            {/* * * * * Contains * * * * * 
+                      Progress Bar
+                  */}
+            <div className={dpStyle.progressBarContainer}>
+              <div className={dpStyle.progressBar}>
+                <div
+                  className={dpStyle.progressBarCompleted}
+                  style={{
+                    width:
+                      unitsCount.total !== 0
+                        ? (unitsCount.completed / unitsCount.total) * 100 + '%'
+                        : '0%',
                   }}
-                  className={dpStyle.inputSearch}
+                ></div>
+                <div
+                  className={dpStyle.progressBarCurrent}
+                  style={{
+                    width:
+                      unitsCount.total !== 0
+                        ? (unitsCount.current / unitsCount.total) * 100 + '%'
+                        : '0%',
+                    borderBottomLeftRadius: unitsCount.completed === 0 && '15px',
+                    borderTopLeftRadius: unitsCount.completed === 0 && '15px',
+                    borderBottomRightRadius: unitsCount.future === 0 && '15px',
+                    borderTopRightRadius: unitsCount.future === 0 && '15px',
+                  }}
+                ></div>
+                <div
+                  className={dpStyle.progressBarFuture}
+                  style={{
+                    width:
+                      unitsCount.total !== 0
+                        ? (unitsCount.future / unitsCount.total) * 100 + '%'
+                        : '0%',
+
+                  }}
                 />
 
-                <div className={dpStyle.searchListContainer}>
-                  {loadMessage && courseSearchValue !== '' && (
-                    <CircularProgress />
-                  )}
-                  {searchCourseResult?.map((course) => (
-                    <CourseSearchBar
-                      courseDetail={course}
-                      key={course.gen_course_id}
-                      onTransferCourse={handleTransferCourseDetail}
-                      origin={'courseList'}
-                      draggable={true}
-                      onClick={handleShowCourseInfo}
-                    />
-                  ))}
-                </div>
+              </div>
+  
+              <div className={dpStyle.progressBarTitle}>
+                {unitsCount.total !== 0
+                  ? parseInt(
+                      ((unitsCount.current + unitsCount.completed) /
+                        unitsCount.total) *
+                        100
+                    ) + '%'
+                  : '0%'}
               </div>
 
-              <div className={sStyle.infoContainer}>
-                <div style={{ color: '#919da1' }}>Quick SHUs summary</div>
-                <div className={sStyle.unitsContainer}>
-                  <div className={sStyle.infoTitle}>Total:&nbsp;</div>
-                  <div classname={sStyle.infoDetail}>{unitsCount.total}</div>
-                </div>
-                <div className={sStyle.unitsContainer}>
-                  <div className={sStyle.infoTitle}>Completed:&nbsp;</div>
-                  <div classname={sStyle.infoDetail}>
-                    {unitsCount.completed}
-                  </div>
-                </div>
-                <div className={sStyle.unitsContainer}>
-                  <div className={sStyle.infoTitle}>In progress:&nbsp;</div>
-                  <div classname={sStyle.infoDetail}>{unitsCount.current}</div>
-                </div>
-                <div className={sStyle.unitsContainer}>
-                  <div className={sStyle.infoTitle}>Remaining:&nbsp;</div>
-                  <div classname={sStyle.infoDetail}>{unitsCount.future}</div>
-                </div>
-              </div>
-
-              {popup.showCourseInfo && (
-                <CourseInfoExpress
-                  courseInfo={courseInfo}
-                  onClose={() => handlePopup('showCourseInfo', false)}
-                />
-              )}
-
-              {/* Degree Requirment Container */}
-              <DegreeReqExpress />
             </div>
+  
+            <div className={dpStyle.horizontalWrapper}>
+              {/* * * * Contains: * * * * 
+                          1. Semester Plan selected
+                          2. Course search Container
+                          3. Degree Req Container 
+                      */}
+              <div className={dpStyle.leftContainer}>
+                {/* SEARCH CONTAINER for Courses */}
+                <div className={dpStyle.planSelectorContainer}>
+                  <Dropdown
+                    options={semesterPlanOptions}
+                    isObject={true}
+                    objectField={'plan_name'}
+                    selectedOption={selectedPlanName}
+                    selectedIdx={selectedPlanIdx}
+                    onOptionChange={handleSemesterPlanChange}
+                    customStyle={{ fontSize: '20px' }}
+                  />
+                  &nbsp;
+                  {semesterPlanOptions && semesterPlanOptions?.length !== 0 && (
+                    <IconButton
 
-            {/* * * * Contains: * * * *
-                        Degree Plan Grids 
-                    */}
-            <div className={dpStyle.rightContainer}>
-              {/* TITLE Container */}
-              <div className={dpStyle.semesterPlanTitleContainer}>
-                <div />
-                <div className={dpStyle.semesterPlanTitle}>
-                  {semesterPlanOptions && semesterPlanOptions?.length !== 0
-                    ? semesterPlanOptions[selectedPlanIdx]?.plan_name
-                    : "You don't have a degree plan. Make one!"}
-                </div>
-                {semesterPlanOptions && semesterPlanOptions?.length !== 0 ? (
-                  <div className={dpStyle.editSemesterButtonContainer}>
-                    <IconButton
-                      className={dpStyle.editSemesterButton}
-                      onClick={() => handlePopup('addSemester', true)}
+                      className={dpStyle.editPlanButton}
+                      onClick={() => handlePopup('editPlanName', true)}
+
                     >
-                      <AddBoxIcon fontSize="medium" />
+                      <ModeEditIcon fontSize="medium" />
                     </IconButton>
-                    &nbsp;
+                  )}
+                  &nbsp;
+                  <IconButton
+                    className={dpStyle.editPlanButton}
+                    onClick={() => handlePopup('addPlan', true)}
+                  >
+                    <AddBoxIcon fontSize="medium" />
+                  </IconButton>
+                  &nbsp;
+                  {semesterPlanOptions && semesterPlanOptions?.length !== 0 && (
                     <IconButton
-                      className={dpStyle.editSemesterButton}
-                      onClick={() => handlePopup('removeSemester', true)}
+
+                      className={dpStyle.editPlanButton}
+                      onClick={() => handlePopup('removePlan', true)}
+
                     >
                       <IndeterminateCheckBoxIcon fontSize="medium" />
                     </IconButton>
+                  )}
+                </div>
+                <div className={dpStyle.existListWrapper}>
+                  <TextField
+                    // label="Search Course"
+                    placeholder="Search Course"
+                    onChange={handleSearchChange}
+                    value={courseSearchValue}
+                    type="text"
+                    variant="outlined"
+                    size="small"
+                    fullWidth
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SearchIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                    className={dpStyle.inputSearch}
+                  />
+  
+                  <div className={dpStyle.searchListContainer}>
+                    {loadMessage && courseSearchValue !== '' && (
+                      <CircularProgress />
+                    )}
+                    {searchCourseResult?.map((course) => (
+                      <CourseSearchBar
+                        courseDetail={course}
+                        key={course.gen_course_id}
+                        onTransferCourse={handleTransferCourseDetail}
+                        origin={'courseList'}
+                        draggable={true}
+                        onClick={handleShowCourseInfo}
+                      />
+                    ))}
                   </div>
-                ) : (
-                  <div />
+                </div>
+  
+                <div className={sStyle.infoContainer}>
+                  <div style={{ color: '#919da1' }}>Quick SHUs summary</div>
+                  <div className={sStyle.unitsContainer}>
+                    <div className={sStyle.infoTitle}>Total:&nbsp;</div>
+                    <div classname={sStyle.infoDetail}>{unitsCount.total}</div>
+                  </div>
+                  <div className={sStyle.unitsContainer}>
+                    <div className={sStyle.infoTitle}>Completed:&nbsp;</div>
+                    <div classname={sStyle.infoDetail}>
+                      {unitsCount.completed}
+                    </div>
+                  </div>
+                  <div className={sStyle.unitsContainer}>
+                    <div className={sStyle.infoTitle}>In progress:&nbsp;</div>
+                    <div classname={sStyle.infoDetail}>{unitsCount.current}</div>
+                  </div>
+                  <div className={sStyle.unitsContainer}>
+                    <div className={sStyle.infoTitle}>Remaining:&nbsp;</div>
+                    <div classname={sStyle.infoDetail}>{unitsCount.future}</div>
+                  </div>
+                </div>
+  
+                {popup.showCourseInfo && (
+                  <CourseInfoExpress
+                    courseInfo={courseInfo}
+                    onClose={() => handlePopup('showCourseInfo', false)}
+                  />
                 )}
+  
+                {/* Degree Requirment Container */}
+                <DegreeReqExpress />
               </div>
 
-              {/* PlanCards Container */}
-              <div className={dpStyle.planCardsContainer}>
-                {cardOptions &&
-                  cardOptions?.map((card) => (
-                    <PlanCard
-                      cardDetail={card}
-                      key={card.plan_term_id}
-                      dropItem={dropItem}
-                      transferCourseDetail={transferCourseDetail}
-                      onTransferCourse={handleTransferCourseDetail}
-                      onRemoveCourse={handleRemoveCourse}
-                      handleCardOrigin={handleCardOrigin}
-                      cardOrigin={cardOrigin}
-                      onClick={handleShowCourseInfo}
-                      origin={'dp2'}
-                    />
-                  ))}
+  
+              {/* * * * Contains: * * * *
+                          Degree Plan Grids 
+                      */}
+              <div className={dpStyle.rightContainer}>
+                {/* TITLE Container */}
+                <div className={dpStyle.semesterPlanTitleContainer}>
+                  <div />
+                  <div className={dpStyle.semesterPlanTitle}>
+                    {semesterPlanOptions && semesterPlanOptions?.length !== 0
+                      ? semesterPlanOptions[selectedPlanIdx]?.plan_name
+                      : "You don't have a degree plan. Make one!"}
+                  </div>
+                  {semesterPlanOptions && semesterPlanOptions?.length !== 0 ? (
+                    <div className={dpStyle.editSemesterButtonContainer}>
+                      <IconButton
+                        className={dpStyle.editSemesterButton}
+                        onClick={() => handlePopup('addSemester', true)}
+                      >
+                        <AddBoxIcon fontSize="medium" />
+                      </IconButton>
+                      &nbsp;
+                      <IconButton
+                        className={dpStyle.editSemesterButton}
+                        onClick={() => handlePopup('removeSemester', true)}
+                      >
+                        <IndeterminateCheckBoxIcon fontSize="medium" />
+                      </IconButton>
+                    </div>
+                  ) : (
+                    <div />
+                  )}
+                </div>
+  
+                {/* PlanCards Container */}
+                <div className={dpStyle.planCardsContainer}>
+                  {cardOptions &&
+                    cardOptions?.map((card) => (
+                      <PlanCard
+                        cardDetail={card}
+                        key={card.plan_term_id}
+                        dropItem={dropItem}
+                        transferCourseDetail={transferCourseDetail}
+                        onTransferCourse={handleTransferCourseDetail}
+                        onRemoveCourse={handleRemoveCourse}
+                        handleCardOrigin={handleCardOrigin}
+                        cardOrigin={cardOrigin}
+                        onClick={handleShowCourseInfo}
+                        origin={'dp2'}
+                      />
+                    ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      ) : (
-        loaded && (
-          <div className={dpStyle.noSchedulewrapper}>
-            <div>Create your plan now!</div>
-            <IconButton
-              className={dpStyle.editPlanButton}
-              onClick={() => handlePopup('addPlan', true)}
-            >
-              <AddBoxIcon fontSize="large" />
-            </IconButton>
-          </div>
-        )
-      )}
+            :
+            (loaded && planExist === true ?  
+              (<div className={dpStyle.noSchedulewrapper}>
+                <div>blank page {semesterPlanOptions?.length}</div>
+              </div>
+              ):(<div className={dpStyle.noSchedulewrapper}>
+                <div>Create your plan now!</div>
+                <IconButton
+                  className={dpStyle.editPlanButton}
+                  onClick={() => handlePopup('addPlan', true)}
+                > 
+                <AddBoxIcon fontSize="large" />
+                </IconButton>
+              </div>)   
+            
+          ))
+        :
+
+              <div className={dpStyle.noSchedulewrapper}>
+                <div>page is not loaded! {semesterPlanOptions?.length}</div>
+              </div>
+      }
+      
+
 
       {/* popups */}
+      {popup.showCourseInfo && (
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+          onClick={() => handlePopupClose("showCourseInfo")}
+        >
+          <CourseInfoExpress courseInfo={courseInfo} />
+        </Backdrop>
+      )}
+
       {popup.addSemester && (
-        <Popup onClose={() => handlePopup('addSemester', false)}>
+        <Popup onClose={() => handlePopup("addSemester", false)}>
           <AddSemester
-            onClose={() => handlePopup('addSemester', false)}
+            onClose={() => handlePopup("addSemester", false)}
             planName={semesterPlanOptions[selectedPlanIdx]?.plan_name}
             planID={semesterPlanOptions[selectedPlanIdx]?.plan_id}
             //pass down selectedPlanIdx
@@ -716,9 +804,9 @@ function DegreePlan(props) {
         </Popup>
       )}
       {popup.removeSemester && (
-        <Popup onClose={() => handlePopup('removeSemester', false)}>
+        <Popup onClose={() => handlePopup("removeSemester", false)}>
           <RemoveSemester
-            onClose={() => handlePopup('removeSemester', false)}
+            onClose={() => handlePopup("removeSemester", false)}
             cardOptions={cardOptions}
             handleRemoveCards={handleRemoveCards}
             planName={semesterPlanOptions[selectedPlanIdx]?.plan_name}
@@ -731,9 +819,9 @@ function DegreePlan(props) {
         </Popup>
       )}
       {popup.editPlanName && (
-        <Popup onClose={() => handlePopup('editPlanName', false)}>
+        <Popup onClose={() => handlePopup("editPlanName", false)}>
           <EditPlanName
-            onClose={() => handlePopup('editPlanName', false)}
+            onClose={() => handlePopup("editPlanName", false)}
             planName={semesterPlanOptions[selectedPlanIdx]?.plan_name}
             planID={semesterPlanOptions[selectedPlanIdx]?.plan_id}
             refreshPlans={fetchPlans}
@@ -744,21 +832,25 @@ function DegreePlan(props) {
         </Popup>
       )}
       {popup.addPlan && (
-        <Popup onClose={() => handlePopup('addPlan', false)}>
+        <Popup onClose={() => handlePopup("addPlan", false)}>
           <AddPlan
             onClose={() => handlePopup('addPlan', false)}
-            refreshPlans={fetchPlans}
+            //refreshPlans={fetchPlans}
             createNewPlan={createNewPlan}
             onShowAlert={() => setShowAlert(true)}
             setAlertMessage={setAlertMessage}
             setAlertSeverity={setAlertSeverity}
+            //Winnie edited
+            // onSetIdxLast={() =>
+            //   handleSetSelectedPlanIdx(semesterPlanOptions?.length - 2)
+            // }
           />
         </Popup>
       )}
       {popup.removePlan && (
-        <Popup onClose={() => handlePopup('removePlan', false)}>
+        <Popup onClose={() => handlePopup("removePlan", false)}>
           <RemovePlan
-            onClose={() => handlePopup('removePlan', false)}
+            onClose={() => handlePopup("removePlan", false)}
             planName={semesterPlanOptions[selectedPlanIdx]?.plan_name}
             planID={semesterPlanOptions[selectedPlanIdx]?.plan_id}
             refreshPlans={fetchPlans}
