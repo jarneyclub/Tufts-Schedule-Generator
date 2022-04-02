@@ -13,6 +13,12 @@
   align-content: flex-start;
 }
 
+.courseTitle {
+  display: flex;
+  justify-content: center;
+  color: #919da1;
+}
+
 .infoTitle {
   color: #fc4e4e;
 }
