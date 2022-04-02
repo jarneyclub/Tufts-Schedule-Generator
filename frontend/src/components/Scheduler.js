@@ -40,7 +40,6 @@ import JarUserLogin from './reusable/JarUserLogin';
 import Event from './reusable/Event';
 import EventScreenshot from './reusable/EventScreenshot';
 import Popup from './reusable/Popup';
-
 import {
   AddSchedule,
   RemoveSchedule,
@@ -606,7 +605,7 @@ function Scheduler(props) {
                           }
                         />
                       }
-                      label="Time Unstated"
+                      label="Time Unspecified"
                     />
                   </FormGroup>
                   <Button
