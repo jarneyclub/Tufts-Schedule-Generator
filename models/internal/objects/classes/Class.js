@@ -163,7 +163,7 @@ function Class(inputCourseID, inputCourseName, inputSectionName, inputSectionTyp
         getCity,
         getSectionType,
         getSectionID,
-        getCourseDatabaseId
+        getCourseDatabaseId,
         isTimeUnspecified
     }
 }
