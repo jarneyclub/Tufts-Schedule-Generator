@@ -143,7 +143,7 @@ function Class(inputCourseID, inputCourseName, inputSectionName, inputSectionTyp
     * @returns {boolean}
     */
     function isTimeUnspecified() {
-        if ( (inputStartTime === -1) && (inputEndTime === -1) && (inputDay === -1) ) {
+        if ( (inputStartTime == -1) && (inputEndTime == -1) && (inputDay == -1) ) {
             return true;
         } else {
             return false;
