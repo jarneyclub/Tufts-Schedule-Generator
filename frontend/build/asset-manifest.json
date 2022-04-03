@@ -1,36 +1,22 @@
 {
   "files": {
-
-    "main.css": "./static/css/main.44758e40.chunk.css",
-    "main.js": "./static/js/main.6b88f52e.chunk.js",
-    "main.js.map": "./static/js/main.6b88f52e.chunk.js.map",
-    "runtime-main.js": "./static/js/runtime-main.3b001913.js",
-    "runtime-main.js.map": "./static/js/runtime-main.3b001913.js.map",
-    "static/css/2.081f420c.chunk.css": "./static/css/2.081f420c.chunk.css",
-    "static/js/2.9b306021.chunk.js": "./static/js/2.9b306021.chunk.js",
-    "static/js/2.9b306021.chunk.js.map": "./static/js/2.9b306021.chunk.js.map",
+    "main.css": "./static/css/main.4fad9f62.css",
+    "main.js": "./static/js/main.e297b6d4.js",
+    "static/media/favicon_2.png": "./static/media/favicon_2.864c93e1efb88812fdf4.png",
+    "static/media/homepage_final.gif": "./static/media/homepage_final.8e74a25ae9bc35061570.gif",
+    "static/media/feedback.png": "./static/media/feedback.795628bfdeb0955db68b.png",
+    "static/media/Eina03-Regular.ttf": "./static/media/Eina03-Regular.5a3070b96ecb253115f0.ttf",
+    "static/media/Eina03-SemiBold.ttf": "./static/media/Eina03-SemiBold.3ad782c774b4c1cccfba.ttf",
+    "static/media/Icon_Scheduler.png": "./static/media/Icon_Scheduler.75a76c379970de90f347.png",
+    "static/media/JARney.png": "./static/media/JARney.ea751889d47e57b25328.png",
+    "static/media/Icon_DegreePlanner.png": "./static/media/Icon_DegreePlanner.bfb9c5e6ab916b938367.png",
+    "static/media/jarney_word.png": "./static/media/jarney_word.a79d9ad41b6d4ba72a97.png",
     "index.html": "./index.html",
-    "static/css/2.081f420c.chunk.css.map": "./static/css/2.081f420c.chunk.css.map",
-    "static/css/main.44758e40.chunk.css.map": "./static/css/main.44758e40.chunk.css.map",
-    "static/js/2.9b306021.chunk.js.LICENSE.txt": "./static/js/2.9b306021.chunk.js.LICENSE.txt",
-    "static/media/Eina03-Regular.5a3070b9.ttf": "./static/media/Eina03-Regular.5a3070b9.ttf",
-    "static/media/HeaderUser.module.css": "./static/media/Eina03-SemiBold.3ad782c7.ttf",
-    "static/media/Icon_DegreePlanner.bfb9c5e6.png": "./static/media/Icon_DegreePlanner.bfb9c5e6.png",
-    "static/media/Icon_Scheduler.75a76c37.png": "./static/media/Icon_Scheduler.75a76c37.png",
-    "static/media/JARney.ea751889.png": "./static/media/JARney.ea751889.png",
-    "static/media/favicon_2.864c93e1.png": "./static/media/favicon_2.864c93e1.png",
-    "static/media/feedback.795628bf.png": "./static/media/feedback.795628bf.png",
-    "static/media/homepage_final.8e74a25a.gif": "./static/media/homepage_final.8e74a25a.gif",
-    "static/media/jarney_word.a79d9ad4.png": "./static/media/jarney_word.a79d9ad4.png"
+    "main.4fad9f62.css.map": "./static/css/main.4fad9f62.css.map",
+    "main.e297b6d4.js.map": "./static/js/main.e297b6d4.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.3b001913.js",
-    "static/css/2.081f420c.chunk.css",
-
-    "static/js/2.9b306021.chunk.js",
-    "static/css/main.44758e40.chunk.css",
-    "static/js/main.6b88f52e.chunk.js"
-
-
+    "static/css/main.4fad9f62.css",
+    "static/js/main.e297b6d4.js"
   ]
 }
