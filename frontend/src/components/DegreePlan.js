@@ -686,13 +686,6 @@ function DegreePlan(props) {
                   </div>
                 </div>
   
-                {popup.showCourseInfo && (
-                  <CourseInfoExpress
-                    courseInfo={courseInfo}
-                    onClose={() => handlePopup('showCourseInfo', false)}
-                  />
-                )}
-  
                 {/* Degree Requirment Container */}
                 <DegreeReqExpress />
 
