@@ -6,16 +6,13 @@
   white-space: normal;
 
   padding: 0 1vw;
-  color: #a0c3d1;
-  background: linear-gradient(
-      rgba(160, 195, 209, 0.1),
-      rgba(160, 195, 209, 0.1)
-    ),
-    linear-gradient(white, white);
+  color: white;
+  background-color: #647984;
   position: absolute;
   border: 1px solid #919da1;
-  border-left: 8px solid #a0c3d1;
+
   width: 100%;
+
   border-radius: 5px;
   font-size: 1.2vw;
   overflow-wrap: break-word;
