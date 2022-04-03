@@ -695,6 +695,7 @@ function DegreePlan(props) {
   
                 {/* Degree Requirment Container */}
                 <DegreeReqExpress />
+
               </div>
 
   
@@ -771,7 +772,7 @@ function DegreePlan(props) {
         :
 
               <div className={dpStyle.noSchedulewrapper}>
-                <div>page is not loaded! {semesterPlanOptions?.length}</div>
+                <div>page is not loaded!!! {semesterPlanOptions?.length}</div>
               </div>
       }
       
