@@ -73,16 +73,14 @@ function CourseSearchBar(props) {
       id={course_num?.concat(course_title)}
       style={customStyle}
     >
-      {(origin === 'schedulerCourseList' ||
-        origin === 'schedulerTab' ||
-        origin !== 'courseList') && <div>&nbsp;</div>}
-      <div
-        style={{ wordBreak: 'break-word' }}
-        onDoubleClick={handleDoubleClick}
-        onClick={handleOnClick}
-      >
-        【{course_num}】<br />
-        {course_title}
+
+      {(origin === "schedulerCourseList" ||
+        origin === "schedulerTab" ||
+        origin !== "courseList") && <div>&nbsp;</div>}
+      <div style={{ wordBreak: "break-word" }} onDoubleClick={handleDoubleClick}
+      onClick={handleOnClick}>
+        【{course_num}】{course_title}
+
       </div>
       {origin === 'schedulerCourseList' && (
         <div className={cStyle.actionButton}>

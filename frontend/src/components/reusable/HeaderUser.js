@@ -51,7 +51,7 @@ function HeaderUser(props) {
   };
 
   const fetchLogout = async () => {
-    await fetch('https://qa.jarney.club/api/auth/logout', { method: 'POST' })
+    await fetch('https://jarney.club/api/auth/logout', { method: 'POST' })
       .then((response) => response.json())
       .then((result) => {})
       .error((error) => {});
