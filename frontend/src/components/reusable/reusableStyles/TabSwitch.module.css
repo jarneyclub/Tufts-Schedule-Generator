@@ -1,17 +1,11 @@
 .courseInfoContainer {
-  width: 35%;
-  height: 200px;
+  width: 100%;
   margin: 10px 0;
-  padding: 20px 1vw;
+  padding: 5px 1vw;
+  border: solid 2px #a0c3d1;
   border-radius: 12px;
-  background: #F6F9FA;
-}
-
-.courseTitle {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #919da1;
+  box-shadow: 0 4px 8px 0 rgba(90, 50, 191, 0.2),
+    0 6px 20px 0 rgba(90, 50, 191, 0.19);
 }
 
 .infoContainer {
@@ -22,14 +16,4 @@
 
 .infoTitle {
   color: #fc4e4e;
-}
-
-.infoDetail {
-  color: #000000;
-}
-
-@media (max-width: 810px){
-  .courseInfoContainer{
-    width: 75%;
-  }
 }

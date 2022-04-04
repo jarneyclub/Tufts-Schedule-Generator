@@ -29,14 +29,7 @@ const time = [
   "9PM",
 ];
 
-const weekdays = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Time Unstated",
-];
+const weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
 function Calendar(props) {
   const {
@@ -93,7 +86,7 @@ function Calendar(props) {
         {/* Time indicator */}
         <div
           className={cStyle.timeSlotContainer}
-          style={timePrefState ? {} : { transform: "translateY(30px)" }}
+          style={timePrefState ? {} : { transform: "translateY(40px)" }}
         >
           <div className={cStyle.timeSlotTitle} />
           {time.map((timeSlot) => (

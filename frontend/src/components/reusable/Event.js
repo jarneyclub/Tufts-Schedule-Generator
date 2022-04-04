@@ -2,8 +2,8 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
 /* * * *  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Event.js
- * The classes. Display relevant information.
+ * Calendar.js
+ *
  *
  */
 
@@ -37,7 +37,6 @@ function Event(props) {
 
     return res;
   };
-  
   const handleOnClick = () => {
     onEventClick(eventDetails);
   };
@@ -54,16 +53,16 @@ function Event(props) {
       }}
       onClick={handleOnClick}
     >
-      <div>{detail[0]}</div>
-      <div>{detail[1]}</div>
-      <div>{name}</div>
-      <div>{loc[0]}</div>
-
       {time_start !== time_end && (
         <div>
           {time_start}&nbsp;~&nbsp;{time_end}
         </div>
       )}
+
+      <div>{detail[0]}</div>
+      <div>{detail[1]}</div>
+      <div>{name}</div>
+      <div>{loc[0]}</div>
     </div>
   );
 }

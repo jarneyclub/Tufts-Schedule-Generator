@@ -32,7 +32,7 @@ import JarUserLogin from './JarUserLogin';
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
- *                          Add PlanCard(semester) Popup                              *
+ *                          Add PlanCard Popup                               *
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 // const yearOptions = []
@@ -111,7 +111,7 @@ function AddSemester(props) {
       body: JSON.stringify(value),
     };
 
-    await fetch('https://qa.jarney.club/api/degreeplan/term', requestOption)
+    await fetch('https://jarney.club/api/degreeplan/term', requestOption)
       .then((response) => response.json())
       .then((result) => {
         if (!result.error) {
@@ -167,7 +167,7 @@ function AddSemester(props) {
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
- *                            Remove PlanCard(semester) Popup                          *
+ *                            Remove PlanCard Popup                          *
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function RemoveSemester(props) {
@@ -206,6 +206,7 @@ function RemoveSemester(props) {
 
   const handleRemove = () => {
     /* do something API?? pass in the selectedCards arr */
+
     fetchDeleteTerms();
   };
 
@@ -218,7 +219,7 @@ function RemoveSemester(props) {
         plan_id: planID,
       }),
     };
-    await fetch('https://qa.jarney.club/api/degreeplan/terms', requestOption)
+    await fetch('https://jarney.club/api/degreeplan/terms', requestOption)
       .then((response) => response.json())
       .then((result) => {
         if (!result.error) {
@@ -307,7 +308,7 @@ function EditPlanName(props) {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
     };
-    const url = 'https://qa.jarney.club/api/degreeplan/'
+    const url = 'https://jarney.club/api/degreeplan/'
       .concat(planID)
       .concat('/plan_name/')
       .concat(editName);
@@ -363,7 +364,7 @@ function AddPlan(props) {
   const {
     onClose,
     createNewPlan,
-    //onSetIdxLast,
+    onSetIdxLast,
     onShowAlert,
     setAlertMessage,
     setAlertSeverity,
@@ -382,8 +383,6 @@ function AddPlan(props) {
     /* do something API?? pass in the selectedCards arr */
 
     if (planName !== '') {
-      //Winnie edited: reset idx last
-      // onSetIdxLast();
       createNewPlan(planName);
       onClose();
     } else {
@@ -449,14 +448,12 @@ function RemovePlan(props) {
       headers: { accept: '*/*' },
     };
     await fetch(
-      'https://qa.jarney.club/api/degreeplan?plan_id='.concat(planID),
+      'https://jarney.club/api/degreeplan?plan_id='.concat(planID),
       requestOption
     )
       .then((response) => response.json())
       .then((result) => {
-
         if (!result.error) {
-          console.log("fetch Delete called");
           onSetIdxLast();
           setAlertMessage('Plan removed!');
           setAlertSeverity('success');
