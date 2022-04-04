@@ -162,10 +162,8 @@ const CourseInfoExpress = (props) => {
 
   return (
     <div className={tStyle.courseInfoContainer}>
-      {details ? (<div className={tStyle.courseTitle}>{details}</div>) :
-      (<div style={tStyle.courseTitle}>
-        {course_num}&nbsp;{course_title}
-      </div>)}
+      <div style={{ color: "#919da1" }}>{course_num}&nbsp;</div>
+      <div style={{ color: "#919da1" }}>{course_title}</div>
 
       {units_esti && (
         <div className={tStyle.infoContainer}>
@@ -173,6 +171,7 @@ const CourseInfoExpress = (props) => {
           <div className={tStyle.infoDetail}>{units_esti}</div>
         </div>
       )}
+
       {time_start && (
         <div className={tStyle.infoContainer}>
           <div className={tStyle.infoTitle}>Time:&nbsp;</div>
@@ -181,30 +180,41 @@ const CourseInfoExpress = (props) => {
           </div>
         </div>
       )}
+
+      {details && (
+        <div className={tStyle.infoContainer}>
+          <div className={tStyle.infoDetail}>{details}</div>
+        </div>
+      )}
+
       {location && (
         <div className={tStyle.infoContainer}>
           <div className={tStyle.infoTitle}>Location:&nbsp;</div>
           <div className={tStyle.infoDetail}>{location}</div>
         </div>
       )}
+
       {name && (
         <div className={tStyle.infoContainer}>
           <div className={tStyle.infoTitle}>Section:&nbsp;</div>
           <div className={tStyle.infoDetail}>{name}</div>
         </div>
       )}
+
       {instructors && (
         <div className={tStyle.infoContainer}>
           <div className={tStyle.infoTitle}>Instructor:&nbsp;</div>
           <div className={tStyle.infoDetail}>{instructors}</div>
         </div>
       )}
+
       {attributes && (
         <div className={tStyle.infoContainer}>
           <div className={tStyle.infoTitle}>Attributes:&nbsp;</div>
           <div className={tStyle.infoDetail}>{attributeDetails}</div>
         </div>
       )}
+
       {description && (
         <div className={tStyle.infoContainer}>
           <div className={tStyle.infoDetail}>{description}</div>
