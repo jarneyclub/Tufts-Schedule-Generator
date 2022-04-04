@@ -541,7 +541,7 @@ function Scheduler(props) {
   }, [selectedCourses]);
 
   return (
-    <div>
+    <>
       <Helmet>
         <title>JARney | Schedule</title>
         <meta
@@ -916,7 +916,7 @@ function Scheduler(props) {
           ></JarUserLogin>
         </Popup>
       )}
-    </div>
+    </>
   );
 }
 

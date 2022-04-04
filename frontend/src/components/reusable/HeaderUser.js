@@ -108,7 +108,7 @@ function HeaderUser(props) {
 
         {!shrink && (
           <div className={hStyle.navbarContainer} ref={navbarRef}>
-            <div>
+            <>
               <NavLink to="/HelpPage">
                 <IconButton
                   className={hStyle.button}
@@ -122,10 +122,10 @@ function HeaderUser(props) {
                   <HelpIcon />
                 </IconButton>
               </NavLink>
-            </div>
+            </>
 
             {!((!logRequired && loginPopup) || signupPopup) && (
-              <div>
+              <>
                 <Button
                   onClick={handleLoginSignupPopup}
                   className={hStyle.button}
@@ -133,7 +133,7 @@ function HeaderUser(props) {
                 >
                   {logged ? 'Sign out' : 'Log in'}
                 </Button>
-              </div>
+              </>
             )}
           </div>
         )}
