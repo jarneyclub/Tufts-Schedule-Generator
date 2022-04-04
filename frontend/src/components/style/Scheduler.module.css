@@ -160,6 +160,12 @@
   width: 100%;
 }
 
+.unitsContainer {
+  align-content: flex-start;
+  display: flex;
+  flex-direction: row;
+}
+
 .tuContainer {
   display: flex;
   flex-direction: row;
