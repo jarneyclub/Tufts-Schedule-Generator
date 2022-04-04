@@ -327,6 +327,7 @@ function Scheduler(props) {
   const handleShowCourseInfo = (info) => {
     setCourseInfo(info);
     setOpen(!open);
+    console.log("handleShowCourseInfoooo")
     handlePopup('showCourseInfo', true);
   };
 
