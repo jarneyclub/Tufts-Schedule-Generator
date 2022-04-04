@@ -63,22 +63,22 @@ function DegreeReqDisplay(props) {
       </div>
 
       {reqDetail && reqDetail?.school && (
-        <div>
+        <>
           <div style={{ color: "#FC4E4E" }}>School:&nbsp;</div>
           <div>{reqDetail?.school}</div>
-        </div>
+        </>
       )}
       {reqDetail && reqDetail?.degree && (
-        <div>
+        <>
           <div style={{ color: "#FC4E4E" }}>Degree:&nbsp;</div>
           <div>{reqDetail?.degree}</div>
-        </div>
+        </>
       )}
 
       <br />
       {reqDetail &&
         reqDetail?.parts?.map((req) => (
-          <div>
+          <>
             <div
               style={{
                 color: "#FC4E4E",
@@ -92,7 +92,7 @@ function DegreeReqDisplay(props) {
               {req?.part_desc}
             </div>
             {req?.part_reqs?.map((course) => (
-              <div>
+              <>
                 {course?.course_num && (
                   <div
                     style={{ wordBreak: "break-word", whiteSpace: "pre-wrap" }}
@@ -105,9 +105,9 @@ function DegreeReqDisplay(props) {
                 >
                   {course?.course_note}
                 </div>
-              </div>
+              </>
             ))}
-          </div>
+          </>
         ))}
     </div>
   );

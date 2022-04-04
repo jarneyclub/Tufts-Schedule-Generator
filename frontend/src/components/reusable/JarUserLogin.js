@@ -122,13 +122,9 @@ const JarUserLogin = React.forwardRef((props, ref) => {
       {!loadMessage && (
         <div className={jStyle.formContainer}>
           {loginState ? (
-            <div>
               <LoginForm onSubmit={handleSubmit} />
-            </div>
           ) : (
-            <div>
               <SignupForm onSubmit={handleSubmit} />
-            </div>
           )}
         </div>
       )}
