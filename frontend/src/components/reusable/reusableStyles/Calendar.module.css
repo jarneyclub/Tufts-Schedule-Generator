@@ -10,6 +10,7 @@
   justify-content: space-between;
   align-items: center;
 }
+
 .calendarContainer {
   display: flex;
   flex-direction: row;
@@ -17,17 +18,18 @@
   width: 100%;
   min-height: 100%;
   justify-content: space-around;
-  padding-right: 6vw;
+  align-items: flex-start;
 }
 
 .timeSlotContainer {
   flex-grow: 1;
   margin: 0 1vw;
   transform: translateY(60px);
+  color: #70757a;
 }
 
 .timeSlotTitle {
-  height: 40px;
+  height: 0px;
   /* position: fixed; */
 }
 
