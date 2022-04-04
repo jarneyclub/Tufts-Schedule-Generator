@@ -408,7 +408,7 @@
   min-height: 250px;
   background-color: #efebf9;
   position: absolute;
-  transform: translate(-12vw, 0px);
+  left: -30%;
   top: 100%;
   z-index: 10001;
   box-sizing: content-box;
@@ -423,6 +423,7 @@
   min-height: 250px;
   background-color: #efebf9;
   position: absolute;
+  /* left: -50%; */
   top: 100%;
   z-index: 10001;
   box-sizing: content-box;
