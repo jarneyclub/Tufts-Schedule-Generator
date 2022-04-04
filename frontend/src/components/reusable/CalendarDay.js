@@ -144,7 +144,7 @@ function CalendarDay(props) {
       {dayName === "Time Unstated" ? (
         <div className={cStyle.unStatedTimeColumn} />
       ) : (
-        <div>
+        <>
           {timePrefState && (
             <div className={cStyle.buttonContainer}>
               <IconButton
@@ -190,7 +190,7 @@ function CalendarDay(props) {
                   <div className={cStyle.timeSlot} key={timeName} />
                 ))}
           </div>
-        </div>
+        </>
       )}
 
       {/* Put the classes on depending on the day */}

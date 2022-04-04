@@ -58,7 +58,7 @@ function RemovePrivReq(props) {
 
   const fetchDelete = async () => {
     await fetch(
-      'https://jarney.club/api/degreereq/private/'.concat(privateReqID),
+      'https://qa.jarney.club/api/degreereq/private/'.concat(privateReqID),
       {
         method: 'DELETE',
       }

@@ -185,7 +185,7 @@ function DegreeReqEdit(props) {
   };
 
   const fetchSchoolOptions = async () => {
-    await fetch('https://jarney.club/api/courses/programs')
+    await fetch('https://qa.jarney.club/api/courses/programs')
       .then((response) => response.json())
       .then((result) => {
         setSchoolOptions(result.names);
