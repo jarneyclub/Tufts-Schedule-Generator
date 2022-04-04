@@ -665,7 +665,7 @@ function DegreePlan(props) {
                 </div>
   
                 <div className={sStyle.infoContainer}>
-                  <div style={{ color: '#919da1' }}>Quick SHUs summary</div>
+                  <div style={{ color: '#919da1' }}>QQuick SHUs summary</div>
                   <div className={sStyle.unitsContainer}>
                     <div className={sStyle.infoTitle}>Total:&nbsp;</div>
                     <div classname={sStyle.infoDetail}>{unitsCount.total}</div>
@@ -685,13 +685,6 @@ function DegreePlan(props) {
                     <div classname={sStyle.infoDetail}>{unitsCount.future}</div>
                   </div>
                 </div>
-  
-                {popup.showCourseInfo && (
-                  <CourseInfoExpress
-                    courseInfo={courseInfo}
-                    onClose={() => handlePopup('showCourseInfo', false)}
-                  />
-                )}
   
                 {/* Degree Requirment Container */}
                 <DegreeReqExpress />
