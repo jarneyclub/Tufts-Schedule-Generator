@@ -206,14 +206,13 @@ router.post('/bingbong',
 //          Test endpoints            //
 //                                    //
 ////////////////////////////////////////
-// const emailUtils = require('../services/emailUtils.js');
+
 /*
 * called when someone makes GET req to https://jarney.club/api/jeremy
 */
 router.get('/jeremy', function (req, res) {
-    // emailUtils.sendEmail('jangho.j@gmail.com', 'hi','yo whats up')
     res.json({
-        'message': 'hello again'
+        'message': 'hello'
     });
 }
 );

@@ -5,6 +5,7 @@ import {
   TextField,
   IconButton,
   CircularProgress,
+  ClickAwayListener,
 } from '@material-ui/core';
 
 import React from 'react';
@@ -31,7 +32,7 @@ function DegreeReqExpress() {
   };
 
   const fetchPrivateReqs = async () => {
-    await fetch('https://qa.jarney.club/api/degreereqs/private')
+    await fetch('https://jarney.club/api/degreereqs/private')
       .then((response) => {
         return response.json();
       })
@@ -87,7 +88,7 @@ function DegreePlanExpress() {
   };
 
   const fetchPlans = async () => {
-    await fetch('https://qa.jarney.club/api/degreeplans')
+    await fetch('https://jarney.club/api/degreeplans')
       .then((response) => {
         return response.json();
       })
@@ -161,65 +162,76 @@ const CourseInfoExpress = (props) => {
   }, []);
 
   return (
-    <div className={tStyle.courseInfoContainer}>
-      <div style={tStyle.courseTitle}>{course_num}&nbsp;{course_title}</div>
-
-      {units_esti && (
-        <div className={tStyle.infoContainer}>
-          <div className={tStyle.infoTitle}>SHUs:&nbsp;</div>
-          <div className={tStyle.infoDetail}>{units_esti}</div>
-        </div>
-      )}
-
-      {time_start && (
-        <div className={tStyle.infoContainer}>
-          <div className={tStyle.infoTitle}>Time:&nbsp;</div>
-          <div className={tStyle.infoDetail}>
-            {time_start}~{time_end}
+    <ClickAwayListener onClickAway={onClose}>
+      <div className={tStyle.courseInfoContainer}>
+        <div style={{ color: '#919da1' }}>More about this course... </div>
+        {course_num && (
+          <div className={tStyle.infoContainer}>
+            <div className={tStyle.infoTitle}>Course title:&nbsp;</div>
+            <div className={tStyle.infoDetail}>
+              {course_num}&nbsp;{course_title}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {details && (
-        <div className={tStyle.infoContainer}>
-          <div className={tStyle.infoDetail}>{details}</div>
-        </div>
-      )}
+        {units_esti && (
+          <div className={tStyle.infoContainer}>
+            <div className={tStyle.infoTitle}>SHUs:&nbsp;</div>
+            <div classname={tStyle.infoDetail}>{units_esti}</div>
+          </div>
+        )}
 
-      {location && (
-        <div className={tStyle.infoContainer}>
-          <div className={tStyle.infoTitle}>Location:&nbsp;</div>
-          <div className={tStyle.infoDetail}>{location}</div>
-        </div>
-      )}
+        {time_start && (
+          <div className={tStyle.infoContainer}>
+            <div className={tStyle.infoTitle}>Time:&nbsp;</div>
+            <div classname={tStyle.infoDetail}>
+              {time_start}~{time_end}
+            </div>
+          </div>
+        )}
 
-      {name && (
-        <div className={tStyle.infoContainer}>
-          <div className={tStyle.infoTitle}>Section:&nbsp;</div>
-          <div className={tStyle.infoDetail}>{name}</div>
-        </div>
-      )}
+        {details && (
+          <div className={tStyle.infoContainer}>
+            <div className={tStyle.infoTitle}>Course:&nbsp;</div>
+            <div classname={tStyle.infoDetail}>{details}</div>
+          </div>
+        )}
 
-      {instructors && (
-        <div className={tStyle.infoContainer}>
-          <div className={tStyle.infoTitle}>Instructor:&nbsp;</div>
-          <div className={tStyle.infoDetail}>{instructors}</div>
-        </div>
-      )}
+        {location && (
+          <div className={tStyle.infoContainer}>
+            <div className={tStyle.infoTitle}>Location:&nbsp;</div>
+            <div classname={tStyle.infoDetail}>{location}</div>
+          </div>
+        )}
 
-      {attributes && (
-        <div className={tStyle.infoContainer}>
-          <div className={tStyle.infoTitle}>Attributes:&nbsp;</div>
-          <div className={tStyle.infoDetail}>{attributeDetails}</div>
-        </div>
-      )}
+        {name && (
+          <div className={tStyle.infoContainer}>
+            <div className={tStyle.infoTitle}>Section:&nbsp;</div>
+            <div classname={tStyle.infoDetail}>{name}</div>
+          </div>
+        )}
 
-      {description && (
-        <div className={tStyle.infoContainer}>
-          <div className={tStyle.infoDetail}>{description}</div>
-        </div>
-      )}
-    </div>
+        {instructors && (
+          <div className={tStyle.infoContainer}>
+            <div className={tStyle.infoTitle}>Instructor:&nbsp;</div>
+            <div classname={tStyle.infoDetail}>{instructors}</div>
+          </div>
+        )}
+
+        {attributes && (
+          <div className={tStyle.infoContainer}>
+            <div className={tStyle.infoTitle}>Attributes:&nbsp;</div>
+            <div classname={tStyle.infoDetail}>{attributeDetails}</div>
+          </div>
+        )}
+
+        {description && (
+          <div className={tStyle.infoContainer}>
+            <div classname={tStyle.infoDetail}>{description}</div>
+          </div>
+        )}
+      </div>
+    </ClickAwayListener>
   );
 };
 
