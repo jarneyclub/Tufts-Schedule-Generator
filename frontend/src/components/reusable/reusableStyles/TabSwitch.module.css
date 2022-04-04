@@ -7,13 +7,6 @@
   background: #F6F9FA;
 }
 
-.courseTitle{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #919da1;
-}
-
 .infoContainer {
   display: flex;
   flex-direction: row;
