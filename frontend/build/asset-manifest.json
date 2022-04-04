@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "./static/css/main.4fad9f62.css",
-    "main.js": "./static/js/main.3c00758d.js",
+    "main.js": "./static/js/main.3ffe001c.js",
     "static/media/favicon_2.png": "./static/media/favicon_2.864c93e1efb88812fdf4.png",
     "static/media/homepage_final.gif": "./static/media/homepage_final.8e74a25ae9bc35061570.gif",
     "static/media/feedback.png": "./static/media/feedback.795628bfdeb0955db68b.png",
@@ -13,10 +13,10 @@
     "static/media/jarney_word.png": "./static/media/jarney_word.a79d9ad41b6d4ba72a97.png",
     "index.html": "./index.html",
     "main.4fad9f62.css.map": "./static/css/main.4fad9f62.css.map",
-    "main.3c00758d.js.map": "./static/js/main.3c00758d.js.map"
+    "main.3ffe001c.js.map": "./static/js/main.3ffe001c.js.map"
   },
   "entrypoints": [
     "static/css/main.4fad9f62.css",
-    "static/js/main.3c00758d.js"
+    "static/js/main.3ffe001c.js"
   ]
 }
