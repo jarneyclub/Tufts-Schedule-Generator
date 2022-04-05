@@ -162,12 +162,12 @@ const CourseInfoExpress = (props) => {
 
   return (
     <div className={tStyle.courseInfoContainer}>
-      <div className={tStyle.courseTitle}>
-          {course_num}&nbsp;{course_title}
-      </div>
-
-      {details && (
+      {details ? (
         <div className={tStyle.courseTitle}>{details}</div>
+      ) : (
+        <div className={tStyle.courseTitle}>
+          {course_num}&nbsp;{course_title}
+        </div>
       )}
 
       {units_esti && (
