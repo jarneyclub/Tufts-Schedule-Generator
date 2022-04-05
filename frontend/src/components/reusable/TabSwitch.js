@@ -166,6 +166,12 @@ const CourseInfoExpress = (props) => {
         {course_num}&nbsp;{course_title}
       </div>
 
+      {details && (
+        <div className={tStyle.infoContainer}>
+          <div style={{ color: "#919da1" }}>{details}</div>
+        </div>
+      )}
+
       {units_esti && (
         <div className={tStyle.infoContainer}>
           <div className={tStyle.infoTitle}>SHUs:&nbsp;</div>
@@ -179,12 +185,6 @@ const CourseInfoExpress = (props) => {
           <div className={tStyle.infoDetail}>
             {time_start}~{time_end}
           </div>
-        </div>
-      )}
-
-      {details && (
-        <div className={tStyle.infoContainer}>
-          <div className={tStyle.infoDetail}>{details}</div>
         </div>
       )}
 
