@@ -260,6 +260,16 @@ function Scheduler(props) {
     }
   };
 
+  const handleCloseDegreeInfo = () => {
+      if (dropdownDegreeReq === true) {
+        setDropdownDegreeReq(!dropdownDegreeReq);
+      }
+
+      if (dropdownDegreePlan === true) {
+        setDropdownDegreePlan(!dropdownDegreePlan);
+      }
+  };
+
   /*  Control for search filter dropdown change  */
   const handleFilterChange = (e) => {
     setSelectedAttributeIdx(e.target.selectedIndex);
@@ -552,7 +562,15 @@ function Scheduler(props) {
       {/*scheduleOptions && scheduleOptions?.length !== 0*/}
       {scheduleExist === true ? (
         <div className={sStyle.horizontalWrapper}>
-          <div className={sStyle.backdrop}></div>
+          {dropdownDegreeReq || dropdownDegreePlan ? (
+            <div
+              className={sStyle.backdrop}
+              onClick={handleCloseDegreeInfo}
+            ></div>
+          ) : (
+            ""
+          )}
+
           <div className={sStyle.leftColumnWrapper}>
             {/* CourseContainer 
                         Contains: 
@@ -784,9 +802,9 @@ function Scheduler(props) {
                   Degree Requirement
                 </div>
                 {dropdownDegreeReq ? (
-                    <div className={sStyle.degreeReqContainer}>
-                      <DegreeReqExpress/>
-                    </div>
+                  <div className={sStyle.degreeReqContainer}>
+                    <DegreeReqExpress />
+                  </div>
                 ) : (
                   ""
                 )}
