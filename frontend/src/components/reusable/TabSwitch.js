@@ -162,16 +162,12 @@ const CourseInfoExpress = (props) => {
 
   return (
     <div className={tStyle.courseInfoContainer}>
-      <div className={tStyle.infoContainer}>
-        <div className={tStyle.courseTitle}>
+      <div className={tStyle.courseTitle}>
           {course_num}&nbsp;{course_title}
-        </div>
       </div>
 
       {details && (
-        <div className={tStyle.infoContainer}>
-          <div className={tStyle.courseTitle}>{details}</div>
-        </div>
+        <div className={tStyle.courseTitle}>{details}</div>
       )}
 
       {units_esti && (
