@@ -783,9 +783,9 @@ function Scheduler(props) {
                   Degree Requirement
                 </div>
                 {dropdownDegreeReq ? (
-                  <div>
+                  <div style={{position: "absolute"}}>
                     <div className={sStyle.degreeReqContainer}>
-                      <DegreeReqExpress />
+                      <DegreeReqExpress/>
                     </div>
                     <div className={sStyle.backdrop}></div>
                   </div>
