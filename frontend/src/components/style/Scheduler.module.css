@@ -401,8 +401,10 @@
 .backdrop {
   height: 100%;
   width: 100%;
-  color:rgba(112, 72, 213, 0.9);
+  color: #f50057;
   z-index: 10000;
+  left: 0;
+  top: 0;
 }
 
 .degreeBtn {

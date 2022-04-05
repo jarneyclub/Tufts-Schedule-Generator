@@ -552,6 +552,7 @@ function Scheduler(props) {
       {/*scheduleOptions && scheduleOptions?.length !== 0*/}
       {scheduleExist === true ? (
         <div className={sStyle.horizontalWrapper}>
+          <div className={sStyle.backdrop}></div>
           <div className={sStyle.leftColumnWrapper}>
             {/* CourseContainer 
                         Contains: 
@@ -783,12 +784,9 @@ function Scheduler(props) {
                   Degree Requirement
                 </div>
                 {dropdownDegreeReq ? (
-                  <div style={{position: "absolute"}}>
                     <div className={sStyle.degreeReqContainer}>
                       <DegreeReqExpress/>
                     </div>
-                    <div className={sStyle.backdrop}></div>
-                  </div>
                 ) : (
                   ""
                 )}
