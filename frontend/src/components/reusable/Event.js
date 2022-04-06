@@ -55,16 +55,16 @@ function Event(props) {
       }}
       onClick={handleOnClick}
     >
-      <div>{detail[0]}</div>
-      <div>{detail[1]}</div>
-      <div>{name}</div>
-      <div>{loc[0]}</div>
-
       {time_start !== time_end && (
         <div>
           {time_start}&nbsp;~&nbsp;{time_end}
         </div>
       )}
+
+      <div>{detail[0]}</div>
+      <div>{detail[1]}</div>
+      {/* <div>{name}</div>
+      <div>{loc[0]}</div> */}
     </div>
   );
 }
