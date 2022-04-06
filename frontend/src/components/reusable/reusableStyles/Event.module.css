@@ -14,7 +14,7 @@
   width: 100%;
 
   border-radius: 5px;
-  font-size: 1.2vw;
+  font-size: 13px;
   overflow-wrap: break-word;
   z-index: 2;
   cursor: pointer;
@@ -45,11 +45,11 @@
 
 @media only screen and (max-width: 813.99px) {
   .eventContainer {
-    font-size: 16px;
+    font-size: 13px;
   }
 }
 @media only screen and (min-width: 1150px) {
   .eventContainer {
-    font-size: 16px;
+    font-size: 13px;
   }
 }
