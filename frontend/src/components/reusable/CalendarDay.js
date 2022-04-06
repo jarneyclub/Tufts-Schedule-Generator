@@ -197,9 +197,7 @@ function CalendarDay(props) {
       {dayName === "Time Unstated"
         ? classesDay?.TimeUnspecified?.map((course) => {
             return (
-              <Button className={sStyle.tuButton} onEventClick={onEventClick}>
-                {course.details}
-              </Button>
+              <Button>Hi</Button>
             );
           })
         : classesDay?.map((event) => {
