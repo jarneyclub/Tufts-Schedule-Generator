@@ -317,7 +317,8 @@
 }
 
 .tabDetailContainer {
-  min-height: 250px;
+  height: auto;
+  min-height: 20px;
   background-color: #efebf9;
   border-top: none;
   box-sizing: content-box;

@@ -582,9 +582,12 @@ function Scheduler(props) {
               {/*time preference */}
               <div className={sStyle.preferenceContainer}>
                 <FormControl className={sStyle.leftCheckboxContainer}>
-                  <FormLabel>Generate Schedule With:</FormLabel>
+                  <FormLabel style={{ margin: "0px" }}>
+                    Generate Schedule With:
+                  </FormLabel>
                   <FormGroup row={true}>
                     <FormControlLabel
+                      style={{ margin: "0px", fontsize: "0.9rem"}}
                       control={
                         <PurpleSwitch
                           checked={coursePreference.waitlist}
@@ -595,6 +598,7 @@ function Scheduler(props) {
                       label="Waitlist"
                     />
                     <FormControlLabel
+                      style={{ margin: "0px", fontsize: "0.9rem" }}
                       control={
                         <PurpleSwitch
                           checked={coursePreference.closed}
@@ -605,6 +609,7 @@ function Scheduler(props) {
                       label="Closed"
                     />
                     <FormControlLabel
+                      style={{ margin: "0px", fontsize: "0.9rem" }}
                       control={
                         <PurpleSwitch
                           checked={coursePreference.online}
@@ -615,6 +620,7 @@ function Scheduler(props) {
                       label="Online"
                     />
                     <FormControlLabel
+                      style={{ margin: "0px", fontsize: "0.9rem" }}
                       control={
                         <PurpleSwitch
                           checked={coursePreference.time_unspecified}
