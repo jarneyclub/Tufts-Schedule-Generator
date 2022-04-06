@@ -26,6 +26,7 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 import Backdrop from "@mui/material/Backdrop";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import Typography from "@mui/material/Typography";
 import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
 import LinkedCameraIcon from '@mui/icons-material/LinkedCamera';
 import PurpleSwitch from './reusable/PurpleSwitch';
@@ -587,7 +588,7 @@ function Scheduler(props) {
                   </FormLabel>
                   <FormGroup row={true}>
                     <FormControlLabel
-                      style={{ margin: "0px", fontsize: "0.9rem"}}
+                      style={{ margin: "0px", fontsize: "0.9rem" }}
                       control={
                         <PurpleSwitch
                           checked={coursePreference.waitlist}
@@ -595,7 +596,11 @@ function Scheduler(props) {
                           onChange={() => handleCoursePrefChange("waitlist")}
                         />
                       }
-                      label="Waitlist"
+                      label={
+                        <Typography className={sStyle.formControlLabel}>
+                          Waitlist
+                        </Typography>
+                      }
                     />
                     <FormControlLabel
                       style={{ margin: "0px", fontsize: "0.9rem" }}
@@ -606,7 +611,11 @@ function Scheduler(props) {
                           onChange={() => handleCoursePrefChange("closed")}
                         />
                       }
-                      label="Closed"
+                      label={
+                        <Typography className={sStyle.formControlLabel}>
+                          Closed
+                        </Typography>
+                      }
                     />
                     <FormControlLabel
                       style={{ margin: "0px", fontsize: "0.9rem" }}
@@ -617,7 +626,11 @@ function Scheduler(props) {
                           onChange={() => handleCoursePrefChange("online")}
                         />
                       }
-                      label="Online"
+                      label={
+                        <Typography className={sStyle.formControlLabel}>
+                          Online
+                        </Typography>
+                      }
                     />
                     <FormControlLabel
                       style={{ margin: "0px", fontsize: "0.9rem" }}
@@ -630,7 +643,11 @@ function Scheduler(props) {
                           }
                         />
                       }
-                      label="Time Unstated"
+                      label={
+                        <Typography className={sStyle.formControlLabel}>
+                          Time Unstated
+                        </Typography>
+                      }
                     />
                   </FormGroup>
                   <Button

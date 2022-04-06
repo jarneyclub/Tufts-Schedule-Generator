@@ -37,10 +37,8 @@
   flex-direction: column;
   flex: 1 1 25%;
   align-items: center;
-  
   padding-right: 1vw;
   margin-bottom: 20px;
-  overflow-y: scroll;
 }
 
 /* * 1st * */
@@ -51,9 +49,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  /* border: #000000 1px solid; */
-  margin-top: 10px;
   width: 100%;
 }
 
@@ -133,19 +128,10 @@
   justify-content: center;
   align-items: center;
   min-height: 170px;
-  /* border: #5a32bf 1px solid; */
   background-color: rgba(239, 235, 249, 0.9);
-  /* 
-  box-shadow: 0 4px 8px 0 rgba(90, 50, 191, 0.2),
-    0 6px 20px 0 rgba(90, 50, 191, 0.19); */
-  /* box-shadow: 0 4px 8px 0 rgba(90,50,191, 0.2), 0 6px 20px 0 rgba(90,50,191, 0.19); */
-  /* background-color: #efebf9; */
-
   border-radius: 12px;
   width: 100%;
-  padding: 10px 1vw;
-  /* padding-left: 1vw;
-  padding-right: 1vw; */
+  padding: 0px 1vw;
   margin: 10px 0;
 }
 
@@ -159,6 +145,10 @@
   background-color: rgba(239, 235, 249, 0.9);
   border-radius: 12px;
   width: 100%;
+}
+
+.formControlLabel {
+  font-size: 0.9 rem;
 }
 
 .unitsContainer {
