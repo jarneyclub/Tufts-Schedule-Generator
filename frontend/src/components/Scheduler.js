@@ -630,7 +630,7 @@ function Scheduler(props) {
                           }
                         />
                       }
-                      label="Time Unspecified"
+                      label="Time Unstated"
                     />
                   </FormGroup>
                   <Button
