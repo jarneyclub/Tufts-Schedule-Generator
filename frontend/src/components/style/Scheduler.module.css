@@ -524,4 +524,7 @@ body {
   .overlayCalendarContainer {
     padding-bottom: 30vh;
   }
+  .leftColumnWrapper {
+    flex: 1 1 100%;
+  }
 }
