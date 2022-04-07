@@ -44,8 +44,15 @@
     font-size: 13px;
   }
 }
+
 @media only screen and (min-width: 1150px) {
   .eventContainer {
     font-size: 13px;
+  }
+}
+
+@media only screen and (max-width: 669.99px) {
+  .eventContainer {
+    align-items: center;
   }
 }

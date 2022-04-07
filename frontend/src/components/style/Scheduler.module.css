@@ -143,11 +143,6 @@
   width: 100%;
 }
 
-.formControlLabel {
-  font-size: 0.9 rem;
-  color: #444444;
-}
-
 .unitsContainer {
   align-content: flex-start;
   display: flex;
