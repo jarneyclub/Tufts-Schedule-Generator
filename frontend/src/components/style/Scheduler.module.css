@@ -516,6 +516,7 @@ body {
   }
   .leftColumnWrapper {
     flex: 1 1 100%;
+    margin-bottom: 10px;
   }
   .scheduleTitleContainer {
     flex-wrap: wrap;
@@ -528,5 +529,10 @@ body {
     width: 100%;
     margin-top: 30px;
     margin-bottom: 10px;
+    justify-content: center;
+    align-items: center;
+  }
+  .degreeReqContainer {
+    left: auto;
   }
 }
