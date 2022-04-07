@@ -504,7 +504,7 @@ body {
   padding-left: 24px;
 }
 
-@media only screen and (max-width: 1040px) {
+/* @media only screen and (max-width: 1040px) {
   .leftColumnWrapper {
     flex: 1 1 25%;
   }
@@ -512,12 +512,7 @@ body {
   .rightColumnWrapper {
     flex: 7 1 75%;
   }
-
-  /* .tabBar {
-    font-size: 1.5vw;
-  }
-   */
-}
+} */
 
 @media only screen and (max-width: 669.99px) {
   .overlayTitle {
