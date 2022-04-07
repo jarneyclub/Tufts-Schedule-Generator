@@ -504,16 +504,6 @@ body {
   padding-left: 24px;
 }
 
-/* @media only screen and (max-width: 1040px) {
-  .leftColumnWrapper {
-    flex: 1 1 25%;
-  }
-
-  .rightColumnWrapper {
-    flex: 7 1 75%;
-  }
-} */
-
 @media only screen and (max-width: 669.99px) {
   .overlayTitle {
     font-size: 20px !important;
@@ -526,5 +516,17 @@ body {
   }
   .leftColumnWrapper {
     flex: 1 1 100%;
+  }
+  .scheduleTitleContainer {
+    flex-wrap: wrap;
+  }
+  .titleContainer {
+    width: 80%;
+    margin-left: 0px;
+  }
+  .DegreeInfoContainer {
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 10px;
   }
 }
