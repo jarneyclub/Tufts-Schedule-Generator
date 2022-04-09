@@ -109,8 +109,6 @@ function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectio
             courseDatabaseId: getCourseDatabaseId()
             
         };
-        
-        //console.log('Section Object created: %o', sectionObject);
         console.log(sectionObject);
         return JSON.stringify(sectionObject, null, 2);
     }
