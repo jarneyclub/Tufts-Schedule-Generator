@@ -229,6 +229,7 @@ const getSection = require('../services/handlers/coursesTerm.js');
 
 router.get('/pamela', function(req, res) {
     let newSection = getSection.getSectionObject("84234");
+    console.log(newSection);
     let info = newSection.getCourseName();
     res.json({
         'message': 'pamela\'s endpoint test1',
