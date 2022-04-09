@@ -60,7 +60,7 @@ function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectio
     function getSectionType() {
         return sectionType;
     }
-
+      
     /** Get classes of this section
      * 
      * @returns {object} {'1': Class, '2': Class}
@@ -90,6 +90,23 @@ function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectio
     function getUnits () {
         return units;
     }
+    
+    function printPretty() {
+        const sectionObject = {
+            courseID: getCourseID(), 
+            courseName: getCourseName(), 
+            sectionName: getSectionName(), 
+            sectionType: getSectionType(), 
+            units: getUnits(), 
+            classes: getClasses(), 
+            sectionStatus: getSectionStatus(), 
+            sectionDatabaseId: getSectionDatabaseId(), 
+            courseDatabaseId: getCourseDatabaseId()
+            
+        };
+        
+        console.log(sectionObject);
+    }
 
     return {
         getCourseID,
@@ -100,7 +117,8 @@ function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectio
         getSectionStatus,
         getSectionDatabaseId,
         getCourseDatabaseId,
-        getUnits
+        getUnits, 
+        printPretty
     }
 }
 

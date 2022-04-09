@@ -230,10 +230,10 @@ const getSection = require('../services/handlers/coursesTerm.js');
 router.get('/pamela', async function(req, res) {
     let newSection = await getSection.getSectionObject("84234");
     console.log(newSection);
-    let info = newSection.getCourseName();
+    let info = await newSection.printPretty();
     res.json({
         'message': 'pamela\'s endpoint test1',
-        'info': info    });
+        'info': info  });
 }
 );
 
