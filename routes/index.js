@@ -227,8 +227,8 @@ router.get('/jeremy', function (req, res) {
 const Section = require('../models/internal/objects/classes/Section.js');
 const getSection = require('../services/handlers/coursesTerm.js');
 
-router.get('/pamela', function(req, res) {
-    let newSection = getSection.getSectionObject("84234");
+router.get('/pamela', async function(req, res) {
+    let newSection = await getSection.getSectionObject("84234");
     console.log(newSection);
     let info = newSection.getCourseName();
     res.json({
