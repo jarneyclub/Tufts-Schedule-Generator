@@ -91,6 +91,9 @@ function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectio
         return units;
     }
     
+    /** Prints all the contents of newly created Section Object
+    * @returns {string} pretty format for JSON Section object
+    */
     function printPretty() {
         const sectionObject = {
             courseID: getCourseID(), 
@@ -105,7 +108,8 @@ function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectio
             
         };
         
-        console.log(sectionObject);
+        console.log('Section Object created: %o', sectionObject);
+        return JSON.stringify(sectionObject);
     }
 
     return {
