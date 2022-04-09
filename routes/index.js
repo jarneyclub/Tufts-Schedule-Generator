@@ -224,7 +224,7 @@ router.get('/jeremy', function (req, res) {
 *
 * 
 */
-const Section = require('../../models/internal/objects/classes/Section.js');
+const Section = require('../models/internal/objects/classes/Section.js');
 const getSection = require('../services/handlers/coursesTerm.js');
 
 router.get('/pamela', function(req, res) {
