@@ -80,7 +80,7 @@ const getCourseObject = async (termCourseId) => {
             let currClassObj = 
                 new Class(section_query.course_num, section_query.course_title, section_query.section_num, section_query.section_type, 
                             currClass.day_of_week, currClass.start_time, currClass.end_time, currClass.room, 
-                            currClass.campus, currClass.instructor, section_query.term_section_id, termCourseId);
+                            currClass.campus, currClass.instructor, section_query.term_section_id, section_query.term_course_id);
             mapClassObj[mapClassObjIndex] = currClassObj;
             mapClassObjIndex++;
         } // (End of) iteration through classes
