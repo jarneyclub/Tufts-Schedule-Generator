@@ -222,9 +222,12 @@ router.get('/jeremy', function (req, res) {
 /* 
 * called when someone makes a GET req to https://jarney.club/api/pamela
 *
+* 
 */
+const getSection = require('../services/handlers/coursesTerm.js');
+
 router.get('/pamela', function(req, res) {
-    let info = makedatabaserequest(field);
+    let info = getSection.getSectionObject("84234");
     res.json({
         'message': 'pamela\'s endpoint test1',
         'info': info    });

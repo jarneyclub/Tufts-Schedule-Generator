@@ -149,7 +149,7 @@ exports.createSchedule   = async (userId, scheduleName, filter, term, courses, c
             sched_name: scheduleName,
             user_id: userId,
             filter: filter,
-            events: classes, /*Pam change here for if classes are defined */
+            events: classes,
             courses: courses,
             term: term
         });
