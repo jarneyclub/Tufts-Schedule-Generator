@@ -92,7 +92,9 @@ function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectio
     }
     
     /** Prints all the contents of newly created Section Object
-    * @returns {string} pretty format for JSON Section object
+    * @returns {string} string format for JSON Section object
+    * Notes: Still may have issue printing classes, does not recognize 
+    *         class object
     */
     function printPretty() {
         const sectionObject = {
@@ -108,8 +110,9 @@ function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectio
             
         };
         
-        console.log('Section Object created: %o', sectionObject);
-        return JSON.stringify(sectionObject);
+        //console.log('Section Object created: %o', sectionObject);
+        console.log(sectionObject);
+        return JSON.stringify(sectionObject, null, 2);
     }
 
     return {
