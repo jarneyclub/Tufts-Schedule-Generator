@@ -224,10 +224,12 @@ router.get('/jeremy', function (req, res) {
 *
 * 
 */
+const Section = require('../../models/internal/objects/classes/Section.js');
 const getSection = require('../services/handlers/coursesTerm.js');
 
 router.get('/pamela', function(req, res) {
-    let info = getSection.getSectionObject("84234");
+    let newSection = getSection.getSectionObject("84234");
+    let info = newSection.getCourseName();
     res.json({
         'message': 'pamela\'s endpoint test1',
         'info': info    });
