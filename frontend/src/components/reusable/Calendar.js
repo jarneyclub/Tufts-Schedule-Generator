@@ -125,7 +125,7 @@ function Calendar(props) {
           </div>
         ))}
 
-      <div className={!shrink ? (cStyle.calendarContainer) : 
+      <div className={shrink ? (cStyle.calendarContainer) : 
         (cStyle.shrinkCalendarContainer)}>
         {/* Time indicator */}
         {origin === "Pref" ? (
