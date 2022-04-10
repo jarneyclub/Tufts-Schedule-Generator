@@ -70,8 +70,8 @@ function Class(inputCourseID, inputCourseName, inputSectionName, inputSectionTyp
             return "TimeUnspecified";
         }
      
-        let daysArray = {"TimeUnspecified", "Monday", "Tuesday", 
-                            "Wednesday", "Thursday", "Friday"};
+        let daysArray = ["TimeUnspecified", "Monday", "Tuesday", 
+                            "Wednesday", "Thursday", "Friday"];
         return daysArray[dayOfWeek];
      }
 
