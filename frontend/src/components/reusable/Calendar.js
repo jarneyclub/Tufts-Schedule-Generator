@@ -79,46 +79,44 @@ function Calendar(props) {
   return (
     <div className={cStyle.container}>
       {/*   This is the control of days for Single Day View  */}
-      {shrink && (
-        <div className={cStyle.dayControlContainer}>
-          <IconButton
-            onClick={() => {
-              onDayChange(-1);
-            }}
-          >
-            <ArrowLeftIcon fontSize="large" />
-          </IconButton>
-          <div>{weekdays[daySelection].substr(0, 3).toUpperCase()}</div>
-          <IconButton
-            onClick={() => {
-              onDayChange(1);
-            }}
-          >
-            <ArrowRightIcon fontSize="large" />
-          </IconButton>
-        </div>
-      )}
-
-      {/*   This is the control of days for Single Day View  */}
-      {origin === "Pref" && shrink && (
-        <div className={cStyle.dayControlContainer}>
-          <IconButton
-            onClick={() => {
-              onDayChange(-1);
-            }}
-          >
-            <ArrowLeftIcon fontSize="large" />
-          </IconButton>
-          <div>{pref_weekdays[daySelection].substr(0, 3).toUpperCase()}</div>
-          <IconButton
-            onClick={() => {
-              onDayChange(1);
-            }}
-          >
-            <ArrowRightIcon fontSize="large" />
-          </IconButton>
-        </div>
-      )}
+      {shrink &&
+        (origin === "pref" ? (
+          <div className={cStyle.dayControlContainer}>
+            <IconButton
+              onClick={() => {
+                onDayChange(-1);
+              }}
+            >
+              <ArrowLeftIcon fontSize="large" />
+            </IconButton>
+            <div>{pref_weekdays[daySelection].substr(0, 3).toUpperCase()}</div>
+            <IconButton
+              onClick={() => {
+                onDayChange(1);
+              }}
+            >
+              <ArrowRightIcon fontSize="large" />
+            </IconButton>
+          </div>
+        ) : (
+          <div className={cStyle.dayControlContainer}>
+            <IconButton
+              onClick={() => {
+                onDayChange(-1);
+              }}
+            >
+              <ArrowLeftIcon fontSize="large" />
+            </IconButton>
+            <div>{weekdays[daySelection].substr(0, 3).toUpperCase()}</div>
+            <IconButton
+              onClick={() => {
+                onDayChange(1);
+              }}
+            >
+              <ArrowRightIcon fontSize="large" />
+            </IconButton>
+          </div>
+        ))}
 
       <div className={cStyle.calendarContainer}>
         {/* Time indicator */}
