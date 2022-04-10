@@ -51,10 +51,10 @@ function PlanCard(props) {
   return (
     <div
       className={pStyle.cardContainer}
-      // onDragOver={dragOver}
-      // onDrop={drop}
+      onDragOver={dragOver}
+      onDrop={drop}
       // onTouchEnd={drop}
-      onMouseUp={drop}
+      // onMouseUp={drop}
 
       id={cardDetail?.plan_term_id}
       style={origin === "dp2" ? { maxWidth: "33%", minWidth: "300px" } : {}}
