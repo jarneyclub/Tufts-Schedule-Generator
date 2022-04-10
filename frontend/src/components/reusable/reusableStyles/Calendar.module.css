@@ -43,14 +43,7 @@
 .shrinkTimeSlotContainer {
   flex-grow: 1;
   margin: 0 1vw;
-  transform: translateY(0px);
-  color: #70757a;
-}
-
-.shrinkTimeSlotContainer {
-  flex-grow: 1;
-  margin: 0 1vw;
-  transform: translateY(30px);
+  transform: translateY(-10px);
   color: #70757a;
 }
 
@@ -58,6 +51,13 @@
   flex-grow: 1;
   margin: 0 1vw;
   transform: translateY(75px);
+  color: #70757a;
+}
+
+.shrinkTimePrefTimeSlotContainer {
+  flex-grow: 1;
+  margin: 0 1vw;
+  transform: translateY(40px);
   color: #70757a;
 }
 

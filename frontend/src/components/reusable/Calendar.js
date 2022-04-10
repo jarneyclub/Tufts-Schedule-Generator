@@ -124,7 +124,13 @@ function Calendar(props) {
       >
         {/* Time indicator */}
         {origin === "Pref" ? (
-          <div className={cStyle.timePrefTimeSlotContainer}>
+          <div
+            className={
+              !shrink
+                ? cStyle.timePrefTimeSlotContainer
+                : cStyle.shrinkTimePrefTimeSlotContainer
+            }
+          >
             <div className={cStyle.timeSlotTitle} />
             {time.map((timeSlot) => (
               <div className={cStyle.timeSlot} key={timeSlot}>
@@ -133,7 +139,13 @@ function Calendar(props) {
             ))}
           </div>
         ) : (
-          <div className={cStyle.timeSlotContainer}>
+          <div
+            className={
+              !shrink
+                ? cStyle.timeSlotContainer
+                : cStyle.shrinkTimeSlotContainer
+            }
+          >
             <div className={cStyle.timeSlotTitle} />
             {time.map((timeSlot) => (
               <div className={cStyle.timeSlot} key={timeSlot}>
