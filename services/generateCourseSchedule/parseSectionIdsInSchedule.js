@@ -82,7 +82,7 @@ exports.sectionsToEvents = async(sections) => {
             
             for (let i in classes) {
                 let classObject = classes[i];
-                let dayOfWeek = classObject.getDayOfWeek();
+                let dayOfWeek = classObject.getDayOfWeekString();
                 console.log("This is the day of week \n");
                 console.log(dayOfWeek);
                 
