@@ -141,6 +141,12 @@ function CalendarDay(props) {
     timePrefDay && setEntireDayOn(timePrefDay?.length === 26);
   }, []);
 
+  const Log = () => {
+    if (dayName === "Time Unstated") {
+      console.log("hmmm");
+    }
+  };
+
   return (
     <div className={cStyle.dayContainer}>
       {!shrink && (
@@ -201,6 +207,8 @@ function CalendarDay(props) {
           </div>
         </>
       )}
+
+      {Log}
 
       {/* Put the classes on depending on the day */}
       {dayName === "Time Unstated"
