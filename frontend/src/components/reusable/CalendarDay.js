@@ -122,6 +122,15 @@ function CalendarDay(props) {
     }
   };
 
+  const handleShowDayTitle = () => {
+    if (dayName === "Time Unstated") {
+      return "Time Unstated";
+    }
+    else {
+      return dayName.substr(0, 3).toUpperCase();
+    }
+  };
+
   const handleRemoveAll = () => {
     if (timePrefDay.length > 0) {
       removeEntireDay(dayName);
@@ -135,16 +144,14 @@ function CalendarDay(props) {
   return (
     <div className={cStyle.dayContainer}>
       <div className={cStyle.timeSlotTitle}>
-        {dayName === "Time Unstated"
-          ? "Time Unstated"
-          : dayName.substr(0, 3).toUpperCase()}
+        {!singleDay && handleShowDayTitle()}
       </div>
 
       {/* Generate the time slots or just one column if it is for time unstated */}
       {dayName === "Time Unstated" ? (
         <div className={cStyle.unStatedTimeColumn} />
       ) : (
-        <div>
+        <>
           {timePrefState && (
             <div className={cStyle.buttonContainer}>
               <IconButton
@@ -190,17 +197,13 @@ function CalendarDay(props) {
                   <div className={cStyle.timeSlot} key={timeName} />
                 ))}
           </div>
-        </div>
+        </>
       )}
 
       {/* Put the classes on depending on the day */}
       {dayName === "Time Unstated"
         ? classesDay?.TimeUnspecified?.map((course) => {
-            return (
-              <Button className={sStyle.tuButton} onEventClick={onEventClick}>
-                {course.details}
-              </Button>
-            );
+            return <Button>Hi</Button>;
           })
         : classesDay?.map((event) => {
             return (

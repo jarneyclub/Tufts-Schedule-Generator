@@ -60,6 +60,20 @@ function Class(inputCourseID, inputCourseName, inputSectionName, inputSectionTyp
     function getDayOfWeek() {
         return dayOfWeek;
     }
+    
+    
+    /** Get day of the week as String version
+     * @returns {string} day of the week (e.g. 1 = "Monday")
+     */
+     function getDayOfWeekString() {
+        if (dayOfWeek == -1 || dayOfWeek > 5) {
+            return "TimeUnspecified";
+        }
+     
+        let daysArray = ["TimeUnspecified", "Monday", "Tuesday", 
+                            "Wednesday", "Thursday", "Friday"];
+        return daysArray[dayOfWeek];
+     }
 
     /** Get start time of section
      * @returns {integer} [0 to 1440], 0 being 12AM, 1440 being 12AM 24 hrs later
@@ -138,10 +152,22 @@ function Class(inputCourseID, inputCourseName, inputSectionName, inputSectionTyp
     function getCourseDatabaseId () {
         return courseDatabaseId;
     }
+    
+    /** Checks whether class time is specified (true) or unspecified (false)
+    * @returns {boolean}
+    */
+    function isTimeUnspecified() {
+        if ( (inputStartTime == -1) && (inputEndTime == -1) && (inputDay == -1) ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     return {
         getDuration,
         getDayOfWeek,
+        getDayOfWeekString,
         getStartTime,
         getEndTime,
         getInstructors,
@@ -152,7 +178,8 @@ function Class(inputCourseID, inputCourseName, inputSectionName, inputSectionTyp
         getCity,
         getSectionType,
         getSectionID,
-        getCourseDatabaseId
+        getCourseDatabaseId,
+        isTimeUnspecified
     }
 }
 

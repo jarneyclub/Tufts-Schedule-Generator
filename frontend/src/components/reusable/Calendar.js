@@ -38,6 +38,14 @@ const weekdays = [
   "Time Unstated",
 ];
 
+const pref_weekdays = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+];
+
 function Calendar(props) {
   const {
     timePrefState,
@@ -49,6 +57,7 @@ function Calendar(props) {
     shrink,
     classes,
     onEventClick,
+    origin,
   } = props;
   const [daySelection, setDaySelection] = useState(0);
 
@@ -69,56 +78,101 @@ function Calendar(props) {
   return (
     <div className={cStyle.container}>
       {/*   This is the control of days for Single Day View  */}
-      {shrink && (
-        <div className={cStyle.dayControlContainer}>
-          <IconButton
-            onClick={() => {
-              onDayChange(-1);
-            }}
-          >
-            <ArrowLeftIcon fontSize="large" />
-          </IconButton>
-          <div>{weekdays[daySelection].substr(0, 3).toUpperCase()}</div>
-          <IconButton
-            onClick={() => {
-              onDayChange(1);
-            }}
-          >
-            <ArrowRightIcon fontSize="large" />
-          </IconButton>
-        </div>
-      )}
+      {shrink &&
+        (origin === "pref" ? (
+          <div className={cStyle.dayControlContainer}>
+            <IconButton
+              onClick={() => {
+                onDayChange(-1);
+              }}
+            >
+              <ArrowLeftIcon fontSize="large" />
+            </IconButton>
+            <div>{pref_weekdays[daySelection].substr(0, 3).toUpperCase()}</div>
+            <IconButton
+              onClick={() => {
+                onDayChange(1);
+              }}
+            >
+              <ArrowRightIcon fontSize="large" />
+            </IconButton>
+          </div>
+        ) : (
+          <div className={cStyle.dayControlContainer}>
+            <IconButton
+              onClick={() => {
+                onDayChange(-1);
+              }}
+            >
+              <ArrowLeftIcon fontSize="large" />
+            </IconButton>
+            <div>{weekdays[daySelection].substr(0, 3).toUpperCase()}</div>
+            <IconButton
+              onClick={() => {
+                onDayChange(1);
+              }}
+            >
+              <ArrowRightIcon fontSize="large" />
+            </IconButton>
+          </div>
+        ))}
 
       <div className={cStyle.calendarContainer}>
         {/* Time indicator */}
-        <div
-          className={cStyle.timeSlotContainer}
-          style={timePrefState ? {} : { transform: "translateY(30px)" }}
-        >
-          <div className={cStyle.timeSlotTitle} />
-          {time.map((timeSlot) => (
-            <div className={cStyle.timeSlot} key={timeSlot}>
-              {timeSlot}
-            </div>
-          ))}
-        </div>
+        {origin === "Pref" ? (
+          <div className={cStyle.timePrefTimeSlotContainer}>
+            <div className={cStyle.timeSlotTitle} />
+            {time.map((timeSlot) => (
+              <div className={cStyle.timeSlot} key={timeSlot}>
+                {timeSlot}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className={cStyle.timeSlotContainer}>
+            <div className={cStyle.timeSlotTitle} />
+            {time.map((timeSlot) => (
+              <div className={cStyle.timeSlot} key={timeSlot}>
+                {timeSlot}
+              </div>
+            ))}
+          </div>
+        )}
 
         {!shrink ? (
-          weekdays.map((dayName) => (
-            <CalendarDay
-              dayName={dayName}
-              key={dayName}
-              timePrefState={timePrefState}
-              timePrefDay={timePref && timePref[dayName]}
-              addTimePref={handleAddTimePref}
-              removeTimePref={handleRemoveTimePref}
-              addEntireDay={handleAddEntireDay}
-              removeEntireDay={handleRemoveEntireDay}
-              singleDay={false}
-              classesDay={classes && classes[dayName]}
-              onEventClick={onEventClick}
-            />
-          ))
+          origin === "Pref" ? (
+            pref_weekdays.map((dayName) => (
+              <CalendarDay
+                dayName={dayName}
+                key={dayName}
+                timePrefState={timePrefState}
+                timePrefDay={timePref && timePref[dayName]}
+                addTimePref={handleAddTimePref}
+                removeTimePref={handleRemoveTimePref}
+                addEntireDay={handleAddEntireDay}
+                removeEntireDay={handleRemoveEntireDay}
+                singleDay={false}
+                classesDay={classes && classes[dayName]}
+                onEventClick={onEventClick}
+              />
+            ))
+          ) : (
+            weekdays.map((dayName) => (
+              <CalendarDay
+                dayName={dayName}
+                key={dayName}
+                timePrefState={timePrefState}
+                timePrefDay={timePref && timePref[dayName]}
+                addTimePref={handleAddTimePref}
+                removeTimePref={handleRemoveTimePref}
+                addEntireDay={handleAddEntireDay}
+                removeEntireDay={handleRemoveEntireDay}
+                singleDay={false}
+                classesDay={classes && classes[dayName]}
+                onEventClick={onEventClick}
+              />
+            ))
+          )
         ) : (
           <CalendarDay
             dayName={weekdays[daySelection]}

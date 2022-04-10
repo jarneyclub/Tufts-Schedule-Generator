@@ -26,13 +26,11 @@ function TimePrefSelector(props) {
         <div className={sStyle.overlayTitle}>
           Drag or Click to Select Your Preferred Time Frame
         </div>
-        <div>** Time slot highlighted indicates preferred time **</div>
+        <div>** Highlighted time slot indicates preferred time **</div>
+        <Button className={sStyle.saveTimePrefButton} onClick={onClose}>
+          Save Time Preference
+        </Button>
       </div>
-      <br />
-      <Button className={sStyle.saveTimePrefButton} onClick={onClose}>
-        Save Time Preference
-      </Button>
-      <br />
       {/* This is the OVERLAY CALENDAR */}
       <div className={sStyle.overlayCalendarContainer}>
         <Calendar
@@ -43,6 +41,7 @@ function TimePrefSelector(props) {
           handleAddEntireDay={onAddEntireDay}
           handleRemoveEntireDay={onRemoveEntireDay}
           shrink={shrink}
+          origin="Pref"
         />
       </div>
       <br />

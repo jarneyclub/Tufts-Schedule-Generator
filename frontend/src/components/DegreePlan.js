@@ -207,7 +207,7 @@ function DegreePlan(props) {
   useEffect(() => {
     async function fetchData() {
       await fetch(
-        'https://jarney.club/api/courses/general?cnum='.concat(
+        'https://qa.jarney.club/api/courses/general?cnum='.concat(
           courseSearchValue
         )
       )
@@ -338,7 +338,7 @@ function DegreePlan(props) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ plan_name: planName }),
     };
-    await fetch('https://jarney.club/api/degreeplan', requestOption)
+    await fetch('https://qa.jarney.club/api/degreeplan', requestOption)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -410,7 +410,7 @@ function DegreePlan(props) {
     // Testing analytics, temporary:
     // saveFrontendUse('test feature', {foo: 'bar', hey: 9});
 
-    await fetch('https://jarney.club/api/degreeplan/term', requestOption)
+    await fetch('https://qa.jarney.club/api/degreeplan/term', requestOption)
       .then((response) => {
         return response.json();
       })
@@ -421,7 +421,7 @@ function DegreePlan(props) {
   };
 
   const fetchPrivateReqs = async () => {
-    await fetch('https://jarney.club/api/degreereqs/private')
+    await fetch('https://qa.jarney.club/api/degreereqs/private')
       .then((response) => {
         return response.json();
       })
@@ -686,15 +686,9 @@ function DegreePlan(props) {
                   </div>
                 </div>
   
-                {popup.showCourseInfo && (
-                  <CourseInfoExpress
-                    courseInfo={courseInfo}
-                    onClose={() => handlePopup('showCourseInfo', false)}
-                  />
-                )}
-  
                 {/* Degree Requirment Container */}
                 <DegreeReqExpress />
+
               </div>
 
   
@@ -755,7 +749,7 @@ function DegreePlan(props) {
             :
             (loaded && planExist === true ?  
               (<div className={dpStyle.noSchedulewrapper}>
-                <div>blank page {semesterPlanOptions?.length}</div>
+                <div>blank page! {semesterPlanOptions?.length}</div>
               </div>
               ):(<div className={dpStyle.noSchedulewrapper}>
                 <div>Create your plan now!</div>
@@ -771,7 +765,7 @@ function DegreePlan(props) {
         :
 
               <div className={dpStyle.noSchedulewrapper}>
-                <div>page is not loaded! {semesterPlanOptions?.length}</div>
+                <div>page is not loaded!!! {semesterPlanOptions?.length}</div>
               </div>
       }
       

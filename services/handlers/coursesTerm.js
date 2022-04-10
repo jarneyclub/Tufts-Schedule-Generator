@@ -62,6 +62,43 @@ const getCourseObject = async (termCourseId) => {
 }
 
 /**
+ * Create a Section object from information in the database.
+ * @param {string} term_section_id_input
+ * @return {Section} created Section object
+ */
+ const getSectionObject = async (term_section_id_input) => {
+    let dbSections = mongoose.connection.collection("sections"); //get MongoDB collection
+    
+    try {
+        const section_query = 
+            await dbSections.findOne({ term_section_id: term_section_id_input });
+        
+        let mapClassObj = {}; // map of index to Class objects of this section
+        let mapClassObjIndex = 0;
+        for (let k = 0; k < section_query.classes.length; k++) {
+            let currClass = section_query.classes[k];
+            let currClassObj = 
+                new Class(section_query.course_num, section_query.course_title, section_query.section_num, section_query.section_type, 
+                            currClass.day_of_week, currClass.start_time, currClass.end_time, currClass.room, 
+                            currClass.campus, currClass.instructor, section_query.term_section_id, section_query.term_course_id);
+            mapClassObj[mapClassObjIndex] = currClassObj;
+            mapClassObjIndex++;
+        } // (End of) iteration through classes
+        
+        let sectionObject = 
+            new Section(section_query.course_num, section_query.course_title, 
+                        section_query.section_num, section_query.section_type, 
+                        section_query.units, mapClassObj, section_query.status,
+                        term_section_id_input, section_query.term_course_id)
+                        
+        return sectionObject;
+        
+    } catch(e) {
+        errorHandler(e);
+    }
+ }
+
+/**
  * Gets all sections associated with a course.  
  * @param {*} termCourseIdInput
  * @return {array} 
@@ -140,4 +177,5 @@ const errorHandler = (e) => {
 }
 
 exports.getCourseObject = getCourseObject;
+exports.getSectionObject = getSectionObject;
 exports.getSectionsForSingleCourse = getSectionsForSingleCourse;
