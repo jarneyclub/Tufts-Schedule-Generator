@@ -38,6 +38,15 @@ const weekdays = [
   "Time Unstated",
 ];
 
+const pref_weekdays = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Lol",
+];
+
 function Calendar(props) {
   const {
     timePrefState,
@@ -49,6 +58,7 @@ function Calendar(props) {
     shrink,
     classes,
     onEventClick,
+    origin,
   } = props;
   const [daySelection, setDaySelection] = useState(0);
 
@@ -79,6 +89,27 @@ function Calendar(props) {
             <ArrowLeftIcon fontSize="large" />
           </IconButton>
           <div>{weekdays[daySelection].substr(0, 3).toUpperCase()}</div>
+          <IconButton
+            onClick={() => {
+              onDayChange(1);
+            }}
+          >
+            <ArrowRightIcon fontSize="large" />
+          </IconButton>
+        </div>
+      )}
+
+      {/*   This is the control of days for Single Day View  */}
+      {origin === "Pref" && shrink && (
+        <div className={cStyle.dayControlContainer}>
+          <IconButton
+            onClick={() => {
+              onDayChange(-1);
+            }}
+          >
+            <ArrowLeftIcon fontSize="large" />
+          </IconButton>
+          <div>{pref_weekdays[daySelection].substr(0, 3).toUpperCase()}</div>
           <IconButton
             onClick={() => {
               onDayChange(1);
