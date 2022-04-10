@@ -527,6 +527,7 @@ function Scheduler(props) {
     fetchAttributes();
     fetchSavedSchedules();
     handleLogRequired(true);
+      console.log("Timeunspec:", classes?.TimeUnspecified);
   }, []);
 
   useEffect(() => {
@@ -587,7 +588,7 @@ function Scheduler(props) {
                   </FormLabel>
                   <FormGroup row={true}>
                     <FormControlLabel
-                      style={{ margin: "0px"}}
+                      style={{ margin: "0px" }}
                       control={
                         <PurpleSwitch
                           checked={coursePreference.waitlist}
@@ -598,7 +599,7 @@ function Scheduler(props) {
                       label="Waitlist"
                     />
                     <FormControlLabel
-                      style={{ margin: "0px"}}
+                      style={{ margin: "0px" }}
                       control={
                         <PurpleSwitch
                           checked={coursePreference.closed}
@@ -609,7 +610,7 @@ function Scheduler(props) {
                       label="Closed"
                     />
                     <FormControlLabel
-                      style={{ margin: "0px"}}
+                      style={{ margin: "0px" }}
                       control={
                         <PurpleSwitch
                           checked={coursePreference.online}
@@ -620,7 +621,7 @@ function Scheduler(props) {
                       label="Online"
                     />
                     <FormControlLabel
-                      style={{ margin: "0px"}}
+                      style={{ margin: "0px" }}
                       control={
                         <PurpleSwitch
                           checked={coursePreference.time_unspecified}
@@ -823,6 +824,7 @@ function Scheduler(props) {
                 shrink={shrink}
                 classes={classes}
                 onEventClick={handleShowCourseInfo}
+                TimeUnstated={classes?.TimeUnspecified}
               />
             </div>
           </div>
