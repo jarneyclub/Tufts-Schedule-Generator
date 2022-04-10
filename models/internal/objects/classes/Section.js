@@ -60,7 +60,7 @@ function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectio
     function getSectionType() {
         return sectionType;
     }
-
+      
     /** Get classes of this section
      * 
      * @returns {object} {'1': Class, '2': Class}
@@ -90,6 +90,28 @@ function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectio
     function getUnits () {
         return units;
     }
+    
+    /** Prints all the contents of newly created Section Object
+    * @returns {string} string format for JSON Section object
+    * Notes: Still may have issue printing classes, does not recognize 
+    *         class object
+    */
+    function printPretty() {
+        const sectionObject = {
+            courseID: getCourseID(), 
+            courseName: getCourseName(), 
+            sectionName: getSectionName(), 
+            sectionType: getSectionType(), 
+            units: getUnits(), 
+            classes: getClasses(), 
+            sectionStatus: getSectionStatus(), 
+            sectionDatabaseId: getSectionDatabaseId(), 
+            courseDatabaseId: getCourseDatabaseId()
+            
+        };
+        console.log(sectionObject);
+        return JSON.stringify(sectionObject, null, 2);
+    }
 
     return {
         getCourseID,
@@ -100,7 +122,8 @@ function Section ( inputCourseID, inputCourseName, inputSectionName, inputSectio
         getSectionStatus,
         getSectionDatabaseId,
         getCourseDatabaseId,
-        getUnits
+        getUnits, 
+        printPretty
     }
 }
 
