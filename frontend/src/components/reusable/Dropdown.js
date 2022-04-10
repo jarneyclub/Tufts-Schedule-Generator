@@ -40,7 +40,7 @@ function Dropdown(props) {
   return (
     // checks if mouse clicked outside of frame
     <FormControl className={dStyle.formContainer}>
-      <InputLabel htmlFor={labelId}>{labelName}</InputLabel>
+      <InputLabel style={{color: 'red'}} htmlFor={labelId}>{labelName}</InputLabel>
       <Select
         value={selectedIdx}
         native
