@@ -52,7 +52,7 @@ exports.sectionsToEvents = async(sections) => {
     let events = {
         "Monday": [], 
         "Tuesday": [], 
-        "Wednesday": []. 
+        "Wednesday": [], 
         "Thursday": [], 
         "Friday": [], 
         "TimeUnspecified": []
