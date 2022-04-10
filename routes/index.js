@@ -236,7 +236,7 @@ router.get('/pamela', async function(req, res) {
     //let info = await newSection.printPretty();
     console.log("In index now\n");
     console.log(eventResult);
-    res.json(eventResult);
+    res.json(eventResult, null, 4);
 }
 );
 
