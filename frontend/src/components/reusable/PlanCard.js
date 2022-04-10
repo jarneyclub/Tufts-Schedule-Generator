@@ -51,8 +51,8 @@ function PlanCard(props) {
   return (
     <div
       className={pStyle.cardContainer}
-      onDragOver={dragOver}
-      onDrop={drop}
+      // onDragOver={dragOver}
+      // onDrop={drop}
       // onTouchEnd={drop}
       onMouseUp={drop}
 
