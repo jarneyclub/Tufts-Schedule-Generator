@@ -68,7 +68,6 @@ function CourseSearchBar(props) {
       className={cStyle.barContainer}
       draggable={draggable}
       // onTouchStart={(e) => handleDragStart(e, true)}
-
       onDragStart={(e) => handleDragStart(e, false)}
       onMouseDown={(e) => handleDragStart(e, false)}
       id={course_num?.concat(course_title)}
