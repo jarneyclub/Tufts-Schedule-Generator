@@ -236,8 +236,7 @@ router.get('/pamela', async function(req, res) {
     //let info = await newSection.printPretty();
     console.log("In index now\n");
     console.log(eventResult);
-    res.json({
-        'message': 'pamela\'s endpoint test1' });
+    res.json(eventResult);
 }
 );
 
