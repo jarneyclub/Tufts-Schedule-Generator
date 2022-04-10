@@ -229,13 +229,13 @@ const getSection = require('../services/handlers/coursesTerm.js');
 const parser = require('../services/generateCourseSchedule/parseSectionIdsInSchedule.js');
 
 router.get('/pamela', async function(req, res) {
-    const testSectionsArray = ["84234", "84452", "84456"];
+    //const testSectionsArray = ["84234", "84452", "84456"];
     //let newSection = await getSection.getSectionObject("84234");
     //console.log(newSection);
-    let eventResult = await parser.sectionsToEvents(testSectionsArray);
+    //let eventResult = await parser.sectionsToEvents(testSectionsArray);
     //let info = await newSection.printPretty();
-    console.log("In index now\n");
-    console.log(eventResult);
+    //console.log("In index now\n");
+    //console.log(eventResult);
     res.json({
         'message': 'pamela\'s endpoint test1' });
 }
