@@ -28,6 +28,13 @@
   color: #70757a;
 }
 
+.timePrefTimeSlotContainer {
+  flex-grow: 1;
+  margin: 0 1vw;
+  transform: translateY(75px);
+  color: #70757a;
+}
+
 .timeSlotTitle {
   height: 0px;
   /* position: fixed; */
