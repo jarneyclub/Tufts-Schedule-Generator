@@ -260,6 +260,16 @@ function Scheduler(props) {
     }
   };
 
+  const handleCloseDegreeInfo = () => {
+      if (dropdownDegreeReq === true) {
+        setDropdownDegreeReq(!dropdownDegreeReq);
+      }
+
+      if (dropdownDegreePlan === true) {
+        setDropdownDegreePlan(!dropdownDegreePlan);
+      }
+  };
+
   /*  Control for search filter dropdown change  */
   const handleFilterChange = (e) => {
     setSelectedAttributeIdx(e.target.selectedIndex);
@@ -327,7 +337,6 @@ function Scheduler(props) {
   const handleShowCourseInfo = (info) => {
     setCourseInfo(info);
     setOpen(!open);
-    console.log("handleShowCourseInfoooo")
     handlePopup('showCourseInfo', true);
   };
 
@@ -553,6 +562,15 @@ function Scheduler(props) {
       {/*scheduleOptions && scheduleOptions?.length !== 0*/}
       {scheduleExist === true ? (
         <div className={sStyle.horizontalWrapper}>
+          {dropdownDegreeReq || dropdownDegreePlan ? (
+            <div
+              className={sStyle.backdrop}
+              onClick={handleCloseDegreeInfo}
+            ></div>
+          ) : (
+            ""
+          )}
+
           <div className={sStyle.leftColumnWrapper}>
             {/* CourseContainer 
                         Contains: 
@@ -564,9 +582,12 @@ function Scheduler(props) {
               {/*time preference */}
               <div className={sStyle.preferenceContainer}>
                 <FormControl className={sStyle.leftCheckboxContainer}>
-                  <FormLabel>Generate Schedule With:</FormLabel>
+                  <FormLabel style={{ margin: "0px" }}>
+                    Generate Schedule With:
+                  </FormLabel>
                   <FormGroup row={true}>
                     <FormControlLabel
+                      style={{ margin: "0px"}}
                       control={
                         <PurpleSwitch
                           checked={coursePreference.waitlist}
@@ -577,6 +598,7 @@ function Scheduler(props) {
                       label="Waitlist"
                     />
                     <FormControlLabel
+                      style={{ margin: "0px"}}
                       control={
                         <PurpleSwitch
                           checked={coursePreference.closed}
@@ -587,6 +609,7 @@ function Scheduler(props) {
                       label="Closed"
                     />
                     <FormControlLabel
+                      style={{ margin: "0px"}}
                       control={
                         <PurpleSwitch
                           checked={coursePreference.online}
@@ -597,6 +620,7 @@ function Scheduler(props) {
                       label="Online"
                     />
                     <FormControlLabel
+                      style={{ margin: "0px"}}
                       control={
                         <PurpleSwitch
                           checked={coursePreference.time_unspecified}
@@ -606,7 +630,7 @@ function Scheduler(props) {
                           }
                         />
                       }
-                      label="Time Unspecified"
+                      label="Time Unstated"
                     />
                   </FormGroup>
                   <Button

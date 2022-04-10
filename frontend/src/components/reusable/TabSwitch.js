@@ -104,7 +104,9 @@ function DegreePlanExpress() {
     fetchPlans();
   }, []);
 
-  // Degree Requirement Container
+  {
+    /* Degree Requirment Container */
+  }
   return (
     <div className={dpStyle.degreeReqContainer}>
       <div className={dpStyle.degreeReqTitleContainer}>
@@ -163,7 +165,7 @@ const CourseInfoExpress = (props) => {
       {details ? (
         <div className={tStyle.courseTitle}>{details}</div>
       ) : (
-        <div style={tStyle.courseTitle}>
+        <div className={tStyle.courseTitle}>
           {course_num}&nbsp;{course_title}
         </div>
       )}

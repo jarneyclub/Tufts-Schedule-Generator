@@ -2,19 +2,15 @@
   display: flex;
   z-index: -1;
   flex-direction: column;
-  /* align-items: flex-start; */
   white-space: normal;
-
-  padding: 0 1vw;
+  padding: 8px 10px;
   color: white;
   background-color: #647984;
   position: absolute;
   border: 1px solid #919da1;
-
   width: 100%;
-
   border-radius: 5px;
-  font-size: 1.2vw;
+  font-size: 13px;
   overflow-wrap: break-word;
   z-index: 2;
   cursor: pointer;
@@ -45,11 +41,19 @@
 
 @media only screen and (max-width: 813.99px) {
   .eventContainer {
-    font-size: 16px;
+    font-size: 13px;
   }
 }
+
 @media only screen and (min-width: 1150px) {
   .eventContainer {
-    font-size: 16px;
+    font-size: 13px;
+  }
+}
+
+@media only screen and (max-width: 669.99px) {
+  .eventContainer {
+    align-items: center;
+    justify-content: center;
   }
 }

@@ -55,6 +55,7 @@ function PlanCard(props) {
       onDrop={drop}
       // onTouchEnd={drop}
       // onMouseUp={drop}
+
       id={cardDetail?.plan_term_id}
       style={origin === "dp2" ? { maxWidth: "33%", minWidth: "300px" } : {}}
     >

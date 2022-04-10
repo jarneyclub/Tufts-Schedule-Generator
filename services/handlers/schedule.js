@@ -149,7 +149,7 @@ exports.createSchedule   = async (userId, scheduleName, filter, term, courses, c
             sched_name: scheduleName,
             user_id: userId,
             filter: filter,
-            events: classes, /*Pam change here for if classes are defined */
+            events: classes,
             courses: courses,
             term: term
         });
@@ -168,8 +168,7 @@ exports.createSchedule   = async (userId, scheduleName, filter, term, courses, c
         errorHandler(e, "createSchedule");
     }
 }
-/*Pam changes here
-If updateSchedule takes in a new parameter, new schema item*/
+
 exports.updateSchedule = async (id, filter, courses, classes) => {
     try {
         // TODO no schedule with given id was found
@@ -182,7 +181,7 @@ exports.updateSchedule = async (id, filter, courses, classes) => {
         }, {
             filter     : filter,
             courses    : courses,
-            events     : classes /*Pam change here*/
+            events     : classes
         }, {
             new: true,
             upsert: false
@@ -246,8 +245,6 @@ exports.getSchedulesOfUser = async (userId) => {
                 filter     : doc.filter,
                 term       : doc.term,
                 courses    : doc.courses,
-                //change here...
-                //for each DOW array, populate 'sections'
                 classes    : doc.events
             };
             documents.push(docParsed);

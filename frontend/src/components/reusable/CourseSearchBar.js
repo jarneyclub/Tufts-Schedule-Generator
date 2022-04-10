@@ -53,7 +53,6 @@ function CourseSearchBar(props) {
 
   const handleDoubleClick = () => {
     if (origin === 'schedulerCourseList' || origin === 'schedulerTab') {
-      console.log("handle on double click in course search bar");
       onDoubleClick(courseDetail);
     } else if (origin !== 'courseList') {
       onDoubleClick(courseDetail);
@@ -61,7 +60,6 @@ function CourseSearchBar(props) {
   };
 
   const handleOnClick = () => {
-    console.log("handle on click in course search bar")
     onClick(courseDetail);
   };
 
@@ -70,8 +68,9 @@ function CourseSearchBar(props) {
       className={cStyle.barContainer}
       draggable={draggable}
       // onTouchStart={(e) => handleDragStart(e, true)}
+
       onDragStart={(e) => handleDragStart(e, false)}
-      // onMouseDown={(e) => handleDragStart(e, false)}
+      onMouseDown={(e) => handleDragStart(e, false)}
       id={course_num?.concat(course_title)}
       style={customStyle}
     >
@@ -79,7 +78,6 @@ function CourseSearchBar(props) {
       {(origin === "schedulerCourseList" ||
         origin === "schedulerTab" ||
         origin !== "courseList") && <div>&nbsp;</div>}
-
       <div style={{ wordBreak: "break-word" }} onDoubleClick={handleDoubleClick}
       onClick={handleOnClick}>
         【{course_num}】{course_title}
