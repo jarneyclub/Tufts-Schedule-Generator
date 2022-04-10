@@ -80,26 +80,27 @@ exports.sectionsToEvents = async(sections) => {
             console.log(classes);
             
             
-            for (let classObject in classes) {
+            for (let i in classes) {
+                let classObject = classes[i];
                 let dayOfWeek = classObject.getDayOfWeek();
                 console.log("This is the day of week \n");
                 console.log(dayOfWeek);
                 
-                let room = courseObject.getLocation();
-                let city = courseObject.getCity();
+                let room = classObject.getLocation();
+                let city = classObject.getCity();
                 let eventLocation = room + "," + city;
                 
-                let courseName = courseObject.getCourseName();
-                let courseId = courseObject.getCourseID();
+                let courseName = classObject.getCourseName();
+                let courseId = classObject.getCourseID();
                 let eventDetails = courseName + ", " + courseId;
                 
-                let eventName = courseObject.getSectionName();
-                let courseDatabaseId = courseObject.getCourseDatabaseId();
-                let sectionId = courseObject.getSectionID();
-                let instructors = courseObject.getInstructors();
+                let eventName = classObject.getSectionName();
+                let courseDatabaseId = classObject.getCourseDatabaseId();
+                let sectionId = classObject.getSectionID();
+                let instructors = classObject.getInstructors();
                 
-                let time_start = timeUtils.integerToMilitaryTime(courseObject.getStartTime());
-                let time_end = timeUtils.integerToMilitaryTime(courseObject.getEndTime());
+                let time_start = timeUtils.integerToMilitaryTime(classObject.getStartTime());
+                let time_end = timeUtils.integerToMilitaryTime(classObject.getEndTime());
                 
                 let eventObject = {
                     details: eventDetails,
