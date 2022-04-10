@@ -44,7 +44,6 @@ const pref_weekdays = [
   "Wednesday",
   "Thursday",
   "Friday",
-  "Lol",
 ];
 
 function Calendar(props) {
@@ -133,21 +132,39 @@ function Calendar(props) {
         </div>
 
         {!shrink ? (
-          weekdays.map((dayName) => (
-            <CalendarDay
-              dayName={dayName}
-              key={dayName}
-              timePrefState={timePrefState}
-              timePrefDay={timePref && timePref[dayName]}
-              addTimePref={handleAddTimePref}
-              removeTimePref={handleRemoveTimePref}
-              addEntireDay={handleAddEntireDay}
-              removeEntireDay={handleRemoveEntireDay}
-              singleDay={false}
-              classesDay={classes && classes[dayName]}
-              onEventClick={onEventClick}
-            />
-          ))
+          origin === "Pref" ? (
+            pref_weekdays.map((dayName) => (
+              <CalendarDay
+                dayName={dayName}
+                key={dayName}
+                timePrefState={timePrefState}
+                timePrefDay={timePref && timePref[dayName]}
+                addTimePref={handleAddTimePref}
+                removeTimePref={handleRemoveTimePref}
+                addEntireDay={handleAddEntireDay}
+                removeEntireDay={handleRemoveEntireDay}
+                singleDay={false}
+                classesDay={classes && classes[dayName]}
+                onEventClick={onEventClick}
+              />
+            ))
+          ) : (
+            weekdays.map((dayName) => (
+              <CalendarDay
+                dayName={dayName}
+                key={dayName}
+                timePrefState={timePrefState}
+                timePrefDay={timePref && timePref[dayName]}
+                addTimePref={handleAddTimePref}
+                removeTimePref={handleRemoveTimePref}
+                addEntireDay={handleAddEntireDay}
+                removeEntireDay={handleRemoveEntireDay}
+                singleDay={false}
+                classesDay={classes && classes[dayName]}
+                onEventClick={onEventClick}
+              />
+            ))
+          )
         ) : (
           <CalendarDay
             dayName={weekdays[daySelection]}
