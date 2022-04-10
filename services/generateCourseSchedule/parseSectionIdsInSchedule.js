@@ -1,36 +1,9 @@
 /*
 * parseSectionIdsInSchedule.js
 * Purpose: 
-*      o retrieve 
-*      The respective class information for that Section reference on 
-*      a given day of the week
-*
-*
-*
-* Example: 
-*       sections: [ {term_section_id}, {term_section_id}, {...} ]
-*
-* Convert to:
-*       events: {
-*           Monday: [{details: String, 
-*                     location: String, 
-*                     name: String, 
-*                     time_start: String, 
-*                     time_end: String, 
-*                     term_course_id: String, 
-*                     term_section_id: String, 
-*                     instructors: String}, 
-*                    {details: String, 
-*                     location: String, 
-*                     name: String, 
-*                     time_start: String, 
-*                     time_end: String, 
-*                     term_course_id: String, 
-*                     term_section_id: String, 
-*                     instructors: String},],
-*           Tuesday: [etc... ^]
-*
-* 
+*     To convert an array of termSectionIds into an events Object 
+*      of the section's classes in their respective days of the week arrays
+* Date: April 9, 2022
 */
 
 const Section = require('../../models/internal/objects/classes/Section.js');
@@ -38,8 +11,12 @@ const getSection = require('../../services/handlers/coursesTerm.js');
 const Class = require('../../models/internal/objects/classes/Class.js');
 const timeUtils = require("./utils/timeUtils.js");
 
-/*Not finished!*/
+/** Converts an array of termSectionIds into an events JSON with organized 
+*   Classes in their corresponding days of the week
+* @returns {object} {'Monday': [], 'Tuesday': []}
+*/
 exports.sectionsToEvents = async(sections) => {
+    /*Initialize the events object to be returned to caller*/
     let events = {
         "Monday": [], 
         "Tuesday": [], 
@@ -49,21 +26,28 @@ exports.sectionsToEvents = async(sections) => {
         "TimeUnspecified": []
     };
     
+    /* Iterate through each term_ection_id in the array*/
     for (let i = 0; i < sections.length; i++) {
+        /* Create a section object based on a given term_section_id */
         let sectionObject = await getSection.getSectionObject(sections[i]);
         
-        let classes = sectionObject.getClasses();
-
+        let classes = sectionObject.getClasses(); /* Get all classes from Section object*/
+        
+        /* Iterate through classes and place in proper DayOfWeek in events object*/
         for (let i in classes) {
             let classObject = classes[i];
+            /* Convert a class Object into desired event formatted details */
             let eventObject = getEventObjectFromClass(classObject);
-            events[classObject.getDayOfWeekString()].push(eventObject);
+            events[classObject.getDayOfWeekString()].push(eventObject); 
         }
     }
 
     return events;
 }
 
+/** Creates an "event" object in the proper formatting based on Class Object information
+* @returns {object} {details: String, location: String, name: String, time_start: String, time_end: String, term_course_id: String, term_section_id: String, instructors: String}
+*/
 const getEventObjectFromClass = (classObject) => {
     
     let dayOfWeek = classObject.getDayOfWeekString();
@@ -84,6 +68,7 @@ const getEventObjectFromClass = (classObject) => {
     let time_start = timeUtils.integerToMilitaryTime(classObject.getStartTime());
     let time_end = timeUtils.integerToMilitaryTime(classObject.getEndTime());
     
+    /* Initialize eventObject in desired formatting and populate with Class details*/
     let eventObject = {
         details: eventDetails,
         location: eventLocation,
