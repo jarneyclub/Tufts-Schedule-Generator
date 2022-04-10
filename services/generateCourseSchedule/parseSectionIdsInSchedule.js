@@ -34,6 +34,7 @@
 */
 
 const Section = require('../../models/internal/objects/classes/Section.js');
+const getSection = require('../../services/handlers/coursesTerm.js');
 const Class = require('../../models/internal/objects/classes/Class.js');
 const timeUtils = require("./utils/timeUtils.js");
 
@@ -71,7 +72,7 @@ exports.sectionsToEvents = async(sections) => {
     }*/
         
         for (let i = 0; i < sections.length; i++) {
-            let sectionObject = getSectionObject(sections[i]);
+            let sectionObject = await getSection.getSectionObject(sections[i]);
             console.log("Created a section Object: \n");
             console.log(sectionObject);
             let classes = sectionObject.getClasses();
