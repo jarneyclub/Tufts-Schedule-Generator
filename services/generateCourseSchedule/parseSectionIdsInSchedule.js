@@ -115,7 +115,7 @@ exports.sectionsToEvents = async(sections) => {
                 console.log("Made an eventobject: \n");
                 console.log(eventObject);
                 
-                events[dayOfWeek].push();
+                events[dayOfWeek].push(eventObject);
                 
             }
         }
