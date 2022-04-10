@@ -98,7 +98,7 @@ function Calendar(props) {
             </IconButton>
           </div>
         ) : (
-          <div className={cStyle.mapShrinkDayControlContainer}>
+          <div className={cStyle.dayControlContainer}>
             <IconButton
               onClick={() => {
                 onDayChange(-1);
@@ -124,13 +124,7 @@ function Calendar(props) {
       >
         {/* Time indicator */}
         {origin === "Pref" ? (
-          <div
-            className={
-              !shrink
-                ? cStyle.timePrefTimeSlotContainer
-                : cStyle.shrinkTimePrefTimeSlotContainer
-            }
-          >
+          <div className={cStyle.timePrefTimeSlotContainer}>
             <div className={cStyle.timeSlotTitle} />
             {time.map((timeSlot) => (
               <div className={cStyle.timeSlot} key={timeSlot}>
@@ -139,13 +133,7 @@ function Calendar(props) {
             ))}
           </div>
         ) : (
-          <div
-            className={
-              !shrink
-                ? cStyle.timeSlotContainer
-                : cStyle.shrinkTimeSlotContainer
-            }
-          >
+          <div className={cStyle.timeSlotContainer}>
             <div className={cStyle.timeSlotTitle} />
             {time.map((timeSlot) => (
               <div className={cStyle.timeSlot} key={timeSlot}>
