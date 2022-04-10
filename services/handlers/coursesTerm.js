@@ -96,8 +96,6 @@ const getCourseObject = async (termCourseId) => {
     } catch(e) {
         errorHandler(e);
     }
-    //lookup term_section_id and match with a section from database
-     
  }
 
 /**

@@ -1,24 +1,14 @@
 /*
 * parseSectionIdsInSchedule.js
 * Purpose: 
-*      To parse through a given array of user schedules, where the events 
-*      attribute, for each day of the week, references a Section Database 
-*      Id. 
-*      For each Section Database Id referenced per class, to retrieve 
+*      o retrieve 
 *      The respective class information for that Section reference on 
 *      a given day of the week
 *
 *
 *
 * Example: 
-*       events: {
-*           Monday: [{SectionDatabaseId},{SectionDatabaseId}],
-*           Tuesday: [{SectionDatabaseId},{SectionDatabaseId}],
-*           Wednesday: [{SectionDatabaseId}],
-*           Thursday: [{SectionDatabaseId}].
-*           Friday: [],
-*           TimeUnspecified: []
-*        },
+*       sections: [ {term_section_id}, {term_section_id}, {...} ]
 *
 * Convert to:
 *       events: {
@@ -43,38 +33,97 @@
 * 
 */
 
-const mongoose = require('mongoose');
-const Section = mongoose.model('Section');
-const ScheduleV2 = mongoose.model('ScheduleV2');
+const Section = require('../../models/internal/objects/classes/Section.js');
+const Class = require('../../models/internal/objects/classes/Class.js');
+const timeUtils = require("./utils/timeUtils.js");
 
 /*Not finished!*/
-exports.parseSectionIdsInSchedule = async(schedules) => {
-    try {
-        
-        for (let i = 0; i < schedules.length; i++) {
-            schedules[i].populate('events');
+exports.sectionsToEvents = async(sections) => {
+    // let eventsParsed = {
+    //     Monday:      [{details: String, location: String, name: String, time_start: String, time_end: String, term_course_id: String, term_section_id: String, instructors: String}],
+    //     Tuesday:     [{details: String, location: String, name: String, time_start: String, time_end: String, term_course_id: String, term_section_id: String, instructors: String}],
+    //     Wednesday:   [{details: String, location: String, name: String, time_start: String, time_end: String, term_course_id: String, term_section_id: String, instructors: String}],
+    //     Thursday:    [{details: String, location: String, name: String, time_start: String, time_end: String, term_course_id: String, term_section_id: String, instructors: String}],
+    //     Friday:      [{details: String, location: String, name: String, time_start: String, time_end: String, term_course_id: String, term_section_id: String, instructors: String}],
+    //     TimeUnspecified: [{details: String, location: String, name: String, time_start: String, time_end: String, term_section_id: String, instructors: String}]
+    // };
+    
+    
+    let events = {
+        "Monday": [], 
+        "Tuesday": [], 
+        "Wednesday": []. 
+        "Thursday": [], 
+        "Friday": [], 
+        "TimeUnspecified": []
+    };
+    
+    
+    /*Use function getSectionObject 
+        For each Section Object, call 
+                Let classes = section.getClasses()
+                
+        For (let classObject in classes) {
+            do something with classObject
         }
         
-    } catch(e) {
-        errorHandler(e, "parseSectionIdsInSchedule");
-    }
+        events[classObject.getDayOfWeekString()]
+    }*/
+        
+        for (let i = 0; i < sections.length; i++) {
+            let sectionObject = getSectionObject(sections[i]);
+            console.log("Created a section Object: \n");
+            console.log(sectionObject);
+            let classes = sectionObject.getClasses();
+            console.log("Got classes array: \n")
+            console.log(classes);
+            
+            
+            for (let classObject in classes) {
+                let dayOfWeek = classObject.getDayOfWeek();
+                console.log("This is the day of week \n");
+                console.log(dayOfWeek);
+                
+                let room = courseObject.getLocation();
+                let city = courseObject.getCity();
+                let eventLocation = room + "," + city;
+                
+                let courseName = courseObject.getCourseName();
+                let courseId = courseObject.getCourseID();
+                let eventDetails = courseName + ", " + courseId;
+                
+                let eventName = courseObject.getSectionName();
+                let courseDatabaseId = courseObject.getCourseDatabaseId();
+                let sectionId = courseObject.getSectionID();
+                let instructors = courseObject.getInstructors();
+                
+                let time_start = timeUtils.integerToMilitaryTime(courseObject.getStartTime());
+                let time_end = timeUtils.integerToMilitaryTime(courseObject.getEndTime());
+                
+                let eventObject = {
+                    details: eventDetails,
+                    location: eventLocation,
+                    name: eventName,
+                    time_start: time_start,
+                    time_end: time_end,
+                    term_course_id: courseDatabaseId,
+                    term_section_id: sectionId,
+                    instructors: instructors
+                }
+                console.log("Made an eventobject: \n");
+                console.log(eventObject);
+                
+                events[dayOfWeek].push();
+                
+            }
+        }
+        
+    console.log("Made Events Object: \n");
+    console.log(events);
     
-    return schedules;
+    return events;
 }
 
-// const matchSectionIdsToSection = async (arrayEventsDayOfWeek) => {
-//     try {
-//         //get MongoDB Collection with Section documents
-//         //let sectionsCollection = mongoose.connection.collection("sections");
-//         populate('events')
-// 
-//     } catch(e) {
-//         errorHandler(e, "matchSectionIdsToSection");
-//     }
-// }
-
-
-/*help with errors??*/
 const errorHandler = (e, functionName) => {
     if (e.message !== undefined) {
         if (e.message.indexOf("validation failed") > -1) {
