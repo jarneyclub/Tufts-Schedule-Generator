@@ -229,9 +229,9 @@ const getSection = require('../services/handlers/coursesTerm.js');
 const parser = require('../services/generateCourseSchedule/parseSectionIdsInSchedule.js');
 
 router.get('/pamela', async function(req, res) {
-    const testSectionsArray = ["84234", "84452", "84456"];
-    let newSection = await getSection.getSectionObject("84234");
-    console.log(newSection);
+    const testSectionsArray = ["83442", "84108", "84110", "84113", "84250"];
+    // let newSection = await getSection.getSectionObject("84234");
+    // console.log(newSection);
     let eventResult = await parser.sectionsToEvents(testSectionsArray);
     //let info = await newSection.printPretty();
     console.log("In index now\n");

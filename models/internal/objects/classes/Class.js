@@ -66,7 +66,7 @@ function Class(inputCourseID, inputCourseName, inputSectionName, inputSectionTyp
      * @returns {string} day of the week (e.g. 1 = "Monday")
      */
      function getDayOfWeekString() {
-        if (dayOfWeek == -1) {
+        if (dayOfWeek == -1 || dayOfWeek > 5) {
             return "TimeUnspecified";
         }
      
