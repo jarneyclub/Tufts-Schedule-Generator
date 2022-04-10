@@ -46,14 +46,6 @@ const pref_weekdays = [
   "Friday",
 ];
 
-// const calendarContainerClassName = () => {
-//     return {cStyle.calendarContainer}
-// };
-
-
-
-// const calendarContainerClassName = classNames(classes);
-
 function Calendar(props) {
   const {
     timePrefState,
