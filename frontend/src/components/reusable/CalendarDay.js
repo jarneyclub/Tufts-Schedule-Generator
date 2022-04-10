@@ -143,9 +143,11 @@ function CalendarDay(props) {
 
   return (
     <div className={cStyle.dayContainer}>
-      <div className={cStyle.timeSlotTitle}>
-        {!singleDay && handleShowDayTitle()}
-      </div>
+      {!shrink && (
+        <div className={cStyle.timeSlotTitle}>
+          {!singleDay && handleShowDayTitle()}
+        </div>
+      )}
 
       {/* Generate the time slots or just one column if it is for time unstated */}
       {dayName === "Time Unstated" ? (
