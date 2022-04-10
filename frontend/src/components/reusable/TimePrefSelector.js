@@ -43,6 +43,7 @@ function TimePrefSelector(props) {
           handleAddEntireDay={onAddEntireDay}
           handleRemoveEntireDay={onRemoveEntireDay}
           shrink={shrink}
+          origin="Pref"
         />
       </div>
       <br />

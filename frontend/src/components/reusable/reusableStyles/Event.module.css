@@ -54,5 +54,6 @@
 @media only screen and (max-width: 669.99px) {
   .eventContainer {
     align-items: center;
+    justify-content: center;
   }
 }
