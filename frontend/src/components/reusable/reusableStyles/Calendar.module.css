@@ -9,6 +9,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px;
 }
 
 .calendarContainer {
@@ -33,6 +34,20 @@
 }
 
 .timeSlotContainer {
+  flex-grow: 1;
+  margin: 0 1vw;
+  transform: translateY(30px);
+  color: #70757a;
+}
+
+.shrinkTimeSlotContainer {
+  flex-grow: 1;
+  margin: 0 1vw;
+  transform: translateY(0px);
+  color: #70757a;
+}
+
+.shrinkTimeSlotContainer {
   flex-grow: 1;
   margin: 0 1vw;
   transform: translateY(30px);
