@@ -58,6 +58,7 @@ function Calendar(props) {
     classes,
     onEventClick,
     origin,
+    TimeUnstated,
   } = props;
   const [daySelection, setDaySelection] = useState(0);
 
@@ -74,7 +75,10 @@ function Calendar(props) {
       setDaySelection((prev) => prev + direction);
     }
   };
+
   console.log("classes", classes);
+  console.log("Lets see Timeunspec:", TimeUnstated.classes?.TimeUnspecified);
+
   return (
     <div className={cStyle.container}>
       {/*   This is the control of days for Single Day View  */}

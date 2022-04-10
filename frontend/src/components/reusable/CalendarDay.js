@@ -144,8 +144,6 @@ function CalendarDay(props) {
     console.log("timeunspec:", classesDay?.TimeUnspecified);
   }, []);
 
-  
-
   return (
     <div className={cStyle.dayContainer}>
       {!shrink && (
