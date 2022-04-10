@@ -59,7 +59,7 @@
   align-items: center;
   border-radius: 12px;
   width: 100%;
-  padding: 0px 10px 1vw;
+  padding: 0px 10px 0vw;
 }
 
 .inputSearch {
@@ -76,6 +76,7 @@
   padding-right: 1vw;
   white-space: nowrap;
   align-items: center;
+  margin-top: 15px;
 }
 
 .searchButton {
@@ -173,6 +174,7 @@
   flex-direction: column;
   justify-content: space-evenly;
   width: 100%;
+  margin-top: 15px;
 }
 
 .toggleSwitch {
