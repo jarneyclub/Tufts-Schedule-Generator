@@ -139,10 +139,12 @@ function CalendarDay(props) {
 
   useEffect(() => {
     timePrefDay && setEntireDayOn(timePrefDay?.length === 26);
+
+  dayName === "Time Unstated" &&
+    console.log("timeunspec:", classesDay?.TimeUnspecified);
   }, []);
 
   
-  (dayName === "Time Unstated" && console.log("timeunspec:" , classesDay.TimeUnspecified))
 
   return (
     <div className={cStyle.dayContainer}>
