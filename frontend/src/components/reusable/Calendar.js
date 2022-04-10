@@ -119,16 +119,25 @@ function Calendar(props) {
 
       <div className={cStyle.calendarContainer}>
         {/* Time indicator */}
-        <div
-          className={cStyle.timePrefTimeSlotContainer}
-        >
-          <div className={cStyle.timeSlotTitle} />
-          {time.map((timeSlot) => (
-            <div className={cStyle.timeSlot} key={timeSlot}>
-              {timeSlot}
-            </div>
-          ))}
-        </div>
+        {origin === "Pref" ? (
+          <div className={cStyle.timePrefTimeSlotContainer}>
+            <div className={cStyle.timeSlotTitle} />
+            {time.map((timeSlot) => (
+              <div className={cStyle.timeSlot} key={timeSlot}>
+                {timeSlot}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className={cStyle.timeSlotContainer}>
+            <div className={cStyle.timeSlotTitle} />
+            {time.map((timeSlot) => (
+              <div className={cStyle.timeSlot} key={timeSlot}>
+                {timeSlot}
+              </div>
+            ))}
+          </div>
+        )}
 
         {!shrink ? (
           origin === "Pref" ? (
