@@ -454,12 +454,9 @@
   flex-direction: column;
   z-index: 30;
   align-items: center;
-
-  top: 80px; /* gives the overlay effect */
+  top: 80px;
   position: fixed;
-
-  background-color: rgba(112, 72, 213, 0.9);
-
+  background-color: rgb(112, 72, 213);
   height: 100vh;
   width: 100vw;
 }
@@ -479,7 +476,7 @@
 
 .overlayCalendarContainer {
   background-color: #ffffff;
-
+  padding-right: 20px;
   width: 100%;
   overflow-y: scroll;
   height: 75vh;
