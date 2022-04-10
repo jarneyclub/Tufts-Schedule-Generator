@@ -46,6 +46,14 @@ const pref_weekdays = [
   "Friday",
 ];
 
+// const calendarContainerClassName = () => {
+//     return {cStyle.calendarContainer}
+// };
+
+
+
+// const calendarContainerClassName = classNames(classes);
+
 function Calendar(props) {
   const {
     timePrefState,
@@ -117,7 +125,8 @@ function Calendar(props) {
           </div>
         ))}
 
-      <div className={cStyle.calendarContainer}>
+      <div className={shrink ? (cStyle.calendarContainer) : 
+        (cStyle.shrinkCalendarContainer)}>
         {/* Time indicator */}
         {origin === "Pref" ? (
           <div className={cStyle.timePrefTimeSlotContainer}>
