@@ -224,9 +224,9 @@ router.get('/jeremy', function (req, res) {
 *
 * 
 */
-const Section = require('../models/internal/objects/classes/Section.js');
-const getSection = require('../services/handlers/coursesTerm.js');
-const parser = require('../services/generateCourseSchedule/parseSectionIdsInSchedule.js');
+//const Section = require('../models/internal/objects/classes/Section.js');
+//const getSection = require('../services/handlers/coursesTerm.js');
+//const parser = require('../services/generateCourseSchedule/parseSectionIdsInSchedule.js');
 
 router.get('/pamela', async function(req, res) {
     //const testSectionsArray = ["84234", "84452", "84456"];
