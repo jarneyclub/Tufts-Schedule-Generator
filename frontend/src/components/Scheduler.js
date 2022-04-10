@@ -527,7 +527,7 @@ function Scheduler(props) {
     fetchAttributes();
     fetchSavedSchedules();
     handleLogRequired(true);
-      console.log("Timeunspec:", classes?.TimeUnspecified);
+      // console.log("Timeunspec:", classes);
   }, []);
 
   useEffect(() => {
