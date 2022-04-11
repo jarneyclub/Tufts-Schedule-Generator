@@ -206,7 +206,7 @@ function CalendarDay(props) {
 
       {/* Put the classes on depending on the day */}
       {dayName === "Time Unstated"
-        ? classesDay.TimeUnspecified.map((course) => {
+        ? classesDay?.TimeUnspecified?.map((course) => {
             return <Button style={{zIndex: 10000000}}>Hi</Button>;
           })
         : classesDay?.map((event) => {
