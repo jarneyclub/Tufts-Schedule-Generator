@@ -139,10 +139,9 @@ function CalendarDay(props) {
 
   useEffect(() => {
     timePrefDay && setEntireDayOn(timePrefDay?.length === 26);
-
-  dayName === "Time Unstated" &&
-    console.log("timeunspec:", classesDay?.TimeUnspecified);
   }, []);
+
+  console.log("Err timeunspec:", classesDay.TimeUnspecified);
 
   return (
     <div className={cStyle.dayContainer}>
@@ -207,7 +206,7 @@ function CalendarDay(props) {
 
       {/* Put the classes on depending on the day */}
       {dayName === "Time Unstated"
-        ? classesDay?.TimeUnspecified?.map((course) => {
+        ? classesDay.TimeUnspecified.map((course) => {
             return <Button style={{zIndex: 10000000}}>Hi</Button>;
           })
         : classesDay?.map((event) => {
