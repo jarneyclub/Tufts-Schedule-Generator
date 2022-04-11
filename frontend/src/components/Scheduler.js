@@ -264,13 +264,15 @@ function Scheduler(props) {
   };
 
   const handleCloseDegreeInfo = () => {
-      if (dropdownDegreeReq === true) {
-        setDropdownDegreeReq(!dropdownDegreeReq);
-      }
+    setBtnClicked(false);
 
-      if (dropdownDegreePlan === true) {
-        setDropdownDegreePlan(!dropdownDegreePlan);
-      }
+    if (dropdownDegreeReq === true) {
+      setDropdownDegreeReq(!dropdownDegreeReq);
+    }
+
+    if (dropdownDegreePlan === true) {
+      setDropdownDegreePlan(!dropdownDegreePlan);
+    }
   };
 
   /*  Control for search filter dropdown change  */
@@ -346,8 +348,6 @@ function Scheduler(props) {
   const handlePopupClose = (field) => {
     handlePopup(field);
     setOpen(false);
-    setBtnClicked(false);
-    console.log("now is ", btnClicked);
   };
 
   const handleSearchChange = (e) => {
