@@ -247,7 +247,7 @@ function Scheduler(props) {
   const handleDegreeInfo = (field) => {
     if (field === "DegreePlan") {
       setDropdownDegreePlan(!dropdownDegreePlan);
-      setPlanBtnClicked(true);
+      setPlanBtnClicked(!planBtnClicked);
       setReqBtnClicked(false);
 
       if (dropdownDegreeReq === true) {
@@ -257,7 +257,7 @@ function Scheduler(props) {
 
     if (field === "DegreeReq") {
       setDropdownDegreeReq(!dropdownDegreeReq);
-      setReqBtnClicked(true);
+      setReqBtnClicked(!reqBtnClicked);
       setPlanBtnClicked(false);
 
       if (dropdownDegreePlan === true) {
