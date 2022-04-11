@@ -393,7 +393,7 @@
   z-index: 5;
 }
 
-.degreeBtn:focus {
+.degreeBtnClicked {
   background: rgb(112, 72, 213);
   border: 0.5px solid #A4A4A4;
   box-sizing: border-box;
