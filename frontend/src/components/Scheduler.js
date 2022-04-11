@@ -230,7 +230,8 @@ function Scheduler(props) {
   const [alertSeverity, setAlertSeverity] = useState();
   const [dropdownDegreePlan, setDropdownDegreePlan] = useState(false);
   const [dropdownDegreeReq, setDropdownDegreeReq] = useState(false);
-  const [btnClicked, setBtnClicked] = useState(false);
+  const [reqBtnClicked, setReqBtnClicked] = useState(false);
+  const [planBtnClicked, setPlanBtnClicked] = useState(false);
 
   /*  Control for schedule plan dropdown change  */
   const handleScheduleChange = (e) => {
@@ -244,10 +245,9 @@ function Scheduler(props) {
 
   /* Control the dropdown for Degree Plan and Degree Requirement */
   const handleDegreeInfo = (field) => {
-    setBtnClicked(!btnClicked);
-
     if (field === "DegreePlan") {
       setDropdownDegreePlan(!dropdownDegreePlan);
+      setPlanBtnClicked(true);
 
       if (dropdownDegreeReq === true) {
         setDropdownDegreeReq(!dropdownDegreeReq);
@@ -256,6 +256,7 @@ function Scheduler(props) {
 
     if (field === "DegreeReq") {
       setDropdownDegreeReq(!dropdownDegreeReq);
+      setReqBtnClicked(true);
 
       if (dropdownDegreePlan === true) {
         setDropdownDegreePlan(!dropdownDegreePlan);
@@ -264,14 +265,14 @@ function Scheduler(props) {
   };
 
   const handleCloseDegreeInfo = () => {
-    setBtnClicked(false);
-
     if (dropdownDegreeReq === true) {
       setDropdownDegreeReq(!dropdownDegreeReq);
+      setReqBtnClicked(false);
     }
 
     if (dropdownDegreePlan === true) {
       setDropdownDegreePlan(!dropdownDegreePlan);
+      setPlanBtnClicked(false);
     }
   };
 
@@ -794,7 +795,7 @@ function Scheduler(props) {
               <div className={sStyle.DegreeInfoContainer}>
                 <div
                   className={
-                    !btnClicked ? sStyle.degreeBtn : sStyle.degreeBtnClicked
+                    !planBtnClicked ? sStyle.degreeBtn : sStyle.degreeBtnClicked
                   }
                   onClick={() => handleDegreeInfo("DegreePlan")}
                 >
@@ -811,7 +812,7 @@ function Scheduler(props) {
                 &nbsp;
                 <div
                   className={
-                    !btnClicked ? sStyle.degreeBtn : sStyle.degreeBtnClicked
+                    !reqBtnClicked ? sStyle.degreeBtn : sStyle.degreeBtnClicked
                   }
                   onClick={() => handleDegreeInfo("DegreeReq")}
                 >
