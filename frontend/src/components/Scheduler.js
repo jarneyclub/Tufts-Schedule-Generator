@@ -230,6 +230,7 @@ function Scheduler(props) {
   const [alertSeverity, setAlertSeverity] = useState();
   const [dropdownDegreePlan, setDropdownDegreePlan] = useState(false);
   const [dropdownDegreeReq, setDropdownDegreeReq] = useState(false);
+  const [btnClicked, setBtnClicked] = useState(false);
 
   /*  Control for schedule plan dropdown change  */
   const handleScheduleChange = (e) => {
@@ -243,6 +244,8 @@ function Scheduler(props) {
 
   /* Control the dropdown for Degree Plan and Degree Requirement */
   const handleDegreeInfo = (field) => {
+    setBtnClicked(!btnClicked);
+
     if (field === "DegreePlan") {
       setDropdownDegreePlan(!dropdownDegreePlan);
 
@@ -788,7 +791,9 @@ function Scheduler(props) {
               {/* The two drop downs for Degree Plan and Degree Requirements */}
               <div className={sStyle.DegreeInfoContainer}>
                 <div
-                  className={sStyle.degreeBtn}
+                  className={
+                    !btnClicked ? sStyle.degreeBtn : sStyle.degreeBtnClicked
+                  }
                   onClick={() => handleDegreeInfo("DegreePlan")}
                 >
                   {" "}
@@ -803,7 +808,9 @@ function Scheduler(props) {
                 )}
                 &nbsp;
                 <div
-                  className={sStyle.degreeBtn}
+                  className={
+                    !btnClicked ? sStyle.degreeBtn : sStyle.degreeBtnClicked
+                  }
                   onClick={() => handleDegreeInfo("DegreeReq")}
                 >
                   Degree Requirement
