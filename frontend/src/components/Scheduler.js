@@ -248,6 +248,7 @@ function Scheduler(props) {
     if (field === "DegreePlan") {
       setDropdownDegreePlan(!dropdownDegreePlan);
       setPlanBtnClicked(true);
+      setReqBtnClicked(false);
 
       if (dropdownDegreeReq === true) {
         setDropdownDegreeReq(!dropdownDegreeReq);
@@ -257,6 +258,7 @@ function Scheduler(props) {
     if (field === "DegreeReq") {
       setDropdownDegreeReq(!dropdownDegreeReq);
       setReqBtnClicked(true);
+      setPlanBtnClicked(false);
 
       if (dropdownDegreePlan === true) {
         setDropdownDegreePlan(!dropdownDegreePlan);
@@ -265,14 +267,15 @@ function Scheduler(props) {
   };
 
   const handleCloseDegreeInfo = () => {
+    setReqBtnClicked(false);
+    setPlanBtnClicked(false);
+
     if (dropdownDegreeReq === true) {
       setDropdownDegreeReq(!dropdownDegreeReq);
-      setReqBtnClicked(false);
     }
 
     if (dropdownDegreePlan === true) {
       setDropdownDegreePlan(!dropdownDegreePlan);
-      setPlanBtnClicked(false);
     }
   };
 
