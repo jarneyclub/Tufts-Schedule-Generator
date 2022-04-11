@@ -346,7 +346,8 @@ function Scheduler(props) {
   const handlePopupClose = (field) => {
     handlePopup(field);
     setOpen(false);
-    setBtnClicked(!btnClicked);
+    setBtnClicked(false);
+    console.log("now is ", btnClicked);
   };
 
   const handleSearchChange = (e) => {
