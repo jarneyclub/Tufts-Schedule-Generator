@@ -186,6 +186,13 @@ const CourseInfoExpress = (props) => {
         </div>
       )}
 
+      {instructors && (
+        <div className={tStyle.infoContainer}>
+          <div className={tStyle.infoTitle}>Instructor:&nbsp;</div>
+          <div className={tStyle.infoDetail}>{instructors}</div>
+        </div>
+      )}
+
       {location && (
         <div className={tStyle.infoContainer}>
           <div className={tStyle.infoTitle}>Location:&nbsp;</div>
@@ -197,13 +204,6 @@ const CourseInfoExpress = (props) => {
         <div className={tStyle.infoContainer}>
           <div className={tStyle.infoTitle}>Section:&nbsp;</div>
           <div className={tStyle.infoDetail}>{name}</div>
-        </div>
-      )}
-
-      {instructors && (
-        <div className={tStyle.infoContainer}>
-          <div className={tStyle.infoTitle}>Instructor:&nbsp;</div>
-          <div className={tStyle.infoDetail}>{instructors}</div>
         </div>
       )}
 
