@@ -66,7 +66,7 @@ const JarUserLogin = React.forwardRef((props, ref) => {
     };
 
     if (loginState) {
-      await fetch('https://jarney.club/api/auth/login', requestOption)
+      await fetch('https://qa.jarney.club/api/auth/login', requestOption)
         .then((response) => {
           if (response.ok) {
             return response.json();
@@ -83,7 +83,7 @@ const JarUserLogin = React.forwardRef((props, ref) => {
           handleAlert('error', 'Error: Failed to Login');
         });
     } else {
-      await fetch('https://jarney.club/api/auth/register', requestOption)
+      await fetch('https://qa.jarney.club/api/auth/register', requestOption)
         .then((response) => {
           return response.json();
         })
@@ -122,13 +122,9 @@ const JarUserLogin = React.forwardRef((props, ref) => {
       {!loadMessage && (
         <div className={jStyle.formContainer}>
           {loginState ? (
-            <div>
               <LoginForm onSubmit={handleSubmit} />
-            </div>
           ) : (
-            <div>
               <SignupForm onSubmit={handleSubmit} />
-            </div>
           )}
         </div>
       )}

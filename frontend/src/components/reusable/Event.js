@@ -18,6 +18,7 @@ function Event(props) {
   const { details, name, location, time_start, time_end } = eventDetails;
   const detail = details.split(",");
   const loc = location.split(",");
+  const timeSlotHeight= 80;
 
   const calculateHeight = () => {
     const start = time_start.split(":");
@@ -26,14 +27,14 @@ function Event(props) {
     const startMin = parseInt(start[0]) * 60 + parseInt(start[1]);
     const endMin = parseInt(end[0]) * 60 + parseInt(end[1]);
 
-    return ((endMin - startMin) / 60) * 80;
+    return ((endMin - startMin) / 60) * timeSlotHeight;
   };
 
   const calculateTranslate = () => {
-    let res = -1040;
+    let res = - timeSlotHeight * 13;
     const start = time_start.split(":");
     res =
-      res + ((parseInt(start[0]) * 60 + parseInt(start[1]) - 480) * 80) / 60;
+      res + ((parseInt(start[0]) * 60 + parseInt(start[1]) - 480) * timeSlotHeight) / 60;
 
     return res;
   };
@@ -56,8 +57,6 @@ function Event(props) {
     >
       <div>{detail[0]}</div>
       <div>{detail[1]}</div>
-      <div>{name}</div>
-      <div>{loc[0]}</div>
 
       {time_start !== time_end && (
         <div>

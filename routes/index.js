@@ -222,12 +222,21 @@ router.get('/jeremy', function (req, res) {
 /* 
 * called when someone makes a GET req to https://jarney.club/api/pamela
 *
+* 
 */
-router.get('/pamela', function(req, res) {
-    let info = makedatabaserequest(field);
-    res.json({
-        'message': 'pamela\'s endpoint test1',
-        'info': info    });
+const Section = require('../models/internal/objects/classes/Section.js');
+const getSection = require('../services/handlers/coursesTerm.js');
+const parser = require('../services/generateCourseSchedule/parseSectionIdsInSchedule.js');
+
+router.get('/pamela', async function(req, res) {
+    const testSectionsArray = ["83442", "84108", "84110", "84113", "84250"];
+    // let newSection = await getSection.getSectionObject("84234");
+    // console.log(newSection);
+    let eventResult = await parser.sectionsToEvents(testSectionsArray);
+    //let info = await newSection.printPretty();
+    console.log("In index now\n");
+    console.log(eventResult);
+    res.json(eventResult, null, 4);
 }
 );
 

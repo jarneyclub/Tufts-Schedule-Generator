@@ -230,6 +230,8 @@ function Scheduler(props) {
   const [alertSeverity, setAlertSeverity] = useState();
   const [dropdownDegreePlan, setDropdownDegreePlan] = useState(false);
   const [dropdownDegreeReq, setDropdownDegreeReq] = useState(false);
+  const [reqBtnClicked, setReqBtnClicked] = useState(false);
+  const [planBtnClicked, setPlanBtnClicked] = useState(false);
 
   /*  Control for schedule plan dropdown change  */
   const handleScheduleChange = (e) => {
@@ -245,6 +247,8 @@ function Scheduler(props) {
   const handleDegreeInfo = (field) => {
     if (field === "DegreePlan") {
       setDropdownDegreePlan(!dropdownDegreePlan);
+      setPlanBtnClicked(!planBtnClicked);
+      setReqBtnClicked(false);
 
       if (dropdownDegreeReq === true) {
         setDropdownDegreeReq(!dropdownDegreeReq);
@@ -253,10 +257,25 @@ function Scheduler(props) {
 
     if (field === "DegreeReq") {
       setDropdownDegreeReq(!dropdownDegreeReq);
+      setReqBtnClicked(!reqBtnClicked);
+      setPlanBtnClicked(false);
 
       if (dropdownDegreePlan === true) {
         setDropdownDegreePlan(!dropdownDegreePlan);
       }
+    }
+  };
+
+  const handleCloseDegreeInfo = () => {
+    setReqBtnClicked(false);
+    setPlanBtnClicked(false);
+
+    if (dropdownDegreeReq === true) {
+      setDropdownDegreeReq(!dropdownDegreeReq);
+    }
+
+    if (dropdownDegreePlan === true) {
+      setDropdownDegreePlan(!dropdownDegreePlan);
     }
   };
 
@@ -384,7 +403,7 @@ function Scheduler(props) {
 
   const fetchSavedSchedules = async () => {
     setSelectedScheduleIdx(0);
-    await fetch('https://jarney.club/api/schedules')
+    await fetch('https://qa.jarney.club/api/schedules')
       .then((response) => response.json())
       .then((result) => {
         setScheduleExist(true);
@@ -416,7 +435,7 @@ function Scheduler(props) {
   };
 
   const fetchAttributes = async () => {
-    await fetch('https://jarney.club/api/courses/attributes')
+    await fetch('https://qa.jarney.club/api/courses/attributes')
       .then((response) => response.json())
       .then(
         (result) => {
@@ -452,7 +471,7 @@ function Scheduler(props) {
       setShowAlert(true);
     }
     checkCourses &&
-      (await fetch('https://jarney.club/api/schedule', requestOption)
+      (await fetch('https://qa.jarney.club/api/schedule', requestOption)
         .then((response) => response.json())
         .then((result) => {
           if (!result.error) {
@@ -475,7 +494,7 @@ function Scheduler(props) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ sched_name: newName }),
     };
-    await fetch('https://jarney.club/api/schedule', requestOption)
+    await fetch('https://qa.jarney.club/api/schedule', requestOption)
       .then((response) => response.json())
       .then((result) => {
         // refresh
@@ -497,7 +516,7 @@ function Scheduler(props) {
   const fetchData = async () => {
     setLoadMessage(true);
     await fetch(
-      'https://jarney.club/api/courses/term?cnum='
+      'https://qa.jarney.club/api/courses/term?cnum='
         .concat(courseSearchValue)
         .concat('&attr=')
         .concat(selectedAttribute)
@@ -517,6 +536,7 @@ function Scheduler(props) {
     fetchAttributes();
     fetchSavedSchedules();
     handleLogRequired(true);
+      // console.log("Timeunspec:", classes);
   }, []);
 
   useEffect(() => {
@@ -541,7 +561,7 @@ function Scheduler(props) {
   }, [selectedCourses]);
 
   return (
-    <div>
+    <>
       <Helmet>
         <title>JARney | Schedule</title>
         <meta
@@ -552,6 +572,15 @@ function Scheduler(props) {
       {/*scheduleOptions && scheduleOptions?.length !== 0*/}
       {scheduleExist === true ? (
         <div className={sStyle.horizontalWrapper}>
+          {dropdownDegreeReq || dropdownDegreePlan ? (
+            <div
+              className={sStyle.backdrop}
+              onClick={handleCloseDegreeInfo}
+            ></div>
+          ) : (
+            ""
+          )}
+
           <div className={sStyle.leftColumnWrapper}>
             {/* CourseContainer 
                         Contains: 
@@ -563,9 +592,12 @@ function Scheduler(props) {
               {/*time preference */}
               <div className={sStyle.preferenceContainer}>
                 <FormControl className={sStyle.leftCheckboxContainer}>
-                  <FormLabel>Generate Schedule With:</FormLabel>
+                  <FormLabel style={{ margin: "0px" }}>
+                    Generate Schedule With:
+                  </FormLabel>
                   <FormGroup row={true}>
                     <FormControlLabel
+                      style={{ margin: "0px" }}
                       control={
                         <PurpleSwitch
                           checked={coursePreference.waitlist}
@@ -576,6 +608,7 @@ function Scheduler(props) {
                       label="Waitlist"
                     />
                     <FormControlLabel
+                      style={{ margin: "0px" }}
                       control={
                         <PurpleSwitch
                           checked={coursePreference.closed}
@@ -586,6 +619,7 @@ function Scheduler(props) {
                       label="Closed"
                     />
                     <FormControlLabel
+                      style={{ margin: "0px" }}
                       control={
                         <PurpleSwitch
                           checked={coursePreference.online}
@@ -596,6 +630,7 @@ function Scheduler(props) {
                       label="Online"
                     />
                     <FormControlLabel
+                      style={{ margin: "0px" }}
                       control={
                         <PurpleSwitch
                           checked={coursePreference.time_unspecified}
@@ -605,7 +640,7 @@ function Scheduler(props) {
                           }
                         />
                       }
-                      label="Time Unspecified"
+                      label="Time Unstated"
                     />
                   </FormGroup>
                   <Button
@@ -762,7 +797,9 @@ function Scheduler(props) {
               {/* The two drop downs for Degree Plan and Degree Requirements */}
               <div className={sStyle.DegreeInfoContainer}>
                 <div
-                  className={sStyle.degreeBtn}
+                  className={
+                    !planBtnClicked ? sStyle.degreeBtn : sStyle.degreeBtnClicked
+                  }
                   onClick={() => handleDegreeInfo("DegreePlan")}
                 >
                   {" "}
@@ -777,7 +814,9 @@ function Scheduler(props) {
                 )}
                 &nbsp;
                 <div
-                  className={sStyle.degreeBtn}
+                  className={
+                    !reqBtnClicked ? sStyle.degreeBtn : sStyle.degreeBtnClicked
+                  }
                   onClick={() => handleDegreeInfo("DegreeReq")}
                 >
                   Degree Requirement
@@ -798,6 +837,7 @@ function Scheduler(props) {
                 shrink={shrink}
                 classes={classes}
                 onEventClick={handleShowCourseInfo}
+                TimeUnstated={classes?.TimeUnspecified}
               />
             </div>
           </div>
@@ -916,7 +956,7 @@ function Scheduler(props) {
           ></JarUserLogin>
         </Popup>
       )}
-    </div>
+    </>
   );
 }
 
