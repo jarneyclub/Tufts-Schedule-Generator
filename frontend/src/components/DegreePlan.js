@@ -108,7 +108,7 @@ function DegreePlan(props) {
   //set plan exists
   const [planExist, setPlanExist] = useState(false);
 
-  const [semesterPlanOptions, setSemesterPlanOptions] = useState([]); // sets the array of options for semester plans
+  const [semesterPlanOptions, setSemesterPlanOptions] = useState(); // sets the array of options for semester plans
   const [courseSearchValue, setCourseSearchValue] = useState('');
 
   /*  Stores the card options. Should be updated by API in UseEffect  */
@@ -493,10 +493,10 @@ function DegreePlan(props) {
       setPlanExist(false);
      
     }
-    if (logged) {
+    if (logged && semesterPlanOptions) {
       setLoaded(true);
     }
-    setLoaded(true);
+    // setLoaded(true);
     console.log('Loaded is set to true again');
     console.log('PlanExist is:', planExist);
   }, [semesterPlanOptions])
@@ -754,11 +754,7 @@ function DegreePlan(props) {
             </div>
           </div>
             :
-            (loaded && planExist === true ?  
-              (<div className={dpStyle.noSchedulewrapper}>
-                <div>blank page! {semesterPlanOptions?.length}</div>
-              </div>
-              ):(<div className={dpStyle.noSchedulewrapper}>
+            <div className={dpStyle.noSchedulewrapper}>
                 <div>Create your plan now!</div>
                 <IconButton
                   className={dpStyle.editPlanButton}
@@ -766,9 +762,8 @@ function DegreePlan(props) {
                 > 
                 <AddBoxIcon fontSize="large" />
                 </IconButton>
-              </div>)   
-            
-          ))
+            </div> 
+           )
         :
 
               <div className={dpStyle.noSchedulewrapper}>
