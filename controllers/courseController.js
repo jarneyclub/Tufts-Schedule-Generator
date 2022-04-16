@@ -11,6 +11,9 @@ const mongoose = require('mongoose');
 
 exports.getGeneralCourses = async (req, res) => {
     var start = Date.now(); // begin timing API endpoint
+    
+    let queryMatch = req.query.match_method; // get desired matching method
+    
     let reqCourseNum = req.query.cnum.toUpperCase(); // get query string
     if (reqCourseNum === "") { // if no query string, return empty array
         res.json({courses: []});
@@ -30,39 +33,82 @@ exports.getGeneralCourses = async (req, res) => {
         let cursorCourseTitle = 
             dbCoursesGeneral.find({ "course_title": { "$regex": reqCourseNum, "$options": "i"} });
         let termCourseIdMap = {}; // map unique courses from both cnum and cleaned cnum
-        // match user input with general courses' course num
-        await cursorCourseNum.forEach((doc) => {
-            // parse database document
-            let docToInsert = {
-                "gen_course_id" : doc["_id"].valueOf(),
-                "course_num"    : doc["course_num"],
-                "course_title"  : doc["course_title"],
-                "units_esti"    : doc["units_esti"]
-            };
-            termCourseIdMap[doc["_id"].valueOf()] = docToInsert;
-        });
-        // match user input with general courses' course title
-        await cursorCourseTitle.forEach((doc) => {
-            // parse database document
-            let docToInsert = {
-                "gen_course_id" : doc["_id"].valueOf(),
-                "course_num"    : doc["course_num"],
-                "course_title"  : doc["course_title"],
-                "units_esti"    : doc["units_esti"]
-            };
-            termCourseIdMap[doc["_id"].valueOf()] = docToInsert;
-        });
-        // match cleaned user input with general courses' course title
-        await cursorCourseNumCleaned.forEach((doc) => {
-            // parse database document
-            let docToInsert = {
-                "gen_course_id" : doc["_id"].valueOf(),
-                "course_num"    : doc["course_num"],
-                "course_title"  : doc["course_title"],
-                "units_esti"    : doc["units_esti"]
-            };
-            termCourseIdMap[doc["_id"].valueOf()] = docToInsert;
-        });
+        
+        if (queryMatch == "courseNum")
+        {
+            // match user input with general courses' course num
+            await cursorCourseNum.forEach((doc) => {
+                // parse database document
+                let docToInsert = {
+                    "gen_course_id" : doc["_id"].valueOf(),
+                    "course_num"    : doc["course_num"],
+                    "course_title"  : doc["course_title"],
+                    "units_esti"    : doc["units_esti"]
+                };
+                termCourseIdMap[doc["_id"].valueOf()] = docToInsert;
+            });
+        }
+        else if (queryMatch == "courseTitle")
+        {
+            // match user input with general courses' course title
+            await cursorCourseTitle.forEach((doc) => {
+                // parse database document
+                let docToInsert = {
+                    "gen_course_id" : doc["_id"].valueOf(),
+                    "course_num"    : doc["course_num"],
+                    "course_title"  : doc["course_title"],
+                    "units_esti"    : doc["units_esti"]
+                };
+                termCourseIdMap[doc["_id"].valueOf()] = docToInsert;
+            });
+            // match cleaned user input with general courses' course title
+            await cursorCourseNumCleaned.forEach((doc) => {
+                // parse database document
+                let docToInsert = {
+                    "gen_course_id" : doc["_id"].valueOf(),
+                    "course_num"    : doc["course_num"],
+                    "course_title"  : doc["course_title"],
+                    "units_esti"    : doc["units_esti"]
+                };
+                termCourseIdMap[doc["_id"].valueOf()] = docToInsert;
+            });
+        }
+        else if (queryMatch == "matchAll")
+        {
+            // match user input with general courses' course num
+            await cursorCourseNum.forEach((doc) => {
+                // parse database document
+                let docToInsert = {
+                    "gen_course_id" : doc["_id"].valueOf(),
+                    "course_num"    : doc["course_num"],
+                    "course_title"  : doc["course_title"],
+                    "units_esti"    : doc["units_esti"]
+                };
+                termCourseIdMap[doc["_id"].valueOf()] = docToInsert;
+            });
+            // match user input with general courses' course title
+            await cursorCourseTitle.forEach((doc) => {
+                // parse database document
+                let docToInsert = {
+                    "gen_course_id" : doc["_id"].valueOf(),
+                    "course_num"    : doc["course_num"],
+                    "course_title"  : doc["course_title"],
+                    "units_esti"    : doc["units_esti"]
+                };
+                termCourseIdMap[doc["_id"].valueOf()] = docToInsert;
+            });
+            // match cleaned user input with general courses' course title
+            await cursorCourseNumCleaned.forEach((doc) => {
+                // parse database document
+                let docToInsert = {
+                    "gen_course_id" : doc["_id"].valueOf(),
+                    "course_num"    : doc["course_num"],
+                    "course_title"  : doc["course_title"],
+                    "units_esti"    : doc["units_esti"]
+                };
+                termCourseIdMap[doc["_id"].valueOf()] = docToInsert;
+            });
+        }
 
         // get course documents array
         let documents = [];
@@ -92,6 +138,9 @@ exports.getGeneralCourses = async (req, res) => {
 
 exports.getTermCourses = async (req, res) => {
     var start = Date.now(); // begin timing API endpoint
+    
+    let queryMatch = req.query.match_method; // get desired matching method
+    
     // get query strings
     let reqCourseInput = req.query.cnum.toUpperCase();
     
@@ -141,63 +190,128 @@ exports.getTermCourses = async (req, res) => {
         else if ( reqAttr === "" ) {
             /* only reqCourseInput is provided */
 
-            // query courses in database by course num and course title
-            let cursorCourseNum = 
-                dbCourses.find({ "course_num": { "$regex": '^' + reqCourseInput } });
-            let cursorCourseNumCleaned =
-                dbCourses.find({ "course_num": { "$regex": '^' + cleanCourseNum(reqCourseInput) } });
-            let cursorCourseTitle = 
-                dbCourses.find({ "course_title": { "$regex": reqCourseInput, "$options": "i"} });
+            // query courses in database by course num or course title based on queryMatch
+            if (queryMatch == "courseTitle") 
+            {
+                let cursorCourseTitle = 
+                    dbCourses.find({ "course_title": { "$regex": reqCourseInput, "$options": "i"} });
+                let termCourseIdMap = {}; // map unique courses from both cnum and ctitle cursors
+                await cursorCourseTitle.forEach((doc) => {
+                    // parse database document
+                    let docToInsert = {
+                        "term_course_id": doc["term_course_id"],
+                        "course_num"    : doc["course_num"],
+                        "course_title"  : doc["course_title"],
+                        "units_esti"    : doc["units_esti"],
+                        "attributes"    : doc["attributes"],
+                        "closed"        : doc["closed"],
+                        "is_virtual"    : doc["is_virtual"],
+                        "description"    : doc["description"],
+                        "last_term"     : doc["last_term"]
+                    };
+                    termCourseIdMap[doc["term_course_id"]] = docToInsert;
+                });
+            }
+            else if (queryMatch == "courseNum")
+            {
+                let cursorCourseNum = 
+                    dbCourses.find({ "course_num": { "$regex": '^' + reqCourseInput } });
+                let cursorCourseNumCleaned =
+                    dbCourses.find({ "course_num": { "$regex": '^' + cleanCourseNum(reqCourseInput) } });
+                let termCourseIdMap = {}; // map unique courses from both cnum and ctitle cursors
+                // map term course id to a course document from the course num cursor
+                await cursorCourseNum.forEach((doc) => {
+                    // parse database document
+                    let docToInsert = {
+                        "term_course_id": doc["term_course_id"],
+                        "course_num"    : doc["course_num"],
+                        "course_title"  : doc["course_title"],
+                        "units_esti"    : doc["units_esti"],
+                        "attributes"    : doc["attributes"],
+                        "closed"        : doc["closed"],
+                        "is_virtual"    : doc["is_virtual"],
+                        "description"    : doc["description"],
+                        "last_term"     : doc["last_term"]
+                    };
+                    termCourseIdMap[doc["term_course_id"]] = docToInsert;
+                });
+                // map term course id to a course document from the course num cursor
+                await cursorCourseNumCleaned.forEach((doc) => {
+                    // parse database document
+                    let docToInsert = {
+                        "term_course_id": doc["term_course_id"],
+                        "course_num"    : doc["course_num"],
+                        "course_title"  : doc["course_title"],
+                        "units_esti"    : doc["units_esti"],
+                        "attributes"    : doc["attributes"],
+                        "closed"        : doc["closed"],
+                        "is_virtual"    : doc["is_virtual"],
+                        "description"    : doc["description"],
+                        "last_term"     : doc["last_term"]
+                    };
+                    termCourseIdMap[doc["term_course_id"]] = docToInsert;
+                });
+            }
+            else if (queryMatch == "matchAll")
+            {
+                // query courses in database by course num and course title
+                let cursorCourseNum = 
+                    dbCourses.find({ "course_num": { "$regex": '^' + reqCourseInput } });
+                let cursorCourseNumCleaned =
+                    dbCourses.find({ "course_num": { "$regex": '^' + cleanCourseNum(reqCourseInput) } });
+                let cursorCourseTitle = 
+                    dbCourses.find({ "course_title": { "$regex": reqCourseInput, "$options": "i"} });
 
-            let termCourseIdMap = {}; // map unique courses from both cnum and ctitle cursors
-            // map term course id to a course document from the course num cursor
-            await cursorCourseNum.forEach((doc) => {
-                // parse database document
-                let docToInsert = {
-                    "term_course_id": doc["term_course_id"],
-                    "course_num"    : doc["course_num"],
-                    "course_title"  : doc["course_title"],
-                    "units_esti"    : doc["units_esti"],
-                    "attributes"    : doc["attributes"],
-                    "closed"        : doc["closed"],
-                    "is_virtual"    : doc["is_virtual"],
-                    "description"    : doc["description"],
-                    "last_term"     : doc["last_term"]
-                };
-                termCourseIdMap[doc["term_course_id"]] = docToInsert;
-            });
-            // map term course id to a course document from the course num cursor
-            await cursorCourseNumCleaned.forEach((doc) => {
-                // parse database document
-                let docToInsert = {
-                    "term_course_id": doc["term_course_id"],
-                    "course_num"    : doc["course_num"],
-                    "course_title"  : doc["course_title"],
-                    "units_esti"    : doc["units_esti"],
-                    "attributes"    : doc["attributes"],
-                    "closed"        : doc["closed"],
-                    "is_virtual"    : doc["is_virtual"],
-                    "description"    : doc["description"],
-                    "last_term"     : doc["last_term"]
-                };
-                termCourseIdMap[doc["term_course_id"]] = docToInsert;
-            });
-            // map term course id to a course document from the course title cursor
-            await cursorCourseTitle.forEach((doc) => {
-                // parse database document
-                let docToInsert = {
-                    "term_course_id": doc["term_course_id"],
-                    "course_num"    : doc["course_num"],
-                    "course_title"  : doc["course_title"],
-                    "units_esti"    : doc["units_esti"],
-                    "attributes"    : doc["attributes"],
-                    "closed"        : doc["closed"],
-                    "is_virtual"    : doc["is_virtual"],
-                    "description"    : doc["description"],
-                    "last_term"     : doc["last_term"]
-                };
-                termCourseIdMap[doc["term_course_id"]] = docToInsert;
-            });
+                let termCourseIdMap = {}; // map unique courses from both cnum and ctitle cursors
+                // map term course id to a course document from the course num cursor
+                await cursorCourseNum.forEach((doc) => {
+                    // parse database document
+                    let docToInsert = {
+                        "term_course_id": doc["term_course_id"],
+                        "course_num"    : doc["course_num"],
+                        "course_title"  : doc["course_title"],
+                        "units_esti"    : doc["units_esti"],
+                        "attributes"    : doc["attributes"],
+                        "closed"        : doc["closed"],
+                        "is_virtual"    : doc["is_virtual"],
+                        "description"    : doc["description"],
+                        "last_term"     : doc["last_term"]
+                    };
+                    termCourseIdMap[doc["term_course_id"]] = docToInsert;
+                });
+                // map term course id to a course document from the course num cursor
+                await cursorCourseNumCleaned.forEach((doc) => {
+                    // parse database document
+                    let docToInsert = {
+                        "term_course_id": doc["term_course_id"],
+                        "course_num"    : doc["course_num"],
+                        "course_title"  : doc["course_title"],
+                        "units_esti"    : doc["units_esti"],
+                        "attributes"    : doc["attributes"],
+                        "closed"        : doc["closed"],
+                        "is_virtual"    : doc["is_virtual"],
+                        "description"    : doc["description"],
+                        "last_term"     : doc["last_term"]
+                    };
+                    termCourseIdMap[doc["term_course_id"]] = docToInsert;
+                });
+                // map term course id to a course document from the course title cursor
+                await cursorCourseTitle.forEach((doc) => {
+                    // parse database document
+                    let docToInsert = {
+                        "term_course_id": doc["term_course_id"],
+                        "course_num"    : doc["course_num"],
+                        "course_title"  : doc["course_title"],
+                        "units_esti"    : doc["units_esti"],
+                        "attributes"    : doc["attributes"],
+                        "closed"        : doc["closed"],
+                        "is_virtual"    : doc["is_virtual"],
+                        "description"    : doc["description"],
+                        "last_term"     : doc["last_term"]
+                    };
+                    termCourseIdMap[doc["term_course_id"]] = docToInsert;
+                });
+            }
             
             // get course documents array
             let documents = [];
@@ -226,82 +340,167 @@ exports.getTermCourses = async (req, res) => {
         }
         else {
             /* all parameters are provided */
-            // get cursor matching user input with course num and attr
-            let cursorCourseNumAttr = dbCourses.find({
-                "course_num": {
-                    "$regex": '^' + reqCourseInput
-                },
-                "attributes": {
-                    "$all": [reqAttr]
-                }
-            });
-            let cursorCourseNumCleanedAttr = dbCourses.find({ 
-                "course_num": { 
-                    "$regex": '^' + cleanCourseNum(reqCourseInput) 
-                },
-                "attributes": {
-                    "$all": [reqAttr]
-            }});
-            // get cursor matching user input with course title and attr
-            let cursorCourseTitleAttr = dbCourses.find({
-                "course_title": { 
-                    "$regex": reqCourseInput, 
-                    "$options": "i"
-                },
-                "attributes": {
-                    "$all": [reqAttr]
-                }
-            });
+            if (queryMatch == "courseNum")
+            {
+                // get cursor matching user input with course num and attr
+                let cursorCourseNumAttr = dbCourses.find({
+                    "course_num": {
+                        "$regex": '^' + reqCourseInput
+                    },
+                    "attributes": {
+                        "$all": [reqAttr]
+                    }
+                });
+                let cursorCourseNumCleanedAttr = dbCourses.find({ 
+                    "course_num": { 
+                        "$regex": '^' + cleanCourseNum(reqCourseInput) 
+                    },
+                    "attributes": {
+                        "$all": [reqAttr]
+                }});
+                let termCourseIdMap = {}; // map unique courses from both cnum and ctitle cursors
+                // map term course id to a course document from the course num cursor
+                await cursorCourseNumAttr.forEach((doc) => {
+                    // parse database document
+                    let docToInsert = {
+                        "term_course_id": doc["term_course_id"],
+                        "course_num"    : doc["course_num"],
+                        "course_title"  : doc["course_title"],
+                        "units_esti"    : doc["units_esti"],
+                        "attributes"    : doc["attributes"],
+                        "closed"        : doc["closed"],
+                        "is_virtual"    : doc["is_virtual"],
+                        "description"    : doc["description"],
+                        "last_term"     : doc["last_term"]
+                    };
+                    termCourseIdMap[doc["term_course_id"]] = docToInsert;
+                });
+                // map term course id to a course document from the course num cursor
+                await cursorCourseNumCleanedAttr.forEach((doc) => {
+                    // parse database document
+                    let docToInsert = {
+                        "term_course_id": doc["term_course_id"],
+                        "course_num"    : doc["course_num"],
+                        "course_title"  : doc["course_title"],
+                        "units_esti"    : doc["units_esti"],
+                        "attributes"    : doc["attributes"],
+                        "closed"        : doc["closed"],
+                        "is_virtual"    : doc["is_virtual"],
+                        "description"    : doc["description"],
+                        "last_term"     : doc["last_term"]
+                    };
+                    termCourseIdMap[doc["term_course_id"]] = docToInsert;
+                });
+            }
+            else if (queryMatch == "courseTitle")
+            {
+                // get cursor matching user input with course title and attr
+                let cursorCourseTitleAttr = dbCourses.find({
+                    "course_title": { 
+                        "$regex": reqCourseInput, 
+                        "$options": "i"
+                    },
+                    "attributes": {
+                        "$all": [reqAttr]
+                    }
+                });
+                let termCourseIdMap = {}; // map unique courses from both cnum and ctitle cursors
+                // map term course id to a course document from the course title cursor
+                await cursorCourseTitleAttr.forEach((doc) => {
+                    // parse database document
+                    let docToInsert = {
+                        "term_course_id": doc["term_course_id"],
+                        "course_num"    : doc["course_num"],
+                        "course_title"  : doc["course_title"],
+                        "units_esti"    : doc["units_esti"],
+                        "attributes"    : doc["attributes"],
+                        "closed"        : doc["closed"],
+                        "is_virtual"    : doc["is_virtual"],
+                        "description"    : doc["description"],
+                        "last_term"     : doc["last_term"]
+                    };
+                    termCourseIdMap[doc["term_course_id"]] = docToInsert;
+                });
+            }
+            else if (queryMatch == "matchAll")
+            {
+                // get cursor matching user input with course num and attr
+                let cursorCourseNumAttr = dbCourses.find({
+                    "course_num": {
+                        "$regex": '^' + reqCourseInput
+                    },
+                    "attributes": {
+                        "$all": [reqAttr]
+                    }
+                });
+                let cursorCourseNumCleanedAttr = dbCourses.find({ 
+                    "course_num": { 
+                        "$regex": '^' + cleanCourseNum(reqCourseInput) 
+                    },
+                    "attributes": {
+                        "$all": [reqAttr]
+                }});
+                // get cursor matching user input with course title and attr
+                let cursorCourseTitleAttr = dbCourses.find({
+                    "course_title": { 
+                        "$regex": reqCourseInput, 
+                        "$options": "i"
+                    },
+                    "attributes": {
+                        "$all": [reqAttr]
+                    }
+                });
 
-            let termCourseIdMap = {}; // map unique courses from both cnum and ctitle cursors
-            // map term course id to a course document from the course num cursor
-            await cursorCourseNumAttr.forEach((doc) => {
-                // parse database document
-                let docToInsert = {
-                    "term_course_id": doc["term_course_id"],
-                    "course_num"    : doc["course_num"],
-                    "course_title"  : doc["course_title"],
-                    "units_esti"    : doc["units_esti"],
-                    "attributes"    : doc["attributes"],
-                    "closed"        : doc["closed"],
-                    "is_virtual"    : doc["is_virtual"],
-                    "description"    : doc["description"],
-                    "last_term"     : doc["last_term"]
-                };
-                termCourseIdMap[doc["term_course_id"]] = docToInsert;
-            });
-            // map term course id to a course document from the course num cursor
-            await cursorCourseNumCleanedAttr.forEach((doc) => {
-                // parse database document
-                let docToInsert = {
-                    "term_course_id": doc["term_course_id"],
-                    "course_num"    : doc["course_num"],
-                    "course_title"  : doc["course_title"],
-                    "units_esti"    : doc["units_esti"],
-                    "attributes"    : doc["attributes"],
-                    "closed"        : doc["closed"],
-                    "is_virtual"    : doc["is_virtual"],
-                    "description"    : doc["description"],
-                    "last_term"     : doc["last_term"]
-                };
-                termCourseIdMap[doc["term_course_id"]] = docToInsert;
-            });
-            // map term course id to a course document from the course title cursor
-            await cursorCourseTitleAttr.forEach((doc) => {
-                // parse database document
-                let docToInsert = {
-                    "term_course_id": doc["term_course_id"],
-                    "course_num"    : doc["course_num"],
-                    "course_title"  : doc["course_title"],
-                    "units_esti"    : doc["units_esti"],
-                    "attributes"    : doc["attributes"],
-                    "closed"        : doc["closed"],
-                    "is_virtual"    : doc["is_virtual"],
-                    "description"    : doc["description"],
-                    "last_term"     : doc["last_term"]
-                };
-                termCourseIdMap[doc["term_course_id"]] = docToInsert;
-            });
+                let termCourseIdMap = {}; // map unique courses from both cnum and ctitle cursors
+                // map term course id to a course document from the course num cursor
+                await cursorCourseNumAttr.forEach((doc) => {
+                    // parse database document
+                    let docToInsert = {
+                        "term_course_id": doc["term_course_id"],
+                        "course_num"    : doc["course_num"],
+                        "course_title"  : doc["course_title"],
+                        "units_esti"    : doc["units_esti"],
+                        "attributes"    : doc["attributes"],
+                        "closed"        : doc["closed"],
+                        "is_virtual"    : doc["is_virtual"],
+                        "description"    : doc["description"],
+                        "last_term"     : doc["last_term"]
+                    };
+                    termCourseIdMap[doc["term_course_id"]] = docToInsert;
+                });
+                // map term course id to a course document from the course num cursor
+                await cursorCourseNumCleanedAttr.forEach((doc) => {
+                    // parse database document
+                    let docToInsert = {
+                        "term_course_id": doc["term_course_id"],
+                        "course_num"    : doc["course_num"],
+                        "course_title"  : doc["course_title"],
+                        "units_esti"    : doc["units_esti"],
+                        "attributes"    : doc["attributes"],
+                        "closed"        : doc["closed"],
+                        "is_virtual"    : doc["is_virtual"],
+                        "description"    : doc["description"],
+                        "last_term"     : doc["last_term"]
+                    };
+                    termCourseIdMap[doc["term_course_id"]] = docToInsert;
+                });
+                // map term course id to a course document from the course title cursor
+                await cursorCourseTitleAttr.forEach((doc) => {
+                    // parse database document
+                    let docToInsert = {
+                        "term_course_id": doc["term_course_id"],
+                        "course_num"    : doc["course_num"],
+                        "course_title"  : doc["course_title"],
+                        "units_esti"    : doc["units_esti"],
+                        "attributes"    : doc["attributes"],
+                        "closed"        : doc["closed"],
+                        "is_virtual"    : doc["is_virtual"],
+                        "description"    : doc["description"],
+                        "last_term"     : doc["last_term"]
+                    };
+                    termCourseIdMap[doc["term_course_id"]] = docToInsert;
+                });
+            }
             
             // get course documents array
             let documents = [];
