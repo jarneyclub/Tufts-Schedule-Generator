@@ -173,11 +173,11 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/CourseGeneral"
-  /courses/term?cnum={e1}&attr={e2}:
+  /courses/term?cnum={e1}&attr={e2}&match_method={e3}:
     get:
       tags:
         - Courses
-      summary: Get a list of courses offered in this term of which course number matches given course-num and attribute
+      summary: Get a list of courses offered in this term of which course number matches given course-num, attribute, and the desired matching method. 
       description: example. _BASE_URL/courses/term/query/?cnum=CS-0011&attr=SoE-Mathematics
       parameters:
         - in: query
@@ -186,6 +186,10 @@ paths:
             type: string
         - in: query
           name: attr
+          schema:
+            type: string
+        - in: query
+          name: match_method
           schema:
             type: string
       responses:
