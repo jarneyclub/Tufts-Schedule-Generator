@@ -434,24 +434,18 @@ function DegreePlan(props) {
       .catch((error) => {});
   };
 
-  /*  Initial fetching for plans when page first loads */
+  /*  Set Login required for Degree Plan to be true */
   useEffect(() => {
-    fetchPlans();
-    fetchPrivateReqs();
     handleLogRequired(true);
   }, []);
 
   useEffect(() => {
-    if (logged) {
-      fetchPlans();
-      fetchPrivateReqs();
-    }
-  }, [logged]);
-
-  useEffect(() => {
     console.log('selectedPlanIdx changed useEffect called');
     fetchPlans();
-  }, [selectedPlanIdx]);
+    if (logged) {
+      fetchPrivateReqs();
+    }
+  }, [selectedPlanIdx, logged]);
 
   useEffect(() => {
     cardOptions?.map((card) => fetchSaveTerm(card));
