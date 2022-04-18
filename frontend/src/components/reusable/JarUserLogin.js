@@ -66,7 +66,7 @@ const JarUserLogin = React.forwardRef((props, ref) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(values),
     };
-    await fetch('https://qa.jarney.club/api/auth//auth/setup_password_reset', requestOption)
+    await fetch('https://qa.jarney.club/api/auth/setup_password_reset', requestOption)
         .then((response) => {
           if (response.ok) {
             return response.json();
