@@ -19,9 +19,6 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import Backdrop from "@mui/material/Backdrop";
 import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
-import CancelIcon from '@material-ui/icons/Cancel';
-import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import dpStyle from './style/DegreePlan.module.css';
 import pStyle from './reusable/reusableStyles/Popup.module.css';
 import Popup from './reusable/Popup';
@@ -481,16 +478,13 @@ function DegreePlan(props) {
   useEffect(() => {
     if (semesterPlanOptions && semesterPlanOptions.length !== 0) {
       setPlanExist(true);
-     
     }
     else {
       setPlanExist(false);
-     
     }
     if (logged) {
       setLoaded(true);
     }
-    // setLoaded(true);
     console.log('Loaded is set to true again');
     console.log('PlanExist is:', planExist);
   }, [semesterPlanOptions])
