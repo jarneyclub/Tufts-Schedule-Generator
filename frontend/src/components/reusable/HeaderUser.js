@@ -27,6 +27,7 @@ function HeaderUser(props) {
 
   const [loginPopup, setLoginPopup] = useState(false);
   const [signupPopup, setSignupPopup] = useState(false);
+  const [resetPopup, setResetPopup] = useState(false);
 
   const navbarRef = useRef();
 
@@ -219,6 +220,7 @@ function HeaderUser(props) {
           <JarUserLogin
             loginState={loginPopup}
             signupState={signupPopup}
+            resetState={resetPopup}
             onClose={() => {
               setLoginPopup(false);
               setSignupPopup(false);
