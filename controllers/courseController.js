@@ -144,10 +144,8 @@ exports.getTermCourses = async (req, res) => {
     
     let queryMatch = req.query.match_method; // get desired matching method
     // if no match method specified, set to matchAll as default
-    if (queryMatch === "") 
-    {
+    if (queryMatch === "" || queryMatch === undefined)
         queryMatch = "matchAll"; 
-    }
     
     // get query strings
     let reqCourseInput = req.query.cnum.toUpperCase();
