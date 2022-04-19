@@ -426,6 +426,9 @@ function Scheduler(props) {
               !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreTU,
           }));
         }
+        else {
+          setScheduleExist(false);
+        }
         
       })
       .catch((error) => {});
