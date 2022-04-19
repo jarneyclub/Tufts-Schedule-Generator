@@ -485,8 +485,6 @@ function DegreePlan(props) {
     if (logged) {
       setLoaded(true);
     }
-    console.log('Loaded is set to true again');
-    console.log('PlanExist is:', planExist);
   }, [semesterPlanOptions])
 
   
