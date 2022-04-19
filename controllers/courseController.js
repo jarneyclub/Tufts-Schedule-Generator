@@ -12,12 +12,12 @@ const mongoose = require('mongoose');
 exports.getGeneralCourses = async (req, res) => {
     var start = Date.now(); // begin timing API endpoint
     
-    // let queryMatch = req.query.match_method; // get desired matching method
-    // // if no match method specified, set to matchAll as default
-    // if (queryMatch === "") 
-    // {
-    //     queryMatch = "matchAll"; 
-    // }
+    let queryMatch = req.query.match_method; // get desired matching method
+    // if no match method specified, set to matchAll as default
+    if (queryMatch === "") 
+    {
+        queryMatch = "matchAll"; 
+    }
     
     let reqCourseNum = req.query.cnum.toUpperCase(); // get query string
     if (reqCourseNum === "") { // if no query string, return empty array
@@ -144,12 +144,12 @@ exports.getGeneralCourses = async (req, res) => {
 exports.getTermCourses = async (req, res) => {
     var start = Date.now(); // begin timing API endpoint
     
-    // let queryMatch = req.query.match_method; // get desired matching method
-    // // if no match method specified, set to matchAll as default
-    // if (queryMatch === "") 
-    // {
-    //     queryMatch = "matchAll"; 
-    // }
+    let queryMatch = req.query.match_method; // get desired matching method
+    // if no match method specified, set to matchAll as default
+    if (queryMatch === "") 
+    {
+        queryMatch = "matchAll"; 
+    }
     
     // get query strings
     let reqCourseInput = req.query.cnum.toUpperCase();
