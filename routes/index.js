@@ -150,11 +150,13 @@ router.post('/auth/login_cookie',
              authController.signAccessTokenAndAttachCookie,
              userController.sendLoginResponse);
 
-// router.post('/auth/password_reset_email',
-//              authController.makePasswordResetEntry,
-//              userController.sendEmailToUser);
+router.post('/auth/setup_password_reset',
+             authController.setupUserPasswordResetAPI);
 
-// ////////////////////////////////////////
+router.post('/auth/do_password_reset',
+             authController.doUserPasswordResetAPI);
+
+////////////////////////////////////////
 //                                    //
 //             Schedule               //
 //                                    //

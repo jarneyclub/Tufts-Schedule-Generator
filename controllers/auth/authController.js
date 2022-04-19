@@ -1,8 +1,6 @@
 /*
 * Name: authController.js
-* API endpoints implementation for lower level authentication operations.
-* 
-* 
+* API endpoint processing for authentication operations.
 */
 
 const jwt = require('jsonwebtoken');
@@ -10,7 +8,9 @@ const mongoose = require('mongoose');
 const resHandler = require("../utils/resHandler.js");
 const passport = require('passport');
 const analyticsHandler = require('../../services/handlers/analytics.js');
-
+const usersHandler = require('../../services/handlers/users.js');
+const authHandler = require('../../services/handlers/authentication.js');
+const errorHandler = require("../utils/controllerErrorHandler.js").getErrorHandler("authController");
 /**
  * Authenticate user credentials, set req.userid and req.password, and 
  * then go to next middleware
@@ -89,7 +89,8 @@ exports.signAccessTokenAndSendAsCookie = async (res, userid) => {
  * @param {*} res
  */
 exports.signAccessTokenAndAttachCookie = async (req, res, next) => {
-    let token = jwt.sign({ userid: req.userid, role: req.role}, process.env.TOKEN_SECRET, { expiresIn: '24h'});
+    let token = jwt.sign({ userid: req.userid, role: req.role}, 
+        process.env.TOKEN_SECRET, { expiresIn: '24h'});
     res.cookie("access_token", token, {
         maxAge: 24 * 60 * 60 * 1000,
         httpOnly: true,
@@ -169,5 +170,52 @@ exports.authenticateToken = async (req, res, next) => {
         } else {
             resHandler.respondWithCustomError("UNKNOWN USER", "Token Authentication", "306", "401", "Authentication Error", "Token was not provided", "Token was not provided", true, res);
         }
+    }
+}
+
+/**
+ * Handle API request validation and response for setting up password reset
+ * procedure.
+ * Preconditions:
+ * - req.body.userid is set
+ * @param {*} req
+ * @param {*} res
+ */
+ exports.setupUserPasswordResetAPI = async (req, res) => {
+    try {
+        const { userid } = req.body;
+        if (userid === undefined)
+            throw {id: "201", status: "400", title: "Request Error", detail : "userid is undefined", databaseDetail: "req.body.userid is undefined"};
+        await authHandler.setupPasswordResetForUser(userid);
+        
+        res.json({"status": "success"});
+        
+    } catch (err) {
+        errorHandler(err, "setupUserPasswordResetAPI", res, req.body.userid, "user");
+    }
+};
+
+exports.doUserPasswordResetAPI = async (req, res) => {
+    try {
+        let { token, password, password_confirmation } = req.body;
+        // request body validation
+        if (token === undefined)
+            throw {id: "201", status: "400", title: "Request Error", detail : "token is undefined", databaseDetail: "req.body.token is undefined"};
+        if (password === undefined)
+            throw {id: "201", status: "400", title: "Request Error", detail : "password is undefined", databaseDetail: "req.body.password is undefined"};
+        if (password_confirmation === undefined)
+            throw {id: "201", status: "400", title: "Request Error", detail : "password_confirmation is undefined", databaseDetail: "req.body.password_confirmation is undefined"};
+        if (typeof token !== 'string')
+            throw {id: "201", status: "400", title: "Request Error", detail : "token is invalid", databaseDetail: "req.body.token is not a string"};
+        if (typeof password !== 'string')
+            throw {id: "201", status: "400", title: "Request Error", detail : "password is invalid", databaseDetail: "req.body.password is not a string"};
+        if (typeof password_confirmation !== 'string')
+            throw {id: "201", status: "400", title: "Request Error", detail : "password_confirmation is invalid", databaseDetail: "req.body.password_confirmation is not a string"};
+        
+        await authHandler.doPasswordResetForUser(token, password, password_confirmation);
+        res.json({"status": "success"});
+    }
+    catch (err) {
+        errorHandler(err, "doUserPasswordReset", res, req.userid, req.role);
     }
 }

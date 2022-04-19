@@ -181,7 +181,7 @@ paths:
               properties:
                 token:
                   type: string
-                  description: hash value of the password reset token. It comes from something like jarney.club/passwordreset/{HASH}}
+                  description: hash value of the password reset token. It comes from something like jarney.club/passwordreset#{HASH}}
                 password:
                   type: string
                   description: new password for the account. It can be the same as before.
