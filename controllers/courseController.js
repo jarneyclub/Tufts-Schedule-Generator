@@ -14,15 +14,10 @@ exports.getGeneralCourses = async (req, res) => {
     
     let queryMatch = req.query.match_method; // get desired matching method
     // if no match method specified, set to matchAll as default
-    if (queryMatch === "") 
-    {
+    if (queryMatch === undefined || queryMatch === "")
         queryMatch = "matchAll"; 
-    }
     
     let reqCourseNum = req.query.cnum.toUpperCase(); // get query string
-    console.log("(courseCntrl/getGeneralCourses) queryMatch: ", queryMatch);
-    console.log("(courseCntrl/getGeneralCourses) reqCourseNum: ", reqCourseNum);
-    console.log("(courseCntrl/getGeneralCourses) req.query.cnum: ", req.query.cnum);
     if (reqCourseNum === "") { // if no query string, return empty array
         res.json({courses: []});
     }
