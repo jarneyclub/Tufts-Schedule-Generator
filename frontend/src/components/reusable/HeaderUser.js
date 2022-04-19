@@ -10,6 +10,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Button, IconButton, ClickAwayListener } from '@material-ui/core';
+import Backdrop from '@mui/material/Backdrop';
 import MenuIcon from '@material-ui/icons/Menu';
 import HelpIcon from '@material-ui/icons/Help';
 import hStyle from './reusableStyles/HeaderUser.module.css';
