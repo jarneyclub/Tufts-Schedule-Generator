@@ -19,23 +19,23 @@ const validationSchema = Yup.object({
 
 function PasswordResetLink () {
   const { hash } = useParams();
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState();
-  const [alertSeverity, setAlertSeverity] = useState();
+  // const [showAlert, setShowAlert] = useState(false);
+  // const [alertMessage, setAlertMessage] = useState();
+  // const [alertSeverity, setAlertSeverity] = useState();
   const [loadMessage, setLoadMessage] = useState(false);
 
   const history = useHistory();
-  const handleAlert = (severity: Boolean, message: String) => {
-    setAlertMessage(message);
-    setAlertSeverity(severity);
-    setShowAlert(true);
-  };
+  // const handleAlert = (severity: Boolean, message: String) => {
+  //   setAlertMessage(message);
+  //   setAlertSeverity(severity);
+  //   setShowAlert(true);
+  // };
 
   const handleSubmitNewPassword = async (values) => {
     const requestOption = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(values),
+      body: JSON.stringify({...values, toke: hash}),
     };
     await fetch(`https://qa.jarney.club/api/auth/do_password_reset/${hash}`, requestOption)
         .then((response) => {
@@ -51,7 +51,7 @@ function PasswordResetLink () {
         })
         .catch((error) => {
           setLoadMessage(false);
-          handleAlert('error', 'Error: Failed to Reset password');
+          // handleAlert('error', 'Error: Failed to Reset password');
         });
   }
 
