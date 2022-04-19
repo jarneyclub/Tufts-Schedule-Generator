@@ -194,7 +194,6 @@ function Scheduler(props) {
     handleLogRequired,
   } = props;
 
-  const [loaded, setLoaded] = useState(false);
   /* schedule Dropdown */
   const [scheduleExist, setScheduleExist] = useState(false);
   const [scheduleOptions, setScheduleOptions] = useState([]);
@@ -406,30 +405,28 @@ function Scheduler(props) {
     await fetch('https://qa.jarney.club/api/schedules')
       .then((response) => response.json())
       .then((result) => {
-        setScheduleExist(true);
-        console.log('scheduleExist is set to true');
+        
+        if (result.schedules.length !== 0) {
+          setScheduleExist(true);
+          setScheduleOptions(result.schedules);
+          setSelectedSchedule(result.schedules[selectedScheduleIdx].sched_name);
+          setSelectedScheduleID(result.schedules[selectedScheduleIdx].sched_id);
+          setSelectedCourses(result.schedules[selectedScheduleIdx]?.courses);
+          setClasses(result.schedules[selectedScheduleIdx]?.classes);
 
-        // if (result.schedules.length === 0) {
-        //   fetchCreateSchedule("Schedule #1");
-        // } else {
-        setScheduleOptions(result.schedules);
-        setSelectedSchedule(result.schedules[selectedScheduleIdx].sched_name);
-        setSelectedScheduleID(result.schedules[selectedScheduleIdx].sched_id);
-        setSelectedCourses(result.schedules[selectedScheduleIdx]?.courses);
-        setClasses(result.schedules[selectedScheduleIdx]?.classes);
-
-        setTimePref(result.schedules[selectedScheduleIdx]?.filter?.time);
-        setCoursePreference((prev) => ({
-          ...prev,
-          waitlist:
-            !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreWL,
-          closed:
-            !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreClosed,
-          online: !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreM,
-          time_unspecified:
-            !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreTU,
-        }));
-        setLoaded(true);
+          setTimePref(result.schedules[selectedScheduleIdx]?.filter?.time);
+          setCoursePreference((prev) => ({
+            ...prev,
+            waitlist:
+              !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreWL,
+            closed:
+              !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreClosed,
+            online: !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreM,
+            time_unspecified:
+              !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreTU,
+          }));
+        }
+        
       })
       .catch((error) => {});
   };
@@ -533,10 +530,7 @@ function Scheduler(props) {
   };
 
   useEffect(() => {
-    fetchAttributes();
-    fetchSavedSchedules();
     handleLogRequired(true);
-      // console.log("Timeunspec:", classes);
   }, []);
 
   useEffect(() => {

@@ -18,7 +18,6 @@ import Scheduler from './components/Scheduler';
 import HelpPage from './components/HelpPage';
 import Header from './components/reusable/HeaderUser';
 
-import EinaBold from './fonts/Eina03-SemiBold.ttf';
 import EinaRegular from './fonts/Eina03-Regular.ttf';
 import PasswordResetLink from './components/PasswordResetPage';
 
