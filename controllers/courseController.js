@@ -20,6 +20,9 @@ exports.getGeneralCourses = async (req, res) => {
     }
     
     let reqCourseNum = req.query.cnum.toUpperCase(); // get query string
+    console.log("(courseCntrl/getGeneralCourses) queryMatch: ", queryMatch);
+    console.log("(courseCntrl/getGeneralCourses) reqCourseNum: ", reqCourseNum);
+    console.log("(courseCntrl/getGeneralCourses) req.query.cnum: ", req.query.cnum);
     if (reqCourseNum === "") { // if no query string, return empty array
         res.json({courses: []});
     }
