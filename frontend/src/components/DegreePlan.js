@@ -298,8 +298,6 @@ function DegreePlan(props) {
   };
 
   const handleSetSelectedPlanIdx = (idx) => {
-    console.log('idx before change: ', selectedPlanIdx);
-    console.log('idx change to: ', idx);
     setSelectedPlanIdx(idx);
   };
 
@@ -369,30 +367,18 @@ function DegreePlan(props) {
    */
   const fetchPlans = async () => {
     // setSelectedPlanIdx(0);
-
+    setLoaded(false);
     await fetch('https://qa.jarney.club/api/degreeplans')
 
       .then((response) => {
         return response.json();
       })
       .then((result) => {
-        
         setSemesterPlanOptions(result.plans);
-        console.log('the number of plan is:', result.plans?.length);
-
-        // if (semesterPlanOptions && semesterPlanOptions?.length !== 0) {
-        //   setPlanExist(true);
-        //   console.log('plan exists');
-        // } else {
-        //   setPlanExist(false);  
-        // }
-        
-        
-
         setCardOptions(result.plans[selectedPlanIdx].terms);
         setSelectedPlanName(result.plans[selectedPlanIdx].plan_name);
         setSelectedPlanID(result.plans[selectedPlanIdx].plan_id);
-        // setLoaded(true);
+        setLoaded(true);
       })
       .catch((error) => {});
   };
