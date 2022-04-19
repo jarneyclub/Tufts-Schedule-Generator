@@ -1,3 +1,8 @@
+/*
+* Name: authentication.js
+* Functions for handling authentication
+*/
+
 const usersHandler = require('../../services/handlers/users.js');
 const mongoose = require('mongoose');
 const PasswordResetToken = mongoose.model('PasswordResetToken');

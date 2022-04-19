@@ -1,3 +1,8 @@
+/*
+* Name: emailUtils.js
+* Email utility functions
+*/
+
 const nodemailer = require('nodemailer');
 /**
  * Send email. This function will throw formatted errors, without doing
