@@ -731,7 +731,7 @@ function DegreePlan(props) {
         :
 
               <div className={dpStyle.noSchedulewrapper}>
-                <div>page is not loaded!!! {semesterPlanOptions?.length}</div>
+                <CircularProgress />
               </div>
       }
       
