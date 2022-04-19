@@ -194,6 +194,7 @@ exports.getTermCourses = async (req, res) => {
 
         }
         else if ( reqAttr === "" ) {
+            let termCourseIdMap = {}; // map unique courses from both cnum and ctitle cursors
             /* only reqCourseInput is provided */
 
             // query courses in database by course num or course title based on queryMatch
@@ -201,7 +202,6 @@ exports.getTermCourses = async (req, res) => {
             {
                 let cursorCourseTitle = 
                     dbCourses.find({ "course_title": { "$regex": reqCourseInput, "$options": "i"} });
-                let termCourseIdMap = {}; // map unique courses from both cnum and ctitle cursors
                 // map term course id to a course document from the course title cursor
                 await cursorCourseTitle.forEach((doc) => {
                     // parse database document
@@ -225,7 +225,6 @@ exports.getTermCourses = async (req, res) => {
                     dbCourses.find({ "course_num": { "$regex": '^' + reqCourseInput } });
                 let cursorCourseNumCleaned =
                     dbCourses.find({ "course_num": { "$regex": '^' + cleanCourseNum(reqCourseInput) } });
-                let termCourseIdMap = {}; // map unique courses from both cnum and ctitle cursors
                 // map term course id to a course document from the course num cursor
                 await cursorCourseNum.forEach((doc) => {
                     // parse database document
@@ -269,7 +268,6 @@ exports.getTermCourses = async (req, res) => {
                 let cursorCourseTitle = 
                     dbCourses.find({ "course_title": { "$regex": reqCourseInput, "$options": "i"} });
 
-                let termCourseIdMap = {}; // map unique courses from both cnum and ctitle cursors
                 // map term course id to a course document from the course num cursor
                 await cursorCourseNum.forEach((doc) => {
                     // parse database document
@@ -347,6 +345,7 @@ exports.getTermCourses = async (req, res) => {
         }
         else {
             /* all parameters are provided */
+            let termCourseIdMap = {}; // map unique courses from both cnum and ctitle cursors
             if (queryMatch == "courseNum")
             {
                 // get cursor matching user input with course num and attr
@@ -365,7 +364,6 @@ exports.getTermCourses = async (req, res) => {
                     "attributes": {
                         "$all": [reqAttr]
                 }});
-                let termCourseIdMap = {}; // map unique courses from both cnum and ctitle cursors
                 // map term course id to a course document from the course num cursor
                 await cursorCourseNumAttr.forEach((doc) => {
                     // parse database document
@@ -411,7 +409,6 @@ exports.getTermCourses = async (req, res) => {
                         "$all": [reqAttr]
                     }
                 });
-                let termCourseIdMap = {}; // map unique courses from both cnum and ctitle cursors
                 // map term course id to a course document from the course title cursor
                 await cursorCourseTitleAttr.forEach((doc) => {
                     // parse database document
@@ -458,7 +455,6 @@ exports.getTermCourses = async (req, res) => {
                     }
                 });
 
-                let termCourseIdMap = {}; // map unique courses from both cnum and ctitle cursors
                 // map term course id to a course document from the course num cursor
                 await cursorCourseNumAttr.forEach((doc) => {
                     // parse database document
