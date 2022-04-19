@@ -113,6 +113,9 @@ export default function App() {
           />
 
           <Switch>
+            <Route path="/passwordreset/:hash">
+              <PasswordResetLink />
+            </Route>
             <Route path="/DegreeRequirement">
               <DegreeRequirement
                 shrink={shrink}
@@ -162,9 +165,7 @@ export default function App() {
                 handleSigninPopup={handleSignupPopup}
               />
             </Route>
-            <Route path="/passwordreset/:hash">
-              <PasswordResetLink />
-            </Route>
+            
 
             <Route path="/">
               <Home handleLogRequired={handleLogRequired} />
