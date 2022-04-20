@@ -20,7 +20,12 @@ const nodemailer = require('nodemailer');
                 pass: process.env.AUTOMATED_EMAIL_PASS
             }
         });
-        transporter.verify();
+        transporter.verify(function (error, success) {
+            if (error) {
+                console.log("(sendEmail) transporter verification error: ", error);
+                throw { id: "000", status: "500", title: "Email Error", detail: "Something went wrong", databaseDetail: error };
+            }
+        });
         // send email
         transporter.sendMail({
                 from: '"JARney for you" <jarneyforyou@gmail.com>', // sender address
