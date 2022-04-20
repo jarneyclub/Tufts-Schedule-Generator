@@ -35,9 +35,9 @@ function PasswordResetLink () {
     const requestOption = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({...values, toke: hash}),
+      body: JSON.stringify({...values, token: hash}),
     };
-    await fetch(`https://qa.jarney.club/api/auth/do_password_reset/${hash}`, requestOption)
+    await fetch(`https://qa.jarney.club/api/auth/do_password_reset`, requestOption)
         .then((response) => {
           if (response.ok) {
             return response.json();
