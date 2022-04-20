@@ -35,6 +35,7 @@ const nodemailer = require('nodemailer');
                 })
         .catch( (e) => {
             // format error
+            console.log("(sendEmail) sendMail error: ", e);
             throw {
                 id: "407",
                 status: "500",
