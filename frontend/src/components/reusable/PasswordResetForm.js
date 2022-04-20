@@ -24,8 +24,7 @@ const PasswordResetForm: React.FC<ResetProps> = (props) => {
 
   return (
     <div className={fStyle.formContainer}>
-      <p>hello lovely jumbo…this feature is super buggy rn ;-; so the email might take a WHILE to send (i, the developer, will PERSONALLY send the email to you until i fix it..GET HYPEDDDD WOOOO)</p>
-      <p>Please enter your email address. If we find an account associated with that email, we will send you a link to reset your passowrd! Token will expire in 24 hours!</p>
+      <p>Please enter your email address. If we find an account associated with that email, we will send you a link to reset your passowrd!</p>
       <Formik
         initialValues={{
           userid: "",
