@@ -76,8 +76,6 @@ function Calendar(props) {
     }
   };
 
-  console.log("classes", classes);
-  console.log("Lets see Timeunspec:", classes.TimeUnspecified);
 
   return (
     <div className={cStyle.container}>
