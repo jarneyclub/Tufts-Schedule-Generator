@@ -204,7 +204,7 @@ function DegreePlan(props) {
   useEffect(() => {
     async function fetchData() {
       await fetch(
-        'https://jarney.club/api/courses/general?cnum='.concat(
+        'https://qa.jarney.club/api/courses/general?cnum='.concat(
           courseSearchValue
         )
       )
@@ -333,7 +333,7 @@ function DegreePlan(props) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ plan_name: planName }),
     };
-    await fetch('https://jarney.club/api/degreeplan', requestOption)
+    await fetch('https://qa.jarney.club/api/degreeplan', requestOption)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -368,7 +368,7 @@ function DegreePlan(props) {
   const fetchPlans = async () => {
     // setSelectedPlanIdx(0);
     setLoaded(false);
-    await fetch('https://jarney.club/api/degreeplans')
+    await fetch('https://qa.jarney.club/api/degreeplans')
 
       .then((response) => {
         return response.json();
@@ -393,7 +393,7 @@ function DegreePlan(props) {
     // Testing analytics, temporary:
     // saveFrontendUse('test feature', {foo: 'bar', hey: 9});
 
-    await fetch('https://jarney.club/api/degreeplan/term', requestOption)
+    await fetch('https://qa.jarney.club/api/degreeplan/term', requestOption)
       .then((response) => {
         return response.json();
       })
@@ -404,7 +404,7 @@ function DegreePlan(props) {
   };
 
   const fetchPrivateReqs = async () => {
-    await fetch('https://jarney.club/api/degreereqs/private')
+    await fetch('https://qa.jarney.club/api/degreereqs/private')
       .then((response) => {
         return response.json();
       })
