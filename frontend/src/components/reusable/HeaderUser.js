@@ -14,7 +14,6 @@ import Backdrop from '@mui/material/Backdrop';
 import MenuIcon from '@material-ui/icons/Menu';
 import HelpIcon from '@material-ui/icons/Help';
 import hStyle from './reusableStyles/HeaderUser.module.css';
-import logo from '../res/JARney.png';
 import newLogo from '../res/jarney_word.png';
 import Popup from './Popup';
 import JarUserLogin from './JarUserLogin';
@@ -111,7 +110,7 @@ function HeaderUser(props) {
 
         {!shrink && (
           <div className={hStyle.navbarContainer} ref={navbarRef}>
-            <div>
+            <>
               <NavLink to="/HelpPage">
                 <IconButton
                   className={hStyle.button}
@@ -120,15 +119,15 @@ function HeaderUser(props) {
                     color: '#5a32bf',
                     textDecoration: 'none',
                   }}
-                  aria-label="help"
+                  aria-label="help" 
                 >
                   <HelpIcon />
                 </IconButton>
               </NavLink>
-            </div>
+            </>
 
             {!((!logRequired && loginPopup) || signupPopup) && (
-              <div>
+              <>
                 <Button
                   onClick={handleLoginSignupPopup}
                   className={hStyle.button}
@@ -136,7 +135,7 @@ function HeaderUser(props) {
                 >
                   {logged ? 'Sign out' : 'Log in'}
                 </Button>
-              </div>
+              </>
             )}
           </div>
         )}

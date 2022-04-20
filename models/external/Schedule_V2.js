@@ -30,20 +30,7 @@ const scheduleV2_Schema = new Schema({
             Friday: [{ time_earliest: String, time_latest: String }]
         }
     },
-    events: {
-        Monday:      [{type: Schema.Types.ObjectId, 
-                        ref: 'Section'}],
-        Tuesday:     [{type: Schema.Types.ObjectId, 
-                        ref: 'Section'}],
-        Wednesday:   [{type: Schema.Types.ObjectId, 
-                        ref: 'Section'}],
-        Thursday:    [{type: Schema.Types.ObjectId, 
-                        ref: 'Section'}],
-        Friday:      [{type: Schema.Types.ObjectId, 
-                        ref: 'Section'}],
-        TimeUnspecified: [{type: Schema.Types.ObjectId, 
-                        ref: 'Section'}]
-    },
+    sections: [{term_section_id: String}],
     courses: [{
         term_course_id: String,
         course_num: String,
