@@ -29,14 +29,7 @@ const time = [
   "9PM",
 ];
 
-const weekdays = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Time Unstated",
-];
+const weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
 const pref_weekdays = [
   "Monday",
@@ -156,6 +149,7 @@ function Calendar(props) {
             ))}
           </div>
         )}
+
 
         {!shrink ? (
           origin === "Pref" ? (

@@ -14,6 +14,7 @@
   align-items: center;
   color: #919da1;
   margin-bottom: 10px;
+
 }
 
 .infoContainer {
@@ -24,14 +25,4 @@
 
 .infoTitle {
   color: #fc4e4e;
-}
-
-.infoDetail {
-  color: #000000;
-}
-
-@media (max-width: 810px){
-  .courseInfoContainer{
-    width: 75%;
-  }
 }

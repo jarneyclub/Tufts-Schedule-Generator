@@ -228,6 +228,7 @@ paths:
         - Courses
       summary: Get a list of courses offered in this term of which course number matches given course-num, attribute, and the desired matching method. 
       description: example. _BASE_URL/courses/term/query/?cnum=CS-0011&attr=SoE-Mathematics&match_method=courseNum
+
       parameters:
         - in: query
           name: cnum

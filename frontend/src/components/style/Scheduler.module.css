@@ -35,9 +35,11 @@
 .leftColumnWrapper {
   display: flex;
   flex-direction: column;
-  flex: 1 1 25%;
+  flex: 1 1 30%;
   align-items: center;
+
   padding-right: 1vw;
+
   margin-bottom: 20px;
 }
 
@@ -154,6 +156,12 @@
   width: 100%;
 }
 
+.unitsContainer {
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+}
+
 .infoTitle {
   color: #fc4e4e;
 }
@@ -196,7 +204,7 @@
   color: #7048d5;
   line-height: 14px;
 
-  background-color: #efebf9;
+  /* background-color: #efebf9; */
 }
 
 .timePrefButton:hover {
@@ -204,7 +212,6 @@
   background-color: #7048d5;
   border: #7048d5 solid 1px;
 }
-
 .saveTimePrefButton {
   border-radius: 12px;
   border: #ffffff solid 1px;
@@ -262,7 +269,6 @@
   min-height: 70%;
   overflow-y: scroll;
 }
-
 /* * * 3rd * * */
 .tabsContainer {
   display: flex;
@@ -273,15 +279,29 @@
   margin-top: 10px;
 }
 
+.tabBarsContainer {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: center; */
+  /* align-items: flex-end;
+    align-content: center; */
+  width: 100%;
+}
+
 .tabBar {
+  /* flex-grow: 1; */
+
   display: flex;
   justify-content: center;
-  flex-direction: row;
+
   font-size: 14px;
-  color: #2F2E31;
-  background-color: #D3CBF0;
+  font-weight: lighter;
+  color: #808080;
+  background-color: #f5f5f5;
   text-align: center;
   align-items: center;
+  border: #ffffff solid 1px;
+  border-radius: 0px 5px 0px 0px;
   box-sizing: content-box;
   border-top-left-radius: 11px;
   border-top-right-radius: 11px;
@@ -300,18 +320,23 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
 }
 
-.shuDisplay{
+.tabBarHighlight {
+  /* flex-grow: 1; */
+
   display: flex;
   justify-content: center;
   flex-direction: row;
   align-content: flex-start;
   font-size: 14px;
-  color: #2F2E31;
+  color: #fc4e4e;
   background-color: #efebf9;
   text-align: center;
   align-items: center;
+  border-bottom: #fc4e4e solid 2px;
+  border-radius: 0px 5px 0px 0px;
   box-sizing: content-box;
   border-bottom-left-radius: 11px;
   border-bottom-right-radius: 11px;
@@ -319,6 +344,21 @@
   height: auto;
   padding-top: 10px;
   padding-bottom: 10px;
+
+}
+
+.tabDetailContainer {
+  min-height: 250px;
+  /* border: #000000 solid 1px; */
+  border-bottom-left-radius: 11px;
+  border-bottom-right-radius: 11px;
+  background-color: #efebf9;
+  /* box-shadow: 0 4px 8px 0 rgba(90,50,191, 0.2), 0 6px 20px 0 rgba(90,50,191, 0.19); */
+  border-top: none;
+  box-sizing: content-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -328,10 +368,10 @@
   flex-direction: column;
   /* justify-content: center; */
   align-items: center;
-  /* flex: 7 1 70%; */
-  flex: 7 1 75%;
+  flex: 7 1 70%;
 
   /* border: #42312B solid 1px; */
+  margin-bottom: 20px;
   height: 90vh;
 }
 
@@ -445,7 +485,6 @@
 
   color: #7048d5;
 }
-
 .calendarContainer {
   width: 100%;
   height: 100%;
@@ -502,6 +541,7 @@ body {
   padding-left: 24px;
 }
 
+
 @media only screen and (max-width: 669.99px) {
   .overlayTitle {
     font-size: 20px !important;
@@ -537,3 +577,4 @@ body {
     left: auto;
   }
 }
+

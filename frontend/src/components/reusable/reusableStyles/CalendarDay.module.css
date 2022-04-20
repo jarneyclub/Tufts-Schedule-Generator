@@ -14,35 +14,26 @@
   width: 50%;
   color: #a1c97d;
 }
-
 .removeAllButton {
   text-transform: unset !important;
   width: 50%;
 }
-
 .timeSlotTitle {
   height: 40px;
   min-width: 80px;
   text-align: center;
-  color: #70757a;
+  /* position: fixed; */
 }
 
 .timeSlot {
   height: 80px;
-  border: 1px solid #70757a;
+  border: 1px solid #c4c4c4;
   position: relative;
   z-index: -5;
 }
-
-.unStatedTimeColumn {
-  flex-direction: column;
-  height: 1040px;
-  border: 1px solid #70757a;
-  position: relative;
-  z-index: -5;
-}
-
 .timeSlotOverlay {
   height: 40px;
-  border: 1px solid #70757a;
+  border: 1px solid #c4c4c4;
+
+  /* background-color: aqua; */
 }

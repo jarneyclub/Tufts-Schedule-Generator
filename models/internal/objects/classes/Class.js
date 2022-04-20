@@ -152,17 +152,6 @@ function Class(inputCourseID, inputCourseName, inputSectionName, inputSectionTyp
     function getCourseDatabaseId () {
         return courseDatabaseId;
     }
-    
-    /** Checks whether class time is specified (true) or unspecified (false)
-    * @returns {boolean}
-    */
-    function isTimeUnspecified() {
-        if ( (inputStartTime == -1) && (inputEndTime == -1) && (inputDay == -1) ) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     return {
         getDuration,
@@ -178,8 +167,7 @@ function Class(inputCourseID, inputCourseName, inputSectionName, inputSectionTyp
         getCity,
         getSectionType,
         getSectionID,
-        getCourseDatabaseId,
-        isTimeUnspecified
+        getCourseDatabaseId
     }
 }
 

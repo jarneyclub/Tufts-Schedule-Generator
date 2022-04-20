@@ -32,7 +32,7 @@ import JarUserLogin from './JarUserLogin';
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
- *                          Add PlanCard(semester) Popup                              *
+ *                          Add PlanCard Popup                               *
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 // const yearOptions = []
@@ -167,7 +167,7 @@ function AddSemester(props) {
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
- *                            Remove PlanCard(semester) Popup                          *
+ *                            Remove PlanCard Popup                          *
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 function RemoveSemester(props) {
@@ -206,6 +206,7 @@ function RemoveSemester(props) {
 
   const handleRemove = () => {
     /* do something API?? pass in the selectedCards arr */
+
     fetchDeleteTerms();
   };
 
@@ -363,7 +364,7 @@ function AddPlan(props) {
   const {
     onClose,
     createNewPlan,
-    //onSetIdxLast,
+    onSetIdxLast,
     onShowAlert,
     setAlertMessage,
     setAlertSeverity,
@@ -382,8 +383,6 @@ function AddPlan(props) {
     /* do something API?? pass in the selectedCards arr */
 
     if (planName !== '') {
-      //Winnie edited: reset idx last
-      // onSetIdxLast();
       createNewPlan(planName);
       onClose();
     } else {
@@ -454,9 +453,7 @@ function RemovePlan(props) {
     )
       .then((response) => response.json())
       .then((result) => {
-
         if (!result.error) {
-          console.log("fetch Delete called");
           onSetIdxLast();
           setAlertMessage('Plan removed!');
           setAlertSeverity('success');

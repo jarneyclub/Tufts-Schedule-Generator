@@ -5,6 +5,7 @@ import {
   TextField,
   IconButton,
   CircularProgress,
+  ClickAwayListener,
 } from '@material-ui/core';
 
 import React from 'react';
@@ -177,14 +178,22 @@ const CourseInfoExpress = (props) => {
         </div>
       )}
 
-      {time_start && (
-        <div className={tStyle.infoContainer}>
-          <div className={tStyle.infoTitle}>Time:&nbsp;</div>
-          <div className={tStyle.infoDetail}>
-            {time_start}~{time_end}
+
+        {units_esti && (
+          <div className={tStyle.infoContainer}>
+            <div className={tStyle.infoTitle}>SHUs:&nbsp;</div>
+            <div classname={tStyle.infoDetail}>{units_esti}</div>
           </div>
-        </div>
-      )}
+        )}
+
+        {time_start && (
+          <div className={tStyle.infoContainer}>
+            <div className={tStyle.infoTitle}>Time:&nbsp;</div>
+            <div classname={tStyle.infoDetail}>
+              {time_start}~{time_end}
+            </div>
+          </div>
+        )}
 
       {instructors && (
         <div className={tStyle.infoContainer}>
@@ -193,19 +202,20 @@ const CourseInfoExpress = (props) => {
         </div>
       )}
 
-      {location && (
-        <div className={tStyle.infoContainer}>
-          <div className={tStyle.infoTitle}>Location:&nbsp;</div>
-          <div className={tStyle.infoDetail}>{location}</div>
-        </div>
-      )}
 
-      {name && (
-        <div className={tStyle.infoContainer}>
-          <div className={tStyle.infoTitle}>Section:&nbsp;</div>
-          <div className={tStyle.infoDetail}>{name}</div>
-        </div>
-      )}
+        {location && (
+          <div className={tStyle.infoContainer}>
+            <div className={tStyle.infoTitle}>Location:&nbsp;</div>
+            <div classname={tStyle.infoDetail}>{location}</div>
+          </div>
+        )}
+
+        {name && (
+          <div className={tStyle.infoContainer}>
+            <div className={tStyle.infoTitle}>Section:&nbsp;</div>
+            <div classname={tStyle.infoDetail}>{name}</div>
+          </div>
+        )}
 
       {attributes && (
         <div className={tStyle.infoContainer}>
@@ -214,12 +224,14 @@ const CourseInfoExpress = (props) => {
         </div>
       )}
 
-      {description && (
-        <div className={tStyle.infoContainer}>
-          <div className={tStyle.infoDetail}>{description}</div>
-        </div>
-      )}
-    </div>
+
+        {description && (
+          <div className={tStyle.infoContainer}>
+            <div classname={tStyle.infoDetail}>{description}</div>
+          </div>
+        )}
+      </div>
+    </ClickAwayListener>
   );
 };
 
