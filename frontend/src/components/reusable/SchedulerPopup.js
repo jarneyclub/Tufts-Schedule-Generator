@@ -200,9 +200,9 @@ function RemoveSchedule(props) {
         if (!result.error) {
           setAlertMessage('Schedule deleted!');
           setAlertSeverity('success');
-          onShowAlert();
-          onClose();
+          onShowAlert(true);
           refreshSchedules();
+          onClose();
         } else {
           setAlertMessage(result.error);
           setAlertSeverity('warning');

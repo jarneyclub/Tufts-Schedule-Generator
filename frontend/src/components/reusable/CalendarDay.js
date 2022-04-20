@@ -121,6 +121,15 @@ function CalendarDay(props) {
     }
   };
 
+  const handleShowDayTitle = () => {
+    if (dayName === "Time Unstated") {
+      return "Time Unstated";
+    }
+    else {
+      return dayName.substr(0, 3).toUpperCase();
+    }
+  };
+
   const handleRemoveAll = () => {
     if (timePrefDay.length > 0) {
       removeEntireDay(dayName);
@@ -131,14 +140,16 @@ function CalendarDay(props) {
     timePrefDay && setEntireDayOn(timePrefDay?.length === 26);
   }, []);
 
+  // console.log("Err timeunspec:", classesDay.TimeUnspecified);
+
   return (
     <div className={cStyle.dayContainer}>
-      {/* {
-        !singleDay ? <div className={cStyle.timeSlotTitle}>{dayName}</div> : <div>&nbsp;</div>
-      } */}
-      <div className={cStyle.timeSlotTitle}>
-        {!singleDay ? dayName.substr(0, 3).toUpperCase() : " "}
-      </div>
+      {!shrink && (
+        <div className={cStyle.timeSlotTitle}>
+          {!singleDay && handleShowDayTitle()}
+        </div>
+      )}
+
 
       {timePrefState && (
         <div className={cStyle.buttonContainer}>
@@ -178,22 +189,21 @@ function CalendarDay(props) {
             ))
           : /* Normal Calendar View */
 
-            time.map((timeName) => (
-              <div className={cStyle.timeSlot} key={timeName} />
-            ))}
-      </div>
-      {/* <div className={cStyle.eventsContainer}>
-          {classesDay?.map((event) => <div>{event.details}</div>)}
-      </div> */}
-      {classesDay?.map((event) => {
-        return (
-          <Event
-            shrink={shrink}
-            eventDetails={event}
-            onEventClick={onEventClick}
-          ></Event>
-        );
-      })}
+      {/* Put the classes on depending on the day */}
+      {dayName === "Time Unstated"
+        ? classesDay?.TimeUnspecified?.map((course) => {
+            return <Button style={{zIndex: 10000000}}>Hi</Button>;
+          })
+        : classesDay?.map((event) => {
+            return (
+              <Event
+                shrink={shrink}
+                eventDetails={event}
+                onEventClick={onEventClick}
+              ></Event>
+            );
+          })}
+
     </div>
   );
 }

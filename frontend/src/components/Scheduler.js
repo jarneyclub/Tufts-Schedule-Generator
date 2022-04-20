@@ -193,7 +193,6 @@ function Scheduler(props) {
     handleLogRequired,
   } = props;
 
-  const [loaded, setLoaded] = useState(false);
   /* schedule Dropdown */
   const [scheduleExist, setScheduleExist] = useState(false);
   const [scheduleOptions, setScheduleOptions] = useState([]);
@@ -226,6 +225,11 @@ function Scheduler(props) {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState();
   const [alertSeverity, setAlertSeverity] = useState();
+  const [dropdownDegreePlan, setDropdownDegreePlan] = useState(false);
+  const [dropdownDegreeReq, setDropdownDegreeReq] = useState(false);
+  const [reqBtnClicked, setReqBtnClicked] = useState(false);
+  const [planBtnClicked, setPlanBtnClicked] = useState(false);
+
 
   /*  Control for schedule plan dropdown change  */
   const handleScheduleChange = (e) => {
@@ -235,6 +239,42 @@ function Scheduler(props) {
     setSelectedScheduleID(scheduleOptions[e.target.selectedIndex].sched_id);
     setSelectedCourses(scheduleOptions[e.target.selectedIndex].courses);
     setClasses(scheduleOptions[e.target.selectedIndex]?.classes);
+  };
+
+  /* Control the dropdown for Degree Plan and Degree Requirement */
+  const handleDegreeInfo = (field) => {
+    if (field === "DegreePlan") {
+      setDropdownDegreePlan(!dropdownDegreePlan);
+      setPlanBtnClicked(!planBtnClicked);
+      setReqBtnClicked(false);
+
+      if (dropdownDegreeReq === true) {
+        setDropdownDegreeReq(!dropdownDegreeReq);
+      }
+    }
+
+    if (field === "DegreeReq") {
+      setDropdownDegreeReq(!dropdownDegreeReq);
+      setReqBtnClicked(!reqBtnClicked);
+      setPlanBtnClicked(false);
+
+      if (dropdownDegreePlan === true) {
+        setDropdownDegreePlan(!dropdownDegreePlan);
+      }
+    }
+  };
+
+  const handleCloseDegreeInfo = () => {
+    setReqBtnClicked(false);
+    setPlanBtnClicked(false);
+
+    if (dropdownDegreeReq === true) {
+      setDropdownDegreeReq(!dropdownDegreeReq);
+    }
+
+    if (dropdownDegreePlan === true) {
+      setDropdownDegreePlan(!dropdownDegreePlan);
+    }
   };
 
   /*  Control for search filter dropdown change  */
@@ -358,30 +398,31 @@ function Scheduler(props) {
     await fetch('https://jarney.club/api/schedules')
       .then((response) => response.json())
       .then((result) => {
-        setScheduleExist(true);
-        console.log('scheduleExist is set to true');
+        
+        if (result.schedules.length !== 0) {
+          setScheduleExist(true);
+          setScheduleOptions(result.schedules);
+          setSelectedSchedule(result.schedules[selectedScheduleIdx].sched_name);
+          setSelectedScheduleID(result.schedules[selectedScheduleIdx].sched_id);
+          setSelectedCourses(result.schedules[selectedScheduleIdx]?.courses);
+          setClasses(result.schedules[selectedScheduleIdx]?.classes);
 
-        // if (result.schedules.length === 0) {
-        //   fetchCreateSchedule("Schedule #1");
-        // } else {
-        setScheduleOptions(result.schedules);
-        setSelectedSchedule(result.schedules[selectedScheduleIdx].sched_name);
-        setSelectedScheduleID(result.schedules[selectedScheduleIdx].sched_id);
-        setSelectedCourses(result.schedules[selectedScheduleIdx]?.courses);
-        setClasses(result.schedules[selectedScheduleIdx]?.classes);
-
-        setTimePref(result.schedules[selectedScheduleIdx]?.filter?.time);
-        setCoursePreference((prev) => ({
-          ...prev,
-          waitlist:
-            !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreWL,
-          closed:
-            !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreClosed,
-          online: !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreM,
-          time_unspecified:
-            !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreTU,
-        }));
-        setLoaded(true);
+          setTimePref(result.schedules[selectedScheduleIdx]?.filter?.time);
+          setCoursePreference((prev) => ({
+            ...prev,
+            waitlist:
+              !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreWL,
+            closed:
+              !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreClosed,
+            online: !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreM,
+            time_unspecified:
+              !result.schedules[selectedScheduleIdx]?.filter?.misc?.ignoreTU,
+          }));
+        }
+        else {
+          setScheduleExist(false);
+        }
+        
       })
       .catch((error) => {});
   };
@@ -485,8 +526,6 @@ function Scheduler(props) {
   };
 
   useEffect(() => {
-    fetchAttributes();
-    fetchSavedSchedules();
     handleLogRequired(true);
   }, []);
 
@@ -523,6 +562,15 @@ function Scheduler(props) {
       {/*scheduleOptions && scheduleOptions?.length !== 0*/}
       {scheduleExist === true ? (
         <div className={sStyle.horizontalWrapper}>
+          {dropdownDegreeReq || dropdownDegreePlan ? (
+            <div
+              className={sStyle.backdrop}
+              onClick={handleCloseDegreeInfo}
+            ></div>
+          ) : (
+            ""
+          )}
+
           <div className={sStyle.leftColumnWrapper}>
             {/* CourseContainer 
                         Contains: 
@@ -534,9 +582,12 @@ function Scheduler(props) {
               {/*time preference */}
               <div className={sStyle.preferenceContainer}>
                 <FormControl className={sStyle.leftCheckboxContainer}>
-                  <FormLabel>Generate Schedule With:</FormLabel>
+                  <FormLabel style={{ margin: "0px" }}>
+                    Generate Schedule With:
+                  </FormLabel>
                   <FormGroup row={true}>
                     <FormControlLabel
+                      style={{ margin: "0px" }}
                       control={
                         <PurpleSwitch
                           checked={coursePreference.waitlist}
@@ -547,6 +598,7 @@ function Scheduler(props) {
                       label="Waitlist"
                     />
                     <FormControlLabel
+                      style={{ margin: "0px" }}
                       control={
                         <PurpleSwitch
                           checked={coursePreference.closed}
@@ -557,6 +609,7 @@ function Scheduler(props) {
                       label="Closed"
                     />
                     <FormControlLabel
+                      style={{ margin: "0px" }}
                       control={
                         <PurpleSwitch
                           checked={coursePreference.online}
@@ -567,6 +620,7 @@ function Scheduler(props) {
                       label="Online"
                     />
                     <FormControlLabel
+                      style={{ margin: "0px" }}
                       control={
                         <PurpleSwitch
                           checked={coursePreference.time_unspecified}
@@ -576,7 +630,7 @@ function Scheduler(props) {
                           }
                         />
                       }
-                      label="Time Unspecified"
+                      label="Time Unstated"
                     />
                   </FormGroup>
                   <Button
@@ -670,14 +724,11 @@ function Scheduler(props) {
             <div className={sStyle.tabsContainer}>
               <div className={sStyle.tabBarsContainer}>
                 <div
-                  role="button"
-                  tabIndex={0}
                   className={
-                    degreeReqTab === 1 ? sStyle.tabBarHighlight : sStyle.tabBar
+                    !planBtnClicked ? sStyle.degreeBtn : sStyle.degreeBtnClicked
                   }
-                  onClick={() => {
-                    setDegreeReqTab(1);
-                  }}
+                  onClick={() => handleDegreeInfo("DegreePlan")}
+
                 >
                   <div>
                     Selected <br /> Courses
@@ -698,14 +749,11 @@ function Scheduler(props) {
                   </div>
                 </div>
                 <div
-                  role="button"
-                  tabIndex={0}
                   className={
-                    degreeReqTab === 3 ? sStyle.tabBarHighlight : sStyle.tabBar
+                    !reqBtnClicked ? sStyle.degreeBtn : sStyle.degreeBtnClicked
                   }
-                  onClick={() => {
-                    setDegreeReqTab(3);
-                  }}
+                  onClick={() => handleDegreeInfo("DegreeReq")}
+
                 >
                   <div>Degree Plan</div>
                 </div>
@@ -781,6 +829,7 @@ function Scheduler(props) {
                 shrink={shrink}
                 classes={classes}
                 onEventClick={handleShowCourseInfo}
+                TimeUnstated={classes?.TimeUnspecified}
               />
             </div>
 

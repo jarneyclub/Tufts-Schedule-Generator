@@ -18,8 +18,8 @@ import Scheduler from './components/Scheduler';
 import HelpPage from './components/HelpPage';
 import Header from './components/reusable/HeaderUser';
 
-import EinaBold from './fonts/Eina03-SemiBold.ttf';
 import EinaRegular from './fonts/Eina03-Regular.ttf';
+import PasswordResetLink from './components/PasswordResetPage';
 
 const THEME = createTheme({
   typography: {
@@ -112,6 +112,9 @@ export default function App() {
           />
 
           <Switch>
+            <Route path="/passwordreset/:hash">
+              <PasswordResetLink />
+            </Route>
             <Route path="/DegreeRequirement">
               <DegreeRequirement
                 shrink={shrink}
@@ -161,6 +164,7 @@ export default function App() {
                 handleSigninPopup={handleSignupPopup}
               />
             </Route>
+            
 
             <Route path="/">
               <Home handleLogRequired={handleLogRequired} />

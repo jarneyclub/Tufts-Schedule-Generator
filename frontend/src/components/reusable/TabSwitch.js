@@ -162,17 +162,22 @@ const CourseInfoExpress = (props) => {
   }, []);
 
   return (
-    <ClickAwayListener onClickAway={onClose}>
-      <div className={tStyle.courseInfoContainer}>
-        <div style={{ color: '#919da1' }}>More about this course... </div>
-        {course_num && (
-          <div className={tStyle.infoContainer}>
-            <div className={tStyle.infoTitle}>Course title:&nbsp;</div>
-            <div className={tStyle.infoDetail}>
-              {course_num}&nbsp;{course_title}
-            </div>
-          </div>
-        )}
+    <div className={tStyle.courseInfoContainer}>
+      {details ? (
+        <div className={tStyle.courseTitle}>{details}</div>
+      ) : (
+        <div className={tStyle.courseTitle}>
+          {course_num}&nbsp;{course_title}
+        </div>
+      )}
+
+      {units_esti && (
+        <div className={tStyle.infoContainer}>
+          <div className={tStyle.infoTitle}>SHUs:&nbsp;</div>
+          <div className={tStyle.infoDetail}>{units_esti}</div>
+        </div>
+      )}
+
 
         {units_esti && (
           <div className={tStyle.infoContainer}>
@@ -190,12 +195,13 @@ const CourseInfoExpress = (props) => {
           </div>
         )}
 
-        {details && (
-          <div className={tStyle.infoContainer}>
-            <div className={tStyle.infoTitle}>Course:&nbsp;</div>
-            <div classname={tStyle.infoDetail}>{details}</div>
-          </div>
-        )}
+      {instructors && (
+        <div className={tStyle.infoContainer}>
+          <div className={tStyle.infoTitle}>Instructor:&nbsp;</div>
+          <div className={tStyle.infoDetail}>{instructors}</div>
+        </div>
+      )}
+
 
         {location && (
           <div className={tStyle.infoContainer}>
@@ -211,19 +217,13 @@ const CourseInfoExpress = (props) => {
           </div>
         )}
 
-        {instructors && (
-          <div className={tStyle.infoContainer}>
-            <div className={tStyle.infoTitle}>Instructor:&nbsp;</div>
-            <div classname={tStyle.infoDetail}>{instructors}</div>
-          </div>
-        )}
+      {attributes && (
+        <div className={tStyle.infoContainer}>
+          <div className={tStyle.infoTitle}>Attributes:&nbsp;</div>
+          <div className={tStyle.infoDetail}>{attributeDetails}</div>
+        </div>
+      )}
 
-        {attributes && (
-          <div className={tStyle.infoContainer}>
-            <div className={tStyle.infoTitle}>Attributes:&nbsp;</div>
-            <div classname={tStyle.infoDetail}>{attributeDetails}</div>
-          </div>
-        )}
 
         {description && (
           <div className={tStyle.infoContainer}>

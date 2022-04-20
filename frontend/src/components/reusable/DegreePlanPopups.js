@@ -457,7 +457,8 @@ function RemovePlan(props) {
           onSetIdxLast();
           setAlertMessage('Plan removed!');
           setAlertSeverity('success');
-          onShowAlert();
+          onShowAlert(true);
+          refreshPlans();
           onClose();
         } else {
           setAlertMessage(result.error);

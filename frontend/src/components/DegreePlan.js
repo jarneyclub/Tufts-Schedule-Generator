@@ -18,9 +18,6 @@ import SearchIcon from '@material-ui/icons/Search';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
-import CancelIcon from '@material-ui/icons/Cancel';
-import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import dpStyle from './style/DegreePlan.module.css';
 import pStyle from './reusable/reusableStyles/Popup.module.css';
 import Popup from './reusable/Popup';
@@ -105,7 +102,7 @@ function DegreePlan(props) {
   } = props;
   const [loaded, setLoaded] = useState(false);
 
-  const [semesterPlanOptions, setSemesterPlanOptions] = useState([]); // sets the array of options for semester plans
+  const [semesterPlanOptions, setSemesterPlanOptions] = useState(); // sets the array of options for semester plans
   const [courseSearchValue, setCourseSearchValue] = useState('');
 
   /*  Stores the card options. Should be updated by API in UseEffect  */
@@ -360,6 +357,7 @@ function DegreePlan(props) {
    */
   const fetchPlans = async () => {
     // setSelectedPlanIdx(0);
+    setLoaded(false);
     await fetch('https://jarney.club/api/degreeplans')
       .then((response) => {
         return response.json();
@@ -408,20 +406,20 @@ function DegreePlan(props) {
       .catch((error) => {});
   };
 
-  /*  Initial fetching for plans when page first loads */
+  /*  Set Login required for Degree Plan to be true */
   useEffect(() => {
-    fetchPlans();
-    fetchPrivateReqs();
     handleLogRequired(true);
   }, []);
 
   useEffect(() => {
+    console.log('selectedPlanIdx changed useEffect called');
+    fetchPlans();
     if (logged) {
-      fetchPlans();
       fetchPrivateReqs();
       setLoaded(true);
     }
-  }, [logged]);
+  }, [selectedPlanIdx, logged]);
+
 
   useEffect(() => {
     cardOptions?.map((card) => fetchSaveTerm(card));
@@ -455,8 +453,17 @@ function DegreePlan(props) {
   }, [cardOptions]);
 
   useEffect(() => {
-    fetchPlans();
-  }, [selectedPlanIdx]);
+    if (semesterPlanOptions && semesterPlanOptions.length !== 0) {
+      setPlanExist(true);
+    }
+    else {
+      setPlanExist(false);
+    }
+    if (logged) {
+      setLoaded(true);
+    }
+  }, [semesterPlanOptions])
+
   return (
     <div style={{ marginTop: '80px' }}>
       <Helmet>
@@ -684,19 +691,35 @@ function DegreePlan(props) {
               </div>
             </div>
           </div>
-        </div>
-      ) : (
-        loaded && (
-          <div className={dpStyle.noSchedulewrapper}>
-            <div>Create your plan now!</div>
-            <IconButton
-              className={dpStyle.editPlanButton}
-              onClick={() => handlePopup('addPlan', true)}
-            >
-              <AddBoxIcon fontSize="large" />
-            </IconButton>
-          </div>
-        )
+            :
+            <div className={dpStyle.noSchedulewrapper}>
+                <div>Create your plan now!</div>
+                <IconButton
+                  className={dpStyle.editPlanButton}
+                  onClick={() => handlePopup('addPlan', true)}
+                > 
+                <AddBoxIcon fontSize="large" />
+                </IconButton>
+              </div>)
+        :
+
+              <div className={dpStyle.noSchedulewrapper}>
+                <CircularProgress />
+              </div>
+      }
+      
+
+
+      {/* popups */}
+      {popup.showCourseInfo && (
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+          onClick={() => handlePopupClose("showCourseInfo")}
+        >
+          <CourseInfoExpress courseInfo={courseInfo} />
+        </Backdrop>
+
       )}
 
       {/* popups */}

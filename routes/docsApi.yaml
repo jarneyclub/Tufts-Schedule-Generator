@@ -145,6 +145,55 @@ paths:
       responses:
         200:
           description: Successful logout
+
+  /auth/setup_password_reset:
+    post:
+      tags:
+        - Account
+      summary: Set up password reset procedure. Calling this will send an email to the user with the link to reset password.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userid:
+                  type: string
+                  description: user's email
+      responses:
+        200:
+          description: Success
+        400:
+          description: User not found (106)
+      
+  /auth/do_password_reset:
+    post:
+      tags:
+        - Account
+      summary: Change the password of a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                  description: hash value of the password reset token. It comes from something like jarney.club/passwordreset#{HASH}}
+                password:
+                  type: string
+                  description: new password for the account. It can be the same as before.
+                password_confirmation:
+                  type: string
+                  description: must be the same as the above field
+      responses:
+        200:
+          description: Success
+        400:
+          description: Token is invalid (308), Passwords mismatch (101)
+
   ####################
   #                  #
   #     COURSES      #
@@ -173,12 +222,13 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/CourseGeneral"
-  /courses/term?cnum={e1}&attr={e2}:
+  /courses/term?cnum={e1}&attr={e2}&match_method={e3}:
     get:
       tags:
         - Courses
-      summary: Get a list of courses offered in this term of which course number matches given course-num and attribute 
-      description: example. _BASE_URL/courses/term/query/?cnum=CS-0011&attr=SoE-Mathematics
+      summary: Get a list of courses offered in this term of which course number matches given course-num, attribute, and the desired matching method. 
+      description: example. _BASE_URL/courses/term/query/?cnum=CS-0011&attr=SoE-Mathematics&match_method=courseNum
+
       parameters:
         - in: query
           name: cnum
@@ -186,6 +236,10 @@ paths:
             type: string
         - in: query
           name: attr
+          schema:
+            type: string
+        - in: query
+          name: match_method
           schema:
             type: string
       responses:

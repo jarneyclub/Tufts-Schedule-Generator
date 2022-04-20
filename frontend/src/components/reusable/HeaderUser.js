@@ -10,6 +10,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Button, IconButton, ClickAwayListener } from '@material-ui/core';
+import Backdrop from '@mui/material/Backdrop';
 import MenuIcon from '@material-ui/icons/Menu';
 import HelpIcon from '@material-ui/icons/Help';
 import hStyle from './reusableStyles/HeaderUser.module.css';
@@ -28,6 +29,7 @@ function HeaderUser(props) {
 
   const [loginPopup, setLoginPopup] = useState(false);
   const [signupPopup, setSignupPopup] = useState(false);
+  const [resetPopup, setResetPopup] = useState(false);
 
   const navbarRef = useRef();
 
@@ -220,6 +222,7 @@ function HeaderUser(props) {
           <JarUserLogin
             loginState={loginPopup}
             signupState={signupPopup}
+            resetState={resetPopup}
             onClose={() => {
               setLoginPopup(false);
               setSignupPopup(false);
