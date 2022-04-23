@@ -77,8 +77,12 @@ exports.eventsToTermSectionIds = async(events) => {
        for (let i = 0; i < events[key].length; i++) {
            console.log("curr lenghth: ");
            console.log(events[key].length);
+           
+           console.logt((events[key])[i]);
+           
+           console.log( ((events[key])[i]).term_section_id);
            termSectionIdsArray.push(events[key[i]].term_section_id);
-           console.log(events[key[i]].term_section_id);
+
        }
    });
     
