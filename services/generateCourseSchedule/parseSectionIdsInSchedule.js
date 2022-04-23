@@ -3,7 +3,7 @@
 * Purpose: 
 *     To convert an array of termSectionIds into an events Object 
 *      of the section's classes in their respective days of the week arrays
-* Date: April 9, 2022
+* Date Modified: April 23, 2022
 */
 
 const Section = require('../../models/internal/objects/classes/Section.js');
@@ -26,6 +26,8 @@ exports.sectionsToEvents = async(sections) => {
         "TimeUnspecified": []
     };
     
+    //not events, classes
+    
     /* Iterate through each term_ection_id in the array*/
     for (let i = 0; i < sections.length; i++) {
         /* Create a section object based on a given term_section_id */
@@ -43,6 +45,29 @@ exports.sectionsToEvents = async(sections) => {
     }
 
     return events;
+}
+
+/** Converts events object with DayOfWeek class arrays into an array of 
+*   term section ids 
+* @returns {array} {String} i.e testSectionsArray = ["83442","84108","84250"];
+*
+*/
+exports.eventsToTermSectionIds = async(events) => {
+    let termSectionIdsArray = [];
+    
+    /* For each day of the week in the events object, 
+        get the term_section_id from every object in the array. 
+    */
+    
+    for (const dow in events) {
+           for (int i = 0; i < dow.length; i++) {
+                 termSectionIdsArray.push(dow[i].term_section_id);
+            }   
+    }
+    
+    console.log(termSectionIdsArray);
+    
+    return termSectionIdsArray;
 }
 
 /** Creates an "event" object in the proper formatting based on Class Object information
