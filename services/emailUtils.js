@@ -51,6 +51,29 @@ const nodemailer = require('nodemailer');
     }
 }
 
+/**
+ * Send email with SendGrid API. This function will throw formatted errors, 
+ * without doing anything beyond that with errors. Handling must be done outside. 
+ * @param {string} recipient
+ * @param {string} subject
+ * @param {string} msg_plaintext
+ */
+exports.sendEmailSendGrid= async (recipient, subject, msgPlaintext) => {
+    try {
+        const sgMail = require("@sendgrid/mail");
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+        const msg = {
+            to: recipient,
+            from: 'jarneyclub@gmail.com',
+            subject: subject,
+            text: msgPlaintext
+        }
+        await sgMail.send(msg);
+    } catch (err) {
+        errorHandler(err);
+    }
+}
+
 const errorHandler = (e) => {
     console.log("(degreeReq errorHandler)");
     if (e.message !== undefined) {
