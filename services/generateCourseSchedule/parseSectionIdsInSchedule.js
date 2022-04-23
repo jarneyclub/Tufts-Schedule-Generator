@@ -60,7 +60,7 @@ exports.eventsToTermSectionIds = async(events) => {
     */
     
     for (const dow in events) {
-           for (int i = 0; i < dow.length; i++) {
+           for (let i = 0; i < dow.length; i++) {
                  termSectionIdsArray.push(dow[i].term_section_id);
             }   
     }
