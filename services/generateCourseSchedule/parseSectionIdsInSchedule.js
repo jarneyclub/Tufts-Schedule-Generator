@@ -59,10 +59,16 @@ exports.eventsToTermSectionIds = async(events) => {
         get the term_section_id from every object in the array. 
     */
     
-    for (const dow in events) {
-           for (let i = 0; i < dow.length; i++) {
-                 termSectionIdsArray.push(dow[i].term_section_id);
-            }   
+    console.log("Now printing using .values:\n");
+    console.log(Object.values(events));
+    
+    for (let dow in events) {
+        console.log("IN FOR LOOP: ");
+        console.log(dow);
+        
+           // for (let i = 0; i < dow.length; i++) {
+           //       termSectionIdsArray.push(dow[i].term_section_id);
+           //  }   
     }
     
     console.log(termSectionIdsArray);
