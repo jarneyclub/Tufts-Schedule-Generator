@@ -59,17 +59,33 @@ exports.eventsToTermSectionIds = async(events) => {
         get the term_section_id from every object in the array. 
     */
     
-    console.log("Now printing using .values:\n");
-    console.log(Object.values(events));
+    // console.log("Now printing using .values:\n");
+    // console.log(Object.values(events));
     
-    for (let dow in events) {
-        console.log("IN FOR LOOP: ");
-        console.log(dow);
+    // for (let dow in events) {
+    //     console.log("IN FOR LOOP: ");
+    //     console.log(dow);
+    // 
+    //        // for (let i = 0; i < dow.length; i++) {
+    //        //       termSectionIdsArray.push(dow[i].term_section_id);
+    //        //  }   
+    // }
+    Object.keys(events).forEach(function(key) {
+        console.log("key: ");
+        console.log(key);
         
-           // for (let i = 0; i < dow.length; i++) {
-           //       termSectionIdsArray.push(dow[i].term_section_id);
-           //  }   
-    }
+       for (let i = 0; i < key.length; i++) {
+           console.log("curr lenghth: ");
+           console.log(key.length);
+           
+           termSectionIdsArray.push(key[i].term_section_id);
+           console.log(key[i].term_section_id);
+       }
+   });
+    
+    
+    
+    
     
     console.log(termSectionIdsArray);
     
