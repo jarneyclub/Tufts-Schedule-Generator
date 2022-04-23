@@ -78,7 +78,7 @@ exports.eventsToTermSectionIds = async(events) => {
            console.log("curr lenghth: ");
            console.log(events[key].length);
            
-           console.logt((events[key])[i]);
+           console.log((events[key])[i]);
            
            console.log( ((events[key])[i]).term_section_id);
            termSectionIdsArray.push(events[key[i]].term_section_id);
