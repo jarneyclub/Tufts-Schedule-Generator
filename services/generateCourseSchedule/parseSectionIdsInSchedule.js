@@ -81,7 +81,13 @@ exports.eventsToTermSectionIds = async(events) => {
            console.log((events[key])[i]);
            
            console.log( ((events[key])[i]).term_section_id);
-           termSectionIdsArray.push(((events[key])[i]).term_section_id);
+           
+           let term_section_id_str = ((events[key])[i]).term_section_id;
+           
+           if (termSectionIdsArray.indexOf(term_section_id_str) === -1) {
+               termSectionIdsArray.push(term_section_id_str);
+           }
+
 
        }
    });
