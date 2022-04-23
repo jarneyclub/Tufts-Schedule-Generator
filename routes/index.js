@@ -24,7 +24,7 @@ router.get('/courses/general',
             authController.authenticateToken,
             courseController.getGeneralCourses);
 router.get('/courses/term', 
-            authController.authenticateToken,
+//             authController.authenticateToken,
             courseController.getTermCourses);
 router.get('/courses/attributes', 
             authController.authenticateToken,
