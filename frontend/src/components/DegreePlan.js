@@ -230,6 +230,8 @@ function DegreePlan(props) {
     const timer = setTimeout(() => {
       fetchData();
     }, 5000);
+
+    timer();
   }, [courseSearchValue]);
 
   /*
