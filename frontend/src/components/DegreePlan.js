@@ -4,7 +4,7 @@
  *
  *
  */
-
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import {
@@ -17,7 +17,7 @@ import {
 import SearchIcon from '@material-ui/icons/Search';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import Backdrop from "@mui/material/Backdrop";
+import Backdrop from '@mui/material/Backdrop';
 import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
 import CancelIcon from '@material-ui/icons/Cancel';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
@@ -107,6 +107,11 @@ function DegreePlan(props) {
   const [loaded, setLoaded] = useState(false);
   //set plan exists
   const [planExist, setPlanExist] = useState(false);
+  //infinite scroll component
+  const [state, setState] = useState({
+    items: Array.from({ length: 20 }),
+    hasMore: true,
+  });
 
   const [semesterPlanOptions, setSemesterPlanOptions] = useState(); // sets the array of options for semester plans
   const [courseSearchValue, setCourseSearchValue] = useState('');
@@ -204,6 +209,7 @@ function DegreePlan(props) {
     }
   };
 
+  //useEffect related to courseSearchValue Change
   useEffect(() => {
     async function fetchData() {
       await fetch(
@@ -374,12 +380,10 @@ function DegreePlan(props) {
     // setSelectedPlanIdx(0);
 
     await fetch('https://qa.jarney.club/api/degreeplans')
-
       .then((response) => {
         return response.json();
       })
       .then((result) => {
-        
         setSemesterPlanOptions(result.plans);
         console.log('the number of plan is:', result.plans?.length);
 
@@ -387,10 +391,8 @@ function DegreePlan(props) {
         //   setPlanExist(true);
         //   console.log('plan exists');
         // } else {
-        //   setPlanExist(false);  
+        //   setPlanExist(false);
         // }
-        
-        
 
         setCardOptions(result.plans[selectedPlanIdx].terms);
         setSelectedPlanName(result.plans[selectedPlanIdx].plan_name);
@@ -398,6 +400,21 @@ function DegreePlan(props) {
         // setLoaded(true);
       })
       .catch((error) => {});
+  };
+
+  //relate to infinite scroll component
+  const fetchMoreData = () => {
+    if (state.items.length >= searchCourseResult?.length) {
+      setState({ hasMore: false });
+      return;
+    }
+    // a fake async api call like which sends
+    // 20 more records in .5 secs
+    setTimeout(() => {
+      setState({
+        items: state.items.concat(Array.from({ length: 20 })),
+      });
+    }, 500);
   };
 
   const fetchSaveTerm = async (planTermDetails) => {
@@ -487,11 +504,8 @@ function DegreePlan(props) {
   useEffect(() => {
     if (semesterPlanOptions && semesterPlanOptions.length !== 0) {
       setPlanExist(true);
-     
-    }
-    else {
+    } else {
       setPlanExist(false);
-     
     }
     if (logged) {
       setLoaded(true);
@@ -499,11 +513,10 @@ function DegreePlan(props) {
     // setLoaded(true);
     console.log('Loaded is set to true again');
     console.log('PlanExist is:', planExist);
-  }, [semesterPlanOptions])
+  }, [semesterPlanOptions]);
 
-  
   return (
-    <div style={{ marginTop: "80px" }}>
+    <div style={{ marginTop: '80px' }}>
       <Helmet>
         <title>JARney | Degree Plan</title>
         <meta
@@ -522,10 +535,9 @@ function DegreePlan(props) {
         display a blank page;
       } */}
 
-      {
-        loaded ? 
-        // 
-          ( semesterPlanOptions && semesterPlanOptions?.length !== 0 ?
+      {loaded ? (
+        //
+        semesterPlanOptions && semesterPlanOptions?.length !== 0 ? (
           <div className={dpStyle.contentContainer}>
             {/* * * * * Contains * * * * * 
                       Progress Bar
@@ -548,7 +560,8 @@ function DegreePlan(props) {
                       unitsCount.total !== 0
                         ? (unitsCount.current / unitsCount.total) * 100 + '%'
                         : '0%',
-                    borderBottomLeftRadius: unitsCount.completed === 0 && '15px',
+                    borderBottomLeftRadius:
+                      unitsCount.completed === 0 && '15px',
                     borderTopLeftRadius: unitsCount.completed === 0 && '15px',
                     borderBottomRightRadius: unitsCount.future === 0 && '15px',
                     borderTopRightRadius: unitsCount.future === 0 && '15px',
@@ -561,12 +574,10 @@ function DegreePlan(props) {
                       unitsCount.total !== 0
                         ? (unitsCount.future / unitsCount.total) * 100 + '%'
                         : '0%',
-
                   }}
                 />
-
               </div>
-  
+
               <div className={dpStyle.progressBarTitle}>
                 {unitsCount.total !== 0
                   ? parseInt(
@@ -576,9 +587,8 @@ function DegreePlan(props) {
                     ) + '%'
                   : '0%'}
               </div>
-
             </div>
-  
+
             <div className={dpStyle.horizontalWrapper}>
               {/* * * * Contains: * * * * 
                           1. Semester Plan selected
@@ -600,10 +610,8 @@ function DegreePlan(props) {
                   &nbsp;
                   {semesterPlanOptions && semesterPlanOptions?.length !== 0 && (
                     <IconButton
-
                       className={dpStyle.editPlanButton}
                       onClick={() => handlePopup('editPlanName', true)}
-
                     >
                       <ModeEditIcon fontSize="medium" />
                     </IconButton>
@@ -618,10 +626,8 @@ function DegreePlan(props) {
                   &nbsp;
                   {semesterPlanOptions && semesterPlanOptions?.length !== 0 && (
                     <IconButton
-
                       className={dpStyle.editPlanButton}
                       onClick={() => handlePopup('removePlan', true)}
-
                     >
                       <IndeterminateCheckBoxIcon fontSize="medium" />
                     </IconButton>
@@ -646,24 +652,34 @@ function DegreePlan(props) {
                     }}
                     className={dpStyle.inputSearch}
                   />
-  
+
                   <div className={dpStyle.searchListContainer}>
                     {loadMessage && courseSearchValue !== '' && (
-                      <CircularProgress />
+                      <CircularProgress /> //little circle while result is loading
                     )}
+
+                    {/* <InfiniteScroll
+            dataLength={state.items.length}
+            next={fetchMoreData}
+            hasMore={state.hasMore}
+            loader={<h4>Loading...</h4>}
+            >  */}
+
                     {searchCourseResult?.map((course) => (
                       <CourseSearchBar
                         courseDetail={course}
-                        key={course.gen_course_id}
+                        key={course.gen_course_id} //for map
                         onTransferCourse={handleTransferCourseDetail}
                         origin={'courseList'}
                         draggable={true}
                         onClick={handleShowCourseInfo}
                       />
                     ))}
+
+                    {/* </InfiniteScroll> */}
                   </div>
                 </div>
-  
+
                 <div className={sStyle.infoContainer}>
                   <div style={{ color: '#919da1' }}>Quick SHUs summary</div>
                   <div className={sStyle.unitsContainer}>
@@ -678,20 +694,20 @@ function DegreePlan(props) {
                   </div>
                   <div className={sStyle.unitsContainer}>
                     <div className={sStyle.infoTitle}>In progress:&nbsp;</div>
-                    <div classname={sStyle.infoDetail}>{unitsCount.current}</div>
+                    <div classname={sStyle.infoDetail}>
+                      {unitsCount.current}
+                    </div>
                   </div>
                   <div className={sStyle.unitsContainer}>
                     <div className={sStyle.infoTitle}>Remaining:&nbsp;</div>
                     <div classname={sStyle.infoDetail}>{unitsCount.future}</div>
                   </div>
                 </div>
-  
+
                 {/* Degree Requirment Container */}
                 <DegreeReqExpress />
-
               </div>
 
-  
               {/* * * * Contains: * * * *
                           Degree Plan Grids 
                       */}
@@ -724,7 +740,7 @@ function DegreePlan(props) {
                     <div />
                   )}
                 </div>
-  
+
                 {/* PlanCards Container */}
                 <div className={dpStyle.planCardsContainer}>
                   {cardOptions &&
@@ -746,40 +762,38 @@ function DegreePlan(props) {
               </div>
             </div>
           </div>
-            :
-            <div className={dpStyle.noSchedulewrapper}>
-                <div>Create your plan now!</div>
-                <IconButton
-                  className={dpStyle.editPlanButton}
-                  onClick={() => handlePopup('addPlan', true)}
-                > 
-                <AddBoxIcon fontSize="large" />
-                </IconButton>
-              </div>)
-        :
-
-              <div className={dpStyle.noSchedulewrapper}>
-                <div>page is not loaded!!! {semesterPlanOptions?.length}</div>
-              </div>
-      }
-      
-
+        ) : (
+          <div className={dpStyle.noSchedulewrapper}>
+            <div>Create your plan now!</div>
+            <IconButton
+              className={dpStyle.editPlanButton}
+              onClick={() => handlePopup('addPlan', true)}
+            >
+              <AddBoxIcon fontSize="large" />
+            </IconButton>
+          </div>
+        )
+      ) : (
+        <div className={dpStyle.noSchedulewrapper}>
+          <div>page is not loaded!!! {semesterPlanOptions?.length}</div>
+        </div>
+      )}
 
       {/* popups */}
       {popup.showCourseInfo && (
         <Backdrop
-          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={open}
-          onClick={() => handlePopupClose("showCourseInfo")}
+          onClick={() => handlePopupClose('showCourseInfo')}
         >
           <CourseInfoExpress courseInfo={courseInfo} />
         </Backdrop>
       )}
 
       {popup.addSemester && (
-        <Popup onClose={() => handlePopup("addSemester", false)}>
+        <Popup onClose={() => handlePopup('addSemester', false)}>
           <AddSemester
-            onClose={() => handlePopup("addSemester", false)}
+            onClose={() => handlePopup('addSemester', false)}
             planName={semesterPlanOptions[selectedPlanIdx]?.plan_name}
             planID={semesterPlanOptions[selectedPlanIdx]?.plan_id}
             //pass down selectedPlanIdx
@@ -792,9 +806,9 @@ function DegreePlan(props) {
         </Popup>
       )}
       {popup.removeSemester && (
-        <Popup onClose={() => handlePopup("removeSemester", false)}>
+        <Popup onClose={() => handlePopup('removeSemester', false)}>
           <RemoveSemester
-            onClose={() => handlePopup("removeSemester", false)}
+            onClose={() => handlePopup('removeSemester', false)}
             cardOptions={cardOptions}
             handleRemoveCards={handleRemoveCards}
             planName={semesterPlanOptions[selectedPlanIdx]?.plan_name}
@@ -807,9 +821,9 @@ function DegreePlan(props) {
         </Popup>
       )}
       {popup.editPlanName && (
-        <Popup onClose={() => handlePopup("editPlanName", false)}>
+        <Popup onClose={() => handlePopup('editPlanName', false)}>
           <EditPlanName
-            onClose={() => handlePopup("editPlanName", false)}
+            onClose={() => handlePopup('editPlanName', false)}
             planName={semesterPlanOptions[selectedPlanIdx]?.plan_name}
             planID={semesterPlanOptions[selectedPlanIdx]?.plan_id}
             refreshPlans={fetchPlans}
@@ -820,7 +834,7 @@ function DegreePlan(props) {
         </Popup>
       )}
       {popup.addPlan && (
-        <Popup onClose={() => handlePopup("addPlan", false)}>
+        <Popup onClose={() => handlePopup('addPlan', false)}>
           <AddPlan
             onClose={() => handlePopup('addPlan', false)}
             //refreshPlans={fetchPlans}
@@ -836,9 +850,9 @@ function DegreePlan(props) {
         </Popup>
       )}
       {popup.removePlan && (
-        <Popup onClose={() => handlePopup("removePlan", false)}>
+        <Popup onClose={() => handlePopup('removePlan', false)}>
           <RemovePlan
-            onClose={() => handlePopup("removePlan", false)}
+            onClose={() => handlePopup('removePlan', false)}
             planName={semesterPlanOptions[selectedPlanIdx]?.plan_name}
             planID={semesterPlanOptions[selectedPlanIdx]?.plan_id}
             refreshPlans={fetchPlans}

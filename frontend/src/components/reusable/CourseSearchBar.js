@@ -35,14 +35,15 @@ function CourseSearchBar(props) {
     courseDetail,
     onTransferCourse,
     origin,
-    handleCardOrigin,
-    draggable,
-    onDoubleClick,
-    customStyle,
+    handleCardOrigin, //not used in DegreePlan
+    draggable, 
+    onDoubleClick, //not used in DegreePlan
+    customStyle, //not used in DegreePlan
     onClick,
   } = props;
   const { course_num, course_title, units_esti } = courseDetail;
 
+  //need clarification
   const handleDragStart = (e, touch) => {
     e.preventDefault();
     onTransferCourse && onTransferCourse(courseDetail, touch);
@@ -50,7 +51,7 @@ function CourseSearchBar(props) {
       handleCardOrigin(origin);
     }
   };
-
+//need clarification
   const handleDoubleClick = () => {
     if (origin === 'schedulerCourseList' || origin === 'schedulerTab') {
       onDoubleClick(courseDetail);
@@ -73,7 +74,7 @@ function CourseSearchBar(props) {
       id={course_num?.concat(course_title)}
       style={customStyle}
     >
-
+      {/* what are these three choices? */}
       {(origin === "schedulerCourseList" ||
         origin === "schedulerTab" ||
         origin !== "courseList") && <div>&nbsp;</div>}
