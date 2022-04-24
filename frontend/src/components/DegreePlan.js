@@ -639,7 +639,6 @@ function DegreePlan(props) {
                       dataLength={state.items.length}
                       next={fetchMoreData}
                       hasMore={state.hasMore}
-                      loader={<h4>Loading...</h4>}
                     >
                       {searchCourseResult?.map((course) => (
                         <CourseSearchBar
