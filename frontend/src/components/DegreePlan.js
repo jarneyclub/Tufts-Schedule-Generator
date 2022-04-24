@@ -227,11 +227,10 @@ function DegreePlan(props) {
         );
     }
     //delay fetching
-    const timer = setTimeout(() => {
+
+    setTimeout(() => {
       fetchData();
     }, 5000);
-
-    timer();
   }, [courseSearchValue]);
 
   /*
