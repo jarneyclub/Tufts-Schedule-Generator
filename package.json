@@ -14,6 +14,7 @@
   "author": "Jeremy Jung",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^7.6.2",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.6.0",
@@ -27,6 +28,7 @@
     "mongodb": "^3.6.3",
     "mongoose": "^5.13.14",
     "mongoose-mongodb-errors": "0.0.2",
+    "nodemailer": "^6.7.2",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^6.1.0",

@@ -19,9 +19,6 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import Backdrop from '@mui/material/Backdrop';
 import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
-import CancelIcon from '@material-ui/icons/Cancel';
-import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import dpStyle from './style/DegreePlan.module.css';
 import pStyle from './reusable/reusableStyles/Popup.module.css';
 import Popup from './reusable/Popup';
@@ -307,8 +304,6 @@ function DegreePlan(props) {
   };
 
   const handleSetSelectedPlanIdx = (idx) => {
-    console.log('idx before change: ', selectedPlanIdx);
-    console.log('idx change to: ', idx);
     setSelectedPlanIdx(idx);
   };
 
@@ -378,26 +373,18 @@ function DegreePlan(props) {
    */
   const fetchPlans = async () => {
     // setSelectedPlanIdx(0);
-
+    setLoaded(false);
     await fetch('https://qa.jarney.club/api/degreeplans')
       .then((response) => {
         return response.json();
       })
       .then((result) => {
         setSemesterPlanOptions(result.plans);
-        console.log('the number of plan is:', result.plans?.length);
-
-        // if (semesterPlanOptions && semesterPlanOptions?.length !== 0) {
-        //   setPlanExist(true);
-        //   console.log('plan exists');
-        // } else {
-        //   setPlanExist(false);
-        // }
 
         setCardOptions(result.plans[selectedPlanIdx].terms);
         setSelectedPlanName(result.plans[selectedPlanIdx].plan_name);
         setSelectedPlanID(result.plans[selectedPlanIdx].plan_id);
-        // setLoaded(true);
+        setLoaded(true);
       })
       .catch((error) => {});
   };
@@ -451,24 +438,18 @@ function DegreePlan(props) {
       .catch((error) => {});
   };
 
-  /*  Initial fetching for plans when page first loads */
+  /*  Set Login required for Degree Plan to be true */
   useEffect(() => {
-    fetchPlans();
-    fetchPrivateReqs();
     handleLogRequired(true);
   }, []);
 
   useEffect(() => {
-    if (logged) {
-      fetchPlans();
-      fetchPrivateReqs();
-    }
-  }, [logged]);
-
-  useEffect(() => {
     console.log('selectedPlanIdx changed useEffect called');
     fetchPlans();
-  }, [selectedPlanIdx]);
+    if (logged) {
+      fetchPrivateReqs();
+    }
+  }, [selectedPlanIdx, logged]);
 
   useEffect(() => {
     cardOptions?.map((card) => fetchSaveTerm(card));
@@ -504,16 +485,16 @@ function DegreePlan(props) {
   useEffect(() => {
     if (semesterPlanOptions && semesterPlanOptions.length !== 0) {
       setPlanExist(true);
-    } else {
+    }
+    else {
+
       setPlanExist(false);
     }
     if (logged) {
       setLoaded(true);
     }
-    // setLoaded(true);
-    console.log('Loaded is set to true again');
-    console.log('PlanExist is:', planExist);
-  }, [semesterPlanOptions]);
+  }, [semesterPlanOptions])
+
 
   return (
     <div style={{ marginTop: '80px' }}>
@@ -762,22 +743,26 @@ function DegreePlan(props) {
               </div>
             </div>
           </div>
-        ) : (
-          <div className={dpStyle.noSchedulewrapper}>
-            <div>Create your plan now!</div>
-            <IconButton
-              className={dpStyle.editPlanButton}
-              onClick={() => handlePopup('addPlan', true)}
-            >
-              <AddBoxIcon fontSize="large" />
-            </IconButton>
-          </div>
-        )
-      ) : (
-        <div className={dpStyle.noSchedulewrapper}>
-          <div>page is not loaded!!! {semesterPlanOptions?.length}</div>
-        </div>
-      )}
+
+            :
+            <div className={dpStyle.noSchedulewrapper}>
+                <div>Create your plan now!</div>
+                <IconButton
+                  className={dpStyle.editPlanButton}
+                  onClick={() => handlePopup('addPlan', true)}
+                > 
+                <AddBoxIcon fontSize="large" />
+                </IconButton>
+              </div>)
+        :
+
+              <div className={dpStyle.noSchedulewrapper}>
+                <CircularProgress />
+              </div>
+      }
+      
+
+
 
       {/* popups */}
       {popup.showCourseInfo && (

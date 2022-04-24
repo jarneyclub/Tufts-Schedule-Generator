@@ -24,7 +24,7 @@ router.get('/courses/general',
             authController.authenticateToken,
             courseController.getGeneralCourses);
 router.get('/courses/term', 
-            authController.authenticateToken,
+//             authController.authenticateToken,
             courseController.getTermCourses);
 router.get('/courses/attributes', 
             authController.authenticateToken,
@@ -150,11 +150,13 @@ router.post('/auth/login_cookie',
              authController.signAccessTokenAndAttachCookie,
              userController.sendLoginResponse);
 
-// router.post('/auth/password_reset_email',
-//              authController.makePasswordResetEntry,
-//              userController.sendEmailToUser);
+router.post('/auth/setup_password_reset',
+             authController.setupUserPasswordResetAPI);
 
-// ////////////////////////////////////////
+router.post('/auth/do_password_reset',
+             authController.doUserPasswordResetAPI);
+
+////////////////////////////////////////
 //                                    //
 //             Schedule               //
 //                                    //
@@ -236,7 +238,10 @@ router.get('/pamela', async function(req, res) {
     //let info = await newSection.printPretty();
     console.log("In index now\n");
     console.log(eventResult);
-    res.json(eventResult, null, 4);
+    
+    let termsectionsResult = await parser.eventsToTermSectionIds(eventResult);
+    //res.json(eventResult, null, 4);
+    res.json(termsectionsResult);
 }
 );
 

@@ -1,5 +1,6 @@
 {
   "files": {
+
     "main.css": "/static/css/main.d644cc8d.css",
     "main.js": "/static/js/main.678257b7.js",
     "static/media/favicon_2.png": "/static/media/favicon_2.864c93e1efb88812fdf4.png",
@@ -12,11 +13,13 @@
     "static/media/Icon_DegreePlanner.png": "/static/media/Icon_DegreePlanner.bfb9c5e6ab916b938367.png",
     "static/media/jarney_word.png": "/static/media/jarney_word.a79d9ad41b6d4ba72a97.png",
     "index.html": "/index.html",
+
     "main.d644cc8d.css.map": "/static/css/main.d644cc8d.css.map",
     "main.678257b7.js.map": "/static/js/main.678257b7.js.map"
   },
   "entrypoints": [
     "static/css/main.d644cc8d.css",
     "static/js/main.678257b7.js"
+
   ]
 }

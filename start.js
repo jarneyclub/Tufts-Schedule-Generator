@@ -32,6 +32,7 @@ require('./models/external/NormalActivity');
 require('./models/external/ApiError');
 require('./models/external/ApiUse');
 require('./models/external/FrontendUse');
+require('./models/external/PasswordResetToken');
 // start app
 const app = require('./app');
 app.set('port', process.env.PORT || 7777);

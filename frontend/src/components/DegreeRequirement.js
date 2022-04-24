@@ -220,8 +220,6 @@ function DegreeRequirement(props) {
 
   useEffect(() => {
     handleLogRequired(true);
-    fetchPrivateReqs();
-    fetchPublicReqs();
   }, []);
 
   useEffect(() => {
