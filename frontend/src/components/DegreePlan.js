@@ -485,16 +485,13 @@ function DegreePlan(props) {
   useEffect(() => {
     if (semesterPlanOptions && semesterPlanOptions.length !== 0) {
       setPlanExist(true);
-    }
-    else {
-
+    } else {
       setPlanExist(false);
     }
     if (logged) {
       setLoaded(true);
     }
-  }, [semesterPlanOptions])
-
+  }, [semesterPlanOptions]);
 
   return (
     <div style={{ marginTop: '80px' }}>
@@ -517,7 +514,6 @@ function DegreePlan(props) {
       } */}
 
       {loaded ? (
-        //
         semesterPlanOptions && semesterPlanOptions?.length !== 0 ? (
           <div className={dpStyle.contentContainer}>
             {/* * * * * Contains * * * * * 
@@ -639,25 +635,23 @@ function DegreePlan(props) {
                       <CircularProgress /> //little circle while result is loading
                     )}
 
-                    {/* <InfiniteScroll
-            dataLength={state.items.length}
-            next={fetchMoreData}
-            hasMore={state.hasMore}
-            loader={<h4>Loading...</h4>}
-            >  */}
-
-                    {searchCourseResult?.map((course) => (
-                      <CourseSearchBar
-                        courseDetail={course}
-                        key={course.gen_course_id} //for map
-                        onTransferCourse={handleTransferCourseDetail}
-                        origin={'courseList'}
-                        draggable={true}
-                        onClick={handleShowCourseInfo}
-                      />
-                    ))}
-
-                    {/* </InfiniteScroll> */}
+                    <InfiniteScroll
+                      dataLength={state.items.length}
+                      next={fetchMoreData}
+                      hasMore={state.hasMore}
+                      loader={<h4>Loading...</h4>}
+                    >
+                      {searchCourseResult?.map((course) => (
+                        <CourseSearchBar
+                          courseDetail={course}
+                          key={course.gen_course_id} //for map
+                          onTransferCourse={handleTransferCourseDetail}
+                          origin={'courseList'}
+                          draggable={true}
+                          onClick={handleShowCourseInfo}
+                        />
+                      ))}
+                    </InfiniteScroll>
                   </div>
                 </div>
 
@@ -743,26 +737,22 @@ function DegreePlan(props) {
               </div>
             </div>
           </div>
-
-            :
-            <div className={dpStyle.noSchedulewrapper}>
-                <div>Create your plan now!</div>
-                <IconButton
-                  className={dpStyle.editPlanButton}
-                  onClick={() => handlePopup('addPlan', true)}
-                > 
-                <AddBoxIcon fontSize="large" />
-                </IconButton>
-              </div>)
-        :
-
-              <div className={dpStyle.noSchedulewrapper}>
-                <CircularProgress />
-              </div>
-      }
-      
-
-
+        ) : (
+          <div className={dpStyle.noSchedulewrapper}>
+            <div>Create your plan now!</div>
+            <IconButton
+              className={dpStyle.editPlanButton}
+              onClick={() => handlePopup('addPlan', true)}
+            >
+              <AddBoxIcon fontSize="large" />
+            </IconButton>
+          </div>
+        )
+      ) : (
+        <div className={dpStyle.noSchedulewrapper}>
+          <CircularProgress />
+        </div>
+      )}
 
       {/* popups */}
       {popup.showCourseInfo && (
