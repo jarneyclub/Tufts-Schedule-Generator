@@ -226,7 +226,10 @@ function DegreePlan(props) {
           }
         );
     }
-    fetchData();
+    //delay fetching
+    const timer = setTimeout(() => {
+      fetchData();
+    }, 5000);
   }, [courseSearchValue]);
 
   /*
