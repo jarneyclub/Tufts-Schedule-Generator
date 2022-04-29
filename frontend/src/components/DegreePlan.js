@@ -376,7 +376,6 @@ function DegreePlan(props) {
    *
    */
   const fetchPlans = async () => {
-    // setSelectedPlanIdx(0);
     setLoaded(false);
     await fetch("https://qa.jarney.club/api/degreeplans")
       .then((response) => {
@@ -384,7 +383,6 @@ function DegreePlan(props) {
       })
       .then((result) => {
         setSemesterPlanOptions(result.plans);
-
         setCardOptions(result.plans[selectedPlanIdx].terms);
         setSelectedPlanName(result.plans[selectedPlanIdx].plan_name);
         setSelectedPlanID(result.plans[selectedPlanIdx].plan_id);
@@ -492,6 +490,10 @@ function DegreePlan(props) {
       setPlanExist(false);
     }
   }, [semesterPlanOptions]);
+
+  useEffect(() => {
+    console.log("loaded: ", loaded);
+  }, [loaded])
 
   return (
     <div style={{ marginTop: "80px" }}>
