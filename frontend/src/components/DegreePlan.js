@@ -379,9 +379,11 @@ function DegreePlan(props) {
     setLoaded(false);
     await fetch("https://qa.jarney.club/api/degreeplans")
       .then((response) => {
+        console.log("response from fetchplans?");
         return response.json();
       })
       .then((result) => {
+        console.log("result from fetchplans?", result);
         setSemesterPlanOptions(result.plans);
         setCardOptions(result.plans[selectedPlanIdx].terms);
         setSelectedPlanName(result.plans[selectedPlanIdx].plan_name);
