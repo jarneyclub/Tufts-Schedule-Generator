@@ -385,9 +385,13 @@ function DegreePlan(props) {
       .then((result) => {
         console.log("result from fetchplans?", result);
         setSemesterPlanOptions(result.plans);
+        console.log("1");
         setCardOptions(result.plans[selectedPlanIdx].terms);
+        console.log("2");
         setSelectedPlanName(result.plans[selectedPlanIdx].plan_name);
+        console.log("3");
         setSelectedPlanID(result.plans[selectedPlanIdx].plan_id);
+        console.log("console log right before set load");
         setLoaded(true);
         console.log("fetchplans response received");
       })
