@@ -7,7 +7,7 @@ import MyInputField from "./MyInputField";
 import fStyle from "./reusableStyles/Form.module.css";
 
 interface ResetProps {
-  onSubmit: ((values: any) => Promise<void>)
+  onSubmit: (values: any) => Promise<void>;
 }
 
 const validationSchema = Yup.object({
@@ -17,14 +17,15 @@ const validationSchema = Yup.object({
     .required("Required"),
 });
 
-
 const PasswordResetForm: React.FC<ResetProps> = (props) => {
-  const {onSubmit} = props;
-
+  const { onSubmit } = props;
 
   return (
     <div className={fStyle.formContainer}>
-      <p>Please enter your email address. If we find an account associated with that email, we will send you a link to reset your passowrd!</p>
+      <p>
+        Please enter your email address. If we find an account associated with
+        that email, we will send you a link to reset your passowrd!
+      </p>
       <Formik
         initialValues={{
           userid: "",
@@ -35,7 +36,11 @@ const PasswordResetForm: React.FC<ResetProps> = (props) => {
         }}
       >
         <Form className={fStyle.formContainer}>
-          <MyInputField placeholder="Email Address" name="userid" type="email" />
+          <MyInputField
+            placeholder="Email Address"
+            name="userid"
+            type="email"
+          />
 
           <Button type="submit" className={fStyle.button}>
             Send me an email
@@ -43,9 +48,7 @@ const PasswordResetForm: React.FC<ResetProps> = (props) => {
         </Form>
       </Formik>
     </div>
-    
   );
-
-}
+};
 
 export default PasswordResetForm;

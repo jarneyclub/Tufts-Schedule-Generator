@@ -6,20 +6,20 @@
  * path.
  *
  */
-import { useState, useEffect } from 'react';
-import { MuiThemeProvider, createTheme } from '@material-ui/core';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Home from './components/Home'; // routest to diff pages
+import { useState, useEffect } from "react";
+import { MuiThemeProvider, createTheme } from "@material-ui/core";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import Home from "./components/Home"; // routest to diff pages
 
-import DegreeRequirement from './components/DegreeRequirement';
-import DegreePlan from './components/DegreePlan';
+import DegreeRequirement from "./components/DegreeRequirement";
+import DegreePlan from "./components/DegreePlan";
 
-import Scheduler from './components/Scheduler';
-import HelpPage from './components/HelpPage';
-import Header from './components/reusable/HeaderUser';
+import Scheduler from "./components/Scheduler";
+import HelpPage from "./components/HelpPage";
+import Header from "./components/reusable/HeaderUser";
 
-import EinaRegular from './fonts/Eina03-Regular.ttf';
-import PasswordResetLink from './components/PasswordResetPage';
+import EinaRegular from "./fonts/Eina03-Regular.ttf";
+import PasswordResetLink from "./components/PasswordResetPage";
 
 const THEME = createTheme({
   typography: {
@@ -61,16 +61,16 @@ export default function App() {
 
   const fetchQuickLogin = async () => {
     const requestOption = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({}),
     };
-    await fetch('https://qa.jarney.club/api/auth/login_cookie', requestOption)
+    await fetch("https://qa.jarney.club/api/auth/login_cookie", requestOption)
       .then((response) => {
         if (response.ok) {
           return response.json();
         }
-        throw new Error('Quick Login Failed. User needs to Login');
+        throw new Error("Quick Login Failed. User needs to Login");
       })
       .then((result) => setLogged(result.data))
       .catch((error) => {});
@@ -87,10 +87,10 @@ export default function App() {
       }
     };
 
-    window.addEventListener('resize', checkResize);
+    window.addEventListener("resize", checkResize);
 
     return () => {
-      window.removeEventListener('resize', checkResize);
+      window.removeEventListener("resize", checkResize);
     };
   }, []);
 
@@ -164,7 +164,6 @@ export default function App() {
                 handleSigninPopup={handleSignupPopup}
               />
             </Route>
-            
 
             <Route path="/">
               <Home handleLogRequired={handleLogRequired} />

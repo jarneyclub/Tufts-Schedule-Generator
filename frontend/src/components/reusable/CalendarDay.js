@@ -9,7 +9,7 @@
 
 import { useEffect, useState } from "react";
 import cStyle from "./reusableStyles/CalendarDay.module.css";
-import sStyle from '../style/Scheduler.module.css';
+import sStyle from "../style/Scheduler.module.css";
 import Event from "./Event.js";
 import { Button, IconButton } from "@material-ui/core";
 
@@ -125,8 +125,7 @@ function CalendarDay(props) {
   const handleShowDayTitle = () => {
     if (dayName === "Time Unstated") {
       return "Time Unstated";
-    }
-    else {
+    } else {
       return dayName.substr(0, 3).toUpperCase();
     }
   };
@@ -207,7 +206,7 @@ function CalendarDay(props) {
       {/* Put the classes on depending on the day */}
       {dayName === "Time Unstated"
         ? classesDay?.TimeUnspecified?.map((course) => {
-            return <Button style={{zIndex: 10000000}}>Hi</Button>;
+            return <Button style={{ zIndex: 10000000 }}>Hi</Button>;
           })
         : classesDay?.map((event) => {
             return (
