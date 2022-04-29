@@ -239,7 +239,7 @@ const createPasswordResetHash = (userid) => {
     if (typeof pwResetHash !== 'string')
         throw {id: "602", status: "400", title: "Authentication Error", detail : "Parameter(s) is invalid", databaseDetail : "pwResetHash is not a string"};
     
-    await emailUtils.sendEmail(userid, "Reset the password for your JARney account!", "Password reset link: " + process.env.SITE_URL + "/passwordreset/" + pwResetHash);
+    await emailUtils.sendEmailSendGrid(userid, "Reset the password for your JARney account!", "Password reset link: " + process.env.SITE_URL + "/passwordreset/" + pwResetHash);
 }
 
 
