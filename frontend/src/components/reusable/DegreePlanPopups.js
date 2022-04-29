@@ -5,30 +5,30 @@
  *
  */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   Button,
   InputAdornment,
   TextField,
   IconButton,
   CircularProgress,
-} from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
-import AddBoxIcon from '@material-ui/icons/AddBox';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
-import CancelIcon from '@material-ui/icons/Cancel';
-import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+} from "@material-ui/core";
+import SearchIcon from "@material-ui/icons/Search";
+import AddBoxIcon from "@material-ui/icons/AddBox";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
+import CancelIcon from "@material-ui/icons/Cancel";
+import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
+import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 
-import pStyle from '../reusable/reusableStyles/Popup.module.css';
-import Popup from './Popup';
-import PlanCard from './PlanCard';
-import Dropdown from './Dropdown';
-import CourseSearchBar from './CourseSearchBar';
-import SnackBarAlert from './SnackBarAlert';
-import DegreeReqDisplay from './DegreeReqDisplay';
-import JarUserLogin from './JarUserLogin';
+import pStyle from "../reusable/reusableStyles/Popup.module.css";
+import Popup from "./Popup";
+import PlanCard from "./PlanCard";
+import Dropdown from "./Dropdown";
+import CourseSearchBar from "./CourseSearchBar";
+import SnackBarAlert from "./SnackBarAlert";
+import DegreeReqDisplay from "./DegreeReqDisplay";
+import JarUserLogin from "./JarUserLogin";
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
@@ -36,7 +36,7 @@ import JarUserLogin from './JarUserLogin';
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 // const yearOptions = []
-const termOptions = ['Fall', 'Spring', 'Summer', 'Annual'];
+const termOptions = ["Fall", "Spring", "Summer", "Annual"];
 function AddSemester(props) {
   const {
     onClose,
@@ -73,13 +73,13 @@ function AddSemester(props) {
   const validateAdd = () => {
     var res = true;
     cardOptions.forEach((card) => {
-      const time = card?.term.split(' ');
+      const time = card?.term.split(" ");
 
       // console.log('true? ', time[0] === '' + yearOptions[selectedYearIdx]);
 
       if (
-        time[0] === '' + yearOptions[selectedYearIdx] &&
-        time[1] === '' + termOptions[selectedTermIdx]
+        time[0] === "" + yearOptions[selectedYearIdx] &&
+        time[1] === "" + termOptions[selectedTermIdx]
       ) {
         res = false;
       }
@@ -94,35 +94,35 @@ function AddSemester(props) {
     if (validateAdd() === true) {
       fetchAdd();
     } else {
-      setAlertMessage('term already exists!');
-      setAlertSeverity('warning');
+      setAlertMessage("term already exists!");
+      setAlertSeverity("warning");
       onShowAlert(true);
     }
   };
 
   const fetchAdd = async () => {
     const yearTerm =
-      yearOptions[selectedYearIdx] + ' ' + termOptions[selectedTermIdx];
+      yearOptions[selectedYearIdx] + " " + termOptions[selectedTermIdx];
 
     const value = { plan_id: planID, term: yearTerm };
     const requestOption = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(value),
     };
 
-    await fetch('https://qa.jarney.club/api/degreeplan/term', requestOption)
+    await fetch("https://qa.jarney.club/api/degreeplan/term", requestOption)
       .then((response) => response.json())
       .then((result) => {
         if (!result.error) {
           refreshPlans();
-          setAlertMessage('Term added!');
-          setAlertSeverity('success');
+          setAlertMessage("Term added!");
+          setAlertSeverity("success");
           onShowAlert();
           onClose();
         } else {
           setAlertMessage(result.error);
-          setAlertSeverity('warning');
+          setAlertSeverity("warning");
           onShowAlert(true);
         }
       })
@@ -190,13 +190,13 @@ function RemoveSemester(props) {
     if (pos === -1) {
       /* was not in selectedCards array, aka was not selected, now select */
       setSelectedCards((prev) => prev.concat(val));
-      e.target.style.backgroundColor = '#5A32BF';
-      e.target.style.color = '#ffffff';
+      e.target.style.backgroundColor = "#5A32BF";
+      e.target.style.color = "#ffffff";
     } else {
       /* found in selectedCards array, aka was selected, now unselect */
       setSelectedCards((prev) => prev.filter((card) => card !== val));
-      e.target.style.backgroundColor = '#ffffff';
-      e.target.style.color = '#5A32BF';
+      e.target.style.backgroundColor = "#ffffff";
+      e.target.style.color = "#5A32BF";
     }
   };
 
@@ -211,25 +211,25 @@ function RemoveSemester(props) {
 
   const fetchDeleteTerms = async () => {
     const requestOption = {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         plan_term_ids: selectedCards,
         plan_id: planID,
       }),
     };
-    await fetch('https://qa.jarney.club/api/degreeplan/terms', requestOption)
+    await fetch("https://qa.jarney.club/api/degreeplan/terms", requestOption)
       .then((response) => response.json())
       .then((result) => {
         if (!result.error) {
           refreshPlans();
-          setAlertMessage('Term(s) removed!');
-          setAlertSeverity('success');
+          setAlertMessage("Term(s) removed!");
+          setAlertSeverity("success");
           onShowAlert();
           onClose();
         } else {
           setAlertMessage(result.error);
-          setAlertSeverity('warning');
+          setAlertSeverity("warning");
           onShowAlert(true);
         }
       });
@@ -304,25 +304,25 @@ function EditPlanName(props) {
 
   const patchEditName = async () => {
     const requestOption = {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
     };
-    const url = 'https://qa.jarney.club/api/degreeplan/'
+    const url = "https://qa.jarney.club/api/degreeplan/"
       .concat(planID)
-      .concat('/plan_name/')
+      .concat("/plan_name/")
       .concat(editName);
     await fetch(url, requestOption)
       .then((response) => response.json())
       .then((result) => {
         if (!result.error) {
           refreshPlans();
-          setAlertMessage('Plan name changed successfully!');
-          setAlertSeverity('success');
+          setAlertMessage("Plan name changed successfully!");
+          setAlertSeverity("success");
           onShowAlert();
           onClose();
         } else {
           setAlertMessage(result.error);
-          setAlertSeverity('warning');
+          setAlertSeverity("warning");
           onShowAlert(true);
         }
       })
@@ -369,7 +369,7 @@ function AddPlan(props) {
     setAlertSeverity,
   } = props;
 
-  const [planName, setPlanName] = useState('');
+  const [planName, setPlanName] = useState("");
 
   const handleClose = () => {
     onClose();
@@ -381,15 +381,15 @@ function AddPlan(props) {
   const handleAdd = () => {
     /* do something API?? pass in the selectedCards arr */
 
-    if (planName !== '') {
+    if (planName !== "") {
       //Winnie edited: reset idx last
       // onSetIdxLast();
       createNewPlan(planName);
       onClose();
     } else {
-      console.log('bad!');
-      setAlertMessage('Plan name cannot be blank!');
-      setAlertSeverity('warning');
+      console.log("bad!");
+      setAlertMessage("Plan name cannot be blank!");
+      setAlertSeverity("warning");
       onShowAlert();
     }
   };
@@ -445,27 +445,26 @@ function RemovePlan(props) {
 
   const fetchDelete = async () => {
     const requestOption = {
-      method: 'DELETE',
-      headers: { accept: '*/*' },
+      method: "DELETE",
+      headers: { accept: "*/*" },
     };
     await fetch(
-      'https://qa.jarney.club/api/degreeplan?plan_id='.concat(planID),
+      "https://qa.jarney.club/api/degreeplan?plan_id=".concat(planID),
       requestOption
     )
       .then((response) => response.json())
       .then((result) => {
-
         if (!result.error) {
           console.log("fetch Delete called");
           onSetIdxLast();
-          setAlertMessage('Plan removed!');
-          setAlertSeverity('success');
+          setAlertMessage("Plan removed!");
+          setAlertSeverity("success");
           onShowAlert(true);
           refreshPlans();
           onClose();
         } else {
           setAlertMessage(result.error);
-          setAlertSeverity('warning');
+          setAlertSeverity("warning");
           onShowAlert(true);
         }
       })

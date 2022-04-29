@@ -17,7 +17,7 @@
         }
  *
  */
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Button,
   IconButton,
@@ -25,10 +25,10 @@ import {
   InputAdornment,
   FormControl,
   InputLabel,
-} from '@material-ui/core';
-import RemoveIcon from '@material-ui/icons/Remove';
-import AddIcon from '@material-ui/icons/Add';
-import cStyle from './reusableStyles/CourseSearchBar.module.css';
+} from "@material-ui/core";
+import RemoveIcon from "@material-ui/icons/Remove";
+import AddIcon from "@material-ui/icons/Add";
+import cStyle from "./reusableStyles/CourseSearchBar.module.css";
 
 function CourseSearchBar(props) {
   const {
@@ -36,7 +36,7 @@ function CourseSearchBar(props) {
     onTransferCourse,
     origin,
     handleCardOrigin, //not used in DegreePlan
-    draggable, 
+    draggable,
     onDoubleClick, //not used in DegreePlan
     customStyle, //not used in DegreePlan
     onClick,
@@ -47,15 +47,15 @@ function CourseSearchBar(props) {
   const handleDragStart = (e, touch) => {
     e.preventDefault();
     onTransferCourse && onTransferCourse(courseDetail, touch);
-    if (origin !== 'courseList') {
+    if (origin !== "courseList") {
       handleCardOrigin(origin);
     }
   };
-//need clarification
+  //need clarification
   const handleDoubleClick = () => {
-    if (origin === 'schedulerCourseList' || origin === 'schedulerTab') {
+    if (origin === "schedulerCourseList" || origin === "schedulerTab") {
       onDoubleClick(courseDetail);
-    } else if (origin !== 'courseList') {
+    } else if (origin !== "courseList") {
       onDoubleClick(courseDetail);
     }
   };
@@ -78,31 +78,33 @@ function CourseSearchBar(props) {
       {(origin === "schedulerCourseList" ||
         origin === "schedulerTab" ||
         origin !== "courseList") && <div>&nbsp;</div>}
-      <div style={{ wordBreak: "break-word" }} onDoubleClick={handleDoubleClick}
-      onClick={handleOnClick}>
+      <div
+        style={{ wordBreak: "break-word" }}
+        onDoubleClick={handleDoubleClick}
+        onClick={handleOnClick}
+      >
         【{course_num}】{course_title}
-
       </div>
-      {origin === 'schedulerCourseList' && (
+      {origin === "schedulerCourseList" && (
         <div className={cStyle.actionButton}>
           <IconButton onClick={handleDoubleClick}>
-            <AddIcon style={{ fill: '#ffffff' }} />
+            <AddIcon style={{ fill: "#ffffff" }} />
           </IconButton>
         </div>
       )}
-      {(origin === 'schedulerTab' ||
+      {(origin === "schedulerTab" ||
         !(
-          origin === 'courseList' ||
-          origin === 'schedulerCourseList' ||
-          origin === 'degreePlanExpress'
+          origin === "courseList" ||
+          origin === "schedulerCourseList" ||
+          origin === "degreePlanExpress"
         )) && (
         <div className={cStyle.actionButton}>
           <IconButton onClick={handleDoubleClick}>
-            <RemoveIcon style={{ fill: '#ffffff' }} />
+            <RemoveIcon style={{ fill: "#ffffff" }} />
           </IconButton>
         </div>
       )}
-      {origin === 'degreePlanExpress' && <div>&nbsp;</div>}
+      {origin === "degreePlanExpress" && <div>&nbsp;</div>}
     </div>
   );
 }
