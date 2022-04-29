@@ -492,9 +492,7 @@ function DegreePlan(props) {
     } else {
       setPlanExist(false);
     }
-    if (logged) {
-      setLoaded(true);
-    }
+   
   }, [semesterPlanOptions]);
 
   return (
@@ -507,15 +505,6 @@ function DegreePlan(props) {
         />
       </Helmet>
 
-      {/* if (loaded) {
-        if (semesterPlanOptions.length !== 0) {
-          display everything;
-        } else {
-          create a new plan!
-        }
-      } else {
-        display a blank page;
-      } */}
 
       {loaded ? (
         semesterPlanOptions && semesterPlanOptions?.length !== 0 ? (
