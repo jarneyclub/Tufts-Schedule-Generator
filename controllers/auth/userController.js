@@ -85,9 +85,13 @@ exports.registerLocal = async (req, res, next) => {
     User.register(user, req.body.password, (err, user) => {
         if (err) {
             if (err.message.indexOf("already registered") > -1)
-                resHandler.respondWithCustomError(req.body.userid, "register", "102", "409", "Registration Error", "The email is already in use", false, res);
-            else
-                resHandler.respondWithCustomError(req.body.userid, "register", "105", "409", "Registration Error", "Something is wrong. Registration Failed.", false, res);
+                resHandler.respondWithCustomError(req.body.userid, "register", "102", "409", "Registration Error", "The email is already in use",  "The email is already in use", false, res);
+            else {
+                if (err.message !== undefined)
+                    resHandler.respondWithCustomError(req.body.userid, "register", "105", "409", "Registration Error", "Something is wrong. Registration Failed.", "error.message=" + err.message, false, res);
+                else 
+                    resHandler.respondWithCustomError(req.body.userid, "register", "105", "409", "Registration Error", "Something is wrong. Registration Failed.", "Something is wrong. And err.message is undefined...", false, res);
+            }
         } else {
             console.log("(userController/registerLocal) registered user into database");
             console.log("(userController/registerLocal) user: ", user);
