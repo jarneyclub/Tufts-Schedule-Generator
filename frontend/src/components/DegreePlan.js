@@ -449,8 +449,8 @@ function DegreePlan(props) {
   }, []);
 
   useEffect(() => {
-    fetchPlans();
     if (logged) {
+      fetchPlans();
       fetchPrivateReqs();
     }
   }, [selectedPlanIdx, logged]);
