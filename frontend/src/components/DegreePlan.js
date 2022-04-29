@@ -387,6 +387,7 @@ function DegreePlan(props) {
         setSelectedPlanName(result.plans[selectedPlanIdx].plan_name);
         setSelectedPlanID(result.plans[selectedPlanIdx].plan_id);
         setLoaded(true);
+        console.log("fetchplans response received");
       })
       .catch((error) => {});
   };
