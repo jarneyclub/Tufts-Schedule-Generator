@@ -5,7 +5,7 @@
  *
  */
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import {
   Button,
@@ -84,6 +84,8 @@ const courses = [
 ];
 
 const currentYear = new Date().getFullYear();
+
+const POSITION = {x: 0, y:0};                  //Added for re-implementation of drag-drop
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                           *
@@ -497,6 +499,18 @@ function DegreePlan(props) {
     console.log("loaded: ", loaded);
   }, [loaded])
 
+  //ADDED FOR RE-IMPLEMENTATION OF DRAG & DROP:
+  const [mouseState, setMouseState] = useState({
+    isDragging: false,
+    origin: POSITION, 
+    translation: POSITION 
+  });
+
+  //Add onDrag here
+  const handleDrag = useCallback(() => {
+
+  }, [])
+
   return (
     <div style={{ marginTop: "80px" }}>
       <Helmet>
@@ -642,6 +656,9 @@ function DegreePlan(props) {
                           origin={"courseList"}
                           draggable={true}
                           onClick={handleShowCourseInfo}
+                          mouseState ={mouseState}              //Added for drag-drop reimplementation
+                          setMouseState={setMouseState}         //Added for drag-drop reimplementation
+                          onDrag={handleDrag}                   //Added for drag-drop reimplementation
                         />
                       ))}
                     </InfiniteScroll>
@@ -724,6 +741,7 @@ function DegreePlan(props) {
                         cardOrigin={cardOrigin}
                         onClick={handleShowCourseInfo}
                         origin={"dp2"}
+                        onDrag={handleDrag}                  //Added for drag-drop reimplementation
                       />
                     ))}
                 </div>
