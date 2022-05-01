@@ -19,51 +19,7 @@ function PlanCard(props) {
     tabExpress,
     onClick,
     origin,
-    mouseState,                      //Added for drag-drop re-implementation 
-    setMouseState,                   //Added for drag-drop re-implementation 
-    onDrag,                          //Added for drag-drop re-implementation 
   } = props;
-
-  //ADDED FOR DRAG-DROP REIMPLEMENTATION:
-  const handleMouseMove = useCallback(({clientX, clientY}) => {
-    const translationn = {x: clientX - mouseState.origin.x, y: clientY - mouseState.origin.y};
-
-    setMouseState(mouseState => ({
-        ...mouseState,
-        translation
-    }))
-
-    onDrag({translation});
-
-  }, [mouseState.origin, onDrag]);
-
-  const handleMouseUp = useCallback(() => {
-    setMouseState(mouseState => ({
-       ...mouseState, 
-       isDragging: false
-    }))
-
-    //Copied from drop() function
-    if (
-      dropItem(cardDetail.plan_term_id, transferCourseDetail) &&
-      cardOrigin !== cardDetail.plan_term_id
-    ) {
-      onRemoveCourse(cardOrigin, transferCourseDetail);
-    }
-    
-  }, []);
-
-  useEffect(() => {
-    if (mouseState.isDragging) {
-        window.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('mouseup', handleMouseUp);
-    } else {
-      window.removeEventListener('mouseMove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
-
-      setMouseState(mouseState => ({...mouseState, translation: POSITION }))
-    }
-  }, [mouseState.isDragging, handleMouseMove, handleMouseUp]);
 
   const dragOver = (e) => {
     e.preventDefault();
@@ -98,8 +54,7 @@ function PlanCard(props) {
       // onDragOver={dragOver}
       // onDrop={drop}
       // onTouchEnd={drop}
-      //onMouseUp={drop}                    //Commented out for drag-drop re-imp
-      onMouseUp={handleMouseUp}             //Added for drag-drop reimplementation
+      onMouseUp={drop}
       id={cardDetail?.plan_term_id}
       style={origin === "dp2" ? { maxWidth: "33%", minWidth: "300px" } : {}}
     >
@@ -136,9 +91,6 @@ function PlanCard(props) {
                   justifyContent: "space-between",
                 }}
                 onClick={onClick}
-                mouseState ={mouseState}              //Added for drag-drop reimplementation
-                setMouseState={setMouseState}         //Added for drag-drop reimplementation
-                onDrag={handleDrag}                   //Added for drag-drop reimplementation
               />
             ))}
       </div>
