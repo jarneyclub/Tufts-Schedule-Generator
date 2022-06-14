@@ -57,6 +57,7 @@ const palette = [
     borderLeft: "5px solid #DCAB6A",
   },
 ];
+
 function Class(props) {
   const { classDetail, tu, customStyle } = props;
   const {

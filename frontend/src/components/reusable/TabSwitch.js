@@ -113,7 +113,7 @@ function DegreePlanExpress() {
         <IconButton onClick={() => handleSwitchReq(-1)}>
           <ArrowLeftIcon fontSize="large" />
         </IconButton>
-        <div style={{ color: '#ffffff' }}>
+        <div style={{ color: "#ffffff" }}>
           {degreePlanOptions[selectedDegreePlan]?.plan_name}
         </div>
         <IconButton color="action" onClick={() => handleSwitchReq(1)}>
@@ -127,7 +127,7 @@ function DegreePlanExpress() {
               key={card.plan_term_id}
               cardDetail={card}
               tabExpress={true}
-              cardOrigin={'degreePlanExpress'}
+              cardOrigin={"degreePlanExpress"}
             />
           ))}
       </div>
