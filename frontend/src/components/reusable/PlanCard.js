@@ -56,7 +56,7 @@ function PlanCard(props) {
       // onTouchEnd={drop}
       onMouseUp={drop}
       id={cardDetail?.plan_term_id}
-      style={origin === "dp2" ? { maxWidth: "33%", minWidth: "300px" } : {}}
+      style={origin === "dp2" ? { maxWidth: "33%", minWidth: "300px" } : {height: "auto", minHeight: "20px"}}
     >
       <div className={pStyle.cardTitle}>{cardDetail?.term}</div>
       <div className={pStyle.courseContainer}>
