@@ -4,7 +4,7 @@
   margin: 10px 0;
   padding: 30px 2vw;
   border-radius: 12px;
-  background: #F6F9FA;
+  background: #f6f9fa;
 }
 
 .courseTitle {
@@ -30,8 +30,8 @@
   color: #000000;
 }
 
-@media (max-width: 810px){
-  .courseInfoContainer{
+@media (max-width: 810px) {
+  .courseInfoContainer {
     width: 75%;
   }
 }

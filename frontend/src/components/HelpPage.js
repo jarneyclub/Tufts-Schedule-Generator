@@ -5,25 +5,25 @@
  * has a feedback form.
  */
 
-import { useState } from 'react';
-import MuiAccordion from '@material-ui/core/Accordion';
-import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
-import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
-import { withStyles } from '@material-ui/core/styles';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import SendIcon from '@mui/icons-material/Send';
-import { Button, TextField, Input } from '@material-ui/core';
-import SnackBarAlert from './reusable/SnackBarAlert';
-import hStyle from './style/HelpPage.module.css';
-import feedbackJumbo from './res/feedback.png';
-import { style } from '@mui/system';
-import './style/HelpPageActiveClass.css';
+import { useState } from "react";
+import MuiAccordion from "@material-ui/core/Accordion";
+import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
+import MuiAccordionDetails from "@material-ui/core/AccordionDetails";
+import { withStyles } from "@material-ui/core/styles";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import SendIcon from "@mui/icons-material/Send";
+import { Button, TextField, Input } from "@material-ui/core";
+import SnackBarAlert from "./reusable/SnackBarAlert";
+import hStyle from "./style/HelpPage.module.css";
+import feedbackJumbo from "./res/feedback.png";
+import { style } from "@mui/system";
+import "./style/HelpPageActiveClass.css";
 
 const Accordion = withStyles({
   root: {
     backgroundColor: (0, 0, 0, 0.5),
-    '&:hover': {
-      backgroundColor: '#D9D9D9',
+    "&:hover": {
+      backgroundColor: "#D9D9D9",
     },
   },
   expanded: {},
@@ -42,16 +42,16 @@ const AccordionDetails = withStyles({
 })(MuiAccordionDetails);
 
 const contactFormDefault = {
-  name: '',
-  email: '',
-  message: '',
+  name: "",
+  email: "",
+  message: "",
 };
 
 function HelpPage() {
   const [contactForm, setContactForm] = useState(contactFormDefault);
   const [showAlert, setShowAlert] = useState(false);
-  const [alertSeverity, setAlertSeverity] = useState('');
-  const [alertMessage, setAlertMessage] = useState('');
+  const [alertSeverity, setAlertSeverity] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
   const handleSubmit = () => {
     fetchSendResponses();
   };
@@ -69,16 +69,16 @@ function HelpPage() {
 
   const fetchSendResponses = async () => {
     const requestOption = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(contactForm),
     };
 
-    await fetch('https://qa.jarney.club/api/responses', requestOption)
+    await fetch("https://qa.jarney.club/api/responses", requestOption)
       .then((response) => response.json())
       .then((result) => {
-        setAlertMessage('Thank you for your feedback!');
-        setAlertSeverity('success');
+        setAlertMessage("Thank you for your feedback!");
+        setAlertSeverity("success");
         setShowAlert(true);
         setContactForm(contactFormDefault);
       })
@@ -153,7 +153,7 @@ function HelpPage() {
               fullWidth
               variant="filled"
               value={contactForm.name}
-              onChange={(value) => handleContactForm('name', value)}
+              onChange={(value) => handleContactForm("name", value)}
             />
 
             <TextField
@@ -164,7 +164,7 @@ function HelpPage() {
               fullWidth
               variant="filled"
               value={contactForm.email}
-              onChange={(value) => handleContactForm('email', value)}
+              onChange={(value) => handleContactForm("email", value)}
             />
 
             <br />
@@ -177,7 +177,7 @@ function HelpPage() {
               multiline
               rows={4}
               value={contactForm.message}
-              onChange={(value) => handleContactForm('message', value)}
+              onChange={(value) => handleContactForm("message", value)}
             />
             <Button
               type="submit"

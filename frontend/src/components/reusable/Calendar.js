@@ -38,13 +38,7 @@ const weekdays = [
   "Time Unstated",
 ];
 
-const pref_weekdays = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-];
+const pref_weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
 function Calendar(props) {
   const {
@@ -75,7 +69,6 @@ function Calendar(props) {
       setDaySelection((prev) => prev + direction);
     }
   };
-
 
   return (
     <div className={cStyle.container}>
