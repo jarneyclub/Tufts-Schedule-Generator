@@ -128,6 +128,7 @@ function DegreePlanExpress() {
               cardDetail={card}
               tabExpress={true}
               cardOrigin={"degreePlanExpress"}
+              customStyle={{height: "auto"}}
             />
           ))}
       </div>
