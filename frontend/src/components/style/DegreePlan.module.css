@@ -99,9 +99,7 @@
   flex: 1 0 25%;
   width: 25vw;
   align-items: center;
-
   padding-right: 1vw;
-
   margin-bottom: 20px;
 }
 
@@ -191,6 +189,8 @@ input {
   display: flex;
   flex-direction: column;
   border-radius: 12px;
+  box-shadow: 0 4px 8px 0 rgb(112 72 213 / 25%),
+      0 6px 20px 0 rgb(0 0 0 / 19%);
 
   width: 100%;
 }
@@ -203,11 +203,12 @@ input {
 
   padding-left: 1vw;
   padding-right: 1vw;
+  border-radius: 12px 12px 0 0;
 
   background-color: #7048d5;
   color: #ffffff;
 
-  height: 35px;
+  height: 45px;
 }
 
 .degreeReqNextButton {
@@ -222,7 +223,7 @@ input {
   height: 300px;
   padding: 10px 1vw;
   overflow-y: scroll;
-  background-color: rgba(239, 235, 249, 0.9);
+  background-color: rgba(239, 235, 249);
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 }
