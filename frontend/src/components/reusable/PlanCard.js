@@ -56,7 +56,9 @@ function PlanCard(props) {
       // onTouchEnd={drop}
       onMouseUp={drop}
       id={cardDetail?.plan_term_id}
-      style={origin === "dp2" ? { maxWidth: "33%", minWidth: "300px" } : {height: "auto", minHeight: "20px"}}
+      style={origin === "dp2" ? { maxWidth: "33%", minWidth: "300px" } : 
+      {height: "auto", minHeight: "50px"}}
+      // The second styling is for plan card in degree plan in scheduler
     >
       <div className={pStyle.cardTitle}>{cardDetail?.term}</div>
       <div className={pStyle.courseContainer}>
@@ -69,12 +71,13 @@ function PlanCard(props) {
                 onTransferCourse={onTransferCourse}
                 origin={cardOrigin}
                 handleCardOrigin={handleCardOrigin}
-                onDoubleClick={handleDoubleClick}
+                // onDoubleClick={handleDoubleClick}
                 customStyle={{
                   border: "none",
                   justifyContent: "space-between",
+                  height: "35px",
                 }}
-                onClick={onClick}
+                // onClick={onClick}
               />
             ))
           : cardDetail.courses?.map((course) => (
