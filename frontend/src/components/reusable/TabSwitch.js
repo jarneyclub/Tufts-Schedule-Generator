@@ -128,12 +128,6 @@ function DegreePlanExpress() {
               cardDetail={card}
               tabExpress={true}
               cardOrigin={"degreePlanExpress"}
-              customStyle={{
-                border: "none",
-                justifyContent: "space-between",
-                backgroundColor: "#8875D4",
-                height: "auto",
-              }}
             />
           ))}
       </div>
