@@ -76,6 +76,7 @@ function PlanCard(props) {
                   border: "none",
                   justifyContent: "space-between",
                   height: "35px",
+                  pointerEvents: "none",
                 }}
                 // onClick={onClick}
               />
