@@ -425,7 +425,7 @@
   width: 100%;
   height: 1000%;
   min-height: 250px;
-  background-color: #efebf9;
+  background-color: transparent;
   position: absolute;
   /* left: -50%; */
   top: 100%;
