@@ -56,6 +56,14 @@ function Calendar(props) {
   } = props;
   const [daySelection, setDaySelection] = useState(0);
 
+  const handleShowDayTitle = () => {
+    if (daySelection === 5) {
+      return "Time Unstated";
+    } else {
+      return pref_weekdays[daySelection].substr(0, 3).toUpperCase();
+    }
+  };
+
   /*
    *  onDayChange()
    *  purpose: controls the display of day schedule on single day view
@@ -72,7 +80,7 @@ function Calendar(props) {
 
   return (
     <div className={cStyle.container}>
-      <div>{JSON.stringify(classes)}</div>
+      {/* <div>{JSON.stringify(classes)}</div> */}
 
       {/*   This is the control of days for Single Day View  */}
       {shrink &&
@@ -85,7 +93,9 @@ function Calendar(props) {
             >
               <ArrowLeftIcon fontSize="large" />
             </IconButton>
-            <div>{pref_weekdays[daySelection].substr(0, 3).toUpperCase()}</div>
+            <div>{handleShowDayTitle()}</div>
+            {/* {handleShowDayTitle()}; */}
+            {/* <div>{pref_weekdays[daySelection].substr(0, 3).toUpperCase()}</div> */}
             <IconButton
               onClick={() => {
                 onDayChange(1);
