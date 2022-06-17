@@ -74,8 +74,6 @@ function Calendar(props) {
     <div className={cStyle.container}>
       <div>{JSON.stringify(classes)}</div>
 
-      {/* console.log(classes[dayName]); */}
-
       {/*   This is the control of days for Single Day View  */}
       {shrink &&
         (origin === "pref" ? (
@@ -105,7 +103,8 @@ function Calendar(props) {
             >
               <ArrowLeftIcon fontSize="large" />
             </IconButton>
-            <div>{weekdays[daySelection].substr(0, 3).toUpperCase()}</div>
+            <div>LOL</div>
+            {/* <div>{weekdays[daySelection].substr(0, 3).toUpperCase()}</div> */}
             <IconButton
               onClick={() => {
                 onDayChange(1);
