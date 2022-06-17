@@ -159,7 +159,7 @@ function CalendarDay(props) {
                 className={sStyle.tuButton}
                 // onClick={() => handleShowCourseInfo(course)}
               >
-                {course.detail}
+                {course.details}
               </div>
             );
           })}
