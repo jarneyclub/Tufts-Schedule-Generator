@@ -123,7 +123,7 @@ function CalendarDay(props) {
   };
 
   const handleShowDayTitle = () => {
-    if (dayName === "Time Unstated") {
+    if (dayName === "TimeSpecified") {
       return "Time Unstated";
     } else {
       return dayName.substr(0, 3).toUpperCase();
@@ -144,14 +144,14 @@ function CalendarDay(props) {
 
   return (
     <div className={cStyle.dayContainer}>
-      <div>{JSON.stringify(classesDay)}</div>
+      {/* <div>{JSON.stringify(classesDay)}</div> */}
       {!shrink && (
         <div className={cStyle.timeSlotTitle}>
           {!singleDay && handleShowDayTitle()}
         </div>
       )}
       {/* Generate the time slots or just one column if it is for time unstated */}
-      {dayName === "Time Unstated" ? (
+      {dayName === "TimeUnspecified" ? (
         <div className={cStyle.unStatedTimeColumn} />
       ) : (
         <>
@@ -204,7 +204,7 @@ function CalendarDay(props) {
       )}
 
       {/* Put the classes on depending on the day */}
-      {dayName === "Time Unstated"
+      {dayName === "TimeUnspecified"
         ? classesDay?.TimeUnspecified?.map((course) => {
             return <Button style={{ zIndex: 10000000 }}>Hi</Button>;
           })
