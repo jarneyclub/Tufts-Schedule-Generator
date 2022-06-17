@@ -65,12 +65,30 @@ function Calendar(props) {
     }
   };
 
+  const timeSlot = () => {
+    if (daySelection === 5) {
+      return (<div
+            className={
+              !shrink
+                ? cStyle.timeSlotContainer
+                : cStyle.shrinkTimeSlotContainer
+            }
+          >
+            <div className={cStyle.timeSlotTitle} />
+            {time.map((timeSlot) => (
+              <div className={cStyle.timeSlot} key={timeSlot}>
+                {timeSlot}
+              </div>
+            ))}
+          </div>);
+    }
+  }
+
   /*
    *  onDayChange()
    *  purpose: controls the display of day schedule on single day view
    */
   const onDayChange = (direction) => {
-    console.log("huh?!");
     if (daySelection === 5 && direction === 1) {
       setDaySelection(0);
     } else if (daySelection === 0 && direction === -1) {
@@ -81,7 +99,6 @@ function Calendar(props) {
   };
 
   const onPrefDayChange = (direction) => {
-    console.log("triggered!");
     if (prefDaySelection === 4 && direction === 1) {
       setPrefDaySelection(0);
     } else if (prefDaySelection === 0 && direction === -1) {
@@ -107,7 +124,7 @@ function Calendar(props) {
               <ArrowLeftIcon fontSize="large" />
             </IconButton>
             <div>
-              {pref_weekdays[prefDaySelection].substr(0, 4).toUpperCase()}
+              {pref_weekdays[prefDaySelection].substr(0, 3).toUpperCase()}
             </div>
             <IconButton
               onClick={() => {
@@ -159,20 +176,7 @@ function Calendar(props) {
             ))}
           </div>
         ) : (
-          <div
-            className={
-              !shrink
-                ? cStyle.timeSlotContainer
-                : cStyle.shrinkTimeSlotContainer
-            }
-          >
-            <div className={cStyle.timeSlotTitle} />
-            {time.map((timeSlot) => (
-              <div className={cStyle.timeSlot} key={timeSlot}>
-                {timeSlot}
-              </div>
-            ))}
-          </div>
+          timeSlot()
         )}
 
         {!shrink ? (
