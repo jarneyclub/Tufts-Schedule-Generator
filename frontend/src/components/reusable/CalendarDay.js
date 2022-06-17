@@ -148,6 +148,7 @@ function CalendarDay(props) {
 
   return (
     <div className={cStyle.dayContainer}>
+      <div>{JSON.stringify(classesDay)}</div>
       {!shrink && (
         <div className={cStyle.timeSlotTitle}>
           {!singleDay && handleShowDayTitle()}
