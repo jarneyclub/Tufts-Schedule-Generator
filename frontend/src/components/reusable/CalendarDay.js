@@ -207,7 +207,17 @@ function CalendarDay(props) {
         </>
       )}
 
-      {dayName === "Time Unstated" ? Call() : Call()}
+      {dayName === "Time Unstated"
+        ? Call()
+        : classesDay?.map((event) => {
+            return (
+              <Event
+                shrink={shrink}
+                eventDetails={event}
+                onEventClick={onEventClick}
+              ></Event>
+            );
+          })}
 
       {/* Put the classes on depending on the day */}
       {/* {dayName === "Time Unstated"
