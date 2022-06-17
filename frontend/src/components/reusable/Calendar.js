@@ -80,17 +80,13 @@ function Calendar(props) {
     }
   };
 
-  /*
-   *  onDayChange()
-   *  purpose: controls the display of day schedule on single day view
-   */
   const onPrefDayChange = (direction) => {
     if (prefDaySelection === 4 && direction === 1) {
       setPrefDaySelection(0);
     } else if (prefDaySelection === 0 && direction === -1) {
       setPrefDaySelection(4);
     } else {
-      setPrefDaySelection((prev) => prev + direction);
+      setPrefDaySelection(prefDaySelection + direction);
     }
   };
 
