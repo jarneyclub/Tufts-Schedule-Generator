@@ -55,12 +55,14 @@ function Calendar(props) {
     TimeUnstated,
   } = props;
   const [daySelection, setDaySelection] = useState(0);
+  const [prefDaySelection, setPrefDaySelection] = useState(0);
 
   const handleShowDayTitle = () => {
-    if (pref_weekdays[daySelection].includes('Time')) {
+    if (weekdays[daySelection].includes("Time")) {
+      console.log("triggered");
       return "Time Unstated";
     } else {
-      return pref_weekdays[daySelection].substr(0, 3).toUpperCase();
+      return weekdays[daySelection].substr(0, 3).toUpperCase();
     }
   };
 
@@ -78,6 +80,20 @@ function Calendar(props) {
     }
   };
 
+  /*
+   *  onDayChange()
+   *  purpose: controls the display of day schedule on single day view
+   */
+  const onPrefDayChange = (direction) => {
+    if (prefDaySelection === 4 && direction === 1) {
+      setPrefDaySelection(0);
+    } else if (prefDaySelection === 0 && direction === -1) {
+      setPrefDaySelection(4);
+    } else {
+      setPrefDaySelection((prev) => prev + direction);
+    }
+  };
+
   return (
     <div className={cStyle.container}>
       {/* <div>{JSON.stringify(classes)}</div> */}
@@ -88,17 +104,17 @@ function Calendar(props) {
           <div className={cStyle.dayControlContainer}>
             <IconButton
               onClick={() => {
-                onDayChange(-1);
+                onPrefDayChange(-1);
               }}
             >
               <ArrowLeftIcon fontSize="large" />
             </IconButton>
-            <div>{handleShowDayTitle()}</div>
-            {/* {handleShowDayTitle()}; */}
-            {/* <div>{pref_weekdays[daySelection].substr(0, 3).toUpperCase()}</div> */}
+            <div>
+              {pref_weekdays[prefDaySelection].substr(0, 3).toUpperCase()}
+            </div>
             <IconButton
               onClick={() => {
-                onDayChange(1);
+                onPrefDayChange(1);
               }}
             >
               <ArrowRightIcon fontSize="large" />
@@ -113,7 +129,7 @@ function Calendar(props) {
             >
               <ArrowLeftIcon fontSize="large" />
             </IconButton>
-            <div>{weekdays[daySelection].substr(0, 3).toUpperCase()}</div>
+            <div>{handleShowDayTitle()}</div>
             <IconButton
               onClick={() => {
                 onDayChange(1);
