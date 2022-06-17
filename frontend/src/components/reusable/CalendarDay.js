@@ -225,7 +225,7 @@ function CalendarDay(props) {
               ></Event>
             );
           })
-        : {}}
+        : null}
 
       {/* Put the classes on depending on the day
       {dayName === "TimeUnspecified"
