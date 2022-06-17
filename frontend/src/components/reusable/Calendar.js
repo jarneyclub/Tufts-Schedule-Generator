@@ -59,7 +59,6 @@ function Calendar(props) {
 
   const handleShowDayTitle = () => {
     if (weekdays[daySelection].includes("Time")) {
-      console.log("triggered");
       return "Time Unstated";
     } else {
       return weekdays[daySelection].substr(0, 3).toUpperCase();
@@ -71,6 +70,7 @@ function Calendar(props) {
    *  purpose: controls the display of day schedule on single day view
    */
   const onDayChange = (direction) => {
+    console.log("huh?!");
     if (daySelection === 5 && direction === 1) {
       setDaySelection(0);
     } else if (daySelection === 0 && direction === -1) {
@@ -107,7 +107,7 @@ function Calendar(props) {
               <ArrowLeftIcon fontSize="large" />
             </IconButton>
             <div>
-              {pref_weekdays[prefDaySelection].substr(0, 3).toUpperCase()}
+              {pref_weekdays[prefDaySelection].substr(0, 4).toUpperCase()}
             </div>
             <IconButton
               onClick={() => {
