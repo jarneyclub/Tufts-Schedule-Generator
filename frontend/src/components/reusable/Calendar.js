@@ -72,10 +72,9 @@ function Calendar(props) {
 
   return (
     <div className={cStyle.container}>
-      console.log(classes); 
-      
-      {/* console.log(classes[dayName]); */}
+      <div>{JSON.stringify(classes)}</div>
 
+      {/* console.log(classes[dayName]); */}
 
       {/*   This is the control of days for Single Day View  */}
       {shrink &&
