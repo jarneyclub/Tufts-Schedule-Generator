@@ -214,20 +214,6 @@ function CalendarDay(props) {
         ? classesDay?.TimeUnspecified?.map((course) => {
             return <Button style={{ zIndex: 10000000 }}>Hi</Button>;
           })
-
-
-          // classesDay?.TimeUnspecified?.map((course) => {
-          //   return <Button style={{ zIndex: 10000000 }}>Hi</Button>;
-          // })
-
-          // classDetails[title]?.map((details) => (
-          //     <Class
-          //       classDetail={details}
-          //       tu={title === "TimeUnspecified"}
-          //       customStyle={classCSS[details.term_course_id]}
-          //     />
-          //   )
-
         : classesDay?.map((event) => {
             return (
               <Event
