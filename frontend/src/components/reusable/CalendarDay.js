@@ -226,28 +226,6 @@ function CalendarDay(props) {
             );
           })
         : null}
-
-      {/* Put the classes on depending on the day
-      {dayName === "TimeUnspecified"
-        ? classesDay?.map((course) => {
-            return (
-              <Button
-                className={sStyle.tuButton}
-                // onClick={() => handleShowCourseInfo(course)}
-              >
-                {course.details}
-              </Button>
-            );
-          })
-        : classesDay?.map((event) => {
-            return (
-              <Event
-                shrink={shrink}
-                eventDetails={event}
-                onEventClick={onEventClick}
-              ></Event>
-            );
-          })} */}
     </div>
   );
 }
