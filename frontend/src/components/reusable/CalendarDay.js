@@ -206,7 +206,7 @@ function CalendarDay(props) {
           </div>
         </>
       )}
-
+      
       {classesDay?.map((event) => {
             return (
               <Event
@@ -216,8 +216,6 @@ function CalendarDay(props) {
               ></Event>
             );
       })};
-
-      {/* {dayName === "Time Unstated" ? Call() : Call()} */}
 
       {/* Put the classes on depending on the day */}
       {/* {dayName === "Time Unstated"
