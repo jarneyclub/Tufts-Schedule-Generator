@@ -123,7 +123,7 @@ function CalendarDay(props) {
   };
 
   const handleShowDayTitle = () => {
-    if (dayName === "TimeSpecified") {
+    if (dayName.includes('Time')) {
       return "Time Unstated";
     } else {
       return dayName.substr(0, 3).toUpperCase();
@@ -205,7 +205,7 @@ function CalendarDay(props) {
 
       {/* Put the classes on depending on the day */}
       {dayName === "TimeUnspecified"
-        ? classesDay?.TimeUnspecified?.map((course) => {
+        ? classesDay?.map((course) => {
             return <Button style={{ zIndex: 10000000 }}>Hi</Button>;
           })
         : classesDay?.map((event) => {
