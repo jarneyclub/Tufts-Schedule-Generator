@@ -57,7 +57,7 @@ function Calendar(props) {
   const [daySelection, setDaySelection] = useState(0);
 
   const handleShowDayTitle = () => {
-    if (daySelection === 5) {
+    if (pref_weekdays[daySelection].includes('Time')) {
       return "Time Unstated";
     } else {
       return pref_weekdays[daySelection].substr(0, 3).toUpperCase();
