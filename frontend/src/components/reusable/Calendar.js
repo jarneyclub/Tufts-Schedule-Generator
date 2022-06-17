@@ -97,7 +97,7 @@ function Calendar(props) {
 
       {/*   This is the control of days for Single Day View  */}
       {shrink &&
-        (origin === "pref" ? (
+        (origin === "Pref" ? (
           <div className={cStyle.dayControlContainer}>
             <IconButton
               onClick={() => {

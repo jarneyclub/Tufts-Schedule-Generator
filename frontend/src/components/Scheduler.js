@@ -938,6 +938,7 @@ function Scheduler(props) {
           shrink={shrink}
         />
       )}
+      
       {showAlert && (
         <SnackBarAlert
           severity={alertSeverity}
