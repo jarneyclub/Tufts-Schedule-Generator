@@ -206,7 +206,14 @@ function CalendarDay(props) {
       {/* Put the classes on depending on the day */}
       {dayName === "TimeUnspecified"
         ? classesDay?.map((course) => {
-            return <Button style={{ zIndex: 10000000 }}>Hi</Button>;
+            return (
+              <Button
+                className={sStyle.tuButton}
+                // onClick={() => handleShowCourseInfo(course)}
+              >
+                {course.details}
+              </Button>
+            );
           })
         : classesDay?.map((event) => {
             return (
