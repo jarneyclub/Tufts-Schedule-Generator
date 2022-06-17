@@ -251,6 +251,7 @@
   text-transform: unset !important;
   margin: 1vw;
   display: flex;
+  overflow-wrap: break-word;
   flex-direction: column;
   white-space: normal;
   color: white;
