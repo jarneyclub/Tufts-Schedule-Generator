@@ -61,10 +61,10 @@ function Calendar(props) {
    *  purpose: controls the display of day schedule on single day view
    */
   const onDayChange = (direction) => {
-    if (daySelection === 4 && direction === 1) {
+    if (daySelection === 5 && direction === 1) {
       setDaySelection(0);
     } else if (daySelection === 0 && direction === -1) {
-      setDaySelection(4);
+      setDaySelection(5);
     } else {
       setDaySelection((prev) => prev + direction);
     }
@@ -103,8 +103,7 @@ function Calendar(props) {
             >
               <ArrowLeftIcon fontSize="large" />
             </IconButton>
-            <div>LOL</div>
-            {/* <div>{weekdays[daySelection].substr(0, 3).toUpperCase()}</div> */}
+            <div>{weekdays[daySelection].substr(0, 3).toUpperCase()}</div>
             <IconButton
               onClick={() => {
                 onDayChange(1);
@@ -114,6 +113,7 @@ function Calendar(props) {
             </IconButton>
           </div>
         ))}
+
       <div
         className={
           !shrink ? cStyle.calendarContainer : cStyle.shrinkCalendarContainer
