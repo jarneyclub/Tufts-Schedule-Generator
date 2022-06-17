@@ -61,6 +61,10 @@ const overlayTime = [
   "20:30",
 ];
 
+function Call() {
+  console.log("Triggered");
+};
+
 function CalendarDay(props) {
   const {
     dayName,
@@ -203,9 +207,21 @@ function CalendarDay(props) {
         </>
       )}
 
-      {/* Put the classes on depending on the day */}
       {dayName === "Time Unstated"
-        ? classesDay["Time Unstated"]?.map((course) => {
+        ? Call()
+        : classesDay?.map((event) => {
+            return (
+              <Event
+                shrink={shrink}
+                eventDetails={event}
+                onEventClick={onEventClick}
+              ></Event>
+            );
+          })}
+
+      {/* Put the classes on depending on the day */}
+      {/* {dayName === "Time Unstated"
+        ? classesDay?.TimeUnspecified?.map((course) => {
             return <Button style={{ zIndex: 10000000 }}>Hi</Button>;
           })
 
@@ -230,7 +246,7 @@ function CalendarDay(props) {
                 onEventClick={onEventClick}
               ></Event>
             );
-          })}
+          })} */}
     </div>
   );
 }
