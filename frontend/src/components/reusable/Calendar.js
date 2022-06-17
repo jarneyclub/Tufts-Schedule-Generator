@@ -67,7 +67,7 @@ function Calendar(props) {
 
   const timeSlot = () => {
     if (daySelection === 5) {
-      return (<div className={cStyle.shrinkTimeSlotContainer}> </div>);
+      return <div className={cStyle.shrinkTUTimeSlotContainer}> </div>;
     }
     else {
       return (
