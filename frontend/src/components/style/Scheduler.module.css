@@ -247,18 +247,20 @@
 }
 
 .tuButton {
+  padding: 0 1vw;
   color: #a0c3d1;
+  background: linear-gradient(
+      rgba(160, 195, 209, 0.1),
+      rgba(160, 195, 209, 0.1)
+    ),
+    linear-gradient(white, white);
+  border: 1px solid #a0c3d1;
+  border-left: 8px solid #a0c3d1;
   text-transform: unset !important;
   margin: 1vw;
-  display: flex;
-  flex-direction: column;
-  white-space: normal;
-  color: white;
-  background-color: #87A5B5;
-  width: 80%;
-  height: auto;
-  border-radius: 5px;
-  font-size: 13px;
+  min-width: 30%;
+  min-height: 70%;
+  overflow-y: scroll;
 }
 
 /* * * 3rd * * */

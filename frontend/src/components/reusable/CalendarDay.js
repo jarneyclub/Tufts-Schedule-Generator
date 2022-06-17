@@ -152,17 +152,15 @@ function CalendarDay(props) {
       )}
       {/* Generate the time slots for just one column if it is for time unstated */}
       {dayName === "TimeUnspecified" ? (
-        <div className={cStyle.unStatedTimeColumn}>
+        <div className={cStyle.unStatedTimeColumn} > 
           {classesDay?.map((course) => {
-            return (
-              <Button
-                className={sStyle.tuButton}
-                // onClick={() => handleShowCourseInfo(course)}
-              >
-                {course.details}
-              </Button>
-            );
-          })}
+                return (<Button
+                  className={sStyle.tuButton}
+                  // onClick={() => handleShowCourseInfo(course)}
+                >
+                  {course.details}
+                </Button>);
+            })}
         </div>
       ) : (
         <>
@@ -228,6 +226,7 @@ function CalendarDay(props) {
         : null}
 
       {/* Put the classes on depending on the day
+
       {dayName === "TimeUnspecified"
         ? classesDay?.map((course) => {
             return (
@@ -247,7 +246,7 @@ function CalendarDay(props) {
                 onEventClick={onEventClick}
               ></Event>
             );
-          })} */}
+          })}
     </div>
   );
 }
