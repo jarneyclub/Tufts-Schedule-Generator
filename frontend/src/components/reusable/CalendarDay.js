@@ -155,7 +155,7 @@ function CalendarDay(props) {
       {dayName === "TimeUnspecified" ? (
         <div className={cStyle.unStatedTimeColumn}>
           {classesDay?.map((course) => {
-            return <TU courseDetails={course}></TU>;
+            return <div>Huh?</div>;
           })}
         </div>
       ) : (
