@@ -67,20 +67,23 @@ function Calendar(props) {
 
   const timeSlot = () => {
     if (daySelection === 5) {
-      return (<div
-            className={
-              !shrink
-                ? cStyle.timeSlotContainer
-                : cStyle.shrinkTimeSlotContainer
-            }
-          >
-            <div className={cStyle.timeSlotTitle} />
-            {time.map((timeSlot) => (
-              <div className={cStyle.timeSlot} key={timeSlot}>
-                {timeSlot}
-              </div>
-            ))}
-          </div>);
+      return (<div className={cStyle.shrinkTimeSlotContainer}> </div>);
+    }
+    else {
+      return (
+        <div
+          className={
+            !shrink ? cStyle.timeSlotContainer : cStyle.shrinkTimeSlotContainer
+          }
+        >
+          <div className={cStyle.timeSlotTitle} />
+          {time.map((timeSlot) => (
+            <div className={cStyle.timeSlot} key={timeSlot}>
+              {timeSlot}
+            </div>
+          ))}
+        </div>
+      );
     }
   }
 
