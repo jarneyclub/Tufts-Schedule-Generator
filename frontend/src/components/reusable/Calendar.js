@@ -81,6 +81,7 @@ function Calendar(props) {
   };
 
   const onPrefDayChange = (direction) => {
+    console.log("triggered!");
     if (prefDaySelection === 4 && direction === 1) {
       setPrefDaySelection(0);
     } else if (prefDaySelection === 0 && direction === -1) {
