@@ -15,7 +15,7 @@
   z-index: 2;
   cursor: pointer;
   -webkit-appearance: none;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .eventButtonHover {
@@ -36,7 +36,7 @@
   z-index: 2;
   cursor: pointer;
   -webkit-appearance: none;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 @media only screen and (max-width: 813.99px) {
