@@ -61,10 +61,6 @@ const overlayTime = [
   "20:30",
 ];
 
-function Call() {
-  console.log("Triggered");
-};
-
 function CalendarDay(props) {
   const {
     dayName,

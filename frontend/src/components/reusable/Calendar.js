@@ -35,7 +35,7 @@ const weekdays = [
   "Wednesday",
   "Thursday",
   "Friday",
-  "Time Unstated",
+  "TimeUnspecified",
 ];
 
 const pref_weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
