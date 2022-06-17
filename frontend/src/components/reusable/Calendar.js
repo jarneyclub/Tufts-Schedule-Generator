@@ -72,6 +72,11 @@ function Calendar(props) {
 
   return (
     <div className={cStyle.container}>
+      console.log(classes); 
+      
+      {/* console.log(classes[dayName]); */}
+
+
       {/*   This is the control of days for Single Day View  */}
       {shrink &&
         (origin === "pref" ? (
@@ -111,7 +116,6 @@ function Calendar(props) {
             </IconButton>
           </div>
         ))}
-
       <div
         className={
           !shrink ? cStyle.calendarContainer : cStyle.shrinkCalendarContainer
@@ -152,6 +156,7 @@ function Calendar(props) {
 
         {!shrink ? (
           origin === "Pref" ? (
+            // Normal time preference view
             pref_weekdays.map((dayName) => (
               <CalendarDay
                 dayName={dayName}
@@ -168,6 +173,7 @@ function Calendar(props) {
               />
             ))
           ) : (
+            // Normal calendar view
             weekdays.map((dayName) => (
               <CalendarDay
                 dayName={dayName}
@@ -185,6 +191,7 @@ function Calendar(props) {
             ))
           )
         ) : (
+          // Shrink Calendar view
           <CalendarDay
             dayName={weekdays[daySelection]}
             key={weekdays[daySelection]}
