@@ -213,6 +213,20 @@ function CalendarDay(props) {
       )}
 
       {/* Put the classes on depending on the day */}
+      {!dayName === "TimeUnspecified"
+        ? classesDay?.map((event) => {
+            return (
+              <Event
+                shrink={shrink}
+                eventDetails={event}
+                onEventClick={onEventClick}
+              ></Event>
+            );
+          })
+        : null}
+
+      {/* Put the classes on depending on the day
+
       {dayName === "TimeUnspecified"
         ? classesDay?.map((course) => {
             return (
