@@ -141,9 +141,11 @@ function CalendarDay(props) {
     timePrefDay && setEntireDayOn(timePrefDay?.length === 26);
   }, []);
 
+  // console.log("Err timeunspec:", classesDay.TimeUnspecified);
+
   return (
-    <div className={(dayName=== "TimeUnspecified") ? 
-      cStyle.TUDayContainer : cStyle.dayContainer}>
+    <div className={cStyle.dayContainer}>
+      {/* <div>{JSON.stringify(classesDay)}</div> */}
       {!shrink && (
         <div className={cStyle.timeSlotTitle}>
           {!singleDay && handleShowDayTitle()}
