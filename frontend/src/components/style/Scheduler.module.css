@@ -247,9 +247,11 @@
 }
 
 .tuButton {
+  position: absolute;
   color: #a0c3d1;
   text-transform: unset !important;
-  margin: 1vw;
+  padding: 5px;
+  margin: 10px;
   display: flex;
   overflow-wrap: break-word;
   flex-direction: column;

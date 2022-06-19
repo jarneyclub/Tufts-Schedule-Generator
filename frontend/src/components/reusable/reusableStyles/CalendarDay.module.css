@@ -3,6 +3,11 @@
   position: relative;
 }
 
+.TUDayContainer {
+  flex-grow: 3;
+  position: relative;
+}
+
 .buttonContainer {
   display: flex;
   flex-direction: row;
