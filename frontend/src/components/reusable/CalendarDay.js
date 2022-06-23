@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import cStyle from "./reusableStyles/CalendarDay.module.css";
 import sStyle from "../style/Scheduler.module.css";
 import Event from "./Event.js";
+import TU from "./TU.js";
 import { Button, IconButton } from "@material-ui/core";
 
 import PurpleSwitch from "../reusable/PurpleSwitch";
