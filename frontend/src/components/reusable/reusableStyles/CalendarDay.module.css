@@ -3,28 +3,6 @@
   position: relative;
 }
 
-.TUdayContainer {
-  flex-basis: 0;
-  flex-grow: 10;
-  position: relative;
-}
-
-.tuButton {
-  color: #a0c3d1;
-  text-transform: unset !important;
-  margin: 1vw;
-  display: flex;
-  overflow-wrap: break-word;
-  flex-direction: column;
-  white-space: normal;
-  color: white;
-  background-color: #87A5B5;
-  height: auto;
-  border-radius: 5px;
-  font-size: 13px;
-  padding: 5px 8px;
-}
-
 .buttonContainer {
   display: flex;
   flex-direction: row;
