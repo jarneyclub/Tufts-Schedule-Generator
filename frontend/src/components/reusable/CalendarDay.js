@@ -138,7 +138,9 @@ function CalendarDay(props) {
   };
 
   useEffect(() => {
+    console.log("www");
     timePrefDay && setEntireDayOn(timePrefDay?.length === 26);
+    console.log("QQQ");
   }, []);
 
   // console.log("Err timeunspec:", classesDay.TimeUnspecified);
