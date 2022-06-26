@@ -1,0 +1,539 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* * * * * * Horizontal Wrapper * * * * * */
+.horizontalWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  padding-left: 2vw;
+  padding-right: 2vw;
+
+  margin-top: 80px;
+}
+
+.noSchedulewrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  height: 80vh;
+
+  margin-top: 80px;
+  color: #5a32bf;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* * * * * * LEFT Column * * * * * */
+.leftColumnWrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 25%;
+  align-items: center;
+  padding-right: 1vw;
+  margin-bottom: 20px;
+}
+
+/* * 1st * */
+
+/* * 2nd * */
+.courseContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* 2nd - 1 */
+.searchCourseContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 12px;
+  width: 100%;
+  padding: 0px 10px 0vw;
+}
+
+.inputSearch {
+  font-size: 15px;
+  padding-right: 0px;
+}
+
+.filterContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  white-space: nowrap;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.searchButton {
+  border-radius: 17px;
+  border: #5a32bf solid 1px;
+
+  box-sizing: border-box;
+
+  height: 35px;
+
+  padding-left: 2vw;
+  padding-right: 2vw;
+
+  text-align: center;
+  font-size: 13px;
+  color: #ffffff;
+
+  background-color: #5a32bf;
+}
+
+.searchButton:hover {
+  background-color: #fc4e4e;
+  border: #fc4e4e solid 1px;
+}
+
+/* 2nd - 2 */
+.courseListContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 150px;
+  width: 100%;
+  border-bottom-left-radius: 11px;
+  border-bottom-right-radius: 11px;
+  overflow-y: scroll;
+  margin-top: 10px;
+}
+
+/* 2nd - 3 */
+.preferenceContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  min-height: 170px;
+  background-color: rgba(239, 235, 249, 0.9);
+  border-radius: 12px;
+  width: 100%;
+  padding: 0px 1vw;
+  margin: 10px 0;
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-height: 300px;
+  margin: 10px 0;
+  padding: 10px 1vw;
+  background-color: rgba(239, 235, 249, 0.9);
+  border-radius: 12px;
+  width: 100%;
+}
+
+.unitsContainer {
+  align-content: flex-start;
+  display: flex;
+  flex-direction: row;
+}
+
+.tuContainer {
+  display: flex;
+  flex-direction: row;
+
+  width: 100%;
+}
+
+.infoTitle {
+  color: #fc4e4e;
+}
+
+.leftCheckboxContainer {
+  /* display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center; */
+
+  /* padding-left: 1vw;
+  padding-right: 1vw; */
+}
+
+.rightButtonContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.toggleSwitch {
+  color: #5a32bf;
+}
+
+.timePrefButton {
+  border-radius: 12px;
+  border: #7048d5 solid 1px;
+  text-transform: unset !important;
+
+  box-sizing: border-box;
+
+  height: 35px;
+  padding: 0 1vw;
+
+  text-align: center;
+  font-size: 13px;
+  color: #7048d5;
+  line-height: 14px;
+
+  background-color: #efebf9;
+}
+
+.timePrefButton:hover {
+  color: #ffffff;
+  background-color: #7048d5;
+  border: #7048d5 solid 1px;
+}
+
+.saveTimePrefButton {
+  border-radius: 12px;
+  border: #ffffff solid 1px;
+  text-transform: unset !important;
+  box-sizing: border-box;
+  padding: 10px;
+  width: auto;
+  height: 35px;
+  text-align: center;
+  font-size: 13px;
+  color: #ffffff;
+  line-height: 14px;
+  margin-top: 10px;
+}
+
+.saveTimePrefButton:hover {
+  color: #7048d5;
+  background-color: #ffffff;
+  border: #ffffff solid 1px;
+}
+
+.renderButton {
+  border-radius: 12px;
+  border: #fc6d6d solid 1px;
+  text-transform: unset !important;
+  box-sizing: border-box;
+  height: 35px;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  text-align: center;
+  font-size: 13px;
+  color: #ffffff;
+  line-height: 14px;
+  background-color: #fc6d6d;
+}
+
+.renderButton:hover {
+  background-color: #fc4e4e;
+  border: #fc4e4e solid 1px;
+}
+
+.tuButton {
+  padding: 0 1vw;
+  color: #a0c3d1;
+  background: linear-gradient(
+      rgba(160, 195, 209, 0.1),
+      rgba(160, 195, 209, 0.1)
+    ),
+    linear-gradient(white, white);
+  border: 1px solid #a0c3d1;
+  border-left: 8px solid #a0c3d1;
+  text-transform: unset !important;
+  margin: 1vw;
+  min-width: 30%;
+  min-height: 70%;
+  overflow-y: scroll;
+}
+
+/* * * 3rd * * */
+.tabsContainer {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+
+  margin-top: 10px;
+}
+
+.tabBar {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  font-size: 14px;
+  color: #2f2e31;
+  background-color: #d3cbf0;
+  text-align: center;
+  align-items: center;
+  box-sizing: content-box;
+  border-top-left-radius: 11px;
+  border-top-right-radius: 11px;
+  width: 100%;
+  height: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.tabDetailContainer {
+  height: auto;
+  min-height: 20px;
+  background-color: #efebf9;
+  border-top: none;
+  box-sizing: content-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.shuDisplay {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-content: flex-start;
+  font-size: 14px;
+  color: #2f2e31;
+  background-color: #efebf9;
+  text-align: center;
+  align-items: center;
+  box-sizing: content-box;
+  border-bottom-left-radius: 11px;
+  border-bottom-right-radius: 11px;
+  width: 100%;
+  height: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* * * * * * Right Column * * * * * */
+.rightColumnWrapper {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  /* flex: 7 1 70%; */
+  flex: 7 1 75%;
+
+  /* border: #42312B solid 1px; */
+  height: 90vh;
+}
+
+.scheduleTitleContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  flex-wrap: nowrap;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+  font-size: 25px;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  width: 40%;
+  text-align: center;
+  font-size: 25px;
+  color: #000000;
+  margin-left: 5vw;
+}
+
+.DegreeInfoContainer {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  text-align: center;
+  width: 60%;
+  font-size: 1.1rem;
+  color: #000000;
+  margin-left: 5vw;
+}
+
+.backdrop {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0);
+  z-index: 4;
+  left: 0;
+  top: 0;
+  position: absolute;
+}
+
+.degreeBtn {
+  background: #ffffff;
+  border: 0.5px solid #a4a4a4;
+  box-sizing: border-box;
+  border-radius: 12px;
+  padding: 6px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.degreeBtnClicked {
+  background-color: rgb(239, 235, 249);
+  border: 0.5px solid #a4a4a4;
+  box-sizing: border-box;
+  border-radius: 12px;
+  padding: 6px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.degreePlanContainer {
+  width: 100%;
+  height: 1000%;
+  min-height: 250px;
+  background-color: #efebf9;
+  position: absolute;
+  left: -30%;
+  top: 100%;
+  z-index: 5;
+  box-sizing: content-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.degreeReqContainer {
+  width: 100%;
+  height: 1000%;
+  min-height: 250px;
+  background-color: #efebf9;
+  position: absolute;
+  /* left: -50%; */
+  top: 100%;
+  z-index: 5;
+  box-sizing: content-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.editPlanButton {
+  height: 25px;
+  width: 25px;
+
+  top: 0;
+  bottom: 0;
+
+  color: #7048d5;
+}
+
+.calendarContainer {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.timePrefOverlay {
+  display: flex;
+  flex-direction: column;
+  z-index: 30;
+  align-items: center;
+  top: 80px;
+  position: fixed;
+  background-color: rgb(112, 72, 213);
+  height: 100vh;
+  width: 100vw;
+}
+
+.overlayTitle {
+  font-size: 25px;
+}
+
+.overlayTitleContainer {
+  text-align: center;
+  color: #ffffff;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  width: 100%;
+  align-items: center;
+  padding: 15px;
+}
+
+.overlayCalendarContainer {
+  background-color: #ffffff;
+  padding-right: 20px;
+  width: 100%;
+  overflow-y: scroll;
+  height: 75vh;
+  padding-bottom: 10vh;
+}
+
+/* font */
+* {
+  font-family: Eina03;
+}
+
+body {
+  background-color: white;
+}
+
+.dropdown {
+  padding-left: 24px;
+}
+
+@media only screen and (max-width: 669.99px) {
+  .overlayTitle {
+    font-size: 20px !important;
+  }
+  .overlayTitleContainer {
+    font-size: 15px !important;
+  }
+  .overlayCalendarContainer {
+    padding-bottom: 30vh;
+  }
+  .leftColumnWrapper {
+    flex: 1 1 100%;
+    margin-bottom: 10px;
+  }
+  .scheduleTitleContainer {
+    flex-wrap: wrap;
+  }
+  .titleContainer {
+    width: 80%;
+    margin-left: 0px;
+  }
+  .DegreeInfoContainer {
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    justify-content: center;
+    align-items: center;
+  }
+  .degreeReqContainer {
+    left: auto;
+  }
+  .degreePlanContainer {
+    left: auto;
+  }
+}
