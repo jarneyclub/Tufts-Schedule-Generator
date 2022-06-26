@@ -153,12 +153,13 @@ function CalendarDay(props) {
         <div className={cStyle.unStatedTimeColumn}>
           {classesDay?.map((course) => {
             return (
-              <div
-                className={sStyle.tuButton}
-                // onClick={() => handleShowCourseInfo(course)}
-              >
-                {course.details}
-              </div>
+              <TU classDetails={course}></TU>
+              // <div
+              //   className={sStyle.tuButton}
+              //   // onClick={() => handleShowCourseInfo(course)}
+              // >
+              //   {course.details}
+              // </div>
             );
           })}
         </div>
