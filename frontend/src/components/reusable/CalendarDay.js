@@ -125,7 +125,7 @@ function CalendarDay(props) {
 
   const handleShowDayTitle = () => {
     if (dayName.includes('Time')) {
-      return "Time Unstated";
+      return "Unstated";
     } else {
       return dayName.substr(0, 3).toUpperCase();
     }
