@@ -57,7 +57,7 @@ function Calendar(props) {
   const [daySelection, setDaySelection] = useState(0);
   const [prefDaySelection, setPrefDaySelection] = useState(0);
 
-  var hasUnstated = (classes.TimeUnspecified.length() > 0);
+  var hasUnstated = (classes.TimeUnspecified?.length() > 0);
 
   const handleShowDayTitle = () => {
     console.log("hmmmm",hasUnstated);
