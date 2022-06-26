@@ -154,7 +154,7 @@ function CalendarDay(props) {
           {classesDay?.map((course) => {
             return (
               <div
-                className={sStyle.tuButton}
+                className={cStyle.tuButton}
                 // onClick={() => handleShowCourseInfo(course)}
               >
                 {course.details}
