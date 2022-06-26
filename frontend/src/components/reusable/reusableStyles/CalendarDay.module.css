@@ -5,7 +5,6 @@
 
 .TUdayContainer {
   flex-basis: 0;
-  flex-grow: 10;
   position: relative;
 }
 
