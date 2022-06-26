@@ -124,7 +124,7 @@ function CalendarDay(props) {
   };
 
   const handleShowDayTitle = () => {
-    if (dayName.includes('Time')) {
+    if (dayName.includes("Time")) {
       return "Unstated";
     } else {
       return dayName.substr(0, 3).toUpperCase();
@@ -142,7 +142,13 @@ function CalendarDay(props) {
   }, []);
 
   return (
-    <div className={cStyle.dayContainer}>
+    <div
+      className={
+        dayName === "TimeUnspecified"
+          ? cStyle.TUdayContainer
+          : cStyle.dayContainer
+      }
+    >
       {!shrink && (
         <div className={cStyle.timeSlotTitle}>
           {!singleDay && handleShowDayTitle()}

@@ -3,6 +3,12 @@
   position: relative;
 }
 
+.TUdayContainer {
+  flex-basis: 0px;
+  flex-grow: 10;
+  position: relative;
+}
+
 .tuButton {
   color: #a0c3d1;
   text-transform: unset !important;
