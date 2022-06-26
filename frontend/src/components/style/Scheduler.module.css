@@ -246,22 +246,6 @@
   border: #fc4e4e solid 1px;
 }
 
-.tuButton {
-  color: #a0c3d1;
-  text-transform: unset !important;
-  margin: 1vw;
-  display: flex;
-  overflow-wrap: break-word;
-  flex-direction: column;
-  white-space: normal;
-  color: white;
-  background-color: #87A5B5;
-  width: 80%;
-  height: auto;
-  border-radius: 5px;
-  font-size: 13px;
-}
-
 /* * * 3rd * * */
 .tabsContainer {
   display: flex;
