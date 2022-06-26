@@ -9,6 +9,7 @@
 
 import { useEffect, useState } from "react";
 import cStyle from "./reusableStyles/CalendarDay.module.css";
+import sStyle from "../style/Scheduler.module.css";
 import Event from "./Event.js";
 import TU from "./TU.js";
 import { Button, IconButton } from "@material-ui/core";
@@ -124,7 +125,7 @@ function CalendarDay(props) {
 
   const handleShowDayTitle = () => {
     if (dayName.includes('Time')) {
-      return "Unstated";
+      return "Time Unstated";
     } else {
       return dayName.substr(0, 3).toUpperCase();
     }
@@ -141,13 +142,7 @@ function CalendarDay(props) {
   }, []);
 
   return (
-    <div
-      className={
-        dayName === "TimeUnspecified"
-          ? cStyle.TUdayContainer
-          : cStyle.dayContainer
-      }
-    >
+    <div className={cStyle.dayContainer}>
       {!shrink && (
         <div className={cStyle.timeSlotTitle}>
           {!singleDay && handleShowDayTitle()}
@@ -159,7 +154,7 @@ function CalendarDay(props) {
           {classesDay?.map((course) => {
             return (
               <div
-                className={cStyle.tuButton}
+                className={sStyle.tuButton}
                 // onClick={() => handleShowCourseInfo(course)}
               >
                 {course.details}
