@@ -60,7 +60,6 @@ function Calendar(props) {
   // var hasUnstated = (classes.TimeUnspecified && classes.TimeUnspecified.length > 0);
 
   const handleShowDayTitle = () => {
-    console.log("hmmmm");
     if (weekdays[daySelection].includes("Time")) {
       return "Time Unstated";
     } else {
