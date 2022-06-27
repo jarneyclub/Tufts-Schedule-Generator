@@ -75,7 +75,7 @@ function PlanCard(props) {
                 customStyle={{
                   border: "none",
                   justifyContent: "space-between",
-                  height: "35px",
+                  padding: "8px",
                   pointerEvents: "none",
                 }}
                 // onClick={onClick}
