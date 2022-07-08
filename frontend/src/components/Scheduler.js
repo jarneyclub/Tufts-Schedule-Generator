@@ -795,42 +795,46 @@ function Scheduler(props) {
 
                 {/* The two drop downs for Degree Plan and Degree Requirements */}
                 <div className={sStyle.DegreeInfoContainer}>
-                  <div
-                    className={
-                      !planBtnClicked
-                        ? sStyle.degreeBtn
-                        : sStyle.degreeBtnClicked
-                    }
-                    onClick={() => handleDegreeInfo("DegreePlan")}
-                  >
-                    {" "}
-                    Degree Plan{" "}
-                  </div>
-                  {dropdownDegreePlan ? (
-                    <div className={sStyle.degreePlanContainer}>
-                      <DegreePlanExpress />
+                  <div className={sStyle.degreeDropdown}>
+                    <div
+                      className={
+                        !planBtnClicked
+                          ? sStyle.degreeBtn
+                          : sStyle.degreeBtnClicked
+                      }
+                      onClick={() => handleDegreeInfo("DegreePlan")}
+                    >
+                      {" "}
+                      Degree Plan{" "}
                     </div>
-                  ) : (
-                    ""
-                  )}
+                    {dropdownDegreePlan ? (
+                      <div className={sStyle.degreePlanContainer}>
+                        <DegreePlanExpress />
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                   &nbsp;
-                  <div
-                    className={
-                      !reqBtnClicked
-                        ? sStyle.degreeBtn
-                        : sStyle.degreeBtnClicked
-                    }
-                    onClick={() => handleDegreeInfo("DegreeReq")}
-                  >
-                    Degree Requirement
-                  </div>
-                  {dropdownDegreeReq ? (
-                    <div className={sStyle.degreeReqContainer}>
-                      <DegreeReqExpress />
+                  <div>
+                    <div
+                      className={
+                        !reqBtnClicked
+                          ? sStyle.degreeBtn
+                          : sStyle.degreeBtnClicked
+                      }
+                      onClick={() => handleDegreeInfo("DegreeReq")}
+                    >
+                      Degree Requirement
                     </div>
-                  ) : (
-                    ""
-                  )}
+                    {dropdownDegreeReq ? (
+                      <div className={sStyle.degreeReqContainer}>
+                        <DegreeReqExpress />
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -938,7 +942,7 @@ function Scheduler(props) {
           shrink={shrink}
         />
       )}
-      
+
       {showAlert && (
         <SnackBarAlert
           severity={alertSeverity}
