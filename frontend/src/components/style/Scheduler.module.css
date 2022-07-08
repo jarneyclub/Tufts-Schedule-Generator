@@ -393,6 +393,7 @@
   display: block;
   /* display: inline-block; */
   float: right;
+  z-index: 5;
 }
 
 .degreePlanContainer {
