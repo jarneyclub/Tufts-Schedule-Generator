@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.5e822fdc.css",
-    "main.js": "/static/js/main.31c9f0e5.js",
+    "main.css": "/static/css/main.fa51474c.css",
+    "main.js": "/static/js/main.23f408a5.js",
     "static/media/favicon_2.png": "/static/media/favicon_2.864c93e1efb88812fdf4.png",
     "static/media/homepage_final.gif": "/static/media/homepage_final.8e74a25ae9bc35061570.gif",
     "static/media/feedback.png": "/static/media/feedback.795628bfdeb0955db68b.png",
@@ -12,11 +12,11 @@
     "static/media/Icon_DegreePlanner.png": "/static/media/Icon_DegreePlanner.bfb9c5e6ab916b938367.png",
     "static/media/jarney_word.png": "/static/media/jarney_word.a79d9ad41b6d4ba72a97.png",
     "index.html": "/index.html",
-    "main.5e822fdc.css.map": "/static/css/main.5e822fdc.css.map",
-    "main.31c9f0e5.js.map": "/static/js/main.31c9f0e5.js.map"
+    "main.fa51474c.css.map": "/static/css/main.fa51474c.css.map",
+    "main.23f408a5.js.map": "/static/js/main.23f408a5.js.map"
   },
   "entrypoints": [
-    "static/css/main.5e822fdc.css",
-    "static/js/main.31c9f0e5.js"
+    "static/css/main.fa51474c.css",
+    "static/js/main.23f408a5.js"
   ]
 }
