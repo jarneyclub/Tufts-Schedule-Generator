@@ -816,7 +816,7 @@ function Scheduler(props) {
                     )}
                   </div>
                   &nbsp;
-                  <div>
+                  <div className={sStyle.degreeDropdown}>
                     <div
                       className={
                         !reqBtnClicked
