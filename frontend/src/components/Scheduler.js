@@ -701,7 +701,7 @@ function Scheduler(props) {
                         customStyle={{
                           border: "none",
                           justifyContent: "space-between",
-                          backgroundColor: "#6B818F",
+                          backgroundColor: "#8DA4B3",
                         }}
                         onClick={handleShowCourseInfo}
                       />
