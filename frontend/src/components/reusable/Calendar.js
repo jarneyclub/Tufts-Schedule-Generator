@@ -58,9 +58,14 @@ function Calendar(props) {
 
   const lol = () => {
     console.log(TimeUnstated.length);
-    if (TimeUnstated.length > 0) {
+    if (TimeUnstated.length > 0 && weekdays.length === 5) {
       weekdays.push("TimeUnspecified"); 
     }
+
+    if (TimeUnstated.length === 0) {
+      weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+    } 
+    
     console.log(weekdays);
   }
 
