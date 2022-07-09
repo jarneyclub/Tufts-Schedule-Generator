@@ -102,12 +102,12 @@ function Calendar(props) {
    */
   const onDayChange = (direction) => {
     if (
-      daySelection === (TimeUnstated.length === 0 ? 4 : 5) &&
+      daySelection === (TimeUnstated.length > 0 ? 5 : 4) &&
       direction === 1
     ) {
       setDaySelection(0);
     } else if (daySelection === 0 && direction === -1) {
-      setDaySelection(TimeUnstated.length === 0 ? 4 : 5);
+      setDaySelection(TimeUnstated.length > 0 ? 5 : 4);
     } else {
       setDaySelection((prev) => prev + direction);
     }
