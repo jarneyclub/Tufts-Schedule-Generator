@@ -55,19 +55,14 @@ function Calendar(props) {
   } = props;
   const [daySelection, setDaySelection] = useState(0);
   const [prefDaySelection, setPrefDaySelection] = useState(0);
-  const [maxDaySelection, setMaxDaySelection] = useState(
-    TimeUnstated.length === 0 ? 4 : 5
-   );
 
   const WeekdaysController = () => {
     if (TimeUnstated.length > 0 && weekdays.length === 5) {
       weekdays.push("TimeUnspecified");
-      console.log("triggered! ", maxDaySelection);
     }
 
     if (TimeUnstated.length === 0) {
       weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-      console.log(maxDaySelection);
     }
   };
 
@@ -111,12 +106,8 @@ function Calendar(props) {
       direction === 1
     ) {
       setDaySelection(0);
-      console.log("first ", daySelection);
-      // console.log(maxDaySelection);
     } else if (daySelection === 0 && direction === -1) {
       setDaySelection(TimeUnstated.length === 0 ? 4 : 5);
-      console.log("second", daySelection);
-      // console.log(maxDaySelection);
     } else {
       setDaySelection((prev) => prev + direction);
     }
