@@ -106,14 +106,17 @@ function Calendar(props) {
    *  purpose: controls the display of day schedule on single day view
    */
   const onDayChange = (direction) => {
-    if (daySelection === maxDaySelection && direction === 1) {
+    if (
+      daySelection === (TimeUnstated.length === 0 ? 4 : 5) &&
+      direction === 1
+    ) {
       setDaySelection(0);
       console.log("first ", daySelection);
-      console.log(maxDaySelection);
+      // console.log(maxDaySelection);
     } else if (daySelection === 0 && direction === -1) {
-      setDaySelection(maxDaySelection);
+      setDaySelection(TimeUnstated.length === 0 ? 4 : 5);
       console.log("second", daySelection);
-      console.log(maxDaySelection);
+      // console.log(maxDaySelection);
     } else {
       setDaySelection((prev) => prev + direction);
     }
