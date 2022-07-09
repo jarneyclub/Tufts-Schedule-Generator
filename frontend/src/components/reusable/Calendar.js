@@ -57,11 +57,12 @@ function Calendar(props) {
   const [prefDaySelection, setPrefDaySelection] = useState(0);
 
   const WeekdaysController = () => {
-    if (TimeUnstated.length > 0 && weekdays.length === 5) {
+    console.log("TimeUnstated");
+    if (TimeUnstated?.length > 0 && weekdays.length === 5) {
       weekdays.push("TimeUnspecified");
     }
 
-    if (TimeUnstated.length === 0) {
+    if (TimeUnstated?.length === 0) {
       weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
     }
   };

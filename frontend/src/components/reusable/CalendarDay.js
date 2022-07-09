@@ -160,7 +160,7 @@ function CalendarDay(props) {
           {classesDay?.map((course) => {
             return (
               <div
-                className={cStyle.tuButton}
+                className={shrink ? cStyle.tuButtonShrink : cStyle.tuButton}
                 // onClick={() => handleShowCourseInfo(course)}
               >
                 {course.details}
