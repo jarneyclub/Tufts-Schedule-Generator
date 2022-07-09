@@ -29,13 +29,12 @@ const time = [
   "9PM",
 ];
 
-const weekdays = [
+let weekdays = [
   "Monday",
   "Tuesday",
   "Wednesday",
   "Thursday",
   "Friday",
-  "TimeUnspecified",
 ];
 
 const pref_weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
@@ -58,7 +57,11 @@ function Calendar(props) {
   const [prefDaySelection, setPrefDaySelection] = useState(0);
 
   const lol = () => {
-    console.log(TimeUnstated);
+    console.log(TimeUnstated.length);
+    if (TimeUnstated.length > 0) {
+      weekdays.push("TimeUnspecified"); 
+    }
+    console.log(weekdays);
   }
 
   const handleShowDayTitle = () => {
