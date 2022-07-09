@@ -437,7 +437,7 @@
 .calendarContainer {
   width: 100%;
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .timePrefOverlay {
@@ -520,8 +520,10 @@ body {
   }
   .degreeReqContainer {
     left: auto;
+    width: 200%;
   }
   .degreePlanContainer {
-    left: auto;
+    left: -80%;
+    width: 200%;
   }
 }
