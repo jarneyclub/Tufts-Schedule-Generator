@@ -55,14 +55,17 @@ function Calendar(props) {
   } = props;
   const [daySelection, setDaySelection] = useState(0);
   const [prefDaySelection, setPrefDaySelection] = useState(0);
+  let maxDaySelection = 4;
 
   const WeekdaysController = () => {
     if (TimeUnstated.length > 0 && weekdays.length === 5) {
       weekdays.push("TimeUnspecified");
+      maxDaySelection = 5;
     }
 
     if (TimeUnstated.length === 0) {
       weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+      maxDaySelection = 4;
     }
   };
 
@@ -101,10 +104,10 @@ function Calendar(props) {
    *  purpose: controls the display of day schedule on single day view
    */
   const onDayChange = (direction) => {
-    if (daySelection === 5 && direction === 1) {
+    if (daySelection === maxDaySelection && direction === 1) {
       setDaySelection(0);
     } else if (daySelection === 0 && direction === -1) {
-      setDaySelection(5);
+      setDaySelection(maxDaySelection);
     } else {
       setDaySelection((prev) => prev + direction);
     }
