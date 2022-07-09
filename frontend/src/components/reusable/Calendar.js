@@ -108,8 +108,12 @@ function Calendar(props) {
   const onDayChange = (direction) => {
     if (daySelection === maxDaySelection && direction === 1) {
       setDaySelection(0);
+      console.log("first ", daySelection);
+      console.log(maxDaySelection);
     } else if (daySelection === 0 && direction === -1) {
       setDaySelection(maxDaySelection);
+      console.log("second", daySelection);
+      console.log(maxDaySelection);
     } else {
       setDaySelection((prev) => prev + direction);
     }
