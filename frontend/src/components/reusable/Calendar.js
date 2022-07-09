@@ -62,13 +62,11 @@ function Calendar(props) {
   const WeekdaysController = () => {
     if (TimeUnstated.length > 0 && weekdays.length === 5) {
       weekdays.push("TimeUnspecified");
-      setMaxDaySelection(5);
       console.log("triggered! ", maxDaySelection);
     }
 
     if (TimeUnstated.length === 0) {
       weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-      setMaxDaySelection(4);
       console.log(maxDaySelection);
     }
   };
