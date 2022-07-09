@@ -55,17 +55,17 @@ function Calendar(props) {
   } = props;
   const [daySelection, setDaySelection] = useState(0);
   const [prefDaySelection, setPrefDaySelection] = useState(0);
-  let maxDaySelection = 4;
+  const [maxDaySelection, setMaxDaySelection] = useState(4);
 
   const WeekdaysController = () => {
     if (TimeUnstated.length > 0 && weekdays.length === 5) {
       weekdays.push("TimeUnspecified");
-      maxDaySelection = 5;
+      setMaxDaySelection(5);
     }
 
     if (TimeUnstated.length === 0) {
       weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-      maxDaySelection = 4;
+      setMaxDaySelection(4);
     }
   };
 
