@@ -26,6 +26,23 @@
   text-align: center;
 }
 
+.tuButtonShrink {
+  color: #a0c3d1;
+  text-transform: unset !important;
+  margin: 5px;
+  display: flex;
+  overflow-wrap: break-word;
+  flex-direction: column;
+  white-space: normal;
+  color: white;
+  background-color: #87A5B5;
+  height: auto;
+  border-radius: 5px;
+  font-size: 13px;
+  padding: 15px 8px;
+  text-align: center;
+}
+
 .buttonContainer {
   display: flex;
   flex-direction: row;
