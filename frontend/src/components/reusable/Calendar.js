@@ -56,18 +56,15 @@ function Calendar(props) {
   const [daySelection, setDaySelection] = useState(0);
   const [prefDaySelection, setPrefDaySelection] = useState(0);
 
-  const lol = () => {
-    console.log(TimeUnstated.length);
+  const WeekdaysController = () => {
     if (TimeUnstated.length > 0 && weekdays.length === 5) {
-      weekdays.push("TimeUnspecified"); 
+      weekdays.push("TimeUnspecified");
     }
 
     if (TimeUnstated.length === 0) {
       weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-    } 
-    
-    console.log(weekdays);
-  }
+    }
+  };
 
   const handleShowDayTitle = () => {
     if (weekdays[daySelection].includes("Time")) {
@@ -125,7 +122,8 @@ function Calendar(props) {
 
   return (
     <div className={cStyle.container}>
-      <div>{lol()}</div>
+      {/* Controlles wether time unstated should be a part of the weekday */}
+      {WeekdaysController()}
 
       {/*   This is the control of days for Single Day View  */}
       {shrink &&
