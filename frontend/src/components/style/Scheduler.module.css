@@ -519,11 +519,11 @@ body {
     align-items: center;
   }
   .degreeReqContainer {
-    left: auto;
+    left: -90%;
     width: 200%;
   }
   .degreePlanContainer {
-    left: -80%;
-    width: 200%;
+    left: -30%;
+    width: 300%;
   }
 }

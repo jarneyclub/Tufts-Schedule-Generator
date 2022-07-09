@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.c6b2d964.css",
+    "main.css": "/static/css/main.4ab836d6.css",
     "main.js": "/static/js/main.d0f0caa8.js",
     "static/media/favicon_2.png": "/static/media/favicon_2.864c93e1efb88812fdf4.png",
     "static/media/homepage_final.gif": "/static/media/homepage_final.8e74a25ae9bc35061570.gif",
@@ -12,11 +12,11 @@
     "static/media/Icon_DegreePlanner.png": "/static/media/Icon_DegreePlanner.bfb9c5e6ab916b938367.png",
     "static/media/jarney_word.png": "/static/media/jarney_word.a79d9ad41b6d4ba72a97.png",
     "index.html": "/index.html",
-    "main.c6b2d964.css.map": "/static/css/main.c6b2d964.css.map",
+    "main.4ab836d6.css.map": "/static/css/main.4ab836d6.css.map",
     "main.d0f0caa8.js.map": "/static/js/main.d0f0caa8.js.map"
   },
   "entrypoints": [
-    "static/css/main.c6b2d964.css",
+    "static/css/main.4ab836d6.css",
     "static/js/main.d0f0caa8.js"
   ]
 }
