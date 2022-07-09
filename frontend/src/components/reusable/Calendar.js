@@ -57,7 +57,9 @@ function Calendar(props) {
   const [daySelection, setDaySelection] = useState(0);
   const [prefDaySelection, setPrefDaySelection] = useState(0);
 
-  // var hasUnstated = (classes.TimeUnspecified && classes.TimeUnspecified.length > 0);
+  const lol = () => {
+    console.log(TimeUnstated);
+  }
 
   const handleShowDayTitle = () => {
     if (weekdays[daySelection].includes("Time")) {
@@ -115,7 +117,7 @@ function Calendar(props) {
 
   return (
     <div className={cStyle.container}>
-      {/* <div>{JSON.stringify(classes)}</div> */}
+      <div>{lol()}</div>
 
       {/*   This is the control of days for Single Day View  */}
       {shrink &&
