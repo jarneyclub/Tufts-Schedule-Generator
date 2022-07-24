@@ -5,7 +5,7 @@
   height: 100%;
   align-items: center;
   background-color: #efebf9;
-  padding: 20px 0;
+  padding: 0 0 20px 0;
   overflow-y: auto;
 }
 
@@ -41,11 +41,19 @@
   border-radius: 8px;
 }
 
-.title {
+.headerContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+  width: 100%;
+  align-items: center;
+  background-color: #d3cbf0;
+  padding: 1rem 10%;
+}
+
+.title {
+  color: #7048d5;
 }
 
 .button {
@@ -62,7 +70,7 @@
   width: auto;
   height: 25px;
   padding: 5px 2vw;
-  color: none;
+  color: #d3cbf0;
   margin: 1rem 0;
 }
 
