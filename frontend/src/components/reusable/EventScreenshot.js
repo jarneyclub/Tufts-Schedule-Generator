@@ -24,37 +24,30 @@ const palette = [
   {
     backgroundColor: "#BECADA",
     color: "#000000",
-    borderLeft: "5px solid #849AB8",
   },
   {
     backgroundColor: "#C8DCE4",
     color: "#000000",
-    borderLeft: "5px solid #91BACA",
   },
   {
     backgroundColor: "#E2B6B6",
     color: "#000000",
-    borderLeft: "5px solid #CF8A8A",
   },
   {
     backgroundColor: "#D2C6CE",
     color: "#000000",
-    borderLeft: "5px solid #AA92A1",
   },
   {
     backgroundColor: "#F0E5A8",
     color: "#000000",
-    borderLeft: "5px solid #EAD986",
   },
   {
     backgroundColor: "#CBE1B7",
     color: "#000000",
-    borderLeft: "5px solid #A1C97D",
   },
   {
     backgroundColor: "#ECD0AC",
     color: "#000000",
-    borderLeft: "5px solid #DCAB6A",
   },
 ];
 function Class(props) {
@@ -81,7 +74,7 @@ function Class(props) {
       )}
       <div>{detail[0]}</div>
       <div>{detail[1]}</div>
-      <div>{name}</div>
+      {/* <div>{name}</div> */}
       <div>{loc[0]}</div>
     </div>
   );
@@ -118,8 +111,6 @@ function EventScreenshot(props) {
       <Button onClick={onClose} className={eStyle.button}>
         Return to Schedule
       </Button>
-      <br />
-      <br />
       <div className={eStyle.rowContainer}>
         {columnTitles.map((title) => (
           <div className={eStyle.eventsContainer}>
