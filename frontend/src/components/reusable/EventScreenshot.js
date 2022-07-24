@@ -50,6 +50,7 @@ const palette = [
     color: "#000000",
   },
 ];
+
 function Class(props) {
   const { classDetail, tu, customStyle } = props;
   const {
@@ -80,9 +81,25 @@ function Class(props) {
   );
 }
 
+function ClassTime(props) {
+  const { classDetails, details } = props;
+
+  const {
+    time_start,
+    time_end,
+  } = details;
+
+    columnTitles.map((title) => (
+      <div className={eStyle.eventsContainer}>
+        {classDetails[title]?.map((details) => (
+          <div></div>
+        ))}
+      </div>
+    ))
+}
+
 function EventScreenshot(props) {
   const { classDetails, onClose } = props;
-
   // const [paletteIdx, setPaletteIdx] = useState(0);
   const [classCSS, setClassCSS] = useState({});
   let sectionIDCSS = {};
@@ -121,7 +138,6 @@ function EventScreenshot(props) {
             <div className={eStyle.titleContainer}>
               {title !== "TimeUnspecified" ? title : "Time Unstated"}
             </div>
-            <br />
             {classDetails[title]?.map((details) => (
               <Class
                 classDetail={details}
