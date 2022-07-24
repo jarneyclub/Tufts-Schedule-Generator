@@ -108,9 +108,15 @@ function EventScreenshot(props) {
 
   return (
     <div className={eStyle.screenshotContainer}>
-      <Button onClick={onClose} className={eStyle.button}>
-        Return to Schedule
-      </Button>
+      <div className={eStyle.title}>
+        <Button onClick={onClose} className={eStyle.button}>
+          Return to Schedule
+        </Button>
+        <div>Take a screenshot of your schedule!</div>
+        <Button className={eStyle.invisibleButton}>
+          Return to Schedule
+        </Button>
+      </div>
       <div className={eStyle.rowContainer}>
         {columnTitles.map((title) => (
           <div className={eStyle.eventsContainer}>

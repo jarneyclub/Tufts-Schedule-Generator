@@ -6,6 +6,7 @@
   align-items: center;
   background-color: #efebf9;
   padding: 20px 0;
+  overflow-y: auto;
 }
 
 .rowContainer {
@@ -27,7 +28,6 @@
 }
 
 .classContainer {
-  /* border: 1px solid #7048d5; */
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -36,16 +36,33 @@
   align-items: center;
   text-align: center;
   /* font-size: 2vw; */
+  margin: 5px 0;
+  padding: 5px;
+  border-radius: 8px;
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   margin-bottom: 5px;
 }
 
 .button {
-  width: 80%;
+  width: auto;
   height: 25px;
   padding: 5px 2vw;
   border: 1px solid #7048d5;
   text-transform: unset !important;
   color: #7048d5;
+  margin: 1rem 0;
+}
+
+.invisibleButton {
+  width: auto;
+  height: 25px;
+  padding: 5px 2vw;
+  color: none;
   margin: 1rem 0;
 }
 
