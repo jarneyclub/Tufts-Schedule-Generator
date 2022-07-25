@@ -82,4 +82,7 @@
   .classContainer {
     font-size: 2vw;
   }
+  .headerContainer {
+    padding: 0.5rem 10px;
+  }
 }
