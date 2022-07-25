@@ -27,7 +27,7 @@ import Backdrop from "@mui/material/Backdrop";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
-import LinkedCameraIcon from "@mui/icons-material/LinkedCamera";
+import AspectRatioIcon from "@mui/icons-material/AspectRatio";
 import PurpleSwitch from "./reusable/PurpleSwitch";
 import sStyle from "./style/Scheduler.module.css";
 import Dropdown from "./reusable/Dropdown";
@@ -789,7 +789,7 @@ function Scheduler(props) {
                     className={sStyle.editPlanButton}
                     onClick={() => handlePopup("eventScreenshot", true)}
                   >
-                    <LinkedCameraIcon fontSize="medium" />
+                    <AspectRatioIcon fontSize="medium" />
                   </IconButton>
                 </div>
 
@@ -918,15 +918,15 @@ function Scheduler(props) {
 
       {popup.eventScreenshot && (
         <Popup onClose={() => handlePopup("eventScreenshot", false)}>
-        <EventScreenshot
-          onClose={() => handlePopup("eventScreenshot", false)}
-          onShowAlert={() => setShowAlert(true)}
-          setAlertMessage={setAlertMessage}
-          setAlertSeverity={setAlertSeverity}
-          scheduleID={scheduleOptions[selectedScheduleIdx].sched_id}
-          scheduleName={scheduleOptions[selectedScheduleIdx].sched_name}
-          classDetails={classes}
-        />
+          <EventScreenshot
+            onClose={() => handlePopup("eventScreenshot", false)}
+            onShowAlert={() => setShowAlert(true)}
+            setAlertMessage={setAlertMessage}
+            setAlertSeverity={setAlertSeverity}
+            scheduleID={scheduleOptions[selectedScheduleIdx].sched_id}
+            scheduleName={scheduleOptions[selectedScheduleIdx].sched_name}
+            classDetails={classes}
+          />
         </Popup>
       )}
 
