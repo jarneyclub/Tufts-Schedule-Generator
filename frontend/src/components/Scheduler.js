@@ -345,6 +345,7 @@ function Scheduler(props) {
   };
 
   const handleShowCourseInfo = (info) => {
+    console.log(screenShot);
     setCourseInfo(info);
     setOpen(!open);
     handlePopup("showCourseInfo", true);
@@ -403,7 +404,6 @@ function Scheduler(props) {
   };
 
   const fetchSavedSchedules = async () => {
-    console.log(screenShot);
     setLoaded(false);
     setSelectedScheduleIdx(0);
     await fetch("https://qa.jarney.club/api/schedules")
