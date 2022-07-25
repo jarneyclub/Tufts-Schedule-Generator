@@ -282,7 +282,8 @@
 }
 
 .tabDetailContainer {
-  height: auto;
+  height: 14vw;
+  overflow-y: auto;
   min-height: 20px;
   background-color: #efebf9;
   border-top: none;
@@ -491,6 +492,9 @@ body {
 }
 
 @media only screen and (max-width: 669.99px) {
+  .tabDetailContainer {
+    height: auto;
+  }
   .overlayTitle {
     font-size: 20px !important;
   }
