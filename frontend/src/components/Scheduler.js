@@ -791,7 +791,7 @@ function Scheduler(props) {
                   >
                     {/* <AspectRatioIcon fontSize="medium" /> */}
                     <img
-                      src="../../res/Screenshot.svg"
+                      src="../res/Screenshot.svg"
                       alt="Screenshot"
                     />
                   </IconButton>
