@@ -789,7 +789,11 @@ function Scheduler(props) {
                     className={sStyle.editPlanButton}
                     onClick={() => handlePopup("eventScreenshot", true)}
                   >
-                    <AspectRatioIcon fontSize="medium" />
+                    {/* <AspectRatioIcon fontSize="medium" /> */}
+                    <img
+                      src="../../res/Screenshot.svg"
+                      alt="Screenshot"
+                    />
                   </IconButton>
                 </div>
 
