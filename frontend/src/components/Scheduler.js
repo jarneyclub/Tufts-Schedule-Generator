@@ -216,7 +216,6 @@ function Scheduler(props) {
   const [loadMessage, setLoadMessage] = useState(true);
   const [timePrefState, setTimePrefState] = useState(false); // state of time pref overlay
   const [timePref, setTimePref] = useState(timePrefDefault); // time pref json that will be passed into post req
-  const [screenShot, setScreenShot] = useState(false); // time pref json that will be passed into post req
 
   const [popup, setPopup] = useState(popupDefault);
   const [open, setOpen] = useState(false);
@@ -345,7 +344,6 @@ function Scheduler(props) {
   };
 
   const handleShowCourseInfo = (info) => {
-    console.log(screenShot);
     setCourseInfo(info);
     setOpen(!open);
     handlePopup("showCourseInfo", true);
@@ -789,7 +787,7 @@ function Scheduler(props) {
                   &nbsp;
                   <IconButton
                     className={sStyle.editPlanButton}
-                    onClick={() => setScreenShot(true)}
+                    onClick={() => handlePopup("eventScreenshot", true)}
                   >
                     <LinkedCameraIcon fontSize="medium" />
                   </IconButton>
@@ -918,9 +916,10 @@ function Scheduler(props) {
         </Popup>
       )}
 
-      {screenShot && (
+      {popup.eventScreenshot && (
+        <Popup onClose={() => handlePopup("eventScreenshot", false)}>
         <EventScreenshot
-          onClose={() => setScreenShot(false)}
+          onClose={() => handlePopup("eventScreenshot", false)}
           onShowAlert={() => setShowAlert(true)}
           setAlertMessage={setAlertMessage}
           setAlertSeverity={setAlertSeverity}
@@ -928,6 +927,7 @@ function Scheduler(props) {
           scheduleName={scheduleOptions[selectedScheduleIdx].sched_name}
           classDetails={classes}
         />
+        </Popup>
       )}
 
       {timePrefState && (
