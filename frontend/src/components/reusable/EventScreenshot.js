@@ -133,7 +133,10 @@ function EventScreenshot(props) {
         <Button className={eStyle.invisibleButton}>X</Button>
       </div>
       <div className={eStyle.rowContainer}>
-        {columnTitles.map((title) => (
+        {columnTitles.map((title) =>
+          title === "TimeUnspecified" && classDetails[title].length === 0
+            ? null
+            : 
           <div className={eStyle.eventsContainer}>
             <div className={eStyle.titleContainer}>
               {title !== "TimeUnspecified" ? title : "Time Unstated"}
@@ -146,7 +149,7 @@ function EventScreenshot(props) {
               />
             ))}
           </div>
-        ))}
+        )}
       </div>
     </div>
   );
