@@ -216,6 +216,7 @@ function Scheduler(props) {
   const [loadMessage, setLoadMessage] = useState(true);
   const [timePrefState, setTimePrefState] = useState(false); // state of time pref overlay
   const [timePref, setTimePref] = useState(timePrefDefault); // time pref json that will be passed into post req
+  const [screenShot, setScreenShot] = useState(false); // time pref json that will be passed into post req
 
   const [popup, setPopup] = useState(popupDefault);
   const [open, setOpen] = useState(false);
@@ -787,7 +788,7 @@ function Scheduler(props) {
                   &nbsp;
                   <IconButton
                     className={sStyle.editPlanButton}
-                    onClick={() => handlePopup("eventScreenshot", true)}
+                    onClick={() => setScreenShot(true)}
                   >
                     <LinkedCameraIcon fontSize="medium" />
                   </IconButton>
@@ -916,18 +917,16 @@ function Scheduler(props) {
         </Popup>
       )}
 
-      {popup.eventScreenshot && (
-        <Popup onClose={() => handlePopup("eventScreenshot", false)}>
-          <EventScreenshot
-            onClose={() => handlePopup("eventScreenshot", false)}
-            onShowAlert={() => setShowAlert(true)}
-            setAlertMessage={setAlertMessage}
-            setAlertSeverity={setAlertSeverity}
-            scheduleID={scheduleOptions[selectedScheduleIdx].sched_id}
-            scheduleName={scheduleOptions[selectedScheduleIdx].sched_name}
-            classDetails={classes}
-          />
-        </Popup>
+      {screenShot && (
+        <EventScreenshot
+          onClose={() => setScreenShot(false)}
+          onShowAlert={() => setShowAlert(true)}
+          setAlertMessage={setAlertMessage}
+          setAlertSeverity={setAlertSeverity}
+          scheduleID={scheduleOptions[selectedScheduleIdx].sched_id}
+          scheduleName={scheduleOptions[selectedScheduleIdx].sched_name}
+          classDetails={classes}
+        />
       )}
 
       {timePrefState && (
