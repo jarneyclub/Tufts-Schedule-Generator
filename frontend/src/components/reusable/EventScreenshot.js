@@ -20,6 +20,8 @@ const columnTitles = [
   "TimeUnspecified",
 ];
 
+const lol = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7]
+
 const palette = [
   {
     backgroundColor: "#BECADA",
@@ -38,15 +40,15 @@ const palette = [
     color: "#000000",
   },
   {
-    backgroundColor: "#F0E5A8",
-    color: "#000000",
-  },
-  {
     backgroundColor: "#CBE1B7",
     color: "#000000",
   },
   {
     backgroundColor: "#ECD0AC",
+    color: "#000000",
+  },
+  {
+    backgroundColor: "#F0E5A8",
     color: "#000000",
   },
 ];
@@ -75,27 +77,9 @@ function Class(props) {
       )}
       <div>{detail[0]}</div>
       <div>{detail[1]}</div>
-      {/* <div>{name}</div> */}
       <div>{loc[0]}</div>
     </div>
   );
-}
-
-function ClassTime(props) {
-  const { classDetails, details } = props;
-
-  const {
-    time_start,
-    time_end,
-  } = details;
-
-    columnTitles.map((title) => (
-      <div className={eStyle.eventsContainer}>
-        {classDetails[title]?.map((details) => (
-          <div></div>
-        ))}
-      </div>
-    ))
 }
 
 function EventScreenshot(props) {
@@ -105,20 +89,32 @@ function EventScreenshot(props) {
   let sectionIDCSS = {};
 
   const setClassPalette = () => {
-    let paletteIdx = 0;
+    // let paletteIdx = 0;
     columnTitles.forEach((title) => {
       classDetails[title].forEach((detail) => {
         if (!sectionIDCSS.hasOwnProperty(detail.term_course_id)) {
-          sectionIDCSS = {
-            ...sectionIDCSS,
-            [detail.term_course_id]: palette[paletteIdx],
-          };
-          paletteIdx <= palette.length - 1 ? paletteIdx++ : (paletteIdx = 0);
+          let startHour = detail.time_start.split;
+          detail.term_course_id = palette[lol[startHour - 8]];
+
+          // sectionIDCSS = {
+          //   ...sectionIDCSS,
+          //   [detail.term_course_id]: palette[paletteIdx],
+          // };
+          // paletteIdx <= palette.length - 1 ? paletteIdx++ : (paletteIdx = 0);
         }
+
+        // if (!sectionIDCSS.hasOwnProperty(detail.term_course_id)) {
+        //   sectionIDCSS = {
+        //     ...sectionIDCSS,
+        //     [detail.term_course_id]: palette[paletteIdx],
+        //   };
+        //   paletteIdx <= palette.length - 1 ? paletteIdx++ : (paletteIdx = 0);
+        // }
       });
     });
     setClassCSS(sectionIDCSS);
   };
+
   useEffect(() => {
     setClassPalette();
   }, []);
