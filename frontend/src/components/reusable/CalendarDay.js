@@ -161,6 +161,7 @@ function CalendarDay(props) {
             return (
               <div
                 className={shrink ? cStyle.tuButtonShrink : cStyle.tuButton}
+                // onClick={() => handleShowCourseInfo(course)}
               >
                 {course.details}
               </div>
