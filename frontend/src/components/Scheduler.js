@@ -791,7 +791,7 @@ function Scheduler(props) {
                     onClick={() => handlePopup("eventScreenshot", true)}
                   >
                     {/* <AspectRatioIcon fontSize="medium" /> */}
-                    <img src={Logo} alt="Screenshot" />
+                    <img className={sStyle.logo} src={Logo} alt="Expand" />
                   </IconButton>
                 </div>
 
