@@ -20,8 +20,6 @@ const columnTitles = [
   "TimeUnspecified",
 ];
 
-const lol = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7]
-
 const palette = [
   {
     backgroundColor: "#BECADA",
@@ -84,32 +82,20 @@ function Class(props) {
 
 function EventScreenshot(props) {
   const { classDetails, onClose } = props;
-  // const [paletteIdx, setPaletteIdx] = useState(0);
   const [classCSS, setClassCSS] = useState({});
   let sectionIDCSS = {};
 
   const setClassPalette = () => {
-    // let paletteIdx = 0;
+    let paletteIdx = 0;
     columnTitles.forEach((title) => {
       classDetails[title].forEach((detail) => {
         if (!sectionIDCSS.hasOwnProperty(detail.term_course_id)) {
-          let startHour = detail.time_start.split;
-          detail.term_course_id = palette[lol[startHour - 8]];
-
-          // sectionIDCSS = {
-          //   ...sectionIDCSS,
-          //   [detail.term_course_id]: palette[paletteIdx],
-          // };
-          // paletteIdx <= palette.length - 1 ? paletteIdx++ : (paletteIdx = 0);
+          sectionIDCSS = {
+            ...sectionIDCSS,
+            [detail.term_course_id]: palette[paletteIdx],
+          };
+          paletteIdx <= palette.length - 1 ? paletteIdx++ : (paletteIdx = 0);
         }
-
-        // if (!sectionIDCSS.hasOwnProperty(detail.term_course_id)) {
-        //   sectionIDCSS = {
-        //     ...sectionIDCSS,
-        //     [detail.term_course_id]: palette[paletteIdx],
-        //   };
-        //   paletteIdx <= palette.length - 1 ? paletteIdx++ : (paletteIdx = 0);
-        // }
       });
     });
     setClassCSS(sectionIDCSS);
