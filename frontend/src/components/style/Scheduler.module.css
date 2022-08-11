@@ -326,6 +326,11 @@
   height: 90vh;
 }
 
+.logo {
+  width: 20px;
+  height: 20px;
+}
+
 .scheduleTitleContainer {
   display: flex;
   flex-direction: row;
