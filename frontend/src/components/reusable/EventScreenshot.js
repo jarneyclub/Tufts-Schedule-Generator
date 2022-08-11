@@ -38,15 +38,15 @@ const palette = [
     color: "#000000",
   },
   {
+    backgroundColor: "#F0E5A8",
+    color: "#000000",
+  },
+  {
     backgroundColor: "#CBE1B7",
     color: "#000000",
   },
   {
     backgroundColor: "#ECD0AC",
-    color: "#000000",
-  },
-  {
-    backgroundColor: "#F0E5A8",
     color: "#000000",
   },
 ];
@@ -75,9 +75,27 @@ function Class(props) {
       )}
       <div>{detail[0]}</div>
       <div>{detail[1]}</div>
+      {/* <div>{name}</div> */}
       <div>{loc[0]}</div>
     </div>
   );
+}
+
+function ClassTime(props) {
+  const { classDetails, details } = props;
+
+  const {
+    time_start,
+    time_end,
+  } = details;
+
+    columnTitles.map((title) => (
+      <div className={eStyle.eventsContainer}>
+        {classDetails[title]?.map((details) => (
+          <div></div>
+        ))}
+      </div>
+    ))
 }
 
 function EventScreenshot(props) {
@@ -100,7 +118,6 @@ function EventScreenshot(props) {
     });
     setClassCSS(sectionIDCSS);
   };
-
   useEffect(() => {
     setClassPalette();
   }, []);
