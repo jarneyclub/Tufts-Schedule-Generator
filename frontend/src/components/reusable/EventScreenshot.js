@@ -100,7 +100,6 @@ function ClassTime(props) {
 
 function EventScreenshot(props) {
   const { classDetails, onClose } = props;
-  // const [paletteIdx, setPaletteIdx] = useState(0);
   const [classCSS, setClassCSS] = useState({});
   let sectionIDCSS = {};
 

@@ -40,6 +40,7 @@ import JarUserLogin from "./reusable/JarUserLogin";
 import Event from "./reusable/Event";
 import EventScreenshot from "./reusable/EventScreenshot";
 import Popup from "./reusable/Popup";
+import Logo from "./res/Vector.png"
 import {
   AddSchedule,
   RemoveSchedule,
@@ -790,7 +791,7 @@ function Scheduler(props) {
                     onClick={() => handlePopup("eventScreenshot", true)}
                   >
                     {/* <AspectRatioIcon fontSize="medium" /> */}
-                    <img src="Vector.png" alt="Screenshot" />
+                    <img src={Logo} alt="Screenshot" />
                   </IconButton>
                 </div>
 
