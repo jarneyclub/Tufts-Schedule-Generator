@@ -1,5 +1,5 @@
 # Semester Schedule Generator with Tufts University Courses
-![Demonstration](./img/demo.gif)
+![Demonstration](./img/demo_new.gif)
 Scheduling Page Prototype Design by Duncan Chang
 
 # Overview
