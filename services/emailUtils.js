@@ -75,7 +75,7 @@ exports.sendEmailSendGrid= async (recipient, subject, msgPlaintext) => {
 }
 
 const errorHandler = (e) => {
-    console.log("(degreeReq errorHandler)");
+    console.log("(emailUtils errorHandler)", e);
     if (e.message !== undefined) {
         // TODO: CATCH MORE ERRORS
         throw { id: "000", status: "500", title: "Email Error", detail: e.message };
